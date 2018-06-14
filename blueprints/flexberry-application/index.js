@@ -1,8 +1,7 @@
 "use strict";
 var child_process = require('child_process');
-var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('ember-cli/lib/ext/promise');
+var Promise = require('rsvp');
 var lodash = require('lodash');
 module.exports = {
     description: 'Generates all entities for flexberry.',
@@ -45,9 +44,9 @@ var ElapsedTime = (function () {
         console.log("Total: " + ElapsedTime.format(total));
     };
     ElapsedTime.format = function (sec) {
-        var hours = Math.floor(sec / 3600);
-        var min = Math.floor((sec - hours * 3600) / 60);
-        var sec2 = sec - hours * 3600 - min * 60;
+        //var hours = Math.floor(sec / 3600);
+        //var min = Math.floor((sec - hours * 3600) / 60);
+        //var sec2 = sec - hours * 3600 - min * 60;
         //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
         return ElapsedTime.formatterFrac.format(sec) + " sec";
     };
@@ -72,8 +71,6 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
         this.promise = this.emberGenerateFlexberryGroup("transform");
         this.promise = this.emberGenerateFlexberryGroup("transform-test");
-        this.promise = this.emberGenerateFlexberryGroup("controller-test");
-        this.promise = this.emberGenerateFlexberryGroup("route-test");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
@@ -95,7 +92,7 @@ var ApplicationBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: this.options.project.blueprintLookupPaths()
         });
     };
     ApplicationBlueprint.prototype.emberGenerateFlexberryGroup = function (blueprintName) {

@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
+
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 
-export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
+export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
   /**
     Component's wrapper CSS-classes.
 
@@ -51,15 +55,20 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-button<br>' +
-    '  class=class<br>' +
-    '  iconClass=class<br>' +
-    '  caption=caption<br>' +
-    '  tooltip=tooltip<br>' +
-    '  readonly=readonly<br>' +
-    '  click=(action \"onButtonClick\")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-button<br>' +
+      '  class=class<br>' +
+      '  iconClass=class<br>' +
+      '  caption=caption<br>' +
+      '  tooltip=tooltip<br>' +
+      '  readonly=readonly<br>' +
+      '  click=(action "onButtonClick")<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -67,8 +76,8 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'class',
@@ -125,6 +134,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
 
   actions: {
     onButtonClick(e) {
+      // eslint-disable-next-line no-console
       console.log('Button clicked. Click event-object: ', e);
     }
   }

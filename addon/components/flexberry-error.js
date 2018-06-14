@@ -2,8 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { isNone } from '@ember/utils';
 /**
   This component displaying errors.
 
@@ -16,7 +18,7 @@ import Ember from 'ember';
   @class FlexberryErrorComponent
   @extends Ember.Component
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Internal property to store the error.
 
@@ -33,8 +35,8 @@ export default Ember.Component.extend({
     @type Boolean
     @private
   */
-  _errorIsArray: Ember.computed('_error', function () {
-    return Ember.isArray(this.get('_error'));
+  _errorIsArray: computed('_error', function () {
+    return isArray(this.get('_error'));
   }),
 
   /**
@@ -44,8 +46,8 @@ export default Ember.Component.extend({
     @type Boolean
     @private
   */
-  _messageIsNotSpecified: Ember.computed('_error', function () {
-    return Ember.isNone(this.get('_error.message'));
+  _messageIsNotSpecified: computed('_error', function () {
+    return isNone(this.get('_error.message'));
   }),
 
   /**
@@ -72,7 +74,7 @@ export default Ember.Component.extend({
     @property error
     @type Error
   */
-  error: Ember.computed('_error', {
+  error: computed('_error', {
     get() {
       return this.get('_error');
     },

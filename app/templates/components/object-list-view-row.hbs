@@ -52,7 +52,7 @@
     {{#each columns as |column index|}}
       <td
         onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+        class="field {{if (and showValidationMessages (v-get record.data column.propName "isInvalid")) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
@@ -80,10 +80,7 @@
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
             {{#if showValidationMessages}}
-              {{flexberry-validationmessage
-                error=(get record.data (concat "errors." column.propName))
-                pointing="pointing"
-              }}
+              {{flexberry-validationmessage error=(v-get record.data column.propName "messages")}}
             {{/if}}
           {{/if}}
         {{else}}

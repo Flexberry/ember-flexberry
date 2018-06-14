@@ -1,10 +1,14 @@
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import sinon from 'sinon';
 
 moduleFor('controller:lookup-dialog', 'Unit | Controller | lookup dialog', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:colsconfig-dialog',
+    'service:lookup-events',
+    'service:objectlistview-events',
+    'service:user-settings',
+  ],
 });
 
 // Replace this with your real tests.
@@ -14,7 +18,7 @@ test('it exists', function (assert) {
 });
 
 test('it shold set selected record to saveTo.propName of saveTo.model', function (assert) {
-  let model = Ember.Object.extend({ makeDirty: function() {} }).create();
+  let model = EmberObject.extend({ makeDirty: function() {} }).create();
   let saveTo =
   {
     model: model,
@@ -26,7 +30,7 @@ test('it shold set selected record to saveTo.propName of saveTo.model', function
 
   sinon.stub(model, 'makeDirty');
   sinon.stub(controller, '_closeModalDialog');
-  let master = Ember.Object.create();
+  let master = EmberObject.create();
 
   controller.send('objectListViewRowClick', master);
 

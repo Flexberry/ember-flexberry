@@ -6,7 +6,7 @@ import lodash = require('lodash');
 import fs = require("fs");
 import path = require('path');
 const stripBom = require("strip-bom");
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 
 const Blueprint = require('ember-cli/lib/models/blueprint');
 
@@ -62,14 +62,6 @@ class GroupBlueprint {
       case 'transform-test':
         this.emberGenerate("objects");
         break;
-      case 'controller-test':
-        this.emberGenerate("list-forms");
-        this.emberGenerate("edit-forms");
-        break;
-      case 'route-test':
-        this.emberGenerate("list-forms");
-        this.emberGenerate("edit-forms");
-        break;
       case 'flexberry-enum':
         this.emberGenerate("enums");
         break;
@@ -105,7 +97,7 @@ class GroupBlueprint {
       ui: undefined,
       analytics: undefined,
       project: undefined,
-      paths: ["node_modules/ember-flexberry/blueprints"]
+      paths: this.options.project.blueprintLookupPaths()
     });
   }
 
@@ -131,4 +123,3 @@ class GroupBlueprint {
   }
 
 }
-

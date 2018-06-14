@@ -27,8 +27,6 @@
   border-color @defaultDuration @defaultEasing
 ;
 
-@inputColor: @textColor;
-
 /*-------------------
         Types
 --------------------*/
@@ -66,8 +64,8 @@
 --------------------*/
 
 /* Placeholder */
-@placeholderColor: @unselectedTextColor;
-@placeholderFocusColor: @textColor;
+@placeholderColor: @inputPlaceholderColor;
+@placeholderFocusColor: @inputPlaceholderFocusColor;
 
 /* Down */
 @downBorderColor: rgba(0, 0, 0, 0.3);
@@ -101,26 +99,3 @@
 @transparentInvertedPlaceholderColor: @invertedUnselectedTextColor;
 @transparentInvertedColor: @white;
 
-/*--------------------------------
-      Flexberry Colorpicker
----------------------------------*/
-
-/* MiniColors */
-@minicolorsBorderColor: rgba(34, 36, 38, 0.15);
-@minicolorsBorder: 1px solid @minicolorsBorderColor;
-@minicolorsBorderRadius: 0.28571429rem;
-@minicolorsBoxshadow: 0em 0em 0em 0em transparent inset;
-@minicolorsTransition: color 0.1s ease, @minicolorsBorderColor 0.1s ease;
-
-/* Hover */
-@minicolorsHoverBorderColor: rgba(34, 36, 38, 0.35);
-@minicolorsHoverBoxshadow: none;
-
-/* Focus */
-@minicolorsFocusBorderColor: #85B7D9;
-@minicolorsFocusBoxshadow: 0px 0em 0em 0em rgba(34, 36, 38, 0.35) inset;
-
-/* Swatch */
-@minicolorsSwatchBorder: none;
-
-@minicolorsSwatchColorBorderRadius: 0.28571429rem;

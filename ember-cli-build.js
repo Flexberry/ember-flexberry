@@ -1,26 +1,13 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+'use strict';
+
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
-    jscsOptions: {
-      enabled: true,
-      esnext: true,
-      configPath: './.jscsrc'
-    },
+  let app = new EmberAddon(defaults, {
     lessOptions: {
       paths: [
         'bower_components/semantic-ui'
       ]
-    },
-    SemanticUI: {
-      import: {
-        css: false,
-        javascript: true,
-        images: false,
-        fonts: true
-      }
     }
   });
 
@@ -36,16 +23,15 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/crim.ttf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff2', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.svg', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.woff2', { destDir: 'assets/fonts' });
   app.import('vendor/serviceImages/close.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
   app.import('vendor/serviceImages/close-hover.png', {
-    destDir: 'assets/themes/blue-sky/assets/images'
-  });
-  app.import('vendor/serviceImages/plus.png', {
-    destDir: 'assets/themes/blue-sky/assets/images'
-  });
-  app.import('vendor/serviceImages/minus.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
   app.import('vendor/serviceImages/header-bgw.png', {

@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { inject } from '@ember/controller';
+import { merge } from '@ember/polyfills';
 
 /**
   Mixin for <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
@@ -11,7 +13,7 @@ import Ember from 'ember';
   @class FlexberryFileControllerMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Controller for modal dialog content.
 
@@ -19,7 +21,7 @@ export default Ember.Mixin.create({
     @type <a href="http://emberjs.com/api/classes/Ember.Controller.html">Controller</a>
     @default Injected flexberry-file-view-dialog controller.
   */
-  flexberryFileModalController: Ember.inject.controller('flexberry-file-view-dialog'),
+  flexberryFileModalController: inject('flexberry-file-view-dialog'),
 
   /**
     Modal dialog content template's name.
@@ -42,7 +44,7 @@ export default Ember.Mixin.create({
       @param {String} [selectedFileOptions.fileName] File name to be setted as modal dialog caption.
     */
     flexberryFileViewImageAction(selectedFileOptions) {
-      let options = Ember.merge({
+      let options = merge({
         fileSrc: undefined,
         fileName: undefined
       }, selectedFileOptions);

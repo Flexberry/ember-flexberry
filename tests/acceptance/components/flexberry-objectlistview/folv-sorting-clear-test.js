@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
+import { run } from '@ember/runloop';
 import { executeTest } from './execute-folv-test';
 import { checkSortingList, loadingLocales, refreshListByFunction, getOrderByClause } from './folv-tests-functions';
 
@@ -15,19 +17,19 @@ executeTest('check sorting clear', (store, assert, app) => {
     // Check page path.
     assert.equal(currentPath(), path);
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = Ember.get(controller, 'modelProjection');
+    let projectionName = get(controller, 'modelProjection');
 
     let orderByClause = null;
 
-    let $olv = Ember.$('.object-list-view ');
-    let $thead = Ember.$('th.dt-head-left', $olv)[0];
+    let $olv = $('.object-list-view ');
+    let $thead = $('th.dt-head-left', $olv)[0];
 
     let currentSorting = controller.get('computedSorting');
     if (!$.isEmptyObject(currentSorting)) {
       orderByClause = getOrderByClause(currentSorting);
     }
 
-    Ember.run(() => {
+    run(() => {
       let done = assert.async();
 
       // Check sortihg in the first column. Sorting is not append.
@@ -45,29 +47,29 @@ executeTest('check sorting clear', (store, assert, app) => {
 
           let done1 = assert.async();
           refreshListByFunction(refreshFunction, controller).then(() => {
-            let $thead = Ember.$('th.dt-head-left', $olv)[0];
-            let $ord = Ember.$('.object-list-view-order-icon', $thead);
-            let $divOrd = Ember.$('div', $ord);
+            let $thead = $('th.dt-head-left', $olv)[0];
+            let $ord = $('.object-list-view-order-icon', $thead);
+            let $divOrd = $('div', $ord);
 
-            assert.equal($divOrd.attr('title'), Ember.get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
-            assert.equal(Ember.$.trim($divOrd.text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
+            assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
+            assert.equal($.trim($divOrd.text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
 
             let done2 = assert.async();
             checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
               assert.ok(isTrue, 'sorting applied');
 
-              let $clearButton = Ember.$('.clear-sorting-button');
+              let $clearButton = $('.clear-sorting-button');
               $clearButton.click();
 
               let done3 = assert.async();
 
               window.setTimeout(() => {
-                let $thead = Ember.$('th.dt-head-left', $olv)[0];
-                let $ord = Ember.$('.object-list-view-order-icon', $thead);
-                let $divOrd = Ember.$('div', $ord);
+                let $thead = $('th.dt-head-left', $olv)[0];
+                let $ord = $('.object-list-view-order-icon', $thead);
+                let $divOrd = $('div', $ord);
 
                 assert.equal($divOrd.attr('title'), undefined, 'sorting are clear');
-                assert.equal(Ember.$.trim($divOrd.text()), '', 'sorting symbol delete');
+                assert.equal($.trim($divOrd.text()), '', 'sorting symbol delete');
 
                 done3();
               }, 3000);

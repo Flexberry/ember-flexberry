@@ -3,6 +3,80 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-sidebar` component, simple component for use sidebar from `Semantic UI`.
+* `flexberry-sitemap` component, component for render sitemap by object with links.
+
+### Changed
+* `flexberry-dropdown` component:
+    * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
+    * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+* `modal-dialog` component:
+    * Does not use `ui-modal` component from `semantic-ui-ember` addon.
+
+### Removed
+* The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
+* Controller `sitemap-node` from final app.
+* Delete `flexberry-simpleolv` component.
+
+### Breaking changes
+* Delete `semantic-ui-ember` dependency.
+* Update dependency on `semantic-ui` to version `2.3.1`.
+
+### Changed
+* `dynamic-actions` mixins: : mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
+* `required-actions` mixins: mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
+
+### Removed
+* `flexberry-datepicker` component. Please use `flexberry-simpledatetime` component instead or create an own component.
+
+### Breaking changes
+* Validations full changed, after upgrade to this version you need regenerate your application.
+
+### Added
+* Dependency on `ember-cp-validations@~3.5.2` addon.
+* Dependency on `ember-i18n-cp-validations@~3.1.0` addon.
+* The `ModelLocales` class in `flexberry-core` blueprint generate locales with model attributes for validations.
+
+### Changed
+* `flexberry-validationsummary` component:
+    * The `headerText` property renamed to `header`.
+    * Added wrapper `DIV` with `header` CSS-class for passed `header`.
+* The `pointing` property in `flexberry-validationmessage` component now have default value `pointing`.
+* The `edit-form` controller runs validations before attempting save the model.
+* Template for model in `flexberry-model-init` blueprint:
+    * Added import of default validation rules (you can override or extend them) from regenerated model file and build validations mixin.
+    * Fixed code style.
+* The `flexberry-model` blueprint:
+    * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
+    * Fixed code style in regenerated model file.
+
+### Removed
+* Dependency on `ember-validations@~2.0.0-alpha.4` addon.
+
+### Breaking changes
+* Validations full changed, after upgrade to this version you need regenerate your application.
+
+### Added
+* Dependency on `ember-cp-validations@~3.5.2` addon.
+* Dependency on `ember-i18n-cp-validations@~3.1.0` addon.
+* The `ModelLocales` class in `flexberry-core` blueprint generate locales with model attributes for validations.
+
+### Changed
+* `flexberry-validationsummary` component:
+    * The `headerText` property renamed to `header`.
+    * Added wrapper `DIV` with `header` CSS-class for passed `header`.
+* The `pointing` property in `flexberry-validationmessage` component now have default value `pointing`.
+* The `edit-form` controller runs validations before attempting save the model.
+* Template for model in `flexberry-model-init` blueprint:
+    * Added import of default validation rules (you can override or extend them) from regenerated model file and build validations mixin.
+    * Fixed code style.
+* The `flexberry-model` blueprint:
+    * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
+    * Fixed code style in regenerated model file.
+
+### Removed
+* Dependency on `ember-validations@~2.0.0-alpha.4` addon.
 
 ## [0.12.0] - 2018-06-08
 ### Added
@@ -814,12 +888,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Validator for `date` type of model properties.
 * Transform to support using `file` type in models.
 * Blueprints for generation of application prototype or its parts. Generation is based on using application metadata that could be creadted manually or using [Flexberry Designer](http://flexberry.ru/Flexberry/ForDevelopers/FlexberryDesigner) from corresponding UML class diagramms. Available blueprints:
-    * `flexberry-application` - bluepring for generation of whole application prototype.
-    * `flexberry-core` - bluepring for generation of base structure of application prototype
-    * `flexberry-edit-form` - bluepring for generation of controller, route and template for specified edit form.
-    * `flexberry-enum` - bluepring for generation of transform and file with definition for specified enumeration.
-    * `flexberry-list-form` - bluepring for generation of controller, route and template for specified list form.
-    * `flexberry-model` - bluepring for generation of specified model and serializer with corresponding tests.
+    * `flexberry-application` - blueprint for generation of whole application prototype.
+    * `flexberry-core` - blueprint for generation of base structure of application prototype
+    * `flexberry-edit-form` - blueprint for generation of controller, route and template for specified edit form.
+    * `flexberry-enum` - blueprint for generation of transform and file with definition for specified enumeration.
+    * `flexberry-list-form` - blueprint for generation of controller, route and template for specified list form.
+    * `flexberry-model` - blueprint for generation of specified model and serializer with corresponding tests.
 
 ### Changed
 * Upgraded `ember-cli` from @1.13.8 to @2.4.3. Ember 1.13 is no longer supported.

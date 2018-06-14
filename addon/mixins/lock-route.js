@@ -2,8 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import { getOwner } from '@ember/application';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /**
   Mixin for {{#crossLink "EditFormRoute"}}{{/crossLink}}, which provides support locking.
@@ -11,7 +13,7 @@ import { Query } from 'ember-flexberry-data';
   @class LockRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     @property _currentLock
     @type DS.Model
@@ -49,12 +51,13 @@ export default Ember.Mixin.create({
       @method actions.willTransition
       @param {Transition} transition
     */
+    /* eslint-disable no-unused-vars */
     willTransition(transition) {
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {
         this.unlockObject().then((answer) => {
-          (answer ? lock.destroyRecord() : new Ember.RSVP.resolve()).then(() => {
+          (answer ? lock.destroyRecord() : new RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
           });
         });
@@ -62,6 +65,7 @@ export default Ember.Mixin.create({
         this.controller.set('readonly', false);
       }
     },
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -72,19 +76,20 @@ export default Ember.Mixin.create({
     @param {Transition} transition
     @return {Promise}
   */
+  /* eslint-disable no-unused-vars */
   beforeModel(transition) {
     let result = this._super(...arguments);
 
-    if (!(result instanceof Ember.RSVP.Promise)) {
-      result = Ember.RSVP.resolve();
+    if (!(result instanceof RSVP.Promise)) {
+      result = RSVP.resolve();
     }
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
       let params = this.paramsFor(this.routeName);
-      let userService = Ember.getOwner(this).lookup('service:user');
+      let userService = getOwner(this).lookup('service:user');
       result.then((parentResult) => {
         if (params.id) {
-          let builder = new Query.Builder(this.store)
+          let builder = new Builder(this.store)
             .from('new-platform-flexberry-services-lock')
             .selectByProjection('LockL')
             .byId(params.id);
@@ -121,6 +126,7 @@ export default Ember.Mixin.create({
       });
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
@@ -130,12 +136,14 @@ export default Ember.Mixin.create({
     @param {Controller} controller
     @param {Object} model
   */
+  /* eslint-disable no-unused-vars */
   setupController(controller, model) {
     this._super(...arguments);
     if (this.get('_readonly')) {
       controller.set('readonly', true);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This function will be called to solve open form read only or transition to parent route.
@@ -150,7 +158,7 @@ export default Ember.Mixin.create({
       export default EditFormRoute.extend({
         ...
         openReadOnly(lockUserName) {
-          return new Ember.RSVP.Promise((resolve) => {
+          return new RSVP.Promise((resolve) => {
             let answer = confirm(`This object lock user with name: '${lockUserName}'. Open read only?`);
             resolve(answer);
           });
@@ -164,11 +172,13 @@ export default Ember.Mixin.create({
     @return {Promise}
     @for EditFormRoute
   */
+  /* eslint-disable no-unused-vars */
   openReadOnly(lockUserName) {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new RSVP.Promise((resolve) => {
       resolve(this.get('defaultBehaviorLock.openReadOnly'));
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This function will be called to solve unlock the object before form close.
@@ -183,7 +193,7 @@ export default Ember.Mixin.create({
       export default EditFormRoute.extend({
         ...
         unlockObject() {
-          return new Ember.RSVP.Promise((resolve) => {
+          return new RSVP.Promise((resolve) => {
             let answer = confirm(`Unlock this object?`);
             resolve(answer);
           });
@@ -197,7 +207,7 @@ export default Ember.Mixin.create({
     @for EditFormRoute
   */
   unlockObject() {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new RSVP.Promise((resolve) => {
       resolve(this.get('defaultBehaviorLock.unlockObject'));
     });
   },

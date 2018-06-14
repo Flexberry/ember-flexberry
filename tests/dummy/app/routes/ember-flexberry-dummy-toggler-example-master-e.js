@@ -1,5 +1,5 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-
+import { computed } from '@ember/object';
 export default EditFormRoute.extend({
 
   /**
@@ -32,7 +32,8 @@ export default EditFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
+  developerUserSettings: computed(function() {
+    return {
     togglerExampleDetailGroupEdit: {
       'DEFAULT': {
         'columnWidths': [
@@ -40,7 +41,7 @@ export default EditFormRoute.extend({
           { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
       }
     }
-  },
+  }}),
 
   /**
     Name of model to be used as list's records types.

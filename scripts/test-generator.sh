@@ -5,15 +5,21 @@
 
 set -ev
 
-# Create temp directory for new ember app.
+# Prepare for tests.
 ADDON_DIR="$PWD"
 META_DIR="$PWD/vendor/flexberry/dummy-metadata"
 TMP_DIR='/tmp/embertest'
 mkdir -p "$TMP_DIR"
-rm -rf "$TMP_DIR/*"
-pushd "$TMP_DIR"
 
-# Initialize new ember app and install addon from the build.
+# Part 1. Test the generated app.
+cd "$TMP_DIR"
+
+# Initialize new ember app and install ember-flexberry from the build.
+ember new ember-app --skip-npm
+cd ember-app
+yarn install
+ember install "${ADDON_DIR}"
+
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
 ember init --skip-npm
@@ -34,7 +40,7 @@ pushd "$TMP_DIR"
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application app --metadata-dir=${META_DIR}
 
-#ember build
+# Run tests.
 ember test
 
 # Cleanup.
@@ -58,22 +64,15 @@ pushd new-addon-for-tests
 yarn install
 ember install "${ADDON_DIR}"
 
+# Default blueprint not execute when install addon from local folder, run it manual.
+ember generate ember-flexberry
+
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
-rm -f ./tests/dummy/app/app.js
-rm -f ./tests/dummy/app/resolver.js
-rm -f ./tests/dummy/app/router.js
-rm -f ./tests/dummy/app/templates/application.hbs
-rm -f ./tests/dummy/app/templates/loading.hbs
-# rm -f ./ember-cli-build.js // TODO: Wy on Travis this file don't created?
-rm -f ./.jscsrc
+rm -r tests/dummy/app/*[!index.html]
 
-# Generate components using Dummy metamodel and test them.
+# Generate components using Dummy metamodel.
 ember generate flexberry-application --metadata-dir=${META_DIR}
 
+# Run tests.
 ember test
-
-# Cleanup.
-popd
-popd
-rm -rf "$TMP_DIR"

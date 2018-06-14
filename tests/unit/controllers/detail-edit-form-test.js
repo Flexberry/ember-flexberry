@@ -1,12 +1,22 @@
 import { moduleFor, test } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
 moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:flexberry-file-view-dialog',
+    'controller:lookup-dialog',
+    'service:detail-interaction',
+    'service:objectlistview-events',
+    'service:user-settings',
+  ],
 });
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  let controller = this.subject();
+  let controller;
+  run(() => {
+    controller = this.subject();
+  });
+
   assert.ok(controller);
 });

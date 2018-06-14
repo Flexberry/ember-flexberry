@@ -2,10 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-
-const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
+import Mixin from '@ember/object/mixin';
+import { set } from '@ember/object';
+import Condition from 'ember-flexberry-data/query/condition';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -13,18 +16,18 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
-    export default Ember.Controller.extend(LimitedController, {
+    export default Controller.extend(LimitedController, {
       ...
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-    export default Ember.Route.extend(LimitedRoute, {
+    export default Route.extend(LimitedRoute, {
       ...
     });
     ```
@@ -50,7 +53,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
   @class LimitedRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
 
@@ -129,7 +132,7 @@ export default Ember.Mixin.create({
       }
     } else {
       if (!filter.condition && filter.type === 'string') {
-        Ember.set(filter, 'condition', 'like');
+        set(filter, 'condition', 'like');
         return new StringPredicate(filter.name).contains(filter.pattern);
       }
     }

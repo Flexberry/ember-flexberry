@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
 /**
   Base route with support projection.
@@ -10,7 +10,7 @@ import Ember from 'ember';
   @class ProjectedModelForm
   @extends <a href="http://emberjs.com/api/classes/Ember.Route.html">Ember.Route</a>
  */
-export default Ember.Route.extend({
+export default Route.extend({
   /**
     Model projection.
 

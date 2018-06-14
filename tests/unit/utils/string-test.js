@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { typeOf } from '@ember/utils';
+import { A } from '@ember/array';
 import { module, test } from 'qunit';
 import { render } from 'ember-flexberry/utils/string';
 
@@ -7,7 +8,7 @@ module('Unit | Util | render-string');
 test('Util is function', function(assert) {
   assert.expect(1);
 
-  assert.strictEqual(Ember.typeOf(render) === 'function', true, 'Imported \'render-string\' util is function');
+  assert.strictEqual(typeOf(render) === 'function', true, 'Imported \'render-string\' util is function');
 });
 
 test('Util returns null for calls with unexpected arguments', function(assert) {
@@ -15,7 +16,7 @@ test('Util returns null for calls with unexpected arguments', function(assert) {
 
   assert.strictEqual(render(), null, 'Returns null for calls without arguments');
 
-  Ember.A([null, 1, true, false, {}, [], function() {}, new Date()]).forEach((wrongFirstArgument) => {
+  A([null, 1, true, false, {}, [], function() {}, new Date()]).forEach((wrongFirstArgument) => {
     assert.strictEqual(
       render(wrongFirstArgument),
       null,

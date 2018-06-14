@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
@@ -21,7 +21,7 @@ export default EditFormController.extend({
       @return {Object} Set of options for lookup window.
      */
     getLookupFolvProperties: function(options) {
-      let methodArgs = Ember.merge({
+      let methodArgs = merge({
         projection: undefined,
         relationName: undefined
       }, options);

@@ -40,7 +40,6 @@ export default ListFormRoute.extend({
 
     @property developerUserSettings
     @type Object
-    @default {}
   */
   developerUserSettings: computed(function() {
     return { <%= formName %>: {} }

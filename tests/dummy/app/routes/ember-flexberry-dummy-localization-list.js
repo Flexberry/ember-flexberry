@@ -29,10 +29,12 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
-    return { localizationObjectListView: { } }}),
+    return {
+      localizationObjectListView: { }
+    }
+  }),
 
   /**
     Name of model to be used as list's records types.

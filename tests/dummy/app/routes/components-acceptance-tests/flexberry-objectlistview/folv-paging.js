@@ -28,19 +28,22 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
-    return { FOLVPagingObjectListView: {
-    'DEFAULT': {
-    'sorting': [
-    {
-      'propName': 'name',
-      'direction': 'asc',
-      'sortPriority': 1
+    return {
+      FOLVPagingObjectListView: {
+        'DEFAULT': {
+          'sorting': [
+            {
+              'propName': 'name',
+              'direction': 'asc',
+              'sortPriority': 1
+            }
+          ]
+        }
+      }
     }
-    ] }
-  } }}),
+  }),
 
   /**
     Name of model to be used as list's records types.

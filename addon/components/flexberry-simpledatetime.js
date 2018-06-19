@@ -154,7 +154,7 @@ export default FlexberryBaseComponent.extend({
       return this.get('_minAsString');
     },
     set(key, value) {
-      let minValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      let minValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_minAsString', this._convertDateToString(minValue));
       } else {
@@ -179,7 +179,7 @@ export default FlexberryBaseComponent.extend({
       return this.get('_maxAsString');
     },
     set(key, value) {
-      let maxValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      let maxValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_maxAsString', this._convertDateToString(maxValue));
       } else {

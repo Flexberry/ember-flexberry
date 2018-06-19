@@ -30,16 +30,16 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    SuggestionObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 90 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+      SuggestionObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 90 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+        }
       }
     }
-  }}),
+  }),
 
   /**
     Name of model to be used as list's records types.

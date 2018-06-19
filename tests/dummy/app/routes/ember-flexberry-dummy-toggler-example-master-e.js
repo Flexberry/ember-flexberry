@@ -30,18 +30,19 @@ export default EditFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    togglerExampleDetailGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
+      togglerExampleDetailGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'togglerExampleDetailProperty', 'width': 935 }
+          ]
+        }
       }
     }
-  }}),
+  }),
 
   /**
     Name of model to be used as list's records types.

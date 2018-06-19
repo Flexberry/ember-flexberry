@@ -39,14 +39,14 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    suggestionTypeLocalizedTypesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
+      suggestionTypeLocalizedTypesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
+        }
       }
     }
-  }})
+  })
 });

@@ -12,7 +12,8 @@ export default Mixin.create({
   actions: {
     /**
       Event handler for processing promise model rejecting.
-      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/error?anchor=error).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/error?anchor=e
+        rror).
 
       @method actions.error
       @param {Object} error
@@ -82,6 +83,7 @@ export default Mixin.create({
 
   },
 
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExiting, transition) {
     if (isExiting) {
       if (controller.get('isSortingError')) {
@@ -90,4 +92,5 @@ export default Mixin.create({
       }
     }
   }
+  /* eslint-enable no-unused-vars */
 });

@@ -28,17 +28,17 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    suggestionTypeLocalizedTypesObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 65 }]
+      suggestionTypeLocalizedTypesObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 65 }]
+        }
       }
     }
+  }),
 
-  }}),
   /**
     Name of model to be used as list's records types.
 

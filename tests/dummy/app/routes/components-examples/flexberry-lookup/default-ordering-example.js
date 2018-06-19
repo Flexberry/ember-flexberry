@@ -35,19 +35,19 @@ export default EditFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    lookupUserSettings: {
-      'DEFAULT': {
-        'sorting': [
-          { 'propName': 'name', 'direction': 'desc' },
-          { 'propName': 'moderated', 'direction': 'asc' }
-        ]
+      lookupUserSettings: {
+        'DEFAULT': {
+          'sorting': [
+            { 'propName': 'name', 'direction': 'desc' },
+            { 'propName': 'moderated', 'direction': 'asc' }
+          ]
+        }
       }
     }
-  }}),
+  }),
   /**
     Returns model related to current route.
 

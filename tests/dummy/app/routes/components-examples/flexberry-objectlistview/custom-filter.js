@@ -41,10 +41,12 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
-    return { FOLVCustomFilterObjectListView: { } }}),
+    return {
+      FOLVCustomFilterObjectListView: { }
+    }
+  }),
 
   predicateForFilter(filter) {
     if (filter.type === 'string' && filter.condition === 'like') {

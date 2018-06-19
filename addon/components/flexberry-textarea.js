@@ -85,6 +85,8 @@ export default FlexberryBaseComponent.extend({
     @type Integer
     @default 2
   */
+
+  /* eslint-disable no-unused-vars */
   rows: computed({
     get(key) {
       this._super(...arguments);
@@ -99,12 +101,15 @@ export default FlexberryBaseComponent.extend({
       return value;
     }
   }),
+  /* eslint-enable no-unused-vars */
 
   /**
     Table columns related to textarea.
     @type Integer
     @default 20
   */
+
+  /* eslint-disable no-unused-vars */
   cols: computed({
     get(key) {
       this._super(...arguments);
@@ -119,6 +124,7 @@ export default FlexberryBaseComponent.extend({
       return value;
     }
   }),
+  /* eslint-enable no-unused-vars */
 
   /**
     Initializes component.

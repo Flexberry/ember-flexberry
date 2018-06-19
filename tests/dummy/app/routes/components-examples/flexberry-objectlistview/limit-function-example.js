@@ -51,10 +51,12 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
-    return { FOLVLimitFunctionExampleObjectListView: { } }}),
+    return {
+      FOLVLimitFunctionExampleObjectListView: { }
+    }
+  }),
 
   /**
     Name of model to be used as list's records types.
@@ -140,8 +142,10 @@ export default ListFormRoute.extend({
     this.set('controller.secondLimitType', this.get('secondLimitType'));
   },
 
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   }
+  /* eslint-enable no-unused-vars */
 });

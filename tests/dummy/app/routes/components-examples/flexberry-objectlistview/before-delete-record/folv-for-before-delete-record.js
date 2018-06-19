@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -37,7 +38,10 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: { FOLVCustomFilterObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return {
+      FOLVCustomFilterObjectListView: { }
+    }
+  })
 });

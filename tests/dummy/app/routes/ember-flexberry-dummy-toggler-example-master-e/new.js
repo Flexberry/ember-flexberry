@@ -47,16 +47,16 @@ export default EditFormNewRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
     return {
-    togglerExampleDetailGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
+      togglerExampleDetailGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
+        }
       }
     }
-  }}),
+  }),
 });

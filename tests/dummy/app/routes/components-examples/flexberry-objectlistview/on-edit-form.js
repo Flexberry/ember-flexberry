@@ -28,10 +28,12 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
   developerUserSettings: computed(function() {
-    return { FOLVOnEditFormObjectListView: { } }}),
+    return {
+      FOLVOnEditFormObjectListView: { }
+    }
+  }),
 
   /**
     Name of model to be used as list's records types.

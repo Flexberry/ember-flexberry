@@ -6,8 +6,8 @@ export default EditFormController.extend({
   init() {
     this._super(...arguments);
 
-    this.set('lookupController.inHierarchicalMode', true);
-    this.set('lookupController.hierarchicalAttribute', 'parent');
+    this.set('lookupController.inHierarchicalMode', true);
+    this.set('lookupController.hierarchicalAttribute', 'parent');
   },
 
   actions: {

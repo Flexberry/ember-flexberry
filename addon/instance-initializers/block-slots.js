@@ -14,7 +14,7 @@ import SlotsMixin from 'ember-block-slots';
 
   @for ApplicationInstanceInitializer
   @method blockSlots.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
+  @param {<a href="https://www.emberjs.com/api/ember/release/classes/ApplicationInstance">ApplicationInstance</a>} applicationInstance Ember application instance.
 */
 /* eslint-disable no-unused-vars */
 export function initialize(applicationInstance) {

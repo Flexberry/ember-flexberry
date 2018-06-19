@@ -45,7 +45,7 @@ import { computed } from '@ember/object';
     ```
 
   @class PaginatedController
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
 export default Mixin.create({
   /**
@@ -228,7 +228,7 @@ export default Mixin.create({
   }),
 
   /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array

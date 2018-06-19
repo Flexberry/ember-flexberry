@@ -9,7 +9,7 @@ import { computed } from '@ember/object';
   Service for store time load and render.
 
   @class FormLoadTimeTrackerService
-  @extends Ember.Service
+  @extends Service
 */
 export default Service.extend({
   /**

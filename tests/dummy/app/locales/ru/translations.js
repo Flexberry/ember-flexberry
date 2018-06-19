@@ -954,7 +954,7 @@ $.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Брошено исключение',
         'reject-rsvp-promise-button-message': 'Promise отклонен',
-        'ember-assert-button-message': 'Вызван метод Ember.assert',
+        'ember-assert-button-message': 'Вызван метод assert',
         'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
         'ember-logger-warn-button-message': 'Вызван метод Ember.warn',
         'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',

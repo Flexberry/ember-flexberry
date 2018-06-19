@@ -8,7 +8,7 @@ import Component from '@ember/component';
   Settings example component.
 
   @class SettingsExampleComponent
-  @extends Ember.Component
+  @extends Component
  */
 export default Component.extend({
   /**

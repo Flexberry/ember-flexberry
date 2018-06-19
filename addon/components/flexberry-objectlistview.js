@@ -12,9 +12,9 @@ import { guidFor } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
 import { A } from '@ember/array';
-import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { runAfter } from '../utils/extended-get';
 
 /**
   Component to view list of object.
@@ -663,7 +663,7 @@ export default FlexberryBaseComponent.extend({
     Interface for communication between object-list-view and flexberry-objectlistview.
 
     @property eventsBus
-    @type Ember.Evented
+    @type Evented
   */
   eventsBus: EmberObject.extend(Evented, {}).create(),
 
@@ -705,7 +705,7 @@ export default FlexberryBaseComponent.extend({
 
       export default ListFormController.extend({
         ...
-        customButtonsMethod: Ember.computed('i18n.locale', function() {
+        customButtonsMethod: computed('i18n.locale', function() {
           let i18n = this.get('i18n');
           return [{
             buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
@@ -812,7 +812,7 @@ export default FlexberryBaseComponent.extend({
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || guidFor(record));
-        run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
             /* eslint-disable ember/closure-actions */
             this.sendAction('action', record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
@@ -1185,7 +1185,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
    */
   init() {
     this._super(...arguments);
@@ -1226,7 +1226,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */
@@ -1236,7 +1236,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called when the element of the view is going to be destroyed.
-    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroyElement() {
     this._super(...arguments);

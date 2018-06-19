@@ -5,7 +5,7 @@
 import { isArray } from '@ember/array';
 
 /**
-  Used for getting objects by path containing Ember.RecordArray
+  Used for getting objects by path containing DS.RecordArray
 
   @for Utils.Layers
   @method getRecord

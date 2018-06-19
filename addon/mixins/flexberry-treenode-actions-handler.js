@@ -9,7 +9,7 @@ import Mixin from '@ember/object/mixin';
   {{#crossLink "FlexberryTreenodeComponent"}}flexberry-treenode component's{{/crossLink}} actions.
 
   @class FlexberryTreenodeActionsHandlerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   actions: {

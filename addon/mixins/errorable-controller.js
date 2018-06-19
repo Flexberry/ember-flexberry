@@ -7,7 +7,7 @@ import { get } from '@ember/object';
   Mixin for handling errors.
 
   @class ErrorableControllerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
 */
 export default Mixin.create({
@@ -46,7 +46,7 @@ export default Mixin.create({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
     this._super(...arguments);

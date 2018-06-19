@@ -292,7 +292,7 @@ export default Mixin.create({
   _createColumn(attr, attrName, bindingPath, isHasMany = false) {
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
-    // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
+    // to avoid 'EmberObject.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
     let getCellComponent = get(currentController || {}, 'getCellComponent');

@@ -13,7 +13,7 @@ import { A, isArray } from '@ember/array';
   Warning: this service should not be used outside of addon because it can lead to unpredictable side effects.
 
   @class DetailInterationService
-  @extends Ember.Service
+  @extends Service
   @public
 */
 export default Service.extend({

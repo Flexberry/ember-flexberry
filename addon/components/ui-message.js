@@ -25,7 +25,7 @@ import { typeOf, isNone } from '@ember/utils';
   ```
 
   @class UIMessage
-  @extend <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extend <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
   /**

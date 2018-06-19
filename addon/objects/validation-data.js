@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 
 /**
   @class ValidationDataObject
-  @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/EmberObject">EmberObject</a>
   @public
 */
 export default EmberObject.extend({
@@ -28,7 +28,7 @@ export default EmberObject.extend({
     Errors object for display messages.
 
     @property errors
-    @type Ember.Object
+    @type EmberObject
     @default {}
   */
   errors: undefined,

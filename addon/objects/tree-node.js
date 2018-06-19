@@ -10,7 +10,7 @@ import EmberObject from '@ember/object';
   All class properties are related to the same component's properties.
 
   @class TreeNodeObject
-  @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/EmberObject">EmberObject</a>
 */
 export default EmberObject.extend({
   /**

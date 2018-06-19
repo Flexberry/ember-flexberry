@@ -5,7 +5,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
   /**
   A hook you can implement to convert the URL into the model for this route.
-  [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+  [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
   @method model
   @param {Object} params
   @param {Object} transition

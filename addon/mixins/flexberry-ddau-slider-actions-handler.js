@@ -12,7 +12,7 @@ import { setRecord } from '../utils/extended-set';
   {{#crossLink "FlexberryDdauSliderComponent"}}flexberry-ddau-slider component's{{/crossLink}} actions.
 
   @class FlexberryDdauSliderActionsHandlerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   actions: {

@@ -207,7 +207,7 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
+    Tag name for the view's outer element. [More info](https://emberjs.com/api/ember/release/classes/Component#property_tagName).
 
     @property tagName
     @type String
@@ -325,7 +325,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */

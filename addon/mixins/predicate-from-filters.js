@@ -14,7 +14,7 @@ import { StringPredicate } from 'ember-flexberry-data/query/predicate';
   Mixin contains functions for predicate build from filters object.
 
   @class PredicateFromFiltersMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
 export default Mixin.create({

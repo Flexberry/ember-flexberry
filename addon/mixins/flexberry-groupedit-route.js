@@ -11,7 +11,7 @@ import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
   to support work with {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
 
   @class FlexberryGroupeditRouteMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
 export default Mixin.create({
@@ -50,7 +50,7 @@ export default Mixin.create({
       It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
 
       @method actions.groupEditRowClick
-      @param {Ember.Object} record Record related to clicked table row.
+      @param {EmberObject} record Record related to clicked table row.
       @param {Object} [options] Record related to clicked table row.
       @param {Boolean} options.saveBeforeRouteLeave Flag: indicates whether to save current model before going to the detail's route.
       @param {Boolean} options.editOnSeparateRoute Flag: indicates whether to edit detail on separate route.

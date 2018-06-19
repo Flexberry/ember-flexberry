@@ -9,7 +9,7 @@ import Evented from '@ember/object/evented';
  * Service to work with column configuration menu
  *
  * @class ColsConfigMenuService
- * @extends Ember.Service
+ * @extends Service
  * @public
  */
 export default Service.extend(Evented, {

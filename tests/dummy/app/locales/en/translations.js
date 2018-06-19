@@ -934,7 +934,7 @@ $.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Exception thrown',
         'reject-rsvp-promise-button-message': 'Promise rejected',
-        'ember-assert-button-message': 'Ember.assert called',
+        'ember-assert-button-message': 'assert called',
         'ember-logger-error-button-message': 'Ember.Logger.error called',
         'ember-logger-warn-button-message': 'Ember.warn called',
         'ember-deprecate-button-message': 'Ember.deprecate called',

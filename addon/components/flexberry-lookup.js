@@ -458,7 +458,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Standard CSS class names to apply to the view's outer element.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
     @property classNames
     @type Array
@@ -468,7 +468,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     A list of properties of the view to apply as class names.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNameBindings).
 
     @property classNameBindings
     @type Array
@@ -578,7 +578,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
 
@@ -595,7 +595,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
+    It seems to me a mistake here, it should be [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement).
     # WRANING!
 
     @method didDestroyElement
@@ -607,7 +607,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement).
 
     @method didInsertElement
   */
@@ -618,7 +618,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */
@@ -646,7 +646,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
     this._super(...arguments);

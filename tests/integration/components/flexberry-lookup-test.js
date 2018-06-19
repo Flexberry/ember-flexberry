@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import RSVP from 'rsvp';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
-import { run } from '@ember/runloop';
+import { run, later } from '@ember/runloop';
 import { assert as emberAssert } from '@ember/debug';
 import Builder from 'ember-flexberry-data/query/builder';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
@@ -200,7 +200,7 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
         $componentInput.focusin();
 
         // Wait for some time which can pass after focus, before possible async data-request will be sent.
-        run.later(() => {
+        later(() => {
           resolve();
         }, 300);
       });

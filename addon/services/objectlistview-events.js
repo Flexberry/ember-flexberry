@@ -12,8 +12,8 @@ import { BasePredicate } from 'ember-flexberry-data/query/predicate';
   Service for triggering objectlistview events.
 
   @class ObjectlistviewEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
  */
 export default Service.extend(Evented, {

@@ -16,7 +16,7 @@ import { isNone } from '@ember/utils';
     ```
 
   @class FlexberryErrorComponent
-  @extends Ember.Component
+  @extends Component
 */
 export default Component.extend({
   /**

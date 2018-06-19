@@ -7,11 +7,11 @@ import { A } from '@ember/array';
 
 /**
   Array helper.
-  Wraps given arguments into [Ember.NativeArray](http://emberjs.com/api/classes/Ember.NativeArray.html)
-  through a call to [Ember.A method](http://emberjs.com/api/classes/Ember.html#method_A).
+  Wraps given arguments into [Ember.NativeArray](https://emberjs.com/api/ember/release/classes/Ember.NativeArray)
+  through a call to [A function](https://emberjs.com/api/ember/release/functions/@ember%2Farray/A).
 
   @class ArrayHelper
-  @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Helper">Helper</a>
 
   Usage:
   templates/my-form.hbs
@@ -22,13 +22,13 @@ import { A } from '@ember/array';
 */
 export default Helper.extend({
   /**
-    Overridden [Ember.Helper compute method](http://emberjs.com/api/classes/Ember.Helper.html#method_compute).
+    Overridden [Helper compute method](https://emberjs.com/api/ember/release/classes/Helper#method_compute).
     Executes helper's logic, returns arguments wrapped into array.
 
     @method compute
     @param {any[]} args Arguments passed to helper, which must be wrapped into
-    [Ember.NativeArray](http://emberjs.com/api/classes/Ember.NativeArray.html).
-    @return {[Ember.NativeArray](http://emberjs.com/api/classes/Ember.NativeArray.html)} Wrapped arguments.
+    [Ember.NativeArray](https://emberjs.com/api/ember/release/classes/Ember.NativeArray).
+    @return {[Ember.NativeArray](https://emberjs.com/api/ember/release/classes/Ember.NativeArray)} Wrapped arguments.
   */
   compute(args) {
     return A(args.slice());

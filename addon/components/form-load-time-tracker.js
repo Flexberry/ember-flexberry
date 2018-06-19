@@ -10,7 +10,7 @@ import { computed} from '@ember/object';
   Component for view data from {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
 
   @class FormLoadTimeTrackerComponent
-  @extends Ember.Component
+  @extends Component
 */
 export default Component.extend({
   /**

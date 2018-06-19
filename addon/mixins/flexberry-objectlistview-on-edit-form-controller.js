@@ -16,7 +16,7 @@ import deserializeSortingParam from '../utils/deserialize-sorting-param';
   Mixin for edit-form-controller for ObjectListView support.
 
   @class FlexberryObjectlistviewOnEditFormControllerMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @uses PredicateFromFiltersMixin
   @public
 */

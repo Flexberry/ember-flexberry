@@ -41,13 +41,13 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
     ```
 
   @class SortableControllerMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
  */
 export default Mixin.create({
   /**
     Defines which query parameters the controller accepts.
-    [More info](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    [More info](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array

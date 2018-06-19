@@ -77,7 +77,7 @@ const flexberryClassNames = {
   ```
 
   @class FlexberryTreenodeComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses <a href="https://github.com/ciena-blueplanet/ember-block-slots#usage">SlotsMixin</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin

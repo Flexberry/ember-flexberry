@@ -1,5 +1,5 @@
-import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+import $ from 'jquery';
 
 executeTest('user button test', (store, assert, app) => {
   assert.expect(5);
@@ -10,7 +10,7 @@ executeTest('user button test', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $testBudtton = Ember.$('.test-click-button')[0];
+    let $testBudtton = $('.test-click-button')[0];
 
     // First click.
     $testBudtton.click();

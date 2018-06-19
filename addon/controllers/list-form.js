@@ -3,6 +3,8 @@
  */
 
 import Controller, { inject } from '@ember/controller';
+import { isNone } from '@ember/utils';
+import { assert } from '@ember/debug';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
@@ -35,7 +37,7 @@ import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexbe
   ```
 
   @class ListFormController
-  @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>
   @uses PaginatedControllerMixin
   @uses SortableControllerMixin
   @uses LimitedControllerMixin
@@ -51,8 +53,8 @@ export default Controller.extend(PaginatedControllerMixin,
     Controller to show colsconfig modal window.
 
     @property lookupController
-    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
-    @default inject.controller('colsconfig-dialog')
+    @type <a href="https://www.emberjs.com/api/ember/release/functions/@ember%2Fcontroller/inject">Ember.InjectedProperty</a>
+    @default controller('colsconfig-dialog')
   */
   colsconfigController: inject('colsconfig-dialog'),
 
@@ -89,7 +91,7 @@ export default Controller.extend(PaginatedControllerMixin,
     */
     beforeDeleteAllRecords(modelName, data) {
       data.cancel = true;
-      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+      assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
     }
   },
 
@@ -158,7 +160,7 @@ export default Controller.extend(PaginatedControllerMixin,
     @param {Object} errorData Data about delete operation fail.
   */
   onDeleteActionRejected(errorData, record) {
-    if (!Ember.isNone(record)) {
+    if (!isNone(record)) {
       this.rejectError(errorData, `Unable to delete a record: ${record.toString()}.`);
     }
   },

@@ -45,7 +45,7 @@ const flexberryClassNames = {
   Flexberry dialog component with [Semantic UI modal style](http://semantic-ui.com/modules/modal.html).
 
   @class FlexberryDialogComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin

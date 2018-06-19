@@ -10,7 +10,7 @@ import { merge } from '@ember/polyfills';
   to support work with {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
 
   @class FlexberryObjectlistviewRouteMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
 export default Mixin.create({
@@ -21,7 +21,7 @@ export default Mixin.create({
       @method actions.objectListViewRowClick
       @public
 
-      @param {Ember.Object} record Record related to clicked table row
+      @param {EmberObject} record Record related to clicked table row
     */
     objectListViewRowClick(record, options) {
       let methodOptions = {

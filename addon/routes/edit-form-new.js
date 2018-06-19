@@ -30,7 +30,7 @@ export default EditFormRoute.extend({
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -58,7 +58,7 @@ export default EditFormRoute.extend({
 
   /**
     A hook you can use to render the template for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/renderTemplate?anchor=renderTemplate).
 
     @method renderTemplate
     @param {Object} controller

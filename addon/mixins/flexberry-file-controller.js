@@ -7,18 +7,18 @@ import { inject } from '@ember/controller';
 import { merge } from '@ember/polyfills';
 
 /**
-  Mixin for <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
+  Mixin for <a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>
   handling {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} actions.
 
   @class FlexberryFileControllerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**
     Controller for modal dialog content.
 
     @property flexberryFileModalController
-    @type <a href="http://emberjs.com/api/classes/Ember.Controller.html">Controller</a>
+    @type <a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>
     @default Injected flexberry-file-view-dialog controller.
   */
   flexberryFileModalController: inject('flexberry-file-view-dialog'),

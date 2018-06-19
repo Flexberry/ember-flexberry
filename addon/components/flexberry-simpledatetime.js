@@ -204,7 +204,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array
@@ -249,7 +249,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called when the element of the view is going to be destroyed. Override this function to do any teardown that requires an element, like removing event listeners.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement).
 
     @method willDestroyElement
   */

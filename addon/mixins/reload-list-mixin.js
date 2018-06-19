@@ -22,7 +22,7 @@ import { StringPredicate } from 'ember-flexberry-data/query/predicate';
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
  *
  * @class ReloadListMixin
- * @extends Ember.Mixin
+ * @extends Mixin
  * @public
  */
 export default Mixin.create({
@@ -31,7 +31,7 @@ export default Mixin.create({
 
    @property objectlistviewEvents
    @type {Class}
-   @default Ember.inject.service()
+   @default inject()
    */
   objectlistviewEvents: service(),
 

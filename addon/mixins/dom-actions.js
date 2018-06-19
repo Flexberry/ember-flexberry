@@ -47,7 +47,7 @@ let validateDomEventOptions = function(options, eventIsAttaching) {
   which will be executed before component will be destroyed.
 
   @class DomActionsMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**
@@ -60,7 +60,7 @@ export default Mixin.create({
     @private
   */
   _availableDomEvents: computed(function() {
-    // Code from Ember.Component 'init' hook to get DOM-events available for component.
+    // Code from Component 'init' hook to get DOM-events available for component.
     let eventDispatcher = getOwner(this).lookup('event_dispatcher:main');
 
     return eventDispatcher && eventDispatcher._finalEvents || {};
@@ -86,7 +86,7 @@ export default Mixin.create({
 
   /**
     Flag: indicates whether component is tagless or not
-    (has empty [tagName](http://emberjs.com/api/classes/Ember.Component.html#property_tagName) or not).
+    (has empty [tagName](https://emberjs.com/api/ember/release/classes/Component#property_tagName) or not).
 
     @property isTagless
     @type Boolean

@@ -91,7 +91,7 @@ export default NewPlatformFlexberryServicesLockListController.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_init).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/init?anchor=init).
 
     @method init
   */

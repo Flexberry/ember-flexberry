@@ -8,7 +8,7 @@ import Mixin from '@ember/object/mixin';
   Mixin for components which need to be flexberry-file compatible.
 
   @class FlexberryFileCompatibleComponentMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   actions: {

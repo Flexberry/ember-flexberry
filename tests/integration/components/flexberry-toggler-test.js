@@ -50,7 +50,7 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
   /* eslint-disable no-unused-vars */
   let expandAnimationCompleted = new RSVP.Promise((resolve, reject) => {
     // Try to expand component.
-    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+    // Semantic UI will start asynchronous animation after click, so we need run function here.
     run(() => {
       $componentTitle.click();
     });
@@ -80,7 +80,7 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
   // Wait for expand animation to be completed (when resolve will be called inside previous timeout).
   // Then try to collapse component.
   expandAnimationCompleted.then(() => {
-    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+    // Semantic UI will start asynchronous animation after click, so we need run function here.
     run(() => {
       $componentTitle.click();
     });

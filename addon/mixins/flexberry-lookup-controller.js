@@ -16,7 +16,7 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
 
   @class FlexberryLookupMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @uses ReloadListMixin
 */
 export default Mixin.create(ReloadListMixin, {
@@ -66,7 +66,7 @@ export default Mixin.create(ReloadListMixin, {
     Controller to show modal window.
 
     @property lookupController
-    @type Ember.Controller
+    @type Controller
   */
   lookupController: undefined,
 

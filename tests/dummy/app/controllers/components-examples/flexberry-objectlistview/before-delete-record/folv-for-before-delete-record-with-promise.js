@@ -1,5 +1,5 @@
-import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/list-form';
+import RSVP from 'rsvp';
 
 export default ListFormController.extend({
 
@@ -14,7 +14,7 @@ export default ListFormController.extend({
 
   actions: {
     beforeDeleteRecord(record, data) {
-      return new Ember.RSVP.Promise((resolve) => {
+      return new RSVP.Promise((resolve) => {
         this.set('recordWasNotDelete', !record.get('isDeleted'));
         resolve();
       });

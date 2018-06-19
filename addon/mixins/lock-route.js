@@ -11,7 +11,7 @@ import Builder from 'ember-flexberry-data/query/builder';
   Mixin for {{#crossLink "EditFormRoute"}}{{/crossLink}}, which provides support locking.
 
   @class LockRouteMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**
@@ -46,7 +46,7 @@ export default Mixin.create({
   actions: {
     /**
       The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
-      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition).
 
       @method actions.willTransition
       @param {Transition} transition
@@ -70,7 +70,7 @@ export default Mixin.create({
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/beforeModel?anchor=beforeModel).
 
     @method beforeModel
     @param {Transition} transition
@@ -130,7 +130,7 @@ export default Mixin.create({
 
   /**
     A hook you can use to setup the controller for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController).
 
     @method setupController
     @param {Controller} controller

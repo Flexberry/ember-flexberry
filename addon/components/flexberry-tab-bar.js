@@ -27,7 +27,7 @@ const flexberryClassNames = {
 /**
  * FlexberryTabBarComponent
  * Component to display semantic ui tabs
- * @extends Ember.Component
+ * @extends Component
  */
 export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],

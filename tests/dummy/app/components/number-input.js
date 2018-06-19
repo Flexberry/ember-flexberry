@@ -10,7 +10,7 @@ import { isNone } from '@ember/utils';
   Number input component.
 
   @class NumberInputComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
  */
 export default Component.extend({
   /**

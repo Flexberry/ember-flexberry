@@ -10,7 +10,7 @@ import $ from 'jquery';
   See [Semantic UI API](https://semantic-ui.com/modules/sidebar.html) and [EmberJS API](https://emberjs.com/api/).
 
   @class FlexberrySidebarComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
   /**

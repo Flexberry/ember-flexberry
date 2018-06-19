@@ -76,7 +76,7 @@ const flexberryClassNames = {
   ```
 
   @class FlexberryDdauCheckboxComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin

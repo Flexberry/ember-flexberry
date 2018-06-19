@@ -49,7 +49,7 @@ ErrorableRouteMixin, {
       It sends message about transition to corresponding controller.
 
       The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
-      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition).
 
       @method actions.willTransition
       @param {Object} transition
@@ -61,7 +61,7 @@ ErrorableRouteMixin, {
   },
 
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object
@@ -92,7 +92,7 @@ ErrorableRouteMixin, {
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/beforeModel?anchor=beforeModel).
 
     @method beforeModel
     @param {Transition} transition
@@ -132,7 +132,7 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -163,10 +163,10 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can use to reset controller values either when the model changes or the route is exiting.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_resetController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/resetController?anchor=resetController).
 
     @method resetController
-    @param {Ember.Controller} controller
+    @param {Controller} controller
     @param {Boolean} isExisting
     @param {Object} transition
    */
@@ -208,10 +208,10 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can use to setup the controller for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController).
 
     @method setupController
-    @param {Ember.Controller} controller
+    @param {Controller} controller
     @param {Object} model
    */
   setupController(controller, model) {

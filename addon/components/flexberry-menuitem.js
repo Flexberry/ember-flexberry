@@ -63,7 +63,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Override component's wrapping element tag.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_tagName)
 
     @property tagName
     @type String
@@ -73,7 +73,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array

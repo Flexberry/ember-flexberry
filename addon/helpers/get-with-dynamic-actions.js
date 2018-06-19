@@ -74,17 +74,17 @@ let getRenderedDynamicActionArguments = function(actionArguments, renderingConte
 /**
   Get with dynamic actions helper.
   Retrieves property with the specified name from the specified object
-  (exactly as [standard get helper](http://emberjs.com/api/classes/Ember.Templates.helpers.html#method_get) does),
+  (exactly as [standard get helper](https://www.emberjs.com/api/ember/release/classes/Ember.Templates.helpers/methods/get?anchor=get) does),
   and additionally binds dynamic actions for retrieved property's nested object/objects
   (even if retrieved property has hierarchical structure).
 
   Helper must be used with those component's,
   which consumes their inner structure as [JSON-object](http://www.json.org/)
-  or [Ember-object](http://emberjs.com/api/classes/Ember.Object.html)
+  or [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject)
   and there is no way to attach action handlers for their nested component's explicitly in hbs-markup.
 
   @class GetWithDynamicActionsHelper
-  @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Helper">Helper</a>
 
   Usage:
   templates/my-form.hbs
@@ -135,13 +135,13 @@ let getRenderedDynamicActionArguments = function(actionArguments, renderingConte
   import TreeNodeObject from 'ember-flexberry/objects/flexberry-treenode';
 
   export default Controller.extend({
-    treeNodes: Ember.A([
+    treeNodes: A([
       FlexberryTreenodeObject.create({
         caption: 'Node 1 (with child nodes)',
         hasCheckbox: true,
         checkboxValue: false,
         iconClass: 'map icon',
-        nodes: Ember.A([
+        nodes: A([
           caption: 'Node 1.1 (leaf node)',
           hasCheckbox: true,
           checkboxValue: false,
@@ -557,7 +557,7 @@ export default Helper.extend({
   },
 
   /**
-    Overridden [Ember.Helper compute method](http://emberjs.com/api/classes/Ember.Helper.html#method_compute).
+    Overridden [Helper compute method](https://emberjs.com/api/ember/release/classes/Helper#method_compute).
     Executes helper's logic, returns helper's value.
 
     @method compute

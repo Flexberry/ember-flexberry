@@ -119,7 +119,7 @@ export default ApplicationLogListFormController.extend({
 
     /**
       Handles ember assert button click.
-      Emulates failed Ember.assert call happened somewhere in application.
+      Emulates failed assert call happened somewhere in application.
 
       @method actions.onEmberAssertButtonClick
       @public

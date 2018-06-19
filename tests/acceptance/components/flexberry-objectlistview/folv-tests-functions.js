@@ -59,7 +59,7 @@ export function loadingList($ctrlForClick, list, records) {
   @param {Function} openEditFormFunction Method options.
  */
 export function openEditFormByFunction(openEditFormFunction) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
@@ -67,9 +67,9 @@ export function openEditFormByFunction(openEditFormFunction) {
 
     openEditFormFunction();
 
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
-        if (Ember.$('.ui.button.close-button').length === 0) {
+        if ($('.ui.button.close-button').length === 0) {
 
           // Edit form isn't loaded yet.
           return;
@@ -86,7 +86,7 @@ export function openEditFormByFunction(openEditFormFunction) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;

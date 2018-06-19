@@ -671,7 +671,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
     this._super(...arguments);
@@ -714,7 +714,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
@@ -815,6 +815,7 @@ export default FlexberryBaseComponent.extend({
   },
   /* eslint-enable no-unused-vars */
 
+  /* eslint-disable no-unused-vars */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.componentName)
     {
@@ -822,6 +823,7 @@ export default FlexberryBaseComponent.extend({
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   _sortNamedSetting(isExportExcel) {
     for (let i = 0; i < this.menus.length; i++) {

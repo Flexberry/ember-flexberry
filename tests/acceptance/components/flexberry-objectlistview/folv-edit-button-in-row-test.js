@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { run } from '@ember/runloop';
 import { executeTest } from './execute-folv-test';
 import { openEditFormByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
@@ -20,7 +19,7 @@ executeTest('check edit button in row', (store, assert, app) => {
 
     // Apply filter function.
     let openEditFormFunction =  function() {
-      let editButtonInRow = Ember.$('.object-list-view-row-edit-button')[0];
+      let editButtonInRow = $('.object-list-view-row-edit-button')[0];
       editButtonInRow.click();
     };
 

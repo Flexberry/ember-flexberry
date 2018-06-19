@@ -13,7 +13,7 @@ import DynamicProperties from '../mixins/dynamic-properties';
  * Base component for Flexberry Ember UI Components.
  *
  * @class FlexberryBaseComponent
- * @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+ * @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
  */
 export default Component.extend(
   DynamicProperties, {
@@ -108,7 +108,7 @@ export default Component.extend(
     Current controller.
 
     @property currentController
-    @type Ember.Controller
+    @type Controller
     @default null
    */
   currentController: null,
@@ -227,13 +227,13 @@ export default Component.extend(
 
     ```javascript
     let controller = this.getTargetObjectByCondition((targetObject) => {
-      return targetObject instanceof Ember.Controller;
+      return targetObject instanceof Controller;
     });
     ```
 
     @method getTargetObjectByCondition.
     @param {Function} condition Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.
-    @return {null|Ember.Component|Ember.Controller} Target object which satisfies a given condition or null.
+    @return {null|Component|Controller} Target object which satisfies a given condition or null.
    */
   getTargetObjectByCondition(condition) {
     if (typeOf(condition) !== 'function') {

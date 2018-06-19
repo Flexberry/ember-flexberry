@@ -11,7 +11,7 @@ import { htmlSafe } from '@ember/string';
   Helper for get formatted value.
 
   @class EnumCaptionHelper
-  @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Helper">Helper</a>
   @public
 */
 export default Helper.extend({

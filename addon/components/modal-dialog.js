@@ -30,7 +30,7 @@ import { isEmpty } from '@ember/utils';
     ```
 
   @class ModalDialog
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
   /**
@@ -38,7 +38,7 @@ export default Component.extend({
 
     @private
     @property _lookupEvents
-    @type Ember.Service
+    @type Service
   */
   _lookupEvents: service('lookup-events'),
 
@@ -139,7 +139,7 @@ export default Component.extend({
       allowMultiple: true,
       context: '.ember-application > .ember-view',
       onApprove: () => {
-        // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+        // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so run function is necessary.
         run(() => {
           if (!isEmpty(this.get('ok'))) {
             this.get('ok')();
@@ -161,7 +161,7 @@ export default Component.extend({
         });
       },
       onVisible: () => {
-        // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
+        // Handler of 'created' action causes asynchronous animation, so run function is necessary.
         run(() => {
           /* eslint-disable ember/closure-actions */
           this.sendAction('created', this.$()); //TODO

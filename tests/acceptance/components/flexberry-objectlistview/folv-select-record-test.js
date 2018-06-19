@@ -1,6 +1,6 @@
-import Ember from 'ember';
 import { executeTest} from './execute-folv-test';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import $ from 'jquery';
 
 executeTest('check configurate selected rows', (store, assert, app) => {
   assert.expect(8);
@@ -12,19 +12,19 @@ executeTest('check configurate selected rows', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let builder = new Query.Builder(store).from(modelName);
+    let builder = new Builder(store).from(modelName);
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       count = arr.length;
     }).then(function() {
-      let $folvContainer = Ember.$('.object-list-view-container');
-      let $checkAllButtton = Ember.$('.check-all-button', $folvContainer).first();
-      let $checkAllAtPageButton = Ember.$('.check-all-at-page-button', $folvContainer).first();
-      let $row = Ember.$('table.object-list-view tbody tr', $folvContainer);
+      let $folvContainer = $('.object-list-view-container');
+      let $checkAllButtton = $('.check-all-button', $folvContainer).first();
+      let $checkAllAtPageButton = $('.check-all-at-page-button', $folvContainer).first();
+      let $row = $('table.object-list-view tbody tr', $folvContainer);
       let controller = app.__container__.lookup('controller:' + currentRouteName());
 
-      let $firstCell = Ember.$('.flexberry-checkbox', $row[0]);
-      let $secondCell = Ember.$('.flexberry-checkbox', $row[1]);
+      let $firstCell = $('.flexberry-checkbox', $row[0]);
+      let $secondCell = $('.flexberry-checkbox', $row[1]);
 
       // Сheck first record.
       $firstCell.click();

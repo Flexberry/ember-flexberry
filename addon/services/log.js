@@ -42,7 +42,7 @@ const joinArguments = function() {
   Log service (stores client-side logs, warns, errors, ... into application log).
 
   @class LogService
-  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Service">Service</a>
 */
 export default Service.extend(Evented, {
   /**
@@ -333,7 +333,7 @@ export default Service.extend(Evented, {
       _this._onError(reason, true);
     };
 
-    // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+    // Assign Ember.onerror & RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = onError;
     RSVP.on('error', onPromiseError);
 
@@ -456,7 +456,7 @@ export default Service.extend(Evented, {
       });
     }
 
-    // Cleanup Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+    // Cleanup Ember.onerror & RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = null;
     RSVP.off('error');
   },

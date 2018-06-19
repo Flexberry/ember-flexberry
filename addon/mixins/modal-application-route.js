@@ -66,7 +66,7 @@ export default Mixin.create({
       @method actions.showModalDialog
       @param {String} modalDialogName Template name modal window.
       @param {Object} [data] Data for transfer to modal window.
-      @param {Ember.Controller} data.controller [Controller](http://emberjs.com/api/classes/Ember.Controller.html).
+      @param {Controller} data.controller [Controller](https://emberjs.com/api/ember/release/classes/Controller).
       @param {DS.Model} data.model [Model](http://emberjs.com/api/data/classes/DS.Model.html).
       @param {Object} [modalParams] Object with parameters for modal window.
       @param {String} [modalParams.outlet] Outlet name.

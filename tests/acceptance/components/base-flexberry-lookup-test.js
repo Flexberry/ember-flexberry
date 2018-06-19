@@ -462,9 +462,9 @@ test('flexberry-lookup limit function through dynamic properties test', function
   andThen(function() {
     assert.equal(currentURL(), path);
 
-    let $limitFunctionButton1 = Ember.$('.firstLimitFunction');
-    let $limitFunctionButton2 = Ember.$('.secondLimitFunction');
-    let $clearLimitFunctionButton = Ember.$('.clearLimitFunction');
+    let $limitFunctionButton1 = $('.firstLimitFunction');
+    let $limitFunctionButton2 = $('.secondLimitFunction');
+    let $clearLimitFunctionButton = $('.clearLimitFunction');
     let limitFunction1;
     let limitFunction2;
 
@@ -472,7 +472,7 @@ test('flexberry-lookup limit function through dynamic properties test', function
     let controller = app.__container__.lookup('controller:' + currentRouteName());
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView')
       .top(2);

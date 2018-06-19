@@ -10,7 +10,7 @@ import Mixin from '@ember/object/mixin';
   # Could not find an example of using.
 
   @class SortableColumn
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
 export default Mixin.create({
   /**

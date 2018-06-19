@@ -14,12 +14,12 @@ import { typeOf, isNone } from '@ember/utils';
   in a single object, which keys are related to component's desirable properties.
 
   @class DynamicPropertiesMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**
     Flag: indicates whether component is tagless or not
-    (has empty [tagName](http://emberjs.com/api/classes/Ember.Component.html#property_tagName) or not).
+    (has empty [tagName](https://emberjs.com/api/ember/release/classes/Component#property_tagName) or not).
 
     @property isTagless
     @type Boolean

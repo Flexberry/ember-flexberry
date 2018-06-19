@@ -5,7 +5,7 @@ import { typeOf } from '@ember/utils';
   Helper for get readonly property for list component's cell.
 
   @class ReadonlyCellHelper
-  @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Helper">Helper</a>
   @public
 */
 export function readonlyCell(params) {

@@ -360,7 +360,7 @@ test('wrap mode works properly', function(assert) {
   // Check that <textarea>'s wrap attribute 'soft'.
   this.set('wrap', 'soft');
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
+    $.trim($textareaInput.attr('wrap')),
     'soft',
     'Component\'s inner <textarea> wrap attribute \'soft\'');
 

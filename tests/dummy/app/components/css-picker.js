@@ -10,7 +10,7 @@ import { set, observer } from '@ember/object';
   CSS picker component.
 
   @class CssPickerComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
   /**

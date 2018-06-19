@@ -24,7 +24,7 @@ import EmberResolver from 'ember-resolver';
   ```
 
   @class Resolver
-  @extends <a href="https://github.com/ember-cli/ember-resolver/blob/master/addon/resolver.js">Ember.Resolver</a>
+  @extends <a href="https://github.com/ember-cli/ember-resolver/blob/master/addon/resolver.js">EmberResolver</a>
 */
 export default EmberResolver.extend({
   /**

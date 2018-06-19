@@ -49,8 +49,8 @@ import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexbe
     ```
 
   @class EditFormController
-  @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
-  @uses <a href="http://emberjs.com/api/classes/Ember.Evented.html">Ember.Evented</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>
+  @uses <a href="https://emberjs.com/api/ember/release/classes/Evented">Evented</a>
   @uses FlexberryLookupMixin
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
@@ -149,7 +149,7 @@ FolvOnEditControllerMixin, {
     Controller to show lookup modal window.
 
     @property lookupController
-    @type Ember.Controller
+    @type Controller
     @default LookupDialog
   */
   lookupController: injectController('lookup-dialog'),
@@ -165,7 +165,7 @@ FolvOnEditControllerMixin, {
   modelNoRollBack: false,
 
   /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array
@@ -371,7 +371,7 @@ FolvOnEditControllerMixin, {
     Promise always settled with [ResultCollection](http://offirgolan.github.io/ember-cp-validations/docs/classes/ResultCollection.html) object.
 
     @method validate
-    @return {Ember.RSVP.Promise}
+    @return {RSVP.Promise}
   */
   validate() {
     return new RSVP.Promise((resolve, reject) => {
@@ -785,7 +785,7 @@ FolvOnEditControllerMixin, {
     Service that lets interact between agregator's and detail's form.
 
     @property flexberryDetailInteractionService
-    @type Ember.Service
+    @type Service
     @readOnly
     @private
   */

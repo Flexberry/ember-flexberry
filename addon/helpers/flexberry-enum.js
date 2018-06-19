@@ -10,7 +10,7 @@ import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
   Helper for get array captions of registered enum.
 
   @class EnumCaptionHelper
-  @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Helper">Helper</a>
   @public
 */
 export default Helper.extend({

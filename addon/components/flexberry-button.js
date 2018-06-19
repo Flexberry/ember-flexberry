@@ -53,7 +53,7 @@ const flexberryClassNames = {
   ```
 
   @class FlexberryButtonComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin
@@ -112,7 +112,7 @@ let FlexberryButtonComponent = Component.extend(
     flexberryClassNames,
 
     /**
-      Overridden ['tagName'](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+      Overridden ['tagName'](https://emberjs.com/api/ember/release/classes/Component/properties/tagName?anchor=tagName)
       to force <label> to be a component's wrapping element.
 
       @property tagName

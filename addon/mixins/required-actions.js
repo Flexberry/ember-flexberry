@@ -13,7 +13,7 @@ import { A, isArray } from '@ember/array';
   if handlers for required actions are not defined.
 
   @class RequiredActionsMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**

@@ -111,7 +111,7 @@ test('Changes in checkbox causes changes in binded value', function(assert) {
   assert.strictEqual(typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' before first click');
 
   // Imitate click on component (change it's state to checked) & check it's state again.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after click');
@@ -120,7 +120,7 @@ test('Changes in checkbox causes changes in binded value', function(assert) {
   });
 
   // Imitate click on component again (change it's state to unchecked) & check it's state again.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after second click');
@@ -168,7 +168,7 @@ test('Component sends \'onChange\' action', function(assert) {
   let $component = this.$().children();
 
   // Imitate click on component (change it's state to checked) & check action's event object.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual(
@@ -178,7 +178,7 @@ test('Component sends \'onChange\' action', function(assert) {
   });
 
   // Imitate click on component again (change it's state to unchecked) & check action's event object again.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual(
@@ -210,7 +210,7 @@ test('Component works properly in readonly mode', function(assert) {
   assert.strictEqual($component.hasClass('read-only'), true, 'Component has css-class \'read-only\' when readonly mode is enabled');
 
   // Imitate click on component (try to change it's state to checked) & check it's state & action's event object.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual(
@@ -236,7 +236,7 @@ test('Component works properly in readonly mode', function(assert) {
   assert.strictEqual($component.hasClass('read-only'), false, 'Component hasn\'t css-class \'read-only\' when readonly mode is disabled');
 
   // Imitate click on component (try to change it's state to checked) & check it's state & action's event object.
-  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
   run(() => {
     $component.click();
     assert.strictEqual(

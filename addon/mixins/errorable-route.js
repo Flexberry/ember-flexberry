@@ -5,14 +5,14 @@ import { isArray } from '@ember/array';
   Mixin for handling errors.
 
   @class ErrorableRouteMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
 */
 export default Mixin.create({
   actions: {
     /**
       Event handler for processing promise model rejecting.
-      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/error?anchor=error).
 
       @method actions.error
       @param {Object} error

@@ -7,7 +7,7 @@ import { assign } from '@ember/polyfills';
 import { set } from '@ember/object';
 
 /**
-  Used for setting objects properties by path containing Ember.RecordArray
+  Used for setting objects properties by path containing DS.RecordArray
 
   @for Utils.Layers
   @method setRecord

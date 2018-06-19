@@ -78,7 +78,7 @@ const flexberryClassNames = {
   ```
 
   @class FlexberryTreeComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses <a href="https://github.com/ciena-blueplanet/ember-block-slots#usage">SlotsMixin</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
@@ -186,7 +186,7 @@ let FlexberryTreeComponent = Component.extend(
 
     /**
       Component's wrapping <div>
-      <a href="http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings">CSS-classes names bindings</a>.
+      <a href="https://emberjs.com/api/ember/release/classes/Component#property_classNameBindings">CSS-classes names bindings</a>.
 
       @property classNameBindings
       @type String[]

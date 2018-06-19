@@ -3,6 +3,7 @@
 */
 
 import $ from 'jquery';
+import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
@@ -94,7 +95,7 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -206,7 +207,7 @@ ErrorableRouteMixin, {
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
 
-        if (this.sorting.length > 0 && Ember.isNone(this.get('controller').get('sort'))) {
+        if (this.sorting.length > 0 && isNone(this.get('controller').get('sort'))) {
           let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
           this.get('controller').set('sort', sortQueryParam);
         }
@@ -316,10 +317,10 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can use to setup the controller for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController).
 
     @method setupController
-    @param {<a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>} controller
+    @param {<a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>} controller
     @param {Object} model
   */
   /* eslint-disable no-unused-vars */
@@ -357,7 +358,7 @@ ErrorableRouteMixin, {
 
       let modelClass = store.modelFor(this.get('modelName'));
       for (let i = 0; i < path.length; i++) {
-        let relationshipsByName = Ember.get(modelClass, 'relationshipsByName');
+        let relationshipsByName = get(modelClass, 'relationshipsByName');
         let relationship = relationshipsByName.get(path[i]);
         if (relationship) {
           modelClass = store.modelFor(relationship.type);
@@ -366,7 +367,7 @@ ErrorableRouteMixin, {
         }
       }
 
-      invalid = invalid || !Ember.get(modelClass, 'attributes').get(propertyName);
+      invalid = invalid || !get(modelClass, 'attributes').get(propertyName);
     });
 
     return invalid;

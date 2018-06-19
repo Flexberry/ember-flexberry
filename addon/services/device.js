@@ -14,7 +14,7 @@ import { isBlank } from '@ember/utils';
   duplicates all <a href="https://github.com/matthewhudson/device.js">devicejs</a> methods inside service & implements some new methods.
 
   @class DeviceService
-  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Service">Service</a>
 */
 export default Service.extend(Evented, {
   /**

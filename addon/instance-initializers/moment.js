@@ -11,7 +11,7 @@ import { addObserver } from '@ember/object/observers';
 
   @for ApplicationInstanceInitializer
   @method moment.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
+  @param {<a href="https://www.emberjs.com/api/ember/release/classes/ApplicationInstance">ApplicationInstance</a>} applicationInstance Ember application instance.
 */
 export function initialize(applicationInstance) {
   let i18n = applicationInstance.lookup('service:i18n');

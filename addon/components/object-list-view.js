@@ -11,13 +11,15 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { run, once } from '@ember/runloop';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import { runAfter } from '../utils/extended-get';
+
 /**
   Object list view component.
 
@@ -880,7 +882,7 @@ export default FlexberryBaseComponent.extend(
           goToEditForm: true
         });
 
-        run.after(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.get('action')(recordData, params);
         });
 
@@ -1081,7 +1083,7 @@ export default FlexberryBaseComponent.extend(
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
     this._super(...arguments);
@@ -1135,7 +1137,7 @@ export default FlexberryBaseComponent.extend(
 
   /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
-    For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [didInsertElement](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   didInsertElement() {
     this._super(...arguments);
@@ -1186,7 +1188,7 @@ export default FlexberryBaseComponent.extend(
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [didRender](https://emberjs.com/api/ember/release/classes/Component#method_didRender) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   didRender() {
     this._super(...arguments);
@@ -1263,7 +1265,7 @@ export default FlexberryBaseComponent.extend(
 
   /**
     Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
     this.removeObserver('content.[]', this, this._contentDidChange);
@@ -1284,7 +1286,7 @@ export default FlexberryBaseComponent.extend(
 
   /**
     Called when the element of the view is going to be destroyed.
-    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroyElement() {
     this._super(...arguments);
@@ -1637,7 +1639,7 @@ export default FlexberryBaseComponent.extend(
 
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
-    // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
+    // to avoid 'EmberObject.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
     let getCellComponent = get(currentController || {}, 'getCellComponent');
@@ -2100,16 +2102,16 @@ export default FlexberryBaseComponent.extend(
       };
 
       if (beforeDeleteAllRecords) {
-        Ember.assert('beforeDeleteAllRecords must be a function', typeof beforeDeleteAllRecords === 'function');
+        assert('beforeDeleteAllRecords must be a function', typeof beforeDeleteAllRecords === 'function');
 
         possiblePromise = beforeDeleteAllRecords(modelName, data);
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise)) && data.cancel) {
           return;
         }
       }
 
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
         possiblePromise.then(() => {
           if (!data.cancel) {
             this._actualDeleteAllRecords(componentName, modelName, data.filterQuery);
@@ -2153,7 +2155,7 @@ export default FlexberryBaseComponent.extend(
       }
     }).catch((errorData) => {
       this.get('objectlistviewEventsService').setLoadingState('error');
-      if (!Ember.isNone(errorData.status) && errorData.status === 0 && !Ember.isNone(errorData.statusText) &&  errorData.statusText === 'error') {
+      if (!isNone(errorData.status) && errorData.status === 0 && !isNone(errorData.statusText) &&  errorData.statusText === 'error') {
         // This message will be converted to corresponding localized message.
         errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';
       }

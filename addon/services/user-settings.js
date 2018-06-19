@@ -22,7 +22,7 @@ const defaultSettingName = 'DEFAULT';
   Service to store/read user settings to/from application storage.
 
   @class UserSettingsService
-  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Service">Service</a>
 */
 export default Service.extend({
   /**

@@ -11,10 +11,10 @@ import { A } from '@ember/array';
 import Builder from 'ember-flexberry-data/query/builder';
 
 /**
-  Mixin for [Ember.Route](http://emberjs.com/api/classes/Ember.Route.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+  Mixin for [Route](https://www.emberjs.com/api/ember/release/classes/Route) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
 
   @class FlexberryObjectlistviewHierarchicalRouteMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
 

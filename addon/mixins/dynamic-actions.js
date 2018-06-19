@@ -54,11 +54,11 @@ let validateDynamicActionProperties = function(dynamicAction, dynamicActionIndex
 /**
   Mixin containing logic making available dynamic actions for those components,
   which consumes their inner structure as [JSON-object](http://www.json.org/)
-  or [Ember-object](http://emberjs.com/api/classes/Ember.Object.html)
+  or [Ember-object](https://emberjs.com/api/ember/release/classes/EmberObject)
   and there is no way to attach action handlers for their nested component's explicitly in hbs-markup.
 
   @class DynamicActionsMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
 export default Mixin.create({
   /**
@@ -105,7 +105,7 @@ export default Mixin.create({
   /**
     Component's dynamic actions.
     If component consumes it's inner structure as [JSON-object](http://www.json.org/)
-    or [Ember-object](http://emberjs.com/api/classes/Ember.Object.html)
+    or [Ember-object](https://emberjs.com/api/ember/release/classes/EmberObject)
     and there is no way to attach action handlers explicitly in hbs-markup,
     then you can define {{#crossLink "DynamicActionObject"}}dynamic actions{{/crossLink}}
     somewhere in code & pass defined array into this component's property.

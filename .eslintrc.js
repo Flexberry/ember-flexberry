@@ -69,10 +69,10 @@ module.exports = {
 
     {
       files: [
-        'addon/components/flexberry-objectlistview.js',
-        'addon/components/object-list-view-row.js',
-        'addon/components/object-list-view.js',
-        'addon/components/olv-toolbar.js',
+        'addon/**/components/flexberry-objectlistview.js',
+        'addon/**/components/object-list-view-row.js',
+        'addon/**/components/object-list-view.js',
+        'addon/**/components/olv-toolbar.js'
       ],
       rules: {
         'ember/closure-actions': 'off'

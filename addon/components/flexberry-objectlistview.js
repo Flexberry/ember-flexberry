@@ -744,7 +744,7 @@ export default FlexberryBaseComponent.extend({
       {{flexberry-objectlistview
         ...
         customButtons=customButtonsMethod
-        userButtonActionTest='userButtonActionTest'
+        userButtonActionTest=(action "userButtonActionTest")
       }}
       ```
 

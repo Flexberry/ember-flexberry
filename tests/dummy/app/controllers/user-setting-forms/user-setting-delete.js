@@ -22,7 +22,7 @@ export default ListFormController.extend({
     /**
       Handler for click on custom user button.
 
-      @method userButtonActionTest
+      @method allDelButtonAction
      */
     allDelButtonAction: function() {
       let proms = [];

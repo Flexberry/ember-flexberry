@@ -162,7 +162,7 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'app/index.html',
-        '    <link rel="icon" href="assets/images/favicon.ico">\n',
+        '    <link rel="icon" href="/assets/images/favicon.ico">\n',
         {
           after: '<link rel="stylesheet" href="assets/ember-app.css">\n'
         }
@@ -186,7 +186,7 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'tests/dummy/app/index.html',
-        '    <link rel="icon" href="assets/images/favicon.ico">\n',
+        '    <link rel="icon" href="/assets/images/favicon.ico">\n',
         {
           after: '<link rel="stylesheet" href="assets/dummy.css">\n'
         }

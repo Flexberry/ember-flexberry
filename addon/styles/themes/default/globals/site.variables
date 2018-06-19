@@ -375,8 +375,8 @@
 --------------------*/
 
 /* For source only. Modified in gulp for dist */
-@imagePath : '../../themes/default/assets/images';
-@fontPath  : '../../themes/default/assets/fonts';
+@imagePath : 'images';
+@fontPath  : 'fonts';
 
 /*-------------------
        Em Sizes

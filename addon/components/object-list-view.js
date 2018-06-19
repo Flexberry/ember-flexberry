@@ -18,7 +18,7 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-import { runAfter } from '../utils/extended-get';
+import runAfter from '../utils/run-after';
 
 /**
   Object list view component.

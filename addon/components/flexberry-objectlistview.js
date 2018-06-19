@@ -14,7 +14,7 @@ import { merge } from '@ember/polyfills';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-import { runAfter } from '../utils/extended-get';
+import runAfter from '../utils/run-after';
 
 /**
   Component to view list of object.

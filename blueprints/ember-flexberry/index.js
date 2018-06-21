@@ -227,18 +227,18 @@ module.exports = {
       return _this.addBowerPackagesToProject([
         { name: 'devicejs', target: '0.2.7' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
-        { name: 'semantic-ui', target: '2.3.1' },
+        { name: 'flatpickr-calendar', target: '2.6.3' },
+        { name: 'semantic-ui', target: '2.2.14' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.2.6' },
         { name: 'js-beautify', target: '1.6.4' },
-        { name: 'moment', target: '2.22.0' }
+        { name: 'moment', target: '~2.22.0' }
       ]);
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
           { name: 'ember-browserify', target: '1.1.9' },
-          { name: 'ember-cli-less', target: '1.5.4' },
+          { name: 'ember-cli-less', target: '^1.5.4' },
           { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
           { name: 'ember-moment', target: '7.7.0' },
@@ -246,9 +246,9 @@ module.exports = {
       });
     }).then(function () {
       return _this.addPackagesToProject([
-        { name: 'dexie', target: '2.0.2' },
-        { name: 'inflection', target: '1.12.0' },
-        { name: 'node-uuid', target: '1.4.7' },
+        { name: 'dexie', target: '^2.0.2' },
+        { name: 'inflection', target: '^1.12.0' },
+        { name: 'node-uuid', target: '^1.4.7' },
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

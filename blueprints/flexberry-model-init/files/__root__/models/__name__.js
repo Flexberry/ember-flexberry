@@ -5,7 +5,7 @@
 %>import { buildValidations } from 'ember-cp-validations';<%
 
 if (!parentModelName) { %>
-EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import OfflineModelMixin from 'ember-flexberry-data/mixins/offline-model';<%
 } %>
 

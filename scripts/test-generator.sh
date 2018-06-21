@@ -20,6 +20,13 @@ ember -v
 # Initialize new ember app and install ember-flexberry from the build.
 ember new ember-app --skip-npm
 cd ember-app
+
+# EmberCLI asks whether it needs to overwrite existing files,
+# so we need to remove them for non-interactive build.
+cp app/index.html .
+rm -r app/*
+mv index.html app
+
 yarn install --no-lockfile
 ember install "${ADDON_DIR}"
 
@@ -53,6 +60,7 @@ ember generate ember-flexberry
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
 rm -r tests/dummy/app/*[!index.html]
+rm -f ./.eslintrc.js
 
 # Generate components using Dummy metamodel.
 ember generate flexberry-application --metadata-dir=${META_DIR}

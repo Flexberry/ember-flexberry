@@ -3080,9 +3080,9 @@ ember-factory-for-polyfill@^1.3.1:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
-"ember-flexberry-data@git+https://github.com/Flexberry/ember-flexberry-data.git#feature-ember-update":
+ember-flexberry-data@1.0.0-beta.1:
   version "1.0.0-beta.1"
-  resolved "git+https://github.com/Flexberry/ember-flexberry-data.git#46acad8bc3083588c0d01f7161b93ac3a4c43653"
+  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-1.0.0-beta.1.tgz#5423535c92d6ed5923c6f540e68caa1e9892942f"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.1"

@@ -14,8 +14,10 @@ export default class Locales {
   protected currentLocale: string;
   protected entityName: string;
   protected translations: Map<string[]> ;
+  protected localePathTemplate: lodash.TemplateExecutor;
 
-  constructor(entityName: string, currentLocale: string) {
+  constructor(entityName: string, currentLocale: string, localePathTemplate: lodash.TemplateExecutor) {
+    this.localePathTemplate = localePathTemplate;
     if (lodash.indexOf(this.locales, currentLocale) == -1) {
       throw new Error(`Unknown locale: ${currentLocale}.`);
     }
@@ -57,36 +59,174 @@ export default class Locales {
     }
   }
 
-  escapeValue(value: string) {
-    return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-  }
-
-  getLodashVariablesWithSuffix(suffix: string) {
+  getLodashVariablesWithSuffix(suffix: string, level: number) {
     let lodashVariables = {};
-    lodashVariables[`${this.currentLocale}${suffix}`] = this.getProperties(this.currentLocale);
-    for (let locale of this.locales) {
-      lodashVariables[`${locale}${suffix}`] = this.getProperties(locale);
+    let availableLocales = [ this.currentLocale ].concat(this.locales);
+    for (let locale of availableLocales) {
+      let source = this.parseMergeSnippet(`{${this.getProperties(locale)}}`);
+      let target;
+
+      // validate target snippet content
+      try {
+        target = this.loadTargetSnippet(locale);
+        if (target) {
+          this.generateProperties(target);
+        }
+      } catch {
+        throw new Error(`Invalid target snippet content to merge. File: ${this.localePathTemplate({ "locale": locale })} .`);
+      }
+
+      source = this.merge(source, target);
+      lodashVariables[`${locale}${suffix}`] = this.generateProperties(source, level);
     }
     return lodashVariables;
   }
 
   getLodashVariablesProperties() {
-    return this.getLodashVariablesWithSuffix("Properties");
+    return this.getLodashVariablesWithSuffix("Properties", 1);
+  }
+
+  protected escapeValue(value: string) {
+    return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+  }
+
+  protected quote(propName: string) {
+    if (propName.indexOf("-") == -1)
+      return propName;
+    return `'${propName}'`;
+  }
+
+  protected generateProperties(obj, level: number = 0) {
+    let strings = [];
+    let tab = (new Array(level + 1)).join(TAB);
+
+    let self = this;
+    lodash.forOwn(obj, function(value, key) {
+      let str = `${tab}${self.quote(key)}: `;
+      let nextLevelExists = lodash.isPlainObject(value);
+
+      str += nextLevelExists ? '{' : `'${self.escapeValue(value)}'`;
+      if (nextLevelExists) {
+        strings.push(str);
+        str = self.generateProperties(value, level + 1);
+        if (str.length)
+          strings.push(str);
+        str = `${tab}}`;
+      }
+      strings.push(`${str},`);
+    })
+
+    if (strings.length) {
+      let last = strings.length - 1;
+      strings[last] = strings[last].slice(0, -1);
+    }
+    return strings.join('\n');
+  }
+
+  protected parseMergeSnippet(content: string) {
+    const SNIPPET_REGEXP = /{[\s\S]*}/;
+    let match = content.match(SNIPPET_REGEXP);
+    if (match) {
+      return eval(`(${match.toString()})`);
+    }
+    return undefined;
+  }
+
+  protected parseTargetSnippet(content: string) {
+    return this.parseMergeSnippet(content);
+  }
+
+  protected loadTargetSnippet(locale: string) {
+    let localePath = this.localePathTemplate({ "locale": locale });
+    if (!fs.existsSync(localePath)) {
+      return undefined;
+    }
+    let content = stripBom(fs.readFileSync(localePath, "utf8"));
+    return this.parseTargetSnippet(content);
+  }
+
+  protected merge(masterObj, overlapObj) {
+    if (overlapObj && lodash.keys(overlapObj).length) {
+
+      // prevent arguments modification
+      let masterClone = lodash.cloneDeep(masterObj);
+      let overlapClone = lodash.cloneDeep(overlapObj);
+
+      this.mergeProperties(masterClone, overlapClone);
+      return masterClone;
+    }
+    return masterObj;
   }
 
   protected getProperties(locale: string) {
     return `  ${this.translations[locale].join(",\n  ")}`;
   }
+
+  /*
+   * Replaces the values of simple-typed master object properties with that of same-named overlap object properties
+   * and adds missing ones from the overlap object.
+   * WARNING! This method modifies arguments.
+   */
+  private mergeProperties(masterObj, overlapObj) {
+    let masterKeys = lodash.keys(masterObj);
+    let overlapKeys = lodash.keys(overlapObj);
+
+    // get missing master object properties names
+    let missingKeys = lodash.difference(overlapKeys, masterKeys);
+
+    let self = this;
+
+    // add missing propertires from the overlap object
+    if (missingKeys.length) {
+      let missingObj = lodash.cloneDeep(lodash.pick(overlapObj, missingKeys));
+      lodash.forOwn(missingObj, function(value, key) {
+        masterObj[key] = value;
+      });
+    }
+
+    // get same-named overlap object properties
+    overlapObj = lodash.omit(overlapObj, missingKeys);
+
+    // replace the values of simple-typed master object properties with that of same-named overlap object properties
+    if (!lodash.keys(overlapObj).length) {
+      return;
+    }
+    lodash.forOwn(overlapObj, function(overlapValue, key) {
+      let masterValue = masterObj[key];
+      let masterValueIsObject = lodash.isPlainObject(masterValue);
+      let overlapValueIsObject = lodash.isPlainObject(overlapValue);
+      if (masterValueIsObject != overlapValueIsObject) {
+        return;
+      }
+      if (masterValueIsObject) {
+        self.mergeProperties(masterValue, overlapValue);
+        return;
+      }
+      masterObj[key] = overlapValue;
+    });
+  }
 }
 
 export class ApplicationMenuLocales extends Locales {
 
-  constructor(currentLocale: string) {
-    super("", currentLocale);
+  constructor(currentLocale: string, targetPathTemplate: lodash.TemplateExecutor) {
+    super("", currentLocale, targetPathTemplate);
   }
 
   protected getProperties(locale: string) {
     return `${this.translations[locale].join(",\n")}`;
+  }
+
+  protected parseTargetSnippet(content: string) {
+    const SNIPPET_REGEXP = /[ ,\n]application[ \n]*:[ \n]*{[\s\S]*[ ,\n]'edit-form'[ \n]*:[ \n]*{/;
+    const EXCLUDE_PROPERTIES = ["application-name", "application-version", "index"];
+
+    let match = content.match(SNIPPET_REGEXP);
+    if (match) {
+      let obj = super.parseMergeSnippet(match.toString());
+      return lodash.omit(obj.sitemap, EXCLUDE_PROPERTIES);
+    }
+    return undefined;
   }
 }
 
@@ -100,8 +240,8 @@ export class ModelLocales extends Locales {
     return `  projections: {\n${translation}\n  }`;
   }
 
-  constructor(model: metadata.Model, modelsDir: string, currentLocale: string) {
-    super("", currentLocale);
+  constructor(model: metadata.Model, modelsDir: string, currentLocale: string, targetPathTemplate: lodash.TemplateExecutor) {
+    super("", currentLocale, targetPathTemplate);
     let projections: string[] = [];
     let projectionsOtherLocales: string[] = [];
     let projName: string;
@@ -230,21 +370,19 @@ export class ModelLocales extends Locales {
       `${attr.name}: {\n${indentStr}__caption__: '${attr.name}'\n${indentStr2}}`
     );
   }
-
-
 }
 
 class SortedPair {
+  index: number;
+  str: string;
+  strOtherLocales: string;
+
   constructor(index: number, str: string, strOtherLocales: string) {
     this.index = index;
     this.str = str;
     this.strOtherLocales = strOtherLocales;
   }
-  index: number;
-  str: string;
-  strOtherLocales: string;
 }
-
 
 interface Map<T> {
   [K: string]: T;

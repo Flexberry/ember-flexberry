@@ -1,11 +1,12 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
-var ModelBlueprint_1 = require('./ModelBlueprint');
-var lodash = require('lodash');
-var path = require('path');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+Object.defineProperty(exports, "__esModule", { value: true });
+var ModelBlueprint_1 = require("./ModelBlueprint");
+var lodash = require("lodash");
+var path = require("path");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [
@@ -16,10 +17,12 @@ module.exports = {
         return false;
     },
     _files: null,
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         var modelsDir = path.join(this.options.metadataDir, "models");
         if (!this.options.file) {
             this.options.file = this.options.entity.name + ".json";

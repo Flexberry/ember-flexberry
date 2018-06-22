@@ -1,20 +1,27 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
+var path = require("path");
+var lodash = require("lodash");
 var TAB = "  ";
-var Locales = (function () {
-    function Locales(entityName, currentLocale) {
+var Locales = /** @class */ (function () {
+    function Locales(entityName, currentLocale, localePathTemplate) {
         this.locales = ["ru", "en"];
+        this.localePathTemplate = localePathTemplate;
         if (lodash.indexOf(this.locales, currentLocale) == -1) {
             throw new Error("Unknown locale: " + currentLocale + ".");
         }
@@ -48,43 +55,161 @@ var Locales = (function () {
             this.translations[locale].push(otherLocalesStr);
         }
     };
-    Locales.prototype.escapeValue = function (value) {
-        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-    };
-    Locales.prototype.getLodashVariablesWithSuffix = function (suffix) {
+    Locales.prototype.getLodashVariablesWithSuffix = function (suffix, level) {
         var lodashVariables = {};
-        lodashVariables[("" + this.currentLocale + suffix)] = this.getProperties(this.currentLocale);
-        for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
-            var locale = _a[_i];
-            lodashVariables[("" + locale + suffix)] = this.getProperties(locale);
+        var availableLocales = [this.currentLocale].concat(this.locales);
+        for (var _i = 0, availableLocales_1 = availableLocales; _i < availableLocales_1.length; _i++) {
+            var locale = availableLocales_1[_i];
+            var source = this.parseMergeSnippet("{" + this.getProperties(locale) + "}");
+            var target = void 0;
+            // validate target snippet content
+            try {
+                target = this.loadTargetSnippet(locale);
+                if (target) {
+                    this.generateProperties(target);
+                }
+            }
+            catch (_a) {
+                throw new Error("Invalid target snippet content to merge. File: " + this.localePathTemplate({ "locale": locale }) + " .");
+            }
+            source = this.merge(source, target);
+            lodashVariables["" + locale + suffix] = this.generateProperties(source, level);
         }
         return lodashVariables;
     };
     Locales.prototype.getLodashVariablesProperties = function () {
-        return this.getLodashVariablesWithSuffix("Properties");
+        return this.getLodashVariablesWithSuffix("Properties", 1);
+    };
+    Locales.prototype.escapeValue = function (value) {
+        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    };
+    Locales.prototype.quote = function (propName) {
+        if (propName.indexOf("-") == -1)
+            return propName;
+        return "'" + propName + "'";
+    };
+    Locales.prototype.generateProperties = function (obj, level) {
+        if (level === void 0) { level = 0; }
+        var strings = [];
+        var tab = (new Array(level + 1)).join(TAB);
+        var self = this;
+        lodash.forOwn(obj, function (value, key) {
+            var str = "" + tab + self.quote(key) + ": ";
+            var nextLevelExists = lodash.isPlainObject(value);
+            str += nextLevelExists ? '{' : "'" + self.escapeValue(value) + "'";
+            if (nextLevelExists) {
+                strings.push(str);
+                str = self.generateProperties(value, level + 1);
+                if (str.length)
+                    strings.push(str);
+                str = tab + "}";
+            }
+            strings.push(str + ",");
+        });
+        if (strings.length) {
+            var last = strings.length - 1;
+            strings[last] = strings[last].slice(0, -1);
+        }
+        return strings.join('\n');
+    };
+    Locales.prototype.parseMergeSnippet = function (content) {
+        var SNIPPET_REGEXP = /{[\s\S]*}/;
+        var match = content.match(SNIPPET_REGEXP);
+        if (match) {
+            return eval("(" + match.toString() + ")");
+        }
+        return undefined;
+    };
+    Locales.prototype.parseTargetSnippet = function (content) {
+        return this.parseMergeSnippet(content);
+    };
+    Locales.prototype.loadTargetSnippet = function (locale) {
+        var localePath = this.localePathTemplate({ "locale": locale });
+        if (!fs.existsSync(localePath)) {
+            return undefined;
+        }
+        var content = stripBom(fs.readFileSync(localePath, "utf8"));
+        return this.parseTargetSnippet(content);
+    };
+    Locales.prototype.merge = function (masterObj, overlapObj) {
+        if (overlapObj && lodash.keys(overlapObj).length) {
+            // prevent arguments modification
+            var masterClone = lodash.cloneDeep(masterObj);
+            var overlapClone = lodash.cloneDeep(overlapObj);
+            this.mergeProperties(masterClone, overlapClone);
+            return masterClone;
+        }
+        return masterObj;
     };
     Locales.prototype.getProperties = function (locale) {
         return "  " + this.translations[locale].join(",\n  ");
     };
+    /*
+     * Replaces the values of simple-typed master object properties with that of same-named overlap object properties
+     * and adds missing ones from the overlap object.
+     * WARNING! This method modifies arguments.
+     */
+    Locales.prototype.mergeProperties = function (masterObj, overlapObj) {
+        var masterKeys = lodash.keys(masterObj);
+        var overlapKeys = lodash.keys(overlapObj);
+        // get missing master object properties names
+        var missingKeys = lodash.difference(overlapKeys, masterKeys);
+        var self = this;
+        // add missing propertires from the overlap object
+        if (missingKeys.length) {
+            var missingObj = lodash.cloneDeep(lodash.pick(overlapObj, missingKeys));
+            lodash.forOwn(missingObj, function (value, key) {
+                masterObj[key] = value;
+            });
+        }
+        // get same-named overlap object properties
+        overlapObj = lodash.omit(overlapObj, missingKeys);
+        // replace the values of simple-typed master object properties with that of same-named overlap object properties
+        if (!lodash.keys(overlapObj).length) {
+            return;
+        }
+        lodash.forOwn(overlapObj, function (overlapValue, key) {
+            var masterValue = masterObj[key];
+            var masterValueIsObject = lodash.isPlainObject(masterValue);
+            var overlapValueIsObject = lodash.isPlainObject(overlapValue);
+            if (masterValueIsObject != overlapValueIsObject) {
+                return;
+            }
+            if (masterValueIsObject) {
+                self.mergeProperties(masterValue, overlapValue);
+                return;
+            }
+            masterObj[key] = overlapValue;
+        });
+    };
     return Locales;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Locales;
-var ApplicationMenuLocales = (function (_super) {
+var ApplicationMenuLocales = /** @class */ (function (_super) {
     __extends(ApplicationMenuLocales, _super);
-    function ApplicationMenuLocales(currentLocale) {
-        _super.call(this, "", currentLocale);
+    function ApplicationMenuLocales(currentLocale, targetPathTemplate) {
+        return _super.call(this, "", currentLocale, targetPathTemplate) || this;
     }
     ApplicationMenuLocales.prototype.getProperties = function (locale) {
         return "" + this.translations[locale].join(",\n");
     };
+    ApplicationMenuLocales.prototype.parseTargetSnippet = function (content) {
+        var SNIPPET_REGEXP = /[ ,\n]application[ \n]*:[ \n]*{[\s\S]*[ ,\n]'edit-form'[ \n]*:[ \n]*{/;
+        var EXCLUDE_PROPERTIES = ["application-name", "application-version", "index"];
+        var match = content.match(SNIPPET_REGEXP);
+        if (match) {
+            var obj = _super.prototype.parseMergeSnippet.call(this, match.toString());
+            return lodash.omit(obj.sitemap, EXCLUDE_PROPERTIES);
+        }
+        return undefined;
+    };
     return ApplicationMenuLocales;
 }(Locales));
 exports.ApplicationMenuLocales = ApplicationMenuLocales;
-var ModelLocales = (function (_super) {
+var ModelLocales = /** @class */ (function (_super) {
     __extends(ModelLocales, _super);
-    function ModelLocales(model, modelsDir, currentLocale) {
-        _super.call(this, "", currentLocale);
+    function ModelLocales(model, modelsDir, currentLocale, targetPathTemplate) {
+        var _this = _super.call(this, "", currentLocale, targetPathTemplate) || this;
         var projections = [];
         var projectionsOtherLocales = [];
         var projName;
@@ -96,11 +221,11 @@ var ModelLocales = (function (_super) {
             var projAttrs = [];
             for (var _b = 0, _c = proj.attrs; _b < _c.length; _b++) {
                 var attr = _c[_b];
-                projAttrs.push(this.declareProjAttr(attr, 4));
+                projAttrs.push(_this.declareProjAttr(attr, 4));
             }
             for (var _d = 0, _e = proj.belongsTo; _d < _e.length; _d++) {
                 var belongsTo = _e[_d];
-                projAttrs.push(this.joinProjBelongsTo(belongsTo, 4));
+                projAttrs.push(_this.joinProjBelongsTo(belongsTo, 4));
             }
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
@@ -112,19 +237,19 @@ var ModelLocales = (function (_super) {
                 if (detailProj) {
                     for (var _h = 0, _j = detailProj.attrs; _h < _j.length; _h++) {
                         var detailAttr = _j[_h];
-                        hasManyAttrs.push(this.declareProjAttr(detailAttr, 5));
+                        hasManyAttrs.push(_this.declareProjAttr(detailAttr, 5));
                     }
                     for (var _k = 0, _l = detailProj.belongsTo; _k < _l.length; _k++) {
                         var detailBelongsTo = _l[_k];
-                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 5));
+                        hasManyAttrs.push(_this.joinProjBelongsTo(detailBelongsTo, 5));
                     }
                     for (var _m = 0, _o = detailProj.hasMany; _m < _o.length; _m++) {
                         var detailHasMany = _o[_m];
-                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 5));
+                        hasManyAttrs.push(_this.joinProjHasMany(detailHasMany, modelsDir, 5));
                     }
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-                hasManyAttrs.unshift(new SortedPair(-1, "        __caption__: '" + this.escapeValue(hasMany.caption) + "'", "        __caption__: '" + hasMany.name + "'"));
+                hasManyAttrs.unshift(new SortedPair(-1, "        __caption__: '" + _this.escapeValue(hasMany.caption) + "'", "        __caption__: '" + hasMany.name + "'"));
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n        ");
                 var attrsStrOtherLocales_1 = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n        ");
                 projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": {\n" + attrsStr_1 + "\n      }", hasMany.name + ": {\n" + attrsStrOtherLocales_1 + "\n      }"));
@@ -132,8 +257,9 @@ var ModelLocales = (function (_super) {
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
             var attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-            this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
+            _this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
         }
+        return _this;
     }
     ModelLocales.prototype.getProperties = function (locale) {
         var translation = this.translations[locale].join(",\n    ");
@@ -214,7 +340,7 @@ var ModelLocales = (function (_super) {
     return ModelLocales;
 }(Locales));
 exports.ModelLocales = ModelLocales;
-var SortedPair = (function () {
+var SortedPair = /** @class */ (function () {
     function SortedPair(index, str, strOtherLocales) {
         this.index = index;
         this.str = str;

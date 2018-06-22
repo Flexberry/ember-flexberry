@@ -44,10 +44,12 @@ module.exports = {
         }
         return targetFile;
     },
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
         var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         if (this.project.isEmberCLIAddon() && !this.options.dummy) {
@@ -203,7 +205,8 @@ var CoreBlueprint = /** @class */ (function () {
             return self.indexOf(item) === index;
         });
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
+        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
             var childItemExt = new SitemapItemExt(item);
@@ -211,7 +214,7 @@ var CoreBlueprint = /** @class */ (function () {
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
         }
-        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
+        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu", 4);
         this.children = children.join(", ");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
@@ -219,6 +222,13 @@ var CoreBlueprint = /** @class */ (function () {
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
         this.inflectorIrregular = inflectorIrregular.join("\n");
     }
+    CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
     return CoreBlueprint;
 }());
 var SitemapItemExt = /** @class */ (function () {

@@ -12,12 +12,13 @@ import { ModelLocales } from '../flexberry-core/Locales';
 const TAB = "  ";
 
 class SortedPair{
+  index: number;
+  str: string;
+
   constructor(index: number, str: string) {
     this.index=index;
     this.str=str;
   }
-  index: number;
-  str: string;
 }
 
 export default class ModelBlueprint {
@@ -34,6 +35,7 @@ export default class ModelBlueprint {
   needsAllEnums: string;
   needsAllObjects: string;
   lodashVariables: {};
+
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -55,7 +57,8 @@ export default class ModelBlueprint {
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
     this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
     this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
-    let modelLocales = new ModelLocales(model, modelsDir, "ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
+    let modelLocales = new ModelLocales(model, modelsDir, "ru", localePathTemplate);
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
   }
 
@@ -323,5 +326,13 @@ export default class ModelBlueprint {
       projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return `\n${projections.join("\n")}\n`;
+  }
+
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
   }
 }

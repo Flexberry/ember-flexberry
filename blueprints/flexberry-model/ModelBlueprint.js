@@ -38,7 +38,8 @@ var ModelBlueprint = /** @class */ (function () {
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
         this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
-        var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
+        var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
@@ -315,6 +316,13 @@ var ModelBlueprint = /** @class */ (function () {
             projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return "\n" + projections.join("\n") + "\n";
+    };
+    ModelBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
     };
     return ModelBlueprint;
 }());

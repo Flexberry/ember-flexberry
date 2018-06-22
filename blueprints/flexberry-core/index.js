@@ -1,14 +1,15 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
-var Locales_1 = require('../flexberry-core/Locales');
-var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+var path = require("path");
+var lodash = require("lodash");
+var Locales_1 = require("../flexberry-core/Locales");
+var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var TAB = "  ";
 module.exports = {
     description: 'Generates core entities for flexberry.',
@@ -19,10 +20,12 @@ module.exports = {
         return false;
     },
     _files: null,
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
         var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         if (this.project.isEmberCLIAddon() && !this.options.dummy) {
@@ -83,7 +86,7 @@ module.exports = {
         );
     }
 };
-var CoreBlueprint = (function () {
+var CoreBlueprint = /** @class */ (function () {
     function CoreBlueprint(blueprint, options) {
         var listFormsDir = path.join(options.metadataDir, "list-forms");
         var listForms = fs.readdirSync(listFormsDir);
@@ -162,7 +165,8 @@ var CoreBlueprint = (function () {
             return self.indexOf(item) === index;
         });
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
+        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
             var childItemExt = new SitemapItemExt(item);
@@ -170,7 +174,7 @@ var CoreBlueprint = (function () {
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
         }
-        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
+        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu", 4);
         this.children = children.join(", ");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
@@ -178,9 +182,16 @@ var CoreBlueprint = (function () {
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
         this.inflectorIrregular = inflectorIrregular.join("\n");
     }
+    CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
     return CoreBlueprint;
 }());
-var SitemapItemExt = (function () {
+var SitemapItemExt = /** @class */ (function () {
     function SitemapItemExt(baseItem) {
         this.baseItem = baseItem;
     }
@@ -222,12 +233,12 @@ var SitemapItemExt = (function () {
             childrenOtherLocalesStr = childrenTranslationOtherLocales.join(",\n");
             sitemapChildrenStr = "[" + sitemap.join(", ") + "]";
         }
-        this.translation = ("" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(this.baseItem.caption) + "',\n") +
+        this.translation = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(this.baseItem.caption) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(this.baseItem.title) + "',\n" + childrenStr + "\n" + indentStr2 + "}");
-        this.translationOtherLocales = ("" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n") +
+        this.translationOtherLocales = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
-        this.sitemap = ("{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n") +
+        this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
             ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
             ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
             ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");

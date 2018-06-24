@@ -12,12 +12,13 @@ import { ModelLocales } from '../flexberry-core/Locales';
 const TAB = "  ";
 
 class SortedPair{
+  index: number;
+  str: string;
+
   constructor(index: number, str: string) {
     this.index=index;
     this.str=str;
   }
-  index: number;
-  str: string;
 }
 
 export default class ModelBlueprint {
@@ -35,6 +36,7 @@ export default class ModelBlueprint {
   needsAllEnums: string;
   needsAllObjects: string;
   lodashVariables: {};
+
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -56,7 +58,8 @@ export default class ModelBlueprint {
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
     this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
     this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
-    let modelLocales = new ModelLocales(model, modelsDir, "ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
+    let modelLocales = new ModelLocales(model, modelsDir, "ru", localePathTemplate);
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
     this.validations = this.getValidations(model);
   }
@@ -170,7 +173,8 @@ export default class ModelBlueprint {
         TAB + TAB + TAB + "```\n" +
         TAB + "*/\n" +
         TAB + `_${attr.name}Compute: function() {\n` +
-        TAB + TAB + `let result = (this.${attr.name}Compute && typeof this.${attr.name}Compute === 'function') ? this.${attr.name}Compute() : null;\n` +
+        TAB + TAB + `let result = (this.${attr.name}Compute && typeof this.${attr.name}Compute === 'function') ?` +
+        (attr.name.length > 21 ? '\n' + TAB + TAB + TAB : ' ') + `this.${attr.name}Compute() : null;\n` +
         TAB + TAB + `this.set('${attr.name}', result);\n` +
         TAB + "}";
       attrs.push(methodToSetNotStoredProperty);
@@ -350,5 +354,13 @@ export default class ModelBlueprint {
     }
 
     return validations.length ? `\n${validations.join(',\n')},\n` : '';
+  }
+
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
   }
 }

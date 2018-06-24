@@ -1,13 +1,14 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
+var path = require("path");
+var lodash = require("lodash");
 var stripBom = require("strip-bom");
-var Locales_1 = require('../flexberry-core/Locales');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+var Locales_1 = require("../flexberry-core/Locales");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
     availableOptions: [
@@ -18,10 +19,12 @@ module.exports = {
         return false;
     },
     _files: null,
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         if (this.options.dummy) {
             this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
         }
@@ -58,18 +61,26 @@ module.exports = {
         );
     }
 };
-var ListFormBlueprint = (function () {
+var ListFormBlueprint = /** @class */ (function () {
     function ListFormBlueprint(blueprint, options) {
         var listFormsDir = path.join(options.metadataDir, "list-forms");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        this.locales = new Locales_1.default(options.entity.name, "ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+        this.locales = new Locales_1.default(options.entity.name, "ru", localePathTemplate);
         var listFormFile = path.join(listFormsDir, options.file);
         var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
         this.listForm = JSON.parse(content);
         this.locales.setupForm(this.listForm);
     }
+    ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
     return ListFormBlueprint;
 }());
 //# sourceMappingURL=index.js.map

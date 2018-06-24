@@ -25,8 +25,11 @@ module.exports = {
 
   _files: null,
 
+  isDummy: false,
+
   files: function () {
     if (this._files) { return this._files; }
+    this.isDummy = this.options.dummy;
     let sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
     let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
     if (this.project.isEmberCLIAddon() && !this.options.dummy) {
@@ -63,7 +66,7 @@ module.exports = {
   locals: function (options) {
     let projectTypeNameCamel = "App";
     let projectTypeNameCebab = "app";
-    if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       options.dummy = true;
       projectTypeNameCamel = "Addon";
       projectTypeNameCebab = "addon";
@@ -88,7 +91,6 @@ module.exports = {
 };
 
 class CoreBlueprint {
-
   children: string;
   routes: string;
   importProperties: string;
@@ -99,7 +101,6 @@ class CoreBlueprint {
   inflectorIrregular: string;
 
   constructor(blueprint, options) {
-
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     let editFormsDir = path.join(options.metadataDir, "edit-forms");
@@ -173,14 +174,15 @@ class CoreBlueprint {
       return self.indexOf(item) === index;
     });
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-    let applicationMenuLocales = new ApplicationMenuLocales("ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
+    let applicationMenuLocales = new ApplicationMenuLocales("ru", localePathTemplate);
     for (let item of this.sitemap.items) {
       let childItemExt = new SitemapItemExt(item);
       childItemExt.process("forms.application.sitemap", 5);
       applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
       children.push(childItemExt.sitemap);
     }
-    this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
+    this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu", 4);
 
     this.children = children.join(", ");
     this.routes = routes.join("\n");
@@ -190,17 +192,25 @@ class CoreBlueprint {
     this.inflectorIrregular = inflectorIrregular.join("\n");
   }
 
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+  }
 }
 
-
-class SitemapItemExt{
+class SitemapItemExt {
   translation: string;
   translationOtherLocales: string;
   sitemap: string;
   baseItem: metadata.SitemapItem;
+
   constructor(baseItem: metadata.SitemapItem) {
     this.baseItem = baseItem;
   }
+
   process(parentTranslationProp: string, level: number) {
     let translationProp: string
     let translationName: string

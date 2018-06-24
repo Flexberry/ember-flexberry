@@ -1,7 +1,8 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require("path");
@@ -25,10 +26,12 @@ module.exports = {
         return false;
     },
     _files: null,
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         if (this.options.dummy) {
             this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
         }
@@ -71,14 +74,15 @@ module.exports = {
         );
     }
 };
-var EditFormBlueprint = (function () {
+var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
-        this.locales = new Locales_1.default(options.entity.name, "ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+        this.locales = new Locales_1.default(options.entity.name, "ru", localePathTemplate);
         this.process();
         this.flexberryComponents = this.snippetsResult.join("\n");
         this.parentRoute = this.getParentRoute();
@@ -211,6 +215,13 @@ var EditFormBlueprint = (function () {
             }
         }
         return parentRoute;
+    };
+    EditFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
     };
     return EditFormBlueprint;
 }());

@@ -23,8 +23,11 @@ module.exports = {
 
   _files: null,
 
+  isDummy: false,
+
   files: function () {
     if (this._files) { return this._files; }
+    this.isDummy = this.options.dummy;
     let modelsDir = path.join(this.options.metadataDir, "models");
     if (!this.options.file) {
       this.options.file = this.options.entity.name + ".json";

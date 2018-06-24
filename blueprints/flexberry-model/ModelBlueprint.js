@@ -9,14 +9,14 @@ var path = require("path");
 var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var TAB = "  ";
-var SortedPair = (function () {
+var SortedPair = /** @class */ (function () {
     function SortedPair(index, str) {
         this.index = index;
         this.str = str;
     }
     return SortedPair;
 }());
-var ModelBlueprint = (function () {
+var ModelBlueprint = /** @class */ (function () {
     function ModelBlueprint(blueprint, options) {
         var modelsDir = path.join(options.metadataDir, "models");
         if (!options.file) {
@@ -38,7 +38,8 @@ var ModelBlueprint = (function () {
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
         this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
-        var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
+        var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
         this.validations = this.getValidations(model);
     }
@@ -152,7 +153,8 @@ var ModelBlueprint = (function () {
                 TAB + TAB + TAB + "```\n" +
                 TAB + "*/\n" +
                 TAB + ("_" + attr.name + "Compute: function() {\n") +
-                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ? this." + attr.name + "Compute() : null;\n") +
+                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ?") +
+                (attr.name.length > 21 ? '\n' + TAB + TAB + TAB : ' ') + ("this." + attr.name + "Compute() : null;\n") +
                 TAB + TAB + ("this.set('" + attr.name + "', result);\n") +
                 TAB + "}";
             attrs.push(methodToSetNotStoredProperty);
@@ -336,6 +338,13 @@ var ModelBlueprint = (function () {
             validations.push((TAB + validationKey) + ": {\n" + (TAB + TAB + descriptionKey) + "\n" + (TAB + TAB + _validators) + "\n" + TAB + "}");
         }
         return validations.length ? "\n" + validations.join(',\n') + ",\n" : '';
+    };
+    ModelBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
     };
     return ModelBlueprint;
 }());

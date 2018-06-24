@@ -24,8 +24,11 @@ module.exports = {
 
   _files: null,
 
+  isDummy: false,
+
   files: function() {
     if (this._files) { return this._files; }
+    this.isDummy = this.options.dummy;
     if (this.options.dummy) {
       this._files=CommonUtils.getFilesForGeneration(this, function(v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
     } else {
@@ -68,15 +71,25 @@ module.exports = {
 class ListFormBlueprint {
   locales: Locales;
   listForm: metadata.ListForm;
+
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     if (!options.file) {
       options.file = options.entity.name + ".json";
     }
-    this.locales = new Locales(options.entity.name, "ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+    this.locales = new Locales(options.entity.name, "ru", localePathTemplate);
     let listFormFile = path.join(listFormsDir, options.file);
     let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
     this.listForm = JSON.parse(content);
     this.locales.setupForm(this.listForm);
+  }
+
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
   }
 }

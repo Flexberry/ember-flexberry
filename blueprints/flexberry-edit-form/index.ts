@@ -32,8 +32,11 @@ module.exports = {
 
   _files: null,
 
+  isDummy: false,
+
   files: function () {
     if (this._files) { return this._files; }
+    this.isDummy = this.options.dummy;
     if (this.options.dummy) {
       this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
     } else {
@@ -79,9 +82,6 @@ module.exports = {
   }
 };
 
-
-
-
 class EditFormBlueprint {
   locales: Locales;
   editForm: metadata.EditForm;
@@ -90,15 +90,16 @@ class EditFormBlueprint {
   functionGetCellComponent: string;
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
-  private modelsDir:string;
+  private modelsDir: string;
   private blueprint;
   private options;
 
   constructor(blueprint, options) {
-    this.blueprint=blueprint;
-    this.options=options;
+    this.blueprint = blueprint;
+    this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
-    this.locales = new Locales(options.entity.name, "ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+    this.locales = new Locales(options.entity.name, "ru", localePathTemplate);
     this.process();
     this.flexberryComponents = this.snippetsResult.join("\n");
     this.parentRoute = this.getParentRoute();
@@ -231,5 +232,13 @@ class EditFormBlueprint {
       }
     }
     return parentRoute;
+  }
+
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
   }
 }

@@ -28,6 +28,7 @@ rm -r app/*
 mv index.html app
 
 yarn install --no-lockfile
+bower install
 ember install "${ADDON_DIR}"
 
 # Default blueprint not execute when install addon from local folder, run it manual.
@@ -52,6 +53,7 @@ ember addon new-addon-for-tests --skip-npm
 cd new-addon-for-tests
 
 yarn install --no-lockfile
+bower install
 ember install "${ADDON_DIR}"
 
 # Default blueprint not execute when install addon from local folder, run it manual.

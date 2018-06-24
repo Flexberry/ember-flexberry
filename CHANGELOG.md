@@ -43,6 +43,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
 
+### Added
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
+
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+
 ## [0.12.0] - 2018-06-08
 ### Added
 * `flexberry-toggler` component:

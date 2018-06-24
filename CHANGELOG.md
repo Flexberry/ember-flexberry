@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
+
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+
 ## [0.12.0] - 2018-06-08
 ### Added
 * `flexberry-toggler` component:

@@ -160,7 +160,7 @@ module.exports = function(environment) {
     });
 
     // Change base URL to force paths to application assets be relative.
-    ENV.baseURL = '/' + ENV.repositoryName + '/' + branch + '/';
+    ENV.rootURL = '/' + ENV.repositoryName + '/' + branch + '/';
     ENV.locationType = 'hash';
   }
 

@@ -28,11 +28,11 @@ rm -r app/*
 mv index.html app
 
 yarn install --no-lockfile
-bower install
 ember install "${ADDON_DIR}"
 
 # Default blueprint not execute when install addon from local folder, run it manual.
 ember generate ember-flexberry
+bower install
 
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application app --metadata-dir=${META_DIR}
@@ -53,11 +53,11 @@ ember addon new-addon-for-tests --skip-npm
 cd new-addon-for-tests
 
 yarn install --no-lockfile
-bower install
 ember install "${ADDON_DIR}"
 
 # Default blueprint not execute when install addon from local folder, run it manual.
 ember generate ember-flexberry
+bower install
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.

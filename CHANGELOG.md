@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Dependency on `ember-cp-validations@~3.5.2` addon.
 * Dependency on `ember-i18n-cp-validations@~3.1.0` addon.
 * The `ModelLocales` class in `flexberry-core` blueprint generate locales with model attributes for validations.
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
 
 ### Changed
 * `flexberry-dropdown` component:
@@ -31,6 +33,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
     * Fixed code style in regenerated model file.
 
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
 * `sitemap-node` controller from app.
@@ -42,14 +48,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
-
-### Added
-* Blueprints:
-    * Additive merging of generated localization files with existing localozation files.
-
-### Fixed
-* Blueprints:
-    * Fix line length JSCS error on model generation.
 
 ## [0.12.0] - 2018-06-08
 ### Added

@@ -697,19 +697,24 @@ export default FlexberryBaseComponent.extend({
         this.set('_uploadDataCopy', this.get('_uploadData'));
         this.set('_uploadData', null);
 
-        this.get('uploadSuccess')({
-          uploadData: uploadData,
-          response: jqXhr,
-          value: value
-        });
+        if (!isNone(this.get('uploadSuccess'))) {
+          this.get('uploadSuccess')({
+            uploadData: uploadData,
+            response: jqXhr,
+            value: value
+          });
+        }
+
         resolve(this.get('_jsonValue'));
       }).fail((jqXhr, textStatus, errorThrown) => {
         let errorContent = this.showUploadErrorModalDialog(file.name, errorThrown ? ' (' + errorThrown + ')' : '');
-        this.get('uploadFail')({
-          uploadData: uploadData,
-          response: jqXhr,
-          value: this.get('value')
-        });
+        if (!isNone(this.get('uploadFail'))) {
+          this.get('uploadFail')({
+            uploadData: uploadData,
+            response: jqXhr,
+            value: this.get('value')
+          });
+        }
         reject(new Error(errorContent));
       }).always(() => {
         this.set('_uploadIsInProgress', false);

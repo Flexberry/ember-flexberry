@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 
@@ -72,8 +71,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       @method onButtonClick
      */
     onButtonClick() {
-      this._router = Ember.getOwner(this).lookup('router:main');
-      this._router.router.transitionTo(this.parentRoute, { queryParams: { perPage: 1 } });
+      this.transitionToRoute(this.parentRoute, { queryParams: { perPage: 1 } });
     }
   }
 });

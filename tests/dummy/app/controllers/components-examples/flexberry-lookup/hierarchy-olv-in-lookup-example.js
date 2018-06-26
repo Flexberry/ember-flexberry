@@ -3,6 +3,13 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
 
+  init() {
+    this._super(...arguments);
+
+    this.set('lookupController.inHierarchicalMode', true);
+    this.set('lookupController.hierarchicalAttribute', 'parent');
+  },
+
   actions: {
     /**
       This method returns custom properties for lookup window.
@@ -24,10 +31,12 @@ export default EditFormController.extend({
           disableHierarchicalMode: false,
           modelName: 'ember-flexberry-dummy-suggestion-type',
           modelProjection: 'SettingLookupExampleView',
+          inHierarchicalMode: true,
+          hierarchicalAttribute: 'Name'
         };
       }
 
       return undefined;
-    }
+    },
   }
 });

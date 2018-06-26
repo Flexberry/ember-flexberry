@@ -484,6 +484,10 @@ Ember.$.extend(true, translations, {
               'title': 'Возвращение с edit-form на list-form с queryParametr',
               'return-button': 'Вернутся'
             },
+            'lock-services-editor-view-list': {
+              'caption': 'Пример отображение имени пользователя заблокировшего объект',
+              'title': ''
+            }
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
@@ -869,7 +873,8 @@ Ember.$.extend(true, translations, {
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
-          'custom-button-name': 'Передать привет'
+          'custom-button-name': 'Передать привет',
+          'custom-row-button-name': 'Пользовательская кнопка в строке',
         },
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',
@@ -894,7 +899,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',
           'button-сaption': 'Добавить',
           'title': ''
-        }
+        },
+        'lock-services-editor-view': {
+          'blocked-by': 'Заблокированно пользователем',
+        },
       },
       'flexberry-simpleolv': {
         'limit-function-example': {

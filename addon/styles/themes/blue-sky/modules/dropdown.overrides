@@ -58,3 +58,10 @@
     left: auto;
     right: -5em;
 }
+
+.flexberry-dropdown {
+    max-width: 100%;
+    div.text {
+      max-width: inherit;
+    }
+}

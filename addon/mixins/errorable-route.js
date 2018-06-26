@@ -43,6 +43,7 @@ export default Ember.Mixin.create({
       // Trying to figure out if there is an id param.
       errorData.id = transition && transition.params[this.routeName] ? transition.params[this.routeName].id : undefined;
 
+      transition.abort();
       this.intermediateTransitionTo('error', errorData);
     } else {
       this.controller.send('error', errorData);
@@ -71,8 +72,21 @@ export default Ember.Mixin.create({
 
     let message = msg ? msg.replace(/\n/g, ' ') : '';
     if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
-      errorData.name = this.get('i18n').t('forms.error-form.error').string.toString();
-      errorData.message = this.get('i18n').t('forms.error-form.ember-data-request').string.toString();
+      errorData.nameLocaleKey = 'forms.error-form.error';
+      errorData.messageLocaleKey = 'forms.error-form.ember-data-request';
+    } else if (message.indexOf('Invalid sorting value') !== -1) {
+      errorData.nameLocaleKey = 'forms.error-form.error';
+      errorData.messageLocaleKey = 'forms.error-form.invalid-sorting-value';
+    }
+
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (isExiting) {
+      if (controller.get('isSortingError')) {
+        controller.set('sort', null);
+        controller.set('isSortingError', undefined);
+      }
     }
   }
 });

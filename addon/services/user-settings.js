@@ -5,10 +5,12 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
 const defaultSettingName = 'DEFAULT';
+
 /**
   Service to store/read user settings to/from application storage.
 
@@ -120,7 +122,7 @@ export default Ember.Service.extend({
   /**
    Get current Web Page.
 
-   @method setCurrentWebPage
+   @method getCurrentWebPage
    @return {String}
    */
   getCurrentWebPage() {
@@ -185,7 +187,7 @@ export default Ember.Service.extend({
     if (!(appPage in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-      this.developerUserSettings[appPage] = developerUserSettings;
+      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
           foundRecords => {
@@ -272,18 +274,28 @@ export default Ember.Service.extend({
    Implements current URL-params to currentUserSettings
 
    @method setCurrentParams
-   @param {Object} params.
+   @param {Object} params
+   @return {String} URL params
    */
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
-    let sorting;
-    if ('sort' in params && params.sort) {
-      sorting = deserializeSortingParam(params.sort);
-    } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
-      sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-    }
+    if (params.sort === null) {
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    } else {
+      let sorting;
+      if ('sort' in params && params.sort) {
+        sorting = deserializeSortingParam(params.sort);
+      } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
+        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
 
-    this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      let userSetting = this.getCurrentUserSetting(componentName);
+      userSetting.sorting = sorting;
+      this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    }
   },
 
   /**
@@ -381,7 +393,7 @@ export default Ember.Service.extend({
   /**
    Returns current userSetting.
 
-   @method getCurrentSorting
+   @method getCurrentUserSetting
    @param {String} componentName Name of component.
    @param {String} settingName Name of setting.
    @return {String}
@@ -557,6 +569,52 @@ export default Ember.Service.extend({
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }
+  },
+
+  /**
+   Set toggler status
+
+   @method setTogglerStatus
+   @param {String} componentName Name of component.
+   @param {Boolean} togglerStatus Status to save.
+   */
+  setTogglerStatus(componentName, settingName, togglerStatus) {
+    let userSetting;
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (this.exists() &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.togglerStatus = togglerStatus;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Returns toggler status from user service.
+
+   @method getTogglerStatus
+   @param {String} componentName component Name to search by.
+   @return {Boolean} Saved status.
+   */
+  getTogglerStatus(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+
+    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.togglerStatus : null;
   },
 
   /**

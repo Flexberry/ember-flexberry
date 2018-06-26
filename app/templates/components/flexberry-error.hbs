@@ -14,6 +14,8 @@
               {{/if}}
             {{/each}}
           </div>
+        {{else if error.messageLocaleKey}}
+          {{t error.messageLocaleKey}}
         {{else if error.message}}
           {{error.message}}
         {{else}}
@@ -25,7 +27,13 @@
           caption=(t "components.flexberry-error.show-more")
         }}
           {{#each error.errors as |e|}}
-            <h3 class="ui header">{{e.message}}</h3>
+            <h3 class="ui header">
+              {{#if e.messageLocaleKey}}
+                {{t e.messageLocaleKey}}
+              {{else if e.message}}
+                {{e.message}}
+              {{/if}}
+            </h3>
             <pre>{{e.stack}}</pre>
           {{/each}}
         {{/flexberry-toggler}}
@@ -38,7 +46,9 @@
       closeable=true
     }}
       <h2 class="ui header">
-        {{#if error.message}}
+        {{#if error.messageLocaleKey}}
+          {{t error.messageLocaleKey}}
+        {{else if error.message}}
           {{error.message}}
         {{else}}
           {{t "components.flexberry-error.unknown-error"}}
@@ -49,7 +59,13 @@
           caption=(t "components.flexberry-error.show-more")
         }}
           {{#each error.errors as |e|}}
-            <h3 class="ui header">{{e.message}}</h3>
+            <h3 class="ui header">
+              {{#if e.messageLocaleKey}}
+                {{t e.messageLocaleKey}}
+              {{else if e.message}}
+                {{e.message}}
+              {{/if}}
+            </h3>
             <pre>{{e.stack}}</pre>
           {{/each}}
         {{/flexberry-toggler}}

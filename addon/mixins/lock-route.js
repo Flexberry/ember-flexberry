@@ -85,7 +85,7 @@ export default Ember.Mixin.create({
           let builder = new Query.Builder(this.store)
             .from('new-platform-flexberry-services-lock')
             .selectByProjection('LockL')
-            .byId(`'${params.id}'`);
+            .byId(params.id);
           this.store.queryRecord('new-platform-flexberry-services-lock', builder.build()).then((lock) => {
             if (!lock) {
               this.store.createRecord('new-platform-flexberry-services-lock', {

@@ -196,11 +196,12 @@ export default FlexberryBaseComponent.extend({
      @param {Int} n  column number (id suffix)
      */
     setSortOrder: function(n) {
+
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
       let $tr = Ember.$(select).parents('tr');  // TR DOM-element
       let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = Ember.$($tr).find('input').get(0); //sortPriority field in this row
+      let input = Ember.$($tr).find('input.sortPriority').get(0); //sortPriority field in this row
       let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);
@@ -361,6 +362,7 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       if (!this.exportParams.isExportExcel) {
         let colsConfig = this._getSettings();
         let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
@@ -382,8 +384,6 @@ export default FlexberryBaseComponent.extend({
 
         this.sendAction('close', colsConfig); // close modal window
       } else {
-        let _this = this;
-        _this.get('objectlistviewEventsService').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();

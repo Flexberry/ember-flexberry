@@ -287,3 +287,21 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     }), timeout);
   });
 }
+
+export function getOrderByClause(currentSorting) {
+  return Object.keys(currentSorting).map(function(key) {
+    return { name: key, sortOrder: currentSorting[key].sortAscending ? 'asc' : 'desc', sortNumber: currentSorting[key].sortNumber };
+  }).sort(function(obj1, obj2) {
+    if (obj1.sortNumber < obj2.sortNumber) {
+      return -1;
+    }
+
+    if (obj1.sortNumber > obj2.sortNumber) {
+      return 1;
+    }
+
+    return 0;
+  }).map(function(obj) {
+    return `${obj.name} ${obj.sortOrder}`;
+  }).join(', ');
+}

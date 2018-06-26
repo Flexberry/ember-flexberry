@@ -25,6 +25,8 @@ export default ListFormController.extend({
    */
   limitFunction: undefined,
 
+  loadCount: 0,
+
   actions: {
     /**
       This method set controller.limitFunction for olv window.

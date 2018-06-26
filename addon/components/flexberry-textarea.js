@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -55,6 +56,46 @@ export default FlexberryBaseComponent.extend({
     @default 'APP.components.flexberryTextarea'
   */
   appConfigSettingsPath: 'APP.components.flexberryTextarea',
+
+  /**
+    Table rows related to textarea.
+    @type Integer
+    @default 2
+  */
+  rows: Ember.computed({
+    get(key) {
+      this._super(...arguments);
+    },
+    set(key, value) {
+      // IE does not handle null values.
+      if (value === null || value === undefined)
+      {
+        return 2;
+      }
+
+      return value;
+    }
+  }),
+
+  /**
+    Table columns related to textarea.
+    @type Integer
+    @default 20
+  */
+  cols: Ember.computed({
+    get(key) {
+      this._super(...arguments);
+    },
+    set(key, value) {
+      // IE does not handle null values.
+      if (value === null || value === undefined)
+      {
+        return 20;
+      }
+
+      return value;
+    }
+  }),
 
   /**
     Initializes component.

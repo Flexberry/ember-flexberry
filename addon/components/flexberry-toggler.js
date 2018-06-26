@@ -95,7 +95,7 @@ export default Ember.Component.extend({
   iconClass: undefined,
 
   /**
-    Flag indicates whenever toogler contains resaizable OLV.
+    Flag indicates whenever toogler contains resizable OLV.
 
     @property hasResizableOLV
     @type Boolean
@@ -114,10 +114,23 @@ export default Ember.Component.extend({
   duration: 350,
 
   /**
+  Toggler status setting name.
+
+    @property settingName
+    @type String
+    @default togglerStatus
+  */
+  settingName: 'togglerStatus',
+
+  expandedChanged: Ember.observer('expanded', function() {
+    this.saveStatus();
+  }),
+  /**
     Handles the event, when component has been insterted.
     Attaches event handlers for expanding / collapsing content.
   */
   didInsertElement() {
+    this.loadStatus();
     let $accordeonDomElement = this.$();
 
     // Attach semantic-ui open/close callbacks.
@@ -150,5 +163,43 @@ export default Ember.Component.extend({
 
     // Destroys Semantic UI accordion.
     this.$().accordion('destroy');
+  },
+
+  /**
+    Saves toggler status to user service. Only if componentName specified.
+  */
+  saveStatus() {
+    let componentName = this.get('componentName');
+    if (!Ember.isPresent(componentName)) {
+      return;
+    }
+
+    let userSettings = this.get('userSettingsService');
+    let settingName = this.get('settingName');
+    let currentStatus = userSettings.getTogglerStatus(componentName, settingName);
+    let expanded = this.get('expanded');
+
+    if (expanded !== currentStatus) {
+      userSettings.setTogglerStatus(componentName, settingName, expanded);
+    }
+  },
+
+  /**
+    Loads toggler status from user service.
+  */
+  loadStatus() {
+    let componentName = this.get('componentName');
+    if (!Ember.isPresent(componentName)) {
+      return;
+    }
+
+    var userSettings = this.get('userSettingsService');
+    let settingName = this.get('settingName');
+    var currentStatus = userSettings.getTogglerStatus(componentName, settingName);
+    let expanded = this.get('expanded');
+
+    if (currentStatus !== null && expanded !== currentStatus) {
+      this.set('expanded', currentStatus);
+    }
   }
 });

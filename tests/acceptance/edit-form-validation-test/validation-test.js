@@ -17,10 +17,10 @@ executeTest('check complete all tests', (store, assert, app) => {
       // Open datepicker calendar.
       $validationDataField.click();
       let $validationDateButton = Ember.$('.available');
-      $validationDateButton = Ember.$($validationDateButton[16]);
 
       // Select date.
-      $validationDateButton.click();
+      Ember.$($validationDateButton[15]).click();
+      Ember.$($validationDateButton[16]).click();
     });
 
     let $validationFlexberryLookupButtons = Ember.$('.ui.button');

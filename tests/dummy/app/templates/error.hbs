@@ -1,7 +1,15 @@
 <h1 class="ui header">{{t "forms.error-form.caption"}}</h1>
 <h2 class="ui header">
-  {{if model.name (concat model.name ": ")}}
-  {{if model.message model.message}}
+  {{#if model.nameLocaleKey}}
+    {{t model.nameLocaleKey}}:
+  {{else if model.name}}
+    {{model.name}}:
+  {{/if}}
+  {{#if model.messageLocaleKey}}
+    {{t model.messageLocaleKey}}
+  {{else if model.message}}
+    {{model.message}}
+  {{/if}}
 </h2>
 {{#if model.stack}}
   {{#flexberry-toggler

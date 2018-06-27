@@ -36,6 +36,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprints:
     * Fix line length JSCS error on model generation.
+* `flexberry-lookup` component:
+    * Fix hierarchical mode settings for `lookup dialog`.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.

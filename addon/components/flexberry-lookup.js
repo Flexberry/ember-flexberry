@@ -250,6 +250,24 @@ export default FlexberryBaseComponent.extend({
   lookupLimitPredicate: undefined,
 
   /**
+    Indicates wheter lookup dilog's table in hierarchical mode.
+
+    @property inHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  inHierarchicalMode: false,
+
+  /**
+    Hierarchical attribute.
+
+    @property hierarchicalAttribute
+    @type String
+    @default undefined
+  */
+  hierarchicalAttribute: undefined,
+
+  /**
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
@@ -329,6 +347,8 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     '_lookupWindowCustomPropertiesData',
+    'inHierarchicalMode',
+    'hierarchicalAttribute',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
@@ -342,6 +362,8 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
+        inHierarchicalMode: this.get('inHierarchicalMode'),
+        hierarchicalAttribute: this.get('hierarchicalAttribute'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')

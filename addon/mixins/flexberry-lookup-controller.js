@@ -97,7 +97,8 @@ export default Mixin.create(ReloadListMixin, {
       @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
     */
     showLookupDialog(chooseData) {
-      let lookupController = this.get('lookupController');
+      this.set('lookupController.inHierarchicalMode', chooseData.inHierarchicalMode);
+
       let options = $.extend(true, {
         projection: undefined,
         relationName: undefined,
@@ -111,7 +112,7 @@ export default Mixin.create(ReloadListMixin, {
         notUseUserSettings: undefined,
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
-        hierarchicalAttribute: lookupController.get('hierarchicalAttribute')
+        hierarchicalAttribute: undefined
       }, chooseData);
 
       let projectionName = options.projection;

@@ -268,9 +268,9 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        lock: {
-          caption: 'Blocking',
-          title: 'Block list',
+        'lock': {
+          'caption': 'Blocking',
+          'title': 'Block list',
         },
         'components-examples': {
           'caption': 'Components examples',
@@ -469,6 +469,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Columns markup',
               'title': ''
+            },
+            'return-from-ediform': {
+              'title': 'Return from edit-form to list-form with queryParameter',
+              'return-button': 'Return'
             },
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',

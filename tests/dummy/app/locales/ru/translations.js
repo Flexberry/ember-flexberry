@@ -480,6 +480,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Разметка столбцов',
               'title': ''
             },
+            'return-from-ediform': {
+              'title': 'Возвращение с edit-form на list-form с queryParametr',
+              'return-button': 'Вернутся'
+            },
             'lock-services-editor-view-list': {
               'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''

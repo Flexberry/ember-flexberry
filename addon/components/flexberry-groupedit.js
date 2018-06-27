@@ -423,6 +423,8 @@ export default FlexberryBaseComponent.extend({
       } else {
         this.set('sorting', []);
       }
+
+      this.get('_groupEditEventsService').setLoadingState('')
     },
 
     /**
@@ -474,6 +476,8 @@ export default FlexberryBaseComponent.extend({
         this.set('sorting', sorting);
         this.sortingFunction();
       }
+
+      this.get('_groupEditEventsService').setLoadingState('')
     },
 
     /**

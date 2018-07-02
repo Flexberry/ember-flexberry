@@ -38,13 +38,11 @@
   </div>
   <div class="field {{if (v-get validationObject "date" "isInvalid") "error"}}">
     <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
-    <div class="inline fields">
     {{flexberry-validationmessage error=(v-get validationObject "date" "messages") pointing="right pointing"}}
     {{flexberry-simpledatetime
       type="date"
       value=model.date
     }}
-    </div>
   </div>
   <div class="field {{if (v-get validationObject "enumeration" "isInvalid") "error"}}">
     <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>

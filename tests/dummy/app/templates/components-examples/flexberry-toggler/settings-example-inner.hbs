@@ -1,0 +1,31 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-toggler.settings-example-inner.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+      {{#flexberry-toggler
+        caption=caption
+        expandedCaption=expandedCaption
+        collapsedCaption=collapsedCaption
+        expanded=expanded
+        iconClass=iconClass
+        componentName="myToggler"
+      }}
+        {{t "forms.components-examples.flexberry-toggler.settings-example-inner.togglerContent"}}
+        {{#flexberry-toggler
+          caption=innerCaption
+          expandedCaption=expandedInnerCaption
+          collapsedCaption=collapsedInnerCaption
+          expanded=innerExpanded
+          iconClass=iconClass
+          componentName="myInnerToggler"
+        }}
+          {{t "forms.components-examples.flexberry-toggler.settings-example-inner.innerTogglerContent"}}
+        {{/flexberry-toggler}}
+      {{/flexberry-toggler}}
+    {{/settings-example}}
+  </div>
+</form>

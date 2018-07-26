@@ -9,6 +9,12 @@ export default Ember.Controller.extend({
    */
   caption: '',
 
+  /**
+    Text for inner 'flexberry-togggler' component 'caption' property.
+
+    @property innerCaption
+    @type String
+   */
   innerCaption: '',
 
   /**
@@ -18,6 +24,13 @@ export default Ember.Controller.extend({
     @type String
    */
   expandedCaption: null,
+
+  /**
+    Text for inner 'flexberry-togggler' component 'expandedCaption' property.
+
+    @property expandedInnerCaption
+    @type String
+   */
   expandedInnerCaption: null,
 
   /**
@@ -27,6 +40,13 @@ export default Ember.Controller.extend({
     @type String
    */
   collapsedCaption: null,
+
+  /**
+    Text for inner 'flexberry-togggler' component 'collapsedCaption' property.
+
+    @property collapsedInnerCaption
+    @type String
+   */
   collapsedInnerCaption: null,
 
   /**
@@ -38,14 +58,22 @@ export default Ember.Controller.extend({
   iconClass: '',
 
   /**
-    Current visibility state.
+    Is accordion expanded?
 
     @property expanded
     @type Boolean
     @default true
   */
   expanded: true,
-  innerExpanded:false,
+
+  /**
+    Is inner accordion expanded?
+
+    @property innerExpanded
+    @type Boolean
+    @default true
+  */
+  innerExpanded: false,
 
   /**
     Template text for 'flexberry-textbox' component.

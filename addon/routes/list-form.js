@@ -178,7 +178,7 @@ ErrorableRouteMixin, {
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
-          filterCondition: controller.filterCondition,
+          filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,

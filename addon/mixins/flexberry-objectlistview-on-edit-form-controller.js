@@ -4,6 +4,7 @@
 
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
+import { assert } from '@ember/debug';
 import { on } from '@ember/object/evented';
 import { set, computed, observer } from '@ember/object';
 import { once } from '@ember/runloop';

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
 
 executeTest('check empty filter', (store, assert, app) => {
   assert.expect(3);
@@ -9,7 +8,6 @@ executeTest('check empty filter', (store, assert, app) => {
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
-  let timeout = 5000;
   let user, type, suggestion;
   Ember.run(() => {
     let newRecords = Ember.A();

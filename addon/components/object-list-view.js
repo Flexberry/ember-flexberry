@@ -2248,7 +2248,7 @@ export default FlexberryBaseComponent.extend(
     this._removeModelWithKey(key);
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
-      this.get('saveAgregator')();
+      this.sendAction('saveAgregator');
       currentController.onDeleteActionFulfilled();
     }) : record.deleteRecord()).catch((reason) => {
 

@@ -11,5 +11,13 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
    */
   editFormRoute: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit',
 
-  exportExcelProjection: 'SuggestionL'
+  exportExcelProjection: 'SuggestionL',
+
+  /**
+    Cout of list loading.
+
+    @property loadCount
+    @type Int
+  */
+  loadCount: 0,
 });

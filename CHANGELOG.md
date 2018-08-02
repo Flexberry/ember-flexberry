@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* Nested togglers now work correctly.
 * Fix unlock edit form in `edit-form` route and `lock-route`
 * `flexberry-objectlistview-route` mixin:
     * Fix set current controller during the transition on edit form

@@ -49,7 +49,6 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
    */
   modelName: 'ember-flexberry-dummy-suggestion',
 
-
   /**
     This method will be invoked always when load operation completed,
     regardless of load promise's state (was it fulfilled or rejected).

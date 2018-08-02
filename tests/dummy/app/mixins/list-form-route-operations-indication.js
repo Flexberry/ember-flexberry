@@ -38,7 +38,9 @@ export default Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('latestOperationType', 'load');
+    if (controller) {
+      controller.set('latestOperationType', 'load');
+    }
   },
   /* eslint-enable no-unused-vars */
 
@@ -54,8 +56,10 @@ export default Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('showFormSuccessMessage', true);
-    controller.set('showFormErrorMessage', false);
+    if (controller) {
+      controller.set('showFormSuccessMessage', true);
+      controller.set('showFormErrorMessage', false);
+    }
   },
   /* eslint-enable no-unused-vars */
 
@@ -71,8 +75,10 @@ export default Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('showFormSuccessMessage', false);
-    controller.set('showFormErrorMessage', true);
+    if (controller) {
+      controller.set('showFormSuccessMessage', false);
+      controller.set('showFormErrorMessage', true);
+    }
   },
   /* eslint-enable no-unused-vars */
 

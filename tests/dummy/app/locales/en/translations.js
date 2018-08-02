@@ -510,6 +510,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             },
+            'settings-example-inner': {
+              'caption': 'Settings example (toggler in a toggler)',
+              'title': ''
+            },
             'ge-into-toggler-example': {
               'caption': 'GroupEdit into toggler example',
             }
@@ -940,6 +944,11 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        },
+        'settings-example-inner': {
+          'caption': 'Flexberry-toggler. Settings example',
+          'togglerContent': 'Some expandable/collapsable content',
+          'innerTogglerContent': 'Some expandable/collapsable content in an inner toggler'
         },
         'ge-into-toggler-example': {
           'caption': 'Flexberry-toggler. GroupEdit into toggler example'

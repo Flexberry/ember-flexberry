@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview-route` mixin:
     * Fix set current controller during the transition on edit form.
 * Fix getting controller for list form.
+* Nested togglers now work correctly.
 
 ## [0.12.0] - 2018-06-08
 ### Added

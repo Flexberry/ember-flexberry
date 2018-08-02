@@ -8,7 +8,9 @@ executeTest('check empty filter', (store, assert, app) => {
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
-  let user, type, suggestion;
+  let user;
+  let type;
+  let suggestion;
   Ember.run(() => {
     let newRecords = Ember.A();
     user = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-application-user', { name: 'Random name fot empty filther test',

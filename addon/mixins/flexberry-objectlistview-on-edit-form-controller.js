@@ -229,6 +229,11 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
       Ember.set(target, property, this.store.query(modelName, builder.build()));
     },
 
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    },
+
     /**
       Switch hierarchical mode.
 

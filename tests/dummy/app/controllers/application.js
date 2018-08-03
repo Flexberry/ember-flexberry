@@ -558,6 +558,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-toggler/settings-example-inner',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example-inner.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example-inner.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-toggler/ge-into-toggler-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.ge-into-toggler-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.ge-into-toggler-example.title'),

@@ -520,6 +520,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример работы с настройками',
               'title': ''
             },
+            'settings-example-inner': {
+              'caption': 'Пример работы с настройками (toggler в toggler)',
+              'title': ''
+            },
             'ge-into-toggler-example': {
               'caption': 'GroupEdit в toggler example',
             }
@@ -951,6 +955,11 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        },
+        'settings-example-inner': {
+          'caption': 'Flexberry-toggler. Пример работы с настройками',
+          'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание',
+          'innerTogglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание внутреннего тогглера'
         },
         'ge-into-toggler-example': {
           'caption': 'Flexberry-toggler. GroupEdit в toggler example'

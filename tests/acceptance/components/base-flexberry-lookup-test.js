@@ -345,34 +345,26 @@ test('flexberry-lookup relation name test', function(assert) {
 });
 
 test('flexberry-lookup projection test', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-projection');
 
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-projection');
+    let done = assert.async();
 
-    let $lookupButtouChoose = Ember.$('.ui-change');
+    let $lookup = Ember.$('.flexberry-lookup');
+    openLookupDialog($lookup).then(($lookupDialog) => {
+      assert.ok($lookupDialog);
 
-    // Click choose button.
-    Ember.run(() => {
-      $lookupButtouChoose.click();
-    });
+      let $lookupSearch = Ember.$('.content table.object-list-view');
+      let $lookupSearchThead = $lookupSearch.children('thead');
+      let $lookupSearchTr = $lookupSearchThead.children('tr');
+      let $lookupHeaders = $lookupSearchTr.children('th');
 
-    Ember.run(() => {
-      var done = assert.async();
-      setTimeout(function() {
-
-        let $lookupSearch = Ember.$('.content table.object-list-view');
-        let $lookupSearchThead = $lookupSearch.children('thead');
-        let $lookupSearchTr = $lookupSearchThead.children('tr');
-        let $lookupHeaders = $lookupSearchTr.children('th');
-
-        // Check count at table header.
-        assert.strictEqual($lookupHeaders.length === 3, true, 'Component has SuggestionTypeE projection');
-
-        done();
-      }, 1000);
+      // Check count at table header.
+      assert.strictEqual($lookupHeaders.length === 3, true, 'Component has SuggestionTypeE projection');
+      done();
     });
   });
 });

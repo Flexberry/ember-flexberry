@@ -41,7 +41,7 @@ export function loadingList($ctrlForClick, list, records) {
         // Time is out.
         // Stop intervals & reject promise.
         window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
+        reject('ListForm load operation is timed out');
       }, timeout);
     });
   });
@@ -126,6 +126,7 @@ export function refreshListByFunction(refreshFunction, controller) {
     let checkInterval = 500;
     let renderInterval = 100;
     let timeout = 10000;
+    let timeiutForLongTimeLoad = checkInterval + 500;
 
     let $lastLoadCount = controller.loadCount;
     refreshFunction();
@@ -152,14 +153,17 @@ export function refreshListByFunction(refreshFunction, controller) {
     // Set wait timeout.
     Ember.run(() => {
       window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
+        // Timeout for with a long load, setInterval executed first.
+        window.setTimeout(() => {
+          if (checkIntervalSucceed) {
+            return;
+          }
 
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
+          // Time is out.
+          // Stop intervals & reject promise.
+          window.clearInterval(checkIntervalId);
+          reject('ListForm load operation is timed out');
+        }, timeiutForLongTimeLoad);
       }, timeout);
     });
   });

@@ -25,8 +25,36 @@ module.exports = {
 
   _files: null,
 
+  _generateOnce: [
+    '.jscsrc',
+    '__root__/app.js',
+    '__root__/templates/application.hbs',
+    '__root__/templates/mobile/application.hbs',
+  ],
+
+  getFileMap: function() {
+    let moduleName = this.options.entity && this.options.entity.name || this.packageName;
+    let fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
+    return this.generateFileMap(fileMapVariables)
+  },
+
+  getTargetFile: function(file: string, fileMap = null): string {
+    if (!fileMap) {
+      fileMap = this.getFileMap();
+    }
+    let targetFile = String(file);
+    for (let i of lodash.keys(fileMap)) {
+      let pattern = new RegExp(i, 'g');
+      targetFile = targetFile.replace(pattern, fileMap[i]);
+    }
+    return targetFile;
+  },
+
+  isDummy: false,
+
   files: function () {
     if (this._files) { return this._files; }
+    this.isDummy = this.options.dummy;
     let sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
     let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
     if (this.project.isEmberCLIAddon() && !this.options.dummy) {
@@ -47,6 +75,7 @@ module.exports = {
     } else {
         lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
     }
+    this._excludeIfExists();
     return this._files;
   },
 
@@ -63,7 +92,7 @@ module.exports = {
   locals: function (options) {
     let projectTypeNameCamel = "App";
     let projectTypeNameCebab = "app";
-    if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       options.dummy = true;
       projectTypeNameCamel = "Addon";
       projectTypeNameCebab = "addon";
@@ -84,11 +113,21 @@ module.exports = {
       },
       coreBlueprint.lodashVariablesApplicationMenu// for use in files\__root__\locales\**\translations.js
     );
+  },
+
+  _excludeIfExists: function () {
+    let fileMap = this.getFileMap();
+    let checkIfExists = lodash.intersection(this._files, this._generateOnce);
+    for (let file of checkIfExists) {
+      let targetFile = this.getTargetFile(file, fileMap);
+      if (fs.existsSync(targetFile)) {
+        lodash.remove(this._files, (v) => v === file);
+      }
+    }
   }
 };
 
 class CoreBlueprint {
-
   children: string;
   routes: string;
   importProperties: string;
@@ -99,7 +138,6 @@ class CoreBlueprint {
   inflectorIrregular: string;
 
   constructor(blueprint, options) {
-
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     let editFormsDir = path.join(options.metadataDir, "edit-forms");
@@ -173,14 +211,15 @@ class CoreBlueprint {
       return self.indexOf(item) === index;
     });
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-    let applicationMenuLocales = new ApplicationMenuLocales("ru");
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
+    let applicationMenuLocales = new ApplicationMenuLocales("ru", localePathTemplate);
     for (let item of this.sitemap.items) {
       let childItemExt = new SitemapItemExt(item);
       childItemExt.process("forms.application.sitemap", 5);
       applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
       children.push(childItemExt.sitemap);
     }
-    this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
+    this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu", 4);
 
     this.children = children.join(", ");
     this.routes = routes.join("\n");
@@ -190,17 +229,25 @@ class CoreBlueprint {
     this.inflectorIrregular = inflectorIrregular.join("\n");
   }
 
+  private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
+    let targetRoot = "app"
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+    }
+    return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+  }
 }
 
-
-class SitemapItemExt{
+class SitemapItemExt {
   translation: string;
   translationOtherLocales: string;
   sitemap: string;
   baseItem: metadata.SitemapItem;
+
   constructor(baseItem: metadata.SitemapItem) {
     this.baseItem = baseItem;
   }
+
   process(parentTranslationProp: string, level: number) {
     let translationProp: string
     let translationName: string

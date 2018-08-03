@@ -1,14 +1,15 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
-var Locales_1 = require('../flexberry-core/Locales');
-var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+var path = require("path");
+var lodash = require("lodash");
+var Locales_1 = require("../flexberry-core/Locales");
+var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var TAB = "  ";
 module.exports = {
     description: 'Generates core entities for flexberry.',
@@ -19,10 +20,36 @@ module.exports = {
         return false;
     },
     _files: null,
+    _generateOnce: [
+        '.jscsrc',
+        '__root__/app.js',
+        '__root__/templates/application.hbs',
+        '__root__/templates/mobile/application.hbs',
+    ],
+    getFileMap: function () {
+        var moduleName = this.options.entity && this.options.entity.name || this.packageName;
+        var fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
+        return this.generateFileMap(fileMapVariables);
+    },
+    getTargetFile: function (file, fileMap) {
+        if (fileMap === void 0) { fileMap = null; }
+        if (!fileMap) {
+            fileMap = this.getFileMap();
+        }
+        var targetFile = String(file);
+        for (var _i = 0, _a = lodash.keys(fileMap); _i < _a.length; _i++) {
+            var i = _a[_i];
+            var pattern = new RegExp(i, 'g');
+            targetFile = targetFile.replace(pattern, fileMap[i]);
+        }
+        return targetFile;
+    },
+    isDummy: false,
     files: function () {
         if (this._files) {
             return this._files;
         }
+        this.isDummy = this.options.dummy;
         var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
         var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         if (this.project.isEmberCLIAddon() && !this.options.dummy) {
@@ -47,6 +74,7 @@ module.exports = {
         else {
             lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
         }
+        this._excludeIfExists();
         return this._files;
     },
     /**
@@ -81,9 +109,24 @@ module.exports = {
             projectTypeNameCebab: projectTypeNameCebab // for use in files\ember-cli-build.js
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
         );
+    },
+    _excludeIfExists: function () {
+        var fileMap = this.getFileMap();
+        var checkIfExists = lodash.intersection(this._files, this._generateOnce);
+        var _loop_1 = function (file) {
+            var targetFile = this_1.getTargetFile(file, fileMap);
+            if (fs.existsSync(targetFile)) {
+                lodash.remove(this_1._files, function (v) { return v === file; });
+            }
+        };
+        var this_1 = this;
+        for (var _i = 0, checkIfExists_1 = checkIfExists; _i < checkIfExists_1.length; _i++) {
+            var file = checkIfExists_1[_i];
+            _loop_1(file);
+        }
     }
 };
-var CoreBlueprint = (function () {
+var CoreBlueprint = /** @class */ (function () {
     function CoreBlueprint(blueprint, options) {
         var listFormsDir = path.join(options.metadataDir, "list-forms");
         var listForms = fs.readdirSync(listFormsDir);
@@ -162,7 +205,8 @@ var CoreBlueprint = (function () {
             return self.indexOf(item) === index;
         });
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
+        var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
             var childItemExt = new SitemapItemExt(item);
@@ -170,7 +214,7 @@ var CoreBlueprint = (function () {
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
         }
-        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
+        this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu", 4);
         this.children = children.join(", ");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
@@ -178,9 +222,16 @@ var CoreBlueprint = (function () {
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
         this.inflectorIrregular = inflectorIrregular.join("\n");
     }
+    CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
+        var targetRoot = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
+        }
+        return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
     return CoreBlueprint;
 }());
-var SitemapItemExt = (function () {
+var SitemapItemExt = /** @class */ (function () {
     function SitemapItemExt(baseItem) {
         this.baseItem = baseItem;
     }
@@ -222,12 +273,12 @@ var SitemapItemExt = (function () {
             childrenOtherLocalesStr = childrenTranslationOtherLocales.join(",\n");
             sitemapChildrenStr = "[" + sitemap.join(", ") + "]";
         }
-        this.translation = ("" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(this.baseItem.caption) + "',\n") +
+        this.translation = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(this.baseItem.caption) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(this.baseItem.title) + "',\n" + childrenStr + "\n" + indentStr2 + "}");
-        this.translationOtherLocales = ("" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n") +
+        this.translationOtherLocales = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
-        this.sitemap = ("{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n") +
+        this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
             ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
             ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
             ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");

@@ -73,7 +73,7 @@ export default Mixin.create({
     }
 
     let message = msg ? msg.replace(/\n/g, ' ') : '';
-    if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
+    if (message.indexOf('The adapter operation was aborted') !== -1) {
       errorData.nameLocaleKey = 'forms.error-form.error';
       errorData.messageLocaleKey = 'forms.error-form.ember-data-request';
     } else if (message.indexOf('Invalid sorting value') !== -1) {

@@ -538,7 +538,7 @@ export default FlexberryBaseComponent.extend({
   minCharacters: 1,
   match: 'both',
   selectOnKeydown: true,
-  forceSelection: true,
+  forceSelection: false,
   allowCategorySelection: false,
   direction: 'auto',
   keepOnScreen: true,

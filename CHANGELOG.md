@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprints:
     * Fix line length JSCS error on model generation.
+    * Fix duplication of some existing files on regeneration.
 * Fix unlock edit form in `edit-form` route and `lock-route`.
 * `flexberry-objectlistview-route` mixin:
     * Fix set current controller during the transition on edit form.

@@ -480,6 +480,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Разметка столбцов',
               'title': ''
             },
+            'return-from-ediform': {
+              'title': 'Возвращение с edit-form на list-form с queryParametr',
+              'return-button': 'Вернутся'
+            },
             'lock-services-editor-view-list': {
               'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''
@@ -514,6 +518,10 @@ Ember.$.extend(true, translations, {
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'settings-example-inner': {
+              'caption': 'Пример работы с настройками (toggler в toggler)',
               'title': ''
             },
             'ge-into-toggler-example': {
@@ -947,6 +955,11 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        },
+        'settings-example-inner': {
+          'caption': 'Flexberry-toggler. Пример работы с настройками',
+          'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание',
+          'innerTogglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание внутреннего тогглера'
         },
         'ge-into-toggler-example': {
           'caption': 'Flexberry-toggler. GroupEdit в toggler example'

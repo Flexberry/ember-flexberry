@@ -68,6 +68,8 @@ executeTest('check delete before record data immediately test', (store, assert, 
             store.query(modelName, builder2.build()).then((result) => {
               assert.ok(result.meta.count, 'record \'' + uuid + '\'not found in store');
               done2();
+            }).finally(() => {
+              newRecord.destroyRecord();
             });
           }), timeout);
         });

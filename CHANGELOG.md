@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
+
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+* Fix unlock edit form in `edit-form` route and `lock-route`.
+* `flexberry-objectlistview-route` mixin:
+    * Fix set current controller during the transition on edit form.
+* Fix getting controller for list form.
+* Nested togglers now work correctly.
 
 ## [0.12.0] - 2018-06-08
 ### Added

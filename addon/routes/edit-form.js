@@ -168,6 +168,7 @@ ErrorableRouteMixin, {
    */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
+    controller.set('readonly', false);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 

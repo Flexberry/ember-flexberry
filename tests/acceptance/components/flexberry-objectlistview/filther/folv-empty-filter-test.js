@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { executeTest, addDataForDestroy } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 executeTest('check empty filter', (store, assert, app) => {
@@ -22,6 +22,9 @@ executeTest('check empty filter', (store, assert, app) => {
         Ember.run(() => {
           suggestion = newRecords.pushObject(store.createRecord(modelName, { type: type, author: user, editor1: user }));
           suggestion.save();
+          addDataForDestroy(suggestion);
+          addDataForDestroy(type);
+          addDataForDestroy(user);
         });
       });
     });

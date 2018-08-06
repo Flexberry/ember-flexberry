@@ -2,8 +2,10 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
+let dataForDestroy = Ember.A();
+let app;
+
 export function executeTest(testName, callback) {
-  let app;
   let store;
   let userSettingsService;
 
@@ -26,10 +28,54 @@ export function executeTest(testName, callback) {
       userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
     },
 
-    afterEach() {
-      Ember.run(app, 'destroy');
+    afterEach(assert) {
+      Ember.run(() => {
+        if(dataForDestroy != 0) {
+          recursionDelete(0);
+        } else {
+          Ember.run(app, 'destroy');
+        }
+      })
     }
   });
 
   test(testName, (assert) => callback(store, assert, app));
+}
+
+/**
+  Function to delete data after testing.
+
+  @public
+  @method addDataForDestroy
+  @param {Object} data  or array of Object.
+ */
+
+export function addDataForDestroy(data) {
+ if (Array.isArray(data)) {
+   data.forEach((item) => {
+     dataForDestroy.pushObject(item);
+   })
+ } else {
+   dataForDestroy.pushObject(data);
+ }
+}
+
+function recursionDelete(index) {
+  if(index >= dataForDestroy.length - 1) {
+    if(!dataForDestroy[index].currentState.isDeleted) {
+      dataForDestroy[index].destroyRecord().then(() => {
+        Ember.run(app, 'destroy');
+      });
+    } else {
+      Ember.run(app, 'destroy');
+    }
+  } else {
+    if(!dataForDestroy[index].currentState.isDeleted) {
+      dataForDestroy[index].destroyRecord().then(() => {
+        recursionDelete(index + 1);
+      });
+    } else {
+      recursionDelete(index + 1);
+    }
+  }
 }

@@ -30,7 +30,7 @@ export function executeTest(testName, callback) {
 
     afterEach(assert) {
       Ember.run(() => {
-        if(dataForDestroy !== 0) {
+        if(dataForDestroy.length !== 0) {
           recursionDelete(0);
         } else {
           Ember.run(app, 'destroy');

@@ -30,12 +30,12 @@ export function executeTest(testName, callback) {
 
     afterEach(assert) {
       Ember.run(() => {
-        if(dataForDestroy != 0) {
+        if(dataForDestroy !== 0) {
           recursionDelete(0);
         } else {
           Ember.run(app, 'destroy');
         }
-      })
+      });
     }
   });
 
@@ -54,7 +54,7 @@ export function addDataForDestroy(data) {
  if (Array.isArray(data)) {
    data.forEach((item) => {
      dataForDestroy.pushObject(item);
-   })
+   });
  } else {
    dataForDestroy.pushObject(data);
  }

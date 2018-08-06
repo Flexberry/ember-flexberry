@@ -61,12 +61,12 @@ executeTest('check empty filter', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal(successful, true, 'Filter successfully worked');
-          done1();
         }).finally(() => {
           newRecords[2].destroyRecord().then(() => {
             Ember.run(() => {
               newRecords[0].destroyRecord();
               newRecords[1].destroyRecord();
+              done1();
             });
           });
         });

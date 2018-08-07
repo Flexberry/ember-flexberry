@@ -64,9 +64,11 @@ function recursionDelete(index) {
   if(index >= dataForDestroy.length - 1) {
     if(!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
+        dataForDestroy.clear();
         Ember.run(app, 'destroy');
       });
     } else {
+      dataForDestroy.clear();
       Ember.run(app, 'destroy');
     }
   } else {

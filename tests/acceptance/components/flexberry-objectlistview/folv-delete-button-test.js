@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
@@ -22,6 +22,8 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
     for (let i = 0; i < howAddRec; i++) {
       newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: uuid }));
     }
+
+    addDataForDestroy(newRecords);
 
     let done2 = assert.async();
     let promises = Ember.A();

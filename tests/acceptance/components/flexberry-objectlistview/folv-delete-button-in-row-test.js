@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import { Query } from 'ember-flexberry-data';
@@ -15,6 +15,7 @@ executeTest('check delete button in row', (store, assert, app) => {
   // Add records for deliting.
   Ember.run(() => {
     let newRecord = store.createRecord(modelName, { name: uuid });
+    addDataForDestroy(newRecord);
     let done1 = assert.async();
 
     newRecord.save().then(() => {

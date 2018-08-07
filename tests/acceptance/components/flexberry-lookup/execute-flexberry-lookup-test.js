@@ -5,7 +5,7 @@ import startApp from '../../../helpers/start-app';
 export function executeTest(testName, callback) {
   let app;
   let store;
-  let latestReceivedRecords;
+  let latestReceivedRecords = Ember.A();
 
   module('Acceptance | flexberry-lookup-base |' + testName, {
     beforeEach() {
@@ -23,7 +23,8 @@ export function executeTest(testName, callback) {
       store.query = function(...args) {
         // Call original method & remember returned records.
         return originalQueryMethod.apply(this, args).then((records) => {
-          latestReceivedRecords = records.toArray();
+          latestReceivedRecords.clear();
+          latestReceivedRecords.addObjects(records.toArray());
 
           return records;
         });
@@ -39,5 +40,5 @@ export function executeTest(testName, callback) {
     },
   });
 
-  test(testName, (assert) => callback(store, assert, app));
+  test(testName, (assert) => callback(store, assert, app, latestReceivedRecords));
 }

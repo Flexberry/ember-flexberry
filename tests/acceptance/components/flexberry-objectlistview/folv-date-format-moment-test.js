@@ -14,7 +14,6 @@ executeTest('date format moment L', (store, assert, app) => {
     loadingLocales('ru', app).then(() => {
 
       let olvContainerClass = '.object-list-view-container';
-      let trTableClass = 'table.object-list-view tbody tr';
 
       let $toolBar = Ember.$('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;

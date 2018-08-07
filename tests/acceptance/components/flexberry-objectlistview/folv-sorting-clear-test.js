@@ -39,12 +39,12 @@ executeTest('check sorting clear', (store, assert, app) => {
           assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
 
           // Refresh function.
-          let refreshFunction =  function() {
+          let refreshFunction1 =  function() {
             $thead.click();
           };
 
           let done1 = assert.async();
-          refreshListByFunction(refreshFunction, controller).then(() => {
+          refreshListByFunction(refreshFunction1, controller).then(() => {
             let $thead = Ember.$('th.dt-head-left', $olv)[0];
             let $ord = Ember.$('.object-list-view-order-icon', $thead);
             let $divOrd = Ember.$('div', $ord);
@@ -56,12 +56,13 @@ executeTest('check sorting clear', (store, assert, app) => {
             checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
               assert.ok(isTrue, 'sorting applied');
 
-              let $clearButton = Ember.$('.clear-sorting-button');
-              $clearButton.click();
-
               let done3 = assert.async();
+              let refreshFunction2 =  function() {
+                let $clearButton = Ember.$('.clear-sorting-button');
+                $clearButton.click();
+              };
 
-              window.setTimeout(() => {
+              refreshListByFunction(refreshFunction2, controller).then(() => {
                 let $thead = Ember.$('th.dt-head-left', $olv)[0];
                 let $ord = Ember.$('.object-list-view-order-icon', $thead);
                 let $divOrd = Ember.$('div', $ord);
@@ -70,7 +71,7 @@ executeTest('check sorting clear', (store, assert, app) => {
                 assert.equal(Ember.$.trim($divOrd.text()), '', 'sorting symbol delete');
 
                 done3();
-              }, 3000);
+              });
               done2();
             });
             done1();

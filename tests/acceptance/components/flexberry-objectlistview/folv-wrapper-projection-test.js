@@ -34,27 +34,26 @@ executeTest('check wrapper and projection', (store, assert, app) => {
     checkSortingList(store, projectionName(), $olv, orderByClause).then((isTrue) => {
       assert.ok(isTrue, 'records are displayed correctly');
       done();
-    });
+    }).then(() => {
+      loadingLocales('en', app).then(() => {
 
-    loadingLocales('en', app).then(() => {
+        // Check projectionName.
+        let attrs = projectionName().attributes;
+        let flag = true;
 
-      // Check projectionName.
-      let attrs = projectionName().attributes;
-      let flag = true;
+        Object.keys(attrs).forEach((element, index, array) => {
+          if (attrs[element].kind !== 'hasMany') {
+            flag = flag && (Ember.$.trim(dtHeadTable[index].innerText) === attrs[element].caption);
+          }
+        });
+        assert.ok(flag, 'projection = columns names');
 
-      Object.keys(attrs).forEach((element, index, array) => {
-        if (attrs[element].kind !== 'hasMany') {
-          flag = flag && (Ember.$.trim(dtHeadTable[index].innerText) === attrs[element].caption);
-        }
+        let newProjectionName = 'SettingLookupExampleView';
+        controller.set('modelProjection', newProjectionName);
+
+        // Ember.get(controller, 'modelProjection') returns only the name of the projection when it replaced.
+        assert.equal(projectionName(), newProjectionName, 'projection name is changed');
       });
-      assert.ok(flag, 'projection = columns names');
-
-      let newProjectionName = 'SettingLookupExampleView';
-      controller.set('modelProjection', newProjectionName);
-
-      // Ember.get(controller, 'modelProjection') returns only the name of the projection when it replaced.
-      assert.equal(projectionName(), newProjectionName, 'projection name is changed');
     });
-
   });
 });

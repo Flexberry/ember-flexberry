@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
@@ -28,6 +28,8 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
     newRecords.forEach(function(item) {
       promises.push(item.save());
     });
+
+    addDataForDestroy(newRecords);
 
     Ember.RSVP.Promise.all(promises).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');

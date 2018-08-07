@@ -442,6 +442,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Placement on edit form',
               'title': ''
             },
+            'list-on-editform': {
+              'caption': 'Placement list of detail on edit form',
+              'title': ''
+            },
             'custom-filter': {
               'caption': 'Custom filter',
               'title': ''

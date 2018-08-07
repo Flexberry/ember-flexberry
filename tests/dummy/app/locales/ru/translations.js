@@ -452,6 +452,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Размещение на форме редактирования',
               'title': ''
             },
+            'list-on-editform': {
+              'caption': 'Размещение списка детейлов на форме редактирования',
+              'title': ''
+            },
             'custom-filter': {
               'caption': 'Настройка фильтра',
               'title': ''

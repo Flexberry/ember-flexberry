@@ -108,7 +108,8 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
   });
 };
 
-executeTest('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', (store, assert, app, latestReceivedRecords) => {
+executeTest('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation',
+(store, assert, app, latestReceivedRecords) => {
   assert.expect(4);
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
 

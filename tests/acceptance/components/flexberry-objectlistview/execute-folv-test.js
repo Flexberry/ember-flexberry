@@ -30,7 +30,7 @@ export function executeTest(testName, callback) {
 
     afterEach(assert) {
       Ember.run(() => {
-        if(dataForDestroy.length !== 0) {
+        if (dataForDestroy.length !== 0) {
           recursionDelete(0);
         } else {
           Ember.run(app, 'destroy');
@@ -51,18 +51,18 @@ export function executeTest(testName, callback) {
  */
 
 export function addDataForDestroy(data) {
- if (Array.isArray(data)) {
-   data.forEach((item) => {
-     dataForDestroy.pushObject(item);
-   });
- } else {
-   dataForDestroy.pushObject(data);
- }
+  if (Array.isArray(data)) {
+    data.forEach((item) => {
+      dataForDestroy.pushObject(item);
+    });
+  } else {
+    dataForDestroy.pushObject(data);
+  }
 }
 
 function recursionDelete(index) {
-  if(index >= dataForDestroy.length - 1) {
-    if(!dataForDestroy[index].currentState.isDeleted) {
+  if (index >= dataForDestroy.length - 1) {
+    if (!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
         dataForDestroy.clear();
         Ember.run(app, 'destroy');
@@ -72,7 +72,7 @@ function recursionDelete(index) {
       Ember.run(app, 'destroy');
     }
   } else {
-    if(!dataForDestroy[index].currentState.isDeleted) {
+    if (!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
         recursionDelete(index + 1);
       });

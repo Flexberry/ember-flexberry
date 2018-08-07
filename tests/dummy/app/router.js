@@ -89,9 +89,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/on-edit-form');
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
   this.route('components-examples/flexberry-objectlistview/list-on-editform');
-  this.route('components-examples/flexberry-objectlistview/list-on-editform/suggestion',
+  this.route('components-examples/flexberry-objectlistview/on-edit-form/suggestion',
   { path:
-    'components-examples/flexberry-objectlistview/list-on-editform/suggestion/:id'
+    'components-examples/flexberry-objectlistview/on-edit-form/suggestion/:id'
   });
   this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-list');

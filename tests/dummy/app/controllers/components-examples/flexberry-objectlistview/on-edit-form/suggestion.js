@@ -9,7 +9,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */
-  parentRoute: 'components-examples/flexberry-objectlistview/list-on-editform',
+  parentRoute: 'components-examples/flexberry-objectlistview/on-edit-form',
 
   /**
     Name of model.comments edit route.

@@ -8,7 +8,7 @@ export default ListFormController.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
    */
-  editFormRoute: 'components-examples/flexberry-objectlistview/list-on-editform/suggestion',
+  editFormRoute: 'components-examples/flexberry-objectlistview/on-edit-form/suggestion',
 
   exportExcelProjection: 'SuggestionL',
 

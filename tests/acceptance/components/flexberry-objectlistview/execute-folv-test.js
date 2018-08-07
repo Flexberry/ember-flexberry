@@ -51,27 +51,15 @@ export function executeTest(testName, callback) {
  */
 
 export function addDataForDestroy(data) {
-  if (Array.isArray(data)) {
-    data.forEach((item) => {
-      dataForDestroy.pushObject(item);
-    });
+  if (Ember.isArray(data)) {
+    dataForDestroy.addObjects(data);
   } else {
-    dataForDestroy.pushObject(data);
+    dataForDestroy.addObject(data);
   }
 }
 
 function recursionDelete(index) {
-  if (index >= dataForDestroy.length - 1) {
-    if (!dataForDestroy[index].currentState.isDeleted) {
-      dataForDestroy[index].destroyRecord().then(() => {
-        dataForDestroy.clear();
-        Ember.run(app, 'destroy');
-      });
-    } else {
-      dataForDestroy.clear();
-      Ember.run(app, 'destroy');
-    }
-  } else {
+  if (index < dataForDestroy.length) {
     if (!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
         recursionDelete(index + 1);
@@ -79,5 +67,8 @@ function recursionDelete(index) {
     } else {
       recursionDelete(index + 1);
     }
+  } else {
+    dataForDestroy.clear();
+    Ember.run(app, 'destroy');
   }
 }

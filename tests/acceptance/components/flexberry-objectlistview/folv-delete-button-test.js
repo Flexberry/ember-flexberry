@@ -23,13 +23,13 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
       newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: uuid }));
     }
 
-    addDataForDestroy(newRecords);
-
     let done2 = assert.async();
     let promises = Ember.A();
     newRecords.forEach(function(item) {
       promises.push(item.save());
     });
+
+    addDataForDestroy(newRecords);
 
     Ember.RSVP.Promise.all(promises).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');

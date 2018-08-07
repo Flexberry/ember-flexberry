@@ -15,10 +15,10 @@ executeTest('check delete before record with promise data cancel test', (store, 
   // Add records for deliting.
   Ember.run(() => {
     let newRecord = store.createRecord(modelName, { name: uuid });
-    addDataForDestroy(newRecord);
     let done1 = assert.async();
 
     newRecord.save().then(() => {
+      addDataForDestroy(newRecord);
       let builder = new Builder(store).from(modelName).count();
       let done = assert.async();
       store.query(modelName, builder.build()).then((result) => {

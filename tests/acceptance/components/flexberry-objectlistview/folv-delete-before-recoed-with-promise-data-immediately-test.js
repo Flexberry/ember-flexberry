@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import { Query } from 'ember-flexberry-data';
@@ -18,6 +18,7 @@ executeTest('check delete before record with promise data immediately test', (st
     let done1 = assert.async();
 
     newRecord.save().then(() => {
+      addDataForDestroy(newRecord);
       let builder = new Builder(store).from(modelName).count();
       let done = assert.async();
       store.query(modelName, builder.build()).then((result) => {

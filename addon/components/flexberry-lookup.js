@@ -307,7 +307,8 @@ export default FlexberryBaseComponent.extend({
       if (lookupWindowCustomProperties) {
         let result = lookupWindowCustomProperties({
           relationName: this.get('relationName'),
-          projection: this.get('projection')
+          projection: this.get('projection'),
+          componentName: this.get('componentName')
         });
 
         return result;

@@ -5,7 +5,7 @@ export default EditFormController.extend({
 
   init() {
     this._super(...arguments);
-
+    
     this.set('lookupController.inHierarchicalMode', true);
     this.set('lookupController.hierarchicalAttribute', 'parent');
   },
@@ -23,18 +23,30 @@ export default EditFormController.extend({
     getLookupFolvProperties: function(options) {
       let methodArgs = Ember.merge({
         projection: undefined,
-        relationName: undefined
+        relationName: undefined,
+        componentName: undefined
       }, options);
 
       if (methodArgs.relationName === 'type') {
-        return {
-          disableHierarchicalMode: false,
-          modelName: 'ember-flexberry-dummy-suggestion-type',
-          modelProjection: 'SettingLookupExampleView',
-          inHierarchicalMode: true,
-          hierarchicalAttribute: 'Name'
-        };
-      }
+        if (methodArgs.componentName === 'HierarchyLookup') {
+          return {
+            disableHierarchicalMode: false,
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: true,
+            hierarchicalAttribute: 'Name'
+          };
+        }
+        if (methodArgs.componentName === 'NoHierarchyLookup') {
+          return {
+            disableHierarchicalMode: true,
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: false,
+            hierarchicalAttribute: 'Name'
+          };
+        } 
+      } 
 
       return undefined;
     },

@@ -5,7 +5,6 @@ export default EditFormController.extend({
 
   init() {
     this._super(...arguments);
-    
     this.set('lookupController.inHierarchicalMode', true);
     this.set('lookupController.hierarchicalAttribute', 'parent');
   },
@@ -37,6 +36,7 @@ export default EditFormController.extend({
             hierarchicalAttribute: 'Name'
           };
         }
+
         if (methodArgs.componentName === 'NoHierarchyLookup') {
           return {
             disableHierarchicalMode: true,
@@ -45,8 +45,8 @@ export default EditFormController.extend({
             inHierarchicalMode: false,
             hierarchicalAttribute: 'Name'
           };
-        } 
-      } 
+        }
+      }
 
       return undefined;
     },

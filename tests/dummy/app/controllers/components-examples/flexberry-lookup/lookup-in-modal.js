@@ -18,7 +18,7 @@ export default EditFormController.extend({
         this.set('_style', style);
       }
 
-      let repeatWindow = $('#repeat-window').modal({
+      let repeatWindow = $('.repeat-window').modal({
         closable: false,
         autofocus: false,
         detachable: false,
@@ -34,7 +34,7 @@ export default EditFormController.extend({
         this.set('_style', style);
       }
 
-      let repeatWindow = $('#repeat-window-double').modal({
+      let repeatWindow = $('.repeat-window-double').modal({
         closable: false,
         autofocus: false,
         detachable: false,

@@ -28,7 +28,7 @@ export default Mixin.create({
       @method actions.onSuccessMessageHide
      */
     onSuccessMessageHide() {
-      this.set('showFormSuccessMessage', undefined);
+      this.set('showFormSuccessMessage', false);
     },
 
     /**
@@ -45,7 +45,7 @@ export default Mixin.create({
       @method actions.onErrorMessageHide
      */
     onErrorMessageHide() {
-      this.set('showFormErrorMessage', undefined);
+      this.set('showFormErrorMessage', false);
     }
   },
 
@@ -63,7 +63,7 @@ export default Mixin.create({
     @property showFormSuccessMessage.
     @type Boolean
    */
-  showFormSuccessMessage: undefined,
+  showFormSuccessMessage: false,
 
   /**
     Success message caption related to current locale and operation type.
@@ -104,7 +104,7 @@ export default Mixin.create({
     @property showFormErrorMessage.
     @type Boolean
    */
-  showFormErrorMessage: undefined,
+  showFormErrorMessage: false,
 
   /**
     Error message caption related to current locale and operation type.

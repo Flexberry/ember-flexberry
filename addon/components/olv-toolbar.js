@@ -211,7 +211,7 @@ export default FlexberryBaseComponent.extend({
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems:  computed(function() {
+  colsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -266,6 +266,16 @@ export default FlexberryBaseComponent.extend({
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
+
+  /**
+    Observe colsSettingsItems changes.
+
+    @property _colsSettingsItems
+    @readOnly
+  */
+  _colsSettingsItems: observer('colsSettingsItems', function() {
+    this._updateListNamedUserSettings();
+  }),
 
   /**
     @property exportExcelItems
@@ -767,6 +777,10 @@ export default FlexberryBaseComponent.extend({
   /* eslint-enable no-unused-vars */
 
   _updateListNamedUserSettings() {
+    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+      return;
+    }
+
     this._resetNamedUserSettings();
     set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
     set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));

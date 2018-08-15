@@ -128,7 +128,7 @@ export default Controller.extend({
     @private
   */
   _userSettingsServiceChanged: observer('userSettingsService.isUserSettingsServiceEnabled', function() {
-    this.get('target.router').refresh();
+    this.send('onRefresh');
   }),
 
   /**

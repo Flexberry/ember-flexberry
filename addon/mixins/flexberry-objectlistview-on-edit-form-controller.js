@@ -4,6 +4,7 @@
 
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
+import { assert } from '@ember/debug';
 import { on } from '@ember/object/evented';
 import { set, computed, observer } from '@ember/object';
 import { once } from '@ember/runloop';
@@ -244,5 +245,16 @@ export default Mixin.create(PredicateFromFiltersMixin, {
       this.toggleProperty('inHierarchicalMode');
       this.getCustomContent();
     },
+
+    /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+
+      @method actions.beforeDeleteAllRecords
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    }
   },
 });

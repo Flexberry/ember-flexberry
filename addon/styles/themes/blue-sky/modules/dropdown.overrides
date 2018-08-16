@@ -59,11 +59,6 @@
     right: -5em;
 }
 
-.ui.dropdown .menu .left.menu {
-  left: auto !important;
-  right: 100% !important;
-}
-
 .flexberry-dropdown {
     max-width: 100%;
     div.text {

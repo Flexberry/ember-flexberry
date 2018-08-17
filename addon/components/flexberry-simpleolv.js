@@ -2671,7 +2671,7 @@ export default folv.extend(
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems:  Ember.computed(function() {
+  colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -2726,6 +2726,15 @@ export default folv.extend(
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
+
+  /**
+    Observe colsSettingsItems changes.
+    @property _colsSettingsItems
+    @readOnly
+  */
+  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
+    this._updateListNamedUserSettings();
+  }),
 
   /**
     @property exportExcelItems
@@ -2861,6 +2870,10 @@ export default folv.extend(
   },
 
   _updateListNamedUserSettings() {
+    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+      return;
+    }
+
     this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
     Ember.set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));

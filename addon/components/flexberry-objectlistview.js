@@ -1266,13 +1266,19 @@ export default FlexberryBaseComponent.extend({
   },
 
   _setMenuWidth(tableWidth, containerWidth) {
-    let $table = this.$('table.object-list-view')[0];
+    let $table = this.$('table.object-list-view');
     if (Ember.isBlank(tableWidth)) {
-      tableWidth = $table.clientWidth;
+      tableWidth = $table.width();
     }
 
     if (Ember.isBlank(containerWidth)) {
-      containerWidth = $table.parentElement.clientWidth - 5;
+      containerWidth = $table.parent().width() - 5;
+    }
+
+    // Using scrollWidth, because Internet Explorer don't receive correct value for this element with .width().
+    let pages = this.$('.ui.secondary.menu .ui.basic.buttons')[0];
+    if (tableWidth < pages.scrollWidth) {
+      tableWidth = pages.scrollWidth + 75;
     }
 
     this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?

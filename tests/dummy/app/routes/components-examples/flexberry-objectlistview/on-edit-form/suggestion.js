@@ -1,4 +1,8 @@
+//import Ember from 'ember';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
+
+//import { Query } from 'ember-flexberry-data';
+//const { Builder } = Query;
 
 export default EditFormRoute.extend({
   /**
@@ -17,9 +21,9 @@ export default EditFormRoute.extend({
   @property developerUserSettings
   @type Object
   @default {}
-
-  developerUserSettings: { FOLVOnEditFormSuggestionsObjectListView: { } },
   */
+
+  // developerUserSettings: { listOnEditform: { } },
 
   /**
     Name of model to be used as form's record type.
@@ -28,6 +32,25 @@ export default EditFormRoute.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
+
+  /** Get a list of all the detailes suggestion-type */
+  getListLocalizedSuggestionType(modelName, modelProjection) {
+    return this._super(...arguments)
+    .then((model) => {
+      let builder = new Builder(this.get('store'))
+        .from(modelName)
+        .selectByProjection(modelProjection)
+        .where(relation, FilterOperator.Eq, key);
+
+      let types = this.get('store').query(modelName, builder.build());
+      return Ember.RSVP.hash({ base: model, types });
+    });
+  },
+
+  setupController(controller, { base, types }) {
+    this._super(controller, base);
+    controller.set('types', types);
+  }
 
 });

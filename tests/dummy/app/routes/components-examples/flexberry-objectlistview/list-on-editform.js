@@ -40,5 +40,5 @@ export default ListFormRoute.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
 });

@@ -20,6 +20,16 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
+  /** Добавить комментарий о том, что происходит  */
+  listOnEditform: null,
+
+  listLocalizedSuggestionType() {
+    let modelName = this.get('ember-flexberry-dummy-localized-suggestion-type');
+    let modelProjection = this.get('LocalizedSuggestionTypeE');
+    let relation = 'suggestionType.name';
+    this.set('listOnEditform', this.getListLocalizedSuggestionType(modelName, modelProjection, relation));
+  },
+
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.
@@ -70,5 +80,24 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
-  }
+  },
+
+  init() {
+    this._super(...arguments);
+
+    this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
+  },
+
+  _setModalIsHidden(componentName) {
+    let componentName = 'SuggestionEditType';
+    if (this.get('componentName') === componentName) {
+      this.get();
+    }
+  },
+
+  willDestroy() {
+    this._super(...arguments);
+    this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+  },
+
 });

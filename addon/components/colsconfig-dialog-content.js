@@ -32,6 +32,14 @@ export default FlexberryBaseComponent.extend({
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
    Model with added DOM elements.
 
    @property modelForDOM
@@ -362,7 +370,7 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
+      this.get('appState').loading();
       if (!this.exportParams.isExportExcel) {
         let colsConfig = this._getSettings();
         let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
@@ -406,12 +414,11 @@ export default FlexberryBaseComponent.extend({
               anchor.get(0).click();
             }
           }
-
-          this.get('objectlistviewEventsService').setLoadingState('');
         }).catch((reason) => {
-          this.get('objectlistviewEventsService').setLoadingState('');
           this.sendAction('close'); // close modal window
           this.currentController.send('handleError', reason);
+        }).finally(() => {
+          this.get('appState').reset();
         });
       }
     },

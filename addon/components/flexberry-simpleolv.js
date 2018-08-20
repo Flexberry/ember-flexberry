@@ -711,6 +711,14 @@ export default folv.extend(
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
     Used to identify objectListView on the page.
 
     @property componentName
@@ -2194,17 +2202,17 @@ export default folv.extend(
     @param {Object} filterQuery Filter applying before delete all records
   */
   _actualDeleteAllRecords(componentName, modelName, filterQuery) {
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
     let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
 
     promise.then((data)=> {
       if (data.deletedCount > -1) {
-        this.get('objectlistviewEventsService').setLoadingState('success');
+        this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
         this.get('currentController').onDeleteActionFulfilled();
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
-        this.get('objectlistviewEventsService').setLoadingState('error');
+        this.get('appState').error();
         let errorData = {
           message: data.message
         };
@@ -2213,7 +2221,7 @@ export default folv.extend(
         this.get('currentController').send('handleError', errorData);
       }
     }).catch((errorData) => {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       if (!Ember.isNone(errorData.status) && errorData.status === 0 && !Ember.isNone(errorData.statusText) &&  errorData.statusText === 'error') {
         // This message will be converted to corresponding localized message.
         errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';

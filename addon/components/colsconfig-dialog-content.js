@@ -427,6 +427,7 @@ export default FlexberryBaseComponent.extend({
         this.set('currentController.message.visible', true);
         this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
         this.set('currentController.message.message', '');
+        this._scrollToBottom();
         return;
       }
 
@@ -443,12 +444,14 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.message', '');
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
           this._isChanged = false;
+          this._scrollToBottom();
         },
         error => {
           this.set('currentController.message.type', 'error');
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
+          this._scrollToBottom();
           this.sendAction('close', colsConfig); // close modal window
           this.currentController.send('handleError', error);
         }
@@ -504,6 +507,18 @@ export default FlexberryBaseComponent.extend({
       this._super(...arguments);
       return true;
     }
+  },
+
+  /**
+    Scrolling content to bottom.
+
+    @method _scrollToBottom
+  */
+  _scrollToBottom() {
+    Ember.run.scheduleOnce('afterRender', this, function() {
+      let scrollBlock = this.$('.flexberry-colsconfig.content');
+      scrollBlock.animate({ scrollTop: scrollBlock.prop('scrollHeight') }, 1000);
+    });
   },
 
   /**

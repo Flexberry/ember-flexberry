@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* The `AppStateService` - service is used to control the state of the application.
 * Blueprints:
     * Additive merging of generated localization files with existing localozation files.
 
@@ -14,10 +15,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix unlock edit form in `edit-form` route and `lock-route`.
 * `flexberry-objectlistview-route` mixin:
     * Fix set current controller during the transition on edit form.
+* `colsconfig-dialog-content` component:
+    * Fix setting save messages visibility.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
 * List components:
     * Fix incorrect footer width in Internet Explorer.
+    * Incorrect resets the load state.
+* `flexberry-objectlistview` component:
+    * Fix user-settings service activity toggle.
+
+### Deprecated
+* The `loadingState` property and the `setLoadingState` method in the `ObjectlistviewEvents` service are obsolete, use the `AppStateService` service.
 
 ## [0.12.0] - 2018-06-08
 ### Added

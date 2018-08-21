@@ -37,7 +37,7 @@ export default Ember.Mixin.create({
     errorData = errorData || {};
     this._updateErrorToDisplay(errorData);
     if (!this.get('controller') || !this.get('controller.model') || this.get('controller.model.isLoading') || (transition && transition.isActive !== false)) {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       errorData.retryRoute = this.routeName;
 
       // Trying to figure out if there is an id param.

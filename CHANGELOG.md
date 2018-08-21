@@ -17,6 +17,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix set current controller during the transition on edit form.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
+* `flexberry-objectlistview` component:
+    * Fix user-settings service activity toggle.
 * Resets the load state from the *list components.
 
 ### Deprecated

@@ -854,8 +854,6 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
@@ -874,8 +872,6 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
@@ -896,8 +892,6 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
@@ -1033,7 +1027,6 @@ export default FlexberryBaseComponent.extend({
       var userSettings = this.get('userSettingsService');
       if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
         userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
-        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
     },
 

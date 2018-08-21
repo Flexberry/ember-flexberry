@@ -910,8 +910,6 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },
@@ -1202,7 +1200,6 @@ export default FlexberryBaseComponent.extend(
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-            this.get('objectlistviewEventsService').setLoadingState('');
 
             this.set('_renderedRowIndex', -1);
 
@@ -1863,14 +1860,12 @@ export default FlexberryBaseComponent.extend(
             });
           }).then(()=> {
             this.set('contentWithKeys', this.contentForRender);
-            this.get('objectlistviewEventsService').setLoadingState('');
           });
         } else {
           content.forEach((item) => {
             this._addModel(item);
           });
           this.set('contentWithKeys', this.contentForRender);
-          this.get('objectlistviewEventsService').setLoadingState('');
         }
       }
 

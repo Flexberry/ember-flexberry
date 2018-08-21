@@ -65,8 +65,6 @@ export default folv.extend(
           item.set('rowConfig.canBeSelected', !checked);
         });
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('');
     }
   })),
 
@@ -759,8 +757,6 @@ export default folv.extend(
         return;
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
 
@@ -833,7 +829,6 @@ export default folv.extend(
       @public
     */
     refresh() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -907,9 +902,6 @@ export default folv.extend(
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText')) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
-      }
 
       Ember.run.later((function() {
         _this.set('filterText', null);

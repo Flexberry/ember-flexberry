@@ -19,9 +19,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix setting save messages visibility.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
+* List components:
+    * Fix incorrect footer width in Internet Explorer.
+    * Incorrect resets the load state.
 * `flexberry-objectlistview` component:
     * Fix user-settings service activity toggle.
-* Resets the load state from the *list components.
 
 ### Deprecated
 * The `loadingState` property and the `setLoadingState` method in the `ObjectlistviewEvents` service are obsolete, use the `AppStateService` service.

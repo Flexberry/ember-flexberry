@@ -27,7 +27,7 @@ export default FlexberryBaseComponent.extend({
 
       if (hasNullValues) {
         let componentName = this.get('componentName');
-        console.warn(`Flexberry-dropdown component ${componentName ? '"' + componentName + '" ' : ''}has null value in items array.`);
+        Ember.warn(`Flexberry-dropdown component ${componentName ? '"' + componentName + '" ' : ''}has null value in items array.`);
       }
     }
 

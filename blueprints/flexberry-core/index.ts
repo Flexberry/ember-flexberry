@@ -25,6 +25,31 @@ module.exports = {
 
   _files: null,
 
+  _generateOnce: [
+    '.jscsrc',
+    '__root__/app.js',
+    '__root__/templates/application.hbs',
+    '__root__/templates/mobile/application.hbs',
+  ],
+
+  getFileMap: function() {
+    let moduleName = this.options.entity && this.options.entity.name || this.packageName;
+    let fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
+    return this.generateFileMap(fileMapVariables)
+  },
+
+  getTargetFile: function(file: string, fileMap = null): string {
+    if (!fileMap) {
+      fileMap = this.getFileMap();
+    }
+    let targetFile = String(file);
+    for (let i of lodash.keys(fileMap)) {
+      let pattern = new RegExp(i, 'g');
+      targetFile = targetFile.replace(pattern, fileMap[i]);
+    }
+    return targetFile;
+  },
+
   isDummy: false,
 
   files: function () {
@@ -50,6 +75,7 @@ module.exports = {
     } else {
         lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
     }
+    this._excludeIfExists();
     return this._files;
   },
 
@@ -87,6 +113,17 @@ module.exports = {
       },
       coreBlueprint.lodashVariablesApplicationMenu// for use in files\__root__\locales\**\translations.js
     );
+  },
+
+  _excludeIfExists: function () {
+    let fileMap = this.getFileMap();
+    let checkIfExists = lodash.intersection(this._files, this._generateOnce);
+    for (let file of checkIfExists) {
+      let targetFile = this.getTargetFile(file, fileMap);
+      if (fs.existsSync(targetFile)) {
+        lodash.remove(this._files, (v) => v === file);
+      }
+    }
   }
 };
 

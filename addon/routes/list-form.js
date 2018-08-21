@@ -151,7 +151,7 @@ ErrorableRouteMixin, {
     userSettingPromise
       .then(currectPageUserSettings => {
         if (this._invalidSorting(params.sort)) {
-          this.get('controller').set('isSortingError', true);
+          controller.set('isSortingError', true);
           transition.abort();
           throw new Error('Invalid sorting value');
         }
@@ -188,7 +188,7 @@ ErrorableRouteMixin, {
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
-          filterCondition: this.get('controller.filterCondition'),
+          filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
@@ -205,7 +205,7 @@ ErrorableRouteMixin, {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.onModelLoadingFulfilled(records, transition);
         this.includeSorting(records, this.sorting);
-        this.get('controller').set('model', records);
+        controller.set('model', records);
 
         if (this.sorting.length > 0 && isNone(this.get('controller').get('sort'))) {
           let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));

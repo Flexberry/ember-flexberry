@@ -137,6 +137,9 @@ export default Component.extend({
 
     // Attach semantic-ui open/close callbacks.
     $accordeonDomElement.accordion({
+      exclusive: false,
+      closeNested: false,
+      selector: { trigger: '> .title' },
       duration: this.get('duration'),
       onOpen: () => {
         // Change of 'expanded' state may cause asynchronous animation, so we need run function here.

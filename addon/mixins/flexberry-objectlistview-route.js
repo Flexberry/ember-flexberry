@@ -48,12 +48,12 @@ export default Mixin.create({
       }
 
       let recordId = record.get('id') || record.get('data.id');
-      let thisUrl = this.get('router.url');
+      let thisRouteName = this.get('router.currentRouteName');
       if (!onEditForm) {
         this.transitionTo(editFormRoute, recordId)
         .then((newRoute) => {
           if (newRoute) {
-            newRoute.controller.set('parentRoute', thisUrl);
+            newRoute.controller.set('parentRoute', thisRouteName);
           }
         });
       } else {
@@ -61,7 +61,7 @@ export default Mixin.create({
           this.controller.save(false, true).then(() => {
             this.transitionTo(editFormRoute, recordId)
             .then((newRoute) => {
-              newRoute.controller.set('parentRoute', thisUrl);
+              newRoute.controller.set('parentRoute', thisRouteName);
             });
           }).catch((errorData) => {
             this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
@@ -69,7 +69,7 @@ export default Mixin.create({
         } else {
           this.transitionTo(editFormRoute, recordId)
           .then((newRoute) => {
-            newRoute.controller.set('parentRoute', thisUrl);
+            newRoute.controller.set('parentRoute', thisRouteName);
           });
         }
       }

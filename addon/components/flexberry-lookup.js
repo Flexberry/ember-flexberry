@@ -834,26 +834,28 @@ export default FlexberryBaseComponent.extend({
           builder.top(maxRes + 1);
           builder.count();
 
-          store.query(relationModelName, builder.build()).then((records) => {
-            callback({
-              success: true,
-              results: records.map(i => {
-                let attributeName = i.get(displayAttributeName);
-                if (iCount > maxRes && records.meta.count > maxRes) {
-                  return {
-                    title: '...'
-                  };
-                } else {
-                  iCount += 1;
-                  return {
-                    title: attributeName,
-                    instance: i
-                  };
-                }
-              })
+          run(() => {
+            store.query(relationModelName, builder.build()).then((records) => {
+              callback({
+                success: true,
+                results: records.map(i => {
+                  let attributeName = i.get(displayAttributeName);
+                  if (iCount > maxRes && records.meta.count > maxRes) {
+                    return {
+                      title: '...'
+                    };
+                  } else {
+                    iCount += 1;
+                    return {
+                      title: attributeName,
+                      instance: i
+                    };
+                  }
+                })
+              });
+            }, () => {
+              callback({ success: false });
             });
-          }, () => {
-            callback({ success: false });
           });
         }
       },
@@ -864,7 +866,10 @@ export default FlexberryBaseComponent.extend({
        */
       onResultsOpen() {
         state = 'opened';
-        debug(`Flexberry Lookup::autocomplete state = ${state}`);
+
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
       },
 
       /**
@@ -875,15 +880,18 @@ export default FlexberryBaseComponent.extend({
        */
       onSelect(result) {
         state = 'selected';
-        debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
-        _this.set('value', result.instance);
-        _this.get('currentController').send(_this.get('updateLookupAction'),
-          {
-            relationName: relationName,
-            modelToLookup: relatedModel,
-            newRelationValue: result.instance
-          });
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+
+          _this.set('value', result.instance);
+          _this.get('currentController').send(_this.get('updateLookupAction'),
+            {
+              relationName: relationName,
+              modelToLookup: relatedModel,
+              newRelationValue: result.instance
+            });
+        });
       },
 
       /**
@@ -893,6 +901,7 @@ export default FlexberryBaseComponent.extend({
       onResultsClose() {
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
+
         if (state !== 'selected') {
           if (_this.get('displayValue')) {
             _this.set('displayValue', _this._buildDisplayValue());
@@ -902,7 +911,10 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
-        debug(`Flexberry Lookup::autocomplete state = ${state}`);
+
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
       }
     });
   },

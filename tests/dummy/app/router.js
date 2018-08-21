@@ -101,6 +101,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
   { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-list');
+  this.route('components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit',
+  { path: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit/:id' });
   this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-list');
   this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-edit',
   { path: 'components-examples/flexberry-objectlistview/lock-services-editor-view-edit/:id' });
@@ -115,6 +118,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
+  this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
   this.route('components-examples/ui-message/settings-example');

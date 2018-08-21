@@ -1,9 +1,12 @@
 import { run } from '@ember/runloop';
+import { A, isArray } from '@ember/array';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
+let dataForDestroy = A();
+let app;
+
 export function executeTest(testName, callback) {
-  let app;
   let store;
   let userSettingsService;
 
@@ -30,10 +33,47 @@ export function executeTest(testName, callback) {
       });
     },
 
-    afterEach() {
-      run(app, 'destroy');
-    },
+    afterEach(assert) {
+      run(() => {
+        if (dataForDestroy.length !== 0) {
+          recursionDelete(0);
+        } else {
+          run(app, 'destroy');
+        }
+      });
+    }
   });
 
   test(testName, (assert) => callback(store, assert, app));
+}
+
+/**
+  Function to delete data after testing.
+
+  @public
+  @method addDataForDestroy
+  @param {Object} data  or array of Object.
+ */
+
+export function addDataForDestroy(data) {
+  if (isArray(data)) {
+    dataForDestroy.addObjects(data);
+  } else {
+    dataForDestroy.addObject(data);
+  }
+}
+
+function recursionDelete(index) {
+  if (index < dataForDestroy.length) {
+    if (!dataForDestroy[index].currentState.isDeleted) {
+      dataForDestroy[index].destroyRecord().then(() => {
+        recursionDelete(index + 1);
+      });
+    } else {
+      recursionDelete(index + 1);
+    }
+  } else {
+    dataForDestroy.clear();
+    run(app, 'destroy');
+  }
 }

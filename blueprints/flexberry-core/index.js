@@ -20,6 +20,30 @@ module.exports = {
         return false;
     },
     _files: null,
+    _generateOnce: [
+        '.jscsrc',
+        '__root__/app.js',
+        '__root__/templates/application.hbs',
+        '__root__/templates/mobile/application.hbs',
+    ],
+    getFileMap: function () {
+        var moduleName = this.options.entity && this.options.entity.name || this.packageName;
+        var fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
+        return this.generateFileMap(fileMapVariables);
+    },
+    getTargetFile: function (file, fileMap) {
+        if (fileMap === void 0) { fileMap = null; }
+        if (!fileMap) {
+            fileMap = this.getFileMap();
+        }
+        var targetFile = String(file);
+        for (var _i = 0, _a = lodash.keys(fileMap); _i < _a.length; _i++) {
+            var i = _a[_i];
+            var pattern = new RegExp(i, 'g');
+            targetFile = targetFile.replace(pattern, fileMap[i]);
+        }
+        return targetFile;
+    },
     isDummy: false,
     files: function () {
         if (this._files) {
@@ -50,6 +74,7 @@ module.exports = {
         else {
             lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
         }
+        this._excludeIfExists();
         return this._files;
     },
     /**
@@ -84,6 +109,21 @@ module.exports = {
             projectTypeNameCebab: projectTypeNameCebab // for use in files\ember-cli-build.js
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
         );
+    },
+    _excludeIfExists: function () {
+        var fileMap = this.getFileMap();
+        var checkIfExists = lodash.intersection(this._files, this._generateOnce);
+        var _loop_1 = function (file) {
+            var targetFile = this_1.getTargetFile(file, fileMap);
+            if (fs.existsSync(targetFile)) {
+                lodash.remove(this_1._files, function (v) { return v === file; });
+            }
+        };
+        var this_1 = this;
+        for (var _i = 0, checkIfExists_1 = checkIfExists; _i < checkIfExists_1.length; _i++) {
+            var file = checkIfExists_1[_i];
+            _loop_1(file);
+        }
     }
 };
 var CoreBlueprint = /** @class */ (function () {

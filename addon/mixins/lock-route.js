@@ -68,8 +68,6 @@ export default Mixin.create({
             this.set('_currentLock', null);
           }
         });
-      } else {
-        this.controller.set('readonly', false);
       }
     },
     /* eslint-enable no-unused-vars */

@@ -1,6 +1,6 @@
 import { later, run } from '@ember/runloop';
 import $ from 'jquery';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
@@ -20,6 +20,7 @@ executeTest('check delete button in row', (store, assert, app) => {
     let done1 = assert.async();
 
     newRecord.save().then(() => {
+      addDataForDestroy(newRecord);
       let builder = new Builder(store).from(modelName).count();
       let done = assert.async();
       store.query(modelName, builder.build()).then((result) => {

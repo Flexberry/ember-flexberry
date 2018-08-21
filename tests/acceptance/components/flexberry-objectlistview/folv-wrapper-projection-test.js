@@ -35,29 +35,27 @@ executeTest('check wrapper and projection', (store, assert, app) => {
     checkSortingList(store, projectionName(), $olv, orderByClause).then((isTrue) => {
       assert.ok(isTrue, 'records are displayed correctly');
       done();
-    });
+    }).then(() => {
+      loadingLocales('en', app).then(() => {
 
-    loadingLocales('en', app).then(() => {
+        // Check projectionName.
+        let attrs = projectionName().attributes;
+        let flag = true;
+        /* eslint-disable no-unused-vars */
+        Object.keys(attrs).forEach((element, index, array) => {
+          if (attrs[element].kind !== 'hasMany') {
+            flag = flag && ($.trim(dtHeadTable[index].innerText) === attrs[element].caption);
+          }
+        });
+        /* eslint-enable no-unused-vars */
+        assert.ok(flag, 'projection = columns names');
 
-      // Check projectionName.
-      let attrs = projectionName().attributes;
-      let flag = true;
+        let newProjectionName = 'SettingLookupExampleView';
+        controller.set('modelProjection', newProjectionName);
 
-      /* eslint-disable no-unused-vars */
-      Object.keys(attrs).forEach((element, index, array) => {
-        if (attrs[element].kind !== 'hasMany') {
-          flag = flag && ($.trim(dtHeadTable[index].innerText) === attrs[element].caption);
-        }
+        // get(controller, 'modelProjection') returns only the name of the projection when it replaced.
+        assert.equal(projectionName(), newProjectionName, 'projection name is changed');
       });
-      /* eslint-enable no-unused-vars */
-      assert.ok(flag, 'projection = columns names');
-
-      let newProjectionName = 'SettingLookupExampleView';
-      controller.set('modelProjection', newProjectionName);
-
-      // get(controller, 'modelProjection') returns only the name of the projection when it replaced.
-      assert.equal(projectionName(), newProjectionName, 'projection name is changed');
     });
-
   });
 });

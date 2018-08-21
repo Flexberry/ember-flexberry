@@ -173,6 +173,7 @@ ErrorableRouteMixin, {
   /* eslint-disable no-unused-vars */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
+    controller.set('readonly', false);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 

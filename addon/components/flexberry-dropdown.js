@@ -16,7 +16,19 @@ export default FlexberryBaseComponent.extend({
 
     if (Ember.isArray(items)) {
       obj = {};
-      items.forEach(item => obj[item] = item.toString());
+      let hasNullValues = false;
+      items.forEach(item => {
+        if (Ember.isNone(item)) {
+          hasNullValues = true;
+        } else {
+          obj[item] = item.toString();
+        }
+      });
+
+      if (hasNullValues) {
+        let componentName = this.get('componentName');
+        console.warn(`Flexberry-dropdown component ${componentName ? '"' + componentName + '" ' : ''}has null value in items array.`);
+      }
     }
 
     return obj || items;

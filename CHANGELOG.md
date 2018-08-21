@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix unlock edit form in `edit-form` route and `lock-route`.
 * `flexberry-objectlistview-route` mixin:
     * Fix set current controller during the transition on edit form.
+* `colsconfig-dialog-content` component:
+    * Fix setting save messages visibility.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
 * `flexberry-objectlistview` component:

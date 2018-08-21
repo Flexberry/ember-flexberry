@@ -406,7 +406,6 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -492,9 +491,6 @@ export default FlexberryBaseComponent.extend({
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText')) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
-      }
 
       Ember.run.later((function() {
         _this.set('filterText', null);

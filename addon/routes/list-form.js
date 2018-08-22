@@ -77,12 +77,12 @@ ErrorableRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  appState: Ember.inject.service(),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -96,7 +96,7 @@ ErrorableRouteMixin, {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
     let controller = this.controllerFor(this.routeName);
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
 
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
@@ -207,9 +207,7 @@ ErrorableRouteMixin, {
         this.onModelLoadingRejected(errorData, transition);
       }).finally((data) => {
         this.onModelLoadingAlways(data, transition);
-        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
-          this.get('objectlistviewEventsService').setLoadingState('');
-        }
+        this.get('appState').reset();
       });
 
     if (this.get('controller') === undefined) {

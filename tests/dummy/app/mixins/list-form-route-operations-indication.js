@@ -35,7 +35,9 @@ export default Ember.Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('latestOperationType', 'load');
+    if (controller) {
+      controller.set('latestOperationType', 'load');
+    }
   },
 
   /**
@@ -49,8 +51,10 @@ export default Ember.Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('showFormSuccessMessage', true);
-    controller.set('showFormErrorMessage', false);
+    if (controller) {
+      controller.set('showFormSuccessMessage', true);
+      controller.set('showFormErrorMessage', false);
+    }
   },
 
   /**
@@ -64,8 +68,10 @@ export default Ember.Mixin.create({
     this._super(...arguments);
 
     let controller = this.get('copyController');
-    controller.set('showFormSuccessMessage', false);
-    controller.set('showFormErrorMessage', true);
+    if (controller) {
+      controller.set('showFormSuccessMessage', false);
+      controller.set('showFormErrorMessage', true);
+    }
   },
 
   /**

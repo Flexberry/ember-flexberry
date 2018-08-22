@@ -61,3 +61,10 @@
 span.lookup-field {
   word-break: break-all;
 }
+
+.ui.form .ui.input.error input {
+  background-color: #FFF6F6;
+  border-color: #E0B4B4;
+  color: #9F3A38;
+  box-shadow: none;
+}

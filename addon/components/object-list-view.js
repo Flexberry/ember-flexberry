@@ -818,6 +818,14 @@ export default FlexberryBaseComponent.extend(
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
     Used to identify objectListView on the page.
 
     @property componentName
@@ -901,8 +909,6 @@ export default FlexberryBaseComponent.extend(
       if (!this.orderable || column.sortable === false) {
         return;
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -1194,7 +1200,6 @@ export default FlexberryBaseComponent.extend(
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-            this.get('objectlistviewEventsService').setLoadingState('');
 
             this.set('_renderedRowIndex', -1);
 
@@ -1855,14 +1860,12 @@ export default FlexberryBaseComponent.extend(
             });
           }).then(()=> {
             this.set('contentWithKeys', this.contentForRender);
-            this.get('objectlistviewEventsService').setLoadingState('');
           });
         } else {
           content.forEach((item) => {
             this._addModel(item);
           });
           this.set('contentWithKeys', this.contentForRender);
-          this.get('objectlistviewEventsService').setLoadingState('');
         }
       }
 
@@ -2113,17 +2116,17 @@ export default FlexberryBaseComponent.extend(
   */
   _actualDeleteAllRecords(componentName, modelName, filterQuery) {
     let currentController = this.get('currentController');
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
     let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
 
     promise.then((data)=> {
       if (data.deletedCount > -1) {
-        this.get('objectlistviewEventsService').setLoadingState('success');
+        this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
         currentController.onDeleteActionFulfilled();
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
-        this.get('objectlistviewEventsService').setLoadingState('error');
+        this.get('appState').error();
         let errorData = {
           message: data.message
         };
@@ -2132,7 +2135,7 @@ export default FlexberryBaseComponent.extend(
         currentController.send('handleError', errorData);
       }
     }).catch((errorData) => {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       if (!Ember.isNone(errorData.status) && errorData.status === 0 && !Ember.isNone(errorData.statusText) &&  errorData.statusText === 'error') {
         // This message will be converted to corresponding localized message.
         errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';

@@ -258,9 +258,16 @@ export default Ember.Service.extend(Ember.Evented, {
 
     @property loadingState
     @type string
-    @default undefined
   */
-  loadingState: undefined,
+  loadingState: Ember.computed.deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
 
   /**
     Sets current limit function for OLV.
@@ -285,13 +292,41 @@ export default Ember.Service.extend(Ember.Evented, {
 
   /**
     Method that sets the form's loading state.
+    This method is deprecated, use {{#crossLink "AppStateService"}}app state service{{/crossLink}}.
 
     @method setLoadingState
-
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    this.set('loadingState', loadingState);
+    Ember.deprecate('This method is deprecated, use app state service.', false, {
+      id: 'service.app-state',
+      until: '1.0.0',
+    });
+
+    switch (loadingState) {
+      case 'loading':
+        this.get('appState').loading();
+        break;
+
+      case 'success':
+        this.get('appState').success();
+        break;
+
+      case 'error':
+        this.get('appState').error();
+        break;
+
+      case 'warning':
+        this.get('appState').warning();
+        break;
+
+      case '':
+        this.get('appState').reset();
+        break;
+
+      default:
+        throw new Error(`Unknown state: '${loadingState}'.`);
+    }
   },
 
   /**

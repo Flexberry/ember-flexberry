@@ -12,6 +12,14 @@ export default Ember.Controller.extend({
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.

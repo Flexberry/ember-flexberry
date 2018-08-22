@@ -2,13 +2,6 @@ import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
-
-  init() {
-    this._super(...arguments);
-    this.set('lookupController.inHierarchicalMode', true);
-    this.set('lookupController.hierarchicalAttribute', 'parent');
-  },
-
   actions: {
     /**
       This method returns custom properties for lookup window.
@@ -29,21 +22,29 @@ export default EditFormController.extend({
       if (methodArgs.relationName === 'type') {
         if (methodArgs.componentName === 'HierarchyLookup') {
           return {
-            disableHierarchicalMode: false,
             modelName: 'ember-flexberry-dummy-suggestion-type',
             modelProjection: 'SettingLookupExampleView',
             inHierarchicalMode: true,
-            hierarchicalAttribute: 'Name'
+            hierarchicalAttribute: 'parent'
           };
         }
 
         if (methodArgs.componentName === 'NoHierarchyLookup') {
           return {
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: false,
+            hierarchicalAttribute: 'parent'
+          };
+        }
+
+        if (methodArgs.componentName === 'DisabledHierarchyLookup') {
+          return {
             disableHierarchicalMode: true,
             modelName: 'ember-flexberry-dummy-suggestion-type',
             modelProjection: 'SettingLookupExampleView',
             inHierarchicalMode: false,
-            hierarchicalAttribute: 'Name'
+            hierarchicalAttribute: 'parent'
           };
         }
       }

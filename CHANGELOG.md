@@ -16,6 +16,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix set current controller during the transition on edit form.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
+* `flexberry-lookup` component:
+    * Fix list's hierarchy when several lookups on page.
 
 ## [0.12.0] - 2018-06-08
 ### Added

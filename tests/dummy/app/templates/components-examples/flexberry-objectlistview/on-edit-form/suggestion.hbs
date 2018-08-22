@@ -171,4 +171,36 @@
     }}
     {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
   </div>
+  <div class="field">
+    <h3>{{t "forms.components-examples.flexberry-objectlistview.on-edit-form.caption"}}:</h3>
+    {{flexberry-objectlistview
+      content=customFolvContent
+      modelName=folvModelName
+      onEditForm=true
+      editFormRoute=folvEditFormRoute
+      modelProjection=folvProjection
+      rowClickable=true
+      refreshButton=true
+      colsConfigButton=false
+      showShowingEntries=false
+      sorting=computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      customButtons=customButtons
+      disableHierarchicalMode=false
+      hierarchicalIndent=50
+      componentName="listOnEditform"
+    }}
+  </div>
 </form>

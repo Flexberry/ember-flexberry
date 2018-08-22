@@ -22,12 +22,12 @@ export default Ember.Mixin.create({
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  appState: Ember.inject.service(),
 
   /**
     Service that lets interact between agregator's and detail's form.
@@ -76,7 +76,7 @@ export default Ember.Mixin.create({
         throw new Error('Detail\'s edit form route is undefined.');
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
+      this.get('appState').loading();
 
       let goToOtherRouteFunction = function() {
         if (!record)

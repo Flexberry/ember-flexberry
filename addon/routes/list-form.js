@@ -77,12 +77,12 @@ ErrorableRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  appState: Ember.inject.service(),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -96,7 +96,7 @@ ErrorableRouteMixin, {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
     let controller = this.controllerFor(this.routeName);
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
 
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
@@ -141,7 +141,7 @@ ErrorableRouteMixin, {
     userSettingPromise
       .then(currectPageUserSettings => {
         if (this._invalidSorting(params.sort)) {
-          this.get('controller').set('isSortingError', true);
+          controller.set('isSortingError', true);
           transition.abort();
           throw new Error('Invalid sorting value');
         }
@@ -178,7 +178,7 @@ ErrorableRouteMixin, {
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
-          filterCondition: this.get('controller.filterCondition'),
+          filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
@@ -195,11 +195,11 @@ ErrorableRouteMixin, {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.onModelLoadingFulfilled(records, transition);
         this.includeSorting(records, this.sorting);
-        this.get('controller').set('model', records);
+        controller.set('model', records);
 
-        if (this.sorting.length > 0 && Ember.isNone(this.get('controller').get('sort'))) {
-          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
-          this.get('controller').set('sort', sortQueryParam);
+        if (this.sorting.length > 0 && Ember.isNone(controller.get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, controller.get('sortDefaultValue'));
+          controller.set('sort', sortQueryParam);
         }
 
         return records;
@@ -207,9 +207,7 @@ ErrorableRouteMixin, {
         this.onModelLoadingRejected(errorData, transition);
       }).finally((data) => {
         this.onModelLoadingAlways(data, transition);
-        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
-          this.get('objectlistviewEventsService').setLoadingState('');
-        }
+        this.get('appState').reset();
       });
 
     if (this.get('controller') === undefined) {

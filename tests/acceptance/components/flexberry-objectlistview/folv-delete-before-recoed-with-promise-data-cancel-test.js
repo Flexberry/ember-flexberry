@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import { Query } from 'ember-flexberry-data';
@@ -18,6 +18,7 @@ executeTest('check delete before record with promise data cancel test', (store, 
     let done1 = assert.async();
 
     newRecord.save().then(() => {
+      addDataForDestroy(newRecord);
       let builder = new Builder(store).from(modelName).count();
       let done = assert.async();
       store.query(modelName, builder.build()).then((result) => {
@@ -68,6 +69,8 @@ executeTest('check delete before record with promise data cancel test', (store, 
             store.query(modelName, builder2.build()).then((result) => {
               assert.ok(result.meta.count, 'record \'' + uuid + '\'not found in store');
               done2();
+            }).finally(() => {
+              newRecord.destroyRecord();
             });
           }), timeout);
         });

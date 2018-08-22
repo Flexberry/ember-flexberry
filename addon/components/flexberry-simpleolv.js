@@ -65,8 +65,6 @@ export default folv.extend(
           item.set('rowConfig.canBeSelected', !checked);
         });
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('');
     }
   })),
 
@@ -711,6 +709,14 @@ export default folv.extend(
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
     Used to identify objectListView on the page.
 
     @property componentName
@@ -750,8 +756,6 @@ export default folv.extend(
       if (!this.orderable || column.sortable === false) {
         return;
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -825,7 +829,6 @@ export default folv.extend(
       @public
     */
     refresh() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -899,9 +902,6 @@ export default folv.extend(
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText')) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
-      }
 
       Ember.run.later((function() {
         _this.set('filterText', null);
@@ -1509,13 +1509,19 @@ export default folv.extend(
   },
 
   _setMenuWidth(tableWidth, containerWidth) {
-    let $table = this.$('table.object-list-view')[0];
+    let $table = this.$('table.object-list-view');
     if (Ember.isBlank(tableWidth)) {
-      tableWidth = $table.clientWidth;
+      tableWidth = $table.width();
     }
 
     if (Ember.isBlank(containerWidth)) {
-      containerWidth = $table.parentElement.clientWidth - 5;
+      containerWidth = $table.parent().width() - 5;
+    }
+
+    // Using scrollWidth, because Internet Explorer don't receive correct value for this element with .width().
+    let pages = this.$('.ui.secondary.menu .ui.basic.buttons')[0];
+    if (tableWidth < pages.scrollWidth) {
+      tableWidth = pages.scrollWidth + 75;
     }
 
     this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
@@ -2194,17 +2200,17 @@ export default folv.extend(
     @param {Object} filterQuery Filter applying before delete all records
   */
   _actualDeleteAllRecords(componentName, modelName, filterQuery) {
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
     let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
 
     promise.then((data)=> {
       if (data.deletedCount > -1) {
-        this.get('objectlistviewEventsService').setLoadingState('success');
+        this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
         this.get('currentController').onDeleteActionFulfilled();
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
-        this.get('objectlistviewEventsService').setLoadingState('error');
+        this.get('appState').error();
         let errorData = {
           message: data.message
         };
@@ -2213,7 +2219,7 @@ export default folv.extend(
         this.get('currentController').send('handleError', errorData);
       }
     }).catch((errorData) => {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       if (!Ember.isNone(errorData.status) && errorData.status === 0 && !Ember.isNone(errorData.statusText) &&  errorData.statusText === 'error') {
         // This message will be converted to corresponding localized message.
         errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';
@@ -2671,7 +2677,7 @@ export default folv.extend(
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems:  Ember.computed(function() {
+  colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -2723,10 +2729,18 @@ export default folv.extend(
         rootItem.items[rootItem.items.length] = showDefaultItem;
       }
 
-      this.colsSettingsItems = [rootItem];
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
+
+  /**
+    Observe colsSettingsItems changes.
+    @property _colsSettingsItems
+    @readOnly
+  */
+  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
+    this._updateListNamedUserSettings();
+  }),
 
   /**
     @property exportExcelItems
@@ -2862,6 +2876,10 @@ export default folv.extend(
   },
 
   _updateListNamedUserSettings() {
+    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+      return;
+    }
+
     this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
     Ember.set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));

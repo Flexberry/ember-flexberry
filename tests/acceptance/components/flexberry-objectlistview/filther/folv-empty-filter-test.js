@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { executeTest, addDataForDestroy } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
 
 executeTest('check empty filter', (store, assert, app) => {
   assert.expect(3);
@@ -9,34 +8,25 @@ executeTest('check empty filter', (store, assert, app) => {
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
+  let user;
+  let type;
+  let suggestion;
   Ember.run(() => {
-    let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where('address', Query.FilterOperator.Eq, '');
-    store.query(modelName, builder.build()).then((result) => {
-      let arr = result.toArray();
+    let newRecords = Ember.A();
+    user = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-application-user', { name: 'Random name fot empty filther test',
+    eMail: 'Random eMail fot empty filther test' }));
+    type = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: 'Random name fot empty filther test' }));
 
-      // Add an object with an empty address, if it is not present.
-      if (arr.length === 0) {
-        let newRecords = Ember.A();
-        let user = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-application-user', { name: 'Random name fot empty filther test',
-        eMail: 'Random eMail fot empty filther test' }));
-        let type = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: 'Random name fot empty filther test' }));
-
-        newRecords.forEach(function(item) {
-          item.save();
+    type.save().then(() => {
+      user.save().then(() => {
+        Ember.run(() => {
+          suggestion = newRecords.pushObject(store.createRecord(modelName, { type: type, author: user, editor1: user }));
+          suggestion.save();
+          addDataForDestroy(suggestion);
+          addDataForDestroy(type);
+          addDataForDestroy(user);
         });
-
-        let done = assert.async();
-        window.setTimeout(() => {
-          Ember.run(() => {
-            newRecords = Ember.A();
-            newRecords.pushObject(store.createRecord(modelName, { type: type, author: user, editor1: user }));
-            newRecords.forEach(function(item) {
-              item.save();
-            });
-          });
-          done();
-        }, 1000);
-      }
+      });
     });
 
     visit(path + '?perPage=500');
@@ -71,7 +61,14 @@ executeTest('check empty filter', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal(successful, true, 'Filter successfully worked');
-          done1();
+        }).finally(() => {
+          newRecords[2].destroyRecord().then(() => {
+            Ember.run(() => {
+              newRecords[0].destroyRecord();
+              newRecords[1].destroyRecord();
+              done1();
+            });
+          });
         });
       });
     });

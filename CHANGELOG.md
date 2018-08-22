@@ -4,6 +4,35 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.1] - 2018-08-22
+### Added
+* The `AppStateService` - service is used to control the state of the application.
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
+
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+    * Fix duplication of some existing files on regeneration.
+* `flexberry-objectlistview-route` mixin:
+    * Fix setting current controller during the transition on edit form.
+* `colsconfig-dialog-content` component:
+    * Fix setting save messages visibility.
+* `flexberry-toggler` component:
+    * Nested togglers now work correctly.
+* `flexberry-dropdown` component:
+    * Fix null values handling in items array.
+* List components:
+    * Fix incorrect footer width in Internet Explorer.
+    * Incorrect resets the load state.
+* `flexberry-objectlistview` component:
+    * Fix user-settings service activity toggle.
+* Fix unlock edit form in `edit-form` route and `lock-route`.
+* Fix getting controller for list form.
+
+### Deprecated
+* The `loadingState` property and the `setLoadingState` method in the `ObjectlistviewEvents` service are obsolete, use the `AppStateService` service.
+
 ## [0.12.0] - 2018-06-08
 ### Added
 * `flexberry-toggler` component:

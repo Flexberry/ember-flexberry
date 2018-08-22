@@ -79,12 +79,12 @@ ErrorableRouteMixin, {
   newSuffix: undefined,
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  appState: Ember.inject.service(),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
@@ -168,6 +168,7 @@ ErrorableRouteMixin, {
    */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
+    controller.set('readonly', false);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
@@ -222,9 +223,7 @@ ErrorableRouteMixin, {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
-      this.get('objectlistviewEventsService').setLoadingState('');
-    }
+    this.get('appState').reset();
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');

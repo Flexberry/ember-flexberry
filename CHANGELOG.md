@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix setting save messages visibility.
 * Fix getting controller for list form.
 * Nested togglers now work correctly.
+* `flexberry-dropdown` component:
+    * Fix null values handling in items array.
 * List components:
     * Fix incorrect footer width in Internet Explorer.
     * Incorrect resets the load state.

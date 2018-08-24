@@ -218,7 +218,7 @@ export default FlexberryBaseComponent.extend({
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems:  Ember.computed(function() {
+  colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -273,6 +273,15 @@ export default FlexberryBaseComponent.extend({
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
+
+  /**
+    Observe colsSettingsItems changes.
+    @property _colsSettingsItems
+    @readOnly
+  */
+  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
+    this._updateListNamedUserSettings();
+  }),
 
   /**
     @property exportExcelItems
@@ -397,7 +406,6 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -483,9 +491,6 @@ export default FlexberryBaseComponent.extend({
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText')) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
-      }
 
       Ember.run.later((function() {
         _this.set('filterText', null);
@@ -736,6 +741,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   _updateListNamedUserSettings() {
+    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+      return;
+    }
+
     this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
     Ember.set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));

@@ -53,12 +53,12 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
   resultPredicate: null,
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  appState: Ember.inject.service(),
 
   /**
     Total count of FOLV records.
@@ -139,9 +139,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
         _this.send('handleError', reason);
       })
       .finally(() => {
-        if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
-          _this.get('objectlistviewEventsService').setLoadingState('');
-        }
+        this.get('appState').reset();
       });
     }
 

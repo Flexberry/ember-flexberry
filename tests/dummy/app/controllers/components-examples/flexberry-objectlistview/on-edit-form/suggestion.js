@@ -82,14 +82,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     return cellComponent;
   },
 
-  customFolvContentObserver: Ember.observer('model', 'model.type', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
-    let _this = this;
-
-    Ember.run(function() {
-      Ember.run.once(_this, 'getCustomContent');
-    });
-  }),
-
   objectListViewLimitPredicate: function(options) {
     let methodOptions = Ember.merge({
       modelName: undefined,
@@ -106,4 +98,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
     return undefined;
   },
+
+  customFolvContentObserver: Ember.observer('model', 'model.type', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
+
+    Ember.run.scheduleOnce('afterRender', this, this.getCustomContent);
+  }),
 });

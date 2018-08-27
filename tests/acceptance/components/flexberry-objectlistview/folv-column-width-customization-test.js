@@ -72,7 +72,7 @@ executeTest('column width custom', (store, assert, app) => {
                   $component.click();
                   setTimeout(function() {
                     assert.equal($($component).hasClass('checked'), false, 'Width config is OFF');
-                    assert.equal($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> is not checked after click');                               
+                    assert.equal($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> is not checked after click');
 
                     // Apply settings
                     let $useBtn = Ember.$('.ui.button#columnConfigurtionButtonUse');
@@ -82,41 +82,36 @@ executeTest('column width custom', (store, assert, app) => {
 
                       setTimeout(function() {}, 17000);
 
-                      }).catch((reason) => {
-                        throw new Error(reason);
-
-                      }).finally(() => {
-                        done4();
-
-                     });
-                    }, 17000);     
-                  }).catch((reason) => {
-                    throw new Error(reason);
-                  }).finally(() => {
-                   done3();
-                  });
-
-                }, 17000);
-
-                }).catch((reason) => {
-                  throw new Error(reason);                 
-                }).finally(() => {
-                  done2();
-                });
+                    }).catch((reason) => {
+                      throw new Error(reason);
+                    }).finally(() => {
+                      done4();
+                    });
                   }, 17000);
-
-                  }).catch((reason) => {
-                throw new Error(reason);
+                }).catch((reason) => {
+                  throw new Error(reason);
+                }).finally(() => {
+                  done3();
+                });
+              }, 17000);
+            }).catch((reason) => {
+              throw new Error(reason);
             }).finally(() => {
-              done1();
+              done2();
             });
-          }).catch((reason) => {
-            throw new Error(reason);
-          }).finally(() => {
-            done();
-            let columns = Ember.$('.dt-head-left.me.class');
-            assert.equal(columns[0].offsetWidth, 170, 'Width is default');
+          }, 17000);
+        }).catch((reason) => {
+          throw new Error(reason);
+        }).finally(() => {
+          done1();
         });
+      }).catch((reason) => {
+        throw new Error(reason);
+      }).finally(() => {
+        done();
+        let columns = Ember.$('.dt-head-left.me.class');
+        assert.equal(columns[0].offsetWidth, 170, 'Width is default');
       });
     });
+  });
 });

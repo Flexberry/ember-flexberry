@@ -16,11 +16,11 @@ executeTest('check paging nav', (store, assert, app) => {
   Ember.run(() => {
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
-  let done = assert.async();  
-  let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionTypeE');
+      let done = assert.async();
+      let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionTypeE');
       store.query(modelName, builder.build()).then((result) => {
-      arr = result.toArray();
-    }).then(function() {
+        arr = result.toArray();
+      }).then(function() {
         visit(path + '?perPage=1');
         andThen(function() {
           assert.equal(currentPath(), path);
@@ -28,7 +28,7 @@ executeTest('check paging nav', (store, assert, app) => {
 
           // check paging.
           let $basicButtons = Ember.$('.ui.button', '.ui.basic.buttons');
-          last=arr.length;
+          last = arr.length;
 
           assert.equal($($basicButtons[0]).hasClass('disabled'), true, 'button prev is disabled');
           assert.equal($($basicButtons[1]).hasClass('active'), true, 'page 1 is active');
@@ -71,9 +71,9 @@ executeTest('check paging nav', (store, assert, app) => {
               assert.equal($($basicButtons[6])[0].innerText, last, 'last page is depicted');
               assert.equal($($basicButtons[1])[0].innerText, 1, '1st page is depicted');
               assert.equal($($basicButtons[2])[0].innerText, '...', '... page is depicted');
-              assert.equal($($basicButtons[3])[0].innerText, last-3, 'n-3 page is depicted');
-              assert.equal($($basicButtons[4])[0].innerText, last-2, 'n-2 page is depicted');
-              assert.equal($($basicButtons[5])[0].innerText, last-1, 'n-1 page is depicted');
+              assert.equal($($basicButtons[3])[0].innerText, last - 3, 'n-3 page is depicted');
+              assert.equal($($basicButtons[4])[0].innerText, last - 2, 'n-2 page is depicted');
+              assert.equal($($basicButtons[5])[0].innerText, last - 1, 'n-1 page is depicted');
               assert.equal($($basicButtons[6])[0].innerText, last, 'last page is depicted');
             }).catch((reason) => {
               throw new Error(reason);

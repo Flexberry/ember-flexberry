@@ -443,7 +443,7 @@ Ember.$.extend(true, translations, {
               'title': ''
             },
             'list-on-editform': {
-              'caption': 'Placement list of detail on edit form',
+              'caption': 'Placement of the list of detail of the master on the editing form',
               'title': ''
             },
             'custom-filter': {
@@ -876,6 +876,9 @@ Ember.$.extend(true, translations, {
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
           'add-button-name': 'Добавить'
+        },
+        'list-on-editform': {
+          'caption': 'List of children Type'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'

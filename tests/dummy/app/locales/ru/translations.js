@@ -453,7 +453,7 @@ Ember.$.extend(true, translations, {
               'title': ''
             },
             'list-on-editform': {
-              'caption': 'Размещение списка детейлов на форме редактирования',
+              'caption': 'Размещение списка детейлов мастера на форме редактирования',
               'title': ''
             },
             'custom-filter': {
@@ -887,6 +887,9 @@ Ember.$.extend(true, translations, {
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',
           'add-button-name': 'Добавить'
+        },
+        'list-on-editform': {
+          'caption': 'Список детейлов Тип предложения'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'

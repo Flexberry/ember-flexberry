@@ -602,7 +602,7 @@ export default FlexberryBaseComponent.extend({
     @method didDestroyElement
   */
   didDestroyElement() {
-    this._super();
+    this._super(...arguments);
     this.removeObserver('i18n.locale', this, this._languageReinit);
   },
 
@@ -613,7 +613,7 @@ export default FlexberryBaseComponent.extend({
     @method didInsertElement
   */
   didInsertElement() {
-    this._super();
+    this._super(...arguments);
     this.addObserver('i18n.locale', this, this._languageReinit);
   },
 
@@ -624,7 +624,7 @@ export default FlexberryBaseComponent.extend({
     @method didRender
   */
   didRender() {
-    this._super();
+    this._super(...arguments);
 
     let isAutocomplete = this.get('autocomplete');
     let isDropdown = this.get('dropdown');

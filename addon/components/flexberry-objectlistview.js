@@ -1206,6 +1206,7 @@ export default FlexberryBaseComponent.extend({
     @method didRender
   */
   didRender() {
+    this._super(...arguments);
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
   },
 

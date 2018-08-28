@@ -29,6 +29,7 @@ export default class ModelBlueprint {
   parentClassName: string;
   parentExternal: boolean;
   className: string;
+  namespace: string;
   projections: string;
   name: string;
   needsAllModels: string;
@@ -49,6 +50,7 @@ export default class ModelBlueprint {
       this.parentExternal = parentModel.external;
     }
     this.className = model.className;
+    this.namespace = model.nameSpace;
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);

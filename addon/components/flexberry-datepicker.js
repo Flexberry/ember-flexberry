@@ -119,6 +119,7 @@ export default FlexberryBaseComponent.extend({
     Init component when DOM is ready.
   */
   didInsertElement() {
+    this._super(...arguments);
     this.minDate = this.minDate === undefined ? moment('01.01.1900', this.dateTimeFormat) : moment(this.minDate, this.dateTimeFormat);
     this.maxDate = this.maxDate === undefined ? moment('31.12.9999', this.dateTimeFormat) : moment(this.maxDate, this.dateTimeFormat);
 

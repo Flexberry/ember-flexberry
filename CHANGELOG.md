@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.12.2] - 2018-08-28
 ### Fixed
-* Missing of calling `_super` method in `lock-route` mixin and `perf` service.
+* Missing of calling `_super` method in ember hooks inside addon.
 
 ## [0.12.1] - 2018-08-22
 ### Added

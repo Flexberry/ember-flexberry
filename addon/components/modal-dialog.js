@@ -105,6 +105,7 @@ export default Ember.Component.extend({
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
+    this._super(...arguments);
     let _this = this;
     let componentName = this.get('componentName');
     let modalSettings = Ember.$.extend({

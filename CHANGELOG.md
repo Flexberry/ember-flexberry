@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `flexberry-model` blueprint generates the exported function to define the namespace of the model.
+* The `flexberry-model-init` blueprint generates an import and call of function to define the namespace in the model file.
 
 ## [0.12.1] - 2018-08-22
 ### Added

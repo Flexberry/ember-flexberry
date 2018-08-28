@@ -319,6 +319,7 @@ export default FlexberryBaseComponent.extend({
     @method didRender
   */
   didRender() {
+    this._super(...arguments);
     if (!this.get('recordsLoaded')) {
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {

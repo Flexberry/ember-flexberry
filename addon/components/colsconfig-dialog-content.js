@@ -160,6 +160,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   didRender: function() {
+    this._super(...arguments);
     let firstButtonUp = Ember.$('#ColDescRowUp_0');
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));

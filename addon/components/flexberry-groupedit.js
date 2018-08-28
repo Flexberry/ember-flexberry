@@ -585,6 +585,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   didInsertElement() {
+    this._super(...arguments);
     let developerUserSettings = this.currentController;
     developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
     developerUserSettings = developerUserSettings[this.componentName] || {};

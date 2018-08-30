@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix list's hierarchy when several lookups on page.
+
+## [0.12.2] - 2018-08-28
+### Fixed
+* Missing of calling `_super` method in ember hooks inside addon.
+
+## [0.12.1] - 2018-08-22
 ### Added
 * The `AppStateService` - service is used to control the state of the application.
 * Blueprints:
@@ -12,15 +22,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Fix line length JSCS error on model generation.
     * Fix duplication of some existing files on regeneration.
-* Fix unlock edit form in `edit-form` route and `lock-route`.
 * `flexberry-objectlistview-route` mixin:
-    * Fix set current controller during the transition on edit form.
+    * Fix setting current controller during the transition on edit form.
 * `colsconfig-dialog-content` component:
     * Fix setting save messages visibility.
 * Fix getting controller for list form.
-* Nested togglers now work correctly.
-* `flexberry-lookup` component:
-    * Fix list's hierarchy when several lookups on page.
+* `flexberry-toggler` component:
+    * Nested togglers now work correctly.
 * `flexberry-dropdown` component:
     * Fix null values handling in items array.
 * List components:
@@ -28,6 +36,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Incorrect resets the load state.
 * `flexberry-objectlistview` component:
     * Fix user-settings service activity toggle.
+* Fix unlock edit form in `edit-form` route and `lock-route`.
+* Fix getting controller for list form.
 
 ### Deprecated
 * The `loadingState` property and the `setLoadingState` method in the `ObjectlistviewEvents` service are obsolete, use the `AppStateService` service.

@@ -30,6 +30,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @method init
   */
   init() {
+    this._super(...arguments);
     this.set('_selectedRecords', []);
   },
 

@@ -50,6 +50,7 @@ export default Ember.Mixin.create({
       @param {Transition} transition
     */
     willTransition(transition) {
+      this._super(...arguments);
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {

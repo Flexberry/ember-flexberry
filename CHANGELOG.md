@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* `flexberry-lookup` component:
+    * Fix list's hierarchy when several lookups on page.
+
 ## [0.12.2] - 2018-08-28
 ### Fixed
 * Missing of calling `_super` method in ember hooks inside addon.

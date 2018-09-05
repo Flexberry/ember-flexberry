@@ -23,7 +23,7 @@ executeTest('date format moment L', (store, assert, app) => {
 
       let controller = app.__container__.lookup('controller:' + currentRouteName());
       let refreshFunction =  function() {
-        let refreshButton = Ember.$('.refresh-button')[0];
+        let refreshButton = $('.refresh-button')[0];
         refreshButton.click();
       };
 

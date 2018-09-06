@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-lookup` component:
     * Fix list's hierarchy when several lookups on page.
+* `list-form` route:
+    * Fix transition to list-form with custom query params.
+    
 
 ## [0.12.2] - 2018-08-28
 ### Fixed

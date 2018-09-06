@@ -164,9 +164,9 @@ ErrorableRouteMixin, {
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
           } else {
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams:  Object.assign(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
+              this.transitionTo(this.currentRouteName, { queryParams:  Ember.$.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: Object.assign(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
+              this.transitionTo(this.currentRouteName, { queryParams: Ember.$.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
           }
         }

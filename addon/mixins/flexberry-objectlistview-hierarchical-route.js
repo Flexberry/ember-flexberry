@@ -62,7 +62,7 @@ export default Ember.Mixin.create({
 
     objectListViewRowClick(record, params) {
       // Prevent transition to edit form if click target is hierarchy expand button.
-      if (params.originalEvent && Ember.$(params.originalEvent.target).hasClass('hierarchy-expand')) {
+      if (params && params.originalEvent && Ember.$(params.originalEvent.target).hasClass('hierarchy-expand')) {
         params.goToEditForm = false;
       }
 

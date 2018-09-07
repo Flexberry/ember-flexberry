@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.3] - 2018-09-18
 ### Fixed
 * `flexberry-lookup` component:
     * Fix list's hierarchy when several lookups on page.

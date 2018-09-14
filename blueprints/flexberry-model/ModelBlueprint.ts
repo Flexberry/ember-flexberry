@@ -35,6 +35,8 @@ export default class ModelBlueprint {
   needsAllEnums: string;
   needsAllObjects: string;
   lodashVariables: {};
+  enums: { [key: string]: metadata.Enumeration; };
+  enumImports: { [key: string]: string; } = {};
 
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
@@ -48,6 +50,7 @@ export default class ModelBlueprint {
       let parentModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
       this.parentExternal = parentModel.external;
     }
+    this.enums = ModelBlueprint.loadEnums(options.metadataDir);
     this.className = model.className;
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
@@ -67,6 +70,21 @@ export default class ModelBlueprint {
     let content = stripBom(fs.readFileSync(modelFile, "utf8"));
     let model: metadata.Model = JSON.parse(content);
     return model;
+  }
+
+  static loadEnums(metadataDir: string): { [key: string]: metadata.Enumeration; } {
+    let enums: { [key: string]: metadata.Enumeration; } = {};
+    let enumsDir: string = path.join(metadataDir, "enums");
+    let files = fs.readdirSync(enumsDir);
+    for (let fileName of files) {
+      let parsedPath: path.ParsedPath = path.parse(fileName);
+      if (parsedPath.ext === ".json") {
+        let enumContent = fs.readFileSync(path.join(enumsDir, fileName), "utf8");
+        enums[parsedPath.name] = JSON.parse(stripBom(enumContent));
+      }
+    }
+
+    return enums;
   }
 
   getNeedsTransforms(dir: string): string {
@@ -149,7 +167,13 @@ export default class ModelBlueprint {
               break;
             }
           default:
-            defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
+            if (this.enums.hasOwnProperty(attr.type)) {
+              let enumName = `${this.enums[attr.type].className}Enum`;
+              this.enumImports[enumName] = attr.type;
+              defaultValue = `, { defaultValue: ${enumName}.${attr.defaultValue} }`;
+            } else {
+              defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
+            }
         }
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${defaultValue})`);

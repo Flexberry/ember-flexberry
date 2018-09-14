@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `flexberry-model` blueprint generates a valid default value for enumerations.
 
 ## [0.12.3] - 2018-09-18
 ### Fixed

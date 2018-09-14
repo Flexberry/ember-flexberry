@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * The `flexberry-model` blueprint generates the exported function to define the namespace of the model, if it is not empty.
 * The `flexberry-model-init` blueprint generates an import and call of function to define the namespace in the model file, if it is not empty.
+* The `flexberry-model` blueprint generates a valid default value for enumerations.
+
+## [0.12.3] - 2018-09-18
+### Fixed
+* `flexberry-lookup` component:
+    * Fix list's hierarchy when several lookups on page.
+* `list-form` route:
+    * Fix transition to list-form with custom query params.
+    
+
+## [0.12.2] - 2018-08-28
+### Fixed
+* Missing of calling `_super` method in ember hooks inside addon.
 
 ## [0.12.1] - 2018-08-22
 ### Added

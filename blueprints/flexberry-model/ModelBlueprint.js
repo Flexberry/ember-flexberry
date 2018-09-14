@@ -18,6 +18,7 @@ var SortedPair = /** @class */ (function () {
 }());
 var ModelBlueprint = /** @class */ (function () {
     function ModelBlueprint(blueprint, options) {
+        this.enumImports = {};
         var modelsDir = path.join(options.metadataDir, "models");
         if (!options.file) {
             options.file = options.entity.name + ".json";
@@ -29,6 +30,7 @@ var ModelBlueprint = /** @class */ (function () {
             var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
             this.parentExternal = parentModel.external;
         }
+        this.enums = ModelBlueprint.loadEnums(options.metadataDir);
         this.className = model.className;
         this.namespace = model.nameSpace;
         this.serializerAttrs = this.getSerializerAttrs(model);
@@ -48,6 +50,20 @@ var ModelBlueprint = /** @class */ (function () {
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
         var model = JSON.parse(content);
         return model;
+    };
+    ModelBlueprint.loadEnums = function (metadataDir) {
+        var enums = {};
+        var enumsDir = path.join(metadataDir, "enums");
+        var files = fs.readdirSync(enumsDir);
+        for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
+            var fileName = files_1[_i];
+            var parsedPath = path.parse(fileName);
+            if (parsedPath.ext === ".json") {
+                var enumContent = fs.readFileSync(path.join(enumsDir, fileName), "utf8");
+                enums[parsedPath.name] = JSON.parse(stripBom(enumContent));
+            }
+        }
+        return enums;
     };
     ModelBlueprint.prototype.getNeedsTransforms = function (dir) {
         var list = fs.readdirSync(dir);
@@ -132,7 +148,14 @@ var ModelBlueprint = /** @class */ (function () {
                             break;
                         }
                     default:
-                        defaultValue = ", { defaultValue: '" + attr.defaultValue + "' }";
+                        if (this.enums.hasOwnProperty(attr.type)) {
+                            var enumName = this.enums[attr.type].className + "Enum";
+                            this.enumImports[enumName] = attr.type;
+                            defaultValue = ", { defaultValue: " + enumName + "." + attr.defaultValue + " }";
+                        }
+                        else {
+                            defaultValue = ", { defaultValue: '" + attr.defaultValue + "' }";
+                        }
                 }
             }
             attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + defaultValue + ")");

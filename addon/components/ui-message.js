@@ -241,6 +241,7 @@ export default Ember.Component.extend({
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
+    this._super(...arguments);
     let isCloseable = this.get('closeable');
     if (isCloseable) {
       this.$('.close').on('click', () => {

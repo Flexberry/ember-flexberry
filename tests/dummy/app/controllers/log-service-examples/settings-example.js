@@ -51,6 +51,7 @@ export default ApplicationLogListFormController.extend({
   messagesToRefreshList: null,
 
   init() {
+    this._super(...arguments);
     this.get('logService').on('error', this, this._refreshList);
     this.get('logService').on('warn', this, this._refreshList);
     this.get('logService').on('info', this, this._refreshList);

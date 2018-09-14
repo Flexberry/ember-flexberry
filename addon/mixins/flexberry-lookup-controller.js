@@ -112,6 +112,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
         hierarchicalAttribute: lookupController.get('hierarchicalAttribute')
       }, chooseData);
 
+      let disableHierarchy = Ember.get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
+      lookupController.set('disableHierarchicalMode', !Ember.isNone(disableHierarchy));
+
+      let customInHierarchicalMode = Ember.get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
+      lookupController.set('inHierarchicalMode', customInHierarchicalMode);
+
       let projectionName = options.projection;
       Ember.assert('ProjectionName is undefined.', projectionName);
 
@@ -127,7 +133,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let sizeClass = options.sizeClass;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
-      let hierarchicalAttribute = options.hierarchicalAttribute;
+      let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
+      let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);

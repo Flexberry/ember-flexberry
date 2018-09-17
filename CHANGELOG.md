@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.13.0-beta.0] - 2018-09-17
 ### Added
 * The `flexberry-model` blueprint generates the exported function to define the namespace of the model, if it is not empty.
 * The `flexberry-model-init` blueprint generates an import and call of function to define the namespace in the model file, if it is not empty.
@@ -14,7 +16,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix list's hierarchy when several lookups on page.
 * `list-form` route:
     * Fix transition to list-form with custom query params.
-    
 
 ## [0.12.2] - 2018-08-28
 ### Fixed

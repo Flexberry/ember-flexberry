@@ -34,6 +34,10 @@ ember install "${ADDON_DIR}"
 ember generate ember-flexberry
 bower install
 
+# EmberCLI asks whether it needs to overwrite existing files,
+# so we need to remove them for non-interactive build.
+rm -f ./.eslintrc.js
+
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application app --metadata-dir=${META_DIR}
 

@@ -145,6 +145,14 @@ module.exports = {
       );
     }).then(function() {
       return _this.insertIntoFile(
+        'ember-cli-build.js',
+        options,
+        {
+          after: 'let app = new EmberAddon(defaults, {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
         'app/index.html',
         '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {

@@ -54,6 +54,7 @@ module.exports = {
     locals: function (options) {
         var modelBlueprint = new ModelBlueprint_1.default(this, options);
         return lodash.defaults({
+            namespace: modelBlueprint.namespace,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,

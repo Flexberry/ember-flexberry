@@ -60,6 +60,7 @@ module.exports = {
   locals: function(options) {
     let modelBlueprint = new ModelBlueprint(this, options);
     return lodash.defaults({
+      namespace: modelBlueprint.namespace,// for use in files\__root__\mixins\regenerated\models\__name__.js
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\mixins\regenerated\models\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\mixins\regenerated\models\__name__.js
       model: modelBlueprint.model,// for use in files\__root__\mixins\regenerated\models\__name__.js

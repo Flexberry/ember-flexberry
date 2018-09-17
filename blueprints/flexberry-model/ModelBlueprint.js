@@ -32,6 +32,7 @@ var ModelBlueprint = /** @class */ (function () {
         }
         this.enums = ModelBlueprint.loadEnums(options.metadataDir);
         this.className = model.className;
+        this.namespace = model.nameSpace;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);

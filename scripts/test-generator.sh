@@ -12,7 +12,7 @@ TMP_DIR='/tmp/embertest'
 mkdir -p "$TMP_DIR"
 
 # Part 1. Test the generated app.
-cd "$TMP_DIR"
+pushd "$TMP_DIR"
 
 # Logging ember version.
 ember -v
@@ -73,3 +73,7 @@ ember generate flexberry-application --metadata-dir=${META_DIR}
 
 # Run tests.
 ember test
+
+# Cleanup.
+popd
+rm -rf "$TMP_DIR"

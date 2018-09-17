@@ -140,15 +140,7 @@ module.exports = {
         'ember-cli-build.js',
         options,
         {
-          after: 'var app = new EmberApp(defaults, {\n'
-        }
-      );
-    }).then(function() {
-      return _this.insertIntoFile(
-        'ember-cli-build.js',
-        options,
-        {
-          after: 'var app = new EmberAddon(defaults, {\n'
+          after: 'let app = new EmberApp(defaults, {\n'
         }
       );
     }).then(function() {

@@ -1,6 +1,7 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
+import { click } from '@ember/test-helpers';
 
 /* eslint-disable no-unused-vars */
 executeTest('check complete all tests', (store, assert, app) => {
@@ -20,11 +21,10 @@ executeTest('check complete all tests', (store, assert, app) => {
     run(() => {
       // Open datepicker calendar.
       $($validationDataInput[0]).click();
-      let $validationDateButton = $('.flatpickr-day');
-      $validationDateButton = $($validationDateButton[16]);
+      let $validationDateButton = $('.flatpickr-day')[16];
 
       // Select date.
-      $validationDateButton.click();
+      click($validationDateButton);
     });
 
     let $validationFlexberryLookup = $('.flexberry-lookup');

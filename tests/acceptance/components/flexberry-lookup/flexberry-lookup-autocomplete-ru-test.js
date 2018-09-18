@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { executeTest } from './execute-flexberry-lookup-test';
 import { loadingLocales } from './lookup-test-functions';
+import { fillIn } from '@ember/test-helpers';
 
 executeTest('flexberry-lookup autocomplete message ru', (store, assert, app) => {
   assert.expect(4);
@@ -12,7 +13,7 @@ executeTest('flexberry-lookup autocomplete message ru', (store, assert, app) => 
     assert.equal(currentPath(), path);
 
     loadingLocales('ru', app).then(() => {
-      let textbox = $('.ember-text-field');
+      let textbox = $('.ember-text-field')[0];
       fillIn(textbox, 'gfhfkjglkhlh');
     });
 

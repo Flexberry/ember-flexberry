@@ -3,8 +3,6 @@ import { A } from '@ember/array';
 import $ from 'jquery';
 import { executeTest, addDataForDestroy } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import Builder from 'ember-flexberry-data/query/builder';
-import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 executeTest('check empty filter', (store, assert, app) => {
   assert.expect(3);

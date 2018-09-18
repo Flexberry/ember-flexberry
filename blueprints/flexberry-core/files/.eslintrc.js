@@ -39,6 +39,7 @@ module.exports = {
       files: [
         'app/mixins/regenerated/models/**/*.js',
         'addon/mixins/regenerated/models/**/*.js',
+        'addon/addon/mixins/regenerated/models/**/*.js',
         'tests/dummy/app/mixins/regenerated/models/**/*.js',
       ],
       rules: {
@@ -49,6 +50,7 @@ module.exports = {
       files: [
         'app/locales/**/*.js',
         'addon/locales/**/*.js',
+        'addon/addon/locales/**/*.js',
         'tests/dummy/app/locales/**/*.js'
       ],
       rules: {

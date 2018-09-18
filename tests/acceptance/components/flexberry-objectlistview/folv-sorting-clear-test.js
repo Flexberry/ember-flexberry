@@ -41,7 +41,7 @@ executeTest('check sorting clear', (store, assert, app) => {
           assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
 
           // Refresh function.
-          let refreshFunction1 =  function() {
+          let refreshFunction =  function() {
             $thead.click();
           };
 

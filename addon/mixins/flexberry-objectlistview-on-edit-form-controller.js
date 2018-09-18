@@ -94,10 +94,10 @@ export default Mixin.create(PredicateFromFiltersMixin, {
     @readOnly
   */
   customFolvContentObserver: observer('model', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
-    let _this = this;
-
-    // https://github.com/emberjs/ember.js/issues/15479
-    once(_this, 'getCustomContent');
+    if (this.get('folvModelName') && this.get('folvProjection')) {
+      // https://github.com/emberjs/ember.js/issues/15479
+      once(this, 'getCustomContent');
+    }
   }),
 
   getCustomContent() {

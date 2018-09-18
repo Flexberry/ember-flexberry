@@ -33,7 +33,7 @@ export function executeTest(testName, callback) {
       });
     },
 
-    afterEach(assert) {
+    afterEach() {
       run(() => {
         if (dataForDestroy.length !== 0) {
           recursionDelete(0);

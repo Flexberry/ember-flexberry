@@ -140,7 +140,7 @@ module.exports = {
         'ember-cli-build.js',
         options,
         {
-          after: 'var app = new EmberApp(defaults, {\n'
+          after: 'let app = new EmberApp(defaults, {\n'
         }
       );
     }).then(function() {
@@ -148,7 +148,7 @@ module.exports = {
         'ember-cli-build.js',
         options,
         {
-          after: 'var app = new EmberAddon(defaults, {\n'
+          after: 'let app = new EmberAddon(defaults, {\n'
         }
       );
     }).then(function() {
@@ -218,6 +218,38 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'config/environment.js',
+        env4,
+        {
+          before: '\n  if (environment === \'development\') {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/config/environment.js',
+        env1,
+        {
+          after: 'module.exports = function(environment) {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/config/environment.js',
+        env2,
+        {
+          after: 'EmberENV: {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/config/environment.js',
+        env3,
+        {
+          after: 'APP: {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/config/environment.js',
         env4,
         {
           before: '\n  if (environment === \'development\') {\n'

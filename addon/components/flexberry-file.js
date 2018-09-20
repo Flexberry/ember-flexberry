@@ -468,6 +468,14 @@ export default FlexberryBaseComponent.extend({
   */
   showModalDialogOnUploadError: undefined,
 
+  /**
+    Headers to the file upload request.
+
+    @property headers
+    @type Object
+   */
+  headers: {},
+
   actions: {
     /**
       Handles click on selected image preview and sends action with data outside component
@@ -584,6 +592,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
 
+      uploadData.headers = this.get('headers');
       this.set('_uploadData', uploadData);
     };
 
@@ -721,10 +730,10 @@ export default FlexberryBaseComponent.extend({
     }
 
     Ember.$.flexberry.downloadFile({
-      // For IE encodeURI is necessary.
-      // Without encodeURI IE will return 404 for files with cyrillic names in URL.
-      url: encodeURI(fileUrl),
-      iframeContainer: this.$('.flexberry-file-download-iframes-container'),
+      url: fileUrl,
+      headers: this.get('headers'),
+      fileName: this.get('_fileName'),
+      onSuccess: this.sendAction('onDownloadSuccess'),
       onError: (errorMessage) => {
         this.showDownloadErrorModalDialog(fileName, errorMessage);
       }

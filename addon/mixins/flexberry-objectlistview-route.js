@@ -31,7 +31,8 @@ export default Ember.Mixin.create({
         detailArray: undefined,
         editFormRoute: undefined,
         readonly: false,
-        goToEditForm: undefined
+        goToEditForm: undefined,
+        customParameters: undefined
       };
       methodOptions = Ember.merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
@@ -44,7 +45,8 @@ export default Ember.Mixin.create({
       let editFormRoute = methodOptions.editFormRoute;
       let transitionOptions = {
         queryParams: {
-          modelName: methodOptions.modelName
+          modelName: methodOptions.modelName,
+          customParameters:  methodOptions.customParameters
         }
       };
       if (!editFormRoute) {

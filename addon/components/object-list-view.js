@@ -275,6 +275,13 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Custom data for the editform
+
+    @property {Object} customParameters
+  */
+  customParameters: {},
+
+  /**
     Flag: indicates whether to show validation messages in every row or not.
 
     @property showValidationMessages
@@ -881,7 +888,8 @@ export default FlexberryBaseComponent.extend(
           modelName: recordData.constructor.modelName || this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
-          goToEditForm: true
+          goToEditForm: true,
+          customParameters: this.get('customParameters')
         });
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {

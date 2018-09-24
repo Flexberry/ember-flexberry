@@ -878,7 +878,7 @@ export default FlexberryBaseComponent.extend(
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
+          modelName: recordData.constructor.modelName || this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
           goToEditForm: true

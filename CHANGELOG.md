@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* `flexberry-objectlistview-route` mixin:
+    * Add in transition to edit-form custom params.
+* `edit-form` route:
+    * ModelName same taken from olv record.
+
 ## [0.13.0-beta.0] - 2018-09-17
 ### Added
 * The `flexberry-model` blueprint generates the exported function to define the namespace of the model, if it is not empty.

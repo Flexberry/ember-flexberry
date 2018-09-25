@@ -139,7 +139,7 @@ ErrorableRouteMixin, {
   model(params, transition) {
     this._super.apply(this, arguments);
 
-    let modelName = this.get('modelName');
+    let modelName = transition.queryParams.modelName || this.get('modelName');
     let modelProjName = this.get('modelProjection');
 
     // Get data from service in order to decide if it is necessary to reload data or not.

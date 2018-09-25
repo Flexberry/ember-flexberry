@@ -31,7 +31,8 @@ export default Ember.Mixin.create({
         detailArray: undefined,
         editFormRoute: undefined,
         readonly: false,
-        goToEditForm: undefined
+        goToEditForm: undefined,
+        customParameters: undefined
       };
       methodOptions = Ember.merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
@@ -42,6 +43,12 @@ export default Ember.Mixin.create({
       let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
       let onEditForm = methodOptions.onEditForm;
       let editFormRoute = methodOptions.editFormRoute;
+      let transitionOptions = {
+        queryParams: {
+          modelName: methodOptions.modelName,
+          customParameters:  methodOptions.customParameters
+        }
+      };
       if (!editFormRoute) {
         throw new Error('Detail\'s edit form route is undefined.');
       }
@@ -49,7 +56,7 @@ export default Ember.Mixin.create({
       let recordId = record.get('id') || record.get('data.id');
       let thisRouteName = this.get('router.currentRouteName');
       if (!onEditForm) {
-        this.transitionTo(editFormRoute, recordId)
+        this.transitionTo(editFormRoute, recordId, transitionOptions)
         .then((newRoute) => {
           if (newRoute) {
             newRoute.controller.set('parentRoute', thisRouteName);
@@ -58,7 +65,7 @@ export default Ember.Mixin.create({
       } else {
         if (saveBeforeRouteLeave) {
           this.controller.save(false, true).then(() => {
-            this.transitionTo(editFormRoute, recordId)
+            this.transitionTo(editFormRoute, recordId, transitionOptions)
             .then((newRoute) => {
               newRoute.controller.set('parentRoute', thisRouteName);
             });
@@ -66,7 +73,7 @@ export default Ember.Mixin.create({
             this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
           });
         } else {
-          this.transitionTo(editFormRoute, recordId)
+          this.transitionTo(editFormRoute, recordId, transitionOptions)
           .then((newRoute) => {
             newRoute.controller.set('parentRoute', thisRouteName);
           });

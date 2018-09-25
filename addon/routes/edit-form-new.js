@@ -36,7 +36,7 @@ export default EditFormRoute.extend({
     @param {Object} params
     @param {Object} transition
    */
-  model() {
+  model(params, transition) {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
@@ -52,7 +52,8 @@ export default EditFormRoute.extend({
     }
 
     // NOTE: record.id is null.
-    var record = this.store.createRecord(this.modelName);
+    let modelName = transition.queryParams.modelName || this.modelName;
+    let record = this.store.createRecord(modelName);
     return record;
   },
 

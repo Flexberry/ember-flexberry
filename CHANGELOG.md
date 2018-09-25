@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add in transition to edit-form custom params.
 * `edit-form` route:
     * ModelName same taken from olv record.
+* `edit-form-new` route:
+    * ModelName same taken from create action.
 
 ## [0.13.0-beta.0] - 2018-09-17
 ### Added

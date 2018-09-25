@@ -12,6 +12,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `edit-form-new` route:
     * ModelName same taken from create action.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.0`.
+
 ## [0.13.0-beta.0] - 2018-09-17
 ### Added
 * The `flexberry-model` blueprint generates the exported function to define the namespace of the model, if it is not empty.

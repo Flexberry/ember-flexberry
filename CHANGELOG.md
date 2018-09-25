@@ -4,13 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.0] - 2018-09-25
 ### Added
 * `flexberry-objectlistview-route` mixin:
-    * Add in transition to edit-form custom params.
-* `edit-form` route:
-    * ModelName same taken from olv record.
-* `edit-form-new` route:
-    * ModelName same taken from create action.
+    * Specifying model name via query params on transition to edit-form. It is needed in case of inherited models are displaying on list form.
+* `edit-form` and `edit-form-new` routes:
+    * Model name is now taken from query params if it is specified there. Custom query parameters can be passed to edit form via `customParameters` property of `options` parameter in `objectListViewRowClick` action.
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.0.0-beta.0`.

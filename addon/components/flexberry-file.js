@@ -473,8 +473,9 @@ export default FlexberryBaseComponent.extend({
 
     @property headers
     @type Object
+    @default null
    */
-  headers: {},
+  headers: null,
 
   actions: {
     /**
@@ -725,6 +726,7 @@ export default FlexberryBaseComponent.extend({
   downloadFile() {
     let fileName = this.get('_jsonInitialValue.fileName');
     let fileUrl = this.get('_jsonInitialValue.fileUrl');
+    let _this = this;
     if (Ember.isBlank(fileUrl)) {
       return null;
     }
@@ -734,8 +736,8 @@ export default FlexberryBaseComponent.extend({
       headers: this.get('headers'),
       fileName: this.get('_fileName'),
       onSuccess: this.sendAction('onDownloadSuccess'),
-      onError: (errorMessage) => {
-        this.showDownloadErrorModalDialog(fileName, errorMessage);
+      onError: function(errorMessage) {
+        _this.showDownloadErrorModalDialog(fileName, errorMessage);
       }
     });
   },

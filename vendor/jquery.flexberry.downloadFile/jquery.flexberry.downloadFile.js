@@ -4,6 +4,7 @@
 ;(function($, window, undefined) {
   var defaultOptions = {
     url: '',
+    headers: {},
     onError: function(errorMessage) {
       console.error(errorMessage);
     }
@@ -19,23 +20,34 @@
       type: 'GET',
       headers: options.headers,
       processData: false,
-      xhr: () => {
-        var xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        return xhr;
+      xhrFields: {
+        responseType: 'blob'
       },
       success: function(result) {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(result);
-        a.download = options.filename;
-        document.body.appendChild(a);
+        var $anchor = $('<a/>', {
+          href: URL.createObjectURL(result),
+          download: options.fileName,
+          hidden: true
+        });
 
+        if (window.navigator.msSaveOrOpenBlob) {
+          let downloadFunction = function() {
+            window.navigator.msSaveOrOpenBlob(result, options.fileName);
+          };
+
+          $anchor.on('click', downloadFunction);
+          $anchor.click();
+          $anchor.off('click', downloadFunction);
+        } else {
+          $('body').append($anchor);
+
+          $anchor.get(0).click();
+        }
+
+        $anchor.remove();
         if (typeof options.onSuccess === 'function') {
           options.onSuccess();
         }
-
-        a.click();
-        document.body.removeChild(a);
       },
       error: function(error) {
         if (typeof options.onError === 'function') {

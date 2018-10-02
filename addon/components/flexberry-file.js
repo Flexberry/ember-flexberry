@@ -726,7 +726,6 @@ export default FlexberryBaseComponent.extend({
   downloadFile() {
     let fileName = this.get('_jsonInitialValue.fileName');
     let fileUrl = this.get('_jsonInitialValue.fileUrl');
-    let _this = this;
     if (Ember.isBlank(fileUrl)) {
       return null;
     }
@@ -735,9 +734,11 @@ export default FlexberryBaseComponent.extend({
       url: fileUrl,
       headers: this.get('headers'),
       fileName: this.get('_fileName'),
-      onSuccess: this.sendAction('onDownloadSuccess'),
-      onError: function(errorMessage) {
-        _this.showDownloadErrorModalDialog(fileName, errorMessage);
+      onSuccess: () => {
+        this.sendAction('onDownloadSuccess');
+      },
+      onError: (errorMessage) => {
+        this.showDownloadErrorModalDialog(fileName, errorMessage);
       }
     });
   },

@@ -326,6 +326,8 @@ export default FlexberryBaseComponent.extend({
       minDate: this.get('min'),
       maxDate: this.get('max'),
       defaultDate: this.get('value'),
+	  defaultHour: this.get('defaultHour') ? this.get('defaultHour') : 12,
+	  defaultMinute: this.get('defaultMinute'),
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {

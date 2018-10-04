@@ -326,8 +326,8 @@ export default FlexberryBaseComponent.extend({
       minDate: this.get('min'),
       maxDate: this.get('max'),
       defaultDate: this.get('value'),
-	    defaultHour: this.get('defaultHour') ? this.get('defaultHour') : 12,
-	    defaultMinute: this.get('defaultMinute'),
+      defaultHour: this.get('defaultHour') ? this.get('defaultHour') : 12,
+      defaultMinute: this.get('defaultMinute'),
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {
@@ -353,7 +353,7 @@ export default FlexberryBaseComponent.extend({
     Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
-    this.$('.custom-flatpickr').keydown(Ember.$.proxy(function(e) {
+    this.$('.custom-flatpickr').keydown(Ember.$.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._validationDateTime();
@@ -369,14 +369,14 @@ export default FlexberryBaseComponent.extend({
   /**
     Sets readonly attr for flatpickr.
   */
-  readonlyObserver: Ember.observer('readonly', function() {
+  readonlyObserver: Ember.observer('readonly', function () {
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   }),
 
   /**
     Reinit flatpickr.
   */
-  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', function() {
+  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', function () {
     this._flatpickrDestroy();
     Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

@@ -74,25 +74,27 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
           let $toolBar = Ember.$('.ui.secondary.menu')[0];
           let $deleteButton = $toolBar.children[2];
           let done = assert.async();
+          let timeout = 500;
+          Ember.run.later((function() {
+            // Delete the marked records.
+            loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
+              let recordsIsDelete = $rows().every((element) => {
+                let nameRecord = Ember.$.trim(element.children[1].innerText);
+                return nameRecord.indexOf(uuid) < 0;
+              });
 
-          // Delete the marked records.
-          loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
-            let recordsIsDelete = $rows().every((element) => {
-              let nameRecord = Ember.$.trim(element.children[1].innerText);
-              return nameRecord.indexOf(uuid) < 0;
+              assert.ok(recordsIsDelete, 'Each entry begins with \'' + uuid + '\' is delete with button in toolbar button');
+
+              // Check that the records have been removed into store.
+              let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
+              let done3 = assert.async();
+              store.query(modelName, builder2.build()).then((result) => {
+                assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');
+                done3();
+              });
+              done();
             });
-
-            assert.ok(recordsIsDelete, 'Each entry begins with \'' + uuid + '\' is delete with button in toolbar button');
-
-            // Check that the records have been removed into store.
-            let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
-            let done3 = assert.async();
-            store.query(modelName, builder2.build()).then((result) => {
-              assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');
-              done3();
-            });
-            done();
-          });
+          }), timeout);
         });
         done1();
       });

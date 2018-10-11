@@ -11,6 +11,7 @@
   <button
     class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
     title={{t "components.olv-toolbar.add-button-text"}}
+    disabled="{{if readonly "disabled" (if enableCreateNewButton "" "disabled")}}"
     {{action "createNew"}}>
       {{t "components.olv-toolbar.add-button-text"}}
   </button>
@@ -19,6 +20,7 @@
   <button
     class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
     title={{t "components.olv-toolbar.delete-button-text"}}
+    disabled="{{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}}"
      {{action "delete"}}>
       {{t "components.olv-toolbar.delete-button-text"}}
        <i class="delete icon"></i>

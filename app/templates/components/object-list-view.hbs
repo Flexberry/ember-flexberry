@@ -8,12 +8,14 @@
               <button
                 class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                disabled={{if (or readonly allSelect) "disabled"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>
               </button>
               <button
                 class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-button-text"}}
+                disabled={{if readonly "disabled"}}
                 {{action "checkAll"}}>
                   <i class="check-all-square-o icon"></i>
               </button>

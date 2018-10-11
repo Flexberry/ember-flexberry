@@ -96,7 +96,9 @@
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
+      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}
+      disabled={{unless hasPreviousPage 'disabled'}}>
+      </button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
@@ -108,7 +110,9 @@
           {{/if}}
         {{/if}}
       {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
+      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}}
+      disabled={{unless hasPreviousPage 'disabled'}}>
+      </button>
     </div>
     <div class="right menu">
       {{#if showShowingEntries}}

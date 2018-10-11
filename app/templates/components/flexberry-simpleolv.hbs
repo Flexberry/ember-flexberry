@@ -12,6 +12,7 @@
     <button
       class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
       title={{t "components.olv-toolbar.add-button-text"}}
+      disabled={{if readonly "disabled" (if enableCreateNewButton "" "disabled")}}
       {{action "createNew"}}>
         {{t "components.olv-toolbar.add-button-text"}}
     </button>
@@ -20,6 +21,7 @@
     <button
       class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
       title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled={{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}}
        {{action "delete"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
     </button>
@@ -152,12 +154,14 @@
               <button
                 class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                disabled={{if (or readonly allSelect) "disabled"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>
               </button>
               <button
                 class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-button-text"}}
+                disabled={{if readonly "disabled"}}
                 {{action "checkAll"}}>
                   <i class="check-all-square-o icon"></i>
               </button>
@@ -278,14 +282,16 @@
                     {{/if}}
                     {{#if showDeleteButtonInRow}}
                       <div class="cell">
-                        <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
+                        <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}
+                        disabled={{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}}>
                           <i class="minus icon"></i>
                         </button>
                       </div>
                     {{/if}}
                     {{#if showEditButtonInRow}}
                       <div class="cell">
-                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}
+                        disabled={{if readonly "disabled"}} >
                           <i class="edit icon"></i>
                         </button>
                       </div>
@@ -345,7 +351,7 @@
 </div>
 <div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled={{unless hasPreviousPage 'disabled'}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -357,7 +363,7 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled={{unless hasNextPage 'disabled'}}></button>
   </div>
   <div class="right menu">
     {{#if showShowingEntries}}

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest, addDataForDestroy } from './execute-folv-test';
-import { loadingList } from './folv-tests-functions';
+import { refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
@@ -71,13 +71,23 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
 
           assert.ok(recordIsChecked, 'Each entry begins with \'' + uuid + '\' is checked');
 
-          let $toolBar = Ember.$('.ui.secondary.menu')[0];
-          let $deleteButton = $toolBar.children[2];
+          // Apply filter function.
+          let refreshFunction =  function() {
+            let deleteButton = Ember.$('.delete-button')[0];
+            click(deleteButton);
+            let refreshButton = Ember.$('.refresh-button')[0];
+            click(refreshButton);
+          };
+
           let done = assert.async();
+          let controller = app.__container__.lookup('controller:' + currentRouteName());
+
           let timeout = 500;
           Ember.run.later((function() {
+
             // Delete the marked records.
-            loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
+            refreshListByFunction(refreshFunction, controller).then(() => {
+
               let recordsIsDelete = $rows().every((element) => {
                 let nameRecord = Ember.$.trim(element.children[1].innerText);
                 return nameRecord.indexOf(uuid) < 0;

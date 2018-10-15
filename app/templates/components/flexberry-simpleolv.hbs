@@ -9,22 +9,42 @@
     </button>
   {{/if}}
   {{#if createNewButton}}
-    <button
-      class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
-      title={{t "components.olv-toolbar.add-button-text"}}
-      disabled={{if readonly "disabled" (if enableCreateNewButton "" "disabled")}}
-      {{action "createNew"}}>
-        {{t "components.olv-toolbar.add-button-text"}}
-    </button>
+    {{#if (or readonly (not enableCreateNewButton))}}
+      <button
+        class="ui create-button {{buttonClass}} disabled button"
+        title={{t "components.olv-toolbar.add-button-text"}}
+        disabled="disabled"
+        {{action "createNew"}}>
+          {{t "components.olv-toolbar.add-button-text"}}
+      </button>
+    {{else}}
+      <button
+        class="ui create-button {{buttonClass}} button"
+        title={{t "components.olv-toolbar.add-button-text"}}
+        {{action "createNew"}}>
+          {{t "components.olv-toolbar.add-button-text"}}
+      </button>
+    {{/if}}
   {{/if}}
   {{#if deleteButton}}
-    <button
-      class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
-      title={{t "components.olv-toolbar.delete-button-text"}}
-      disabled={{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}}
-       {{action "delete"}}>
-        {{t "components.olv-toolbar.delete-button-text"}}
-    </button>
+    {{#if (or readonly (not isDeleteButtonEnabled))}}
+      <button
+        class="ui delete-button {{buttonClass}} disabled button"
+        title={{t "components.olv-toolbar.delete-button-text"}}
+        disabled="disabled"
+        {{action "delete"}}>
+          {{t "components.olv-toolbar.delete-button-text"}}
+          <i class="delete icon"></i>
+      </button>
+    {{else}}
+      <button
+        class="ui delete-button {{buttonClass}} button"
+        title={{t "components.olv-toolbar.delete-button-text"}}
+        {{action "delete"}}>
+          {{t "components.olv-toolbar.delete-button-text"}}
+          <i class="delete icon"></i>
+      </button>
+    {{/if}}
   {{/if}}
   {{#if availableHierarchicalMode}}
     <button
@@ -151,20 +171,38 @@
         {{#if showHelperColumn}}
           <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
             {{#if showCheckBoxInRow }}
-              <button
-                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
-                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                disabled={{if (or readonly allSelect) "disabled"}}
-                {{action "checkAllAtPage"}}>
-                  <i class="check-square-o icon"></i>
-              </button>
-              <button
-                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
-                title={{t "components.olv-toolbar.check-all-button-text"}}
-                disabled={{if readonly "disabled"}}
-                {{action "checkAll"}}>
-                  <i class="check-all-square-o icon"></i>
-              </button>
+              {{#if (or readonly allSelect)}}
+                <button
+                  class="ui check-all-at-page-button {{buttonClass}} disabled button"
+                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                  disabled="disabled"
+                  {{action "checkAllAtPage"}}>
+                    <i class="check-square-o icon"></i>
+                </button>
+              {{else}}
+                <button
+                  class="ui check-all-at-page-button {{buttonClass}} button"
+                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                  {{action "checkAllAtPage"}}>
+                    <i class="check-square-o icon"></i>
+                </button>
+              {{/if}}
+              {{#if readonly}}
+                <button
+                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
+                  title={{t "components.olv-toolbar.check-all-button-text"}}
+                  disabled="disabled"
+                  {{action "checkAll"}}>
+                    <i class="check-all-square-o icon"></i>
+                </button>
+              {{else}}
+                <button
+                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
+                  title={{t "components.olv-toolbar.check-all-button-text"}}
+                  {{action "checkAll"}}>
+                    <i class="check-all-square-o icon"></i>
+                </button>
+              {{/if}}
               <button
                 class="ui clear-sorting-button {{buttonClass}} button"
                 title={{t "components.olv-toolbar.clear-sorting-button-text"}}
@@ -282,18 +320,42 @@
                     {{/if}}
                     {{#if showDeleteButtonInRow}}
                       <div class="cell">
-                        <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}
-                        disabled={{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}}>
-                          <i class="minus icon"></i>
-                        </button>
+                        {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+                          <button
+                            class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
+                            title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                            disabled="disabled"
+                            {{action deleteRow record}}>
+                            <i class="minus icon"></i>
+                          </button>
+                        {{else}}
+                          <button
+                            class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
+                            title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                            {{action deleteRow record}}>
+                            <i class="minus icon"></i>
+                          </button>
+                        {{/if}}
                       </div>
                     {{/if}}
                     {{#if showEditButtonInRow}}
                       <div class="cell">
-                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}
-                        disabled={{if readonly "disabled"}} >
-                          <i class="edit icon"></i>
-                        </button>
+                        {{#if readonly}}
+                          <button
+                            class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
+                            title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                            disabled="disabled"
+                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            <i class="edit icon"></i>
+                          </button>
+                        {{else}}
+                          <button
+                            class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} button"
+                            title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            <i class="edit icon"></i>
+                          </button>
+                        {{/if}}
                       </div>
                     {{/if}}
                   </div>
@@ -351,7 +413,13 @@
 </div>
 <div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled={{unless hasPreviousPage 'disabled'}}></button>
+    {{#if hasPreviousPage}}
+      <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
+      </button>
+    {{else}}
+      <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
+      </button>
+    {{/if}}
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -363,7 +431,13 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled={{unless hasNextPage 'disabled'}}></button>
+    {{#if hasNextPage}}
+      <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
+      </button>
+    {{else}}
+      <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
+      </button>
+    {{/if}}
   </div>
   <div class="right menu">
     {{#if showShowingEntries}}

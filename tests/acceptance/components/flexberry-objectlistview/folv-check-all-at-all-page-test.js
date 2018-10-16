@@ -55,7 +55,9 @@ executeTest('check select all at all page', (store, assert, app) => {
             assert.equal($deleteButton.hasClass('disabled'), false, 'delete are available');
 
             $checkAllButton.click();
+            $checkAllAtPageButton = Ember.$('.check-all-at-page-button');
             $checkCheckBox = Ember.$('.flexberry-checkbox.checked.read-only');
+            $deleteButton = Ember.$('.delete-button');
 
             // Check afther unselect all.
             assert.equal($checkAllAtPageButton.hasClass('disabled'), false, 'select all at page are available');

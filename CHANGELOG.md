@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.2] - 2018-10-17
+### Added
+* `flexberry-simpledatetime` component:
+    * `defaultHour` and `defaultMinute` properties.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.2`.
+
 ## [2.0.0-beta.1] - 2018-10-10
 ### Added
 * `flexberry-file` component:

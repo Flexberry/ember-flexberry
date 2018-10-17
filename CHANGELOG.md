@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `object-list-view` component:
+    * Fix undefined in modelName when creating a new record in flexberry-groupedit.
 
 ## [2.0.0-beta.2] - 2018-10-17
 ### Added

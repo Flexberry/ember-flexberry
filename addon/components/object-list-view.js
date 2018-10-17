@@ -877,6 +877,7 @@ export default FlexberryBaseComponent.extend(
       if (this.rowClickable || params.rowEdit) {
         let recordKey = recordWithKey && recordWithKey.key;
         let recordData = recordWithKey && recordWithKey.data;
+        let recordModelName = Ember.isNone(recordData) ? undefined : recordData.constructor.modelName;
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
@@ -885,7 +886,7 @@ export default FlexberryBaseComponent.extend(
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
-          modelName: recordData.constructor.modelName || this.get('modelProjection').modelName,
+          modelName: recordModelName || this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
           goToEditForm: true,

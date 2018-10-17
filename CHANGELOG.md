@@ -12,6 +12,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.0.0-beta.2`.
 
+### Fixed
+* List components:
+    * Fix possibility to call actions of disabled buttons by focusing and pressing `Enter`.
+
 ## [2.0.0-beta.1] - 2018-10-10
 ### Added
 * `flexberry-file` component:

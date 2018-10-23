@@ -158,7 +158,7 @@ ErrorableRouteMixin, {
         this.sorting = userSettingsService.getCurrentSorting(componentName);
 
         this.perPage = userSettingsService.getCurrentPerPage(componentName);
-        if (this.perPage !== params.perPage || this.sorting !== params.sorting) {
+        if (this.perPage !== params.perPage || serializeSortingParam(this.sorting) !== params.sort) {
           if (params.perPage !== 5) {
             this.perPage = params.perPage;
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
@@ -210,17 +210,13 @@ ErrorableRouteMixin, {
         this.get('appState').reset();
       });
 
-    if (this.get('controller') === undefined) {
-      return { isLoading: true };
-    }
-
     // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
-    if (model !== null) {
-      return model;
-    } else {
+    if (Ember.isNone(model)) {
       return { isLoading: true };
+    } else {
+      return model;
     }
   },
 

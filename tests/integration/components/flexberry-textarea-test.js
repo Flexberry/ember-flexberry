@@ -331,7 +331,7 @@ test('spellcheck mode works properly', function(assert) {
 });
 
 test('wrap mode works properly', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   // Render component.
   this.render(hbs`{{flexberry-textarea

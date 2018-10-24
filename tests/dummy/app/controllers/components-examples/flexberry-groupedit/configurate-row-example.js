@@ -35,9 +35,7 @@ export default EditFormController.extend({
         this.get('records').push(record);
       }
 
-      if (record.get('flag') === this.get('configurateRowByFlag')) {
-        set(rowConfig, 'canBeDeleted', false);
-      }
+      set(rowConfig, 'canBeDeleted', record.get('flag') !== this.get('configurateRowByFlag'));
     },
   },
 

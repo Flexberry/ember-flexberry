@@ -1090,6 +1090,15 @@ export default FlexberryBaseComponent.extend(
     assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
     this.set('selectedRecords', A());
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null,
+    });
+    this.set('defaultRowConfig', {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: ''
+    });
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
@@ -1106,15 +1115,6 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
     this.get('_contentObserver').apply(this);
     this.get('selectedRowsChanged').apply(this);
-    this.set('cellComponent', {
-      componentName: undefined,
-      componentProperties: null,
-    });
-    this.set('defaultRowConfig', {
-      canBeDeleted: true,
-      canBeSelected: true,
-      customClass: ''
-    });
   },
 
   /**

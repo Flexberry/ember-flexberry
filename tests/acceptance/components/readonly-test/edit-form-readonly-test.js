@@ -205,7 +205,9 @@ test('flexberry-lookup on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($lookup.is('readonly'), false, 'Lookup don\'t readonly');
+      $removeButton = $('.not-in-groupedit button.ui-clear');
+      $removeButtonFge = $('.in-groupedit button.ui-clear');
+      assert.strictEqual($(this).is('readonly'), false, 'Lookup don\'t readonly');
       assert.strictEqual($chooseButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Choose\' don\'t readonly');
       assert.strictEqual($removeButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Remove\' don\'t readonly');
 
@@ -274,12 +276,13 @@ test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($addButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' is not readonly');
-      assert.strictEqual($removeButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' is not readonly');
-      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper is not readonly');
-      assert.strictEqual($removeButtonRow.hasClass('disabled'), false, 'Flexberry-groupedit\'s button \'Remove in row\' is not readonly');
-      assert.strictEqual($itemEditMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Edit\' in left menu is not readonly');
-      assert.strictEqual($itemDeleteMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Delete\' in left menu is not readonly');
+      $removeButtonRow = $('.in-groupedit .object-list-view-row-delete-button');
+      assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
+      assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
+      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper don\'t readonly');
+      assert.strictEqual($removeButtonRow.hasClass('disabled'), false, 'Flexberry-groupedit\'s button \'Remove in row\' don\'t readonly');
+      assert.strictEqual($itemEditMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Edit\' in left menu don\'t readonly');
+      assert.strictEqual($itemDeleteMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Delete\' in left menu don\'t readonly');
     });
   });
 });

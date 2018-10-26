@@ -8,6 +8,7 @@ moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form',
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
+    'service:app-state',
   ],
 });
 

@@ -17,6 +17,14 @@ export default Controller.extend({
   */
   objectlistviewEventsService: service('objectlistview-events'),
 
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -430,6 +438,10 @@ export default Controller.extend({
             link: 'components-examples/flexberry-objectlistview/on-edit-form',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
+          }, {
+            link: 'components-examples/flexberry-objectlistview/list-on-editform',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.list-on-editform.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.list-on-editform.title'),
           }, {
             link: 'components-examples/flexberry-objectlistview/custom-filter',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),

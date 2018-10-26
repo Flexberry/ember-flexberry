@@ -22,6 +22,7 @@ module.exports = {
     locals: function (options) {
         var modelBlueprint = new ModelBlueprint_1.default(this, options);
         return {
+            namespace: modelBlueprint.namespace,
             className: modelBlueprint.className,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,

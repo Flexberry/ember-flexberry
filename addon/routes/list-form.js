@@ -81,12 +81,12 @@ ErrorableRouteMixin, {
   colsConfigMenu: service(),
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: service('objectlistview-events'),
+  appState: service(),
 
   init() {
     this._super(...arguments);
@@ -105,7 +105,7 @@ ErrorableRouteMixin, {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
     let controller = this.controllerFor(this.routeName);
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
 
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
@@ -168,16 +168,18 @@ ErrorableRouteMixin, {
         this.sorting = userSettingsService.getCurrentSorting(componentName);
 
         this.perPage = userSettingsService.getCurrentPerPage(componentName);
-        if (this.perPage !== params.perPage || this.sorting !== params.sorting) {
+        if (this.perPage !== params.perPage || serializeSortingParam(this.sorting) !== params.sort) {
           if (params.perPage !== 5) {
             this.perPage = params.perPage;
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
           } else {
+            /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+              this.transitionTo(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: { sort: sortString, perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+              this.transitionTo(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
+            /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
           }
         }
 
@@ -217,23 +219,17 @@ ErrorableRouteMixin, {
         this.onModelLoadingRejected(errorData, transition);
       }).finally((data) => {
         this.onModelLoadingAlways(data, transition);
-        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
-          this.get('objectlistviewEventsService').setLoadingState('');
-        }
+        this.get('appState').reset();
       });
     /* eslint-enable no-unused-vars */
-
-    if (this.get('controller') === undefined) {
-      return { isLoading: true };
-    }
 
     // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
-    if (model !== null) {
-      return model;
-    } else {
+    if (isNone(model)) {
       return { isLoading: true };
+    } else {
+      return model;
     }
   },
 

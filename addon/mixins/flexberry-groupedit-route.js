@@ -27,12 +27,12 @@ export default Mixin.create({
   _groupEditEventsService: service('objectlistview-events'),
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: service('objectlistview-events'),
+  appState: service(),
 
   /**
     Service that lets interact between agregator's and detail's form.
@@ -81,7 +81,7 @@ export default Mixin.create({
         throw new Error('Detail\'s edit form route is undefined.');
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
+      this.get('appState').loading();
 
       let goToOtherRouteFunction = function() {
         if (!record)

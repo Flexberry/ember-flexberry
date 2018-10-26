@@ -59,12 +59,12 @@ export default Mixin.create(PredicateFromFiltersMixin, {
   resultPredicate: null,
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: service('objectlistview-events'),
+  appState: service(),
 
   /**
     Total count of FOLV records.
@@ -144,9 +144,7 @@ export default Mixin.create(PredicateFromFiltersMixin, {
         _this.send('handleError', reason);
       })
       .finally(() => {
-        if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
-          _this.get('objectlistviewEventsService').setLoadingState('');
-        }
+        this.get('appState').reset();
       });
     }
 

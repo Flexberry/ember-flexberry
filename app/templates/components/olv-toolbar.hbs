@@ -8,21 +8,42 @@
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button
-    class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
-    title={{t "components.olv-toolbar.add-button-text"}}
-    {{action "createNew"}}>
-      {{t "components.olv-toolbar.add-button-text"}}
-  </button>
+  {{#if (or readonly (not enableCreateNewButton))}}
+    <button
+      class="ui create-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      disabled="disabled"
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{else}}
+    <button
+      class="ui create-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{/if}}
 {{/if}}
 {{#if deleteButton}}
-  <button
-    class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
-    title={{t "components.olv-toolbar.delete-button-text"}}
-     {{action "delete"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
-       <i class="delete icon"></i>
-  </button>
+  {{#if (or readonly (not isDeleteButtonEnabled))}}
+    <button
+      class="ui delete-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled="disabled"
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{else}}
+    <button
+      class="ui delete-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{/if}}
 {{/if}}
 {{#if availableHierarchicalMode}}
   <button

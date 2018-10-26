@@ -281,7 +281,7 @@ export default FlexberryBaseComponent.extend({
     @property exportExcelItems
     @readOnly
   */
-  exportExcelItems:  computed(function() {
+  exportExcelItems: computed(function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -400,7 +400,6 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -486,9 +485,6 @@ export default FlexberryBaseComponent.extend({
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText')) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
-      }
 
       later((function() {
         _this.set('filterText', null);

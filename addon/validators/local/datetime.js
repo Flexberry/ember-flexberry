@@ -10,7 +10,7 @@ export default Base.extend({
     For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
-    this._super();
+    this._super(...arguments);
     /*jshint expr:true*/
     if (this.options === true) {
       set(this, 'options', { allowBlank: false });

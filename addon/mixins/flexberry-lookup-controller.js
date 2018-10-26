@@ -115,6 +115,13 @@ export default Mixin.create(ReloadListMixin, {
         hierarchicalAttribute: undefined
       }, chooseData);
 
+      let lookupController = this.get('lookupController');
+      let disableHierarchy = get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
+      lookupController.set('disableHierarchicalMode', !isNone(disableHierarchy));
+
+      let customInHierarchicalMode = get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
+      lookupController.set('inHierarchicalMode', customInHierarchicalMode);
+
       let projectionName = options.projection;
       assert('ProjectionName is undefined.', projectionName);
 
@@ -130,7 +137,8 @@ export default Mixin.create(ReloadListMixin, {
       let sizeClass = options.sizeClass;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
-      let hierarchicalAttribute = options.hierarchicalAttribute;
+      let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
+      let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);

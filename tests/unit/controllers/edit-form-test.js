@@ -14,6 +14,7 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
+    'service:app-state',
   ],
 
   beforeEach: function() {

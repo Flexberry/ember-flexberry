@@ -101,12 +101,12 @@ FolvOnEditControllerMixin, {
   readonly: false,
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: injectService('objectlistview-events'),
+  appState: injectService(),
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -393,15 +393,15 @@ FolvOnEditControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
 
     let _this = this;
 
     let afterSaveModelFunction = () => {
-      this.get('objectlistviewEventsService').setLoadingState('success');
+      this.get('appState').success();
       _this.onSaveActionFulfilled();
       if (close) {
-        this.get('objectlistviewEventsService').setLoadingState('');
+        this.get('appState').reset();
         _this.close(skipTransition);
       } else if (!skipTransition) {
         let routeName = _this.get('routeName');
@@ -450,13 +450,13 @@ FolvOnEditControllerMixin, {
           }
         });
       }
-    })).catch((errorData) => {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+    }).catch((errorData) => {
+      this.get('appState').error();
       this.onSaveActionRejected(errorData);
       return RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
-    });
+    }));
 
     return savePromise;
   },
@@ -472,7 +472,7 @@ FolvOnEditControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
 
     let model = this.get('model');
     let deletePromise = null;
@@ -497,7 +497,7 @@ FolvOnEditControllerMixin, {
 
     deletePromise.catch((errorData) => {
       model.rollbackAll();
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -514,7 +514,7 @@ FolvOnEditControllerMixin, {
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
   close(skipTransition, rollBackModel) {
-    this.get('objectlistviewEventsService').setLoadingState('');
+    this.get('appState').reset();
     this.onCloseActionStarted();
     if (!skipTransition) {
       this.transitionToParentRoute(skipTransition, rollBackModel);

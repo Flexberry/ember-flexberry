@@ -77,6 +77,14 @@ export default Controller.extend({
   */
   objectlistviewEventsService: service('objectlistview-events'),
 
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.

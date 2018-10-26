@@ -59,6 +59,89 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
 
+## [2.0.0-beta.3] - 2018-10-23
+### Fixed
+* `list-form` route:
+    * Fix unnecessary transition in model with same query params.
+
+## [2.0.0-beta.2] - 2018-10-17
+### Added
+* `flexberry-simpledatetime` component:
+    * `defaultHour` and `defaultMinute` properties.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.2`.
+
+### Fixed
+* List components:
+    * Fix possibility to call actions of disabled buttons by focusing and pressing `Enter`.
+* `object-list-view` component:
+    * Fix error when creating new record in separate route with `flexberry-groupedit` component.
+
+## [2.0.0-beta.1] - 2018-10-10
+### Added
+* `flexberry-file` component:
+    * Headers attribute, which will be added to the file download request.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.1`.
+
+## [2.0.0-beta.0] - 2018-09-25
+### Added
+* `flexberry-objectlistview-route` mixin:
+    * Specifying model name via query params on transition to edit-form. It is needed in case of inherited models are displaying on list form.
+* `edit-form` and `edit-form-new` routes:
+    * Model name is now taken from query params if it is specified there. Custom query parameters can be passed to edit form via `customParameters` property of `options` parameter in `objectListViewRowClick` action.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.0`.
+
+## [0.13.0-beta.0] - 2018-09-17
+### Added
+* The `flexberry-model` blueprint generates the exported function to define the namespace of the model, if it is not empty.
+* The `flexberry-model-init` blueprint generates an import and call of function to define the namespace in the model file, if it is not empty.
+* The `flexberry-model` blueprint generates a valid default value for enumerations.
+
+## [0.12.3] - 2018-09-18
+### Fixed
+* `flexberry-lookup` component:
+    * Fix list's hierarchy when several lookups on page.
+* `list-form` route:
+    * Fix transition to list-form with custom query params.
+
+## [0.12.2] - 2018-08-28
+### Fixed
+* Missing of calling `_super` method in ember hooks inside addon.
+
+## [0.12.1] - 2018-08-22
+### Added
+* The `AppStateService` - service is used to control the state of the application.
+* Blueprints:
+    * Additive merging of generated localization files with existing localozation files.
+
+### Fixed
+* Blueprints:
+    * Fix line length JSCS error on model generation.
+    * Fix duplication of some existing files on regeneration.
+* `flexberry-objectlistview-route` mixin:
+    * Fix setting current controller during the transition on edit form.
+* `colsconfig-dialog-content` component:
+    * Fix setting save messages visibility.
+* `flexberry-toggler` component:
+    * Nested togglers now work correctly.
+* `flexberry-dropdown` component:
+    * Fix null values handling in items array.
+* List components:
+    * Fix incorrect footer width in Internet Explorer.
+    * Incorrect resets the load state.
+* `flexberry-objectlistview` component:
+    * Fix user-settings service activity toggle.
+* Fix unlock edit form in `edit-form` route and `lock-route`.
+* Fix getting controller for list form.
+
+### Deprecated
+* The `loadingState` property and the `setLoadingState` method in the `ObjectlistviewEvents` service are obsolete, use the `AppStateService` service.
+
 ## [0.12.0] - 2018-06-08
 ### Added
 * `flexberry-toggler` component:

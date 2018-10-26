@@ -117,6 +117,15 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   reloadObserverIsActive: false,
 
   /**
+    Flag indicates whether to show hierarchical button if hierarchy is available.
+
+    @property disableHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  disableHierarchicalMode: false,
+
+  /**
     Service that triggers lookup events.
 
     @property lookupEventsService

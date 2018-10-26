@@ -88,6 +88,11 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/limit-function-example');
   this.route('components-examples/flexberry-objectlistview/on-edit-form');
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
+  this.route('components-examples/flexberry-objectlistview/list-on-editform');
+  this.route('components-examples/flexberry-objectlistview/on-edit-form/suggestion',
+  { path:
+    'components-examples/flexberry-objectlistview/on-edit-form/suggestion/:id'
+  });
   this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-list');
   this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit',

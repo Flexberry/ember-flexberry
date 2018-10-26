@@ -67,7 +67,7 @@ export default Mixin.create({
 
     objectListViewRowClick(record, params) {
       // Prevent transition to edit form if click target is hierarchy expand button.
-      if (params.originalEvent && $(params.originalEvent.target).hasClass('hierarchy-expand')) {
+      if (params && params.originalEvent && $(params.originalEvent.target).hasClass('hierarchy-expand')) {
         params.goToEditForm = false;
       }
 

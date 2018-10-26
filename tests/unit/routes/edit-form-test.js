@@ -6,6 +6,7 @@ moduleFor('route:edit-form', 'Unit | Route | edit form', {
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
+    'service:app-state',
   ],
 });
 

@@ -194,6 +194,24 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Default value of hour.
+
+    @property defaultHour
+    @default 12
+    @type Integer
+  */
+  defaultHour: 12,
+
+  /**
+    Default value of minute.
+
+    @property defaultMinute
+    @default 0
+    @type Integer
+  */
+  defaultMinute: 0,
+
+  /**
     Text to be displayed in field, if field has not been filled.
 
     @property placeholder
@@ -328,6 +346,8 @@ export default FlexberryBaseComponent.extend({
       minDate: this.get('min'),
       maxDate: this.get('max'),
       defaultDate: this.get('value'),
+      defaultHour: this.get('defaultHour'),
+      defaultMinute: this.get('defaultMinute'),
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {

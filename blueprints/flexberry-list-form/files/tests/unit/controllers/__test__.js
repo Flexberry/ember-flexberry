@@ -6,6 +6,7 @@ moduleFor('controller:<%= entityName %>', 'Unit | Controller | <%= entityName %>
     'controller:colsconfig-dialog',
     'service:objectlistview-events',
     'service:user-settings',
+    'service:app-state',
   ],
 });
 

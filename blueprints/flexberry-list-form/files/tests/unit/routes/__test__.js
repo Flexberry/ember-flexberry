@@ -6,6 +6,7 @@ moduleFor('route:<%= entityName %>', 'Unit | Route | <%= entityName %>', {
     'service:cols-config-menu',
     'service:form-load-time-tracker',
     'service:objectlistview-events',
+    'service:app-state',
   ],
 });
 

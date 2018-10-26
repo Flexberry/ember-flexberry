@@ -7,6 +7,7 @@ moduleFor('route:<%= entityName %>', 'Unit | Route | <%= entityName %>', {
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
+    'service:app-state',
   ],
 });
 

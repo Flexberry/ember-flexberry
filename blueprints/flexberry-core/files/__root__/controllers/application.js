@@ -83,7 +83,7 @@ export default Controller.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   actions: {
     /**

@@ -26,6 +26,7 @@ module.exports = {
   locals: function(options) {
     let modelBlueprint = new ModelBlueprint(this, options);
     return {
+      namespace: modelBlueprint.namespace,// for use in files\__root__\models\__name__.js
       className: modelBlueprint.className,// for use in files\__root__\models\__name__.js
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\models\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\models\__name__.js

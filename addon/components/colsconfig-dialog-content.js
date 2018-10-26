@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { get, set  } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { getOwner } from '@ember/application';
+import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
@@ -33,6 +34,14 @@ export default FlexberryBaseComponent.extend({
    @default service()
    */
   objectlistviewEventsService: service('objectlistview-events'),
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
 
   /**
    Model with added DOM elements.
@@ -157,6 +166,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   didRender: function() {
+    this._super(...arguments);
     let firstButtonUp = $('#ColDescRowUp_0');
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = $('#ColDescRowDown_' + (this.modelForDOM.length - 1));
@@ -367,8 +377,8 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-      if (!this.get('exportParams').isExportExcel) {
+      this.get('appState').loading();
+      if (!this.get('exportParams.isExportExcel')) {
         let colsConfig = this._getSettings();
         let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
         if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
@@ -390,9 +400,7 @@ export default FlexberryBaseComponent.extend({
         });
         /* eslint-enable no-unused-vars */
 
-        /* eslint-disable ember/closure-actions */
-        this.sendAction('close', colsConfig); //TODO
-        /* eslint-enable ember/closure-actions */
+        this.get('close')(colsConfig);
       } else {
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
@@ -416,16 +424,11 @@ export default FlexberryBaseComponent.extend({
               anchor.get(0).click();
             }
           }
-
-          this.get('objectlistviewEventsService').setLoadingState('');
         }).catch((reason) => {
-          this.get('objectlistviewEventsService').setLoadingState('');
-
-          /* eslint-disable ember/closure-actions */
-          this.sendAction('close'); //TODO
-          /* eslint-enable ember/closure-actions */
-
+          this.get('close')(); // close modal window
           this.currentController.send('handleError', reason);
+        }).finally(() => {
+          this.get('appState').reset();
         });
       }
     },
@@ -441,6 +444,7 @@ export default FlexberryBaseComponent.extend({
         this.set('currentController.message.visible', true);
         this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
         this.set('currentController.message.message', '');
+        this._scrollToBottom();
         return;
       }
 
@@ -459,17 +463,15 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.message', '');
           $('#columnConfigurtionButtonSave')[0].className += ' disabled';
           this._isChanged = false;
+          this._scrollToBottom();
         },
         error => {
           this.set('currentController.message.type', 'error');
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
-
-          /* eslint-disable ember/closure-actions */
-          this.sendAction('close', colsConfig); //TODO
-          /* eslint-enable ember/closure-actions */
-
+          this._scrollToBottom();
+          this.get('close')(colsConfig); // close modal window
           this.currentController.send('handleError', error);
         }
       );
@@ -528,6 +530,18 @@ export default FlexberryBaseComponent.extend({
     }
     /* eslint-enable no-unused-vars */
 
+  },
+
+  /**
+    Scrolling content to bottom.
+
+    @method _scrollToBottom
+  */
+  _scrollToBottom() {
+    scheduleOnce('afterRender', this, function() {
+      let scrollBlock = this.$('.flexberry-colsconfig.content');
+      scrollBlock.animate({ scrollTop: scrollBlock.prop('scrollHeight') }, 1000);
+    });
   },
 
   /**

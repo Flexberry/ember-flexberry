@@ -216,8 +216,12 @@ export default Service.extend({
           willTransition: function() {
             perfObjects = [];
             this.set('tagsHaveBeenPlaced', false);
+            this._super(...arguments);
           },
-          didTransition: this._runOnTransitionEnd
+          didTransition: function() {
+            this._super(...arguments);
+            this._runOnTransitionEnd();
+          }
         }
       });
 

@@ -83,12 +83,12 @@ ErrorableRouteMixin, {
   newSuffix: undefined,
 
   /**
-    Service that triggers objectlistview events.
+    Service for managing the state of the application.
 
-    @property objectlistviewEventsService
-    @type Service
+    @property appState
+    @type AppStateService
   */
-  objectlistviewEventsService: service('objectlistview-events'),
+  appState: service(),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
@@ -142,7 +142,7 @@ ErrorableRouteMixin, {
   model(params, transition) {
     this._super.apply(this, arguments);
 
-    let modelName = this.get('modelName');
+    let modelName = transition.queryParams.modelName || this.get('modelName');
     let modelProjName = this.get('modelProjection');
 
     // Get data from service in order to decide if it is necessary to reload data or not.
@@ -229,9 +229,7 @@ ErrorableRouteMixin, {
       controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
-      this.get('objectlistviewEventsService').setLoadingState('');
-    }
+    this.get('appState').reset();
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');

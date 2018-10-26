@@ -57,6 +57,7 @@ declare module "MetadataClasses" {
         public name: string;
         public modelName: string;
         public className: string;
+        public nameSpace: string;
         public parentModelName: string;
         public parentClassName: string;
         public attrs: DSattr[];

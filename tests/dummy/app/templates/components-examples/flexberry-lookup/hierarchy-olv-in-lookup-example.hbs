@@ -2,6 +2,39 @@
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     {{flexberry-lookup
+      componentName="HierarchyLookup"
+      value=model.type
+      projection="CustomizeLookupWindowExampleView"
+      displayAttributeName="name"
+      title=(t "forms.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.titleLookup")
+      relationName="type"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupLimitPredicate=lookupCustomLimitPredicate
+      autocomplete=true
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-lookup
+      componentName="NoHierarchyLookup"
+      value=model.type
+      projection="CustomizeLookupWindowExampleView"
+      displayAttributeName="name"
+      title=(t "forms.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.titleLookup")
+      relationName="type"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupLimitPredicate=lookupCustomLimitPredicate
+      autocomplete=true
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-lookup
+      componentName="DisabledHierarchyLookup"
       value=model.type
       projection="CustomizeLookupWindowExampleView"
       displayAttributeName="name"

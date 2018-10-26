@@ -285,6 +285,13 @@ export default FlexberryBaseComponent.extend(
   cellComponent: undefined,
 
   /**
+    Custom data for the editform
+
+    @property {Object} customParameters
+  */
+  customParameters: undefined,
+
+  /**
     Flag: indicates whether to show validation messages in every row or not.
 
     @property showValidationMessages
@@ -824,6 +831,14 @@ export default FlexberryBaseComponent.extend(
   objectlistviewEventsService: service('objectlistview-events'),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
+
+  /**
     Used to identify objectListView on the page.
 
     @property componentName
@@ -868,20 +883,23 @@ export default FlexberryBaseComponent.extend(
       if (this.rowClickable || params.rowEdit) {
         let recordKey = recordWithKey && recordWithKey.key;
         let recordData = recordWithKey && recordWithKey.data;
+        let recordModelName = isNone(recordData) ? undefined : recordData.constructor.modelName;
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
         params = params || {};
+        /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
         $.extend(params, {
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
+          modelName: recordModelName || this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
-          goToEditForm: true
+          goToEditForm: true,
+          customParameters: this.get('customParameters')
         });
-
+        /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
         runAfter(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.get('action')(recordData, params);
         });
@@ -907,8 +925,6 @@ export default FlexberryBaseComponent.extend(
       if (!this.orderable || column.sortable === false) {
         return;
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.get(action)(column);
@@ -1099,6 +1115,9 @@ export default FlexberryBaseComponent.extend(
       canBeSelected: true,
       customClass: ''
     });
+    if (isNone(this.get('customParameters'))) {
+      this.set('customParameters', {});
+    }
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
@@ -1206,7 +1225,6 @@ export default FlexberryBaseComponent.extend(
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-            this.get('objectlistviewEventsService').setLoadingState('');
 
             this.set('_renderedRowIndex', -1);
 
@@ -2135,17 +2153,17 @@ export default FlexberryBaseComponent.extend(
   */
   _actualDeleteAllRecords(componentName, modelName, filterQuery) {
     let currentController = this.get('currentController');
-    this.get('objectlistviewEventsService').setLoadingState('loading');
+    this.get('appState').loading();
     let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
 
     promise.then((data)=> {
       if (data.deletedCount > -1) {
-        this.get('objectlistviewEventsService').setLoadingState('success');
+        this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
         currentController.onDeleteActionFulfilled();
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
-        this.get('objectlistviewEventsService').setLoadingState('error');
+        this.get('appState').error();
         let errorData = {
           message: data.message
         };
@@ -2154,7 +2172,7 @@ export default FlexberryBaseComponent.extend(
         currentController.send('handleError', errorData);
       }
     }).catch((errorData) => {
-      this.get('objectlistviewEventsService').setLoadingState('error');
+      this.get('appState').error();
       if (!isNone(errorData.status) && errorData.status === 0 && !isNone(errorData.statusText) &&  errorData.statusText === 'error') {
         // This message will be converted to corresponding localized message.
         errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';

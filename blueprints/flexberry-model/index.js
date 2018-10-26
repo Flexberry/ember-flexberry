@@ -54,6 +54,7 @@ module.exports = {
     locals: function (options) {
         var modelBlueprint = new ModelBlueprint_1.default(this, options);
         return lodash.defaults({
+            namespace: modelBlueprint.namespace,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
@@ -64,7 +65,8 @@ module.exports = {
             name: modelBlueprint.name,
             needsAllModels: modelBlueprint.needsAllModels,
             needsAllEnums: modelBlueprint.needsAllEnums,
-            needsAllObjects: modelBlueprint.needsAllObjects // for use in files\tests\unit\serializers\__name__.js
+            needsAllObjects: modelBlueprint.needsAllObjects,
+            enumImports: modelBlueprint.enumImports,
         }, modelBlueprint.lodashVariables);
     }
 };

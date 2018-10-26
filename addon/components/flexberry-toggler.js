@@ -132,6 +132,7 @@ export default Component.extend({
     Attaches event handlers for expanding / collapsing content.
   */
   didInsertElement() {
+    this._super(...arguments);
     this.loadStatus();
     let $accordeonDomElement = this.$();
 

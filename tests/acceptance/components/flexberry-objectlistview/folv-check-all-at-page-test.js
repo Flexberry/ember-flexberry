@@ -60,6 +60,8 @@ executeTest('check select all at page', (store, assert, app) => {
             run(() => {
               $checkAllAtPageButton.click();
             });
+
+            $deleteButton = $('.delete-button');
             $checkCheckBox = $('.flexberry-checkbox.checked');
 
             // Check afther unselect all at page.

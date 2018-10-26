@@ -6,6 +6,9 @@ import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
 import { isNone } from '@ember/utils';
+import { deprecatingAlias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
@@ -262,9 +265,16 @@ export default Service.extend(Evented, {
 
     @property loadingState
     @type string
-    @default undefined
   */
-  loadingState: undefined,
+  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
 
   /**
     Sets current limit function for OLV.
@@ -289,13 +299,41 @@ export default Service.extend(Evented, {
 
   /**
     Method that sets the form's loading state.
+    This method is deprecated, use {{#crossLink "AppStateService"}}app state service{{/crossLink}}.
 
     @method setLoadingState
-
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    this.set('loadingState', loadingState);
+    deprecate('This method is deprecated, use app state service.', false, {
+      id: 'service.app-state',
+      until: '1.0.0',
+    });
+
+    switch (loadingState) {
+      case 'loading':
+        this.get('appState').loading();
+        break;
+
+      case 'success':
+        this.get('appState').success();
+        break;
+
+      case 'error':
+        this.get('appState').error();
+        break;
+
+      case 'warning':
+        this.get('appState').warning();
+        break;
+
+      case '':
+        this.get('appState').reset();
+        break;
+
+      default:
+        throw new Error(`Unknown state: '${loadingState}'.`);
+    }
   },
 
   /**

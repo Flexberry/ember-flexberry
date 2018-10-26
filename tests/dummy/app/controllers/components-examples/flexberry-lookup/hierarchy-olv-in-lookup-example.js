@@ -15,17 +15,38 @@ export default EditFormController.extend({
     getLookupFolvProperties: function(options) {
       let methodArgs = merge({
         projection: undefined,
-        relationName: undefined
+        relationName: undefined,
+        componentName: undefined
       }, options);
 
       if (methodArgs.relationName === 'type') {
-        return {
-          disableHierarchicalMode: false,
-          modelName: 'ember-flexberry-dummy-suggestion-type',
-          modelProjection: 'SettingLookupExampleView',
-          inHierarchicalMode: true,
-          hierarchicalAttribute: 'Name'
-        };
+        if (methodArgs.componentName === 'HierarchyLookup') {
+          return {
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: true,
+            hierarchicalAttribute: 'parent'
+          };
+        }
+
+        if (methodArgs.componentName === 'NoHierarchyLookup') {
+          return {
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: false,
+            hierarchicalAttribute: 'parent'
+          };
+        }
+
+        if (methodArgs.componentName === 'DisabledHierarchyLookup') {
+          return {
+            disableHierarchicalMode: true,
+            modelName: 'ember-flexberry-dummy-suggestion-type',
+            modelProjection: 'SettingLookupExampleView',
+            inHierarchicalMode: false,
+            hierarchicalAttribute: 'parent'
+          };
+        }
       }
 
       return undefined;

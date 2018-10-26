@@ -5,6 +5,7 @@ moduleFor('route:new-platform-flexberry-services-lock-list', 'Unit | Route | new
     'service:cols-config-menu',
     'service:form-load-time-tracker',
     'service:objectlistview-events',
+    'service:app-state',
   ],
 });
 

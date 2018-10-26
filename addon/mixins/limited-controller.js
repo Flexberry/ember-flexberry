@@ -121,7 +121,6 @@ export default Mixin.create({
     applyFilters(filters) {
       this.set('page', 1);
       this.set('filters', filters);
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
     },
 
@@ -134,7 +133,6 @@ export default Mixin.create({
     resetFilters(componentName) {
       this.set('page', 1);
       this.set('filters', null);
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
@@ -148,7 +146,6 @@ export default Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern || this.get('filterCondition') !== filterCondition) {
-        this.get('objectlistviewEventsService').setLoadingState('loading');
         let _this = this;
         later((function() {
           _this.setProperties({

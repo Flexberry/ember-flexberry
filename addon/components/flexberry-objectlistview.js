@@ -850,8 +850,6 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
@@ -870,8 +868,6 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
@@ -892,8 +888,6 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
-
-      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
@@ -1033,7 +1027,6 @@ export default FlexberryBaseComponent.extend({
       var userSettings = this.get('userSettingsService');
       if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
         userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
-        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
     },
 
@@ -1231,6 +1224,7 @@ export default FlexberryBaseComponent.extend({
     @method didRender
   */
   didRender() {
+    this._super(...arguments);
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
   },
 
@@ -1284,13 +1278,19 @@ export default FlexberryBaseComponent.extend({
   },
 
   _setMenuWidth(tableWidth, containerWidth) {
-    let $table = this.$('table.object-list-view')[0];
+    let $table = this.$('table.object-list-view');
     if (isBlank(tableWidth)) {
-      tableWidth = $table.clientWidth;
+      tableWidth = $table.width();
     }
 
     if (isBlank(containerWidth)) {
-      containerWidth = $table.parentElement.clientWidth - 5;
+      containerWidth = $table.parent().width() - 5;
+    }
+
+    // Using scrollWidth, because Internet Explorer don't receive correct value for this element with .width().
+    let pages = this.$('.ui.secondary.menu .ui.basic.buttons')[0];
+    if (tableWidth < pages.scrollWidth) {
+      tableWidth = pages.scrollWidth + 75;
     }
 
     this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?

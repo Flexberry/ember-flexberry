@@ -3,6 +3,7 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('controller:application', {
   needs: [
     'service:objectlistview-events',
+    'service:app-state',
   ],
 });
 

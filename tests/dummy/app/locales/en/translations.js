@@ -691,6 +691,10 @@ $.extend(true, translations, {
               'caption': 'Placement on edit form',
               'title': ''
             },
+            'list-on-editform': {
+              'caption': 'Placement of the list of detail of the master on the editing form',
+              'title': ''
+            },
             'custom-filter': {
               'caption': 'Custom filter',
               'title': ''
@@ -1116,6 +1120,9 @@ $.extend(true, translations, {
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
           'add-button-name': 'Добавить'
+        },
+        'list-on-editform': {
+          'caption': 'List of children Type'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'

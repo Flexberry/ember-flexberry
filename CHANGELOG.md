@@ -44,6 +44,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Nested togglers now work correctly.
 * `flexberry-lookup` component:
     * Fix hierarchical mode settings for `lookup dialog`.
+    * Fix dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
 
@@ -58,6 +59,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
+* `flexberry-lookup` component:
+    * In templates `items` property must be before `value` property.
 
 ## [2.0.0-beta.3] - 2018-10-23
 ### Fixed

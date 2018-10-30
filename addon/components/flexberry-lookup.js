@@ -6,6 +6,7 @@ import { assert, warn, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { later, run } from '@ember/runloop';
+import { merge } from '@ember/polyfills';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
@@ -532,24 +533,7 @@ export default FlexberryBaseComponent.extend({
     Semantic-ui settings for dropdown.
     For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
   */
-  on: 'click',
-  allowReselection: false,
-  allowAdditions: false,
-  hideAdditions: true,
-  minCharacters: 1,
-  match: 'both',
-  selectOnKeydown: true,
-  forceSelection: false,
-  allowCategorySelection: false,
-  direction: 'auto',
-  keepOnScreen: true,
-  fullTextSearch: false,
-  preserveHTML: true,
-  sortSelect: false,
-  showOnFocus: true,
-  allowTab: true,
-  transition: 'auto',
-  duration: 200,
+  dropdownSettings: undefined,
 
   actions: {
     /**
@@ -615,8 +599,11 @@ export default FlexberryBaseComponent.extend({
     For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
-
     this._super(...arguments);
+
+    if (this.get('dropdown')) {
+      this._onDropdown();
+    }
 
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
@@ -937,7 +924,6 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relationModelName = getRelationType(relatedModel, relationName);
-    let minCharacters = this.get('minCharacters');
     let dropdownIsSearch = this.get('dropdownIsSearch');
 
     let displayAttributeName = this.get('displayAttributeName');
@@ -946,26 +932,10 @@ export default FlexberryBaseComponent.extend({
     }
 
     let i18n = _this.get('i18n');
-    this.$('.flexberry-dropdown').dropdown({
-      minCharacters: dropdownIsSearch ? minCharacters : 0,
+    let defaultDropdownSettings = {
+      minCharacters: dropdownIsSearch ? 1 : 0,
       cache: false,
-      on: this.get('on'),
-      allowReselection: this.get('allowReselection'),
-      allowAdditions: this.get('allowAdditions'),
-      hideAdditions: this.get('hideAdditions'),
-      match: this.get('match'),
-      selectOnKeydown: this.get('selectOnKeydown'),
-      forceSelection: this.get('forceSelection'),
-      allowCategorySelection: this.get('allowCategorySelection'),
-      direction: this.get('direction'),
-      keepOnScreen: this.get('keepOnScreen'),
-      fullTextSearch: this.get('fullTextSearch'),
-      preserveHTML: this.get('preserveHTML'),
-      sortSelect: this.get('sortSelect'),
-      showOnFocus: this.get('showOnFocus'),
-      allowTab: this.get('allowTab'),
-      transition: this.get('transition'),
-      duration: this.get('duration'),
+      forceSelection: false,
       message: {
         noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
       },
@@ -986,7 +956,7 @@ export default FlexberryBaseComponent.extend({
           run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               // We have to cache data because dropdown component sets text as value and we lose object value.
-              let resultArray = [];
+              let resultArray = {};
               let results = records.map((i) => {
                 let attributeName = i.get(displayAttributeName);
                 resultArray[i.id] = i;
@@ -1021,13 +991,19 @@ export default FlexberryBaseComponent.extend({
         }
 
         _this.get('currentController').send(_this.get('updateLookupAction'),
-          {
-            relationName: relationName,
-            modelToLookup: relatedModel,
-            newRelationValue: newValue
-          });
+        {
+          relationName: relationName,
+          modelToLookup: relatedModel,
+          newRelationValue: newValue
+        });
+      },
+      onHide() {
+        _this.$('.flexberry-dropdown input.search').val('');
+        _this.$('.flexberry-dropdown .text.filtered').removeClass('filtered');
       }
-    });
+    };
+
+    this.set('dropdownSettings', merge(defaultDropdownSettings, this.get('dropdownSettings') || {}));
   },
 
   /**

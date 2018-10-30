@@ -2,11 +2,12 @@
   {{flexberry-dropdown
     placeholder=placeholder
     class="search"
-    value=(unbound displayValue)
+    value=displayValue
     readonly=(if readonly "readonly")
     needChecksOnValue=false
     isSearch=true
     isSearchReadOnly=dropdownIsSearch
+    settings=dropdownSettings
   }}
 {{else}}
   <div class="ui fluid action input">

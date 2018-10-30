@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-tab-bar` component:
+    * Fix tabs `active` class adding.
 
 ## [2.0.0-beta.3] - 2018-10-23
 ### Fixed

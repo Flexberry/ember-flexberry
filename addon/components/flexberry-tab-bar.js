@@ -58,13 +58,16 @@ export default Ember.Component.extend({
 
     items.forEach((item) => {
       let itemIsActive = Ember.get(item, 'active');
-      if (itemIsActive && itemIsActive === true) {
+      if (itemIsActive) {
         if (!active) {
           active = true;
-          this.$('.item.active').removeClass('active');
 
           let itemClass = Ember.get(item, 'class') || '';
-          itemClass += itemClass + ' active';
+          let regEx = /\sactive(\s|$)/;
+          if (!regEx.test(itemClass)) {
+            itemClass += ' active';
+          }
+
           Ember.set(item, 'class', itemClass);
 
           this.set('prevTab', item.selector);

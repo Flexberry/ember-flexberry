@@ -23,7 +23,7 @@
                 <i class="chevron down icon"></i>
               </button>
             </td
-            ><td class="{{if colDesc.hide "disabled"}}">{{#if exportParams.isExportExcel}}{{input value=colDesc.name focusOut=(action "columnNameChanged")}}{{else}}{{colDesc.name}}{{/if}}</td
+            ><td class="{{if colDesc.hide "disabled"}}">{{#if exportParams.isExportExcel}}{{input value=colDesc.name change=(action "columnNameChanged")}}{{else}}{{colDesc.name}}{{/if}}</td
             ><td class="sort-direction-cell"
               ><select class="ui compact dropdown selection sort-direction-dropdown {{if colDesc.hide 'disabled' ''}} {{if colDesc.isHasMany 'hidden' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
@@ -34,12 +34,12 @@
             ><td class="{{if colDesc.hide 'disabled' ''}}">
               <div class="ui input {{if colDesc.hide 'disabled' ''}}">
                 <input id="{{colDesc.sortPriorityId}}" size='2' class="sortPriority {{if colDesc.sortOrder '' 'hidden'}}" disabled="{{if colDesc.sortOrder '' 'disabled'}}" value='{{colDesc.sortPriority}}' type='input' style=""
-                  {{action "setSortPriority" n on="focusOut"}} prevValue="{{colDesc.sortPriority}}">
+                  {{action "setSortPriority" n on="change"}} prevValue="{{colDesc.sortPriority}}">
               </div>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
               <div class="ui input {{if (or colDesc.hide (or exportParams.isExportExcel (or colDesc.fixed (not saveColWidthState)))) 'disabled' ''}}">
-                <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}>
+                <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="change"}}>
               </div>
             </td
 
@@ -76,7 +76,7 @@
           ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
             ><th>
               <div class="ui input">
-              <input id="perPageValueInput" size='2' class="perPage" value='{{perPageValue}}' type='input' {{action "perPageChanged"  on="focusOut"}}
+              <input id="perPageValueInput" size='2' class="perPage" value='{{perPageValue}}' type='input' {{action "perPageChanged"  on="change"}}
                     >
                 </div>
             </th

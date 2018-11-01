@@ -172,6 +172,19 @@ div.ui.secondary.menu.no-margin {
     color: @white;
 }
 
+.ui.secondary.menu {
+    .ui.buttons.export-config, .ui.buttons.cols-config {
+        .export-button, .config-button.settings-enabled {
+            padding-right: 0em;
+        }
+
+        .dropdown.button {
+            padding-left: 0.2em;
+        }
+    }
+}
+
+
 /**************************************
       Edit panel buttons section
 ***************************************/
@@ -567,7 +580,7 @@ div.ui.secondary.menu.no-margin {
 .ui.buttons:not(.basic):not(.inverted) > .button {
     border: none;
     background: none!important;
-    padding: 0.7400em 0.8571em!important;
+    padding: 0.7400em 0.8571em;
 }
 
 .ui.basic.buttons .active.button {

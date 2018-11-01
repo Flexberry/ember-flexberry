@@ -46,6 +46,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix hierarchical mode settings for `lookup dialog`.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.

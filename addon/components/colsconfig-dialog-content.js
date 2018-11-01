@@ -488,6 +488,15 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Column name is changed
+
+      @method actions.columnNameChanged
+    */
+    columnNameChanged: function() {
+      this._changed();
+    },
+
+    /**
       Config name is defined
 
       @method actions.setConfigName

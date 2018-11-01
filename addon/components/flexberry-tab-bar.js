@@ -60,13 +60,16 @@ export default Component.extend({
 
     items.forEach((item) => {
       let itemIsActive = get(item, 'active');
-      if (itemIsActive && itemIsActive === true) {
+      if (itemIsActive) {
         if (!active) {
           active = true;
-          this.$('.item.active').removeClass('active');
 
           let itemClass = get(item, 'class') || '';
-          itemClass += itemClass + ' active';
+          let regEx = /\sactive(\s|$)/;
+          if (!regEx.test(itemClass)) {
+            itemClass += ' active';
+          }
+
           set(item, 'class', itemClass);
 
           this.set('prevTab', item.selector);

@@ -61,6 +61,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
 
+### Fixed from develop branch
+* `colsconfig-dialog-content` component:
+    * Fix column names saving in export excel mode.
+
+## [2.0.0-beta.4] - 2018-10-30
+### Fixed
+* `flexberry-tab-bar` component:
+    * Fix tabs `active` class adding.
+
 ## [2.0.0-beta.3] - 2018-10-23
 ### Fixed
 * `list-form` route:

@@ -70,6 +70,9 @@ export default Ember.Mixin.create({
           propName = colOrder.propName;
           if ((propName in namedColList) && ('header' in  namedColList[propName])) {
             reliableColsOrder.push(colOrder);
+            if (isExportExcel && colOrder.name) {
+              Ember.set(namedColList[propName], 'header.string', colOrder.name);
+            }
           }
         }
 

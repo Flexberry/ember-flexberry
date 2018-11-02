@@ -530,6 +530,11 @@ export default FlexberryBaseComponent.extend({
   componentName: undefined,
 
   /**
+    Autocomplete settings.
+  */
+  minCharacters: 1,
+
+  /**
     Semantic-ui settings for dropdown.
     For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
   */

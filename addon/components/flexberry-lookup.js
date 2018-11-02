@@ -929,6 +929,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relationModelName = getRelationType(relatedModel, relationName);
+    let minCharacters = this.get('minCharacters');
     let dropdownIsSearch = this.get('dropdownIsSearch');
 
     let displayAttributeName = this.get('displayAttributeName');
@@ -938,7 +939,7 @@ export default FlexberryBaseComponent.extend({
 
     let i18n = _this.get('i18n');
     let defaultDropdownSettings = {
-      minCharacters: dropdownIsSearch ? 1 : 0,
+      minCharacters: dropdownIsSearch ? minCharacters : 0,
       cache: false,
       forceSelection: false,
       message: {

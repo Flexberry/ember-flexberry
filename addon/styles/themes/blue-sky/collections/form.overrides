@@ -37,15 +37,14 @@
     outline: none;
 }
 
-.ember-view.example-simpledatetime input.flatpickr-input {
-    border-bottom: none;
-}
-
 .flexberry-simpledatetime .ui.fluid.action.input {
     border: none;
     border-bottom: 1px solid @inputBorderColor;
     border-radius: 0px;
     outline: none;
+    input.flatpickr-input {
+        border-bottom: none;
+    }
 }
 
 input[type="checkbox"]:after {

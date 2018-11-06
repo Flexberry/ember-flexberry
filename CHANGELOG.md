@@ -46,6 +46,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix hierarchical mode settings for `lookup dialog`.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+* `modal-dialog` component:
+    * Fix settings initialization.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.

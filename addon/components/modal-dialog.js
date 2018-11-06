@@ -120,11 +120,6 @@ export default Component.extend({
   */
   componentName: undefined,
 
-  init() {
-    this._super(...arguments);
-    this.set('settings', {});
-  },
-
   /**
     See [EmberJS API](https://emberjs.com/api/).
 

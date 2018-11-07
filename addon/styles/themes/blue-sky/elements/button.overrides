@@ -538,25 +538,24 @@ div.ui.secondary.menu.no-margin {
 /******************************************
       Not categorized buttons section
 *******************************************/
+.flexberry-colsconfig.content {
+    .cols-config-apply {
+        display: flex;
+        align-items: center;
+        background-color: @uiHoveredPositiveBackgroundColor;
+        border: 1px solid @uiBorderColor;
+        &:hover {
+            border: 1px solid @uiHoveredPositiveBorderColor;
+        }
+    }
 
-#columnConfigurtionButtonUse {
-    display: flex;
-    align-items: center;
-    background-color: @uiHoveredPositiveBackgroundColor;
-    border: 1px solid @uiBorderColor;
-}
-
-#columnConfigurtionButtonUse:hover {
-    border: 1px solid @uiHoveredPositiveBorderColor;
-}
-
-#columnConfigurtionButtonSave {
-    border: 1px solid @uiBorderColor;
-}
-
-#columnConfigurtionButtonSave:hover {
-    border: 1px solid @uiHoveredPositiveBorderColor;
-    background-color: @uiHoveredPositiveBackgroundColor;
+    .cols-config-save {
+        border: 1px solid @uiBorderColor;
+        &:hover {
+            border: 1px solid @uiHoveredPositiveBorderColor;
+            background-color: @uiHoveredPositiveBackgroundColor;
+        }
+    }
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {

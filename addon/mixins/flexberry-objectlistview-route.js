@@ -69,6 +69,7 @@ export default Ember.Mixin.create({
             this.transitionTo(editFormRoute, recordId, transitionOptions)
             .then((newRoute) => {
               newRoute.controller.set('parentRoute', thisRouteName);
+              newRoute.controller.set('parentRouteId', thisRecordId);
             });
           }).catch((errorData) => {
             this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));

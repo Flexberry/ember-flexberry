@@ -433,6 +433,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
+  /* eslint-disable no-side-effects */
   columns: computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
@@ -526,6 +527,7 @@ export default FlexberryBaseComponent.extend(
 
     return ret;
   }),
+  /* eslint-enable no-side-effects */
 
   /**
     Total columns count (including additional columns).

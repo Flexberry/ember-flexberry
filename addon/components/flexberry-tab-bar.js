@@ -53,6 +53,7 @@ export default Component.extend({
    * @property tabs
    * @type {Array}
    */
+  /* eslint-disable no-side-effects */
   tabs: computed('items.{[],@each.active}', function () {
     let active = false;
     let items = this.get('items') || A();
@@ -87,6 +88,7 @@ export default Component.extend({
 
     return result;
   }),
+  /* eslint-enable no-side-effects */
 
   /**
    * Contains name of previous data-tab

@@ -433,7 +433,6 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  /* eslint-disable no-side-effects */
   columns: computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
@@ -444,7 +443,7 @@ export default FlexberryBaseComponent.extend(
 
     let cols = this._generateColumns(projection.attributes);
     let userSettings;
-    if (this.notUseUserSettings === true) {
+    if (this.notUseUserSettings) {
 
       // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
@@ -503,31 +502,14 @@ export default FlexberryBaseComponent.extend(
           }
         }
       } else {
-        if (this.currentController) {
-          if (this.currentController.userSettings === undefined) {
-            set(this.currentController, 'userSettings', {});
-          }
-
-          set(this.currentController.userSettings, 'colsOrder', cols);
-        }
-
         ret = cols;
       }
     } else {
-      if (this.currentController) {
-        if (this.currentController.userSettings === undefined) {
-          set(this.currentController, 'userSettings', {});
-        }
-
-        set(this.currentController.userSettings, 'colsOrder', cols);
-      }
-
       ret = cols;
     }
 
     return ret;
   }),
-  /* eslint-enable no-side-effects */
 
   /**
     Total columns count (including additional columns).

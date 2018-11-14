@@ -3,7 +3,6 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import RSVP from 'rsvp';
 import { assert } from '@ember/debug';
 import { on } from '@ember/object/evented';
 import { set, computed, observer } from '@ember/object';
@@ -74,16 +73,7 @@ export default Mixin.create(PredicateFromFiltersMixin, {
     @readOnly
   */
   recordsTotalCount: computed('customFolvContent', function() {
-    let customFolvContent = this.get('customFolvContent');
-    if (customFolvContent) {
-      if (customFolvContent instanceof RSVP.Promise) {
-        customFolvContent.then((records) => {
-          this.set('recordsTotalCount', records.meta.count);
-        }, this);
-      } else {
-        return customFolvContent.meta.count;
-      }
-    }
+    return this.get('customFolvContent.meta.count');
   }),
 
   /**

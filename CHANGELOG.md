@@ -32,6 +32,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-model` blueprint:
     * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
     * Fixed code style in regenerated model file.
+* `flexberry-objectlistview-on-edit-form-controller` mixin:
+    * Property `customFolvContent` can't have Promise as a value.
 
 ### Fixed
 * Blueprints:

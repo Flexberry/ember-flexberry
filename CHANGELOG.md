@@ -380,6 +380,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix list's `refresh` and `delete` buttons styles for Firefox.
 * Fix `onRowClick` action for `object-list-view-row`.
 * Fix `lookupWindowCustomProperties` for lookups in `flexberry-groupedit`.
+* Fix `lock-route`: deleting a blocking object for single-model routes.
 
 ### Removed
 * `ui-message` component: attribute `title`.

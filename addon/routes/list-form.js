@@ -329,7 +329,6 @@ ErrorableRouteMixin, {
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('error', undefined);
-    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));

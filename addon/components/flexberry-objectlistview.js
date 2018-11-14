@@ -576,8 +576,7 @@ export default FlexberryBaseComponent.extend({
     let pages = this.get('pages');
     let perPageValue = this.get('perPageValue');
     let recordsTotalCount = this.get('recordsTotalCount');
-    if (recordsTotalCount === null && this.get('showShowingEntries')) {
-      this.set('showShowingEntries', false);
+    if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
       throw new Error('Property \'recordsTotalCount\' is undefined.');
     }
 

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add `componentName` generation for lookups.
+
 ### Fixed
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.

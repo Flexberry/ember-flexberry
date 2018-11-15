@@ -14,6 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.
+* List components:
+    * Fix filter by date type columns.
     * Fix usersettings apply, when query params doesn't change.
 * `olv-toolbar` component:
     * Fix usersettings copy dialog selectors.

@@ -1829,7 +1829,10 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'date':
-        component.name = 'flexberry-textbox';
+        component.name = 'flexberry-simpledatetime';
+        component.properties = Ember.$.extend(true, component.properties, {
+          type: 'date',
+        });
         break;
 
       default:

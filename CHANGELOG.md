@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* `colsconfig-dialog-content` component refactoring.
 ### Added
 * Blueprints:
     * Add `componentName` generation for lookups.
@@ -12,7 +14,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix column names saving in export excel mode.
 * List components:
     * Fix filter by date type columns.
+    * Fix usersettings apply, when query params doesn't change.
+* `olv-toolbar` component:
+    * Fix usersettings copy dialog selectors.
+* `flexberry-file` component:
+    * Fix mobile file component menu.
+* `flexberry-menu` component:
+    * Fix setting bordered icon style.
+* `flexberry-objectlistview` component:
+    * Fix pager block resizing in hierarchy mode.
 * `flexberry-simpledatetime` component:
+    * Fix time after clearing component's value.
     * Date dialog opening when clear button was clicked.
 
 ## [2.0.0-beta.4] - 2018-10-30

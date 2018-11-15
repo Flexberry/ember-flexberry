@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add `componentName` generation for lookups.
+* `flexberry-simpledatetime` component:
+    * Ability to dynamically change `defaultHour` and `defaultMinute` properties.
 
 ### Fixed
 * `colsconfig-dialog-content` component:

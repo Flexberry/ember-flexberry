@@ -392,7 +392,7 @@ export default FlexberryBaseComponent.extend({
       infoModalDialog.modal('show');
     }
 
-    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+    let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
     oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
     oLVToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
@@ -645,9 +645,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     copyJSONContent(event) {
-      Ember.$('#OLVToolbarInfoContent').select();
+      let infoModalDialog = this.get('_infoModalDialog');
+      infoModalDialog.find('.olv-toolbar-info-modal-dialog-content textarea').select();
       let copied = document.execCommand('copy');
-      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+      let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     }

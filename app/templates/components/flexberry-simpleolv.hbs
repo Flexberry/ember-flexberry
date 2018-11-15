@@ -142,10 +142,9 @@
     </div>
     <div class="center aligned ui grid">
     <button
-      class="ui icon button"
+      class="ui icon button olv-toolbar-info-modal-dialog-copy-button"
       title={{t "components.olv-toolbar.copy"}}
-      {{action "copyJSONContent"}}
-      id='OLVToolbarInfoCopyButton'>
+      {{action "copyJSONContent"}}>
         <i class="copy icon"></i>
         {{t "components.olv-toolbar.copy"}}
     </button>
@@ -158,7 +157,7 @@
     </div>
     <div class="ui form">
       <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">
-        <textarea id='OLVToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
+        <textarea cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
       </div>
     </div>
   </div>

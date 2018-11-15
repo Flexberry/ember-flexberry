@@ -19,6 +19,7 @@ const Validations = buildValidations({
     presence: true,
     message: 'Editor is required',
   }),
+  userVotes: validator('has-many'),
 });
 
 let Model = EmberFlexberryDataModel.extend(Validations, {

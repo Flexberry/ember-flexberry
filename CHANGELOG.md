@@ -50,6 +50,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix localization switching for mobile mode.
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
+* `dynamic-actions` mixin:
+    * Fix `classNames` property computing.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.

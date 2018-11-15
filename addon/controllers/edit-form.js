@@ -456,7 +456,11 @@ FolvOnEditControllerMixin, {
       return RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
-    }));
+    })).catch((errorData) => {
+      this.get('appState').error();
+      this.onSaveActionRejected(errorData);
+      return RSVP.reject(errorData);
+    });
 
     return savePromise;
   },

@@ -144,6 +144,10 @@ export default FlexberryBaseComponent.extend({
   value: computed('_value', 'items', {
     get() {
       let valueKey = this.get('_value');
+      if (valueKey && this.get('_initialized')) {
+        this.$().dropdown('set selected', valueKey);
+      }
+
       return valueKey ? this.get(`items.${valueKey}`) : undefined;
     },
     set(key, value, oldValue) {

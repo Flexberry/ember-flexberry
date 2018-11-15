@@ -15,7 +15,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `flexberry-dropdown` component:
     * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
-    * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 * `modal-dialog` component:
     * Does not use `ui-modal` component from `semantic-ui-ember` addon.
 * `run.after` function renamed to `runAfter` and replaced from initializer to utils.
@@ -46,6 +45,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Nested togglers now work correctly.
 * `flexberry-lookup` component:
     * Fix hierarchical mode settings for `lookup dialog`.
+    * Fix dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
 * `modal-dialog` component:
@@ -66,6 +66,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
+* `flexberry-lookup` component:
+    * In templates `items` property must be before `value` property.
+    * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
+* `flexberry-dropdown` component:
+    * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
 ### Fixed from develop branch
 * `colsconfig-dialog-content` component:

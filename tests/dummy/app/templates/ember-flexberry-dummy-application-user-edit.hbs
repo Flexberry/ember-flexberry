@@ -124,8 +124,8 @@
   <div class="field {{if (v-get validationObject "gender" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
     {{flexberry-dropdown
-      value=model.gender
       items=(flexberry-enum "ember-flexberry-dummy-gender")
+      value=model.gender
       readonly=readonly
       settings=(hash direction="upward")
     }}

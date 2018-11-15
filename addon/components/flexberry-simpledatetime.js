@@ -210,6 +210,16 @@ export default FlexberryBaseComponent.extend({
   defaultMinute: 0,
 
   /**
+   Reinit flatpickr to change defaultHour and defaultMinute.
+   */
+  updateAfterSettingNewDefaultTime: Ember.observer('defaultHour', 'defaultMinute', function () {
+    let flatpickr = this.get('_flatpickr');
+    if (flatpickr) {
+      this._flatpickrDestroy();
+      Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
+    }
+  }),
+  /**
     Text to be displayed in field, if field has not been filled.
 
     @property placeholder

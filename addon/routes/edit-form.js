@@ -169,12 +169,13 @@ ErrorableRouteMixin, {
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     controller.set('readonly', false);
+    controller.set('parentRouteId', undefined);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
-    controller.set('parentRouteId', undefined);
+    controller.set('modelCurrentAgregators', undefined);
 
     // If flag 'modelNoRollBack' is set, leave current model as is and remove flag.
     if (controller.get('modelNoRollBack') === true) {

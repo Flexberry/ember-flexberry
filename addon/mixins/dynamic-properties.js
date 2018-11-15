@@ -97,7 +97,6 @@ export default Mixin.create({
 
       if (!isArray(classNames)) {
         classNames = [];
-        this.set('classNames', classNames);
       }
 
       if ($component) {
@@ -120,7 +119,9 @@ export default Mixin.create({
         });
       }
 
-      this.set('classNames', customClassNames);
+      classNames = classNames.concat(customClassNames.filter(c => classNames.indexOf(c) < 0));
+
+      this.set('classNames', classNames);
 
       // Remember added custom class names in the context of property observer handler.
       previousCustomClassNames = customClassNames;

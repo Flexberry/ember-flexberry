@@ -349,7 +349,13 @@ export default FlexberryBaseComponent.extend({
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {
-          this.set('_valueAsDate', dates[dates.length - 1]);
+          if (this.get('_flatpickr.config.enableTime') && Ember.isNone(this.get('_valueAsDate'))) {
+            dates[0].setHours(this.get('defaultHour'));
+            dates[0].setMinutes(this.get('defaultMinute'));
+            this.get('_flatpickr').setDate(dates[0], false);
+          }
+
+          this.set('_valueAsDate', dates[0]);
         }
       },
       onClose: () => {

@@ -78,10 +78,10 @@ FolvOnEditControllerMixin, {
   /**
     Parent route record ID.
 
-    @property parentRouteId
+    @property parentRouteRecordId
     @type String
   */
-  parentRouteId: undefined,
+  parentRouteRecordId: undefined,
 
   /**
     Route name corresponding this edit form.
@@ -653,11 +653,11 @@ FolvOnEditControllerMixin, {
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       let parentRoute = this.get('parentRoute');
       Ember.assert('Parent route must be defined.', parentRoute);
-      let parentRouteId = this.get('parentRouteId');
-      if (Ember.isNone(parentRouteId)) {
+      let parentRouteRecordId = this.get('parentRouteRecordId');
+      if (Ember.isNone(parentRouteRecordId)) {
         this.transitionToRoute(parentRoute);
       } else {
-        this.transitionToRoute(parentRoute, parentRouteId);
+        this.transitionToRoute(parentRoute, parentRouteRecordId);
       }
     }
   },

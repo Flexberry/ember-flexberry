@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.
+* `flexberry-simpledatetime` component:
+    * Date dialog opening when clear button was clicked.
 
 ## [2.0.0-beta.4] - 2018-10-30
 ### Fixed

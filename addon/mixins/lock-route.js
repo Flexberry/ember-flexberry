@@ -54,9 +54,11 @@ export default Ember.Mixin.create({
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {
+        transition.abort();
         this.unlockObject().then((answer) => {
           (answer ? lock.destroyRecord() : new Ember.RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
+            transition.retry();
           });
         });
       }

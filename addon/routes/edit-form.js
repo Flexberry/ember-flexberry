@@ -176,7 +176,6 @@ ErrorableRouteMixin, {
     controller.set('modelCurrentAgregatorPathes', undefined);
     controller.set('parentRouteId', undefined);
 
-
     // If flag 'modelNoRollBack' is set, leave current model as is and remove flag.
     if (controller.get('modelNoRollBack') === true) {
       controller.set('modelNoRollBack', false);

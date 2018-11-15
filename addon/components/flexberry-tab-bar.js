@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import { get, set, computed } from '@ember/object';
-import { A } from '@ember/array';
+import { get, set } from '@ember/object';
+import { A, isArray } from '@ember/array';
 
 /**
   Component's CSS-classes names.
@@ -49,49 +49,6 @@ export default Component.extend({
   items: null,
 
   /**
-   * Contains items that will be displayed in tab bar
-   * @property tabs
-   * @type {Array}
-   */
-  tabs: computed('items.{[],@each.active}', function () {
-    let active = false;
-    let items = this.get('items') || A();
-    let result = A();
-
-    items.forEach((item) => {
-      let itemIsActive = get(item, 'active');
-      if (itemIsActive) {
-        if (!active) {
-          active = true;
-
-          let itemClass = get(item, 'class') || '';
-          let regEx = /\sactive(\s|$)/;
-          if (!regEx.test(itemClass)) {
-            itemClass += ' active';
-          }
-
-          set(item, 'class', itemClass);
-
-          this.set('prevTab', item.selector);
-          this.$().tab('change tab', item.selector);
-        }
-      }
-
-      set(item, 'active', false);
-
-      if (get(item, 'iconClass')) {
-        set(item, '_hasIcon', true);
-      } else {
-        set(item, '_hasIcon', false);
-      }
-
-      result.pushObject(item);
-    });
-
-    return result;
-  }),
-
-  /**
    * Contains name of previous data-tab
    * @property prevTab
    */
@@ -106,17 +63,18 @@ export default Component.extend({
     */
     change(currentTab, event) {
       let prevTab = this.get('prevTab');
+      let tabName = currentTab.selector;
       let changed = false;
 
-      if (prevTab !== currentTab) {
-        this.set('prevTab', currentTab);
+      if (prevTab !== tabName) {
+        this.set('prevTab', tabName);
         changed = true;
       }
 
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        this.$('.item.active').removeClass('active');
+        set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -125,7 +83,7 @@ export default Component.extend({
       }
 
       let e = {
-        tabName: currentTab,
+        tabName: tabName,
         prevTab: prevTab,
         changed: changed,
         originalEvent: event
@@ -133,6 +91,29 @@ export default Component.extend({
 
       this.get('change')(e);
     }
+  },
+
+  init() {
+    this._super(...arguments);
+
+    let items = this.get('items');
+    if (!isArray(items)) {
+      items = A(items)
+      this.set('items', items);
+    }
+
+    let active = false;
+    items.forEach((item) => {
+      let itemIsActive = get(item, 'active');
+      if (itemIsActive && !active) {
+        active = true;
+
+        this.set('prevTab', item.selector);
+        this.$().tab('change tab', item.selector);
+      } else {
+        set(item, 'active', false);
+      }
+    }, this);
   },
 
   /**

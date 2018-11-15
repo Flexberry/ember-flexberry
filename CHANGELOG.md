@@ -48,6 +48,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix hierarchical mode settings for `lookup dialog`.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+* `modal-dialog` component:
+    * Fix settings initialization.
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
 * `dynamic-actions` mixin:

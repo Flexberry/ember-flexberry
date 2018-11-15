@@ -32,6 +32,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-model` blueprint:
     * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
     * Fixed code style in regenerated model file.
+* `flexberry-objectlistview-on-edit-form-controller` mixin:
+    * Property `customFolvContent` can't have Promise as a value.
 
 ### Fixed
 * Blueprints:
@@ -48,6 +50,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix localization switching for mobile mode.
 * `modal-dialog` component:
     * Fix settings initialization.
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
+* `dynamic-actions` mixin:
+    * Fix `classNames` property computing.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
@@ -60,6 +66,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
+
+### Fixed from develop branch
+* `colsconfig-dialog-content` component:
+    * Fix column names saving in export excel mode.
+
+## [2.0.0-beta.4] - 2018-10-30
+### Fixed
+* `flexberry-tab-bar` component:
+    * Fix tabs `active` class adding.
 
 ## [2.0.0-beta.3] - 2018-10-23
 ### Fixed

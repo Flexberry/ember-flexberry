@@ -1,8 +1,16 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+});
+
+var Model = EmberFlexberryDataModel.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-suggestion.userVotes.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {

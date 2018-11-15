@@ -118,7 +118,7 @@
 {{#if colsConfigButton}}
   <div class="ui buttons cols-config">
     <button
-      class="ui icon button config-button"
+      class="ui icon button config-button{{if colsSettingsItems " settings-enabled" ""}}"
       title={{t "components.colsconfig-dialog-content.title"}}
       {{action "showConfigDialog"}}>
         <i class="large table icon"></i>

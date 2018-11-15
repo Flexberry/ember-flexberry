@@ -3,7 +3,7 @@ import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { typeOf, isNone } from '@ember/utils';
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 import { isArray } from '@ember/array';
 import { capitalize } from '@ember/string';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
@@ -77,6 +77,9 @@ export default Mixin.create({
           propName = colOrder.propName;
           if ((propName in namedColList) && ('header' in  namedColList[propName])) {
             reliableColsOrder.push(colOrder);
+            if (isExportExcel && colOrder.name) {
+              set(namedColList[propName], 'header.string', colOrder.name);
+            }
           }
         }
 

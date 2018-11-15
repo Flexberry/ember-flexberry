@@ -31,7 +31,7 @@
         });
 
         if (window.navigator.msSaveOrOpenBlob) {
-          let downloadFunction = function() {
+          var downloadFunction = function() {
             window.navigator.msSaveOrOpenBlob(result, options.fileName);
           };
 

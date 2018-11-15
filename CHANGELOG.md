@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.
+    * Fix usersettings apply, when query params doesn't change.
 * `flexberry-objectlistview` component:
     * Fix pager block resizing in hierarchy mode.
 * `flexberry-simpledatetime` component:

@@ -325,14 +325,14 @@
                             class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
                             title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
                             disabled="disabled"
-                            {{action deleteRow record}}>
+                            {{action "deleteRow" record}}>
                             <i class="minus icon"></i>
                           </button>
                         {{else}}
                           <button
                             class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
                             title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                            {{action deleteRow record}}>
+                            {{action "deleteRow" record}}>
                             <i class="minus icon"></i>
                           </button>
                         {{/if}}

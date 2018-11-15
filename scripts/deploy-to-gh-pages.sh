@@ -28,7 +28,7 @@ mkdir "${TRAVIS_BRANCH}"
 echo "Copy builded ember application (for ${TRAVIS_BRANCH} branch)."
 cp -r ../../dist/* "${TRAVIS_BRANCH}"
 
-if [${TRAVIS_BRANCH} != "dummy-test"]
+if [[ -z "$1" || ${1} != "no-doc" ]]
 then
   cd ../..
 

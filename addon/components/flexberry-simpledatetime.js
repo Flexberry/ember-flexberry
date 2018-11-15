@@ -18,6 +18,8 @@ import { translationMacro as t } from 'ember-i18n';
       value=model.orderDate
       min=model.orderDateMin
       max=model.orderDateMax
+      defaultHour=defaultHour
+      defaultMinute=defaultMinute
     }}
     ```
 
@@ -210,16 +212,6 @@ export default FlexberryBaseComponent.extend({
   defaultMinute: 0,
 
   /**
-   Reinit flatpickr to change defaultHour and defaultMinute.
-   */
-  updateAfterSettingNewDefaultTime: Ember.observer('defaultHour', 'defaultMinute', function () {
-    let flatpickr = this.get('_flatpickr');
-    if (flatpickr) {
-      this._flatpickrDestroy();
-      Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
-    }
-  }),
-  /**
     Text to be displayed in field, if field has not been filled.
 
     @property placeholder
@@ -408,9 +400,9 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Reinit flatpickr.
+    Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', function () {
+  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
     this._flatpickrDestroy();
     Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.0.0-beta.0] - 2018-11-16
 ### Added
 * `flexberry-sidebar` component, simple component for use sidebar from `Semantic UI`.
 * `flexberry-sitemap` component, component for render sitemap by object with links.

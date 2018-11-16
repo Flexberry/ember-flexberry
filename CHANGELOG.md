@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Additive merging of generated localization files with existing localozation files.
 
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `3.0.0-beta.0`.
 * `flexberry-dropdown` component:
     * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
 * `modal-dialog` component:

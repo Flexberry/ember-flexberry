@@ -60,14 +60,14 @@ script:
   - if [ "$EMBER_TRY_SCENARIO" == "ember-default" ]; then bash ./scripts/test-generator.sh; fi
 
 after_success:
-  - test $EMBER_TRY_SCENARIO == "default"
+  - test $EMBER_TRY_SCENARIO == "ember-default"
     && test $TRAVIS_PULL_REQUEST == "false"
     && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
     && bash scripts/deploy-to-gh-pages.sh
 
 after_script:
-  - test $EMBER_TRY_SCENARIO == "default"
+  - test $EMBER_TRY_SCENARIO == "ember-default"
     && test $TRAVIS_PULL_REQUEST == "false"
     && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH

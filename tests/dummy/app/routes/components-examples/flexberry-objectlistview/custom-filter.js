@@ -1,9 +1,7 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 import { computed } from '@ember/object';
-import { Query } from 'ember-flexberry-data';
-
-const { SimplePredicate } = Query;
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 export default ListFormRoute.extend({
   /**

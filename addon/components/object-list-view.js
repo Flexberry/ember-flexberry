@@ -1809,7 +1809,7 @@ export default FlexberryBaseComponent.extend(
       case 'file':
         break;
 
-      case 'string':{
+      case 'string': {
         component.name = 'flexberry-textbox';
         component.properties = $.extend(true, component.properties, {
           class: 'compact fluid',
@@ -1836,7 +1836,10 @@ export default FlexberryBaseComponent.extend(
       }
 
       case 'date': {
-        component.name = 'flexberry-textbox';
+        component.name = 'flexberry-simpledatetime';
+        component.properties = $.extend(true, component.properties, {
+          type: 'date',
+        });
         break;
       }
 

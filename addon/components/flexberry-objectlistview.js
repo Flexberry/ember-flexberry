@@ -1204,7 +1204,7 @@ export default FlexberryBaseComponent.extend({
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
-        if (componentName === this.get('componentName')) {
+        if (componentName === this.get('componentName') && !this.get('_inHierarchicalMode')) {
           this._setMenuWidth(tableWidth, containerWidth);
         }
       });

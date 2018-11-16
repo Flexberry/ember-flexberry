@@ -174,6 +174,7 @@ ErrorableRouteMixin, {
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     controller.set('readonly', false);
+    controller.set('parentRouteRecordId', undefined);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 

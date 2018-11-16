@@ -201,6 +201,10 @@ i.icon.change:before {
     content: "\f057";
     font-family: 'Icons';
 }
+.flexberry-menu > i.icon.setting.bordered {
+    height: 2em;
+    margin-top: -0.5em;
+}
 
 /**************************************
       FileControl buttons section

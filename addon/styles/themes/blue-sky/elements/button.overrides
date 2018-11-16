@@ -14,6 +14,9 @@
     border: 1px solid @uiBorderColor;
     border-radius: 5px;
     margin: 0px 5px;
+    &.huge {
+        height: 55px;
+    }
 }
 
 .ui.small.button {
@@ -281,6 +284,12 @@ div.ui.secondary.menu.no-margin {
         color: @brightBlue;
         background: @white;
     }
+}
+
+.flexberry-file-mobile-menu.ui.icon.button:hover {
+    border-color: @brightBlue;
+    color: @brightBlue;
+    background: @white;
 }
 
 /******************************************
@@ -551,25 +560,24 @@ div.ui.secondary.menu.no-margin {
 /******************************************
       Not categorized buttons section
 *******************************************/
+.flexberry-colsconfig.content {
+    .cols-config-apply {
+        display: flex;
+        align-items: center;
+        background-color: @uiHoveredPositiveBackgroundColor;
+        border: 1px solid @uiBorderColor;
+        &:hover {
+            border: 1px solid @uiHoveredPositiveBorderColor;
+        }
+    }
 
-#columnConfigurtionButtonUse {
-    display: flex;
-    align-items: center;
-    background-color: @uiHoveredPositiveBackgroundColor;
-    border: 1px solid @uiBorderColor;
-}
-
-#columnConfigurtionButtonUse:hover {
-    border: 1px solid @uiHoveredPositiveBorderColor;
-}
-
-#columnConfigurtionButtonSave {
-    border: 1px solid @uiBorderColor;
-}
-
-#columnConfigurtionButtonSave:hover {
-    border: 1px solid @uiHoveredPositiveBorderColor;
-    background-color: @uiHoveredPositiveBackgroundColor;
+    .cols-config-save {
+        border: 1px solid @uiBorderColor;
+        &:hover {
+            border: 1px solid @uiHoveredPositiveBorderColor;
+            background-color: @uiHoveredPositiveBackgroundColor;
+        }
+    }
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {

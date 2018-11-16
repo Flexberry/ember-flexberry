@@ -1,14 +1,13 @@
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
-import { get, set  } from '@ember/object';
-import { isBlank } from '@ember/utils';
+import { A } from '@ember/array';
+import { isBlank, isNone } from '@ember/utils';
 import { getOwner } from '@ember/application';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
-const _idPrefix = 'ColDesc';
 
 /**
  * Columns configuration dialog Content component.
@@ -44,69 +43,6 @@ export default FlexberryBaseComponent.extend({
   appState: service(),
 
   /**
-   Model with added DOM elements.
-
-   @property modelForDOM
-   @type {Object}
-   @default '[]'
-   */
-  modelForDOM: undefined,
-
-  /**
-   ObjectListView component name.
-
-   @property componentName
-   @type {String}
-   @default ''
-   */
-  componentName: '',
-
-  /**
-   ObjectListView setting name.
-
-   @property settingName
-   @type {String}
-   @default ''
-   */
-  settingName: '',
-
-  /**
-    Changed flag.
-
-    @property isChanged
-    @type {Boolean}
-    @default false
-  */
-  _isChanged: false,
-
-  /**
-   Flag. If true, store columns width.
-
-   @property saveColWidthState
-   @type {Boolean}
-   @default true
-   */
-  saveColWidthState: true,
-
-  /**
-    Per page value.
-
-    @property perPageValue
-    @type {Int}
-    @default undefined
-  */
-  perPageValue: undefined,
-
-  /**
-    Params for export excel.
-
-    @property exportParams
-    @type {Object}
-    @default {}
-  */
-  exportParams: undefined,
-
-  /**
     Current store.
 
     @property store
@@ -115,71 +51,30 @@ export default FlexberryBaseComponent.extend({
   */
   store: undefined,
 
-  /**
-    Current model name.
-
-    @property modelName
-    @type {String}
-    @default undefined
-  */
-  modelName: undefined,
-
   init: function() {
     this._super(...arguments);
-    this.set('modelForDOM', []);
-    this.set('exportParams', {});
-    if (!this.get('model') || !('colDescs' in this.get('model'))) {
+    if (!this.get('model.colDescs')) {
       return;
     }
 
-    this.set('settingName', this.get('model.settingName'));
-    this.set('componentName', this.get('model.componentName'));
-    this.set('perPageValue', this.get('model.perPageValue'));
-    this.set('saveColWidthState', this.get('model.saveColWidthState'));
-    this.set('exportParams', this.get('model.exportParams'));
-    this.set('modelName', this.get('model.modelName'));
     this.set('store', this.get('model.store'));
-    let colDescs = this.get('model.colDescs');
-    for (let i = 0; i < colDescs.length; i++) {
-      let colDesc = colDescs[i];
-      let sortOrder = colDesc.sortOrder;
-      if (sortOrder > 0) {
-        colDesc.sortOrderAsc = 'selected';
-      } else {
-        if (sortOrder < 0) {
-          colDesc.sortOrderDesc = 'selected';
-        } else {
-          colDesc.sortOrderdNot = 'selected';
-        }
-      }
-
-      colDesc.trId = _idPrefix + 'TR_' + i;
-      colDesc.hideId = _idPrefix + 'Hide_' + i;
-      colDesc.sortOrderId = _idPrefix + 'SortOrder_' + i;
-      colDesc.sortPriorityId = _idPrefix + 'SortPriority_' + i;
-      colDesc.columnWidthId = _idPrefix + 'ColumnWidth_' + i;
-      colDesc.rowUpId = _idPrefix + 'RowUp_' + i;
-      colDesc.rowDownId = _idPrefix + 'RowDown_' + i;
-      let modelForDOM = this.get('modelForDOM');
-      modelForDOM[i] = colDesc;
-    }
+    this.set('model.colDescs', A(this.get('model.colDescs')));
   },
 
   didRender: function() {
     this._super(...arguments);
-    let firstButtonUp = $('#ColDescRowUp_0');
-    firstButtonUp.addClass('disabled'); // Disable first button up
-    let lastButtondown = $('#ColDescRowDown_' + (this.modelForDOM.length - 1));
-    lastButtondown.addClass('disabled'); // Disable last button down
-    if (this.get('exportParams').isExportExcel && this.get('exportParams').immediateExport) {
-      this.get('exportParams').immediateExport = false;
+    let exportParams = this.get('model.exportParams') || {};
+    if (exportParams.isExportExcel && exportParams.immediateExport) {
+      exportParams.immediateExport = false;
       this.actions.apply.call(this);
     }
   },
 
   didInsertElement: function() {
     this._super(...arguments);
-    this.$('.sort-direction-dropdown').dropdown();
+    this.$('.sort-direction-dropdown').each((index, element) => {
+      $(element).dropdown('set selected', this.get(`model.colDescs.${index}.sortOrder`));
+    });
   },
 
   actions: {
@@ -187,205 +82,77 @@ export default FlexberryBaseComponent.extend({
      Invert column visibility (On/Off)
 
      @method actions.invertVisibility
-     @param {Int} n  column number (id suffix)
+     @param {Integer} n Row number.
      */
     invertVisibility: function(n) {
-      let element = this._getEventElement('Hide', n); // clicked DOM-element
-      let newHideState = !get(this.get('model').colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
-      set(this.get('model').colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
-      if (newHideState) { // Hide element
-        element.className = element.className.replace('unhide', 'hide');  // Change picture
-        $(element).parent().siblings('TD').addClass('disabled'); // Disable row
-      } else {
-        element.className = element.className.replace('hide', 'unhide');  // Change picture
-        $(element).parent().siblings('TD').removeClass('disabled');  // Enaable row
-      }
-
-      this._changed();
+      let newHideState = !this.get(`model.colDescs.${n}.hide`);
+      this.set(`model.colDescs.${n}.hide`, newHideState);
     },
 
     /**
-     Set sort order for column: descending ascending, none) and eneble/disable sort priority
+     Set sort order and priority for column.
 
      @method actions.setSortOrder
-     @param {Int} n  column number (id suffix)
+     @param {Integer} index Row number.
+     @param {Object} element Dropdown.
+     @param {String} value Selected value.
      */
-    setSortOrder: function(n) {
-
-      let select = this._getEventElement('SortOrder', n); // changed select DOM-element
-      let $tr = $(select).parents('tr');  // TR DOM-element
-      let $tbody = $(select).parents('tbody');  // TBODY DOM-element
-      let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = $($tr).find('input.sortPriority').get(0); //sortPriority field in this row
-      let $inputs = $('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
-      let SortPriority = 1;
-      let index = this._getIndexFromId(input.id);
-      if (value === '0') {  // Disable sorting?
-        input.value = '';
-        input.disabled = true;  // Disable sortPriority field in this row
-        input.style.display = 'none'; // Hide sortPriority field in this row
-        set(this.get('model').colDescs[index], 'sortPriority', undefined);
-        set(this.get('model').colDescs[n], 'sortOrder', undefined);
-      } else {
-        if (input.disabled) { // SortPriority disabled
-          input.disabled = false;  // Enable SortPriority field in this row
-          input.style.display = 'block'; // Show SortPriority field in this row
-          if (input.value <= 0) { //Sort priority not set
-            SortPriority = $inputs.length + 1;  //Set current maximim
-            input.value = SortPriority;
-            input.prevValue = SortPriority; //remember previous value
+    setSortOrder: function(index, element, value) {
+      let currentValue = this.get(`model.colDescs.${index}.sortOrder`);
+      if (currentValue !== parseInt(value)) {
+        if (value === '0') {
+          this.set(`model.colDescs.${index}.sortPriority`, undefined);
+          this.set(`model.colDescs.${index}.sortOrder`, undefined);
+        } else {
+          let sortPriority = this.get(`model.colDescs.${index}.sortPriority`);
+          if (isNone(sortPriority)) {
+            sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
+            this.set(`model.colDescs.${index}.sortPriority`, sortPriority);
           }
-        } else {  // SortPriority enabled
-          SortPriority = input.value;
+
+          this.set(`model.colDescs.${index}.sortOrder`, parseInt(value));
         }
-
-        set(this.get('model').colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
-        set(this.get('model').colDescs[n], 'sortOrder', parseInt(value));
       }
-
-      this._changed();
     },
 
     /**
-     Set sort priority for column
-
-     @method actions.setSortPriority
-     @param {Int} n  column number (id suffix)
-     */
-    setSortPriority: function(n) {
-      let eventInput = this._getEventElement('SortPriority', n);  // changed input DOM-element
-      let newValue = parseInt(eventInput.value);  //New value
-      let prevValue = eventInput.getAttribute('prevValue'); // Previous value
-      let $tbody = $(eventInput).parents('tbody');  // TBODY DOM-element
-      let input;
-      let inputValue;
-      let $inputs = $('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
-      if (isNaN(newValue) || newValue <= 0) { //new Value incorrectly setAttribute
-        newValue = $inputs.length;  // Set last value
-      }
-
-      let index = this._getIndexFromId(eventInput.id);  // get index of initial order  (if  columns order is changed n!=index )
-      set(this.get('model').colDescs[index], 'sortPriority', newValue); // set new sortPriority value
-      if (prevValue === newValue) { //value not changed
-        return;
-      }
-
-      eventInput.value = newValue;  // value changed - set new
-      eventInput.setAttribute('prevValue', newValue); //Remember value as prevoius
-
-      //Reorder sortPriority values for values in interval prevValue <-> newValue
-      let from; // From sortPriority value
-      let to; // To sortPriority value
-      let delta;  // shift value
-      if (prevValue < newValue) { // prevoious value is lower
-        from = prevValue;
-        to = newValue + 1;
-        delta =  -1;  // Decrement values in interval
-      } else {
-        from = newValue - 1;
-        to = prevValue;
-        delta = 1;  // Increment values in interval
-      }
-
-      for (let i = 0; i < $inputs.length; i++) {  //for each inputs
-        input = $inputs.get(i);
-        inputValue = parseInt(input.value);
-        if (input !== eventInput && inputValue > from && inputValue < to) { // Value in interval
-          inputValue += delta;
-          input.value = inputValue; // Decrement/Increment value
-          input.prevValue = inputValue; // Remeber previous value
-          index = this._getIndexFromId(input.id); // get index of initial order
-          set(this.get('model').colDescs[index], 'sortPriority', inputValue); // Set computed value
-        }
-      }
-
-      this._changed();
-    },
-
-    /**
-     Increase column in list (exchange previous column)
+     Move row upward in list.
 
      @method actions.rowUp
-     @param {Int} n  column number (id suffix)
+     @param {Integer} n Row number.
      */
     rowUp: function(n) {
-      let eventButton = this._getEventElement('RowUp', n);
-      let newTr;
-      let tr = $(eventButton).parents('tr').get(0);  // TR DOM-element
-      let select = $(tr).find('SELECT').get(0);
-      let selectedIndex = select.selectedIndex; // selected index of sort order
-      var tbody = $(eventButton).parents('tbody').get(0);   // TBODY DOM-element
-      let prevTr = $(tr).prev('TR').get(0); // Previous TR DOM-element
-      if (prevTr) { // Previous TR exist
-        newTr = tbody.removeChild(tr);
-        newTr = tbody.insertBefore(newTr, prevTr);
-        select = $(newTr).find('SELECT').get(0);
-        select.selectedIndex = selectedIndex; // Reset selected index of sort order
-        $(newTr).find('BUTTON').eq(1).removeClass('disabled');
-        $(prevTr).find('BUTTON').eq(0).removeClass('disabled');
-        if ($(newTr).prev('TR').length === 0) {  //First row
-          $(newTr).find('BUTTON').eq(0).addClass('disabled');
-        }
+      let array = this.get('model.colDescs');
+      let row = array[n];
 
-        if ($(prevTr).next('TR').length === 0) {  //Last row
-          $(prevTr).find('BUTTON').eq(1).addClass('disabled');
-        }
-      }
-
-      this._changed();
+      array.removeObject(row);
+      array.insertAt(n - 1, row);
     },
 
     /**
-     Decrease column in list (exchange  next column)
+     Move row downward.
 
      @method actions.rowDown
-     @param {Int} n  column number (id suffix)
+     @param {Integer} n Row number.
      */
     rowDown: function(n) {
-      let eventButton = this._getEventElement('RowDown', n);
-      var newTr;
-      let tr = $(eventButton).parents('tr').get(0);  // TR DOM-element
-      let select = $(tr).find('SELECT').get(0);
-      let selectedIndex = select.selectedIndex; // selected index of sort order
-      var tbody = $(eventButton).parents('tbody').get(0);   // TBODY DOM-element
-      var nextTr = $(tr).next('TR').get(0); // Next TR DOM-element
-      if (nextTr) { // Next TR exist
-        newTr = tbody.removeChild(tr);  // Exchange TR's
-        if ($(nextTr).next('TR').length === 0) {  //Last row
-          newTr = tbody.appendChild(newTr);
-          $(newTr).find('BUTTON').eq(1).addClass('disabled');
-        } else {  // last row
-          newTr = tbody.insertBefore(newTr, nextTr.nextSibling);
-        }
+      let array = this.get('model.colDescs');
+      let row = array[n];
 
-        if ($(nextTr).prev('TR').length === 0) {  //First row
-          $(nextTr).find('BUTTON').eq(0).addClass('disabled');
-        }
-
-        select = $(newTr).find('SELECT').get(0);
-        select.selectedIndex = selectedIndex; // Reset selected index of sort order
-        $(newTr).find('BUTTON').eq(0).removeClass('disabled');
-        $(nextTr).find('BUTTON').eq(1).removeClass('disabled');
-      }
-
-      this._changed();
+      array.removeObject(row);
+      array.insertAt(n + 1, row);
     },
 
     /**
-     Apply settings specified in the interface as DEFAULT values
+     Apply specified usersettings.
 
      @method actions.apply
     */
     apply: function() {
       this.get('appState').loading();
-      if (!this.get('exportParams.isExportExcel')) {
+      if (!this.get('model.exportParams.isExportExcel')) {
         let colsConfig = this._getSettings();
-        let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
-        if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
-          return;
-        }
 
-        //Save colsConfig in userSettings as DEFAULT
         let router = getOwner(this).lookup('router:main');
         let savePromise = this._getSavePromise(undefined, colsConfig);
 
@@ -393,7 +160,10 @@ export default FlexberryBaseComponent.extend({
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
-            router._routerMicrolib.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+            this.get('appState').reset();
+            this.set('currentController.mainControler.sort', sort);
+            this.set('currentController.mainControler.perPage', colsConfig.perPage || 5);
+            router.router.refresh();
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
@@ -403,9 +173,10 @@ export default FlexberryBaseComponent.extend({
         this.get('close')(colsConfig);
       } else {
         let store = this.get('store.onlineStore') || this.get('store');
-        let adapter = store.adapterFor(this.modelName);
+        let modelName = this.get('model.modelName');
+        let adapter = store.adapterFor(modelName);
         let currentQuery = this._getCurrentQuery();
-        adapter.query(store, this.modelName, currentQuery).then((result) => {
+        adapter.query(store, modelName, currentQuery).then((result) => {
           let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           let anchor = $('.download-anchor');
           if (!isBlank(anchor)) {
@@ -432,13 +203,14 @@ export default FlexberryBaseComponent.extend({
         });
       }
     },
+
     /**
-      Save named settings specified in the interface as named values
+      Save specified usersettings.
 
       @method actions.saveColsSetting
     */
     saveColsSetting: function() {
-      let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
+      let settingName = this.get('model.settingName');
       if (settingName.length <= 0) {
         this.set('currentController.message.type', 'warning');
         this.set('currentController.message.visible', true);
@@ -461,8 +233,6 @@ export default FlexberryBaseComponent.extend({
             settingName +
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
           this.set('currentController.message.message', '');
-          $('#columnConfigurtionButtonSave')[0].className += ' disabled';
-          this._isChanged = false;
           this._scrollToBottom();
         },
         error => {
@@ -476,60 +246,6 @@ export default FlexberryBaseComponent.extend({
         }
       );
       /* eslint-enable no-unused-vars */
-    },
-
-    /**
-      Column width is changed
-
-      @method actions.widthChanged
-    */
-    widthChanged: function() {
-      this._changed();
-    },
-
-    /**
-      Column name is changed
-
-      @method actions.columnNameChanged
-    */
-    columnNameChanged: function() {
-      this._changed();
-    },
-
-    /**
-      Config name is defined
-
-      @method actions.setConfigName
-    */
-    setConfigName: function() {
-      this._changed();
-    },
-
-    /**
-      Per page value is changed
-
-      @method actions.perPageChanged
-    */
-    perPageChanged: function() {
-      this._changed();
-    },
-
-    /**
-      DetSeparateCols value is changed
-
-      @method actions.detSeparateColsChange
-    */
-    detSeparateColsChange: function() {
-      this._changed();
-    },
-
-    /**
-      DetSeparateRows value is changed
-
-      @method actions.detSeparateRowsChange
-    */
-    detSeparateRowsChange: function() {
-      this._changed();
     },
 
     /* eslint-disable no-unused-vars */
@@ -554,14 +270,14 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Gets current query for export excel
+    Gets current query for export excel.
 
     @method _getCurrentQuery
   */
   _getCurrentQuery: function() {
     let settings = this._getSettings();
     let sortString = '';
-    let modelName = this.get('modelName');
+    let modelName = this.get('model.modelName');
     settings.sorting.map(sort => {
       sortString += `${sort.propName} ${sort.direction},`;
     });
@@ -569,7 +285,8 @@ export default FlexberryBaseComponent.extend({
     let store = this.get('store.onlineStore') || this.get('store');
     let builder = new QueryBuilder(store, modelName);
     let adapter = new ODataAdapter('123', store);
-    builder.selectByProjection(this.exportParams.projectionName, true);
+    let exportParams = this.get('model.exportParams') || {};
+    builder.selectByProjection(exportParams.projectionName, true);
     let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
       .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
       .join();
@@ -582,10 +299,10 @@ export default FlexberryBaseComponent.extend({
       builder.where(limitFunction);
     }
 
-    if (this.get('exportParams').isExportExcel) {
+    if (exportParams.isExportExcel) {
       builder.ofDataType('blob');
-      let customQueryParams = { colsOrder: colsOrder, exportExcel: this.get('exportParams').isExportExcel,
-        detSeparateRows: this.get('exportParams').detSeparateRows, detSeparateCols: this.get('exportParams').detSeparateCols };
+      let customQueryParams = { colsOrder: colsOrder, exportExcel: exportParams.isExportExcel,
+        detSeparateRows: exportParams.detSeparateRows, detSeparateCols: exportParams.detSeparateCols };
       builder.withCustomParams(customQueryParams);
     }
 
@@ -596,7 +313,10 @@ export default FlexberryBaseComponent.extend({
 
   /* eslint-disable no-unused-vars */
   _getSavePromise: function(settingName, colsConfig) {
-    return this.get('userSettingsService').saveUserSetting(this.get('componentName'), settingName, colsConfig, this.get('exportParams').isExportExcel)
+    let componentName = this.get('model.componentName');
+    let isExportExcel = this.get('model.exportParams.isExportExcel');
+
+    return this.get('userSettingsService').saveUserSetting(componentName, settingName, colsConfig, isExportExcel)
     .then(result => {
       this.get('colsConfigMenu').updateNamedSettingTrigger();
     });
@@ -604,72 +324,42 @@ export default FlexberryBaseComponent.extend({
   /* eslint-enable no-unused-vars */
 
   _getSettings: function() {
-    let trs = $('#colsConfigtableRows').children('TR');
-    let colsConfig = [];
     let colsOrder = [];
     let sortSettings = [];
     let widthSetting = [];
 
-    //Set sortSettings and colsOrder array
-    for (let i = 0; i < trs.length; i++) {  // Iterate TR list
-      let tr = trs[i];
-      let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
-      let colDesc = this.get('model').colDescs[index];  // Model for this tr
-      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() };  //Set colsOrder element
-      if (colDesc.sortPriority !== undefined) { // Sort priority defined
-        sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
+    let colDescs = this.get('model.colDescs');
+    colDescs.forEach((colDesc) => {
+      colsOrder.push({ propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() });
+      if (!isNone(colDesc.sortPriority)) {
+        sortSettings.push({ propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority });
       }
 
-      if (this.saveColWidthState) {
-        let colWidthElement = this._getEventElement('ColumnWidth', index);
-        let width = parseInt(colWidthElement.value, 10);
-        if (width !== isNaN && width >= 0) {
-          widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width };
-        }
+      if (this.get('model.saveColWidthState')) {
+        widthSetting.push({ propName: colDesc.propName, width: parseInt(colDesc.columnWidth) });
       }
-    }
+    }, this);
 
-    let sortedSettings = sortSettings.sort((a, b) => a.sortPriority - b.sortPriority);  // Sort sortSettings
-    let sorting = [];
-    for (let i = 0; i < sortedSettings.length; i++) { // produce sorting array
-      let sortedSetting = sortedSettings[i];
-      sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
-    }
+    sortSettings = sortSettings.sort((a, b) => a.sortPriority - b.sortPriority);
+    sortSettings = sortSettings.map((s) => { return { propName: s.propName, direction:  s.sortOrder > 0 ? 'asc' : 'desc' }; });
 
-    let perPageElement = $('#perPageValueInput').get(0);
-    let perPage = parseInt(perPageElement.value, 10);
+    let perPage = parseInt(this.get('model.perPageValue'));
 
     if (perPage === isNaN || perPage <= 0) {
       perPage = 5;
     }
 
-    colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
-    if (this.get('saveColWidthState')) {
+    let colsConfig = { colsOrder: colsOrder, sorting: sortSettings, perPage: perPage };
+    if (this.get('model.saveColWidthState')) {
       colsConfig.columnWidths = widthSetting;
     }
 
-    if (this.get('exportParams').isExportExcel) {
-      colsConfig.detSeparateRows = this.get('exportParams').detSeparateRows;
-      colsConfig.detSeparateCols = this.get('exportParams').detSeparateCols;
+    let exportParams = this.get('model.exportParams') || {};
+    if (exportParams.isExportExcel) {
+      colsConfig.detSeparateRows = exportParams.detSeparateRows;
+      colsConfig.detSeparateCols = exportParams.detSeparateCols;
     }
 
     return colsConfig;
-  },
-
-  _getIndexFromId: function(id) {
-    let ret = id.substr(id.lastIndexOf('_') + 1);
-    return parseInt(ret);
-  },
-
-  _getEventElement: function (prefix, n) {
-    let id = '#' + _idPrefix + prefix + '_' + n;
-    let ret = $.find(id)[0];
-    return ret;
-  },
-
-  _changed: function() {
-    this._isChanged = true;
-    $('#columnConfigurtionButtonUse')[0].className = $('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
-    $('#columnConfigurtionButtonSave')[0].className = $('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
   }
 });

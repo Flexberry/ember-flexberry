@@ -73,16 +73,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-### Added from develop branch
+## [2.0.0-beta.5] - 2018-11-16
+### Added
 * Blueprints:
     * Add `componentName` generation for lookups.
 * `flexberry-simpledatetime` component:
     * Ability to dynamically change `defaultHour` and `defaultMinute` properties.
 
-### Changed from develop branch
+### Changed
 * `colsconfig-dialog-content` component refactoring.
 
-### Fixed from develop branch
+### Fixed
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.
 * List components:

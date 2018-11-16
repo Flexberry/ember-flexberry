@@ -59,6 +59,6 @@ after_success:
 after_script:
   - test $EMBER_TRY_SCENARIO == "default"
     && test $TRAVIS_PULL_REQUEST == "false"
-    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2.0.0" || test $TRAVIS_BRANCH == "dummy-test-3.0.0")
+    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
     && bash scripts/deploy-to-gh-pages.sh no-doc

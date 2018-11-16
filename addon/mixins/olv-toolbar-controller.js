@@ -173,6 +173,7 @@ export default Mixin.create({
       let store = this.get('store');
 
       let controller = this.get('colsconfigController');
+      controller.set('mainControler', this);
 
       let loadingParams = {
         view: 'application',

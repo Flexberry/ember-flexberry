@@ -84,6 +84,14 @@ FolvOnEditControllerMixin, {
   parentRoute: undefined,
 
   /**
+    Parent route record ID.
+
+    @property parentRouteRecordId
+    @type String
+  */
+  parentRouteRecordId: undefined,
+
+  /**
     Route name corresponding this edit form.
 
     @property routeName
@@ -693,7 +701,12 @@ FolvOnEditControllerMixin, {
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       let parentRoute = this.get('parentRoute');
       assert('Parent route must be defined.', parentRoute);
-      this.transitionToRoute(parentRoute);
+      let parentRouteRecordId = this.get('parentRouteRecordId');
+      if (isNone(parentRouteRecordId)) {
+        this.transitionToRoute(parentRoute);
+      } else {
+        this.transitionToRoute(parentRoute, parentRouteRecordId);
+      }
     }
   },
 

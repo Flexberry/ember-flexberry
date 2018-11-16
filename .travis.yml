@@ -44,7 +44,6 @@ before_install:
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add firebase-tools
   - yarn global add ember-cli@3.1.4
   - yarn global add bower
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
@@ -61,10 +60,15 @@ script:
   - if [ "$EMBER_TRY_SCENARIO" == "ember-default" ]; then bash ./scripts/test-generator.sh; fi
 
 after_success:
-  - test $EMBER_TRY_SCENARIO == "ember-default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "ember-default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy --project flexberry-ember --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "ember-default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop")  && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH && bash scripts/deploy-to-gh-pages.sh
+  - test $EMBER_TRY_SCENARIO == "default"
+    && test $TRAVIS_PULL_REQUEST == "false"
+    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop")
+    && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+    && bash scripts/deploy-to-gh-pages.sh
 
 after_script:
-  - test $EMBER_TRY_SCENARIO == "ember-default" && test $TRAVIS_BRANCH == "dummy-test" && ember build && firebase deploy --project flexberry-ember-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "ember-default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "dummy-test"  && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH && bash scripts/deploy-to-gh-pages.sh
+  - test $EMBER_TRY_SCENARIO == "default"
+    && test $TRAVIS_PULL_REQUEST == "false"
+    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
+    && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+    && bash scripts/deploy-to-gh-pages.sh no-doc

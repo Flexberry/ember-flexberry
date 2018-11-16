@@ -1,9 +1,10 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { DatePredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 import { computed } from '@ember/object';
+import { Query } from 'ember-flexberry-data';
+
+const { SimplePredicate } = Query;
+
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -49,20 +50,12 @@ export default ListFormRoute.extend({
   }),
 
   predicateForFilter(filter) {
-    if (filter.type === 'string' && filter.condition === 'like') {
-      return new StringPredicate(filter.name).contains(filter.pattern);
-    }
-
     if (filter.type === 'string' && filter.condition === 'empty') {
       return new SimplePredicate(filter.name, 'eq', null);
     }
 
     if (filter.type === 'decimal') {
       return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
-    }
-
-    if (filter.type === 'date') {
-      return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
     }
 
     return this._super(...arguments);

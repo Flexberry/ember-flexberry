@@ -12,6 +12,7 @@ if (lookupValueField) { %>
       projection="<%= projection %>"
       title=(<%= caption %>)
       readonly=<%= readonly %>
+      componentName="<%= name %>Lookup"
     }}
     {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
   </div>

@@ -72,9 +72,32 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
+### Added from develop branch
+* Blueprints:
+    * Add `componentName` generation for lookups.
+* `flexberry-simpledatetime` component:
+    * Ability to dynamically change `defaultHour` and `defaultMinute` properties.
+
+### Changed from develop branch
+* `colsconfig-dialog-content` component refactoring.
+
 ### Fixed from develop branch
 * `colsconfig-dialog-content` component:
     * Fix column names saving in export excel mode.
+* List components:
+    * Fix filter by date type columns.
+    * Fix usersettings apply, when query params doesn't change.
+* `olv-toolbar` component:
+    * Fix usersettings copy dialog selectors.
+* `flexberry-file` component:
+    * Fix mobile file component menu.
+* `flexberry-menu` component:
+    * Fix setting bordered icon style.
+* `flexberry-objectlistview` component:
+    * Fix pager block resizing in hierarchy mode.
+* `flexberry-simpledatetime` component:
+    * Fix time after clearing component's value.
+    * Date dialog opening when clear button was clicked.
 
 ## [2.0.0-beta.4] - 2018-10-30
 ### Fixed
@@ -449,6 +472,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix list's `refresh` and `delete` buttons styles for Firefox.
 * Fix `onRowClick` action for `object-list-view-row`.
 * Fix `lookupWindowCustomProperties` for lookups in `flexberry-groupedit`.
+* Fix `lock-route`: deleting a blocking object for single-model routes.
 
 ### Removed
 * `ui-message` component: attribute `title`.

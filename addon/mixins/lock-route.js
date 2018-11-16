@@ -51,27 +51,20 @@ export default Mixin.create({
       @method actions.willTransition
       @param {Transition} transition
     */
-    /* eslint-disable no-unused-vars */
     willTransition(transition) {
       this._super(...arguments);
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {
+        transition.abort();
         this.unlockObject().then((answer) => {
-          if (answer) {
-            lock.destroyRecord().then((record) => {
-              // Without this next creation of lock object for this page throws an error:
-              // 'modelName was saved to the server, but the response returned the new id 'id', which has already been used with another record'.
-              this.store.unloadRecord(record);
-              this.set('_currentLock', null);
-            });
-          } else {
+          (answer ? lock.destroyRecord() : new RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
-          }
+            transition.retry();
+          });
         });
       }
-    },
-    /* eslint-enable no-unused-vars */
+    }
   },
 
   /**

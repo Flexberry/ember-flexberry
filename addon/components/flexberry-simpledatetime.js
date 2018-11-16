@@ -20,6 +20,8 @@ import { translationMacro as t } from 'ember-i18n';
       value=model.orderDate
       min=model.orderDateMin
       max=model.orderDateMax
+      defaultHour=defaultHour
+      defaultMinute=defaultMinute
     }}
     ```
 
@@ -351,7 +353,13 @@ export default FlexberryBaseComponent.extend({
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {
-          this.set('_valueAsDate', dates[dates.length - 1]);
+          if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
+            dates[0].setHours(this.get('defaultHour'));
+            dates[0].setMinutes(this.get('defaultMinute'));
+            this.get('_flatpickr').setDate(dates[0], false);
+          }
+
+          this.set('_valueAsDate', dates[0]);
         }
       },
       onClose: () => {
@@ -396,9 +404,9 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Reinit flatpickr.
+    Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', function() {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
     this._flatpickrDestroy();
     scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

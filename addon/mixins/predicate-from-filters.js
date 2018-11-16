@@ -40,10 +40,10 @@ export default Mixin.create({
     @return {BasePredicate|null} Predicate to filter through.
   */
   predicateForFilter(filter) {
-    if (filter.pattern && filter.condition) {
+    if (filter.condition) {
       switch (filter.type) {
         case 'string':
-          return filter.condition === 'like' ?
+          return filter.condition === 'like' && filter.pattern ?
             new StringPredicate(filter.name).contains(filter.pattern) :
             new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'boolean':
@@ -51,15 +51,23 @@ export default Mixin.create({
         case 'number':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
         case 'date':
-          return new DatePredicate(filter.name, filter.condition, filter.pattern);
+          return filter.pattern ?
+            new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
+            new SimplePredicate(filter.name, filter.condition, filter.pattern);
 
         default:
           return null;
       }
-    } else {
-      if (!filter.condition && filter.type === 'string') {
-        set(filter, 'condition', 'like');
-        return new StringPredicate(filter.name).contains(filter.pattern);
+    } else if (filter.pattern) {
+      switch (filter.type) {
+        case 'string':
+          set(filter, 'condition', 'like');
+          return new StringPredicate(filter.name).contains(filter.pattern);
+        case 'date':
+          set(filter, 'condition', 'eq');
+          return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
+        default:
+          return null;
       }
     }
 

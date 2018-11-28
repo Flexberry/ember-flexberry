@@ -66,7 +66,7 @@ executeTest('column width custom', (store, assert, app) => {
                 assert.equal($($component).hasClass('checked'), true, 'checkbox is checked');
                 click($component[5]);
                 setTimeout(function() {
-                  assert.equal($component[5].className==='toggle ember-view flexberry-checkbox ui checkbox', true, 'Width config is OFF');
+                  assert.equal($component[5].className === 'toggle ember-view flexberry-checkbox ui checkbox', true, 'Width config is OFF');
                   assert.equal($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> is not checked after click');
 
                   // Apply settings
@@ -75,7 +75,7 @@ executeTest('column width custom', (store, assert, app) => {
                   let done4 = assert.async();
                   setTimeout(function() {
                     loadingList($useBtn[0], '.object-list-view-container', 'table.object-list-view tbody tr').then(($list) => {
-                      assert.ok($list);                     
+                      assert.ok($list);
                     }).catch((reason) => {
                       throw new Error(reason);
                     }).finally(() => {

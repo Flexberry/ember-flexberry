@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
 
 executeTest('user button test', (store, assert, app) => {
@@ -10,15 +9,17 @@ executeTest('user button test', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $testBudtton = Ember.$('.test-click-button')[0];
+
+    // Enable the hi button.
+    click('.toggle-hi-button');
 
     // First click.
-    $testBudtton.click();
-    assert.equal(controller.clickCounter, 2, 'Test button was pressed');
+    click('.test-click-button');
+    andThen(() => assert.equal(controller.clickCounter, 2, 'Test button was pressed'));
 
     // Second click.
-    $testBudtton.click();
-    assert.equal(controller.clickCounter, 3, 'Test button was pressed');
+    click('.test-click-button');
+    andThen(() => assert.equal(controller.clickCounter, 3, 'Test button was pressed'));
 
     assert.notOk(controller.get('modelFromClickedRow'));
     click('.ui.button > .bug.icon:first');

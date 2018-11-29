@@ -20,18 +20,37 @@ export default ListFormController.extend({
   messageForUser: undefined,
 
   /**
+    The state of the hi button, is disabled if `true` or enabled if `false`.
+
+    @property hiButtonState
+    @type Boolean
+    @default true
+  */
+  hiButtonState: true,
+
+  /**
     Property to form array of special structures of custom user buttons.
 
     @property customButtons
     @type Array
-   */
-  customButtons: Ember.computed('i18n.locale', function() {
+  */
+  customButtons: Ember.computed('i18n.locale', 'hiButtonState', function() {
     let i18n = this.get('i18n');
+    let hiButtonState = this.get('hiButtonState');
+    let togglerButtonType = hiButtonState ? 'enable' : 'disable';
+    let hiButtonText = i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name');
+    let togglerButtonText = i18n.t(`forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.${togglerButtonType}-button-name`);
     return [{
-      buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
+      buttonName: hiButtonText,
       buttonAction: 'userButtonActionTest',
       buttonClasses: 'test-click-button',
-      buttonTitle: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name')
+      buttonTitle: hiButtonText,
+      disabled: hiButtonState,
+    }, {
+      buttonName: togglerButtonText,
+      buttonAction: 'toggleHiButton',
+      buttonTitle: togglerButtonText,
+      disabled: false,
     }];
   }),
 
@@ -39,7 +58,7 @@ export default ListFormController.extend({
     /**
       Handler for click on custom user button.
 
-      @method userButtonActionTest
+      @method actions.userButtonActionTest
      */
     userButtonActionTest: function() {
       let i18n = this.get('i18n');
@@ -48,6 +67,15 @@ export default ListFormController.extend({
       this.set('messageForUser',
         i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-message').string +
         ' ' + clickCounter);
-    }
+    },
+
+    /**
+      Toggles the state of the hi button.
+
+      @method actions.toggleHiButton
+    */
+    toggleHiButton() {
+      this.toggleProperty('hiButtonState');
+    },
   }
 });

@@ -497,10 +497,13 @@ export default FlexberryBaseComponent.extend({
       let fileName = this.get('_fileName');
       let previewImageAsBase64String = this.get('_previewImageAsBase64String');
       if (!isBlank(fileName) && !isBlank(previewImageAsBase64String)) {
-        this.get('viewImageAction')({
+
+        /* eslint-disable ember/closure-actions */
+        this.sendAction('viewImageAction', {
           fileSrc: previewImageAsBase64String,
           fileName: fileName
         });
+        /* eslint-enable ember/closure-actions */
       }
     },
 

@@ -109,7 +109,7 @@
       <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat

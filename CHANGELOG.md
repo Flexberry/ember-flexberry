@@ -51,6 +51,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+    * Fix recordsTotalCount in mobile mode.
 * `modal-dialog` component:
     * Fix settings initialization.
 * `olv-toolbar` component:

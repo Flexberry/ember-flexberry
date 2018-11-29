@@ -291,10 +291,10 @@ i.icon.text-menu-hide:before {
 }
 
 .ui.icon.button > .plus.icon {
-  margin-right: 1em;
+  margin-right: 1em !important;
 }
 .ui.icon.button > .minus.icon {
-  margin-right: 1em;
+  margin-right: 1em !important;
 }
 
 .ui.button.icon.mini.compact {

@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix setting bordered icon style.
 * `flexberry-objectlistview` component:
     * Fix pager block resizing in hierarchy mode.
+    * Fix return to parentRoute, when olv on edit-form.
 * `flexberry-simpledatetime` component:
     * Fix time after clearing component's value.
     * Date dialog opening when clear button was clicked.

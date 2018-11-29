@@ -58,7 +58,10 @@ export default Ember.Mixin.create({
         this.unlockObject().then((answer) => {
           (answer ? lock.destroyRecord() : new Ember.RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
-            transition.retry();
+            transition.retry().then((newRoute) => {
+              newRoute.controller.set('parentRoute', this.routeName);
+              newRoute.controller.set('parentRouteRecordId', lock.id);
+            });
           });
         });
       }

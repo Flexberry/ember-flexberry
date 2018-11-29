@@ -13,6 +13,20 @@ import Ember from 'ember';
   @public
 */
 export default Ember.Mixin.create({
+
+  /**
+    Writes to the new route value parent route.
+
+    @method updateParentRoute
+    @param {Object} newRoute
+    @param {String} parentRoute
+    @param {String} parentRouteRecordId
+  */
+  updateParentRoute(newRoute, parentRoute, parentRouteRecordId) {
+    newRoute.controller.set('parentRoute', parentRoute);
+    newRoute.controller.set('parentRouteRecordId', parentRouteRecordId);
+  },
+
   actions: {
     /**
       Table row click handler.
@@ -68,8 +82,7 @@ export default Ember.Mixin.create({
           this.controller.save(false, true).then(() => {
             this.transitionTo(editFormRoute, recordId, transitionOptions)
             .then((newRoute) => {
-              newRoute.controller.set('parentRoute', thisRouteName);
-              newRoute.controller.set('parentRouteRecordId', thisRecordId);
+              this.updateParentRoute(newRoute, thisRouteName, thisRecordId);
             });
           }).catch((errorData) => {
             this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
@@ -77,8 +90,7 @@ export default Ember.Mixin.create({
         } else {
           this.transitionTo(editFormRoute, recordId, transitionOptions)
           .then((newRoute) => {
-            newRoute.controller.set('parentRoute', thisRouteName);
-            newRoute.controller.set('parentRouteRecordId', thisRecordId);
+            this.updateParentRoute(newRoute, thisRouteName, thisRecordId);
           });
         }
       }

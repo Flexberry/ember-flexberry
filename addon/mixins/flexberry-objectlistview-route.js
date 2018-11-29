@@ -24,7 +24,9 @@ export default Ember.Mixin.create({
   */
   updateParentRoute(newRoute, parentRoute, parentRouteRecordId) {
     newRoute.controller.set('parentRoute', parentRoute);
-    newRoute.controller.set('parentRouteRecordId', parentRouteRecordId);
+    if (!Ember.isNone(parentRouteRecordId)) {
+      newRoute.controller.set('parentRouteRecordId', parentRouteRecordId);
+    }
   },
 
   actions: {
@@ -74,7 +76,7 @@ export default Ember.Mixin.create({
         this.transitionTo(editFormRoute, recordId, transitionOptions)
         .then((newRoute) => {
           if (newRoute) {
-            newRoute.controller.set('parentRoute', thisRouteName);
+            this.updateParentRoute(newRoute, thisRouteName);
           }
         });
       } else {

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix return to parentRoute, when olv on edit-form.
 
 ## [2.0.0-beta.5] - 2018-11-16
 ### Changed
@@ -28,7 +31,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix setting bordered icon style.
 * `flexberry-objectlistview` component:
     * Fix pager block resizing in hierarchy mode.
-    * Fix return to parentRoute, when olv on edit-form.
 * `flexberry-simpledatetime` component:
     * Fix time after clearing component's value.
     * Date dialog opening when clear button was clicked.

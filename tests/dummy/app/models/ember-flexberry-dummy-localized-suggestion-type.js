@@ -22,6 +22,11 @@ var Model = Projection.Model.extend({
       presence: {
         message: 'Name is required'
       }
+    },
+    localization: {
+      presence: {
+        message: 'Localization is required'
+      }
     }
   }
 });

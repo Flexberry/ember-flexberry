@@ -3,9 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * The property `disabled` to control the state of custom buttons.
+
 ### Changed
 * `flexberry-menu` component:
-    * By default handles click and touchstart events.
+    * By default handles click and `touchstart` events.
 
 ## [2.0.0-beta.5] - 2018-11-16
 ### Changed

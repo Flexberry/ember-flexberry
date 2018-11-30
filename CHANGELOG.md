@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * By default handles click and `touchstart` events.
 
 ### Fixed
-* `flexberry-objectlistview` component:
+* `flexberry-objectlistview-route` mixin and `edit-form` route:
     * Fix return to parentRoute, when olv on edit-form.
 
 ## [2.0.0-beta.5] - 2018-11-16

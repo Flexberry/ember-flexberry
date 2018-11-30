@@ -147,8 +147,8 @@ export default Ember.Controller.extend({
 
     // Add locales.
     let locale = Ember.A();
-    locale.push('ru');
-    locale.push('en');
+    locale.pushObject('ru');
+    locale.pushObject('en');
     this.set('locales', locale);
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.

@@ -61,29 +61,16 @@ export default Ember.Mixin.create({
       }
 
       if (!onEditForm) {
-        this.transitionTo(editFormRoute, recordId, transitionOptions)
-        .then((newRoute) => {
-          if (newRoute) {
-            newRoute.controller.set('parentRoute', thisRouteName);
-          }
-        });
+        this.transitionTo(editFormRoute, recordId, transitionOptions);
       } else {
         if (saveBeforeRouteLeave) {
           this.controller.save(false, true).then(() => {
-            this.transitionTo(editFormRoute, recordId, transitionOptions)
-            .then((newRoute) => {
-              newRoute.controller.set('parentRoute', thisRouteName);
-              newRoute.controller.set('parentRouteRecordId', thisRecordId);
-            });
+            this.transitionTo(editFormRoute, recordId, transitionOptions);
           }).catch((errorData) => {
             this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
           });
         } else {
-          this.transitionTo(editFormRoute, recordId, transitionOptions)
-          .then((newRoute) => {
-            newRoute.controller.set('parentRoute', thisRouteName);
-            newRoute.controller.set('parentRouteRecordId', thisRecordId);
-          });
+          this.transitionTo(editFormRoute, recordId, transitionOptions);
         }
       }
     },

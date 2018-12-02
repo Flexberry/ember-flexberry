@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.0.0-beta.6] - 2018-12-02
 ### Added
 * `flexberry-objectlistview` and `flexberry-simpleolv` components:
     * The property `disabled` to control the state of custom buttons.

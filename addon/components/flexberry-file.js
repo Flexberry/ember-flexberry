@@ -733,7 +733,7 @@ export default FlexberryBaseComponent.extend({
     Ember.$.flexberry.downloadFile({
       url: fileUrl,
       headers: this.get('headers'),
-      fileName: this.get('_fileName'),
+      fileName: fileName,
       onSuccess: () => {
         this.sendAction('onDownloadSuccess');
       },

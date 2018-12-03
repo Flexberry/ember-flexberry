@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.7] - 2018-12-03
+### Fixed
+* `lock-route` mixin:
+    * Fix lock deleting when leaving `edit-form`.
+
 ## [2.0.0-beta.6] - 2018-12-02
 ### Added
 * `flexberry-objectlistview` and `flexberry-simpleolv` components:

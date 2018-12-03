@@ -58,10 +58,18 @@ export default Mixin.create({
       if (lock) {
         transition.abort();
         this.unlockObject().then((answer) => {
-          (answer ? lock.destroyRecord() : new RSVP.resolve()).then(() => {
+          if (answer) {
+            lock.destroyRecord().then((record) => {
+              // Without this next creation of lock object for this page throws an error:
+              // 'modelName was saved to the server, but the response returned the new id 'id', which has already been used with another record'.
+              this.store.unloadRecord(record);
+              this.set('_currentLock', null);
+              transition.retry();
+            });
+          } else {
             this.set('_currentLock', null);
             transition.retry();
-          });
+          }
         });
       }
     }

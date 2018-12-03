@@ -125,7 +125,7 @@ export default Controller.extend({
 
     @property locales
     @type String[]
-    @default ['ru', 'en']
+    @default undefined
   */
   locales: undefined,
 

@@ -106,6 +106,15 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryMenu',
 
   /**
+    Indicates than only click handler needed.
+
+    @property onlyClickHandler
+    @type Boolean
+    @default false
+  */
+  onlyClickHandler: false,
+
+  /**
     Initializes component.
   */
   init() {
@@ -147,7 +156,7 @@ export default FlexberryBaseComponent.extend({
     this.set('_onClickHandler', onClickHandler);
 
     // Attach menu click event handler.
-    this.$().on('click', onClickHandler);
+    this.$().on(this.get('onlyClickHandler') ? 'click' : 'click touchstart', onClickHandler);
     this.$().dropdown();
     this._getActionForMenu(this.get('collapseMenuOnItemClick'));
   },
@@ -160,7 +169,7 @@ export default FlexberryBaseComponent.extend({
 
     // Remove menu item click event handler.
     let onClickHandler = this.get('_onClickHandler');
-    this.$().off('click', onClickHandler);
+    this.$().off('click touchstart', onClickHandler);
   },
 
   /**

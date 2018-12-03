@@ -8,6 +8,10 @@ const Validations = buildValidations({
     presence: true,
     message: 'Name is required',
   }),
+  localization: validator('presence', {
+    presence: true,
+    message: 'Localization is required',
+  }),
 });
 
 let Model = EmberFlexberryDataModel.extend(Validations, {

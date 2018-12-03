@@ -75,6 +75,22 @@ ErrorableRouteMixin, {
   },
 
   /**
+    Route name corresponding edit form.
+
+    @property parentRoute
+    @type String
+  */
+  parentRoute: undefined,
+
+  /**
+    Route id corresponding edit form.
+
+    @property parentRouteRecordId
+    @type String
+  */
+  parentRouteRecordId: undefined,
+
+  /**
     Suffix for new route (has value only on new routes).
 
     @property newSuffix
@@ -100,6 +116,15 @@ ErrorableRouteMixin, {
   */
   beforeModel(transition) {
     this._super(...arguments);
+
+    if (!isNone(transition.queryParams.parentRoute)) {
+      let thisRouteName = transition.queryParams.parentRoute;
+      let thisRecordId = transition.queryParams.parentRouteRecordId;
+      if (!isNone(thisRouteName)) {
+        this.set('parentRoute', thisRouteName);
+        this.set('parentRouteRecordId', thisRecordId);
+      }
+    }
 
     let webPage = transition.targetName;
     let newSuffix = this.get('newSuffix');
@@ -231,6 +256,12 @@ ErrorableRouteMixin, {
     }
 
     this.get('appState').reset();
+
+    let parentRoute = this.get('parentRoute');
+    if (!isNone(parentRoute)) {
+      controller.set('parentRoute', parentRoute);
+      controller.set('parentRouteRecordId', this.get('parentRouteRecordId'));
+    }
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');

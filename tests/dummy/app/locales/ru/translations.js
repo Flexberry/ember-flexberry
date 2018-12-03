@@ -1136,6 +1136,8 @@ $.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
           'custom-button-name': 'Передать привет',
+          'disable-button-name': 'Отключить соседнюю кнопку',
+          'enable-button-name': 'Включить соседнюю кнопку',
           'custom-row-button-name': 'Пользовательская кнопка в строке',
         },
         'on-edit-form': {

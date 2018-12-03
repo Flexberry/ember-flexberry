@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix recordsTotalCount in mobile mode.
+* `flexberry-file` component:
+    * Fix preview click action.
 
 ## [3.0.0-beta.0] - 2018-11-16
 ### Added
@@ -51,15 +56,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
-    * Fix recordsTotalCount in mobile mode.
 * `modal-dialog` component:
     * Fix settings initialization.
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
 * `dynamic-actions` mixin:
     * Fix `classNames` property computing.
-* `flexberry-file` component:
-    * Fix preview click action.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
@@ -77,6 +79,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.0.0-beta.6] - 2018-12-02
+### Added
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * The property `disabled` to control the state of custom buttons.
+
+### Changed
+* `flexberry-menu` component:
+    * By default handles click and `touchstart` events.
+
+### Fixed
+* `flexberry-objectlistview-route` mixin and `edit-form` route:
+    * Fix return to parentRoute, when olv on edit-form.
 
 ## [2.0.0-beta.5] - 2018-11-16
 ### Added

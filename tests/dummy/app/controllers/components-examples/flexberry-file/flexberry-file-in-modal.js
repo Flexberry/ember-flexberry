@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import config from 'dummy/config/environment';
 
 export default EditFormController.extend({
   /**
@@ -10,6 +11,38 @@ export default EditFormController.extend({
     @default #example
   */
   _style:'#example',
+
+  /**
+    File upload URL for 'flexberry-file' component 'uploadUrl' property.
+
+    @property uploadUrl
+    @type String
+   */
+  uploadUrl: config.APP.components.flexberryFile.uploadUrl,
+
+  /**
+    Flag for 'flexberry-file' component 'showPreview' property.
+
+    @property showPreview
+    @type Boolean
+   */
+  showPreview: true,
+
+  /**
+    Flag for 'flexberry-file' component 'showUploadButton' property.
+
+    @property showUploadButton
+    @type Boolean
+   */
+  showUploadButton: true,
+
+  /**
+    Flag for 'flexberry-file' component 'showDownloadButton' property.
+
+    @property showDownloadButton
+    @type Boolean
+   */
+  showDownloadButton: true,
 
   actions: {
     modalWindow(style) {

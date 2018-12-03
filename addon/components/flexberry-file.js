@@ -469,6 +469,15 @@ export default FlexberryBaseComponent.extend({
   showModalDialogOnUploadError: undefined,
 
   /**
+    Flag: download by clicking download or open file in new window.
+
+    @property openInNewWindowInsteadOfLoading
+    @type Boolean
+    @default false
+  */
+  openFileInNewWindowInsteadOfLoading: undefined,
+
+  /**
     Headers to the file upload request.
 
     @property headers
@@ -734,6 +743,7 @@ export default FlexberryBaseComponent.extend({
       url: fileUrl,
       headers: this.get('headers'),
       fileName: fileName,
+      openFileInNewWindowInsteadOfLoading: this.get('openFileInNewWindowInsteadOfLoading'),
       onSuccess: () => {
         this.sendAction('onDownloadSuccess');
       },

@@ -87,6 +87,15 @@ export default EditFormController.extend({
   showModalDialogOnDownloadError: true,
 
   /**
+    Flag: download by clicking download or open file in new window.
+
+    @property openInNewWindowInsteadOfLoading
+    @type Boolean
+    @default false
+  */
+  openFileInNewWindowInsteadOfLoading: false,
+
+  /**
     Template text for 'flexberry-textbox' component.
 
     @property componentTemplateText
@@ -106,6 +115,7 @@ export default EditFormController.extend({
     '  showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
     '  inputClass=inputClass<br>' +
     '  buttonClass=buttonClass<br>' +
+    '  openFileInNewWindowInsteadOfLoading=openFileInNewWindowInsteadOfLoading<br>' +
     '}}'),
 
   /**
@@ -189,6 +199,12 @@ export default EditFormController.extend({
       settingDefaultValue: '',
       settingAvailableItems: ['purple basic', 'inverted violet', 'green colored', 'mini', 'huge'],
       bindedControllerPropertieName: 'buttonClass'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'openFileInNewWindowInsteadOfLoading',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'openFileInNewWindowInsteadOfLoading'
     });
 
     return componentSettingsMetadata;

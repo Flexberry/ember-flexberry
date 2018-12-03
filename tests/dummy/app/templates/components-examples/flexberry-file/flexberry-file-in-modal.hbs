@@ -2,7 +2,6 @@
 
 <form class="ui form flexberry-vertical-form" role="form">
   <button class="ui button" {{action 'modalWindow' "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
-  <button class="ui button" {{action 'modalWindowDouble' "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
 </form>
 
 {{#ui-modal id="repeat-window"}}
@@ -10,16 +9,6 @@
   <div class="content">
     <div class="ui form flexberry-vertical-form">
       <div class="field">
-        {{flexberry-lookup
-          value=model.editor1
-          relatedModel=model
-          relationName="editor1"
-          projection="ApplicationUserL"
-          displayAttributeName="name"
-          readonly=readonly
-          choose=(action "showLookupDialog")
-          remove=(action "removeLookupValue")
-        }}
         {{flexberry-file
           value=model.file
           placeholder=placeholder
@@ -36,27 +25,6 @@
         }}
       </div>
       <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
-    </div>
-  </div>
-{{/ui-modal}}
-
-{{#ui-modal id="repeat-window-double"}}
-  <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModalDouble"}}</div>
-  <div class="content">
-    <div class="ui form flexberry-vertical-form">
-      <div class="field">
-        {{flexberry-lookup
-          value=model.type
-          projection="SuggestionTypeL"
-          displayAttributeName="name"
-          title="Master"
-          relationName="type"
-          choose=(action "showLookupDialog")
-          remove=(action "removeLookupValue")
-          readonly=readonly
-        }}
-      </div>
-      <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}

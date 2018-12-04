@@ -150,6 +150,7 @@ export default Controller.extend({
       return;
     }
 
+    // Add locales.
     this.set('locales', ['ru', 'en']);
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.

@@ -49,14 +49,12 @@ export default Mixin.create({
       [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition).
 
       @method actions.willTransition
-      @param {Transition} transition
     */
-    willTransition(transition) {
+    willTransition() {
       this._super(...arguments);
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {
-        transition.abort();
         this.unlockObject().then((answer) => {
           if (answer) {
             lock.destroyRecord().then((record) => {
@@ -64,11 +62,9 @@ export default Mixin.create({
               // 'modelName was saved to the server, but the response returned the new id 'id', which has already been used with another record'.
               this.store.unloadRecord(record);
               this.set('_currentLock', null);
-              transition.retry();
             });
           } else {
             this.set('_currentLock', null);
-            transition.retry();
           }
         });
       }

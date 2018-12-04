@@ -750,7 +750,7 @@ export default FlexberryBaseComponent.extend({
     $.flexberry.downloadFile({
       url: fileUrl,
       headers: this.get('headers'),
-      fileName: this.get('_fileName'),
+      fileName: fileName,
       onSuccess: () => {
         /* eslint-disable ember/closure-actions */
         this.sendAction('onDownloadSuccess');

@@ -24,20 +24,19 @@
         responseType: 'blob'
       },
       success: function(result) {
+        var fileObjct = {
+          href: URL.createObjectURL(result),
+          hidden: true
+        };
+
         if (!options.openFileInNewWindowInsteadOfLoading)
         {
-          var $anchor = $('<a/>', {
-            href: URL.createObjectURL(result),
-            download: options.fileName,
-            hidden: true
-          });
+          fileObjct.download = options.fileName;
         } else {
-          var $anchor = $('<a/>', {
-            href: URL.createObjectURL(result),
-            hidden: true,
-            target: "_blank",
-          });
+          fileObjct.target = '_blank';
         }
+
+        var $anchor = $('<a/>', fileObjct);
 
         if (window.navigator.msSaveOrOpenBlob) {
           var downloadFunction = function() {

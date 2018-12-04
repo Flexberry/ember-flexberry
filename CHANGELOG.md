@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-file` component:
     * Open file by click download at deleted file.
 
+### Added
+* `flexberry-file` component:
+    * Added the ability to open files instead of downloading.
+
 ## [2.0.0-beta.6] - 2018-12-02
 ### Added
 * `flexberry-objectlistview` and `flexberry-simpleolv` components:

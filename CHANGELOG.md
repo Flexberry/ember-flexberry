@@ -5,9 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * `flexberry-objectlistview` component:
-    * Fix recordsTotalCount in mobile mode.
+    * Fix `recordsTotalCount` in mobile mode.
 * `flexberry-file` component:
     * Fix preview click action.
+
+### Breaking changes
+* `flexberry-objectlistview` component:
+    * Property `customParameters` for passing custom query parameters to edit form transition, passes each parameter separately (before this change parameters were passed in single object `customParameters`).
 
 ## [3.0.0-beta.0] - 2018-11-16
 ### Added

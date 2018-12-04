@@ -47,13 +47,15 @@ export default Mixin.create({
       let recordId = record.get('id') || record.get('data.id');
       let thisRouteName = this.get('router.currentRouteName');
       let thisRecordId = this.get('currentModel.id');
+      let queryParams = {
+        modelName: methodOptions.modelName,
+        parentRoute: thisRouteName,
+        parentRouteRecordId: thisRecordId
+      };
+      queryParams = merge(queryParams, methodOptions.customParameters);
+
       let transitionOptions = {
-        queryParams: {
-          modelName: methodOptions.modelName,
-          customParameters:  methodOptions.customParameters,
-          parentRoute: thisRouteName,
-          parentRouteRecordId: thisRecordId
-        }
+        queryParams: queryParams
       };
       if (!editFormRoute) {
         throw new Error('Detail\'s edit form route is undefined.');

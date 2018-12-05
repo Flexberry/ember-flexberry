@@ -73,6 +73,11 @@ export default FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super(...arguments);
     this.$('.sort-direction-dropdown').each((index, element) => {
+      $(element).dropdown({
+        onChange: (value) => {
+          this.send('setSortOrder', index, element, value);
+        }
+      });
       $(element).dropdown('set selected', this.get(`model.colDescs.${index}.sortOrder`));
     });
   },
@@ -159,11 +164,9 @@ export default FlexberryBaseComponent.extend({
         /* eslint-disable no-unused-vars */
         savePromise.then(
           record => {
-            let sort = serializeSortingParam(colsConfig.sorting);
             this.get('appState').reset();
-            this.set('currentController.mainControler.sort', sort);
-            this.set('currentController.mainControler.perPage', colsConfig.perPage || 5);
-            router.router.refresh();
+            let sort = serializeSortingParam(colsConfig.sorting);
+            router._routerMicrolib.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);

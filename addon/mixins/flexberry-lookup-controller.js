@@ -219,6 +219,78 @@ export default Ember.Mixin.create(ReloadListMixin, {
     },
 
     /**
+      Handlers action from FlexberryLookup preview action.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInModal, projection, modelName, controller }.
+    */
+    previewLookupValue(previewData) {
+      let options = Ember.$.extend(true, {
+        recordId: undefined,
+        transitionRoute: undefined,
+        transitionOptions: undefined,
+        showInModal: undefined,
+        modelName: undefined,
+        controller: undefined
+      }, previewData);
+      let recordId = options.recordId;
+      let transitionRoute = options.transitionRoute;
+      let transitionOptions = options.transitionOptions;
+      let showInModal = options.showInModal;
+
+      if (!showInModal) {
+        let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
+
+        if (Ember.isNone(route)) {
+          throw new Error('Error in current \`previewFormRoute\`.');
+        }
+
+        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+      } else {
+        let controllerName = options.controller;
+        let modelName = options.modelName;
+
+        let routeName = controllerName || transitionRoute;
+        let controller = Ember.getOwner(this).lookup(`controller:${routeName}`);
+
+        if (Ember.isNone(controller)) {
+          throw new Error(`Controller with '${routeName}' name does not exist.`);
+        }
+
+        controller.setProperties({
+          readonly: true,
+          routeName:  routeName,
+          parentRoute: transitionOptions.queryParams.parentParameters.parentRoute,
+          parentRouteRecordId: transitionOptions.queryParams.parentParameters.parentRouteRecordId
+        });
+
+        let lookupController = this.get('lookupController');
+        lookupController.setProperties({
+          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          sizeClass: 'small preview-model',
+        });
+
+        let lookupSettings = this.get('lookupSettings');
+        this.send('showModalDialog', lookupSettings.template);
+
+        let loadingParams = {
+          view: lookupSettings.template,
+          outlet: 'modal-content'
+        };
+
+        this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+        this.store.findRecord(modelName, recordId).then(data => {
+          this.send('removeModalDialog', loadingParams);
+          this.send('showModalDialog', transitionRoute, {
+            controller: controller,
+            model: data
+          }, loadingParams);
+        });
+      }
+    },
+
+    /**
       Update relation value at model.
 
       @method actions.updateLookupValue

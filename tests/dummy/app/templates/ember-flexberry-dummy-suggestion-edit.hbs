@@ -106,9 +106,12 @@
       relationName="author"
       projection="ApplicationUserL"
       displayAttributeName="name"
+      showPreviewButton=true
+      previewFormRoute="ember-flexberry-dummy-application-user-edit"
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      preview=(action "previewLookupValue")
       readonly=readonly
       componentName="SuggestionEditAuthor"
     }}
@@ -122,9 +125,13 @@
       relationName="editor1"
       projection="ApplicationUserL"
       displayAttributeName="name"
+      showPreviewButton=true
+      previewInModal=true
+      previewFormRoute="ember-flexberry-dummy-application-user-edit"
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      preview=(action "previewLookupValue")
       readonly=readonly
       componentName="SuggestionEditEditor1"
     }}

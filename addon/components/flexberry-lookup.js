@@ -213,13 +213,13 @@ export default FlexberryBaseComponent.extend({
   previewFormRoute: undefined,
 
   /**
-    Flag to show the selected object in modal.
+    Flag to show the selected object in separate route.
 
-    @property previewInModal
+    @property previewOnSeparateRoute
     @type Boolean
     @default false
   */
-  previewInModal: false,
+  previewOnSeparateRoute: false,
 
   /**
     The controller for viewing the selected object.
@@ -661,7 +661,7 @@ export default FlexberryBaseComponent.extend({
         recordId: this.get('value.id'),
         transitionRoute: previewFormRoute,
         transitionOptions: transitionOptions,
-        showInModal:  this.get('previewInModal'),
+        showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
         controller: this.get('controllerForPreview')
       };

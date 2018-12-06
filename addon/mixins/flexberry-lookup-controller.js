@@ -222,23 +222,23 @@ export default Ember.Mixin.create(ReloadListMixin, {
       Handlers action from FlexberryLookup preview action.
 
       @method actions.previewLookupValue
-      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInModal, projection, modelName, controller }.
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInSeparateRoute, projection, modelName, controller }.
     */
     previewLookupValue(previewData) {
       let options = Ember.$.extend(true, {
         recordId: undefined,
         transitionRoute: undefined,
         transitionOptions: undefined,
-        showInModal: undefined,
+        showInSeparateRoute: undefined,
         modelName: undefined,
         controller: undefined
       }, previewData);
       let recordId = options.recordId;
       let transitionRoute = options.transitionRoute;
       let transitionOptions = options.transitionOptions;
-      let showInModal = options.showInModal;
+      let showInSeparateRoute = options.showInSeparateRoute;
 
-      if (!showInModal) {
+      if (showInSeparateRoute) {
         let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
 
         if (Ember.isNone(route)) {

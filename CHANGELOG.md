@@ -8,9 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add preview button.
 
+## [2.0.0-beta.7] - 2018-12-04
 ### Fixed
+* `lock-route` mixin:
+    * Fix lock deleting when leaving `edit-form`.
 * `flexberry-file` component:
-    * Open file by click download at deleted file.
+    * Fix file opening instead of download when clicking download button after file was deleted.
 
 ## [2.0.0-beta.6] - 2018-12-02
 ### Added

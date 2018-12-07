@@ -4,7 +4,7 @@
 
 import { assert, warn, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { later, run } from '@ember/runloop';
 import { merge } from '@ember/polyfills';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -176,6 +176,18 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   dropdown: false,
+
+  /**
+    Handles changes in dropdown.
+
+    @method _dropdownObserver
+    @private
+  */
+  _dropdownObserver: observer('dropdown', function() {
+    if (this.get('dropdown')) {
+      this._onDropdown();
+    }
+  }),
 
   /**
     Flag to show that lookup has search or autocomplete in dropdown mode.
@@ -606,10 +618,6 @@ export default FlexberryBaseComponent.extend({
   init() {
     this._super(...arguments);
 
-    if (this.get('dropdown')) {
-      this._onDropdown();
-    }
-
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
@@ -657,13 +665,9 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
     }
 
-    let cachedDropdownValue = this.get('_cachedDropdownValue');
     let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
-
     if (isAutocomplete && !cachedAutocompleteValue) {
       this._onAutocomplete();
-    } else if (isDropdown && !cachedDropdownValue) {
-      this._onDropdown();
     }
 
     this.set('_cachedDropdownValue', isDropdown);

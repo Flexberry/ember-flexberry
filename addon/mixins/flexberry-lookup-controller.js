@@ -256,7 +256,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         }
 
         let modelConstructor = this.store.modelFor(modelName);
-        let projection = Ember.get(modelConstructor, 'projections')[projectionName];
+        let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
         if (!projection) {
           throw new Error(
             `No projection with '${projectionName}' name defined in '${modelName}' model.`);
@@ -387,7 +387,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       reloadData.saveTo);
 
     let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
-    let projection = Ember.get(modelConstructor, 'projections')[reloadData.projectionName];
+    let projection = Ember.get(modelConstructor, `projections.${reloadData.projectionName}`);
     if (!projection) {
       throw new Error(
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);

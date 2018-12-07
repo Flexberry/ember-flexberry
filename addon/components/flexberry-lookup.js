@@ -213,6 +213,15 @@ export default FlexberryBaseComponent.extend({
   previewFormRoute: undefined,
 
   /**
+    Projection name preview form.
+
+    @property previewFormProjection
+    @type String
+    @default undefined
+  */
+  previewFormProjection: undefined,
+
+  /**
     Flag to show the selected object in separate route.
 
     @property previewOnSeparateRoute
@@ -663,7 +672,8 @@ export default FlexberryBaseComponent.extend({
         transitionOptions: transitionOptions,
         showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
-        controller: this.get('controllerForPreview')
+        controller: this.get('controllerForPreview'),
+        projection: this.get('previewFormProjection')
       };
 
       this.sendAction('preview', previewData);

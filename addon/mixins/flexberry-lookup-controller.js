@@ -231,37 +231,41 @@ export default Ember.Mixin.create(ReloadListMixin, {
         transitionOptions: undefined,
         showInSeparateRoute: undefined,
         modelName: undefined,
-        controller: undefined
+        controller: undefined,
+        projection: undefined
       }, previewData);
       let recordId = options.recordId;
       let transitionRoute = options.transitionRoute;
-      let transitionOptions = options.transitionOptions;
-      let showInSeparateRoute = options.showInSeparateRoute;
 
-      if (showInSeparateRoute) {
-        let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
-
-        if (Ember.isNone(route)) {
-          throw new Error('Error in current \`previewFormRoute\`.');
-        }
-
+      if (options.showInSeparateRoute) {
+        let transitionOptions = options.transitionOptions || {};
         this.transitionToRoute(transitionRoute, recordId, transitionOptions);
       } else {
-        let controllerName = options.controller;
+        let routeName = options.controller || transitionRoute;
         let modelName = options.modelName;
 
-        let routeName = controllerName || transitionRoute;
         let controller = Ember.getOwner(this).lookup(`controller:${routeName}`);
-
         if (Ember.isNone(controller)) {
           throw new Error(`Controller with '${routeName}' name does not exist.`);
         }
 
+        let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
+        let projectionName = options.projection || (route ? route.get('modelProjection') : undefined);
+        if (Ember.isNone(projectionName)) {
+          throw new Error('\`previewFormProjection\` is undefined.');
+        }
+
+        let modelConstructor = this.store.modelFor(modelName);
+        let projection = Ember.get(modelConstructor, 'projections')[projectionName];
+        if (!projection) {
+          throw new Error(
+            `No projection with '${projectionName}' name defined in '${modelName}' model.`);
+        }
+
         controller.setProperties({
           readonly: true,
-          routeName:  routeName,
-          parentRoute: transitionOptions.queryParams.parentParameters.parentRoute,
-          parentRouteRecordId: transitionOptions.queryParams.parentParameters.parentRouteRecordId
+          routeName: routeName,
+          modelProjection: projection
         });
 
         let lookupController = this.get('lookupController');

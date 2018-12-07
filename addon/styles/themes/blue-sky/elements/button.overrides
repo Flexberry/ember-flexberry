@@ -21,7 +21,7 @@
 
 .ui.small.button {
     border: none;
-    font-size: 12px;
+    font-size: 14px;
     &:hover {
         background: #d01919;
     }
@@ -329,9 +329,9 @@ div.ui.secondary.menu.no-margin {
     padding: 0px;
     height: 30px;
     width: 30px;
-    border: 1px solid @uiBorderColor;
+    border: none;
     &:hover {
-        border: 1px solid @uiHoveredNegitveBorderColor;
+        border: none;
         background: @white;
         & i.icon.minus:before {
             color: @uiHoveredNegitveTextColor;
@@ -553,11 +553,12 @@ div.ui.secondary.menu.no-margin {
         align-items: center;
         background-color: @uiHoveredPositiveBackgroundColor;
         border: 1px solid @uiBorderColor;
+        border-radius: 5px;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
+            border-radius: 5px;
         }
     }
-
     .cols-config-save {
         border: 1px solid @uiBorderColor;
         &:hover {
@@ -590,12 +591,10 @@ div.ui.secondary.menu.no-margin {
 
 .ui.icon.tiny.button {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.icon.tiny.button.no-margin {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.buttons:not(.basic):not(.inverted) {

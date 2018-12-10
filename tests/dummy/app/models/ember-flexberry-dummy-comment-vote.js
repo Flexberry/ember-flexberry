@@ -1,8 +1,20 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  applicationUser: validator('presence', {
+    presence: true,
+    message: 'ApplicationUser is required',
+  }),
+  voteType: validator('presence', {
+    presence: true,
+    message: 'VoteType is required',
+  }),
+});
+
+var Model = EmberFlexberryDataModel.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-comment.userVotes.
   // It's not a property for flexberry-lookup component.
   comment: DS.belongsTo('ember-flexberry-dummy-comment', {

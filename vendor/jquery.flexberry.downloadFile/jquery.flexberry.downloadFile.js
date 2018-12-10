@@ -24,19 +24,19 @@
         responseType: 'blob'
       },
       success: function(result) {
-        var fileObjct = {
+        var anchorProperties = {
           href: URL.createObjectURL(result),
           hidden: true
         };
 
         if (!options.openFileInNewWindowInsteadOfLoading)
         {
-          fileObjct.download = options.fileName;
+          anchorProperties.download = options.fileName;
         } else {
-          fileObjct.target = '_blank';
+          anchorProperties.target = '_blank';
         }
 
-        var $anchor = $('<a/>', fileObjct);
+        var $anchor = $('<a/>', anchorProperties);
 
         if (window.navigator.msSaveOrOpenBlob) {
           var downloadFunction = function() {

@@ -565,6 +565,7 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'showDownloadButton', defaultValue: true });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
+    this.initProperty({ propertyName: 'openFileInNewWindowInsteadOfLoading', defaultValue: false });
 
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));

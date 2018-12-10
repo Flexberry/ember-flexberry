@@ -302,7 +302,7 @@ test('loong animation speed', function(assert) {
   assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
   Ember.run.later(() => {
     assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
-  }, 500);
+  }, 400);
   Ember.run.later(() => {
     assert.notOk(this.$('.flexberry-toggler .content').hasClass('animating'));
     done();

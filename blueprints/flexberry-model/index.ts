@@ -60,6 +60,7 @@ module.exports = {
   locals: function(options) {
     let modelBlueprint = new ModelBlueprint(this, options);
     return lodash.defaults({
+      namespace: modelBlueprint.namespace,// for use in files\__root__\mixins\regenerated\models\__name__.js
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\mixins\regenerated\models\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\mixins\regenerated\models\__name__.js
       model: modelBlueprint.model,// for use in files\__root__\mixins\regenerated\models\__name__.js
@@ -69,7 +70,8 @@ module.exports = {
       name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllEnums: modelBlueprint.needsAllEnums,// for use in files\tests\unit\serializers\__name__.js
-      needsAllObjects: modelBlueprint.needsAllObjects// for use in files\tests\unit\serializers\__name__.js
+      needsAllObjects: modelBlueprint.needsAllObjects,// for use in files\tests\unit\serializers\__name__.js
+      enumImports: modelBlueprint.enumImports,// for use in files\__root__\mixins\regenerated\models\__name__.js
       },
       modelBlueprint.lodashVariables
     );

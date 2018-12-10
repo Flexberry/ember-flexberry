@@ -11,11 +11,12 @@
     {{#if _hasFile}}
       <div class="flexberry-file-menu">
         {{flexberry-menu
-          class=(concat "left pointing" (if (and readonly (not showPreview)) " disabled" ""))
+          class=(concat "flexberry-file-mobile-menu left pointing" (if (and readonly (not showPreview)) " disabled" ""))
           items=_menuItems
           callItemsOnClickCallbacks=false
           onItemClick=(action "onMenuItemClick")
           collapseMenuOnItemClick=true
+          onlyClickHandler=true
         }}
       </div>
       {{#if showPreview}}

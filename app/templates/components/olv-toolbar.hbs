@@ -8,21 +8,42 @@
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button
-    class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
-    title={{t "components.olv-toolbar.add-button-text"}}
-    {{action "createNew"}}>
-      {{t "components.olv-toolbar.add-button-text"}}
-  </button>
+  {{#if (or readonly (not enableCreateNewButton))}}
+    <button
+      class="ui create-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      disabled="disabled"
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{else}}
+    <button
+      class="ui create-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{/if}}
 {{/if}}
 {{#if deleteButton}}
-  <button
-    class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
-    title={{t "components.olv-toolbar.delete-button-text"}}
-     {{action "delete"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
-       <i class="delete icon"></i>
-  </button>
+  {{#if (or readonly (not isDeleteButtonEnabled))}}
+    <button
+      class="ui delete-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled="disabled"
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{else}}
+    <button
+      class="ui delete-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{/if}}
 {{/if}}
 {{#if availableHierarchicalMode}}
   <button
@@ -114,6 +135,7 @@
   <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
     title={{if customButton.buttonTitle customButton.buttonTitle}}
+    disabled={{customButton.disabled}}
     {{action "customButtonAction" customButton.buttonAction}}>
       {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
   </button>
@@ -127,8 +149,7 @@
   <button
     class="ui button icon olv-toolbar-info-modal-dialog-copy-button"
     title={{t "components.olv-toolbar.copy"}}
-    {{action "copyJSONContent"}}
-    id='OLVToolbarInfoCopyButton'>
+    {{action "copyJSONContent"}}>
       {{t "components.olv-toolbar.copy"}}
   </button>
   <div class="actions">
@@ -139,7 +160,7 @@
   </div>
   <div class="ui form">
     <div class="ui field olv-toolbar-info-modal-dialog-content center aligned ">
-      <textarea id='OLVToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
+      <textarea cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
     </div>
   </div>
 </div>

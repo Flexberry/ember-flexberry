@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest, addDataForDestroy } from './execute-folv-test';
-import { loadingList } from './folv-tests-functions';
+import { refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
@@ -71,28 +71,40 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
 
           assert.ok(recordIsChecked, 'Each entry begins with \'' + uuid + '\' is checked');
 
-          let $toolBar = Ember.$('.ui.secondary.menu')[0];
-          let $deleteButton = $toolBar.children[2];
+          // Apply filter function.
+          let refreshFunction =  function() {
+            let deleteButton = Ember.$('.delete-button')[0];
+            click(deleteButton);
+            let refreshButton = Ember.$('.refresh-button')[0];
+            click(refreshButton);
+          };
+
           let done = assert.async();
+          let controller = app.__container__.lookup('controller:' + currentRouteName());
 
-          // Delete the marked records.
-          loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
-            let recordsIsDelete = $rows().every((element) => {
-              let nameRecord = Ember.$.trim(element.children[1].innerText);
-              return nameRecord.indexOf(uuid) < 0;
+          let timeout = 500;
+          Ember.run.later((function() {
+
+            // Delete the marked records.
+            refreshListByFunction(refreshFunction, controller).then(() => {
+
+              let recordsIsDelete = $rows().every((element) => {
+                let nameRecord = Ember.$.trim(element.children[1].innerText);
+                return nameRecord.indexOf(uuid) < 0;
+              });
+
+              assert.ok(recordsIsDelete, 'Each entry begins with \'' + uuid + '\' is delete with button in toolbar button');
+
+              // Check that the records have been removed into store.
+              let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
+              let done3 = assert.async();
+              store.query(modelName, builder2.build()).then((result) => {
+                assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');
+                done3();
+              });
+              done();
             });
-
-            assert.ok(recordsIsDelete, 'Each entry begins with \'' + uuid + '\' is delete with button in toolbar button');
-
-            // Check that the records have been removed into store.
-            let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
-            let done3 = assert.async();
-            store.query(modelName, builder2.build()).then((result) => {
-              assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');
-              done3();
-            });
-            done();
-          });
+          }), timeout);
         });
         done1();
       });

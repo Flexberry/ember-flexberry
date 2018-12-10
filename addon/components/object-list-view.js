@@ -275,6 +275,13 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Custom data for the editform
+
+    @property {Object} customParameters
+  */
+  customParameters: {},
+
+  /**
     Flag: indicates whether to show validation messages in every row or not.
 
     @property showValidationMessages
@@ -870,6 +877,7 @@ export default FlexberryBaseComponent.extend(
       if (this.rowClickable || params.rowEdit) {
         let recordKey = recordWithKey && recordWithKey.key;
         let recordData = recordWithKey && recordWithKey.data;
+        let recordModelName = Ember.isNone(recordData) ? undefined : recordData.constructor.modelName;
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
@@ -878,10 +886,11 @@ export default FlexberryBaseComponent.extend(
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
+          modelName: recordModelName || this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
-          goToEditForm: true
+          goToEditForm: true,
+          customParameters: this.get('customParameters')
         });
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
@@ -1820,7 +1829,10 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'date':
-        component.name = 'flexberry-textbox';
+        component.name = 'flexberry-simpledatetime';
+        component.properties = Ember.$.extend(true, component.properties, {
+          type: 'date',
+        });
         break;
 
       default:

@@ -54,6 +54,7 @@ executeTest('check select all at page', (store, assert, app) => {
 
             $checkAllAtPageButton.click();
             $checkCheckBox = Ember.$('.flexberry-checkbox.checked');
+            $deleteButton = Ember.$('.delete-button');
 
             // Check afther unselect all at page.
             assert.equal($checkCheckBox.length, 0, 'all checkBox in row are unselect');

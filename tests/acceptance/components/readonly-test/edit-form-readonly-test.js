@@ -227,6 +227,8 @@ test('flexberry-lookup on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
+      $removeButton = Ember.$('.not-in-groupedit button.ui-clear');
+      $removeButtonFge = Ember.$('.in-groupedit button.ui-clear');
       assert.strictEqual($(this).is('readonly'), false, 'Lookup don\'t readonly');
       assert.strictEqual($chooseButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Choose\' don\'t readonly');
       assert.strictEqual($removeButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Remove\' don\'t readonly');
@@ -296,6 +298,7 @@ test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
+      $removeButtonRow = Ember.$('.in-groupedit .object-list-view-row-delete-button');
       assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
       assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
       assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper don\'t readonly');

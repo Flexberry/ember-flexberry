@@ -2,7 +2,7 @@ import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 import { Query } from 'ember-flexberry-data';
 
-const { SimplePredicate, StringPredicate, DatePredicate } = Query;
+const { SimplePredicate } = Query;
 
 export default ListFormRoute.extend({
   /**
@@ -46,20 +46,12 @@ export default ListFormRoute.extend({
   developerUserSettings: { FOLVCustomFilterObjectListView: { } },
 
   predicateForFilter(filter) {
-    if (filter.type === 'string' && filter.condition === 'like') {
-      return new StringPredicate(filter.name).contains(filter.pattern);
-    }
-
     if (filter.type === 'string' && filter.condition === 'empty') {
       return new SimplePredicate(filter.name, 'eq', null);
     }
 
     if (filter.type === 'decimal') {
       return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
-    }
-
-    if (filter.type === 'date') {
-      return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
     }
 
     return this._super(...arguments);

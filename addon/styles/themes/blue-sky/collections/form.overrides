@@ -47,6 +47,10 @@
     }
 }
 
+.flexberry-simpledatetime {
+    width:100%;
+}
+
 input[type="checkbox"]:after {
     content: "";
     display: inline-block;

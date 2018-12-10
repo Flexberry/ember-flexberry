@@ -306,6 +306,14 @@ div.ui.secondary.menu.no-margin {
     opacity: 1;
 }
 
+.flexberry-simpledatetime .flatpickr .ui.ui-clear.button {
+    width: 20px;
+    margin-right: 3px;
+    .remove.icon {
+      margin-left: 0px;
+    }
+}
+
 .ui.fluid.action.input:hover {
     background: none;
 }

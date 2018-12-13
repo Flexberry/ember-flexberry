@@ -109,9 +109,12 @@ div.ui.secondary.menu.no-margin {
 .ui.button.delete-button {
     border: none;
     font-size: 0px;
-    padding-top: 10px;
+    padding-right: 10px;
     padding-left: 10px;
     height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
         background: none;
         border :none;
@@ -120,6 +123,8 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.icon.hierarchical-button {
     border: 0px;
+    padding: 0 5px 0;
+    font-size: 21px;
     &:hover {
         background: @white;
     }
@@ -138,10 +143,8 @@ div.ui.secondary.menu.no-margin {
     border: 0px;
 }
 
-.ui.buttons.filter-active {
-    border: 1px solid @uiBorderColor;
-    height: 35px;
-    border-radius: 5px;
+.ui.buttons.filter-active { 
+    border: none;
 }
 
 .ui.buttons.removeFilter-button {
@@ -329,7 +332,7 @@ div.ui.secondary.menu.no-margin {
     padding: 0px;
     height: 30px;
     width: 30px;
-    border: none;
+    border: 1px solid @uiBorderColor;
     &:hover {
         border: none;
         background: @white;
@@ -569,7 +572,9 @@ div.ui.secondary.menu.no-margin {
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {
-    margin-top: -4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ui.buttons > .ui.button:not(.basic):not(.inverted),

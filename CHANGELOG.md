@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.1.0-beta.0] - 2018-12-13
 ### Added
 * `flexberry-lookup` component:
     * Add preview button.

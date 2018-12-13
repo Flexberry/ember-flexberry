@@ -98,6 +98,15 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-lookup.placeholder'),
 
   /**
+    Text on button preview value.
+
+    @property previewText
+    @type String
+    @default '<i class="eye icon"></i>'
+  */
+  previewText: '<i class="eye icon"></i>',
+
+  /**
     Text on button opening a modal window.
 
     @property chooseText
@@ -116,6 +125,14 @@ export default FlexberryBaseComponent.extend({
     @default '<i class="remove icon"></i>'
   */
   removeText: '<i class="remove icon"></i>',
+
+  /**
+    CSS classes for preview button.
+
+    @property previewButtonClass
+    @type String
+  */
+  previewButtonClass: undefined,
 
   /**
     CSS classes for choose button.
@@ -176,6 +193,51 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   dropdown: false,
+
+  /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    The URL that will be used for viewing the selected object.
+
+    @property previewFormRoute
+    @type String
+    @default undefined
+  */
+  previewFormRoute: undefined,
+
+  /**
+    Projection name preview form.
+
+    @property previewFormProjection
+    @type String
+    @default undefined
+  */
+  previewFormProjection: undefined,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    The controller for viewing the selected object.
+
+    @property controllerForPreview
+    @type String
+    @default undefined
+  */
+  controllerForPreview: undefined,
 
   /**
     Flag to show that lookup has search or autocomplete in dropdown mode.
@@ -575,6 +637,46 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction('remove', removeData);
+    },
+
+    /**
+      Show window for select value.
+
+      @method actions.preview
+    */
+    preview() {
+      let previewFormRoute = this.get('previewFormRoute');
+      if (Ember.isNone(previewFormRoute)) {
+        throw new Error('\`previewFormRoute\` is undefined.');
+      }
+
+      let relatedModel = this.get('relatedModel');
+      let relationName = this.get('relationName');
+      let relationModelName = getRelationType(relatedModel, relationName);
+
+      let thisRouteName = this.get('currentController.routeName');
+      let thisRecordId = this.get('relatedModel.id');
+      let transitionOptions = {
+        queryParams: {
+          readonly: true,
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
+      let previewData = {
+        recordId: this.get('value.id'),
+        transitionRoute: previewFormRoute,
+        transitionOptions: transitionOptions,
+        showInSeparateRoute: this.get('previewOnSeparateRoute'),
+        modelName: relationModelName,
+        controller: this.get('controllerForPreview'),
+        projection: this.get('previewFormProjection')
+      };
+
+      this.sendAction('preview', previewData);
     }
   },
 

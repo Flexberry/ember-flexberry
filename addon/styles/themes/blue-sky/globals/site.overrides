@@ -40,16 +40,12 @@
     padding: 7px 0px;
 }
 
-#example-mobile .flexberry-content.ui.attached.segment {
-    border: none;
-    height: auto;
-    min-height: 100%;
-}
-
-#example .flexberry-content.ui.attached.segment {
-    border: none;
-    height: auto;
-    min-height: 100%;
+#example-mobile, #example {
+    .flexberry-content.ui.attached.segment {
+       border: none;
+       height: auto;
+       min-height: 100%;
+    }
 }
 
 .flex-container {

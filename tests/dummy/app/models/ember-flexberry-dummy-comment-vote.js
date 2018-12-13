@@ -8,10 +8,6 @@ const Validations = buildValidations({
     presence: true,
     message: 'ApplicationUser is required',
   }),
-  voteType: validator('presence', {
-    presence: true,
-    message: 'VoteType is required',
-  }),
 });
 
 var Model = EmberFlexberryDataModel.extend(Validations, {

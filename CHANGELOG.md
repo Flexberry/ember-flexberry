@@ -3,24 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `colsconfig-dialog-content` component:
-    * Fix sorting dropdown.
-* `flexberry-lookup` component:
-    * Fixed semantic dropdown initialization for dropdown mode.
 
-## [3.0.0-beta.1] - 2018-12-04
-### Fixed
-* `flexberry-objectlistview` component:
-    * Fix `recordsTotalCount` in mobile mode.
-* `flexberry-file` component:
-    * Fix preview click action.
-
-### Breaking changes
-* `flexberry-objectlistview` component:
-    * Property `customParameters` for passing custom query parameters to edit form transition, passes each parameter separately (before this change parameters were passed in single object `customParameters`).
-
-## [3.0.0-beta.0] - 2018-11-16
+## [3.0.0] - 2018-12-13
 ### Added
 * `flexberry-sidebar` component, simple component for use sidebar from `Semantic UI`.
 * `flexberry-sitemap` component, component for render sitemap by object with links.
@@ -31,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Additive merging of generated localization files with existing localozation files.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.0.0-beta.0`.
+* Update dependency on `ember-flexberry-data` to version `3.0.0`.
 * `flexberry-dropdown` component:
     * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
 * `modal-dialog` component:
@@ -64,15 +48,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Nested togglers now work correctly.
 * `flexberry-lookup` component:
     * Fix hierarchical mode settings for `lookup dialog`.
-    * Fix dropdown mode.
+    * Fixed semantic dropdown initialization for dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+    * Fix `recordsTotalCount` in mobile mode.
 * `modal-dialog` component:
     * Fix settings initialization.
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
 * `dynamic-actions` mixin:
     * Fix `classNames` property computing.
+* `flexberry-file` component:
+    * Fix preview click action.
+* `colsconfig-dialog-content` component:
+    * Fix sorting dropdown.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
@@ -82,6 +71,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Dependency on `ember-validations@~2.0.0-alpha.4` addon.
 
 ### Breaking changes
+* `flexberry-objectlistview` component:
+    * Property `customParameters` for passing custom query parameters to edit form transition, passes each parameter separately (before this change parameters were passed in single object `customParameters`).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.

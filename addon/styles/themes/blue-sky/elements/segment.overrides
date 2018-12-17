@@ -15,6 +15,8 @@
     bottom: 0px;
     z-index: 99;
     height: @footerHeight;
+    width: 100% !important;
+    margin: 0px !important;
 }
 
 .daterangepicker .calendar td {

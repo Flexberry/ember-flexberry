@@ -96,6 +96,22 @@
   }
 }
 
+@-moz-document url-prefix() {
+  .flexberry-colsconfig {
+    table {
+      tbody {
+        tr {
+          td {
+            &:nth-child(6) {
+              width: 73px;
+            } 
+          }
+        }
+      }
+    }
+  }
+}
+
 /**
  * Fix semantic-ui style for flexberry-menu.
  */

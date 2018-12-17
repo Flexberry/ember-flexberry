@@ -22,11 +22,9 @@
         tbody {
             display: block;
             overflow-y: scroll;
-            height: 370px;
+            overflow-x: hidden;
+            max-height: 370px;
             box-sizing: border-box;
-            tr {
-                min-width: 678px;
-            }
         }
         tfoot {
             tr:last-child > th:last-child {

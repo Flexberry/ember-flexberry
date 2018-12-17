@@ -10,6 +10,11 @@
     height: @headerHeightMobile;
 }
 
+.pushable .pusher.mobile {
+    height: auto;
+    min-height: auto;
+}
+
 .background-logo {
     height: @headerHeight;
     position: fixed;

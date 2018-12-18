@@ -13,9 +13,9 @@ executeTest('multiple transactions', (store, assert, app) => {
 
   // Add records for deliting.
   Ember.run(() => {
-    let newRecord1 = store.createRecord(modelName, { name: uuid1, newRecord2 });
+    let newRecord1 = store.createRecord(modelName, { name: uuid1, parent: newRecord2 });
 
-    let newRecord2 = store.createRecord(modelName, { name: uuid2, parent:newRecord1 });
+    let newRecord2 = store.createRecord(modelName, { name: uuid2, parent: newRecord1 });
 
     newRecord1.save();
     newRecord2.save();

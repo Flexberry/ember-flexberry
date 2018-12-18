@@ -8,21 +8,21 @@ const { Builder } = Query;
 executeTest('multiple transactions', (store, assert, app) => {
   assert.expect(1);
   let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let uuid = '0' + generateUniqueId();
-  let id1 = '1';
-  let id2 = '2';
+  let uuid1 = '1' + generateUniqueId();
+  let uuid2 = '2' + generateUniqueId();
 
   // Add records for deliting.
   Ember.run(() => {
-    let newRecord1 = store.createRecord(modelName, { ID:id1, name: uuid });
-    newRecord1.save();
+    let newRecord1 = store.createRecord(modelName, { name: uuid1, newRecord2 });
 
-    let newRecord2 = store.createRecord(modelName, { ID:id2, name: uuid, parent:id1 });
+    let newRecord2 = store.createRecord(modelName, { name: uuid2, parent:newRecord1 });
+
+    newRecord1.save();
     newRecord2.save();
 
-    let builder = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
+    let builder = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid1);
     store.query(modelName, builder.build()).then((result) => {
-      assert.ok(result.meta.count, 'record \'' + uuid + 'ok');
+      assert.ok(result.meta.count, 'record \'' + uuid1 + 'ok');
     });
   });
 });

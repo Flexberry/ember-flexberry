@@ -138,10 +138,11 @@ option {
     border-radius: 0px !important;
     padding-top: 0 !important;
 }
-.flexberry-vertical-form
+.flexberry-vertical-form {
     .field {
         margin-bottom: 2em !important;
-    }
         label {
             margin-bottom: 0 !important;
         }
+    }    
+}

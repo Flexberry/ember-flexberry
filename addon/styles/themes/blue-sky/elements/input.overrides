@@ -7,7 +7,7 @@
 }
 
 .ui.action.input:not([class*="left action"]) > .button:last-child {
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 .ui.input input, input {

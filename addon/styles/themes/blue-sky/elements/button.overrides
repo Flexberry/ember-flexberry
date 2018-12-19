@@ -564,6 +564,7 @@ div.ui.secondary.menu.no-margin {
     }
     .cols-config-save {
         border: 1px solid @uiBorderColor;
+        border-radius: 5px !important;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             background-color: @uiHoveredPositiveBackgroundColor;

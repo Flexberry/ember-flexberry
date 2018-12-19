@@ -124,3 +124,24 @@ option {
 .ui.form .field .ui.input .block-action-input input {
     width: 100%;
 }
+
+.ember-text-field,
+.ember-text-area,
+.flexberry-simpledatetime,
+.flexberry-dropdown,
+.custom-flatpickr {
+    padding-left: 0 !important;    
+}
+.ember-text-area {
+    border: none !important;
+    border-bottom: 1px solid @inputBorderColor !important;
+    border-radius: 0px !important;
+    padding-top: 0 !important;
+}
+.flexberry-vertical-form
+    .field {
+        margin-bottom: 2em !important;
+    }
+        label {
+            margin-bottom: 0 !important;
+        }

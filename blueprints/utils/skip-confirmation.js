@@ -39,7 +39,15 @@ function isValidFile(fileInfo) {
 
 function prepareInfos(info) {
     return info.checkForConflict().then(resolution => {
-      info.action = resolution === 'identical' ? 'skip' : 'overwrite';
+      switch (resolution) {
+        case 'identical':
+          info.action = 'skip';
+          break;
+        case 'confirm':
+          info.action = 'overwrite';
+          break;
+      }
+
       return info;
     });
 };

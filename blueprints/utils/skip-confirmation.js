@@ -5,6 +5,7 @@ const existsSync = require('exists-sync');
 const minimatch = require('minimatch');
 const fs = require('fs-extra');
 const stat = RSVP.denodeify(fs.stat);
+const Blueprint = require('ember-cli/lib/models/blueprint');
 
 module.exports = function skipConfirmation(context, intoDir, templateVariables) {
     let files = context._getFilesForInstall(templateVariables.targetFiles);
@@ -29,12 +30,12 @@ function finishProcessingForUninstall(infos) {
 };
 
 function isValidFile(fileInfo) {
-    /*let fn = fileInfo.inputPath;
-    if (this.ignoredFiles.some(ignoredFile => minimatch(fn, ignoredFile, { matchBase: true }))) {
+    let fn = fileInfo.inputPath;
+    if (Blueprint.ignoredFiles.some(ignoredFile => minimatch(fn, ignoredFile, { matchBase: true }))) {
       return Promise.resolve(false);
-    } else {*/
+    } else {
       return stat(fileInfo.inputPath).then(it => it.isFile());
-    //}
+    }
 };
 
 function prepareInfos(info) {

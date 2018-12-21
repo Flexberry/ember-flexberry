@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `colsconfig-dialog-content` component:
     * Fix sorting dropdown.
+* Blueprints:
+    * Fix create validations in model blueprint.
 
 ## [3.0.0-beta.1] - 2018-12-04
 ### Fixed

@@ -3,24 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `colsconfig-dialog-content` component:
-    * Fix sorting dropdown.
 * Blueprints:
     * Fix create validations in model blueprint.
 
-## [3.0.0-beta.1] - 2018-12-04
-### Fixed
-* `flexberry-objectlistview` component:
-    * Fix `recordsTotalCount` in mobile mode.
-* `flexberry-file` component:
-    * Fix preview click action.
-
-### Breaking changes
-* `flexberry-objectlistview` component:
-    * Property `customParameters` for passing custom query parameters to edit form transition, passes each parameter separately (before this change parameters were passed in single object `customParameters`).
-
-## [3.0.0-beta.0] - 2018-11-16
+## [3.0.0] - 2018-12-13
 ### Added
 * `flexberry-sidebar` component, simple component for use sidebar from `Semantic UI`.
 * `flexberry-sitemap` component, component for render sitemap by object with links.
@@ -31,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Additive merging of generated localization files with existing localozation files.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.0.0-beta.0`.
+* Update dependency on `ember-flexberry-data` to version `3.0.0`.
 * `flexberry-dropdown` component:
     * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
 * `modal-dialog` component:
@@ -64,15 +50,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Nested togglers now work correctly.
 * `flexberry-lookup` component:
     * Fix hierarchical mode settings for `lookup dialog`.
-    * Fix dropdown mode.
+    * Fixed semantic dropdown initialization for dropdown mode.
 * `flexberry-objectlistview` component:
     * Fix localization switching for mobile mode.
+    * Fix `recordsTotalCount` in mobile mode.
 * `modal-dialog` component:
     * Fix settings initialization.
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
 * `dynamic-actions` mixin:
     * Fix `classNames` property computing.
+* `flexberry-file` component:
+    * Fix preview click action.
+* `colsconfig-dialog-content` component:
+    * Fix sorting dropdown.
 
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
@@ -82,6 +73,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Dependency on `ember-validations@~2.0.0-alpha.4` addon.
 
 ### Breaking changes
+* `flexberry-objectlistview` component:
+    * Property `customParameters` for passing custom query parameters to edit form transition, passes each parameter separately (before this change parameters were passed in single object `customParameters`).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 * Validations was fully changed, after upgrade to this version you need regenerate your application.
@@ -91,95 +84,56 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-## [2.0.0-beta.7] - 2018-12-04
-### Fixed
-* `lock-route` mixin:
-    * Fix lock deleting when leaving `edit-form`.
-* `flexberry-file` component:
-    * Fix file opening instead of download when clicking download button after file was deleted.
-
-## [2.0.0-beta.6] - 2018-12-02
+## [2.0.0] - 2018-12-07
 ### Added
+* `flexberry-objectlistview-route` mixin:
+    * Specifying model name via query params on transition to edit-form. It is needed in case of inherited models are displaying on list form.
+* `edit-form` and `edit-form-new` routes:
+    * Model name is now taken from query params if it is specified there. Custom query parameters can be passed to edit form via `customParameters` property of `options` parameter in `objectListViewRowClick` action.
+* Blueprints:
+    * Add `componentName` generation for lookups.
+* `flexberry-simpledatetime` component:
+    * `defaultHour` and `defaultMinute` properties.
 * `flexberry-objectlistview` and `flexberry-simpleolv` components:
     * The property `disabled` to control the state of custom buttons.
+* `flexberry-file` component:
+    * Headers attribute, which will be added to the file download request.
 
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `2.0.0`.
+* `colsconfig-dialog-content` component refactoring.
 * `flexberry-menu` component:
     * By default handles click and `touchstart` events.
 
 ### Fixed
 * `flexberry-objectlistview-route` mixin and `edit-form` route:
     * Fix return to parentRoute, when olv on edit-form.
-
-## [2.0.0-beta.5] - 2018-11-16
-### Added
-* Blueprints:
-    * Add `componentName` generation for lookups.
-* `flexberry-simpledatetime` component:
-    * Ability to dynamically change `defaultHour` and `defaultMinute` properties.
-
-### Changed
-* `colsconfig-dialog-content` component refactoring.
-
-### Fixed
-* `colsconfig-dialog-content` component:
-    * Fix column names saving in export excel mode.
+* `list-form` route:
+    * Fix unnecessary transition in model with same query params.
+* `lock-route` mixin:
+    * Fix lock deleting when leaving `edit-form`.
 * List components:
+    * Fix possibility to call actions of disabled buttons by focusing and pressing `Enter`.
     * Fix filter by date type columns.
     * Fix usersettings apply, when query params doesn't change.
-* `olv-toolbar` component:
-    * Fix usersettings copy dialog selectors.
+* `flexberry-objectlistview` component:
+    * Fix error when creating new record in separate route with `flexberry-groupedit` component.
+    * Fix pager block resizing in hierarchy mode.
 * `flexberry-file` component:
     * Fix mobile file component menu.
+    * Fix file preview style in `flexberry-groupedit` in mobile mode.
+    * Fix file opening instead of download when clicking download button after file was deleted.
+* `colsconfig-dialog-content` component:
+    * Fix column names saving in export excel mode.
+* `olv-toolbar` component:
+    * Fix usersettings copy dialog selectors.
 * `flexberry-menu` component:
     * Fix setting bordered icon style.
-* `flexberry-objectlistview` component:
-    * Fix pager block resizing in hierarchy mode.
 * `flexberry-simpledatetime` component:
     * Fix time after clearing component's value.
     * Date dialog opening when clear button was clicked.
-
-## [2.0.0-beta.4] - 2018-10-30
-### Fixed
 * `flexberry-tab-bar` component:
     * Fix tabs `active` class adding.
-
-## [2.0.0-beta.3] - 2018-10-23
-### Fixed
-* `list-form` route:
-    * Fix unnecessary transition in model with same query params.
-
-## [2.0.0-beta.2] - 2018-10-17
-### Added
-* `flexberry-simpledatetime` component:
-    * `defaultHour` and `defaultMinute` properties.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.2`.
-
-### Fixed
-* List components:
-    * Fix possibility to call actions of disabled buttons by focusing and pressing `Enter`.
-* `object-list-view` component:
-    * Fix error when creating new record in separate route with `flexberry-groupedit` component.
-
-## [2.0.0-beta.1] - 2018-10-10
-### Added
-* `flexberry-file` component:
-    * Headers attribute, which will be added to the file download request.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.1`.
-
-## [2.0.0-beta.0] - 2018-09-25
-### Added
-* `flexberry-objectlistview-route` mixin:
-    * Specifying model name via query params on transition to edit-form. It is needed in case of inherited models are displaying on list form.
-* `edit-form` and `edit-form-new` routes:
-    * Model name is now taken from query params if it is specified there. Custom query parameters can be passed to edit form via `customParameters` property of `options` parameter in `objectListViewRowClick` action.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.0`.
 
 ## [0.13.0-beta.0] - 2018-09-17
 ### Added

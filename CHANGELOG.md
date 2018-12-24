@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+* Blueprints:
+    * Fix create validations in model blueprint.
 
 ## [3.0.0] - 2018-12-13
 ### Added

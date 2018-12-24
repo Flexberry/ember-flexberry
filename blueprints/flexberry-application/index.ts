@@ -7,6 +7,7 @@ import path = require('path');
 import child_process = require('child_process');
 const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('rsvp');
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 import lodash = require('lodash');
 
 
@@ -15,7 +16,8 @@ module.exports = {
   description: 'Generates all entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -27,6 +29,14 @@ module.exports = {
     return applicationBlueprint.promise;
   },
 
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super(...arguments);
+  },
 
   /**
    * Blueprint Hook locals.

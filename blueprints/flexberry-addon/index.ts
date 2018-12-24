@@ -1,10 +1,12 @@
 const inflector = require("inflection");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 
 module.exports = {
   description: 'Generates an import wrapper.',
 
   availableOptions: [
-    { name: 'middle-path', type: String }
+    { name: 'middle-path', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   fileMapTokens: function() {
@@ -19,6 +21,15 @@ module.exports = {
         return 'app';
       }
     };
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super(...arguments);
   },
 
    /**

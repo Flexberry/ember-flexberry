@@ -362,7 +362,7 @@ export default class ModelBlueprint {
     }
 
     for (let belongsTo of model.belongsTo) {
-      validators[belongsTo.name] = [`validator('ds-error'),`, `validator('belongs-to'),`];
+      validators[belongsTo.name] = [`validator('ds-error'),`];
       if (belongsTo.presence) {
         validators[belongsTo.name].push(`validator('presence', true),`);
       }

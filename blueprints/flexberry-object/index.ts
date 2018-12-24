@@ -3,6 +3,7 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
 const stripBom = require("strip-bom");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
@@ -15,7 +16,8 @@ module.exports = {
 
   availableOptions: [
     { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -26,6 +28,15 @@ module.exports = {
     if (this.project.isEmberCLIAddon()) {
       CommonUtils.installFlexberryAddon(options, ["object", "transform"]);
     }
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super(...arguments);
   },
 
   /**

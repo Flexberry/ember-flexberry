@@ -346,7 +346,7 @@ var ModelBlueprint = /** @class */ (function () {
         }
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
             var belongsTo = _c[_b];
-            validators[belongsTo.name] = ["validator('ds-error'),", "validator('belongs-to'),"];
+            validators[belongsTo.name] = ["validator('ds-error'),"];
             if (belongsTo.presence) {
                 validators[belongsTo.name].push("validator('presence', true),");
             }

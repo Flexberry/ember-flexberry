@@ -3,8 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.0.1-beta.0] - 2018-12-24
+### Added
 * Blueprints:
-    * Fix create validations in model blueprint.
+    * Add skip-confirmation property for overwriting files without confirmation.
+
+### Fixed
+* Blueprints:
+    * Fix validations generation in model blueprint.
 
 ## [3.0.0] - 2018-12-13
 ### Added

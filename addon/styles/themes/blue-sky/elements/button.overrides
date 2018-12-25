@@ -556,7 +556,6 @@ div.ui.secondary.menu.no-margin {
         align-items: center;
         background-color: @uiHoveredPositiveBackgroundColor;
         border: 1px solid @uiBorderColor;
-        border-radius: 5px;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             border-radius: 5px;

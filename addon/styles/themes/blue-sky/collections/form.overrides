@@ -148,13 +148,17 @@ option {
     }
     .field {
         margin-bottom: 2em !important;
+        label {
+            margin-bottom: 5px;
+        }
         > .field {
             margin: 0 !important;
         }
     }  
     .column {
-        margin-bottom: 1em !important;
+        margin-bottom: 2em !important;
         padding-bottom: 0 !important;
+        padding-top: 0 !important;
         > .column {
             margin: 0 !important;
         }

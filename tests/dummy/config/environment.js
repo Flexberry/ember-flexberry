@@ -62,6 +62,7 @@ module.exports = function(environment) {
         enabled: true,
         openReadOnly: true,
         unlockObject: true,
+        lockTime: 7200 //seconds
       },
 
       // Flag: indicates whether to use user settings service or not.

@@ -1,6 +1,15 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  <div class="two fields">
+
+  <div class="three fields">
+    <div class="field {{if model.errors.text "error" ""}}">
+      {{flexberry-field
+        value=model.text
+        label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    </div>
     <div class="field {{if model.errors.address "error" ""}}">
       {{flexberry-field
         value=model.address
@@ -9,7 +18,6 @@
       }}
       {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
     </div>
-
     <div class="field {{if model.errors.date "error" ""}}">
       <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
       {{flexberry-datepicker
@@ -19,7 +27,7 @@
       {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
     </div>
   </div>
-  <!-- /.two fields -->
+  <!-- /.three fields -->
 
   <div class="three fields">
     <div class="field {{if model.errors.text "error" ""}}">
@@ -39,27 +47,52 @@
       }}
       {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
     </div>
-
-    <div class="field {{if model.errors.type "error" ""}}">
-      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
+    <div class="field {{if model.errors.editor1 "error" ""}}">
+      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
       {{flexberry-lookup
-        value=model.type
+        value=model.editor1
         relatedModel=model
-        relationName="type"
-        projection="SuggestionTypeL"
+        relationName="editor1"
+        projection="ApplicationUserL"
         displayAttributeName="name"
-        title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
+        title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
         choose=(action "showLookupDialog")
         remove=(action "removeLookupValue")
-        dropdown=true
         readonly=readonly
-        direction="upward"
-        componentName="SuggestionEditType"
+        componentName="SuggestionEditEditor1"
       }}
-      {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
+      {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
     </div>
   </div>
   <!-- /.three fields-->
+
+  <div class="three fields">
+    <div class="field {{if model.errors.text "error" ""}}">
+      {{flexberry-field
+        value=model.text
+        label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    </div>
+    <div class="field {{if model.errors.address "error" ""}}">
+      {{flexberry-field
+        value=model.address
+        label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
+    </div>
+    <div class="field {{if model.errors.date "error" ""}}">
+      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
+      {{flexberry-datepicker
+        value=model.date
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
+    </div>
+  </div>
+  <!-- /.three fields -->
 
   <div class="four fields">
     <div class="field {{if model.errors.date "error" ""}}">
@@ -87,24 +120,6 @@
       }}
       {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
     </div>
-
-    <div class="field {{if model.errors.editor1 "error" ""}}">
-      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
-      {{flexberry-lookup
-        value=model.editor1
-        relatedModel=model
-        relationName="editor1"
-        projection="ApplicationUserL"
-        displayAttributeName="name"
-        title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
-        choose=(action "showLookupDialog")
-        remove=(action "removeLookupValue")
-        readonly=readonly
-        componentName="SuggestionEditEditor1"
-      }}
-      {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
-    </div>
-
     <div class="field {{if model.errors.moderated "error" ""}}">
       <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
       {{flexberry-checkbox
@@ -116,41 +131,35 @@
   </div>
   <!-- /.four fields-->
 
-
-  <div class="field {{if model.errors.votes "error" ""}}">
-    {{flexberry-field
-      value=model.votes
-      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+  <div class="six fields">
+    <div class="field {{if model.errors.type "error" ""}}">
+      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
+      {{flexberry-lookup
+        value=model.type
+        relatedModel=model
+        relationName="type"
+        projection="SuggestionTypeL"
+        displayAttributeName="name"
+        title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
+        dropdown=true
+        readonly=readonly
+        direction="upward"
+        componentName="SuggestionEditType"
+      }}
+      {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
+    </div>
+    <div class="field {{if model.errors.moderated "error" ""}}">
+      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
+      {{flexberry-checkbox
+        value=model.moderated
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    </div>
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.moderated
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.type "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
-    {{flexberry-lookup
-      value=model.type
-      relatedModel=model
-      relationName="type"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      dropdown=true
-      readonly=readonly
-      direction="upward"
-      componentName="SuggestionEditType"
-    }}
-    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
-  </div>
+  <!-- /.six fields -->
 
   <div class="two fields">
     <div class="field {{if model.errors.author "error" ""}}">
@@ -187,23 +196,35 @@
     </div>
   </div>
   <!-- /.two fields-->
-
-  <div class="field {{if model.errors.editor1 "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
-    {{flexberry-lookup
-      value=model.editor1
-      relatedModel=model
-      relationName="editor1"
-      projection="ApplicationUserL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=readonly
-      componentName="SuggestionEditEditor1"
-    }}
-    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
+  <div class="two fields">
+    <div class="field {{if model.errors.editor1 "error" ""}}">
+      <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
+      {{flexberry-lookup
+        value=model.editor1
+        relatedModel=model
+        relationName="editor1"
+        projection="ApplicationUserL"
+        displayAttributeName="name"
+        title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
+        readonly=readonly
+        componentName="SuggestionEditEditor1"
+      }}
+      {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
+    </div>
+    
+    <div class="field {{if model.errors.votes "error" ""}}">
+      {{flexberry-field
+        value=model.votes
+        label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
+        readonly=readonly
+      }}
+      {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+    </div>
   </div>
+  <!-- /.two fields-->
+
   <div class="field {{if model.errors.files "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{flexberry-groupedit

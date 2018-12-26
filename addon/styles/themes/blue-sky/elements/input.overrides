@@ -69,9 +69,6 @@ span.lookup-field {
   box-shadow: none;
 }
 
-.setting-name-input {
-    margin-right: 15px !important;
-}
-.per-page-input {
-    width: 53px !important;
-}
+input.setting-name-input.ember-text-field{
+    margin-right: 1em;
+}          

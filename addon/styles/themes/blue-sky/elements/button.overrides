@@ -21,7 +21,7 @@
 
 .ui.small.button {
     border: none;
-    font-size: 14px;
+    font-size: 12px;
     &:hover {
         background: #d01919;
     }
@@ -329,9 +329,9 @@ div.ui.secondary.menu.no-margin {
     padding: 0px;
     height: 30px;
     width: 30px;
-    border: none;
+    border: 1px solid @uiBorderColor;
     &:hover {
-        border: none;
+        border: 1px solid @uiHoveredNegitveBorderColor;
         background: @white;
         & i.icon.minus:before {
             color: @uiHoveredNegitveTextColor;
@@ -553,14 +553,13 @@ div.ui.secondary.menu.no-margin {
         align-items: center;
         background-color: @uiHoveredPositiveBackgroundColor;
         border: 1px solid @uiBorderColor;
-        border-radius: 5px;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
-            border-radius: 5px;
         }
     }
     .cols-config-save {
         border: 1px solid @uiBorderColor;
+        font-size: 14px;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             background-color: @uiHoveredPositiveBackgroundColor;

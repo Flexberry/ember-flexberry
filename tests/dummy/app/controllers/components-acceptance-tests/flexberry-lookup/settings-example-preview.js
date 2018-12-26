@@ -112,7 +112,7 @@ export default EditFormController.extend({
     @property previewButtonClass
     @type String
   */
-  previewButtonClass: 'preview-button',
+  previewButtonClass: '',
 
   /**
     Method to get type and attributes of a component,
@@ -140,8 +140,7 @@ export default EditFormController.extend({
             projection: 'ApplicationUserL',
             autocomplete: true,
             showPreviewButton: true,
-            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
-            previewButtonClass: 'preview-button'
+            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page'
           };
           break;
       }

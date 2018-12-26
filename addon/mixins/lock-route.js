@@ -39,7 +39,7 @@ export default Ember.Mixin.create({
   defaultBehaviorLock: {
     openReadOnly: true,
     unlockObject: true,
-    lockTime: 60 //seconds
+    lockTime: 7200 //seconds
   },
 
   actions: {

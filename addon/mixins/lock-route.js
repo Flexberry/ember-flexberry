@@ -39,7 +39,7 @@ export default Ember.Mixin.create({
   defaultBehaviorLock: {
     openReadOnly: true,
     unlockObject: true,
-    lockTime: 7200 //seconds
+    lockTime: 60 //seconds
   },
 
   actions: {
@@ -112,19 +112,32 @@ export default Ember.Mixin.create({
             } else {
               let timeLocked = lock.get('lockDate');
               let expirationTime = this.get('defaultBehaviorLock.lockTime');
-              let timeNow = new Date()
+              let timeNow = new Date();
               if ((timeNow - timeLocked) / 1000 >= expirationTime) {
-                //HERE SHOULD UNLOCK AND RE-LOCK FOR A NEW USER IF LOCK EXPIRED
-              }
 
-              //below old code: used in case lock is present and not expired(?)
-              if (lock.get('userName') === userService.getCurrentUserName()) {
-                this.set('_currentLock', lock);
-                resolve(lock);
-              } else {
-                this.openReadOnly(lock.get('userName')).then((answer) => {
-                  this._openReadOnly(answer, resolve, reject);
+                lock.destroyRecord().then((lock) => {
+                  this.store.createRecord('new-platform-flexberry-services-lock', {
+                    lockKey: params.id,
+                    userName: userService.getCurrentUserName(),
+                    lockDate: new Date(),
+                  }).save().then((lock) => {
+                    this.set('_currentLock', lock);
+                    resolve(lock);
+                  });
+                }).catch((reason) => {
+                  this.openReadOnly().then((answer) => {
+                    this._openReadOnly(answer, resolve, reject, reason);
+                  });
                 });
+              } else {
+                if (lock.get('userName') === userService.getCurrentUserName()) {
+                  this.set('_currentLock', lock);
+                  resolve(lock);
+                } else {
+                  this.openReadOnly(lock.get('userName')).then((answer) => {
+                    this._openReadOnly(answer, resolve, reject);
+                  });
+                }
               }
             }
           }).catch((reason) => {

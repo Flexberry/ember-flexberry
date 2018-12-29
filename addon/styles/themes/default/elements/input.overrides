@@ -59,7 +59,3 @@
 .flexberry-file-image-preview-wrapper {
   margin-top: 0 !important;
 }
-
-.input:read-only {
-  color: @readonlyColor !important;
-}

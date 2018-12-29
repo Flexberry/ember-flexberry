@@ -69,6 +69,6 @@ span.lookup-field {
   box-shadow: none;
 }
 
-input:read-only {
+.ui.form input:read-only {
   color: @readonlyColor !important;
 }

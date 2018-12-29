@@ -68,3 +68,7 @@ span.lookup-field {
   color: #9F3A38;
   box-shadow: none;
 }
+
+input:read-only {
+  color: @readonlyColor !important;
+}

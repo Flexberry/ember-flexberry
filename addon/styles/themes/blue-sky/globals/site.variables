@@ -45,6 +45,7 @@
 
 /*---  Colors  ---*/
 @dropdownHoveredItemColor: #dcebfc;
+@readonlyColor: #ccc;
 
 /*-------------------
         Heights

@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.1.0-beta.0] - 2018-12-13
+### Added
+* `flexberry-lookup` component:
+    * Add preview button.
+* `flexberry-file` component:
+    * Added the ability to open files instead of downloading.
+
 ## [2.0.0] - 2018-12-07
 ### Added
 * `flexberry-objectlistview-route` mixin:

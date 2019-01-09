@@ -39,11 +39,14 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
             remove: 'removeLookupValue',
+            preview: 'previewLookupValue',
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            showPreviewButton: true,
+            previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
           };
           break;
 

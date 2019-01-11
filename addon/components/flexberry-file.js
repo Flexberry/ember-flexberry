@@ -468,6 +468,24 @@ export default FlexberryBaseComponent.extend({
   */
   showModalDialogOnUploadError: undefined,
 
+  /**
+    Flag: download by clicking download or open file in new window.
+
+    @property openInNewWindowInsteadOfLoading
+    @type Boolean
+    @default false
+  */
+  openFileInNewWindowInsteadOfLoading: undefined,
+
+  /**
+    Headers to the file upload request.
+
+    @property headers
+    @type Object
+    @default null
+   */
+  headers: null,
+
   actions: {
     /**
       Handles click on selected image preview and sends action with data outside component
@@ -547,6 +565,7 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'showDownloadButton', defaultValue: true });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
+    this.initProperty({ propertyName: 'openFileInNewWindowInsteadOfLoading', defaultValue: false });
 
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
@@ -584,6 +603,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
 
+      uploadData.headers = this.get('headers');
       this.set('_uploadData', uploadData);
     };
 
@@ -721,10 +741,13 @@ export default FlexberryBaseComponent.extend({
     }
 
     Ember.$.flexberry.downloadFile({
-      // For IE encodeURI is necessary.
-      // Without encodeURI IE will return 404 for files with cyrillic names in URL.
-      url: encodeURI(fileUrl),
-      iframeContainer: this.$('.flexberry-file-download-iframes-container'),
+      url: fileUrl,
+      headers: this.get('headers'),
+      fileName: fileName,
+      openFileInNewWindowInsteadOfLoading: this.get('openFileInNewWindowInsteadOfLoading'),
+      onSuccess: () => {
+        this.sendAction('onDownloadSuccess');
+      },
       onError: (errorMessage) => {
         this.showDownloadErrorModalDialog(fileName, errorMessage);
       }

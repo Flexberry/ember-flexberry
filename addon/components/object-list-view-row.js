@@ -289,6 +289,16 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Redirect action from FlexberryLookupComponent in the controller.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData
+    */
+    previewLookupValue(previewData) {
+      this.get('currentController').send('previewLookupValue', previewData);
+    },
+
+    /**
       Handles rows clicks and sends 'rowClick' action outside.
 
       @method actions.onRowClick

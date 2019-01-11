@@ -1,12 +1,10 @@
 /**
   jQuery flexberry.downloadFile plugin.
-  It uses iframe to download files as attachments, and can call onError callback in case of download error.
-  Success callback is not supported because in common case we couldn't check iframe's request success without timeouts.
 */
 ;(function($, window, undefined) {
   var defaultOptions = {
     url: '',
-    iframeContainer: 'body',
+    headers: {},
     onError: function(errorMessage) {
       console.error(errorMessage);
     }
@@ -14,60 +12,61 @@
 
   var downloadFile = function(options) {
     options = $.extend(true, defaultOptions, options);
-    
-    var iframeInitialLoadCompleted = false;
-    var errorOccurred = false;
-    var errorMessage = '';
 
-    // Actions order in cases of success/fail in different browsers.
-    // So call of iframe's load callback after iframeInitialLoadCompleted is 100% fail.
-    //
-    // Chrome:  success - load, iframeInitialLoadCompleted     fail - load, iframeInitialLoadCompleted, load.
-    // Opera:   success - load, iframeInitialLoadCompleted     fail - load, iframeInitialLoadCompleted, load.
-    // Firefox: success - iframeInitialLoadCompleted           fail - iframeInitialLoadCompleted, load.
-    // IE:      success - iframeInitialLoadCompleted           fail - iframeInitialLoadCompleted, load.
-    var $iframe = $('<iframe>')
-      .hide()
-      .on('load', function(e) {
-        if (errorOccurred) {
-          return;
+    $.ajax({
+      // For IE encodeURI is necessary.
+      // Without encodeURI IE will return 404 for files with cyrillic names in URL.
+      url: encodeURI(options.url),
+      type: 'GET',
+      headers: options.headers,
+      processData: false,
+      xhrFields: {
+        responseType: 'blob'
+      },
+      success: function(result) {
+        var anchorProperties = {
+          href: URL.createObjectURL(result),
+          hidden: true
+        };
+
+        if (!options.openFileInNewWindowInsteadOfLoading)
+        {
+          anchorProperties.download = options.fileName;
+        } else {
+          anchorProperties.target = '_blank';
         }
 
-        try {
-          if (iframeInitialLoadCompleted) {
-            errorOccurred = true;
-          }
+        var $anchor = $('<a/>', anchorProperties);
 
-          var iframeDocument = e.target.contentWindow ? e.target.contentWindow.document : e.target.contentDocument;
-          var $iframeBody = $(iframeDocument.body);
-          if ($iframeBody[0] && $iframeBody.prop('innerHTML').length > 0) {
-            errorMessage = $iframeBody.prop('innerText');
-          }           
-        } catch(ex) {
-          // The only way to get exception here is when file request has been failed,
-          // but application and file domains are different.
-          // So it is 100% guarantee that file download failed,
-          // but we can't access iframe's document and get actual error message because of same origin policy.
-          errorMessage = '';
-        } finally {
-          if (errorOccurred) {
-            errorMessage = 'Request to \'' + options.url + '\' failed.' + (errorMessage ? ' ' + errorMessage : '');
-            if (typeof options.onError === 'function') {
-              options.onError(errorMessage);
-            } else {
-              defaultOptions.onError(errorMessage);
-            }
+        if (window.navigator.msSaveOrOpenBlob) {
+          var downloadFunction = function() {
+            window.navigator.msSaveOrOpenBlob(result, options.fileName);
+          };
 
-            $iframe.remove();
-          }
+          $anchor.on('click', downloadFunction);
+          $anchor.click();
+          $anchor.off('click', downloadFunction);
+        } else {
+          $('body').append($anchor);
+
+          $anchor.get(0).click();
         }
-      })
-      .appendTo(options.iframeContainer);
-    
-    $iframe.prop('src', options.url);
-    iframeInitialLoadCompleted = true;
+
+        $anchor.remove();
+        if (typeof options.onSuccess === 'function') {
+          options.onSuccess();
+        }
+      },
+      error: function(error) {
+        if (typeof options.onError === 'function') {
+          options.onError(error);
+        } else {
+          defaultOptions.onError(error);
+        }
+      }
+    });
   };
-  
+
   // Extend $ namespace with flexberry.downloadFile.
   downloadFile.defaultOptions = defaultOptions;
   $.extend(true, $, {

@@ -52,7 +52,8 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     }, options);
 
     if (methodOptions.modelName === this.get('folvModelName') &&
-    methodOptions.projectionName === this.get('folvProjection')) {
+    methodOptions.projectionName === this.get('folvProjection') &&
+    !this.get('inHierarchicalMode')) {
       let limitFunction = new ComplexPredicate('or',
         new StringPredicate('name').contains('1'),
         new StringPredicate('name').contains('Type'));

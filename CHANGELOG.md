@@ -4,15 +4,63 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.0.0-beta.0] - 2018-09-25
+## [2.1.0-beta.0] - 2018-12-13
+### Added
+* `flexberry-lookup` component:
+    * Add preview button.
+* `flexberry-file` component:
+    * Added the ability to open files instead of downloading.
+
+## [2.0.0] - 2018-12-07
 ### Added
 * `flexberry-objectlistview-route` mixin:
     * Specifying model name via query params on transition to edit-form. It is needed in case of inherited models are displaying on list form.
 * `edit-form` and `edit-form-new` routes:
     * Model name is now taken from query params if it is specified there. Custom query parameters can be passed to edit form via `customParameters` property of `options` parameter in `objectListViewRowClick` action.
+* Blueprints:
+    * Add `componentName` generation for lookups.
+* `flexberry-simpledatetime` component:
+    * `defaultHour` and `defaultMinute` properties.
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * The property `disabled` to control the state of custom buttons.
+* `flexberry-file` component:
+    * Headers attribute, which will be added to the file download request.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.0.0-beta.0`.
+* Update dependency on `ember-flexberry-data` to version `2.0.0`.
+* `colsconfig-dialog-content` component refactoring.
+* `flexberry-menu` component:
+    * By default handles click and `touchstart` events.
+
+### Fixed
+* `flexberry-objectlistview-route` mixin and `edit-form` route:
+    * Fix return to parentRoute, when olv on edit-form.
+* `list-form` route:
+    * Fix unnecessary transition in model with same query params.
+* `lock-route` mixin:
+    * Fix lock deleting when leaving `edit-form`.
+* List components:
+    * Fix possibility to call actions of disabled buttons by focusing and pressing `Enter`.
+    * Fix filter by date type columns.
+    * Fix usersettings apply, when query params doesn't change.
+* `flexberry-objectlistview` component:
+    * Fix error when creating new record in separate route with `flexberry-groupedit` component.
+    * Fix pager block resizing in hierarchy mode.
+* `flexberry-file` component:
+    * Fix mobile file component menu.
+    * Fix file preview style in `flexberry-groupedit` in mobile mode.
+    * Fix file opening instead of download when clicking download button after file was deleted.
+* `colsconfig-dialog-content` component:
+    * Fix column names saving in export excel mode.
+* `olv-toolbar` component:
+    * Fix usersettings copy dialog selectors.
+* `flexberry-menu` component:
+    * Fix setting bordered icon style.
+* `flexberry-simpledatetime` component:
+    * Fix time after clearing component's value.
+    * Date dialog opening when clear button was clicked.
+* `flexberry-tab-bar` component:
+    * Fix tabs `active` class adding.
 
 ## [0.13.0-beta.0] - 2018-09-17
 ### Added
@@ -345,6 +393,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix list's `refresh` and `delete` buttons styles for Firefox.
 * Fix `onRowClick` action for `object-list-view-row`.
 * Fix `lookupWindowCustomProperties` for lookups in `flexberry-groupedit`.
+* Fix `lock-route`: deleting a blocking object for single-model routes.
 
 ### Removed
 * `ui-message` component: attribute `title`.

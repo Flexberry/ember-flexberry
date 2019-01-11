@@ -11,11 +11,12 @@
     {{#if _hasFile}}
       <div class="flexberry-file-menu">
         {{flexberry-menu
-          class=(concat "left pointing" (if (and readonly (not showPreview)) " disabled" ""))
+          class=(concat "flexberry-file-mobile-menu left pointing" (if (and readonly (not showPreview)) " disabled" ""))
           items=_menuItems
           callItemsOnClickCallbacks=false
           onItemClick=(action "onMenuItemClick")
           collapseMenuOnItemClick=true
+          onlyClickHandler=true
         }}
       </div>
       {{#if showPreview}}
@@ -48,7 +49,7 @@
       {{_errorModalDialogContent}}
     </div>
   </div>
-  <div class="center aligned ui grid">
+  <div class="flexberry-file-error-modal-dialog-button center aligned ui grid">
     <div class="actions">
       <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
         <i class="checkmark icon"></i>

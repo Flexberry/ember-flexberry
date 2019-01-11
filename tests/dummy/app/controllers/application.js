@@ -120,9 +120,9 @@ export default Ember.Controller.extend({
 
     @property locales
     @type String[]
-    @default ['ru', 'en']
+    @default undefined
   */
-  locales: ['ru', 'en'],
+  locales: undefined,
 
   /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
@@ -144,6 +144,9 @@ export default Ember.Controller.extend({
     if (Ember.isNone(i18n)) {
       return;
     }
+
+    // Add locales.
+    this.set('locales', ['ru', 'en']);
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];

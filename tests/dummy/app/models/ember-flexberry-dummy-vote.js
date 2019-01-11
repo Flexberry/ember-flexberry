@@ -15,6 +15,11 @@ var Model = Projection.Model.extend({
 
   // Model validation rules.
   validations: {
+    author: {
+      presence: {
+        message: 'Author is required'
+      }
+    }
   }
 });
 

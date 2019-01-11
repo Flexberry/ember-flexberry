@@ -871,6 +871,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
           'custom-button-name': 'Send hello',
+          'disable-button-name': 'Disable adjacent button',
+          'enable-button-name': 'Enable adjacent button',
           'custom-row-button-name': 'Custom button in row',
         },
         'on-edit-form': {

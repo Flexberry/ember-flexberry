@@ -704,7 +704,8 @@ export default FlexberryBaseComponent.extend({
         buttonName: '...', // Button displayed name.
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
+        buttonTitle: '...', // Button title.
+        disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```
 
@@ -1192,7 +1193,7 @@ export default FlexberryBaseComponent.extend({
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
-        if (componentName === this.get('componentName')) {
+        if (componentName === this.get('componentName') && !this.get('_inHierarchicalMode')) {
           this._setMenuWidth(tableWidth, containerWidth);
         }
       });

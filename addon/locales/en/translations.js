@@ -96,6 +96,7 @@ export default {
       'placeholder': '(no value)',
       'choose-button-text': 'Choose',
       'remove-button-text': 'Remove',
+      'preview-button-text': 'View',
       'dropdown': {
         'messages': {
           'noResultsHeader': 'No results',

@@ -71,6 +71,22 @@ ErrorableRouteMixin, {
   },
 
   /**
+    Route name corresponding edit form.
+
+    @property parentRoute
+    @type String
+  */
+  parentRoute: undefined,
+
+  /**
+    Route id corresponding edit form.
+
+    @property parentRouteRecordId
+    @type String
+  */
+  parentRouteRecordId: undefined,
+
+  /**
     Suffix for new route (has value only on new routes).
 
     @property newSuffix
@@ -96,6 +112,15 @@ ErrorableRouteMixin, {
   */
   beforeModel(transition) {
     this._super(...arguments);
+
+    if (!Ember.isNone(transition.queryParams.parentParameters)) {
+      let thisRouteName = transition.queryParams.parentParameters.parentRoute;
+      let thisRecordId = transition.queryParams.parentParameters.parentRouteRecordId;
+      if (!Ember.isNone(thisRouteName) || !Ember.isNone(thisRecordId)) {
+        this.set('parentRoute', thisRouteName);
+        this.set('parentRouteRecordId', thisRecordId);
+      }
+    }
 
     let webPage = transition.targetName;
     let newSuffix = this.get('newSuffix');
@@ -169,6 +194,7 @@ ErrorableRouteMixin, {
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     controller.set('readonly', false);
+    controller.set('parentRouteRecordId', undefined);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
     let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
@@ -224,6 +250,13 @@ ErrorableRouteMixin, {
     }
 
     this.get('appState').reset();
+
+    let parentRoute = this.get('parentRoute');
+    let parentRouteRecordId = this.get('parentRouteRecordId');
+    if (!Ember.isNone(parentRoute) || !Ember.isNone(parentRouteRecordId)) {
+      controller.set('parentRoute', parentRoute);
+      controller.set('parentRouteRecordId', parentRouteRecordId);
+    }
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');

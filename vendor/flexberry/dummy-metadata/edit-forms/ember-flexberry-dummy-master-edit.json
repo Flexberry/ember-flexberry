@@ -1,0 +1,23 @@
+﻿{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Detail.ParentDetail",
+      "projection": "",
+      "detailModelName": null
+    }
+  ],
+  "external": false,
+  "caption": "MasterEdit",
+  "name": "EmberFlexberryDummyMasterEdit",
+  "className": "MasterEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-master",
+      "modelProjection": "MasterEdit"
+    }
+  ]
+}

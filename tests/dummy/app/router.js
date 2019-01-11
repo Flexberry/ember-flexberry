@@ -32,6 +32,12 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
   this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
 
+  this.route('ember-flexberry-dummy-master-list');
+  this.route('ember-flexberry-dummy-master-edit',
+  { path: 'ember-flexberry-dummy-master-edit/:id' });
+  this.route('ember-flexberry-dummy-master-edit.new',
+  { path: 'ember-flexberry-dummy-master-edit/new' });
+
   // Logging.
   this.route('i-i-s-caseberry-logging-objects-application-log-l');
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });

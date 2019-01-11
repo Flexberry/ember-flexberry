@@ -1,0 +1,15 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-master-edit",
+  "editForm": "ember-flexberry-dummy-master-edit",
+  "external": false,
+  "caption": "MasterList",
+  "name": "EmberFlexberryDummyMasterList",
+  "className": "MasterList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-master",
+      "modelProjection": "MasterList"
+    }
+  ]
+}

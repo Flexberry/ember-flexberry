@@ -1,0 +1,67 @@
+﻿{
+  "name": "EmberFlexberryDummyMaster",
+  "modelName": "ember-flexberry-dummy-master",
+  "className": "Master",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [
+    {
+      "name": "detail",
+      "relatedTo": "ember-flexberry-dummy-detail",
+      "inverse": "master"
+    }
+  ],
+  "projections": [
+    {
+      "name": "MasterEdit",
+      "modelName": "ember-flexberry-dummy-master",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": [
+        {
+          "projectionName": "Detail",
+          "caption": "Detail",
+          "name": "detail",
+          "relatedTo": "ember-flexberry-dummy-detail",
+          "inverse": null
+        }
+      ]
+    },
+    {
+      "name": "MasterList",
+      "modelName": "ember-flexberry-dummy-master",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

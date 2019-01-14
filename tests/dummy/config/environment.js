@@ -129,6 +129,12 @@ module.exports = function(environment) {
     ENV.baseURL = '/';
     ENV.locationType = 'none';
 
+    // URL of the backend running in docker.
+    backendUrl = 'http://localhost:6500';
+    ENV.APP.backendUrl = backendUrl;
+    ENV.APP.backendUrls.root = backendUrl;
+    ENV.APP.backendUrls.api = backendUrl + '/odata';
+
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;

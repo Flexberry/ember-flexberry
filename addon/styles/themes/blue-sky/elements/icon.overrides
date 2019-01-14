@@ -31,10 +31,9 @@ for instance `lemon icon` not `lemon outline icon` since there is only one lemon
 *******************************/
 
 /* Web Content */
-i.icon {font-family: 'Icons'; }
-i.icon:before { color: @colorIcon; opacity: 0.8; }
+i.icon {font-family: 'Icons'; color: @colorIcon; opacity: 0.8; }
 i.icon:hover:before { opacity: 1; }
-.disabled:before { opacity: 1; color: #999; }
+.disabled { opacity: 1; color: #999; }
 i.icon.setting:before { content: "\e817"; font-family: 'Crimean'; }
 
 /* View Adjustment */
@@ -56,8 +55,9 @@ i.icon.angle.right:before { content: "\f105"; font-size: 16px;}
 /* Tables */
 i.icon.columns:before { content: "\f0db";}
 i.icon.edit:before { content: "\e810"; font-family: 'Crimean'; }
-i.icon.asterisk:before { content: "\f069"; color: @brightRed; }
-i.icon.calendar:before { content: "\e81c"; color: @colorIcon; font-family: 'Crimean'; }
+i.icon.asterisk:before { content: "\f069"; }
+i.icon.asterisk.small {color: @brightRed !important; } 
+i.icon.calendar:before { content: "\e81c"; font-family: 'Crimean'; }
 i.icon.check-square-o:before { content: "\f046"; font-size: 20px;}
 i.icon.check-all-square-o:before { content: "\e815"; font-family: 'Crimean'; font-size: 20px;}
 
@@ -73,11 +73,13 @@ i.icon.spinner:before { content: "\e839";  font-family: "Icons"}
         Toolbar buttons section
 ***************************************/
 
-i.icon.refresh:before {
-    font-family: 'Crimean';
-    content: "\e807";
-    font-size: 21px;
+i.icon.refresh {
     color: @green;
+    &:before {
+        font-family: 'Crimean';
+        content: "\e807";
+        font-size: 21px;
+    }    
 }
 .create-button {
     color: #fff;
@@ -128,7 +130,7 @@ i.icon.change:before {
     top: -1px;
     opacity: 1;
     &:hover {
-        color: @brightBlue;
+        color: @brightBlue; 
         opacity: 1;
     }
 }
@@ -158,18 +160,18 @@ i.icon.change:before {
     font-size: 21px;
     padding-right: 10px;
 }
-.delete-button {
+.ui.delete-button.button {
+    color: @red;
     &:before {
         content: "\e814";
         font-family: 'Crimean';
         visibility: visible;
         font-size: 21px;
-        color: @red;
     }
     &:hover:before {
         color: @brightRed;
     }
-    &.disabled:before {
+    &.disabled {
         color: #999;
     }
 }
@@ -217,17 +219,17 @@ i.icon.trash.outline:before {
     font-family: 'Crimean';
     content: "\e814";
 }
-.ui.icon.button:hover i.trash.outline.icon:before {
+.ui.icon.button:hover i.trash.outline.icon {
     color: @red;
 }
 i.icon.download:before {
     font-family: 'Crimean';
     content: "\e822";
 }
-.ui.icon.button:hover i.download.outline.icon:before {
+.ui.icon.button:hover i.download.outline.icon {
     color: @brightBlue;
 }
-.ui.icon.button:hover i.upload.outline.icon:before {
+.ui.icon.button:hover i.upload.outline.icon{
     color: @brightBlue;
 }
 
@@ -275,9 +277,6 @@ i.icon.download:before {
     margin: 0px 25px 0px 0px;
 }
 
-.remove.icon:before:hover {
-    color: @red;
-}
 .remove.icon:hover:before {
     color: @red;
 }

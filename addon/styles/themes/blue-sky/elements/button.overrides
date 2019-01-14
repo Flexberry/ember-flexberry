@@ -242,10 +242,6 @@ div.ui.secondary.menu.no-margin {
         border-color: @green;
         color: @green;
         background: @white;
-
-        &:before {
-            color: @green;
-        }
     }
 }
 .flexberry-file-remove-button.ui.icon.button {

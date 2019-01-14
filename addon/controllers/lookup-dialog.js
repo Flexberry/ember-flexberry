@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
@@ -130,7 +131,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   actions: {
     /**
@@ -257,7 +258,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
+  queryParametersChanged: observer('filter', 'page', 'perPage', 'sort', function() {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }

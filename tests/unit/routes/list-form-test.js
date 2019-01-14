@@ -1,8 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:list-form', 'Unit | Route | list form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'service:cols-config-menu',
+    'service:form-load-time-tracker',
+    'service:objectlistview-events',
+    'service:app-state',
+  ],
 });
 
 test('it exists', function(assert) {

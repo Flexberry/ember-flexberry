@@ -42,7 +42,7 @@
   {{else}}
     {{#ui-message
       type="negative"
-      onHide="close"
+      onHide=(action "close")
       closeable=true
     }}
       <h2 class="ui header">

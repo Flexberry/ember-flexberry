@@ -863,49 +863,6 @@ i.icon.bed:before { content: "\f236"; }
     box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
 
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
-    content: "\e807";
-    font-family: 'Crimean';
-    visibility: visible;
-    font-size: 21px;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
-    color: #f39a2e!important;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
-     color: rgb(0,0,0);
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
-    border: none!important;
-    width: 25px;
-    padding: 0px;
-    display: flex;
-    font-size: 0px;
-    box-shadow: none;
-    background: none!important;
-    height: 0px!important;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
-    color: #fff;
-    background: #7dd4b4;
-    border: 1px solid #7dd4b4;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
-    background: #f39a2e!important;
-    border: 1px solid #7dd4b4;
-    border-radius: 2px;
-    border: 1px solid #f39a2e!important;
-    webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
-    -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
-    box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
-    color: #fff!important;
-}
-
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
     content: "\e814";
     font-family: 'Crimean';
@@ -1178,9 +1135,3 @@ i.icon.calendar:hover:before {
     color: #f39a2e!important;
     opacity: 1!important;
 }
-
-
-
-
-
-

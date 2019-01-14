@@ -1,13 +1,14 @@
 "use strict";
 var child_process = require('child_process');
-var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('ember-cli/lib/ext/promise');
+var Promise = require('rsvp');
 var lodash = require('lodash');
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates all entities for flexberry.',
     availableOptions: [
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -27,7 +28,16 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-    }
+    },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super(...arguments);
+    },
 };
 var ElapsedTime = (function () {
     function ElapsedTime(caption, startTime) {
@@ -45,9 +55,9 @@ var ElapsedTime = (function () {
         console.log("Total: " + ElapsedTime.format(total));
     };
     ElapsedTime.format = function (sec) {
-        var hours = Math.floor(sec / 3600);
-        var min = Math.floor((sec - hours * 3600) / 60);
-        var sec2 = sec - hours * 3600 - min * 60;
+        //var hours = Math.floor(sec / 3600);
+        //var min = Math.floor((sec - hours * 3600) / 60);
+        //var sec2 = sec - hours * 3600 - min * 60;
         //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
         return ElapsedTime.formatterFrac.format(sec) + " sec";
     };
@@ -72,8 +82,6 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
         this.promise = this.emberGenerateFlexberryGroup("transform");
         this.promise = this.emberGenerateFlexberryGroup("transform-test");
-        this.promise = this.emberGenerateFlexberryGroup("controller-test");
-        this.promise = this.emberGenerateFlexberryGroup("route-test");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
@@ -95,7 +103,7 @@ var ApplicationBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: this.options.project.blueprintLookupPaths()
         });
     };
     ApplicationBlueprint.prototype.emberGenerateFlexberryGroup = function (blueprintName) {

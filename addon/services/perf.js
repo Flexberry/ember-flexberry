@@ -2,9 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { schedule } from '@ember/runloop';
+import Route from '@ember/routing/route';
+import { subscribe, unsubscribe } from '@ember/instrumentation';
 
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Flag indicates whether perf service is enabled or not.
 
@@ -32,7 +35,7 @@ export default Ember.Service.extend({
   enabled: false,
 
   tagsHaveBeenPlaced: false,
-  perfObjects: [],
+  perfObjects: undefined,
 
   /**
     Initializes perf service.
@@ -40,7 +43,7 @@ export default Ember.Service.extend({
   */
   init() {
     this._super(...arguments);
-
+    this.set('perfObjects', []);
     let enabled = this.get('enabled');
     if (!enabled) {
       return;
@@ -141,7 +144,7 @@ export default Ember.Service.extend({
       dataElement.classList.add('perf-rerendered');
     }
 
-    Ember.run.schedule('afterRender', this, () => {
+    schedule('afterRender', this, () => {
       let nudgeCount = 0;
       let isClosedTag = element.tagName === 'IMG' || element.tagName === 'INPUT';
       let isNudger = false;
@@ -156,8 +159,8 @@ export default Ember.Service.extend({
       let perfElems = document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF').without(dataElement);
 
       if (perfElems.length) {
-        perfElem = perfElems.find((item) => item.classList.contains('nudger')) || perfElems[0];
-        isNudger = perfElem.classList.contains('nudger');
+        perfElem = perfElems.find((item) => item.classList.includes('nudger')) || perfElems[0];
+        isNudger = perfElem.classList.includes('nudger');
 
         if (isNudger) {
           nudgeCount = perfElem.getAttribute('data-nudge-count');
@@ -184,7 +187,7 @@ export default Ember.Service.extend({
       return;
     }
 
-    Ember.run.schedule('afterRender', () => {
+    schedule('afterRender', () => {
       for (let i = 0, len = perfObjects.length; i < len; i++) {
         let obj = perfObjects[i];
         let parent;
@@ -208,7 +211,7 @@ export default Ember.Service.extend({
     let _this = this;
 
     if (selectors) {
-      Ember.Route.reopen({
+      Route.reopen({
         actions: {
           willTransition: function() {
             perfObjects = [];
@@ -222,7 +225,7 @@ export default Ember.Service.extend({
         }
       });
 
-      Ember.subscribe('render', {
+      subscribe('render', {
         before(name, timestamp, payload) {
           let className = payload.containerKey;
           if (className && selectors.filter(regEx => regEx.test(className)).length) {
@@ -235,6 +238,8 @@ export default Ember.Service.extend({
               isQueueRendering = true;
 
               // console.profile();
+
+              // eslint-disable-next-line no-console
               console.timeStamp('Render queue running.');
               window.perf.startTime = timestamp;
             }
@@ -249,6 +254,8 @@ export default Ember.Service.extend({
               name: name,
               beforeInsertTime: Math.round(timestamp * 100) / 100
             };
+
+            // eslint-disable-next-line no-console
             console.time(name);
           }
         },
@@ -256,6 +263,8 @@ export default Ember.Service.extend({
         after(name, timestamp, payload) {
           let perfObject = window.perf.selection[payload.object];
           if (perfObject) {
+
+            // eslint-disable-next-line no-console
             console.timeEnd(perfObject.name);
 
             perfObject.afterInsertTime = Math.round(timestamp * 100) / 100;
@@ -287,7 +296,10 @@ export default Ember.Service.extend({
 
               // console.table(window.perf.results);
 
+            // eslint-disable-next-line no-console
               console.log('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
+
+              // eslint-disable-next-line no-console
               console.timeStamp('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
 
               // window.perf.results.forEach(result => console.log(result.totalRenderTime + 'ms', result.element))
@@ -305,6 +317,6 @@ export default Ember.Service.extend({
       elems[i].removeEventListener('click', this.handleClick);
     }
 
-    Ember.Instrumentation.unsubscribe('render');
+    unsubscribe('render');
   }
 });

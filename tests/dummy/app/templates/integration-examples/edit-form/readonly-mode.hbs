@@ -46,7 +46,8 @@
   <div class="two fields">
     <div class="field">
       <label>{{t "forms.integration-examples.edit-form.readonly-mode.date-caption"}}</label>
-      {{flexberry-datepicker
+      {{flexberry-simpledatetime
+        type="date"
         value=model.date
         readonly=readonly
       }}
@@ -57,7 +58,6 @@
         readonly=readonly
         type="datetime"
         value=model.time
-        readonly=readonly
       }}
     </div>
   </div>

@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
 import { loadingList, checkSortingList, loadingLocales, getOrderByClause } from './folv-tests-functions';
 
@@ -16,19 +18,19 @@ executeTest('check select all at all page', (store, assert, app) => {
     // Check page path.
     assert.equal(currentPath(), path);
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = Ember.get(controller, 'modelProjection');
+    let projectionName = get(controller, 'modelProjection');
 
     let orderByClause = null;
 
-    let $olv = Ember.$('.object-list-view ');
-    let $thead = Ember.$('th.dt-head-left', $olv)[0];
+    let $olv = $('.object-list-view ');
+    let $thead = $('th.dt-head-left', $olv)[0];
 
     let currentSorting = controller.get('computedSorting');
     if (!$.isEmptyObject(currentSorting)) {
       orderByClause = getOrderByClause(currentSorting);
     }
 
-    Ember.run(() => {
+    run(() => {
       let done = assert.async();
 
       // Check sortihg in the first column. Sorting is not append.
@@ -43,21 +45,27 @@ executeTest('check select all at all page', (store, assert, app) => {
 
             assert.ok($list);
 
-            let $checkAllButton = Ember.$('.check-all-button');
-            $checkAllButton.click();
-            let $checkAllAtPageButton = Ember.$('.check-all-at-page-button');
-            let $checkCheckBox = Ember.$('.flexberry-checkbox.checked.read-only');
-            let $deleteButton = Ember.$('.delete-button');
+            let $checkAllButton = $('.check-all-button');
+            run(() => {
+              $checkAllButton.click();
+            });
+
+            let $checkAllAtPageButton = $('.check-all-at-page-button');
+            let $checkCheckBox = $('.flexberry-checkbox.checked.read-only');
+            let $deleteButton = $('.delete-button');
 
             // Check afther select all.
             assert.equal($checkAllAtPageButton.hasClass('disabled'), true, 'select all at page aren\'t available');
             assert.equal($checkCheckBox.length, 5, 'all checkBox in row are select and readOnly');
             assert.equal($deleteButton.hasClass('disabled'), false, 'delete are available');
 
-            $checkAllButton.click();
-            $checkAllAtPageButton = Ember.$('.check-all-at-page-button');
-            $checkCheckBox = Ember.$('.flexberry-checkbox.checked.read-only');
-            $deleteButton = Ember.$('.delete-button');
+            run(() => {
+              $checkAllButton.click();
+            });
+
+            $checkAllAtPageButton = $('.check-all-at-page-button');
+            $checkCheckBox = $('.flexberry-checkbox.checked.read-only');
+            $deleteButton = $('.delete-button');
 
             // Check afther unselect all.
             assert.equal($checkAllAtPageButton.hasClass('disabled'), false, 'select all at page are available');

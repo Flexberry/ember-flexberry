@@ -7,11 +7,13 @@ var ModelBlueprint_1 = require("./ModelBlueprint");
 var lodash = require("lodash");
 var path = require("path");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -41,6 +43,16 @@ module.exports = {
             CommonUtils_1.default.installFlexberryAddon(options, ["model", "serializer"]);
         }
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super(...arguments);
+    },
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -59,6 +71,7 @@ module.exports = {
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
             projections: modelBlueprint.projections,
+            validations: modelBlueprint.validations,
             serializerAttrs: modelBlueprint.serializerAttrs,
             offlineSerializerAttrs: modelBlueprint.offlineSerializerAttrs,
             name: modelBlueprint.name,

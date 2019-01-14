@@ -1,18 +1,19 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 import { initialize } from 'dummy/instance-initializers/lock';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
 
 module('Unit | Instance Initializer | lock', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.appInstance = this.application.buildInstance();
     });
   },
 
   afterEach() {
-    Ember.run(this.appInstance, 'destroy');
+    run(this.appInstance, 'destroy');
     destroyApp(this.application);
   },
 });

@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
     Lookup events service.
   */
-  lookupEvents: Ember.inject.service('lookup-events'),
+  lookupEvents: service('lookup-events'),
 
   actions: {
     /**

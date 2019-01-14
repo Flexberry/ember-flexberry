@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { observer } from '@ember/object';
+import { isNone } from '@ember/utils';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
@@ -43,13 +45,13 @@ const flexberryClassNames = {
   Flexberry dialog component with [Semantic UI modal style](http://semantic-ui.com/modules/modal.html).
 
   @class FlexberryDialogComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryDialogComponent = Ember.Component.extend(
+let FlexberryDialogComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -191,9 +193,9 @@ let FlexberryDialogComponent = Ember.Component.extend(
       @method _visibleDidChange
       @private
     */
-    _visibleDidChange: Ember.observer('visible', function() {
+    _visibleDidChange: observer('visible', function() {
       let $dialog = this.get('_dialog');
-      if (Ember.isNone($dialog)) {
+      if (isNone($dialog)) {
         return;
       }
 
@@ -222,7 +224,7 @@ let FlexberryDialogComponent = Ember.Component.extend(
         duration: this.get('duration'),
         onShow: () => {
           let e = { showDialog: true, target: this.get('_dialog') };
-          this.sendAction('beforeShow', e);
+          this.sendDynamicAction('beforeShow', e);
 
           return e.showDialog;
         },
@@ -233,7 +235,7 @@ let FlexberryDialogComponent = Ember.Component.extend(
           }
 
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('beforeHide', e);
+          this.sendDynamicAction('beforeHide', e);
 
           return e.closeDialog;
         },
@@ -241,30 +243,30 @@ let FlexberryDialogComponent = Ember.Component.extend(
           this.set('visible', true);
 
           let e = { target: this.get('_dialog') };
-          this.sendAction('show', e);
+          this.sendDynamicAction('show', e);
         },
         onHidden: () => {
           this.set('visible', false);
 
           let e = { target: this.get('_dialog') };
-          this.sendAction('hide', e);
+          this.sendDynamicAction('hide', e);
         },
         onApprove: () => {
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('approve', e);
+          this.sendDynamicAction('approve', e);
 
           return e.closeDialog;
         },
         onDeny: () => {
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('deny', e);
+          this.sendDynamicAction('deny', e);
 
           return e.closeDialog;
         }
       });
 
       // Show dialog if necessary.
-      if (this.get('visible') && !Ember.isNone($dialog)) {
+      if (this.get('visible') && !isNone($dialog)) {
         $dialog.modal('show');
       }
 
@@ -278,7 +280,7 @@ let FlexberryDialogComponent = Ember.Component.extend(
       this._super(...arguments);
 
       let $dialog = this.get('_dialog');
-      if (Ember.isNone($dialog)) {
+      if (isNone($dialog)) {
         return;
       }
 

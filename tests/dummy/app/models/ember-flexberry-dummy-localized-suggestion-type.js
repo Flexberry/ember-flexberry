@@ -1,7 +1,20 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+  localization: validator('presence', {
+    presence: true,
+    message: 'Localization is required',
+  }),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-suggestion-type.localizedTypes.
   // It's not a property for flexberry-lookup component.
   suggestionType: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -15,27 +28,13 @@ var Model = Projection.Model.extend({
     inverse: null,
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    localization: {
-      presence: {
-        message: 'Localization is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.
 Model.defineProjection('LocalizedSuggestionTypeE', 'ember-flexberry-dummy-localized-suggestion-type', {
-  name: Projection.attr('Name'),
-  localization: Projection.belongsTo('ember-flexberry-dummy-localization', 'Localization', {
-    name: Projection.attr('Name', {
+  name: attr('Name'),
+  localization: belongsTo('ember-flexberry-dummy-localization', 'Localization', {
+    name: attr('Name', {
       hidden: true
     })
   }, {

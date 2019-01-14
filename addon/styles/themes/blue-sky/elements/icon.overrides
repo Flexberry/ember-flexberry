@@ -42,8 +42,8 @@ i.icon.list.layout:before { content: "\"; font-size: 12px; font-family: 'Crim
 
 /* Item Selection */
 i.icon.remove.circle:before { content: "\e806"; font-size: 16px; opacity: 1; }
-i.icon.plus:before { content: "\e833"; position: relative; font-family: 'Crimean'; }
-i.icon.minus:before { content: "\e834"; font-size: 2px; position: relative; top: -3px; font-family: 'Crimean'; }
+i.icon.plus:not(.square):before { content: "\e833"; position: relative; font-family: 'Crimean'; }
+i.icon.minus:not(.square):before { content: "\e834"; font-size: 2px; position: relative; top: -3px; font-family: 'Crimean'; }
 i.icon.add.square:before { content: "\e833"; font-family: 'Crimean'; }
 
 /* Pointers */
@@ -291,10 +291,10 @@ i.icon.text-menu-hide:before {
 }
 
 .ui.icon.button > .plus.icon {
-  margin-right: 1em;
+  margin-right: 1em !important;
 }
 .ui.icon.button > .minus.icon {
-  margin-right: 1em;
+  margin-right: 1em !important;
 }
 
 .ui.button.icon.mini.compact {

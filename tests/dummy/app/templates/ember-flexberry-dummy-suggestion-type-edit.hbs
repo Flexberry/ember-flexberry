@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -40,23 +40,23 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.name "error" ""}}">
+  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
     {{flexberry-field
       value=model.name
       label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
+  <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
   </div>
-  <div class="field {{if model.errors.parent "error" ""}}">
+  <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
     {{flexberry-lookup
       value=model.parent
@@ -69,9 +69,9 @@
       remove=(action "removeLookupValue")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
   </div>
-  <div class="field {{if model.errors.localizedTypes "error" ""}}">
+  <div class="field {{if (v-get validationObject "localizedTypes" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionTypeLocalizedTypesGroupEdit"
@@ -81,6 +81,6 @@
       orderable=false
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.localizedTypes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "localizedTypes" "messages")}}
   </div>
 </form>

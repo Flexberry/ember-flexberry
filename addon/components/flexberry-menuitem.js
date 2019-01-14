@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { isArray } from '@ember/array';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -38,9 +40,9 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
   */
-  hasSubitems: Ember.computed('item.items', function() {
+  hasSubitems: computed('item.items', function() {
     let subItems = this.get('item.items');
-    return Ember.isArray(subItems) && subItems.length > 0;
+    return isArray(subItems) && subItems.length > 0;
   }),
 
   /**
@@ -50,9 +52,9 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
   */
-  titleIsBeforeIcon: Ember.computed('item.iconAlignment', function() {
+  titleIsBeforeIcon: computed('item.iconAlignment', function() {
     let iconAlignment = this.get('item.iconAlignment');
-    if (Ember.typeOf(iconAlignment) === 'string') {
+    if (typeOf(iconAlignment) === 'string') {
       iconAlignment = iconAlignment.trim();
     }
 
@@ -61,7 +63,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Override component's wrapping element tag.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_tagName)
 
     @property tagName
     @type String
@@ -71,7 +73,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array

@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import { assert } from '@ember/debug';
 import EditFormRoute from './edit-form';
 
 /**
@@ -30,7 +30,7 @@ export default EditFormRoute.extend({
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -59,7 +59,7 @@ export default EditFormRoute.extend({
 
   /**
     A hook you can use to render the template for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/renderTemplate?anchor=renderTemplate).
 
     @method renderTemplate
     @param {Object} controller
@@ -67,7 +67,7 @@ export default EditFormRoute.extend({
    */
   renderTemplate(controller, model) {
     var templateName = this.get('templateName');
-    Ember.assert('Template name must be defined.', templateName);
+    assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,
       controller,

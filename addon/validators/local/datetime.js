@@ -1,15 +1,13 @@
 /* global moment:true */
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { get, set } from '@ember/object';
 import Base from 'ember-validations/validators/base';
 import Messages from 'ember-validations/messages';
-
-let get = Ember.get;
-let set = Ember.set;
 
 export default Base.extend({
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
     this._super(...arguments);
@@ -32,7 +30,7 @@ export default Base.extend({
   },
 
   call() {
-    if (Ember.isEmpty(get(this.model, this.property))) {
+    if (isEmpty(get(this.model, this.property))) {
       if (!this.options.allowBlank) {
         this.errors.pushObject(this.options.messages.blank);
       }

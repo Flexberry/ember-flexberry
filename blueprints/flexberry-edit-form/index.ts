@@ -3,6 +3,7 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
 const stripBom = require("strip-bom");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
@@ -14,7 +15,7 @@ import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
   { name: "flexberry-checkbox", types: ["boolean"] },
-  { name: "flexberry-datepicker", types: ["date"] },
+  { name: "flexberry-simpledatetime", types: ["date"] },
   { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
@@ -23,7 +24,8 @@ module.exports = {
 
   availableOptions: [
     { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -50,6 +52,15 @@ module.exports = {
       CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
       CommonUtils.installReexportNew(options, ["controller", "route"]);
     }
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super(...arguments);
   },
 
   /**

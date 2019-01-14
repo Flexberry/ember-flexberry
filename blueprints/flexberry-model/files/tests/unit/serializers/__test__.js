@@ -4,6 +4,7 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:<%= name %>',
+    'service:syncer',
     'transform:file',
     'transform:decimal',
     'transform:guid',
@@ -12,8 +13,14 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
 <% } %><% if (!!needsAllObjects === true) { %>
 <%= needsAllObjects %>,
 <% } %>
-<%= needsAllModels %>
-  ]
+<%= needsAllModels %>,
+    'validator:ds-error',
+    'validator:presence',
+    'validator:number',
+    'validator:date',
+    'validator:belongs-to',
+    'validator:has-many',
+  ],
 });
 
 // Replace this with your real tests.

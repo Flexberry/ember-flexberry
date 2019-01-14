@@ -1,32 +1,47 @@
-import Ember from 'ember';
+import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger, Ember.testing = false;
+import DS from 'ember-data';
 import { module, test } from 'qunit';
-import startApp from '../../helpers/start-app';
-import destroyApp from '../../helpers/destroy-app';
+import { resolve, reject } from 'rsvp';
+import { run } from '@ember/runloop';
+import { warn, debug, assert } from '@ember/debug';
+import { deprecate } from '@ember/application/deprecations';
+import startApp from 'dummy/tests/helpers/start-app';
+import destroyApp from 'dummy/tests/helpers/destroy-app';
 import config from '../../../config/environment';
 
+import $ from 'jquery';
+
 let app;
+let adapter;
+let saveModel;
 
 module('Unit | Service | log', {
-  beforeEach: function () {
+  beforeEach() {
     app = startApp();
+
+    adapter = Ember.Test.adapter;
+    Ember.Test.adapter = null;
+    Ember.testing = false;
+
+    saveModel = DS.Model.prototype.save;
+    DS.Model.prototype.save = function() {
+      return resolve(this);
+    };
   },
-  afterEach: function() {
+
+  afterEach() {
+    Ember.Test.adapter = adapter;
+    Ember.testing = true;
+
+    DS.Model.prototype.save = saveModel;
+
     destroyApp(app);
-  }
+  },
 });
 
 test('error works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -39,40 +54,29 @@ test('error works properly', function(assert) {
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'ERROR');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '1');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), errorMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'ERROR');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '1');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), errorMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), errorProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('message')), errorMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.error.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.error(errorMessage);
   });
 });
 test('logService works properly when storeErrorMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -84,13 +88,11 @@ test('logService works properly when storeErrorMessages disabled', function(asse
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.error.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.error(errorMessage);
   });
 });
@@ -98,15 +100,6 @@ test('logService works properly when storeErrorMessages disabled', function(asse
 test('logService for error works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -122,13 +115,11 @@ test('logService for error works properly when it\'s disabled', function(assert)
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.error.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.error(errorMessage);
   });
 });
@@ -136,15 +127,6 @@ test('logService for error works properly when it\'s disabled', function(assert)
 test('warn works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -157,42 +139,31 @@ test('warn works properly', function(assert) {
 
   logService.on('warn', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'WARN');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '2');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), warnMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), warnAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), warnProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'WARN');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '2');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), warnMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), warnAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), warnProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsWarnMessage = savedLogRecord.get('message').indexOf(warnMessage) > -1;
     assert.ok(savedMessageContainsWarnMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.warn.
-  Ember.run(() => {
-    Ember.warn(warnMessage);
+  // Call to warn.
+  run(() => {
+    warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly' });
   });
 });
 
 test('logService works properly when storeWarnMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -204,29 +175,18 @@ test('logService works properly when storeWarnMessages disabled', function(asser
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.warn.
-  Ember.run(() => {
-    Ember.warn(warnMessage);
+  // Call to warn.
+  run(() => {
+    warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly-when-store-warn-messages-is-disabled' });
   });
 });
 
 test('logService for warn works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -242,29 +202,18 @@ test('logService for warn works properly when it\'s disabled', function(assert) 
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.warn.
-  Ember.run(() => {
-    Ember.warn(warnMessage);
+  // Call to warn.
+  run(() => {
+    warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly-when-log-service-is-disabled' });
   });
 });
 
 test('log works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -277,25 +226,23 @@ test('log works properly', function(assert) {
 
   logService.on('log', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'LOG');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '3');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), logMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), logAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), logProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), logMessage);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'LOG');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '3');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), logMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), logAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), logProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('message')), logMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.log.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.log(logMessage);
   });
 });
@@ -303,15 +250,6 @@ test('log works properly', function(assert) {
 test('logService works properly when storeLogMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -323,13 +261,11 @@ test('logService works properly when storeLogMessages disabled', function(assert
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.log.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.log(logMessage);
   });
 });
@@ -337,15 +273,6 @@ test('logService works properly when storeLogMessages disabled', function(assert
 test('logService for log works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -361,13 +288,11 @@ test('logService for log works properly when it\'s disabled', function(assert) {
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.log.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.log(logMessage);
   });
 });
@@ -375,15 +300,6 @@ test('logService for log works properly when it\'s disabled', function(assert) {
 test('info works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -396,25 +312,23 @@ test('info works properly', function(assert) {
 
   logService.on('info', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'INFO');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '4');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), infoMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), infoAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), infoProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), infoMessage);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'INFO');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '4');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), infoMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), infoAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), infoProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('message')), infoMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.info.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.info(infoMessage);
   });
 });
@@ -422,15 +336,6 @@ test('info works properly', function(assert) {
 test('logService works properly when storeInfoMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -442,13 +347,11 @@ test('logService works properly when storeInfoMessages disabled', function(asser
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.info.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.info(infoMessage);
 
   });
@@ -457,15 +360,6 @@ test('logService works properly when storeInfoMessages disabled', function(asser
 test('logService for info works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -481,13 +375,11 @@ test('logService for info works properly when it\'s disabled', function(assert) 
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.info.
-  Ember.run(() => {
+  run(() => {
     Ember.Logger.info(infoMessage);
   });
 });
@@ -495,15 +387,6 @@ test('logService for info works properly when it\'s disabled', function(assert) 
 test('debug works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -516,42 +399,31 @@ test('debug works properly', function(assert) {
 
   logService.on('debug', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'DEBUG');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '5');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), debugMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), debugAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), debugProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'DEBUG');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '5');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), debugMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), debugAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), debugProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsDebugMessage = savedLogRecord.get('message').indexOf(debugMessage) > -1;
     assert.ok(savedMessageContainsDebugMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.debug.
-  Ember.run(() => {
-    Ember.debug(debugMessage);
+  // Call to debug.
+  run(() => {
+    debug(debugMessage);
   });
 });
 
 test('logService works properly when storeDebugMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -563,29 +435,18 @@ test('logService works properly when storeDebugMessages disabled', function(asse
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.debug.
-  Ember.run(() => {
-    Ember.debug(debugMessage);
+  // Call to debug.
+  run(() => {
+    debug(debugMessage);
   });
 });
 
 test('logService for debug works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -601,29 +462,18 @@ test('logService for debug works properly when it\'s disabled', function(assert)
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.debug.
-  Ember.run(() => {
-    Ember.debug(debugMessage);
+  // Call to debug.
+  run(() => {
+    debug(debugMessage);
   });
 });
 
 test('deprecate works properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -636,42 +486,31 @@ test('deprecate works properly', function(assert) {
 
   logService.on('deprecation', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'DEPRECATION');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '6');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), deprecationMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), deprecationAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), deprecationProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'DEPRECATION');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '6');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), deprecationMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), deprecationAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), deprecationProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsDeprecationMessage = savedLogRecord.get('message').indexOf(deprecationMessage) > -1;
     assert.ok(savedMessageContainsDeprecationMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.deprecate.
-  Ember.run(() => {
-    Ember.deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
+  // Call to deprecate.
+  run(() => {
+    deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
   });
 });
 
 test('logService works properly when storeDeprecationMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -683,29 +522,18 @@ test('logService works properly when storeDeprecationMessages disabled', functio
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.deprecate.
-  Ember.run(() => {
-    Ember.deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
+  // Call to deprecate.
+  run(() => {
+    deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
   });
 });
 
 test('logService for deprecate works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -721,29 +549,18 @@ test('logService for deprecate works properly when it\'s disabled', function(ass
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.deprecate.
-  Ember.run(() => {
-    Ember.deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
+  // Call to deprecate.
+  run(() => {
+    deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
   });
 });
 
-test('assert works properly', function(assert) {
-  let done = assert.async();
-  assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
+test('assert works properly', function(testAssert) {
+  let done = testAssert.async();
+  testAssert.expect(10);
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -756,42 +573,31 @@ test('assert works properly', function(assert) {
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'ERROR');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '1');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), assertMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), assertAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), assertProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    testAssert.strictEqual($.trim(savedLogRecord.get('category')), 'ERROR');
+    testAssert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    testAssert.strictEqual($.trim(savedLogRecord.get('priority')), '1');
+    testAssert.strictEqual($.trim(savedLogRecord.get('machineName')), assertMachineName);
+    testAssert.strictEqual($.trim(savedLogRecord.get('appDomainName')), assertAppDomainName);
+    testAssert.strictEqual($.trim(savedLogRecord.get('processId')), assertProcessId);
+    testAssert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    testAssert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsAssertMessage = savedLogRecord.get('message').indexOf(assertMessage) > -1;
-    assert.ok(savedMessageContainsAssertMessage);
+    testAssert.ok(savedMessageContainsAssertMessage);
     let formattedMessageContainsAssertMessage = savedLogRecord.get('formattedMessage').indexOf(assertMessage) > -1;
-    assert.ok(formattedMessageContainsAssertMessage);
+    testAssert.ok(formattedMessageContainsAssertMessage);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.assert.
-  Ember.run(() => {
-    Ember.assert(assertMessage, false);
+  // Call to assert.
+  run(() => {
+    assert(assertMessage, false);
   });
 });
 
-test('logService works properly when storeErrorMessages for assert disabled', function(assert) {
-  let done = assert.async();
-  assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
+test('logService works properly when storeErrorMessages for assert disabled', function(testAssert) {
+  let done = testAssert.async();
+  testAssert.expect(1);
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -801,31 +607,20 @@ test('logService works properly when storeErrorMessages for assert disabled', fu
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.notOk(savedLogRecord);
+    testAssert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.assert.
-  Ember.run(() => {
-    Ember.assert(assertMessage, false);
+  // Call to assert.
+  run(() => {
+    assert(assertMessage, false);
   });
 });
 
-test('logService for assert works properly when it\'s disabled', function(assert) {
-  let done = assert.async();
-  assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
+test('logService for assert works properly when it\'s disabled', function(testAssert) {
+  let done = testAssert.async();
+  testAssert.expect(1);
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -838,32 +633,21 @@ test('logService for assert works properly when it\'s disabled', function(assert
     if (savedLogRecord) {
       throw new Error('Log is disabled, DB isn\'t changed');
     } else {
-      assert.ok(true, 'Check log call, DB isn\'t changed');
+      testAssert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
-  // Call to Ember.assert.
-  Ember.run(() => {
-    Ember.assert(assertMessage, false);
+  // Call to assert.
+  run(() => {
+    assert(assertMessage, false);
   });
 });
 
 test('throwing exceptions logs properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -876,25 +660,23 @@ test('throwing exceptions logs properly', function(assert) {
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'ERROR');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '1');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), errorMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'ERROR');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '1');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), errorMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), errorProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('message')), errorMessage);
     let formattedMessageContainsErrorMessage = savedLogRecord.get('formattedMessage').indexOf(errorMessage) > -1;
     assert.ok(formattedMessageContainsErrorMessage);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
+  run(() => {
     throw new Error(errorMessage);
   });
 });
@@ -902,15 +684,6 @@ test('throwing exceptions logs properly', function(assert) {
 test('logService works properly when storeErrorMessages for throw disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -922,13 +695,11 @@ test('logService works properly when storeErrorMessages for throw disabled', fun
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
+  run(() => {
     throw new Error(errorMessage);
   });
 });
@@ -936,15 +707,6 @@ test('logService works properly when storeErrorMessages for throw disabled', fun
 test('logService for throw works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -960,13 +722,11 @@ test('logService for throw works properly when it\'s disabled', function(assert)
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
+  run(() => {
     throw new Error(errorMessage);
   });
 });
@@ -974,19 +734,6 @@ test('logService for throw works properly when it\'s disabled', function(assert)
 test('promise errors logs properly', function(assert) {
   let done = assert.async();
   assert.expect(10);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
-
-  // Override default QUnitAdapter.exception method to avoid calling additional assertion when rejecting promise.
-  let oldTestAdapterException = Ember.Test.adapter.exception;
-  Ember.Test.adapter.exception = () => { };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -1000,49 +747,31 @@ test('promise errors logs properly', function(assert) {
 
   logService.on('promise', this, (savedLogRecord) => {
     // Check results asyncronously.
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'PROMISE');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '7');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), promiseMachineName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), promiseAppDomainName);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), promiseProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), promiseErrorMessage);
+    assert.strictEqual($.trim(savedLogRecord.get('category')), 'PROMISE');
+    assert.strictEqual($.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual($.trim(savedLogRecord.get('priority')), '7');
+    assert.strictEqual($.trim(savedLogRecord.get('machineName')), promiseMachineName);
+    assert.strictEqual($.trim(savedLogRecord.get('appDomainName')), promiseAppDomainName);
+    assert.strictEqual($.trim(savedLogRecord.get('processId')), promiseProcessId);
+    assert.strictEqual($.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual($.trim(savedLogRecord.get('threadName')), config.modulePrefix);
+    assert.strictEqual($.trim(savedLogRecord.get('message')), promiseErrorMessage);
 
     let formattedMessageContainsPromiseErrorMessage = savedLogRecord.get('formattedMessage').indexOf(promiseErrorMessage) > -1;
     assert.ok(formattedMessageContainsPromiseErrorMessage);
 
-    //Restore default QUnitAdapter.exception method
-    Ember.Test.adapter.exception = oldTestAdapterException;
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
-    Ember.RSVP.reject(promiseErrorMessage);
+  run(() => {
+    reject(promiseErrorMessage);
   });
 });
 
 test('logService works properly when storePromiseErrors disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-     savedLogRecord = this;
-     return Ember.RSVP.resolve(savedLogRecord);
-   };
-
-  // Override default QUnitAdapter.exception method to avoid calling additional assertion when rejecting promise.
-  let oldTestAdapterException = Ember.Test.adapter.exception;
-  Ember.Test.adapter.exception = () => { };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -1055,32 +784,18 @@ test('logService works properly when storePromiseErrors disabled', function(asse
     // Check results asyncronously.
     assert.notOk(savedLogRecord);
 
-    //Restore default QUnitAdapter.exception method
-    Ember.Test.adapter.exception = oldTestAdapterException;
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
-    Ember.RSVP.reject(promiseErrorMessage);
+  run(() => {
+    reject(promiseErrorMessage);
   });
 });
 
 test('logService for promise works properly when it\'s disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  let savedLogRecord;
-  DS.Model.prototype.save = function() {
-    savedLogRecord = this;
-    return Ember.RSVP.resolve(savedLogRecord);
-  };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -1096,13 +811,11 @@ test('logService for promise works properly when it\'s disabled', function(asser
       assert.ok(true, 'Check log call, DB isn\'t changed');
     }
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Throwing an exception.
-  Ember.run(() => {
-    Ember.RSVP.reject(promiseErrorMessage);
+  run(() => {
+    reject(promiseErrorMessage);
   });
 });

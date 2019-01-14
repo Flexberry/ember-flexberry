@@ -2,18 +2,24 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import EmberMap from '@ember/map';
+import { isNone } from '@ember/utils';
+import { deprecatingAlias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
 
   @class ObjectlistviewEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
  */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   /**
     Current set of selected records for all list components.
@@ -161,9 +167,9 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
-    if (count > 0 || !Ember.isNone(recordWithKey)) {
+    if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
-        this.get('_selectedRecords')[componentName] = Ember.Map.create();
+        this.get('_selectedRecords')[componentName] = EmberMap.create();
       }
 
       if (checked) {
@@ -260,7 +266,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property loadingState
     @type string
   */
-  loadingState: Ember.computed.deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
 
   /**
     Service for managing the state of the application.
@@ -268,7 +274,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Sets current limit function for OLV.
@@ -299,7 +305,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    Ember.deprecate('This method is deprecated, use app state service.', false, {
+    deprecate('This method is deprecated, use app state service.', false, {
       id: 'service.app-state',
       until: '1.0.0',
     });

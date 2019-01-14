@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
+import { A } from '@ember/array';
 import startApp from '../../../helpers/start-app';
 
 export function executeTest(testName, callback) {
   let app;
   let store;
-  let latestReceivedRecords = Ember.A();
+  let latestReceivedRecords = A();
 
   module('Acceptance | flexberry-lookup-base |' + testName, {
     beforeEach() {
@@ -33,10 +35,10 @@ export function executeTest(testName, callback) {
 
     afterEach() {
       // Remove semantic ui modal dialog's dimmer.
-      Ember.$('body .ui.dimmer.modals').remove();
+      $('body .ui.dimmer.modals').remove();
 
       // Destroy application.
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     },
   });
 

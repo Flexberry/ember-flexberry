@@ -1,5 +1,5 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -28,15 +28,16 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: {
-    FOLVSettingsExampleObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+  developerUserSettings: computed(function() {
+    return {
+      FOLVSettingsExampleObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+        }
       }
     }
-  },
+  }),
 
   /**
     Name of model to be used as list's records types.

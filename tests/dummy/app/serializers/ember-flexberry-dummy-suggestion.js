@@ -11,11 +11,14 @@ export default ApplicationSerializer.extend({
     userVotes: { serialize: false, deserialize: 'records' }
   },
 
+  /* eslint-disable no-unused-vars */
   serialize(snapshot, options) {
     let data = this._super(...arguments);
     delete data.СommentsCount;
     return data;
   },
+  /* eslint-enable no-unused-vars */
+
   /**
     Property name in which object identifier is kept.
    */

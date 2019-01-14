@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import emberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
 
 const translations = {};
-Ember.$.extend(true, translations, emberFlexberryTranslations);
+$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
   'models': {
     'ember-flexberry-dummy-suggestion': {
       'projections': {
@@ -50,6 +50,36 @@ Ember.$.extend(true, translations, {
           'address': {
             __caption__: 'Адрес'
           },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            }
+          },
+          'author': {
+            __caption__: 'Автор',
+            'name': {
+              __caption__: 'Автор'
+            }
+          },
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Редактор'
+            }
+          },
           'userVotes': {
             'name': {
               __caption__: 'Наименование'
@@ -90,6 +120,157 @@ Ember.$.extend(true, translations, {
               'eMail': {
                 __caption__: 'Почта'
               }
+            }
+          }
+        },
+        'SuggestionMainModelProjectionTest': {
+          'userVotes': {
+            'voteType': {
+              __caption__: 'Текст для теста'
+            }
+          }
+        },
+        'SettingLookupExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'CustomizeLookupWindowExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'DropDownLookupExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'FolvWithLimitFunctionExampleView': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          }
+        },
+        'LookupInBlockFormView': {
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Редактор'
+            },
+            'eMail': {
+              __caption__: 'Почта'
+            },
+            'gender': {
+              __caption__: 'Пол'
+            }
+          },
+        },
+        'FlexberryObjectlistviewCustomFilter': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+            'moderated': {
+              __caption__: 'Одобрено'
+            },
+            'parent': {
+              __caption__: 'Иерархия',
+              'name': {
+                __caption__: 'Тип предложения'
+              },
+              'moderated': {
+                __caption__: 'Одобрено'
+              },
+            },
+          },
+          'author': {
+            __caption__: 'Автор',
+            'name': {
+              __caption__: 'Автор'
+            },
+            'eMail': {
+              __caption__: 'Почта'
+            }
+          },
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Редактор'
+            }
+          }
+        },
+        'DefaultOrderingExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'FlexberryObjectlistviewFilterTest': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            }
+          },
+          'author': {
+            __caption__: 'Автор',
+            'name': {
+              __caption__: 'Автор'
             }
           }
         }
@@ -142,6 +323,15 @@ Ember.$.extend(true, translations, {
           },
         },
         'SuggestionTypeE': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
           'localizedTypes': {
             'name': {
               __caption__: 'Наименование'
@@ -153,6 +343,38 @@ Ember.$.extend(true, translations, {
               }
             }
           },
+        },
+        'SettingLookupExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'CustomizeLookupWindowExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'DropDownLookupExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
         }
       }
     },
@@ -176,6 +398,51 @@ Ember.$.extend(true, translations, {
         }
       }
     },
+    'integration-examples/edit-form/validation/base': {
+      'projections': {
+        'BaseE': {
+          'flag': {
+            __caption__: 'Флаг'
+          },
+          'number': {
+            __caption__: 'Число'
+          },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'longText': {
+            __caption__: 'Длинный текст'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'enumeration': {
+            __caption__: 'Перечисление'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'master': {
+            __caption__: 'Мастер',
+            'text': {
+              __caption__: 'Текст'
+            }
+          },
+          'details': {
+            __caption__: 'Детейлы',
+            'flag': {
+              __caption__: 'Флаг'
+            },
+            'number': {
+              __caption__: 'Число'
+            },
+            'text': {
+              __caption__: 'Текст'
+            }
+          }
+        }
+      }
+    }
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',
@@ -303,14 +570,6 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-ddau-checkbox': {
             'caption': 'flexberry-ddau-checkbox',
-            'title': '',
-            'settings-example': {
-              'caption': 'Пример работы с настройками',
-              'title': ''
-            }
-          },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -707,7 +966,7 @@ Ember.$.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Брошено исключение',
         'reject-rsvp-promise-button-message': 'Promise отклонен',
-        'ember-assert-button-message': 'Вызван метод Ember.assert',
+        'ember-assert-button-message': 'Вызван метод assert',
         'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
         'ember-logger-warn-button-message': 'Вызван метод Ember.warn',
         'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
@@ -740,11 +999,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
         }
       },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Пример работы с настройками'
-        }
-      },
       'flexberry-dropdown': {
         'settings-example': {
           'caption': 'Flexberry-dropdown. Пример работы с настройками'
@@ -756,7 +1010,7 @@ Ember.$.extend(true, translations, {
             '{{pageTemplate}}' +
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
+            'после этого следует проверить консоль браузера, она должна быть чиста от ошибок "Semantic-UI" и прочих ошибок.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Пример dropdown-а с пустым значением',
@@ -916,34 +1170,6 @@ Ember.$.extend(true, translations, {
         'lock-services-editor-view': {
           'blocked-by': 'Заблокированно пользователем',
         },
-      },
-      'flexberry-simpleolv': {
-        'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения',
-          'captionFirstLimitFunction': 'Функция ограничения №1',
-          'captionSecondLimitFunction': 'Функция ограничения №2',
-          'captionClearLimitFunction': 'Очистить функцию ограничения'
-        },
-        'settings-example': {
-          'caption': 'Flexberry-simpleolv. Пример работы с настройками'
-        },
-        'toolbar-custom-buttons-example': {
-          'caption': 'Flexberry-simpleolv. Пользовательские кнопки',
-          'custom-message': 'Привет!',
-          'custom-button-name': 'Передать привет'
-        },
-        'on-edit-form': {
-          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
-        },
-        'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Настройка фильтра'
-        },
-        'configurate-rows': {
-          'caption': 'Flexberry-simpleolv. Раскраска строк'
-        },
-        'selected-rows': {
-          'caption': 'Flexberry-simpleolv. Выбранные строки'
-        }
       },
       'flexberry-simpledatetime': {
         'settings-example': {

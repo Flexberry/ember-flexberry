@@ -1,7 +1,8 @@
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import RSVP from 'rsvp';
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-
+import { computed } from '@ember/object';
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -30,9 +31,12 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return {
+      FOLVSettingExampleObjectListView: { }
+    }
+  }),
 
   /**
     Name of model to be used as list's records types.
@@ -55,18 +59,19 @@ export default ListFormRoute.extend({
   /**
     Performs loading of some existing address before model will be loaded.
   */
+  /* eslint-disable no-unused-vars */
   beforeModel(params) {
     if (this.get('controller.configurateRowByAddress')) {
       return;
     }
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
       let store = this.get('store');
 
-      let query = new Query.Builder(store)
-        .from('ember-flexberry-dummy-suggestion')
+      let query = new Builder(store)
+        .from('ember-flexberry-dummy-suggestion')
         .select('address')
-        .where('address', Query.FilterOperator.Neq, null)
+        .where('address', FilterOperator.Neq, null)
         .top(1);
 
       store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {
@@ -78,6 +83,7 @@ export default ListFormRoute.extend({
       });
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Setups controller properties.

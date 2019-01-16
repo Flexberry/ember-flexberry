@@ -6,6 +6,9 @@ language: node_js
 node_js:
   - "6"
 
+services:
+  - docker
+
 cache:
   yarn: true
   directories:
@@ -35,6 +38,13 @@ addons:
   chrome: stable
 
 before_install:
+  - docker --version
+  - docker pull flexberry/ember-flexberry-stand-backend:latest
+  - docker pull flexberry/ember-flexberry-stand-postgres:latest
+  - curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+  - docker swarm init
+  - docker stack deploy -c ember-flexberry-stand-postgres.yml EmberFlexberryStand
+
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - yarn global add ember-cli@2.4.3

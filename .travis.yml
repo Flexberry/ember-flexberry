@@ -7,6 +7,9 @@ node_js:
 sudo: required
 dist: trusty
 
+services:
+  - docker
+
 addons:
   chrome: stable
 
@@ -40,6 +43,13 @@ notifications:
     on_start: never     # options: [always|never|change] default: always
 
 before_install:
+  - docker --version
+  - docker pull flexberry/ember-flexberry-stand-backend:latest
+  - docker pull flexberry/ember-flexberry-stand-postgres:latest
+  - curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+  - docker swarm init
+  - docker stack deploy -c ember-flexberry-stand-postgres.yml EmberFlexberryStand
+
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - curl -o- -L https://yarnpkg.com/install.sh | bash

@@ -96,6 +96,7 @@ export default {
       'placeholder': '(нет значения)',
       'choose-button-text': 'Выбрать',
       'remove-button-text': 'Очистить',
+      'preview-button-text': 'Просмотр',
       'dropdown': {
         'messages': {
           'noResultsHeader': 'Нет данных',

@@ -41,3 +41,10 @@
 .ui.modal .content h2.ui.header {
     word-wrap: break-word;
 }
+
+.ui.modal.preview-model .content {
+  overflow: scroll;
+  .close-button {
+    display: none;
+  }
+}

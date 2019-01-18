@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = function(environment) {
-  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  var backendUrl = 'http://flexberry.northeurope.cloudapp.azure.com';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
@@ -132,6 +132,12 @@ module.exports = function(environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
+
+    // URL of the backend running in docker.
+    backendUrl = 'http://localhost:6500';
+    ENV.APP.backendUrl = backendUrl;
+    ENV.APP.backendUrls.root = backendUrl;
+    ENV.APP.backendUrls.api = backendUrl + '/odata';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;

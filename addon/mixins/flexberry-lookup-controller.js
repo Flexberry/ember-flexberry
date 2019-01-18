@@ -4,6 +4,7 @@
 
 import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
+import { getOwner } from '@ember/application';
 import { merge } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
@@ -223,6 +224,82 @@ export default Mixin.create(ReloadListMixin, {
     },
 
     /**
+      Handlers action from FlexberryLookup preview action.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInSeparateRoute, projection, modelName, controller }.
+    */
+    previewLookupValue(previewData) {
+      let options = $.extend(true, {
+        recordId: undefined,
+        transitionRoute: undefined,
+        transitionOptions: undefined,
+        showInSeparateRoute: undefined,
+        modelName: undefined,
+        controller: undefined,
+        projection: undefined
+      }, previewData);
+      let recordId = options.recordId;
+      let transitionRoute = options.transitionRoute;
+
+      if (options.showInSeparateRoute) {
+        let transitionOptions = options.transitionOptions || {};
+        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+      } else {
+        let routeName = options.controller || transitionRoute;
+        let modelName = options.modelName;
+
+        let controller = getOwner(this).lookup(`controller:${routeName}`);
+        if (isNone(controller)) {
+          throw new Error(`Controller with '${routeName}' name does not exist.`);
+        }
+
+        let route = getOwner(this).lookup(`route:${transitionRoute}`);
+        let projectionName = options.projection || (route ? route.get('modelProjection') : undefined);
+        if (isNone(projectionName)) {
+          throw new Error('`previewFormProjection` is undefined.');
+        }
+
+        let modelConstructor = this.store.modelFor(modelName);
+        let projection = get(modelConstructor, `projections.${projectionName}`);
+        if (!projection) {
+          throw new Error(
+            `No projection with '${projectionName}' name defined in '${modelName}' model.`);
+        }
+
+        controller.setProperties({
+          readonly: true,
+          routeName: routeName,
+          modelProjection: projection
+        });
+
+        let lookupController = this.get('lookupController');
+        lookupController.setProperties({
+          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          sizeClass: 'small preview-model',
+        });
+
+        let lookupSettings = this.get('lookupSettings');
+        this.send('showModalDialog', lookupSettings.template);
+
+        let loadingParams = {
+          view: lookupSettings.template,
+          outlet: 'modal-content'
+        };
+
+        this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+        this.store.findRecord(modelName, recordId).then(data => {
+          this.send('removeModalDialog', loadingParams);
+          this.send('showModalDialog', transitionRoute, {
+            controller: controller,
+            model: data
+          }, loadingParams);
+        });
+      }
+    },
+
+    /**
       Update relation value at model.
 
       @method actions.updateLookupValue
@@ -315,7 +392,7 @@ export default Mixin.create(ReloadListMixin, {
       reloadData.saveTo);
 
     let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
-    let projection = get(modelConstructor, 'projections')[reloadData.projectionName];
+    let projection = get(modelConstructor, `projections.${reloadData.projectionName}`);
     if (!projection) {
       throw new Error(
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);

@@ -109,7 +109,7 @@
           <div class="ui button">...</div>
         {{else}}
           {{#if page.isCurrent}}
-            <button class="ui active button">{{page.number}}</button>
+            <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
           {{else}}
             <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
           {{/if}}

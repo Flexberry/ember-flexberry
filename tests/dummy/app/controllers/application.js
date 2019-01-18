@@ -346,6 +346,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-lookup-with-computed-atribute.title'),
             children: null
           }, {
+            link: 'ember-flexberry-dummy-master-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.ember-flexberry-dummy-master-list.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.ember-flexberry-dummy-master-list.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-readonly-columns-by-configurate-row-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.title'),

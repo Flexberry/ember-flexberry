@@ -365,6 +365,14 @@ Ember.$.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'GrouptEdit readonly columns by configurateRow',
               'title': ''
+            },
+            'ember-flexberry-dummy-master-list': {
+              'caption': 'Example of hierarchical detail',
+              'title': ''
+            },
+            'ember-flexberry-dummy-master-edit': {
+              'caption': 'Example of hierarchical datail',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -778,6 +786,15 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Model update example',
           'addDetailButton': 'Add detail',
           'removeDetailButton': 'Remove detail',
+        },
+        'ember-flexberry-dummy-master-list': {
+          'caption': 'Flexberry-groupedit. Hierarchical detail'
+        },
+        'ember-flexberry-dummy-master-edit': {
+          'caption': 'Flexberry-groupedit. Hierarchical detail',
+          'name-caption': 'Name',
+          'detail-caption': 'Detail'
+
         }
       },
       'flexberry-lookup': {

@@ -1,20 +1,11 @@
-import { buildValidations } from 'ember-cp-validations';
-import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
-import OfflineModelMixin from 'ember-flexberry-data/mixins/offline-model';
+import { Model as DetailMixin, defineNamespace, defineProjections } from
+  '../mixins/regenerated/models/ember-flexberry-dummy-detail';
+import { Projection } from 'ember-flexberry-data';
+import { Offline } from 'ember-flexberry-data';
+let Model = Projection.Model.extend(Offline.ModelMixin, DetailMixin, {
 
-import {
-  defineProjections,
-  ValidationRules,
-  Model as DetailMixin
-} from '../mixins/regenerated/models/ember-flexberry-dummy-detail';
-
-const Validations = buildValidations(ValidationRules, {
-  dependentKeys: ['model.i18n.locale'],
 });
 
-let Model = EmberFlexberryDataModel.extend(OfflineModelMixin, DetailMixin, Validations, {
-});
-
+defineNamespace(Model);
 defineProjections(Model);
-
 export default Model;

@@ -375,6 +375,14 @@ Ember.$.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
               'title': ''
+            },
+            'ember-flexberry-dummy-master-list': {
+              'caption': 'Пример иерархического детейла',
+              'title': ''
+            },
+            'ember-flexberry-dummy-master-edit': {
+              'caption': 'Пример иерархического детейла',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -789,6 +797,14 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
+        },
+        'ember-flexberry-dummy-master-list': {
+          'caption': 'Flexberry-groupedit. Иерархический детейл'
+        },
+        'ember-flexberry-dummy-master-edit': {
+          'caption': 'Flexberry-groupedit. Иерархический детейл',
+          'name-caption': 'Наименование',
+          'detail-caption': 'Детейл'
         }
       },
       'flexberry-lookup': {

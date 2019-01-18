@@ -60,6 +60,7 @@
             }
           ],
           "index": 1,
+          "type": "standard",
           "caption": "",
           "name": "parentDetail",
           "relatedTo": "ember-flexberry-dummy-detail",

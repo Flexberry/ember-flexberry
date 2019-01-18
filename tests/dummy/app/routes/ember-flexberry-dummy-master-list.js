@@ -1,5 +1,5 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { computed } from '@ember/object';
+
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -40,8 +40,7 @@ export default ListFormRoute.extend({
 
     @property developerUserSettings
     @type Object
+    @default {}
   */
-  developerUserSettings: computed(function() {
-    return { EmberFlexberryDummyMasterList: {} };
-  }),
+  developerUserSettings: { EmberFlexberryDummyMasterList: {} },
 });

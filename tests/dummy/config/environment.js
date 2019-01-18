@@ -1,7 +1,10 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  // var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  var backendUrl = 'http://localhost:6500';
+
+  // var backendUrl = 'http://rtc-web.ics.perm.ru:8081';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.

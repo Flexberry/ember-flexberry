@@ -69,6 +69,8 @@ span.lookup-field {
   box-shadow: none;
 }
 
-input.setting-name-input.ember-text-field{
-    margin-right: 1em;
-}          
+.ui.action.input {
+    input.setting-name-input.ember-text-field.ember-view {
+        width: 60%;
+    }          
+}

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+* `reload-list-mixin` mixin:
+    * create only SimplePredicate from SimplePredicate and DatePredicate.
 
 ## [2.1.0-beta.0] - 2018-12-13
 ### Added

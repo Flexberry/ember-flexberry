@@ -570,9 +570,10 @@ div.ui.secondary.menu.no-margin {
             border: 1px solid @uiHoveredPositiveBorderColor;
         }
     }
-
-    .cols-config-save {
+    .ui.small.button.cols-config-save {
+        margin-left: 1em;
         border: 1px solid @uiBorderColor;
+        font-size: 14px;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             background-color: @uiHoveredPositiveBackgroundColor;
@@ -603,12 +604,10 @@ div.ui.secondary.menu.no-margin {
 
 .ui.icon.tiny.button {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.icon.tiny.button.no-margin {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.buttons:not(.basic):not(.inverted) {

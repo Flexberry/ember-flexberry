@@ -18,7 +18,20 @@
 
 .ui.modal .content .flexberry-colsconfig.content {
     max-height: 585px;
-    overflow: auto;
+    table {
+        tbody {
+            display: block;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 370px;
+            box-sizing: border-box;
+        }
+        tfoot {
+            tr:last-child > th:last-child {
+                border-left: none;
+                }  
+            }  
+    }
 }
 
 .ui.modal > ui.table {

@@ -17,17 +17,48 @@
  * Flexberry-colsconfig.
  */
 .flexberry-colsconfig {
+  table {
+    tbody {
+      tr {
+        td {
+          &:nth-child(1) {
+            width: 55px;
+          }
+          &:nth-child(2) {
+            width: 115px;
+            white-space: nowrap;
+          }
+          &:nth-child(4) {
+            width: 86px;
+          }
+          &:nth-child(5) {
+            width: 70px;
+          }
+          &:nth-child(6) {
+            width: 80px;
+          }
+        }
+      }
+    }
+    tfoot {
+      th {
+        &:last-child {
+          width: 90px;
+        }
+      }
+    }
+  }
   .show-columns {
     width: 55px;
   }
   .columns-order {
-    width: 90px;
+    width: 117px;
   }
   .column-width {
-    width: 85px;
+    width: 90px;
   }
   .sort-direction {
-    width: 80px;
+    width: 86px;
   }
   .sort-priority {
     width: 70px;
@@ -47,12 +78,32 @@
   }
   th {
     > .input {
-      input.setting-name {
-        width: 250px;
-      }
+      width: 100%;
+      margin-right: 15px;
+
     }
     .ui.action.input .ui.button {
       display: inline-flex;
+    }
+  }
+  tr {
+    width: 100%;
+    display: table;
+  }
+}
+
+@-moz-document url-prefix() {
+  .flexberry-colsconfig {
+    table {
+      tbody {
+        tr {
+          td {
+            &:nth-child(6) {
+              width: 73px;
+            } 
+          }
+        }
+      }
     }
   }
 }

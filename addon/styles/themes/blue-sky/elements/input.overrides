@@ -7,7 +7,7 @@
 }
 
 .ui.action.input:not([class*="left action"]) > .button:last-child {
-    border-radius: 0px;
+    border-radius: 5px;
 }
 
 .ui.input input, input {
@@ -67,4 +67,10 @@ span.lookup-field {
   border-color: #E0B4B4;
   color: #9F3A38;
   box-shadow: none;
+}
+
+.ui.action.input {
+    input.setting-name-input.ember-text-field.ember-view {
+        width: 60%;
+    }          
 }

@@ -331,12 +331,8 @@ export default Ember.Mixin.create({
     if (!Ember.isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
       let sp1 = predicate;
       let sp2;
-      if (predicate instanceof SimplePredicate) {
+      if (predicate instanceof SimplePredicate || predicate instanceof DatePredicate) {
         sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
-      }
-
-      if (predicate instanceof DatePredicate) {
-        sp2 = new DatePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
       }
 
       result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;

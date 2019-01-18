@@ -9,6 +9,3 @@
 
 @loaderDistanceFromTop: 100px;
 @loaderSize: 2.5em;
-
-/* Sidebar tabbar */
-@rightSidebarTabbarBackground: @white;

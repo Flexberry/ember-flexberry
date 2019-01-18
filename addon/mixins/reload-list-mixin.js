@@ -2,36 +2,38 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
-
-import { Query } from 'ember-flexberry-data';
-
-const {
-  Builder,
-  Condition,
-  BasePredicate,
-  SimplePredicate,
-  StringPredicate,
-  ComplexPredicate,
-  DatePredicate
-} = Query;
+import Mixin from '@ember/object/mixin';
+import { get } from '@ember/object'
+import { merge } from '@ember/polyfills';
+import { assert } from '@ember/debug';
+import { inject as service } from '@ember/service';
+import { isNone } from '@ember/utils';
+import { A } from '@ember/array';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
  *
  * @class ReloadListMixin
- * @extends Ember.Mixin
+ * @extends Mixin
  * @public
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
    Service that triggers objectlistview events.
 
    @property objectlistviewEvents
    @type {Class}
-   @default Ember.inject.service()
+   @default inject()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
    * It reloads data by parameters.
@@ -54,7 +56,7 @@ export default Ember.Mixin.create({
    */
   reloadList: function(options) {
     if (options.filters instanceof ComplexPredicate) {
-      var newFilter = Ember.A();
+      var newFilter = A();
       options.filters._predicates.forEach((predicate) => {
         newFilter.push(this._normalizeNeqPredicate(predicate));
       }, this);
@@ -65,9 +67,9 @@ export default Ember.Mixin.create({
     }
 
     let store = this.store;
-    Ember.assert('Store for data loading is not defined.', store);
+    assert('Store for data loading is not defined.', store);
 
-    let reloadOptions = Ember.merge({
+    let reloadOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       perPage: undefined,
@@ -81,13 +83,13 @@ export default Ember.Mixin.create({
     }, options);
 
     let modelName = reloadOptions.modelName;
-    Ember.assert('Model name for data loading is not defined.', modelName);
+    assert('Model name for data loading is not defined.', modelName);
 
     let projectionName = reloadOptions.projectionName;
-    Ember.assert('Projection name for data loading is not defined.', projectionName);
+    assert('Projection name for data loading is not defined.', projectionName);
 
     let modelConstructor = store.modelFor(modelName);
-    let projection = Ember.get(modelConstructor, 'projections')[projectionName];
+    let projection = get(modelConstructor, 'projections')[projectionName];
     if (!projection) {
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
@@ -110,8 +112,8 @@ export default Ember.Mixin.create({
     let page = reloadOptions.page;
     let pageNumber = parseInt(page, 10);
     let perPageNumber = parseInt(perPage, 10);
-    Ember.assert('page must be greater than zero.', pageNumber > 0);
-    Ember.assert('perPage must be greater than zero.', perPageNumber > 0);
+    assert('page must be greater than zero.', pageNumber > 0);
+    assert('perPage must be greater than zero.', perPageNumber > 0);
 
     let builder = new Builder(store)
       .from(modelName)
@@ -202,7 +204,7 @@ export default Ember.Mixin.create({
     }
 
     switch (attribute.type) {
-      case 'string':
+      case 'string': {
         let words = filter.trim().replace(/\s+/g, ' ').split(' ');
         if (filterCondition && words.length > 1) {
           let predicates = words.map(word => new StringPredicate(attribute.name).contains(word));
@@ -210,23 +212,26 @@ export default Ember.Mixin.create({
         }
 
         return new StringPredicate(attribute.name).contains(filter);
+      }
 
-      case 'number':
+      case 'number': {
         if (isFinite(filter)) {
           return new SimplePredicate(attribute.name, 'eq', +filter);
         }
 
         return null;
+      }
 
-      case 'decimal':
+      case 'decimal': {
         filter = filter.replace(',', '.');
         if (isFinite(filter)) {
           return new SimplePredicate(attribute.name, 'eq', +filter);
         }
 
         return null;
+      }
 
-      case 'boolean':
+      case 'boolean': {
         let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
         let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
 
@@ -239,9 +244,11 @@ export default Ember.Mixin.create({
         }
 
         return null;
+      }
 
-      default:
+      default: {
         return null;
+      }
     }
   },
 
@@ -255,7 +262,7 @@ export default Ember.Mixin.create({
     @private
   */
   _getFilterPredicate: function(modelProjection, params) {
-    Ember.assert('Projection is not defined', modelProjection);
+    assert('Projection is not defined', modelProjection);
 
     let predicates = [];
     if (params.filter) {
@@ -287,17 +294,18 @@ export default Ember.Mixin.create({
       if (projection.attributes.hasOwnProperty(name)) {
         let attribute = projection.attributes[name];
         switch (attribute.kind) {
-          case 'attr':
-            let options = Ember.merge({}, attribute.options);
+          case 'attr': {
+            let options = merge({}, attribute.options);
             options.displayMemberPath = projection.options && projection.options.displayMemberPath === name;
             attributes.push({
               name: name,
               options: options,
-              type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
+              type: get(store.modelFor(projection.modelName), 'attributes').get(name).type,
             });
             break;
+          }
 
-          case 'belongsTo':
+          case 'belongsTo': {
             let belongsToAttributes = this._attributesForFilter(attribute, store);
             for (let i = 0; i < belongsToAttributes.length; i++) {
               belongsToAttributes[i].name = `${name}.${belongsToAttributes[i].name}`;
@@ -305,12 +313,14 @@ export default Ember.Mixin.create({
             }
 
             break;
+          }
 
           case 'hasMany':
             break;
 
-          default:
+          default: {
             throw new Error(`Not supported kind: ${attribute.kind}`);
+          }
         }
       }
     }
@@ -328,15 +338,15 @@ export default Ember.Mixin.create({
   */
   _normalizeNeqPredicate(predicate) {
     let result = predicate;
-    if (!Ember.isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
+    if (!isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
       let sp1 = predicate;
       let sp2;
       if (predicate instanceof SimplePredicate) {
-        sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+        sp2 = new SimplePredicate(sp1._attributePath, FilterOperator.Eq, null);
       }
 
       if (predicate instanceof DatePredicate) {
-        sp2 = new DatePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+        sp2 = new DatePredicate(sp1._attributePath, FilterOperator.Eq, null);
       }
 
       result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;

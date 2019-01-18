@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
 import EditFormController from './edit-form';
 
 /**
@@ -32,7 +33,7 @@ export default EditFormController.extend({
     @private
     @readOnly
   */
-  _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
+  _hasParentRoute: computed('modelCurrentAgregatorPathes', function() {
     let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
     let modelAgregatorRoutes = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) ||
@@ -95,9 +96,11 @@ export default EditFormController.extend({
       @method actions.saveAndClose
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
+    /* eslint-disable no-unused-vars */
     saveAndClose(skipTransition) {
       this._super.apply(this, arguments);
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handler for button 'Delete' click.
@@ -139,6 +142,7 @@ export default EditFormController.extend({
     @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
+  /* eslint-disable no-unused-vars */
   close(skipTransition, rollBackModel) {
     this._setFlexberryDetailInteractionSettings();
     if (!this.get('_hasParentRoute')) {
@@ -163,6 +167,7 @@ export default EditFormController.extend({
       this.rejectError(reason);
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Save object.
@@ -172,10 +177,12 @@ export default EditFormController.extend({
     @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
     @return {Promise}
   */
+  /* eslint-disable no-unused-vars */
   save(close, skipTransition) {
     this._saveInternalLogic();
     return this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Delete object, if successful transition to parent route.
@@ -184,10 +191,12 @@ export default EditFormController.extend({
     @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     @return {Promise}
   */
+  /* eslint-disable no-unused-vars */
   delete(skipTransition) {
     this._setFlexberryDetailInteractionSettings();
     return this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Method to transit to parent's route (previous route).
@@ -217,7 +226,7 @@ export default EditFormController.extend({
       flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator) {
-        let store = Ember.getOwner(this).lookup('service:store');
+        let store = getOwner(this).lookup('service:store');
         let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') &&
           store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
 

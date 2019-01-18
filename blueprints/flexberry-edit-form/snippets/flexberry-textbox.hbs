@@ -1,15 +1,12 @@
-<div class="ui grid {{if model.errors.<%= name %> 'error' ''}}">
-  <div class="ui two wide column right aligned middle aligned content">
-    <label>{{<%= caption %>}}</label>
+  <div class="ui grid {{if (v-get validationObject "<%= name %>" "isInvalid") "error"}}">
+    <div class="ui two wide column right aligned content">
+      <label>{{<%= caption %>}}</label>
+    </div>
+    <div class="ten wide column">
+      {{flexberry-textbox
+        readonly=<%= readonly %>
+        value=model.<%= name %>
+      }}
+      {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages") pointing="left pointing"}}
+    </div>
   </div>
-  <div class="ten wide column">
-    {{
-      flexberry-textbox
-      placeholder=(t 'components.flexberry-textbox.placeholder')
-      readonly=<%= readonly %>
-      required=true
-      value=model.<%= name %>
-    }}
-  </div>
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
-</div>

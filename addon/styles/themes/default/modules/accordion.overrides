@@ -26,39 +26,3 @@
 .ui.accordion .accordion .title .dropdown.icon:before {
   content: '\f0da'/*rtl:'\f0d9'*/;
 }
-
-/* Flexberry tree */
-.flexberry-tree {
-  margin: 0;
-  &-placeholder {
-    text-align: center;
-  }
-  &-header,
-  &-footer {
-    padding: 0.75em 1em;
-  }
-}
-
-.ui.styled.accordion .title,
-.ui.styled.accordion .accordion .title {
-  line-height: 2em;
-  &>* {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1em;
-  }
-  .flexberry-button {
-    float: right;
-    padding: .5em;
-  }
-}
-
-.ui.accordion,
-.ui.accordion {
-  .content,
-  .accordion .content {
-    .flexberry-slider {
-      padding-right: .7em;
-    }
-  }
-}

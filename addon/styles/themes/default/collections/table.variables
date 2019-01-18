@@ -2,15 +2,6 @@
              Table
 *******************************/
 
-/*-----------------------------
-       Object List View
--------------------------------*/
-@olvMargin: 0;
-@olvSelectableCursor: pointer;
-
-/* Container */
-@olvContainerMargin: 1em 0;
-
 /*-------------------
        Element
 --------------------*/
@@ -99,8 +90,13 @@
 @definitionFooterFontWeight: @definitionHeaderFontWeight;
 
 @definitionColumnBackground: @subtleTransparentBlack;
-@definitionColumnColor: @selectedTextColor;
 @definitionColumnFontWeight: bold;
+@definitionColumnColor: @selectedTextColor;
+@definitionColumnFontSize: @relativeMedium;
+@definitionColumnTextTransform: '';
+@definitionColumnBoxShadow: '';
+@definitionColumnTextAlign: '';
+@definitionColumnHorizontalPadding: '';
 
 
 /*--------------

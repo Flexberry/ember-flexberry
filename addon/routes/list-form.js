@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -59,7 +63,7 @@ ErrorableRouteMixin, {
     @type FormLoadTimeTrackerService
     @private
   */
-  formLoadTimeTracker: Ember.inject.service(),
+  formLoadTimeTracker: service(),
 
   /**
     Current sorting.
@@ -68,13 +72,13 @@ ErrorableRouteMixin, {
     @type Array
     @default []
   */
-  sorting: [],
+  sorting: undefined,
 
   /**
     @property colsConfigMenu
     @type Service
   */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
     Service for managing the state of the application.
@@ -82,11 +86,16 @@ ErrorableRouteMixin, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
+
+  init() {
+    this._super(...arguments);
+    this.set('sorting', []);
+  },
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -109,7 +118,7 @@ ErrorableRouteMixin, {
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
-    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
     let nComponents = 0;
     let componentName;
@@ -122,22 +131,23 @@ ErrorableRouteMixin, {
         case 'object':
           break;
         default:
-          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+          assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
       nComponents += 1;
     }
 
     if (nComponents === 0) {
-      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+      assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
     }
 
-    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
+    assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
       nComponents === 1);
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
+    /* eslint-disable no-unused-vars */
     userSettingPromise
       .then(currectPageUserSettings => {
         if (this._invalidSorting(params.sort)) {
@@ -163,11 +173,13 @@ ErrorableRouteMixin, {
             this.perPage = params.perPage;
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
           } else {
+            /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams:  Ember.$.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
+              this.transitionTo(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: Ember.$.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
+              this.transitionTo(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
+            /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
           }
         }
 
@@ -197,9 +209,9 @@ ErrorableRouteMixin, {
         this.includeSorting(records, this.sorting);
         controller.set('model', records);
 
-        if (this.sorting.length > 0 && Ember.isNone(controller.get('sort'))) {
-          let sortQueryParam = serializeSortingParam(this.sorting, controller.get('sortDefaultValue'));
-          controller.set('sort', sortQueryParam);
+        if (this.sorting.length > 0 && isNone(this.get('controller').get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
+          this.get('controller').set('sort', sortQueryParam);
         }
 
         return records;
@@ -209,11 +221,12 @@ ErrorableRouteMixin, {
         this.onModelLoadingAlways(data, transition);
         this.get('appState').reset();
       });
+    /* eslint-enable no-unused-vars */
 
     // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
-    if (Ember.isNone(model)) {
+    if (isNone(model)) {
       return { isLoading: true };
     } else {
       return model;
@@ -234,8 +247,10 @@ ErrorableRouteMixin, {
     @param {Object} queryParameters Query parameters used for model loading operation.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingStarted(queryParameters, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked when model loading operation successfully completed.
@@ -251,8 +266,10 @@ ErrorableRouteMixin, {
     @param {Object} model Loaded model data.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingFulfilled(model, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked when model loading operation completed, but failed.
@@ -289,17 +306,20 @@ ErrorableRouteMixin, {
     @param {Object} data Data about completed model loading operation.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController).
 
     @method setupController
-    @param {<a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>} controller
+    @param {<a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>} controller
     @param {Object} model
   */
+  /* eslint-disable no-unused-vars */
   setupController: function(controller, model) {
     this._super(...arguments);
     this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
@@ -309,13 +329,12 @@ ErrorableRouteMixin, {
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('error', undefined);
-    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));
     controller.set('filtersPredicate', this.get('filtersPredicate'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
   },
 
@@ -334,7 +353,7 @@ ErrorableRouteMixin, {
 
       let modelClass = store.modelFor(this.get('modelName'));
       for (let i = 0; i < path.length; i++) {
-        let relationshipsByName = Ember.get(modelClass, 'relationshipsByName');
+        let relationshipsByName = get(modelClass, 'relationshipsByName');
         let relationship = relationshipsByName.get(path[i]);
         if (relationship) {
           modelClass = store.modelFor(relationship.type);
@@ -343,7 +362,7 @@ ErrorableRouteMixin, {
         }
       }
 
-      invalid = invalid || !Ember.get(modelClass, 'attributes').get(propertyName);
+      invalid = invalid || !get(modelClass, 'attributes').get(propertyName);
     });
 
     return invalid;

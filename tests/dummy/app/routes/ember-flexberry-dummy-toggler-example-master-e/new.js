@@ -1,5 +1,5 @@
 import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
-
+import { computed } from '@ember/object';
 export default EditFormNewRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -47,15 +47,16 @@ export default EditFormNewRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: {
-    togglerExampleDetailGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
+  developerUserSettings: computed(function() {
+    return {
+      togglerExampleDetailGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
+        }
       }
     }
-  },
+  }),
 });

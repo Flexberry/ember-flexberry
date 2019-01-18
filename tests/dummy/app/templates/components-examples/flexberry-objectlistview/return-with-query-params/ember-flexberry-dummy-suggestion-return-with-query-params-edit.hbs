@@ -41,12 +41,9 @@
     </div>
   </div>
   <div class="ui segment">
-    {{flexberry-button
-      caption=(t "forms.application.sitemap.components-examples.flexberry-objectlistview.return-from-ediform.return-button")
-      readonly=false
-      click=(action "onButtonClick")
-      class="return-to-list-form"
-    }}
+    <button type="submit" class="ui button return-to-list-form" {{action 'onButtonClick'}}>
+      {{t "forms.application.sitemap.components-examples.flexberry-objectlistview.return-from-ediform.return-button"}}
+    </button>
   </div>
   <div class="field {{if model.errors.address "error" ""}}">
     {{flexberry-field
@@ -66,7 +63,7 @@
   </div>
   <div class="field {{if model.errors.date "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
       value=model.date
       readonly=readonly
     }}

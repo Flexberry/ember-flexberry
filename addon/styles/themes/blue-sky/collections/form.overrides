@@ -163,4 +163,10 @@ option {
             margin: 0 !important;
         }
     }     
+.flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-content {
+    text-align: center;
+}
+
+.flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
+    padding-top: 20px;
 }

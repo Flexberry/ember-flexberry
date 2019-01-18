@@ -2,9 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
 
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute(sorting) {
     switch (sorting) {
       case '1':

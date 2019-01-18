@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { observer } from '@ember/object';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -34,8 +33,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   checkboxValue: false,
   fieldvalue: 'Vasya',
 
-  lookupReadonly: Ember.observer('checkboxValue', function() {
-    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.readonly'))) {
+  lookupReadonly: observer('checkboxValue', function() {
+    if (!isNone(this.get('computedProperties.dynamicProperties.readonly'))) {
       if (this.get('checkboxValue')) {
         this.set('computedProperties.dynamicProperties.readonly', true);
       } else {
@@ -46,8 +45,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     return this.get('checkboxValue');
   }),
 
-  lookupLimitFunction: Ember.observer('fieldvalue', function() {
-    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.lookupLimitPredicate'))) {
+  lookupLimitFunction: observer('fieldvalue', function() {
+    if (!isNone(this.get('computedProperties.dynamicProperties.lookupLimitPredicate'))) {
       this.set('computedProperties.dynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
     }
 

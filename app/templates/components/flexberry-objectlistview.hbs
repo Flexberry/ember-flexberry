@@ -17,7 +17,7 @@
   enableDeleteButton=(not readonly)
   componentName=componentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
@@ -72,8 +72,8 @@
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
@@ -92,6 +92,7 @@
   customButtonsInRow=customButtonsInRow
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  customParameters=customParameters
 }}
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin nav-bar">
@@ -108,7 +109,7 @@
           <div class="ui button">...</div>
         {{else}}
           {{#if page.isCurrent}}
-            <button class="ui active button">{{page.number}}</button>
+            <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
           {{else}}
             <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
           {{/if}}
@@ -123,7 +124,7 @@
       {{/if}}
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat
@@ -132,7 +133,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
 {{/unless}}

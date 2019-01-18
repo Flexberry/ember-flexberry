@@ -1,24 +1,28 @@
-/* jshint node: true */
+/* globals module */
+'use strict';
 
 module.exports = function(environment) {
-  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  var backendUrl = 'http://flexberry.northeurope.cloudapp.azure.com';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
     backendUrl = 'http://localhost:6501';
   }
 
-  var ENV = {
+  let ENV = {
     repositoryName: 'ember-flexberry/dummy',
     modulePrefix: 'dummy',
-    environment: environment,
-    baseURL: '/',
+    environment,
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
-      LOG_STACKTRACE_ON_DEPRECATION: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
       }
     },
 
@@ -113,7 +117,8 @@ module.exports = function(environment) {
   // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.
   // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).
   ENV.moment = {
-    outputFormat: 'L'
+    outputFormat: 'L',
+    includeLocales: ['ru']
   };
 
   if (environment === 'development') {
@@ -126,18 +131,25 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
+
+    // URL of the backend running in docker.
+    backendUrl = 'http://localhost:6500';
+    ENV.APP.backendUrl = backendUrl;
+    ENV.APP.backendUrls.root = backendUrl;
+    ENV.APP.backendUrls.api = backendUrl + '/odata';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
 
+    // here you can enable a production-specific feature
   }
 
   // Change paths to application assets if build has been started with the following parameters:
@@ -154,7 +166,7 @@ module.exports = function(environment) {
     });
 
     // Change base URL to force paths to application assets be relative.
-    ENV.baseURL = '/' + ENV.repositoryName + '/' + branch + '/';
+    ENV.rootURL = '/' + ENV.repositoryName + '/' + branch + '/';
     ENV.locationType = 'hash';
   }
 

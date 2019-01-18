@@ -10,17 +10,19 @@ var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
-    { name: "flexberry-datepicker", types: ["date"] },
+    { name: "flexberry-simpledatetime", types: ["date"] },
     { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 module.exports = {
     description: 'Generates an ember edit-form for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -46,6 +48,16 @@ module.exports = {
             CommonUtils_1.default.installReexportNew(options, ["controller", "route"]);
         }
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super(...arguments);
+    },
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

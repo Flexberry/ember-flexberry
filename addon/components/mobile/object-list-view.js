@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
 
 /**
@@ -28,10 +28,7 @@ export default ObjectListViewComponent.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of middlee column.
@@ -48,7 +45,7 @@ export default ObjectListViewComponent.extend({
     @type Number
     @readOnly
   */
-  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
+  colspan: computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
     let columnsCount = 1;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;
@@ -59,5 +56,13 @@ export default ObjectListViewComponent.extend({
     }
 
     return columnsCount;
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  }
 });

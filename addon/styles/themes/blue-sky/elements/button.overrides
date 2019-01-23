@@ -124,7 +124,7 @@ div.ui.secondary.menu.no-margin {
 .ui.button.icon.hierarchical-button {
     border: 0px;
     padding: 0 5px 0;
-    font-size: 21px;
+    font-size: 1.5rem;
     &:hover {
         background: @white;
     }
@@ -141,10 +141,6 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.collexp-button {
     border: 0px;
-}
-
-.ui.buttons.filter-active { 
-    border: none;
 }
 
 .ui.buttons.removeFilter-button {

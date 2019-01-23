@@ -59,9 +59,12 @@
     right: -5em;
 }
 
-.flexberry-dropdown {
-    max-width: 100%;
-    div.text {
-      max-width: inherit;
+.flexberry-vertical-form {
+    .ui.dropdown.flexberry-dropdown.selection {
+        max-width: 100%;
+        min-height: 37px;
+        div.text {
+            max-width: inherit;
+        }
     }
 }

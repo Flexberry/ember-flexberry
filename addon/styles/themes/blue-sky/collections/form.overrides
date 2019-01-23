@@ -125,44 +125,43 @@ option {
     width: 100%;
 }
 
-.flexberry-vertical-form {
+form.ui.form.flexberry-vertical-form {
     .ember-text-area  {
-        border: none !important;
-        border-bottom: 1px solid @inputBorderColor !important;
-        border-radius: 0px !important;
-        padding-top: 0 !important;
+        border: none;
+        border-bottom: 1px solid @inputBorderColor;
+        border-radius: 0px;
+        padding-top: 0;
     }
 }
 
-.flexberry-vertical-form {
+form.ui.form.flexberry-vertical-form {
     .ember-text-field,
     .ember-text-area,
     .flexberry-simpledatetime,
     .flexberry-dropdown,
     .custom-flatpickr {
-        padding-left: 0 !important; 
-    }
-    .flexberry-dropdown {
-        max-height: 35px !important;
-        min-height: 35px !important;
+        padding-left: 0; 
+        height: 37px;
     }
     .field {
-        margin-bottom: 2em !important;
+        margin-bottom: 2em;
         label {
             margin-bottom: 5px;
         }
         > .field {
-            margin: 0 !important;
+            margin: 0;
         }
     }  
     .column {
-        margin-bottom: 2em !important;
-        padding-bottom: 0 !important;
-        padding-top: 0 !important;
+        margin-bottom: 2em;
+        padding-bottom: 0;
+        padding-top: 0;
         > .column {
-            margin: 0 !important;
+            margin: 0;
         }
-    }     
+    }  
+}
+
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-content {
     text-align: center;
 }
@@ -170,3 +169,4 @@ option {
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
     padding-top: 20px;
 }
+

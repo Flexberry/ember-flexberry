@@ -40,18 +40,31 @@ export default Ember.Mixin.create({
     if (filter.condition) {
       switch (filter.type) {
         case 'string':
-          return filter.condition === 'like' && filter.pattern ?
-            new StringPredicate(filter.name).contains(filter.pattern) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          if (filter.condition === 'like') {
+            return (!Ember.isNone(filter.pattern)) ?
+              new StringPredicate(filter.name).contains(filter.pattern) :
+              null;
+          } else {
+            return (!Ember.isNone(filter.pattern)) ?
+              new SimplePredicate(filter.name, filter.condition, filter.pattern) :
+              new SimplePredicate(filter.name, filter.condition, null);
+          }
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+          if (!Ember.isNone(filter.pattern)) {
+            return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+          } else {
+            return null;
+          }
         case 'date':
-          return filter.pattern ?
-            new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
-
+          if (!Ember.isNone(filter.pattern)) {
+            return filter.pattern ?
+              new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
+              new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          } else {
+            return null;
+          }
         default:
           return null;
       }

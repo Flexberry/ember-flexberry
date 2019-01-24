@@ -50,6 +50,7 @@ export default Ember.Mixin.create({
               new SimplePredicate(filter.name, filter.condition, null);
           }
 
+          break;
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
@@ -59,6 +60,7 @@ export default Ember.Mixin.create({
             return null;
           }
 
+          break;
         case 'date':
           if (!Ember.isNone(filter.pattern)) {
             return filter.pattern ?
@@ -68,6 +70,7 @@ export default Ember.Mixin.create({
             return null;
           }
 
+          break;
         default:
           return null;
       }

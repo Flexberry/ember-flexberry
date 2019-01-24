@@ -37,6 +37,7 @@ Router.map(function() {
   { path: 'ember-flexberry-dummy-master-edit/:id' });
   this.route('ember-flexberry-dummy-master-edit.new',
   { path: 'ember-flexberry-dummy-master-edit/new' });
+  this.route('ember-flexberry-dummy-parent-detail-list');
 
   // Logging.
   this.route('i-i-s-caseberry-logging-objects-application-log-l');

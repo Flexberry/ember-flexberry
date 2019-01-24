@@ -1,0 +1,15 @@
+﻿{
+  "newForm": null,
+  "editForm": null,
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyParentDetailList",
+  "className": "ParentDetailList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-detail",
+      "modelProjection": "Detail"
+    }
+  ]
+}

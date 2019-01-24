@@ -1,0 +1,55 @@
+<h3 class="ui header">{{t 'forms.components-examples.flexberry-groupedit.ember-flexberry-dummy-master-edit.caption'}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui button save-button" {{action 'save'}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+        {{#unless model.isNew}}
+          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
+            {{t "forms.edit-form.delete-button-text"}}
+          </button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action 'close'}}>
+        {{t "forms.edit-form.close-button-text"}}
+      </button>
+    </div>
+  </div>
+  <div class="field">
+  {{
+    flexberry-field
+    placeholder=(t 'components.flexberry-field.placeholder')
+    readonly=readonly
+    required=true
+    value=model.name
+    class=(if model.errors.name 'error' '')
+    label=(t 'forms.components-examples.flexberry-groupedit.ember-flexberry-dummy-master-edit.name-caption')
+  }}
+  {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+</div>
+
+<div class="field">
+  <label>{{t 'forms.components-examples.flexberry-groupedit.ember-flexberry-dummy-master-edit.detail-caption'}}</label>
+  {{
+    flexberry-groupedit
+    componentName="detailGroupEdit"
+    mainModelProjection=modelProjection
+    modelProjection=modelProjection.attributes.detail
+    content=model.detail
+    readonly=readonly
+    orderable=false
+    class=(if model.errors.detail 'error' '')
+  }}
+  {{flexberry-validationmessage error=model.errors.detail pointing="pointing"}}
+</div>
+
+</form>

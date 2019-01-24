@@ -123,6 +123,7 @@ export default Ember.Mixin.create({
               new SimplePredicate(filter.name, filter.condition, filter.pattern) :
               new SimplePredicate(filter.name, filter.condition, null);
           }
+
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
@@ -131,6 +132,7 @@ export default Ember.Mixin.create({
           } else {
             return null;
           }
+
         case 'date':
           if (!Ember.isNone(filter.pattern)) {
             return filter.pattern ?
@@ -139,6 +141,7 @@ export default Ember.Mixin.create({
           } else {
             return null;
           }
+
         default:
           return null;
       }

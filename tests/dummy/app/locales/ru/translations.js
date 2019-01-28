@@ -383,10 +383,6 @@ Ember.$.extend(true, translations, {
             'ember-flexberry-dummy-master-edit': {
               'caption': 'Пример иерархического детейла',
               'title': ''
-            },
-            'ember-flexberry-dummy-parent-detail-list': {
-              'caption': 'Список детейлов',
-              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -809,9 +805,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Иерархический детейл',
           'name-caption': 'Наименование',
           'detail-caption': 'Детейл'
-        },
-        'ember-flexberry-dummy-parent-detail-list': {
-          'caption': 'Список детейлов'
         }
       },
       'flexberry-lookup': {

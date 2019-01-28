@@ -373,10 +373,6 @@ Ember.$.extend(true, translations, {
             'ember-flexberry-dummy-master-edit': {
               'caption': 'Example of hierarchical datail',
               'title': ''
-            },
-            'ember-flexberry-dummy-parent-detail-list': {
-              'caption': 'List of detailes',
-              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -798,9 +794,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Hierarchical detail',
           'name-caption': 'Name',
           'detail-caption': 'Detail'
-        },
-        'ember-flexberry-dummy-parent-detail-list': {
-          'caption': 'List of detailes'
+
         }
       },
       'flexberry-lookup': {

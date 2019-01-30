@@ -12,7 +12,7 @@ executeTest('multiple transactions', (store, assert, app) => {
   let uuid2 = '2' + generateUniqueId();
 
   Ember.run(() => {
-    let done = assert.async()
+    let done = assert.async();
     let timeout = 10000;
     let newRecord1;
     let newRecord2;

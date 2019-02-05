@@ -59,7 +59,7 @@ executeTest('check empty filter', (store, assert, app) => {
             }
           }
 
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
+          assert.equal(filtherResult.length === 0, false, 'Filtered list is not empty');
           assert.equal(successful, true, 'Filter successfully worked');
         }).finally(() => {
           newRecords[2].destroyRecord().then(() => {

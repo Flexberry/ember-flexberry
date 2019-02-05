@@ -129,7 +129,11 @@ export function refreshListByFunction(refreshFunction, controller) {
     let timeiutForLongTimeLoad = checkInterval + 500;
 
     let $lastLoadCount = controller.loadCount;
-    refreshFunction();
+    Ember.run(() => {
+      window.setTimeout(() => {
+        refreshFunction();
+      }, checkInterval);
+    });
 
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {

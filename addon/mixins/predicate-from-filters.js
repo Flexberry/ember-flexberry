@@ -43,7 +43,7 @@ export default Ember.Mixin.create({
           if (filter.condition === 'like') {
             return (!Ember.isNone(filter.pattern)) ?
               new StringPredicate(filter.name).contains(filter.pattern) :
-              null;
+              new StringPredicate(filter.name).contains(null);
           } else {
             return (!Ember.isNone(filter.pattern)) ?
               new SimplePredicate(filter.name, filter.condition, filter.pattern) :

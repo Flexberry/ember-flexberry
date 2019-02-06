@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
-import { later } from '@ember/runloop';
 
 // Function for waiting list loading.
 export function loadingList($ctrlForClick, list, records) {
@@ -277,15 +276,24 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
     let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
+    let fillPromise;
     if (textbox.length !== 0) {
-      let fillPromise = fillIn(textbox, filterValue);
+      fillPromise = fillIn(textbox, filterValue);
     }
 
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
 
-    fillPromise.then(() => resolve());
+    if (fillPromise) {
+      fillPromise.then(() => resolve());
+    } else {
+      let timeout = 300;
+      Ember.run.later((() => {
+        resolve();
+      }), timeout);
+    }
+    
   });
 }
 

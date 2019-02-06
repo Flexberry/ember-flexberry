@@ -1,54 +1,61 @@
 import Ember from 'ember';
-import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { executeTest, addDataForDestroy } from './execute-folv-test';
 
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
 executeTest('multiple transactions', (store, assert, app) => {
-  assert.expect(2);
+  assert.expect(1);
   let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let uuid1 = '1' + generateUniqueId();
-  let uuid2 = '2' + generateUniqueId();
+  let testName = 'Multiple transactions test record ';
 
   Ember.run(() => {
     let done = assert.async();
-    let timeout = 10000;
-    let newRecord1;
-    let newRecord2;
+    let recordCount = 100;
+    let timeout = 50 * recordCount;
+    let newRecords = Ember.A();
 
     // Create new records.
-    newRecord1 = store.createRecord(modelName, { name: uuid1, patent: newRecord2 });
-    newRecord2 = store.createRecord(modelName, { name: uuid2, patent: newRecord1 });
+    for (let i=0; i<recordCount; i++) {
+        newRecords.pushObject(store.createRecord(modelName, { name: testName + i}));
+        addDataForDestroy(newRecords[i]);
+    }
 
-    newRecord1.save().then(() => {
-      newRecord2.save().then(() => {
+    for(let i=0; i<recordCount; i++) {
+      newRecords[i].save();
+    }
 
-        // Add record to destroy afther test.
-        addDataForDestroy(newRecord2);
-        addDataForDestroy(newRecord1);
+    Ember.run.later((function() {
 
-        // Add circular reference to records.
-        newRecord2.set('parent', newRecord2);
-        newRecord1.set('parent', newRecord1);
+      newRecords[0].set('parent', newRecords[recordCount - 1]);
+      for (let i=1; i<recordCount; i++) {
+        newRecords[i].set('parent', newRecords[i - 1]);
+      }
 
-        // Save their together.
-        newRecord1.save();
-        newRecord2.save();
+      for(let i=0; i<recordCount; i++) {
+        newRecords[i].save();
+      }
 
-        Ember.run.later((function() {
-          // Check created records.
-          let builder = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid1);
-          store.query(modelName, builder.build()).then((result) => {
-            assert.ok(result.content.length, 'record \'' + uuid1 + 'ok');
-            let builder = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid2);
-            store.query(modelName, builder.build()).then((result) => {
-              assert.ok(result.content.length, 'record \'' + uuid2 + 'ok');
+      Ember.run.later((function() {
+        // Check created records.
+        let builder = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, testName + 0);
+        store.query(modelName, builder.build()).then((result) => {
+          assert.ok(result.content.length, 'record \'' + testName + 0 + ' ok');
+
+          Ember.run.later((function() {
+            for (let i=0; i<recordCount; i++) {
+              newRecords[i].set('parent', null);
+            }
+
+            for(let i=0; i<recordCount; i++) {
+              newRecords[i].save();
+            }
+            Ember.run.later((function() {
               done();
-            });
-          });
-        }), timeout);
-      });
-    });
+            }), timeout);
+          }), timeout);
+        });
+      }), timeout);
+    }), timeout);
   });
 });

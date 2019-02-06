@@ -293,7 +293,7 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
         resolve();
       }), timeout);
     }
-    
+
   });
 }
 

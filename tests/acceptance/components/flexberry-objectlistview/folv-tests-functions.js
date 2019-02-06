@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
+import { later } from '@ember/runloop';
 
 // Function for waiting list loading.
 export function loadingList($ctrlForClick, list, records) {
@@ -254,9 +255,7 @@ export function filterObjectListView(objectListView, operations, filterValues) {
 
   for (let i = 0; i < tableColumns.length; i++) {
     if (operations[i]) {
-      Ember.run.next(function() {
-        promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
-      });
+      promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
     }
   }
 
@@ -279,14 +278,14 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
     if (textbox.length !== 0) {
-      fillIn(textbox, filterValue);
+      let fillPromise = fillIn(textbox, filterValue);
     }
 
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
 
-    resolve();
+    fillPromise.then(() => resolve());
   });
 }
 

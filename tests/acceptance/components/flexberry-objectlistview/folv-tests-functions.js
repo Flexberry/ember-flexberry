@@ -129,12 +129,7 @@ export function refreshListByFunction(refreshFunction, controller) {
     let timeiutForLongTimeLoad = checkInterval + 500;
 
     let $lastLoadCount = controller.loadCount;
-    Ember.run(() => {
-      window.setTimeout(() => {
-        refreshFunction();
-      }, checkInterval);
-    });
-
+    refreshFunction();
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {
         let loadCount = controller.loadCount;
@@ -259,7 +254,9 @@ export function filterObjectListView(objectListView, operations, filterValues) {
 
   for (let i = 0; i < tableColumns.length; i++) {
     if (operations[i]) {
-      promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
+      Ember.run.next(function() {
+        promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
+      });
     }
   }
 
@@ -289,10 +286,7 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
       dropdown.dropdown('set selected', filterValue);
     }
 
-    let timeout = 300;
-    Ember.run.later((() => {
-      resolve();
-    }), timeout);
+    resolve();
   });
 }
 

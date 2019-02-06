@@ -16,12 +16,12 @@ executeTest('multiple transactions', (store, assert, app) => {
     let newRecords = Ember.A();
 
     // Create new records.
-    for (let i = 0 ; i < recordCount; i++) {
-        newRecords.pushObject(store.createRecord(modelName, { name: testName + i}));
-        addDataForDestroy(newRecords[i]);
+    for (let i = 0; i < recordCount; i++) {
+      newRecords.pushObject(store.createRecord(modelName, { name: testName + i }));
+      addDataForDestroy(newRecords[i]);
     }
 
-    for (let i = 0 ; i < recordCount; i++) {
+    for (let i = 0; i < recordCount; i++) {
       newRecords[i].save();
     }
 
@@ -32,7 +32,7 @@ executeTest('multiple transactions', (store, assert, app) => {
         newRecords[i].set('parent', newRecords[i - 1]);
       }
 
-      for(let i = 0; i < recordCount; i++) {
+      for (let i = 0; i < recordCount; i++) {
         newRecords[i].save();
       }
 
@@ -47,7 +47,7 @@ executeTest('multiple transactions', (store, assert, app) => {
               newRecords[i].set('parent', null);
             }
 
-            for(let i = 0; i < recordCount; i++) {
+            for (let i = 0; i < recordCount; i++) {
               newRecords[i].save();
             }
 

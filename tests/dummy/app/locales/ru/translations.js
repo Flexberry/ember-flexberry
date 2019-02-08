@@ -92,7 +92,63 @@ Ember.$.extend(true, translations, {
               }
             }
           }
-        }
+        },
+        SuggestionEWithComputedField: {
+          address: {
+            __caption__: 'address'
+          },
+          text: {
+            __caption__: 'text'
+          },
+          date: {
+            __caption__: 'date'
+          },
+          votes: {
+            __caption__: 'votes'
+          },
+          moderated: {
+            __caption__: 'moderated'
+          },
+          author: {
+            __caption__: 'author',
+            name: {
+              __caption__: 'name'
+            }
+          },
+          type: {
+            __caption__: 'type',
+            name: {
+              __caption__: 'name'
+            },
+            moderated: {
+              __caption__: 'moderated'
+            },
+            computedField: {
+              __caption__: 'computedField'
+            },
+            creator: {
+              __caption__: 'creator'
+            }
+          },
+          editor1: {
+            __caption__: 'editor1',
+            name: {
+              __caption__: 'name'
+            }
+          },
+          createTime: {
+            __caption__: 'createTime'
+          },
+          creator: {
+            __caption__: 'creator'
+          },
+          editTime: {
+            __caption__: 'editTime'
+          },
+          editor: {
+            __caption__: 'editor'
+          }
+        },
       }
     },
     'ember-flexberry-dummy-application-user': {
@@ -153,7 +209,45 @@ Ember.$.extend(true, translations, {
               }
             }
           },
-        }
+        },
+        SuggestionTypeEWithComputedField: {
+          name: {
+            __caption__: 'Имя'
+          },
+          moderated: {
+            __caption__: 'moderated'
+          },
+          computedField: {
+            __caption__: 'Вычислимое поле'
+          },
+          parent: {
+            __caption__: 'parent',
+            name: {
+              __caption__: 'name'
+            },
+            moderated: {
+              __caption__: 'moderated'
+            },
+            computedField: {
+              __caption__: 'computedField'
+            },
+            creator: {
+              __caption__: 'creator'
+            }
+          },
+          createTime: {
+            __caption__: 'createTime'
+          },
+          creator: {
+            __caption__: 'creator'
+          },
+          editTime: {
+            __caption__: 'editTime'
+          },
+          editor: {
+            __caption__: 'editor'
+          }
+        },
       }
     },
     'ember-flexberry-dummy-comment': {

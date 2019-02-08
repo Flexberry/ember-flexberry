@@ -325,4 +325,28 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
   })
 });
 
+// Projection for lookup with computed field test.
+Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr(''),
+  text: Projection.attr(''),
+  date: Projection.attr(''),
+  votes: Projection.attr(''),
+  moderated: Projection.attr(''),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr('')
+  }),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: Projection.attr(''),
+    moderated: Projection.attr(''),
+    computedField: Projection.attr('')
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr('')
+  }),
+  createTime: Projection.attr(''),
+  creator: Projection.attr(''),
+  editTime: Projection.attr(''),
+  editor: Projection.attr('')
+});
+
 export default Model;

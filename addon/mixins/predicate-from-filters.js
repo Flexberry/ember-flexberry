@@ -54,8 +54,7 @@ export default Ember.Mixin.create({
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ?
-            Number(filter.pattern) : null);
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
         case 'date':
           return filter.pattern ?
             new DatePredicate(filter.name, filter.condition, filter.pattern, true) :

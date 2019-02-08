@@ -4,7 +4,7 @@ import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/com
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check neq filter', (store, assert, app) => {
-  assert.expect(3);
+  assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'neq';
@@ -48,8 +48,6 @@ executeTest('check neq filter', (store, assert, app) => {
             }
           }
 
-          //assert.equal(filtherResult.length > 0, false, 'Filtered list is not empty');
-          assert.equal(filtherResult.length === 0, false, 'Filtered list is not empty');
           assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });

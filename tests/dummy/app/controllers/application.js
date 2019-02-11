@@ -365,7 +365,7 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.title'),
             children: null
-          }, {
+          },  {
             link: 'components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.title'),
@@ -404,6 +404,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/autocomplete-order-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }]
         }, {

@@ -472,6 +472,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Window customization',
               'title': ''
             },
+            'compute-autocomplete': {
+              'caption': 'Example lookup with compute autocomplete',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -881,6 +885,10 @@ Ember.$.extend(true, translations, {
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Window customization',
           'titleLookup': 'Master'
+        },
+        'compute-autocomplete': {
+          'caption': 'Example lookup with compute autocomplete',
+          'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',

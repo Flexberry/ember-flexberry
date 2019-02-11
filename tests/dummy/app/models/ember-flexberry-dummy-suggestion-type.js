@@ -35,11 +35,11 @@ var Model = Projection.Model.extend({
   */
   computedField: DS.attr('string'),
 
-  computedFieldChanged: Ember.on('init', Ember.observer('Name', function() {
+  moderatedChanged: Ember.on('init', Ember.observer('Name', function() {
     Ember.run.once(this, 'computedFieldCompute');
   })),
 
-  computedFieldChanged: Ember.on('init', Ember.observer('Moderated', function() {
+  nameChanged: Ember.on('init', Ember.observer('Moderated', function() {
     Ember.run.once(this, 'computedFieldCompute');
   })),
 

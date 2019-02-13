@@ -95,45 +95,45 @@ Ember.$.extend(true, translations, {
         },
         SuggestionEWithComputedField: {
           address: {
-            __caption__: 'address'
+            __caption__: 'Адрес'
           },
           text: {
-            __caption__: 'text'
+            __caption__: 'Текст'
           },
           date: {
-            __caption__: 'date'
+            __caption__: 'Дата'
           },
           votes: {
-            __caption__: 'votes'
+            __caption__: 'Голоса'
           },
           moderated: {
-            __caption__: 'moderated'
+            __caption__: 'Одобрено'
           },
           author: {
-            __caption__: 'author',
+            __caption__: 'Пользователь приложения',
             name: {
-              __caption__: 'name'
+              __caption__: 'Наименование'
             }
           },
           type: {
-            __caption__: 'type',
+            __caption__: 'Тип предложения',
             name: {
-              __caption__: 'name'
+              __caption__: 'Наименование'
             },
             moderated: {
-              __caption__: 'moderated'
+              __caption__: 'Одобрено'
             },
             computedField: {
-              __caption__: 'computedField'
+              __caption__: 'Вычислимое поле'
             },
             creator: {
               __caption__: 'creator'
             }
           },
           editor1: {
-            __caption__: 'editor1',
+            __caption__: 'Редактор',
             name: {
-              __caption__: 'name'
+              __caption__: 'Имя'
             }
           },
           createTime: {
@@ -215,21 +215,21 @@ Ember.$.extend(true, translations, {
             __caption__: 'Имя'
           },
           moderated: {
-            __caption__: 'moderated'
+            __caption__: 'Одобрено'
           },
           computedField: {
             __caption__: 'Вычислимое поле'
           },
           parent: {
-            __caption__: 'parent',
+            __caption__: 'Иерархия',
             name: {
-              __caption__: 'name'
+              __caption__: 'Наименование'
             },
             moderated: {
-              __caption__: 'moderated'
+              __caption__: 'Одобрено'
             },
             computedField: {
-              __caption__: 'computedField'
+              __caption__: 'Вычислимое поле'
             },
             creator: {
               __caption__: 'creator'

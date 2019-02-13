@@ -465,6 +465,15 @@ export default FlexberryBaseComponent.extend({
   autocompleteOrder: null,
 
   /**
+    Projection name for autocomplete query.
+
+    @property autocompleteProjection
+    @type String
+    @default undefined
+  */
+  autocompleteProjection: undefined,
+
+  /**
     Current selected instance of the model.
 
     @property value
@@ -832,6 +841,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relationModelName = getRelationType(relatedModel, relationName);
+    let projectionName = this.get('autocompleteProjection');
 
     let displayAttributeName = this.get('displayAttributeName');
     let autocompleteOrder = this.get('autocompleteOrder');
@@ -878,13 +888,30 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
+          let selectAttributes = displayAttributeName;
+          if (!Ember.isNone(projectionName)) {
+            let modelConstructor = store.modelFor(relationModelName);
+            let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
+            if (!projection) {
+              throw new Error(`No projection with '${projectionName}' name defined in '${relationModelName}' model.`);
+            }
+
+            let attributes = Ember.get(projection, 'attributes');
+            let attributesKeys = Object.keys(attributes);
+            if (attributesKeys.indexOf(displayAttributeName) === -1) {
+              attributesKeys.push(displayAttributeName);
+            }
+
+            selectAttributes = attributesKeys.join(',');
+          }
+
           let builder;
           if (autocompleteOrder) {
             builder = new Builder(store, relationModelName)
-            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
+            .select(selectAttributes).orderBy(`${autocompleteOrder}`);
           } else {
             builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
+            .select(selectAttributes)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
           }
 

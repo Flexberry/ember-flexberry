@@ -62,13 +62,13 @@
       value=model.parent
       relatedModel=model
       relationName="parent"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
+      projection="SuggestionTypeEWithComputedField"
       title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly
       autocomplete=true
+      autocompleteProjection="AutocompleteProjectionExampleView"
       displayAttributeName="computedField"
     }}
     {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}

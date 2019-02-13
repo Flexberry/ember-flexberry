@@ -117,6 +117,8 @@ Model.defineProjection('SuggestionTypeEWithComputedField', 'ember-flexberry-dumm
     name: Projection.attr(''),
     moderated: Projection.attr(''),
     computedField: Projection.attr('')
+  }, {
+    displayMemberPath: 'computedField'
   }),
   localizedTypes: Projection.hasMany('ember-flexberry-dummy-localized-suggestion-type', '', {
     name: Projection.attr('Name'),
@@ -126,6 +128,12 @@ Model.defineProjection('SuggestionTypeEWithComputedField', 'ember-flexberry-dumm
     suggestionType: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
     }, { hidden: true })
   })
+});
+
+Model.defineProjection('AutocompleteProjectionExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: Projection.attr('Name'),
+  moderated: Projection.attr('Moderated'),
+  computedField: Projection.attr(''),
 });
 
 export default Model;

@@ -14,6 +14,7 @@ const {
   Condition,
   BasePredicate,
   StringPredicate,
+  SimplePredicate,
   ComplexPredicate
 } = Query;
 
@@ -303,6 +304,24 @@ export default FlexberryBaseComponent.extend({
   maxResults: 10,
 
   /**
+    Flag for remove autocomplete value if it's not in the results (remove when false).
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
+    Stores autocomplete value, when autocompletePersistValue=true and lookup value clearing.
+
+    @property autocompletePersistValueCache
+    @type String
+    @default undefined
+  */
+  autocompletePersistValueCache: undefined,
+
+  /**
     Limit function on lookup.
     It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
 
@@ -514,11 +533,9 @@ export default FlexberryBaseComponent.extend({
 
     @property displayValue
     @type String
-    @readOnly
+    @default undefined
   */
-  displayValue: Ember.computed('value', function() {
-    return this._buildDisplayValue();
-  }),
+  displayValue: undefined,
 
   /**
     Standard CSS class names to apply to the view's outer element.
@@ -636,6 +653,11 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      if (this.get('autocompletePersistValue')) {
+        this.set('autocompletePersistValueCache', undefined);
+        this.set('displayValue', undefined);
+      }
+
       this.sendAction('remove', removeData);
     },
 
@@ -692,11 +714,15 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
 
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.addObserver('value', this, this._valueObserver);
-    this.addObserver('displayAttributeName', this, this._valueObserver);
-    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autocompletePersistValue') && Ember.isNone(this.get('value'))) {
+      this.set('autocompletePersistValueCache', this.get('displayValue'));
+    }
   },
+
+  /**
+    Observe lookup value changes.
+  */
+  valueObserver: Ember.on('init', Ember.observer('value', 'displayAttributeName', function() { Ember.run.once(this, '_valueObserver'); })),
 
   /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
@@ -757,11 +783,6 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
-
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.removeObserver('value', this, this._valueObserver);
-    this.removeObserver('displayAttributeName', this, this._valueObserver);
-    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
   /**
@@ -970,8 +991,37 @@ export default FlexberryBaseComponent.extend({
         // and Ember won't change computed property.
 
         if (state !== 'selected') {
-          if (_this.get('displayValue')) {
-            _this.set('displayValue', _this._buildDisplayValue());
+          let displayValue = _this.get('displayValue');
+          if (displayValue) {
+            if (_this.get('autocompletePersistValue')) {
+              let builder = new Builder(store, relationModelName).select(displayAttributeName);
+
+              let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
+              let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+              if (resultPredicate) {
+                builder.where(resultPredicate);
+              }
+
+              Ember.run(() => {
+                store.query(relationModelName, builder.build()).then((records) => {
+                  let record = records.objectAt(0);
+                  if (Ember.isNone(record)) {
+                    _this.set('autocompletePersistValueCache', displayValue);
+                    _this.sendAction('remove', _this.get('removeData'));
+                  } else {
+                    _this.set('value', record);
+                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                      {
+                        relationName: relationName,
+                        modelToLookup: relatedModel,
+                        newRelationValue: record
+                      });
+                  }
+                });
+              });
+            } else {
+              _this.set('displayValue', _this._buildDisplayValue());
+            }
           } else {
             _this.sendAction('remove', _this.get('removeData'));
           }
@@ -1105,10 +1155,15 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _buildDisplayValue() {
+    let autocompletePersistValueCache = this.get('autocompletePersistValueCache');
+    if (autocompletePersistValueCache) {
+      this.set('autocompletePersistValueCache', undefined);
+    }
+
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      return '';
+      return autocompletePersistValueCache ? autocompletePersistValueCache : '';
     }
 
     if (!displayAttributeName) {

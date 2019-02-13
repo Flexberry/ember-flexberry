@@ -51,7 +51,7 @@ executeTest('check without operation filter', (store, assert, app) => {
 
           let dropdown = Ember.$('.flexberry-dropdown')[0];
           assert.equal(dropdown.innerText, 'like', 'Filter select like operation if it is not specified');
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
+          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
           assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });

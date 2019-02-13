@@ -3,8 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
 * `flexberry-groupedit` component:
     * Add text and icon custom buttons in toolbar.
+
+### Fixed
+* `reload-list-mixin` mixin:
+    * Fix error, when use DatePredicate in filter. Create only SimplePredicate from SimplePredicate and DatePredicate.
+    * Fix error, when use empty value in conditios "eq" and "like" by filters types data, string, number.
 
 ## [2.1.0-beta.0] - 2018-12-13
 ### Added

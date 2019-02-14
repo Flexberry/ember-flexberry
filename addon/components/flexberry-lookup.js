@@ -533,7 +533,6 @@ export default FlexberryBaseComponent.extend({
 
     @property displayValue
     @type String
-    @default undefined
   */
   displayValue: undefined,
 

@@ -13,14 +13,14 @@ export default EditFormController.extend({
 
   /**
     Property to show user message after click on user button.
-    
+
     @property messageForUser
     @type String
   */
   messageForUser: undefined,
 
   /**
-     The state of the hi button, is disabled if `true` or enabled if `false`.
+    The state of the hi button, is disabled if `true` or enabled if `false`.
 
     @property hiButtonState
     @type Boolean

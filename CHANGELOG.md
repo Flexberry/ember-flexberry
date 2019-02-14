@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-lookup` component:
+    * Add persist value mode for autocomplete.
+
 ### Fixed
 * `reload-list-mixin` mixin:
     * Fix error, when use DatePredicate in filter. Create only SimplePredicate from SimplePredicate and DatePredicate.

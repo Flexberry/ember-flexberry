@@ -7,10 +7,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-groupedit` component:
     * Add text and icon custom buttons in toolbar.
 
+## [2.1.0-beta.1] - 2019-02-14
+### Added
+* `flexberry-lookup` component:
+    * Add persist value mode for autocomplete.
+
 ### Fixed
 * `reload-list-mixin` mixin:
-    * Fix error, when use DatePredicate in filter. Create only SimplePredicate from SimplePredicate and DatePredicate.
-    * Fix error, when use empty value in conditios "eq" and "like" by filters types data, string, number.
+    * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
+    * Fix filter by `null` for `string`, `number` and `date` data types.
 
 ## [2.1.0-beta.0] - 2018-12-13
 ### Added

@@ -872,10 +872,10 @@ export default FlexberryBaseComponent.extend({
     let input = this.$('input')[0];
 
     input.onblur = function() {
-      if ( state!=='opened') {
+      if (state !== 'opened') {
         this.value = '';
       }
-    }
+    };
 
     let state;
     let i18n = _this.get('i18n');

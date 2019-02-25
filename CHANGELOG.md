@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-lookup` component:
+    * Fix not deleting text when fast text is entered into autocomplete.
 
 ## [2.1.0-beta.1] - 2019-02-14
 ### Added

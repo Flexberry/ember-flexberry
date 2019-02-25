@@ -869,6 +869,14 @@ export default FlexberryBaseComponent.extend({
       throw new Error('maxResults has wrong value.');
     }
 
+    let input = this.$('input')[0];
+
+    input.onblur = function() {
+      if ( state!=='opened') {
+        this.value = '';
+      }
+    }
+
     let state;
     let i18n = _this.get('i18n');
     this.$().search({

@@ -354,6 +354,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Model update example',
               'title': ''
             },
+            'custom-buttons-example': {
+              'caption': 'Custom user buttons example',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
@@ -770,6 +774,13 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Settings example'
+        },
+        'custom-buttons-example': {
+          'caption': 'Flexberry-groupedit. Custom buttons example',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello',
+          'disable-button-name': 'Disable adjacent button',
+          'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Configurate rows'

@@ -364,6 +364,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Обновление модели',
               'title': ''
             },
+            'custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
@@ -781,6 +785,13 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
+        },
+        'custom-buttons-example': {
+          'caption': 'Flexberry-groupedit. Пользовательские кнопки',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет',
+          'disable-button-name': 'Отключить соседнюю кнопку',
+          'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Настройка строк'

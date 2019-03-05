@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Fix not deleting text when fast text is entered into autocomplete.
 
+### Added
+* `flexberry-groupedit` component:
+    * Add text and icon custom buttons in toolbar.
+
 ## [2.1.0-beta.1] - 2019-02-14
 ### Added
 * `flexberry-lookup` component:

@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.1.0-beta.2] - 2019-03-05
 ### Added
 * `flexberry-groupedit` component:
     * Add text and icon custom buttons in toolbar.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.0`.
 
 ## [2.1.0-beta.1] - 2019-02-14
 ### Added

@@ -67,6 +67,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');
+  this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list');
+  this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
+    { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');

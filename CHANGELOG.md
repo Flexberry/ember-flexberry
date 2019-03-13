@@ -25,6 +25,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
     * Fix filter by `null` for `string`, `number` and `date` data types.
 
+* Blueprints:
+    * Add generating lookups in dropdown mode.
+
 ## [2.1.0-beta.0] - 2018-12-13
 ### Added
 * `flexberry-lookup` component:

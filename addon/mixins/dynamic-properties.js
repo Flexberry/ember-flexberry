@@ -134,13 +134,6 @@ export default Ember.Mixin.create({
       }
     };
 
-    if (propertyName === 'computedProperties') {
-      let propertyValue = this.get(`dynamicProperties.computedProperties`);
-      let thisController = propertyValue.thisController;
-      thisController.set('computedProperties', this);
-      return;
-    }
-
     setDynamicProperty();
     this.addObserver(`dynamicProperties.${propertyName}`, setDynamicProperty);
 

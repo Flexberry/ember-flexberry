@@ -56,7 +56,7 @@ export default EditFormController.extend({
         detachable: true,
         allowMultiple: true,
       });
-      
+
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');
     },

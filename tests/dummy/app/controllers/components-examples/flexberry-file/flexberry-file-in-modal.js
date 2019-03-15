@@ -53,10 +53,10 @@ export default EditFormController.extend({
       let repeatWindow = Ember.$('#repeat-window').modal({
         closable: false,
         autofocus: false,
-        detachable: false,
+        detachable: true,
         allowMultiple: true,
-        context: this.get('_style'),
       });
+      
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');
     },

@@ -80,6 +80,14 @@ export default ListFormController.extend({
   allowColumnResize: true,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'fixedHeader' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  fixedHeader: false,
+
+  /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'createNewButton' mode or not.
 
     @property createNewButton
@@ -260,6 +268,7 @@ export default ListFormController.extend({
     '  previousPage=(action \"previousPage\")<br>' +
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
+    '  fixedHeader=fixedHeader<br>' +
     '}}'),
 
   /**
@@ -440,6 +449,12 @@ export default ListFormController.extend({
       settingType: 'string',
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'singleColumnHeaderTitle'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;

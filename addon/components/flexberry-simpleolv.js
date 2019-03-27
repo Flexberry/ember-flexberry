@@ -149,7 +149,7 @@ export default folv.extend(
     @type Boolean
     @default true
   */
- fixedHeader: false,
+  fixedHeader: false,
 
   /**
     Table add column to sorting action name.
@@ -3001,7 +3001,7 @@ export default folv.extend(
     @method _showFiltersObserver
     @private
   */
- _showFiltersObserver: Ember.observer('showFilters', function() {
+  _showFiltersObserver: Ember.observer('showFilters', function() {
     let showFilters = this.get('showFilters');
     if (showFilters) {
       Ember.run.schedule('afterRender', this, function() {

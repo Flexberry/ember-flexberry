@@ -17,7 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
 
 ## [2.1.0-beta.2] - 2019-03-05
-
 ### Added
 * `flexberry-groupedit` component:
     * Add text and icon custom buttons in toolbar.

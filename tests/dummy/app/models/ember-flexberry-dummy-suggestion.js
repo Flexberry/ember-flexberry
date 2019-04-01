@@ -195,6 +195,33 @@ Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-sugges
   })
 });
 
+// Projection for lookup example on preview example.
+Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-suggestion', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: Projection.attr('Name', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'name'
+    })
+  }),
+});
+
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion', {
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
@@ -323,6 +350,30 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup with computed field test.
+Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr(''),
+  text: Projection.attr(''),
+  date: Projection.attr(''),
+  votes: Projection.attr(''),
+  moderated: Projection.attr(''),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr('')
+  }),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: Projection.attr(''),
+    moderated: Projection.attr(''),
+    computedField: Projection.attr('')
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr('')
+  }),
+  createTime: Projection.attr(''),
+  creator: Projection.attr(''),
+  editTime: Projection.attr(''),
+  editor: Projection.attr('')
 });
 
 export default Model;

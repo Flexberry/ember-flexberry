@@ -1,0 +1,33 @@
+{{flexberry-error error=error}}
+<h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
+<div class="row">
+  {{flexberry-simpleolv
+    content=model
+    modelName="ember-flexberry-dummy-suggestion-type"
+    modelProjection=modelProjection
+    editFormRoute=editFormRoute
+    createNewButton=false
+    deleteButton=true
+    refreshButton=true
+    exportExcelButton=true
+    sorting=computedSorting
+    orderable=true
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="SOLVSuggestionTypeObjectListView"
+    showCheckBoxInRow=true
+    showEditMenuItemInRow=true
+    showDeleteMenuItemInRow=true
+    showDeleteButtonInRow=true
+  }}
+</div>

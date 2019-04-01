@@ -14,6 +14,7 @@ const {
   Condition,
   BasePredicate,
   StringPredicate,
+  SimplePredicate,
   ComplexPredicate
 } = Query;
 
@@ -98,6 +99,15 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-lookup.placeholder'),
 
   /**
+    Text on button preview value.
+
+    @property previewText
+    @type String
+    @default '<i class="eye icon"></i>'
+  */
+  previewText: '<i class="eye icon"></i>',
+
+  /**
     Text on button opening a modal window.
 
     @property chooseText
@@ -116,6 +126,14 @@ export default FlexberryBaseComponent.extend({
     @default '<i class="remove icon"></i>'
   */
   removeText: '<i class="remove icon"></i>',
+
+  /**
+    CSS classes for preview button.
+
+    @property previewButtonClass
+    @type String
+  */
+  previewButtonClass: undefined,
 
   /**
     CSS classes for choose button.
@@ -176,6 +194,51 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   dropdown: false,
+
+  /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    The URL that will be used for viewing the selected object.
+
+    @property previewFormRoute
+    @type String
+    @default undefined
+  */
+  previewFormRoute: undefined,
+
+  /**
+    Projection name preview form.
+
+    @property previewFormProjection
+    @type String
+    @default undefined
+  */
+  previewFormProjection: undefined,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    The controller for viewing the selected object.
+
+    @property controllerForPreview
+    @type String
+    @default undefined
+  */
+  controllerForPreview: undefined,
 
   /**
     Flag to show that lookup has search or autocomplete in dropdown mode.
@@ -239,6 +302,24 @@ export default FlexberryBaseComponent.extend({
     @default 10
   */
   maxResults: 10,
+
+  /**
+    Flag for remove autocomplete value if it's not in the results (remove when false).
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
+    Stores autocomplete value, when autocompletePersistValue=true and lookup value clearing.
+
+    @property autocompletePersistValueCache
+    @type String
+    @default undefined
+  */
+  autocompletePersistValueCache: undefined,
 
   /**
     Limit function on lookup.
@@ -403,6 +484,15 @@ export default FlexberryBaseComponent.extend({
   autocompleteOrder: null,
 
   /**
+    Projection name for autocomplete query.
+
+    @property autocompleteProjection
+    @type String
+    @default undefined
+  */
+  autocompleteProjection: undefined,
+
+  /**
     Current selected instance of the model.
 
     @property value
@@ -452,11 +542,8 @@ export default FlexberryBaseComponent.extend({
 
     @property displayValue
     @type String
-    @readOnly
   */
-  displayValue: Ember.computed('value', function() {
-    return this._buildDisplayValue();
-  }),
+  displayValue: undefined,
 
   /**
     Standard CSS class names to apply to the view's outer element.
@@ -574,7 +661,52 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      if (this.get('autocompletePersistValue')) {
+        this.set('autocompletePersistValueCache', undefined);
+        this.set('displayValue', undefined);
+      }
+
       this.sendAction('remove', removeData);
+    },
+
+    /**
+      Show window for select value.
+
+      @method actions.preview
+    */
+    preview() {
+      let previewFormRoute = this.get('previewFormRoute');
+      if (Ember.isNone(previewFormRoute)) {
+        throw new Error('\`previewFormRoute\` is undefined.');
+      }
+
+      let relatedModel = this.get('relatedModel');
+      let relationName = this.get('relationName');
+      let relationModelName = getRelationType(relatedModel, relationName);
+
+      let thisRouteName = this.get('currentController.routeName');
+      let thisRecordId = this.get('relatedModel.id');
+      let transitionOptions = {
+        queryParams: {
+          readonly: true,
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
+      let previewData = {
+        recordId: this.get('value.id'),
+        transitionRoute: previewFormRoute,
+        transitionOptions: transitionOptions,
+        showInSeparateRoute: this.get('previewOnSeparateRoute'),
+        modelName: relationModelName,
+        controller: this.get('controllerForPreview'),
+        projection: this.get('previewFormProjection')
+      };
+
+      this.sendAction('preview', previewData);
     }
   },
 
@@ -590,11 +722,15 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
 
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.addObserver('value', this, this._valueObserver);
-    this.addObserver('displayAttributeName', this, this._valueObserver);
-    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autocompletePersistValue') && Ember.isNone(this.get('value'))) {
+      this.set('autocompletePersistValueCache', this.get('displayValue'));
+    }
   },
+
+  /**
+    Observe lookup value changes.
+  */
+  valueObserver: Ember.on('init', Ember.observer('value', 'displayAttributeName', function() { Ember.run.once(this, '_valueObserver'); })),
 
   /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
@@ -655,11 +791,6 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
-
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.removeObserver('value', this, this._valueObserver);
-    this.removeObserver('displayAttributeName', this, this._valueObserver);
-    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
   /**
@@ -730,6 +861,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relationModelName = getRelationType(relatedModel, relationName);
+    let projectionName = this.get('autocompleteProjection');
 
     let displayAttributeName = this.get('displayAttributeName');
     let autocompleteOrder = this.get('autocompleteOrder');
@@ -776,13 +908,30 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
+          let selectAttributes = displayAttributeName;
+          if (!Ember.isNone(projectionName)) {
+            let modelConstructor = store.modelFor(relationModelName);
+            let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
+            if (!projection) {
+              throw new Error(`No projection with '${projectionName}' name defined in '${relationModelName}' model.`);
+            }
+
+            let attributes = Ember.get(projection, 'attributes');
+            let attributesKeys = Object.keys(attributes);
+            if (attributesKeys.indexOf(displayAttributeName) === -1) {
+              attributesKeys.push(displayAttributeName);
+            }
+
+            selectAttributes = attributesKeys.join(',');
+          }
+
           let builder;
           if (autocompleteOrder) {
             builder = new Builder(store, relationModelName)
-            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
+            .select(selectAttributes).orderBy(`${autocompleteOrder}`);
           } else {
             builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
+            .select(selectAttributes)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
           }
 
@@ -868,8 +1017,37 @@ export default FlexberryBaseComponent.extend({
         // and Ember won't change computed property.
 
         if (state !== 'selected') {
-          if (_this.get('displayValue')) {
-            _this.set('displayValue', _this._buildDisplayValue());
+          let displayValue = _this.get('displayValue');
+          if (displayValue) {
+            if (_this.get('autocompletePersistValue')) {
+              let builder = new Builder(store, relationModelName).select(displayAttributeName);
+
+              let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
+              let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+              if (resultPredicate) {
+                builder.where(resultPredicate);
+              }
+
+              Ember.run(() => {
+                store.query(relationModelName, builder.build()).then((records) => {
+                  let record = records.objectAt(0);
+                  if (Ember.isNone(record)) {
+                    _this.set('autocompletePersistValueCache', displayValue);
+                    _this.sendAction('remove', _this.get('removeData'));
+                  } else {
+                    _this.set('value', record);
+                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                      {
+                        relationName: relationName,
+                        modelToLookup: relatedModel,
+                        newRelationValue: record
+                      });
+                  }
+                });
+              });
+            } else {
+              _this.set('displayValue', _this._buildDisplayValue());
+            }
           } else {
             _this.sendAction('remove', _this.get('removeData'));
           }
@@ -1003,10 +1181,15 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _buildDisplayValue() {
+    let autocompletePersistValueCache = this.get('autocompletePersistValueCache');
+    if (autocompletePersistValueCache) {
+      this.set('autocompletePersistValueCache', undefined);
+    }
+
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      return '';
+      return autocompletePersistValueCache ? autocompletePersistValueCache : '';
     }
 
     if (!displayAttributeName) {

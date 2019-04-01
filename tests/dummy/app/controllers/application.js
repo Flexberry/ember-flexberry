@@ -146,10 +146,7 @@ export default Ember.Controller.extend({
     }
 
     // Add locales.
-    let locale = Ember.A();
-    locale.pushObject('ru');
-    locale.pushObject('en');
-    this.set('locales', locale);
+    this.set('locales', ['ru', 'en']);
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
@@ -339,6 +336,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/custom-buttons-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
@@ -412,6 +414,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/autocomplete-order-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }]
         }, {

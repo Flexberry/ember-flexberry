@@ -96,6 +96,7 @@ export default {
       'placeholder': '(no value)',
       'choose-button-text': 'Choose',
       'remove-button-text': 'Remove',
+      'preview-button-text': 'View',
       'dropdown': {
         'messages': {
           'noResultsHeader': 'No results',
@@ -173,7 +174,8 @@ export default {
     'groupedit-toolbar': {
       'add-button-text': 'Add',
       'delete-button-text': 'Delete',
-      'clear-settings-button-text': 'Restore default settings'
+      'clear-settings-button-text': 'Restore default settings',
+      'custom-button-text': 'Custom button'
     },
 
     'colsconfig-dialog-content': {

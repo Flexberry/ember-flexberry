@@ -17,6 +17,16 @@
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
+    {{#if showPreviewButton }}
+      {{#if (and previewFormRoute value)}}
+        <button
+          class="ui ui-preview {{if isBlocked " disabled"}} {{previewButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+          title={{t "components.flexberry-lookup.preview-button-text"}}
+          {{action "preview"}}>
+          {{{previewText}}}
+        </button>
+      {{/if}}
+    {{/if}}
     <button
       class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
       title={{t "components.flexberry-lookup.choose-button-text"}}

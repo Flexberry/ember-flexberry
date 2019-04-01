@@ -59,6 +59,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-groupedit/configurate-row-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
+  this.route('components-examples/flexberry-lookup/autocpmplete-preset-value-example');
   this.route('components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
   this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');

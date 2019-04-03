@@ -10,14 +10,24 @@ export default EditFormController.extend({
 
   actions: {
     onButtonClick: function() { 
-      let _this = this;
-      let store = this.get('store');
+      //this.set('model.lookupDisplayValue', 'Значение для lookupDisplayValue');
+      /*let store = this.get('store');
       let builder = new Query.Builder(store).from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('CustomizeLookupWindowExampleView').top(1);  
       store.query('ember-flexberry-dummy-suggestion-type', builder.build()).then(function(result) {
         let ressutArray = result.toArray();
-        _this.set('model.type',ressutArray[0]);
-      });
+        _this.set('model.lookupDisplayValue',ressutArray[0]);
+      });*/
+      let store = this.get('store');
+      let base = store.createRecord('ember-flexberry-dummy-suggestion');
+      base.set('lookupDisplayValue', 'Значение для lookupDisplayValue');
+      this.set('model', base);
     }
   }
+
+  /*model() {
+    let store = this.get('store');
+    let base = store.createRecord('ember-flexberry-dummy-suggestion');
+    return base;
+  }*/
 });

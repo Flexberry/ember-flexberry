@@ -1,23 +1,17 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.customizing-window-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    {{flexberry-lookup
+    {{autocpmplete-preset-value-example-test-component
       value=model.type
-      projection="CustomizeLookupWindowExampleView"
-      displayAttributeName="name"
-      title=(t "forms.components-examples.flexberry-lookup.customizing-window-example.titleLookup")
-      relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
-      readonly=readonly
-      limitFunction=null
-      autocomplete=true
-      autocompletePersistValue=true
       displayValue=model.lookupDisplayValue
     }}
     {{flexberry-button
       caption="Заполнить lookupDisplayValue"
-      click=(action "onButtonClick")
+      click=(action "onFillLookupDisplayValueClick")
+    }}
+    {{flexberry-button
+      caption="Заполнить данные"
+      click=(action "onFillLookupDataClick")
     }}
   </div>
 </form>

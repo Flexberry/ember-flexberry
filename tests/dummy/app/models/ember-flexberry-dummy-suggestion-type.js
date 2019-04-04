@@ -142,6 +142,13 @@ Model.defineProjection('AutocompleteProjectionExampleView', 'ember-flexberry-dum
   name: Projection.attr('Name'),
   moderated: Projection.attr('Moderated'),
   computedField: Projection.attr(''),
+  parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: Projection.attr(''),
+    moderated: Projection.attr(''),
+    computedField: Projection.attr('')
+  }, {
+    displayMemberPath: 'computedField'
+  }),
 });
 
 export default Model;

@@ -175,7 +175,8 @@ export default {
     'groupedit-toolbar': {
       'add-button-text': 'Добавить',
       'delete-button-text': 'Удалить',
-      'clear-settings-button-text': 'Восстановить настройки по умолчанию'
+      'clear-settings-button-text': 'Восстановить настройки по умолчанию',
+      'custom-button-text': 'Пользовательская кнопка'
     },
 
     'colsconfig-dialog-content': {

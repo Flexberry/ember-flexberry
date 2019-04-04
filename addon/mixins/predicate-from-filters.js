@@ -9,6 +9,7 @@ import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { DatePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { isNone } from '@ember/utils';
 
 /**
   Mixin contains functions for predicate build from filters object.
@@ -43,18 +44,23 @@ export default Mixin.create({
     if (filter.condition) {
       switch (filter.type) {
         case 'string':
-          return filter.condition === 'like' && filter.pattern ?
-            new StringPredicate(filter.name).contains(filter.pattern) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          if (filter.condition === 'like') {
+            return (!isNone(filter.pattern)) ?
+              new StringPredicate(filter.name).contains(filter.pattern) :
+              new StringPredicate(filter.name).contains('');
+          } else {
+            return (!isNone(filter.pattern)) ?
+              new SimplePredicate(filter.name, filter.condition, filter.pattern) :
+              new SimplePredicate(filter.name, filter.condition, null);
+          }
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
         case 'date':
           return filter.pattern ?
             new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
-
+            new SimplePredicate(filter.name, filter.condition, null);
         default:
           return null;
       }

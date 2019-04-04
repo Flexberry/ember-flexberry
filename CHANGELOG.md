@@ -91,6 +91,32 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
+## [2.1.0-beta.3] - 2019-03-15
+### Added
+* `flexberry-lookup` component:
+    * Add optional projection for autocomplite (`autocompleteProjection` property).
+
+### Deprecated
+* Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
+
+## [2.1.0-beta.2] - 2019-03-05
+### Added
+* `flexberry-groupedit` component:
+    * Add text and icon custom buttons in toolbar.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.0`.
+
+## [2.1.0-beta.1] - 2019-02-14
+### Added
+* `flexberry-lookup` component:
+    * Add persist value mode for autocomplete.
+
+### Fixed
+* `reload-list-mixin` mixin:
+    * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
+    * Fix filter by `null` for `string`, `number` and `date` data types.
+
 ## [2.1.0-beta.0] - 2018-12-13
 ### Added
 * `flexberry-lookup` component:

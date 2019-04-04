@@ -194,6 +194,33 @@ Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-sugges
   })
 });
 
+// Projection for lookup example on preview example.
+Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-suggestion', {
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  editor1: belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  userVotes: hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    author: belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: attr('Name', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'name'
+    })
+  }),
+});
+
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion', {
   type: belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
@@ -322,6 +349,30 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup with computed field test.
+Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+  address: attr(''),
+  text: attr(''),
+  date: attr(''),
+  votes: attr(''),
+  moderated: attr(''),
+  author: belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: attr('')
+  }),
+  type: belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: attr(''),
+    moderated: attr(''),
+    computedField: attr('')
+  }),
+  editor1: belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: attr('')
+  }),
+  createTime: attr(''),
+  creator: attr(''),
+  editTime: attr(''),
+  editor: attr('')
 });
 
 export default Model;

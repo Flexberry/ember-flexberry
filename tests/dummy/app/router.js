@@ -55,6 +55,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-groupedit/model-update-example');
+  this.route('components-examples/flexberry-groupedit/custom-buttons-example');
   this.route('components-examples/flexberry-groupedit/configurate-row-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
@@ -66,6 +67,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');
+  this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list');
+  this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
+    { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -144,6 +148,9 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
+  { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');

@@ -326,6 +326,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/custom-buttons-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
@@ -399,6 +404,11 @@ export default Controller.extend({
             link: 'components-examples/flexberry-lookup/autocomplete-order-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }]
         }, {

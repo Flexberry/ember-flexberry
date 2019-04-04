@@ -272,19 +272,24 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let dropdown = $(filterValueCell).find('.flexberry-dropdown');
     let textbox = $(filterValueCell).find('.ember-text-field');
 
+    let fillPromise;
     if (textbox.length !== 0) {
-      textbox.val(filterValue);
-      textbox.change();
+      fillPromise = fillIn(textbox, filterValue);
     }
 
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
 
-    let timeout = 300;
-    later((() => {
-      resolve();
-    }), timeout);
+    if (fillPromise) {
+      fillPromise.then(() => resolve());
+    } else {
+      let timeout = 300;
+      later((() => {
+        resolve();
+      }), timeout);
+    }
+
   });
 }
 

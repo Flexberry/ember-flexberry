@@ -6,7 +6,7 @@ import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';
 
 executeTest('check neq filter', (store, assert, app) => {
-  assert.expect(3);
+  assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'neq';
@@ -52,7 +52,6 @@ executeTest('check neq filter', (store, assert, app) => {
             }
           }
 
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });

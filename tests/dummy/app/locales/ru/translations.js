@@ -273,7 +273,63 @@ $.extend(true, translations, {
               __caption__: 'Автор'
             }
           }
-        }
+        },
+        'SuggestionEWithComputedField': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'author': {
+            __caption__: 'Пользователь приложения',
+            'name': {
+              __caption__: 'Наименование'
+            }
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Наименование'
+            },
+            'moderated': {
+              __caption__: 'Одобрено'
+            },
+            'computedField': {
+              __caption__: 'Вычислимое поле'
+            },
+            'creator': {
+              __caption__: 'creator'
+            }
+          },
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Имя'
+            }
+          },
+          'createTime': {
+            __caption__: 'createTime'
+          },
+          'creator': {
+            __caption__: 'creator'
+          },
+          'editTime': {
+            __caption__: 'editTime'
+          },
+          'editor': {
+            __caption__: 'editor'
+          }
+        },
       }
     },
     'ember-flexberry-dummy-application-user': {
@@ -375,7 +431,45 @@ $.extend(true, translations, {
           'moderated': {
             __caption__: 'Одобрено'
           }
-        }
+        },
+        'SuggestionTypeEWithComputedField': {
+          'name': {
+            __caption__: 'Имя'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'computedField': {
+            __caption__: 'Вычислимое поле'
+          },
+          'parent': {
+            __caption__: 'Иерархия',
+            'name': {
+              __caption__: 'Наименование'
+            },
+            'moderated': {
+              __caption__: 'Одобрено'
+            },
+            'computedField': {
+              __caption__: 'Вычислимое поле'
+            },
+            'creator': {
+              __caption__: 'creator'
+            }
+          },
+          'createTime': {
+            __caption__: 'createTime'
+          },
+          'creator': {
+            __caption__: 'creator'
+          },
+          'editTime': {
+            __caption__: 'editTime'
+          },
+          'editor': {
+            __caption__: 'editor'
+          }
+        },
       }
     },
     'ember-flexberry-dummy-comment': {
@@ -623,6 +717,10 @@ $.extend(true, translations, {
               'caption': 'Обновление модели',
               'title': ''
             },
+            'custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
@@ -645,6 +743,10 @@ $.extend(true, translations, {
             },
             'customizing-window-example': {
               'caption': 'Настройка окна',
+              'title': ''
+            },
+            'compute-autocomplete': {
+              'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -1036,6 +1138,13 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
+        'custom-buttons-example': {
+          'caption': 'Flexberry-groupedit. Пользовательские кнопки',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет',
+          'disable-button-name': 'Отключить соседнюю кнопку',
+          'enable-button-name': 'Включить соседнюю кнопку',
+        },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Настройка строк'
         },
@@ -1052,6 +1161,10 @@ $.extend(true, translations, {
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Настройка окна',
           'titleLookup': 'Мастер'
+        },
+        'compute-autocomplete': {
+          'caption': 'Пример лукапа с вычислимым автокомплитом',
+          'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',

@@ -97,6 +97,23 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+		    iconClasses: '' // Css classes for icon.
+      }
+      ```
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Custom classes for table.
 
     @property customTableClass
@@ -509,6 +526,20 @@ export default FlexberryBaseComponent.extend({
     */
     sendMenuItemAction(actionName, record) {
       this.get(actionName)(record);
+    },
+
+    /**
+      Handler to get user button's actions and send action to corresponding controllers's handler.
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit toolbar was found.');
+      }
+
+      this.get(actionName)();
     },
   },
 

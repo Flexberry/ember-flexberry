@@ -53,6 +53,31 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Name of action to send out, action triggered by click on user button.
+    @property customButtonAction
+    @type String
+    @default 'customButtonAction'
+  */
+  customButtonAction: 'customButtonAction',
+
+  /**
+     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+        iconClasses: '' // Css classes for icon.
+      }
+      ```
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Boolean property to show or hide delete button in toolbar.
     Delete record button will not display if set to false.
 
@@ -136,7 +161,24 @@ export default FlexberryBaseComponent.extend({
         _this.get('_groupEditEventsService').updateWidthTrigger(componentName);
       });
       /* eslint-enable no-unused-vars */
-    }
+    },
+
+    /**
+      Action for custom button.
+      @method actions.customButtonAction
+      @public
+      @param {Function|String} action The action or name of action.
+    */
+    customButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action();
+      } else if (actionType === 'string') {
+        this.get('customButtonAction')(action);
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
+    },
   },
 
   /**

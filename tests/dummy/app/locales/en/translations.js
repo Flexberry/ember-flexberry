@@ -123,6 +123,62 @@ $.extend(true, translations, {
             }
           }
         },
+        'SuggestionEWithComputedField': {
+          'address': {
+            __caption__: 'address'
+          },
+          'text': {
+            __caption__: 'text'
+          },
+          'date': {
+            __caption__: 'date'
+          },
+          'votes': {
+            __caption__: 'votes'
+          },
+          'moderated': {
+            __caption__: 'moderated'
+          },
+          'author': {
+            __caption__: 'author',
+            'name': {
+              __caption__: 'name'
+            }
+          },
+          'type': {
+            __caption__: 'type',
+            'name': {
+              __caption__: 'name'
+            },
+            'moderated': {
+              __caption__: 'moderated'
+            },
+            'computedField': {
+              __caption__: 'computedField'
+            },
+            'creator': {
+              __caption__: 'creator'
+            }
+          },
+          'editor1': {
+            __caption__: 'editor1',
+            'name': {
+              __caption__: 'name'
+            }
+          },
+          'createTime': {
+            __caption__: 'createTime'
+          },
+          'creator': {
+            __caption__: 'creator'
+          },
+          'editTime': {
+            __caption__: 'editTime'
+          },
+          'editor': {
+            __caption__: 'editor'
+          }
+        },
         'SuggestionMainModelProjectionTest': {
           'userVotes': {
             'voteType': {
@@ -375,7 +431,45 @@ $.extend(true, translations, {
           'moderated': {
             __caption__: 'Moderated'
           }
-        }
+        },
+        'SuggestionTypeEWithComputedField': {
+          'name': {
+            __caption__: 'name'
+          },
+          'moderated': {
+            __caption__: 'moderated'
+          },
+          'computedField': {
+            __caption__: 'computedField'
+          },
+          'parent': {
+            __caption__: 'parent',
+            'name': {
+              __caption__: 'name'
+            },
+            'moderated': {
+              __caption__: 'moderated'
+            },
+            'computedField': {
+              __caption__: 'computedField'
+            },
+            'creator': {
+              __caption__: 'creator'
+            }
+          },
+          'createTime': {
+            __caption__: 'createTime'
+          },
+          'creator': {
+            __caption__: 'creator'
+          },
+          'editTime': {
+            __caption__: 'editTime'
+          },
+          'editor': {
+            __caption__: 'editor'
+          }
+        },
       }
     },
     'integration-examples/edit-form/validation/base': {
@@ -603,6 +697,10 @@ $.extend(true, translations, {
               'caption': 'Model update example',
               'title': ''
             },
+            'custom-buttons-example': {
+              'caption': 'Custom user buttons example',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
@@ -625,6 +723,10 @@ $.extend(true, translations, {
             },
             'customizing-window-example': {
               'caption': 'Window customization',
+              'title': ''
+            },
+            'compute-autocomplete': {
+              'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -1015,6 +1117,13 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Settings example'
         },
+        'custom-buttons-example': {
+          'caption': 'Flexberry-groupedit. Custom buttons example',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello',
+          'disable-button-name': 'Disable adjacent button',
+          'enable-button-name': 'Enable adjacent button',
+        },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Configurate rows'
         },
@@ -1031,6 +1140,10 @@ $.extend(true, translations, {
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Window customization',
           'titleLookup': 'Master'
+        },
+        'compute-autocomplete': {
+          'caption': 'Example lookup with compute autocomplete',
+          'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',

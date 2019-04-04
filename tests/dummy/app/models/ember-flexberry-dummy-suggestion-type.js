@@ -44,8 +44,16 @@ var Model = Projection.Model.extend({
   })),
 
   computedFieldCompute: function() {
-    let result =  this.get('name') + ' ' + this.get('moderated');
-    this.set('computedField', result);
+    let parent = this.get('parent');
+    let result = '';
+
+    if(parent){
+      let result =  this.get('parent.name') + ' ' + this.get('moderated');
+      this.set('computedField', result);
+    } else {
+      let result = this.get('moderated');
+      this.set('computedField', result);
+    }
   },
 });
 

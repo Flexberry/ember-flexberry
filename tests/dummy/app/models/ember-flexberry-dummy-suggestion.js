@@ -353,7 +353,7 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
 });
 
 // Projection for lookup with computed field test.
-Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+modelClass.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
   address: Projection.attr(''),
   text: Projection.attr(''),
   date: Projection.attr(''),

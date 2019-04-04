@@ -125,9 +125,6 @@ Ember.$.extend(true, translations, {
             },
             computedField: {
               __caption__: 'computedField'
-            },
-            creator: {
-              __caption__: 'creator'
             }
           },
           editor1: {

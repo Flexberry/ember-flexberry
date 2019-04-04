@@ -95,58 +95,55 @@ Ember.$.extend(true, translations, {
         },
         SuggestionEWithComputedField: {
           address: {
-            __caption__: 'Адрес'
+            __caption__: ''
           },
           text: {
-            __caption__: 'Текст'
+            __caption__: ''
           },
           date: {
-            __caption__: 'Дата'
+            __caption__: ''
           },
           votes: {
-            __caption__: 'Голоса'
+            __caption__: ''
           },
           moderated: {
-            __caption__: 'Одобрено'
+            __caption__: ''
           },
           author: {
-            __caption__: 'Пользователь приложения',
+            __caption__: '',
             name: {
-              __caption__: 'Наименование'
+              __caption__: ''
             }
           },
           type: {
-            __caption__: 'Тип предложения',
+            __caption__: '',
             name: {
-              __caption__: 'Наименование'
+              __caption__: ''
             },
             moderated: {
-              __caption__: 'Одобрено'
+              __caption__: ''
             },
             computedField: {
-              __caption__: 'Вычислимое поле'
-            },
-            creator: {
-              __caption__: 'creator'
+              __caption__: ''
             }
           },
           editor1: {
-            __caption__: 'Редактор',
+            __caption__: '',
             name: {
-              __caption__: 'Имя'
+              __caption__: ''
             }
           },
           createTime: {
-            __caption__: 'createTime'
+            __caption__: ''
           },
           creator: {
-            __caption__: 'creator'
+            __caption__: ''
           },
           editTime: {
-            __caption__: 'editTime'
+            __caption__: ''
           },
           editor: {
-            __caption__: 'editor'
+            __caption__: ''
           }
         },
       }

@@ -4,8 +4,7 @@
     {{autocpmplete-preset-value-example-test-component
       value=model.type
       displayValue=model.lookupDisplayValue
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
     }}
     {{flexberry-button
       caption="Заполнить lookupDisplayValue"

@@ -1,5 +1,5 @@
 import { computed } from '@ember/object';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -39,7 +39,7 @@ export default EditFormRoute.extend({
   model() {
     let store = this.get('store');
 
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-application-user')
       .selectByProjection('PreviewExampleView');
 

@@ -3,9 +3,6 @@ import RSVP from 'rsvp';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { run, later } from '@ember/runloop';
-import { assert as emberAssert } from '@ember/debug';
-import Builder from 'ember-flexberry-data/query/builder';
-import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
@@ -159,68 +156,54 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
     return originalAjaxMethod.apply(this, arguments);
   };
 
-  // First, load model with existing master.
-  let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let query = new Builder(store)
-    .from(modelName)
-    .selectByProjection('SuggestionTypeE')
-    .where('parent', FilterOperator.Neq, null)
-    .top(1);
-
   let asyncOperationsCompleted = assert.async();
-  store.query(modelName, query.build()).then(suggestionTypes => {
-    suggestionTypes = suggestionTypes.toArray();
-    emberAssert('One or more \'' + modelName + '\' must exist', suggestionTypes.length > 0);
 
-    // Remember model & render component.
-    this.set('model', suggestionTypes[0]);
+  this.set('actions.showLookupDialog', () => {});
+  this.set('actions.removeLookupValue', () => {});
 
-    this.set('actions.showLookupDialog', () => {});
-    this.set('actions.removeLookupValue', () => {});
+  this.render(hbs`{{flexberry-lookup
+    value=model.parent
+    relatedModel=model
+    relationName="parent"
+    projection="SuggestionTypeL"
+    displayAttributeName="name"
+    title="Parent"
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    readonly=true
+    autocomplete=true
+  }}`);
 
-    this.render(hbs`{{flexberry-lookup
-      value=model.parent
-      relatedModel=model
-      relationName="parent"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title="Parent"
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=true
-      autocomplete=true
-    }}`);
+  // Retrieve component.
+  let $component = this.$();
+  let $componentInput = $('input', $component);
 
-    // Retrieve component.
-    let $component = this.$();
-    let $componentInput = $('input', $component);
+  run(() => {
+    this.set('model', store.createRecord('ember-flexberry-dummy-suggestion-type', {
+      name: 'TestTypeName'
+    }));
 
-    /* eslint-disable no-unused-vars */
-    return new RSVP.Promise((resolve, reject) => {
-      run(() => {
-        ajaxMethodHasBeenCalled = false;
+    let testPromise = new RSVP.Promise((resolve) => {
+      ajaxMethodHasBeenCalled = false;
 
-        // Imitate focus on component, which can cause async data-requests.
-        $componentInput.focusin();
+      // Imitate focus on component, which can cause async data-requests.
+      $componentInput.focusin();
 
-        // Wait for some time which can pass after focus, before possible async data-request will be sent.
-        later(() => {
-          resolve();
-        }, 300);
-      });
+      // Wait for some time which can pass after focus, before possible async data-request will be sent.
+      later(() => {
+        resolve();
+      }, 300);
     });
-    /* eslint-enable no-unused-vars */
-  }).then(() => {
-    // Check that store.query hasn\'t been called after focus.
-    assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');
-  }).catch((e) => {
-    // Error output.
-    assert.ok(false, e);
-  }).finally(() => {
-    // Restore original method.
-    $.ajax = originalAjaxMethod;
 
-    asyncOperationsCompleted();
+    testPromise.then(() => {
+      // Check that store.query hasn\'t been called after focus.
+      assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');
+    }).finally(() => {
+      // Restore original method.
+      $.ajax = originalAjaxMethod;
+
+      asyncOperationsCompleted();
+    });
   });
 });
 

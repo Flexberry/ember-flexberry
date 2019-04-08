@@ -861,10 +861,8 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relationModelName = getRelationType(relatedModel, relationName);
-    let projectionName = this.get('autocompleteProjection');
 
     let displayAttributeName = this.get('displayAttributeName');
-    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
       throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
@@ -908,32 +906,7 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let selectAttributes = displayAttributeName;
-          if (!Ember.isNone(projectionName)) {
-            let modelConstructor = store.modelFor(relationModelName);
-            let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
-            if (!projection) {
-              throw new Error(`No projection with '${projectionName}' name defined in '${relationModelName}' model.`);
-            }
-
-            let attributes = Ember.get(projection, 'attributes');
-            let attributesKeys = Object.keys(attributes);
-            if (attributesKeys.indexOf(displayAttributeName) === -1) {
-              attributesKeys.push(displayAttributeName);
-            }
-
-            selectAttributes = attributesKeys.join(',');
-          }
-
-          let builder;
-          if (autocompleteOrder) {
-            builder = new Builder(store, relationModelName)
-            .select(selectAttributes).orderBy(`${autocompleteOrder}`);
-          } else {
-            builder = new Builder(store, relationModelName)
-            .select(selectAttributes)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
-          }
+          let builder = _this._createQueryBuilder(store, relationModelName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -1114,9 +1087,7 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+          let builder = _this._createQueryBuilder(store, relationModelName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -1198,6 +1169,33 @@ export default FlexberryBaseComponent.extend({
     }
 
     return selectedModel.get(displayAttributeName);
+  },
+
+  /**
+    Creates an instance of the Builder class with selection and sorting specified in the component parameters.
+
+    @method _createQueryBuilder
+    @param {DS.Store} store
+    @param {String} modelName
+    @return {Builder}
+  */
+  _createQueryBuilder(store, modelName) {
+    let sorting = this.get('sorting');
+    let autocompleteOrder = this.get('autocompleteOrder');
+    let displayAttributeName = this.get('displayAttributeName');
+    let autocompleteProjection = this.get('autocompleteProjection');
+
+    let builder = new Builder(store, modelName);
+
+    if (autocompleteProjection) {
+      builder.selectByProjection(autocompleteProjection);
+    } else {
+      builder.select(displayAttributeName);
+    }
+
+    builder.orderBy(`${autocompleteOrder ? autocompleteOrder : `${displayAttributeName} ${sorting}`}`);
+
+    return builder;
   },
 
   /**

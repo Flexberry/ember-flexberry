@@ -906,8 +906,8 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let autocompleteProjection = this.get('autocompleteProjection');
-          let autocompleteOrder = this.get('autocompleteOrder');
+          let autocompleteProjection = _this.get('autocompleteProjection');
+          let autocompleteOrder = _this.get('autocompleteOrder');
 
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
 
@@ -1090,7 +1090,7 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let projectionName = this.get('projection');
+          let projectionName = _this.get('projection');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
 
           let autocompletePredicate = settings.urlData.query ?

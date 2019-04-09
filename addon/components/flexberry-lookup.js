@@ -906,7 +906,10 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder = _this._createQueryBuilder(store, relationModelName);
+          let autocompleteProjection = this.get('autocompleteProjection');
+          let autocompleteOrder = this.get('autocompleteOrder');
+
+          let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -1087,7 +1090,8 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = _this._createQueryBuilder(store, relationModelName);
+          let projectionName = this.get('projection');
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -1177,23 +1181,23 @@ export default FlexberryBaseComponent.extend({
     @method _createQueryBuilder
     @param {DS.Store} store
     @param {String} modelName
+    @param {String} projection
+    @param {String} order
     @return {Builder}
   */
-  _createQueryBuilder(store, modelName) {
+  _createQueryBuilder(store, modelName, projection, order) {
     let sorting = this.get('sorting');
-    let autocompleteOrder = this.get('autocompleteOrder');
     let displayAttributeName = this.get('displayAttributeName');
-    let autocompleteProjection = this.get('autocompleteProjection');
 
     let builder = new Builder(store, modelName);
 
-    if (autocompleteProjection) {
-      builder.selectByProjection(autocompleteProjection);
+    if (projection) {
+      builder.selectByProjection(projection);
     } else {
       builder.select(displayAttributeName);
     }
 
-    builder.orderBy(`${autocompleteOrder ? autocompleteOrder : `${displayAttributeName} ${sorting}`}`);
+    builder.orderBy(`${order ? order : `${displayAttributeName} ${sorting}`}`);
 
     return builder;
   },

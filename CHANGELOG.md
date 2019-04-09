@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-lookup` component:
+    * Add optional projection for dropdown mode (`autocompleteProjection` property).
 
 ## [2.1.0-beta.3] - 2019-03-15
 ### Added

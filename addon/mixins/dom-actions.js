@@ -326,7 +326,6 @@ export default Mixin.create({
         eventName: domEventName,
         eventHandler: (...args) => {
           let canSendAction = true;
-
           // Trigger component's inner action handler.
           // (Check if action is defined in component to avoid assertion failed exception).
           if (typeOf(this.get(`actions.${componentActionName}`)) === 'function') {
@@ -335,10 +334,7 @@ export default Mixin.create({
 
           // Trigger component's outer action if inner action handler doesn't return 'false'.
           if (canSendAction) {
-            if(!isNone(this.get(componentActionName))){
-              this.get(componentActionName)(...args);
-            }
-
+            this.sendAction(componentActionName, ...args);
           }
         }
       });
@@ -353,7 +349,6 @@ export default Mixin.create({
       if (typeOf(componentActionName) !== 'string') {
         break;
       }
-
       // Attach actions logic for every available DOM-event.
       attachEventsActions(domEventName, componentActionName);
     }
@@ -387,7 +382,7 @@ export default Mixin.create({
       if (typeOf(componentActionName) !== 'string') {
         break;
       }
-
+      
       this.set(componentActionName, undefined);
       delete this[componentActionName];
     }

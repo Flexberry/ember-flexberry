@@ -76,7 +76,7 @@ declare module "MetadataClasses" {
         public notNull: boolean;
         public defaultValue: string;
         public stored: boolean;
-        public order: boolean;
+        public ordered: boolean;
     }
     export class Relation {
 

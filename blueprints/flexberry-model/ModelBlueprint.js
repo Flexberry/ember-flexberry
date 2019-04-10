@@ -159,7 +159,7 @@ var ModelBlueprint = /** @class */ (function () {
                         }
                 }
             }
-            if (attr.order) {
+            if (attr.ordered) {
                 options.push("order: true");
             }
             if (options.length != 0) {

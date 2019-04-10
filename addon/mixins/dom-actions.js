@@ -334,7 +334,10 @@ export default Mixin.create({
 
           // Trigger component's outer action if inner action handler doesn't return 'false'.
           if (canSendAction) {
-            this.sendAction(componentActionName, ...args);
+            if(!isNone(this.get(componentActionName))) {
+              this.get(componentActionName)(...args);
+            }
+
           }
         }
       });
@@ -349,6 +352,7 @@ export default Mixin.create({
       if (typeOf(componentActionName) !== 'string') {
         break;
       }
+
       // Attach actions logic for every available DOM-event.
       attachEventsActions(domEventName, componentActionName);
     }

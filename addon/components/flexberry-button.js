@@ -61,7 +61,6 @@ const flexberryClassNames = {
 */
 let FlexberryButtonComponent = Component.extend(
   RequiredActionsMixin,
-  DomActionsMixin,
   DynamicActionsMixin,
   DynamicPropertiesMixin, {
 

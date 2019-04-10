@@ -65,10 +65,10 @@ export default FlexberryBaseComponent.extend(
   /**
     Flag indicates on availability in view order property.
 
-    @property orderProperty
+    @property orderedProperty
     @type String
   */
-  orderProperty: undefined,
+  orderedProperty: undefined,
 
   /**
     Model projection which should be used to display given content.
@@ -481,7 +481,7 @@ export default FlexberryBaseComponent.extend(
         userSettings.sorting = [];
       }
 
-      if (Ember.isNone(this.get('orderProperty'))) {
+      if (Ember.isNone(this.get('orderedProperty'))) {
         for (let i = 0; i < userSettings.sorting.length; i++) {
           let sorting = userSettings.sorting[i];
           let propName = sorting.propName;
@@ -925,7 +925,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.orderable || column.sortable === false || !Ember.isNone(this.get('orderProperty'))) {
+      if (!this.orderable || column.sortable === false || !Ember.isNone(this.get('orderedProperty'))) {
         return;
       }
 
@@ -1663,8 +1663,8 @@ export default FlexberryBaseComponent.extend(
       let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
 
-      let orderProperty = this.get('orderProperty');
-      if (!Ember.isNone(orderProperty) && orderProperty === bindingPath) {
+      let orderedProperty = this.get('orderedProperty');
+      if (!Ember.isNone(orderedProperty) && orderedProperty === bindingPath) {
         if (Ember.isNone(cellComponent.componentProperties)) {
           cellComponent.componentProperties = {};
         }
@@ -1904,7 +1904,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (Ember.isNone(this.get('orderProperty')) && Ember.isArray(sorting)) {
+      if (Ember.isNone(this.get('orderedProperty')) && Ember.isArray(sorting)) {
         let columns = this.get('columns');
         if (Ember.isArray(columns)) {
           columns.forEach((column) => {
@@ -2014,14 +2014,14 @@ export default FlexberryBaseComponent.extend(
     if (itemToRemove) {
       this.get('contentWithKeys').removeObject(itemToRemove);
 
-      let orderProperty = this.get('orderProperty');
-      if (!Ember.isNone(orderProperty)) {
-        let valueOrder = itemToRemove.get(`data.${orderProperty}`);
-        let updateItems = this.get('contentWithKeys').filter((value) => value.get(`data.${orderProperty}`) > valueOrder);
+      let orderedProperty = this.get('orderedProperty');
+      if (!Ember.isNone(orderedProperty)) {
+        let valueOrder = itemToRemove.get(`data.${orderedProperty}`);
+        let updateItems = this.get('contentWithKeys').filter((value) => value.get(`data.${orderedProperty}`) > valueOrder);
         updateItems.forEach((updateItem) => {
           let data = updateItem.get('data');
-          let oldOrder = data.get(`${orderProperty}`);
-          data.set(`${orderProperty}`, oldOrder - 1);
+          let oldOrder = data.get(`${orderedProperty}`);
+          data.set(`${orderedProperty}`, oldOrder - 1);
         });
       }
     }
@@ -2100,8 +2100,8 @@ export default FlexberryBaseComponent.extend(
       } else {
         let modelName = this.get('modelProjection').modelName;
         let modelToAdd = this.get('store').createRecord(modelName, {});
-        if (!Ember.isNone(this.get('orderProperty'))) {
-          modelToAdd.set(`${this.get('orderProperty')}`, this.get('content').length + 1);
+        if (!Ember.isNone(this.get('orderedProperty'))) {
+          modelToAdd.set(`${this.get('orderedProperty')}`, this.get('content').length + 1);
         }
 
         this._addModel(modelToAdd);
@@ -2536,11 +2536,11 @@ export default FlexberryBaseComponent.extend(
   _moveUpRow(componentName) {
     if (componentName === this.componentName) {
       let contentForRender = this.get('contentForRender');
-      let orderProperty = this.get('orderProperty');
+      let orderedProperty = this.get('orderedProperty');
       let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
-        if (a.get(`${orderProperty}`) > b.get(`${orderProperty}`)) {
+        if (a.get(`${orderedProperty}`) > b.get(`${orderedProperty}`)) {
           return 1;
-        } else if (a.get(`${orderProperty}`) < b.get(`${orderProperty}`)) {
+        } else if (a.get(`${orderedProperty}`) < b.get(`${orderedProperty}`)) {
           return -1;
         }
 
@@ -2551,10 +2551,10 @@ export default FlexberryBaseComponent.extend(
         let content = contentForRender.map(i => i.data);
         let indexRecord = content.indexOf(record);
         if (indexRecord !== 0 && !selectedRecords.includes(content[indexRecord - 1])) {
-          let orderValue = content[indexRecord].get(`${orderProperty}`);
-          let orderValueAbove = content[indexRecord - 1].get(`${orderProperty}`);
-          content[indexRecord].set(`${orderProperty}`, orderValueAbove);
-          content[indexRecord - 1].set(`${orderProperty}`, orderValue);
+          let orderValue = content[indexRecord].get(`${orderedProperty}`);
+          let orderValueAbove = content[indexRecord - 1].get(`${orderedProperty}`);
+          content[indexRecord].set(`${orderedProperty}`, orderValueAbove);
+          content[indexRecord - 1].set(`${orderedProperty}`, orderValue);
 
           let temp = contentForRender[indexRecord];
           contentForRender.replace(indexRecord, 1);
@@ -2574,11 +2574,11 @@ export default FlexberryBaseComponent.extend(
     if (componentName === this.componentName) {
       let contentForRender = this.get('contentForRender');
 
-      let orderProperty = this.get('orderProperty');
+      let orderedProperty = this.get('orderedProperty');
       let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
-        if (a.get(`${orderProperty}`) < b.get(`${orderProperty}`)) {
+        if (a.get(`${orderedProperty}`) < b.get(`${orderedProperty}`)) {
           return 1;
-        } else if (a.get(`${orderProperty}`) > b.get(`${orderProperty}`)) {
+        } else if (a.get(`${orderedProperty}`) > b.get(`${orderedProperty}`)) {
           return -1;
         }
 
@@ -2589,10 +2589,10 @@ export default FlexberryBaseComponent.extend(
         let content = contentForRender.map(i => i.data);
         let indexRecord = content.indexOf(record);
         if (indexRecord !== content.length - 1 && !selectedRecords.includes(content[indexRecord + 1])) {
-          let orderValue = content[indexRecord].get(`${orderProperty}`);
-          let orderValueBelow = content[indexRecord + 1].get(`${orderProperty}`);
-          content[indexRecord].set(`${orderProperty}`, orderValueBelow);
-          content[indexRecord + 1].set(`${orderProperty}`, orderValue);
+          let orderValue = content[indexRecord].get(`${orderedProperty}`);
+          let orderValueBelow = content[indexRecord + 1].get(`${orderedProperty}`);
+          content[indexRecord].set(`${orderedProperty}`, orderValueBelow);
+          content[indexRecord + 1].set(`${orderedProperty}`, orderValue);
 
           let temp = contentForRender[indexRecord];
           contentForRender.replace(indexRecord, 1);

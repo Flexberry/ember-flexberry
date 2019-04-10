@@ -180,7 +180,7 @@ export default class ModelBlueprint {
         }
       }
       if (attr.ordered) {
-          options.push("order: true");
+          options.push("ordered: true");
       }
       if (options.length != 0) {
           optionsStr = ", { " + options.join(', ') + ' }';

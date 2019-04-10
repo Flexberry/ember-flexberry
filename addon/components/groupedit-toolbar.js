@@ -100,8 +100,8 @@ export default FlexberryBaseComponent.extend({
 
     @property arrowsButtons
   */
-  arrowsButtons: Ember.computed('orderProperty', function() {
-    return !Ember.isNone(this.get('orderProperty'));
+  arrowsButtons: Ember.computed('orderedProperty', function() {
+    return !Ember.isNone(this.get('orderedProperty'));
   }),
 
   actions: {

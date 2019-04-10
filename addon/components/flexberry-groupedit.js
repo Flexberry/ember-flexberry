@@ -551,10 +551,10 @@ export default FlexberryBaseComponent.extend({
   /**
     Check in view order property.
 
-    @property orderProperty
+    @property orderedProperty
     @type computed
   */
-  orderProperty: Ember.computed('modelProjection', function() {
+  orderedProperty: Ember.computed('modelProjection', function() {
     let projectionName = this.get('modelProjection');
 
     if (Ember.isNone(projectionName)) {
@@ -656,7 +656,7 @@ export default FlexberryBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    if (Ember.isNone(this.get('orderProperty'))) {
+    if (Ember.isNone(this.get('orderedProperty'))) {
       let developerUserSettings = this.currentController;
       developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
       developerUserSettings = developerUserSettings[this.componentName] || {};

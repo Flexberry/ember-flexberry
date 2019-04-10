@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Dropdown mode uses projection from `projection` property.
 
 ### Added
-* `flexberry-objectlistview` component:
+* `object-list-view` component:
     * Add option to hide default sorting button.
 
 ## [2.1.0-beta.3] - 2019-03-15

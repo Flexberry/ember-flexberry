@@ -22,6 +22,25 @@
       <i class="configure icon"></i>
   </button>
 {{/if}}
+
+{{#if arrowsButtons}}
+  <button
+    class="ui ui-move-up {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.move-up-button-text"}}
+    disabled={{readonly}}
+    {{action 'moveUp'}}>
+      <i class="arrow up icon"></i>
+  </button>
+
+  <button
+    class="ui ui-move-down {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.move-down-button-text"}}
+    disabled={{readonly}}
+    {{action 'moveDown'}}>
+      <i class="arrow down icon"></i>
+  </button>
+{{/if}}
+
 {{#each customButtons as |customButton|}}
   <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} {{if customButton.iconClasses " icon" ""}} custom button"

@@ -95,6 +95,15 @@ export default FlexberryBaseComponent.extend({
   */
   defaultSettingsButton: true,
 
+  /**
+    Boolean property to show or hide arrows button in toolbar.
+
+    @property arrowsButtons
+  */
+  arrowsButtons: Ember.computed('orderProperty', function() {
+    return !Ember.isNone(this.get('orderProperty'));
+  }),
+
   actions: {
     /**
       Handles add record button click and triggers add record event on
@@ -176,6 +185,34 @@ export default FlexberryBaseComponent.extend({
         throw new Error('Unsupported action type for custom buttons.');
       }
     },
+
+    /**
+      Handles moveUp button click.
+
+      @method actions.moveUp
+    */
+    moveUp() {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      let componentName = this.get('componentName');
+      this.get('_groupEditEventsService').moveUpRowTrigger(componentName);
+    },
+
+    /**
+      Handles moveDown button click.
+
+      @method actions.moveDown
+    */
+    moveDown() {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      let componentName = this.get('componentName');
+      this.get('_groupEditEventsService').moveDownRowTrigger(componentName);
+    }
   },
 
   /**

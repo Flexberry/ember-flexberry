@@ -8,7 +8,7 @@ var Model = Projection.Model.extend({
     inverse: 'files',
     async: false
   }),
-  order: DS.attr('number'),
+  order: DS.attr('number', { order: true }),
   file: DS.attr('file'),
 
   // Model validation rules.

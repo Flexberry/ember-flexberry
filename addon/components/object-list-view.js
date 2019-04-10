@@ -63,6 +63,14 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
+    Flag indicates on availability in view order property.
+
+    @property orderProperty
+    @type String
+  */
+  orderProperty: undefined,
+
+  /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
 
@@ -473,12 +481,14 @@ export default FlexberryBaseComponent.extend(
         userSettings.sorting = [];
       }
 
-      for (let i = 0; i < userSettings.sorting.length; i++) {
-        let sorting = userSettings.sorting[i];
-        let propName = sorting.propName;
-        namedCols[propName].sorted = true;
-        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-        namedCols[propName].sortNumber = i + 1;
+      if (Ember.isNone(this.get('orderProperty'))) {
+        for (let i = 0; i < userSettings.sorting.length; i++) {
+          let sorting = userSettings.sorting[i];
+          let propName = sorting.propName;
+          namedCols[propName].sorted = true;
+          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
+          namedCols[propName].sortNumber = i + 1;
+        }
       }
 
       if (userSettings.colsOrder !== undefined) {
@@ -915,7 +925,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.orderable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false || !Ember.isNone(this.get('orderProperty'))) {
         return;
       }
 
@@ -1118,6 +1128,8 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').on('moveUpRow', this, this._moveUpRow);
+    this.get('objectlistviewEventsService').on('moveDownRow', this, this._moveDownRow);
   },
 
   /**
@@ -1280,6 +1292,8 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').off('moveUpRow', this, this._moveUpRow);
+    this.get('objectlistviewEventsService').off('moveDownRow', this, this._moveDownRow);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1648,6 +1662,15 @@ export default FlexberryBaseComponent.extend(
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+
+      let orderProperty = this.get('orderProperty');
+      if (!Ember.isNone(orderProperty) && orderProperty === bindingPath) {
+        if (Ember.isNone(cellComponent.componentProperties)) {
+          cellComponent.componentProperties = {};
+        }
+
+        Ember.set(cellComponent.componentProperties, 'readonly', true);
+      }
     }
 
     let key = this._createKey(bindingPath);
@@ -1881,7 +1904,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (Ember.isArray(sorting)) {
+      if (Ember.isNone(this.get('orderProperty')) && Ember.isArray(sorting)) {
         let columns = this.get('columns');
         if (Ember.isArray(columns)) {
           columns.forEach((column) => {
@@ -1990,6 +2013,17 @@ export default FlexberryBaseComponent.extend(
     let itemToRemove = this.get('contentWithKeys').findBy('key', key);
     if (itemToRemove) {
       this.get('contentWithKeys').removeObject(itemToRemove);
+
+      let orderProperty = this.get('orderProperty');
+      if (!Ember.isNone(orderProperty)) {
+        let valueOrder = itemToRemove.get(`data.${orderProperty}`);
+        let updateItems = this.get('contentWithKeys').filter((value) => value.get(`data.${orderProperty}`) > valueOrder);
+        updateItems.forEach((updateItem) => {
+          let data = updateItem.get('data');
+          let oldOrder = data.get(`${orderProperty}`);
+          data.set(`${orderProperty}`, oldOrder - 1);
+        });
+      }
     }
   },
 
@@ -2066,6 +2100,9 @@ export default FlexberryBaseComponent.extend(
       } else {
         let modelName = this.get('modelProjection').modelName;
         let modelToAdd = this.get('store').createRecord(modelName, {});
+        if (!Ember.isNone(this.get('orderProperty'))) {
+          modelToAdd.set(`${this.get('orderProperty')}`, this.get('content').length + 1);
+        }
 
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
@@ -2487,6 +2524,81 @@ export default FlexberryBaseComponent.extend(
       if (!skipConfugureRows) {
         this.selectedRowsChanged();
       }
+    }
+  },
+
+  /**
+    Move up all select records.
+
+    @method _moveUpRow
+    @private
+  */
+  _moveUpRow(componentName) {
+    if (componentName === this.componentName) {
+      let contentForRender = this.get('contentForRender');
+      let orderProperty = this.get('orderProperty');
+      let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
+        if (a.get(`${orderProperty}`) > b.get(`${orderProperty}`)) {
+          return 1;
+        } else if (a.get(`${orderProperty}`) < b.get(`${orderProperty}`)) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+      selectedRecords.forEach((record) => {
+        let content = contentForRender.map(i => i.data);
+        let indexRecord = content.indexOf(record);
+        if (indexRecord !== 0 && !selectedRecords.includes(content[indexRecord - 1])) {
+          let orderValue = content[indexRecord].get(`${orderProperty}`);
+          let orderValueAbove = content[indexRecord - 1].get(`${orderProperty}`);
+          content[indexRecord].set(`${orderProperty}`, orderValueAbove);
+          content[indexRecord - 1].set(`${orderProperty}`, orderValue);
+
+          let temp = contentForRender[indexRecord];
+          contentForRender.replace(indexRecord, 1);
+          contentForRender.replace(indexRecord - 1, 0, temp);
+        }
+      });
+    }
+  },
+
+  /**
+    Move down all select records.
+
+    @method _moveDownRow
+    @private
+  */
+  _moveDownRow(componentName) {
+    if (componentName === this.componentName) {
+      let contentForRender = this.get('contentForRender');
+
+      let orderProperty = this.get('orderProperty');
+      let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
+        if (a.get(`${orderProperty}`) < b.get(`${orderProperty}`)) {
+          return 1;
+        } else if (a.get(`${orderProperty}`) > b.get(`${orderProperty}`)) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+      selectedRecords.forEach((record) => {
+        let content = contentForRender.map(i => i.data);
+        let indexRecord = content.indexOf(record);
+        if (indexRecord !== content.length - 1 && !selectedRecords.includes(content[indexRecord + 1])) {
+          let orderValue = content[indexRecord].get(`${orderProperty}`);
+          let orderValueBelow = content[indexRecord + 1].get(`${orderProperty}`);
+          content[indexRecord].set(`${orderProperty}`, orderValueBelow);
+          content[indexRecord + 1].set(`${orderProperty}`, orderValue);
+
+          let temp = contentForRender[indexRecord];
+          contentForRender.replace(indexRecord, 1);
+          contentForRender.replace(indexRecord + 1, 0, temp);
+        }
+      });
     }
   },
 });

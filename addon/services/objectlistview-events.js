@@ -246,6 +246,30 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "moveUpRow" event in objectlistview.
+    Event name: moveUpRow.
+
+    @method addRomoveUpRowTriggerwTrigger
+
+    @param {String} componentName The name of objectlistview component
+  */
+  moveUpRowTrigger(componentName) {
+    this.trigger('moveUpRow', componentName);
+  },
+
+  /**
+    Trigger for "moveDownRow" event in objectlistview.
+    Event name: moveDownRow.
+
+    @method moveDownRowTrigger
+
+    @param {String} componentName The name of objectlistview component
+  */
+  moveDownRowTrigger(componentName) {
+    this.trigger('moveDownRow', componentName);
+  },
+
+  /**
     Current limit function for OLV.
 
     @property currentLimitFunction

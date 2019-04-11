@@ -44,12 +44,12 @@ test(testName, (assert) => {
 
         click('.ui.check-all-at-page-button');
         andThen(() => {
-          let $checkCheckBox= Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
+          let $checkCheckBox = Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
           assert.equal($checkCheckBox.length, $columns.length, 'all checkBox in row are select');
 
           click('.ui.check-all-at-page-button');
           andThen(() => {
-            let $checkCheckBox= Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
+            let $checkCheckBox = Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
             assert.equal($checkCheckBox.length, 0, 'all checkBox in row are unselect');
           });
         });

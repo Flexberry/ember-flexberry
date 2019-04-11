@@ -428,7 +428,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      return [];
+      return Ember.A();
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -1527,7 +1527,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _generateColumns(attributes, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -1555,7 +1555,7 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -1569,34 +1569,12 @@ export default FlexberryBaseComponent.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
       }
     }
 
-    return columnsBuf.sort((a, b) => this._compareIndex(a.index, b.index));
-  },
-
-  /**
-    Compare column indexes.
-
-    @method _compareIndex
-    @private
-  */
-  _compareIndex(a, b) {
-    if (Ember.isBlank(a) && Ember.isBlank(b)) {
-      return -1;
-    }
-
-    if (Ember.isBlank(a)) {
-      return 1;
-    }
-
-    if (Ember.isBlank(b)) {
-      return -1;
-    }
-
-    return a - b;
+    return columnsBuf.sortBy('index');
   },
 
   /**

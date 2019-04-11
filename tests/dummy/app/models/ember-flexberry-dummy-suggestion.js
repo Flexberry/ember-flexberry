@@ -146,41 +146,29 @@ Model.defineProjection('SuggestionMainModelProjectionTest', 'ember-flexberry-dum
 
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
-  address: Projection.attr('Address'),
-  text: Projection.attr('Text'),
-  date: Projection.attr('Date'),
-  votes: Projection.attr('Votes'),
-  moderated: Projection.attr('Moderated'),
+  address: Projection.attr('Address', { index: 0 }),
+  text: Projection.attr('Text', { index: 1 }),
+  date: Projection.attr('Date', { index: 2 }),
+  votes: Projection.attr('Votes', { index: 15 }),
+  moderated: Projection.attr('Moderated', { index: 5 }),
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: Projection.attr('Name', { index: 7, hidden: true })
+  }, { index: 6, displayMemberPath: 'name' }),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
-      hidden: true
-    }),
-    eMail: Projection.attr('Email')
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: Projection.attr('Name', { index: 9, hidden: true }),
+    eMail: Projection.attr('Email', { index: 4 })
+  }, { index: 8, displayMemberPath: 'name' }),
   editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
-  commentsCount: Projection.attr('Comments Count'),
+    name: Projection.attr('Name', { index: 11, hidden: true })
+  }, { index: 10, displayMemberPath: 'name' }),
+  commentsCount: Projection.attr('Comments Count', { index: 3 }),
   comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: Projection.attr('Text'),
-    votes: Projection.attr('Votes'),
-    moderated: Projection.attr('Moderated'),
+    text: Projection.attr('Text', { index: 0 }),
+    votes: Projection.attr('Votes', { index: 1 }),
+    moderated: Projection.attr('Moderated', { index: 2 }),
     author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Projection.attr('Name', { hidden: true })
-    }, { displayMemberPath: 'name' })
+      name: Projection.attr('Name', { index: 4, hidden: true })
+    }, { index: 3, displayMemberPath: 'name' })
   })
 });
 

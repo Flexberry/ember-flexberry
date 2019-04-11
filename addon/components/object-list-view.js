@@ -1574,7 +1574,29 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sort((a, b) => this._compareIndex(a.index, b.index));
+  },
+
+  /**
+    Compare column indexes.
+
+    @method _compareIndex
+    @private
+  */
+  _compareIndex(a, b) {
+    if (Ember.isBlank(a) && Ember.isBlank(b)) {
+      return -1;
+    }
+
+    if (Ember.isBlank(a)) {
+      return 1;
+    }
+
+    if (Ember.isBlank(b)) {
+      return -1;
+    }
+
+    return a - b;
   },
 
   /**
@@ -1652,11 +1674,13 @@ export default FlexberryBaseComponent.extend(
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = Ember.get(attr, 'options.index');
 
     let column = {
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      index: index,
     };
 
     if (valueFromLocales) {

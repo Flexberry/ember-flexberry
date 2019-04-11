@@ -149,19 +149,19 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   address: Projection.attr('Address', { index: 0 }),
   text: Projection.attr('Text', { index: 1 }),
   date: Projection.attr('Date', { index: 2 }),
-  votes: Projection.attr('Votes', { index: 15 }),
-  moderated: Projection.attr('Moderated', { index: 5 }),
+  votes: Projection.attr('Votes', { index: 3 }),
+  moderated: Projection.attr('Moderated', { index: 4 }),
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Projection.attr('Name', { index: 7, hidden: true })
-  }, { index: 6, displayMemberPath: 'name' }),
+    name: Projection.attr('Name', { index: 6, hidden: true })
+  }, { index: 5, displayMemberPath: 'name' }),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', { index: 9, hidden: true }),
-    eMail: Projection.attr('Email', { index: 4 })
-  }, { index: 8, displayMemberPath: 'name' }),
+    name: Projection.attr('Name', { index: 8, hidden: true }),
+    eMail: Projection.attr('Email', { index: 9 })
+  }, { index: 7, displayMemberPath: 'name' }),
   editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
     name: Projection.attr('Name', { index: 11, hidden: true })
   }, { index: 10, displayMemberPath: 'name' }),
-  commentsCount: Projection.attr('Comments Count', { index: 3 }),
+  commentsCount: Projection.attr('Comments Count', { index: 15 }),
   comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
     text: Projection.attr('Text', { index: 0 }),
     votes: Projection.attr('Votes', { index: 1 }),

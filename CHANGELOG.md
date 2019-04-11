@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-lookup` component:
+    * Add property `autofillByLimit`.
+
 ### Changed
 * `flexberry-lookup` component:
     * Dropdown mode uses projection from `projection` property.

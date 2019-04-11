@@ -274,13 +274,13 @@ export default FlexberryBaseComponent.extend({
 
     @property _autofillByLimitObserver
   */
-  _autofillByLimitObserver: Ember.obserber('autofillByLimit', function() {
+  _autofillByLimitObserver: Ember.on('init', Ember.observer('autofillByLimit', function() {
     if (this.get('autofillByLimit')) {
       this.addObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
     } else {
       this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
     }
-  }),
+  })),
 
   /**
     Classes by property of autocomplete.
@@ -747,6 +747,10 @@ export default FlexberryBaseComponent.extend({
     if (this.get('autocompletePersistValue') && Ember.isNone(this.get('value'))) {
       this.set('autocompletePersistValueCache', this.get('displayValue'));
     }
+
+    if (this.get('autofillByLimit')) {
+      this._onAutofillByLimit();
+    }
   },
 
   /**
@@ -813,7 +817,9 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
-    this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+    if (this.get('autofillByLimit')) {
+      this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+    }
   },
 
   /**
@@ -1299,7 +1305,7 @@ export default FlexberryBaseComponent.extend({
     builder.top(2);
     store.query(relationModelName, builder.build()).then((records) => {
       let record = records.objectAt(0);
-      if (records.length === 1) {
+      if (records.content.length === 1) {
         _this.set('value', record);
         _this.get('currentController').send(_this.get('updateLookupAction'),
           {

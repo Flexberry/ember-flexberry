@@ -261,6 +261,28 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
+    Flag to fill value by limitPredicate.
+
+    @property autofillByLimit
+    @type Boolean
+    @default false
+  */
+  autofillByLimit: false,
+
+  /**
+    Observer on 'autofillByLimit'.
+
+    @property _autofillByLimitObserver
+  */
+  _autofillByLimitObserver: Ember.obserber('autofillByLimit', function() {
+    if (this.get('autofillByLimit')) {
+      this.addObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+    } else {
+      this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+    }
+  }),
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -791,6 +813,7 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+    this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
   },
 
   /**
@@ -1243,5 +1266,48 @@ export default FlexberryBaseComponent.extend({
     } else if (this.get('dropdown')) {
       this._onDropdown();
     }
+  },
+
+  /**
+    Handles changing properties affecting the sample.
+
+    @method _onAutofillByLimit
+    @private
+  */
+  _onAutofillByLimit() {
+    if (this.get('readonly')) {
+      return;
+    }
+
+    let _this = this;
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let store = this.get('store');
+    let relatedModel = this.get('relatedModel');
+    let relationModelName = getRelationType(relatedModel, relationName);
+
+    let builder = new Builder(store, relationModelName).selectByProjection(this.get('projection'));
+
+    let lookupLimitPredicate = this.get('lookupLimitPredicate');
+    if (lookupLimitPredicate) {
+      builder.where(lookupLimitPredicate);
+    }
+
+    builder.top(2);
+    store.query(relationModelName, builder.build()).then((records) => {
+      let record = records.objectAt(0);
+      if (records.length === 1) {
+        _this.set('value', record);
+        _this.get('currentController').send(_this.get('updateLookupAction'),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: record
+          });
+      }
+    });
   }
 });

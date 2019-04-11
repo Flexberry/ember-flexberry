@@ -26,7 +26,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
 });
 
 test(testName, (assert) => {
-  assert.expect(3);
+  assert.expect(4);
 
   visit(path);
 
@@ -42,12 +42,17 @@ test(testName, (assert) => {
         assert.ok($list);
         let $columns = Ember.$('.object-list-view-helper-column');
 
-        let $checkAllAtPageButton = Ember.$('.check-all-at-page-button');
-        $checkAllAtPageButton.click();
+        click('.ui.check-all-at-page-button');
+        andThen(() => {
+          let $checkCheckBox= Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
+          assert.equal($checkCheckBox.length, $columns.length, 'all checkBox in row are select');
 
-        let $checkBox = Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox');
-        let $checkCheckBox = Ember.$($checkBox, '.checked');
-        assert.equal($checkCheckBox.length, $columns.length, 'all checkBox in row are select');
+          click('.ui.check-all-at-page-button');
+          andThen(() => {
+            let $checkCheckBox= Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
+            assert.equal($checkCheckBox.length, 0, 'all checkBox in row are unselect');
+          });
+        });
 
         done();
       });

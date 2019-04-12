@@ -25,7 +25,6 @@ executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert, ap
       false,
       'value is changes');
 
-
     Ember.run(() => {
       click('.isclean .ui-clear');
     });

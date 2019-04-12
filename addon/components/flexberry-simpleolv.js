@@ -2571,6 +2571,15 @@ export default folv.extend(
   filterButton: false,
 
   /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Used to specify default 'filter by any match' field text.
 
     @property filterText

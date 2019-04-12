@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add index property generation for projection attributes.
+* List components:
+    * Add option to hide default sorting button.
+* `flexberry-groupedit` component:
+    * Add check all at page button.
 
 ### Changed
 * `flexberry-lookup` component:

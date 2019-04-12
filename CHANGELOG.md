@@ -4,16 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Blueprints:
+    * Add index property generation for projection attributes.
+* List components:
+    * Add option to hide default sorting button.
 * `flexberry-groupedit` component:
     * Add check all at page button.
 
 ### Changed
 * `flexberry-lookup` component:
     * Dropdown mode uses projection from `projection` property.
-
-### Added
-* List components:
-    * Add option to hide default sorting button.
 
 ## [2.1.0-beta.3] - 2019-03-15
 ### Added

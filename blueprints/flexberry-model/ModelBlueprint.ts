@@ -278,10 +278,14 @@ export default class ModelBlueprint {
     }
     let hiddenStr = "";
     if (belongsTo.hidden || belongsTo.index==-1) {
-      hiddenStr = ", { hidden: true }";
+      hiddenStr = `, { index: ${belongsTo.index}, hidden: true }`;
     }else{
-      if(belongsTo.lookupValueField)
-        hiddenStr = `, { displayMemberPath: '${belongsTo.lookupValueField}' }`;
+      index = belongsToAttrs[0].index;
+      if (belongsTo.lookupValueField) {
+        hiddenStr = `, { index: ${belongsTo.index}, displayMemberPath: '${belongsTo.lookupValueField}' }`;
+      } else {
+        hiddenStr = `, { index: ${belongsTo.index} }`;
+      }
     }
     let indent: string[] = [];
     for (let i = 0; i < level; i++) {
@@ -306,7 +310,9 @@ export default class ModelBlueprint {
   declareProjAttr(attr: metadata.ProjAttr): SortedPair {
     let hiddenStr = "";
     if (attr.hidden) {
-      hiddenStr = ", { hidden: true }";
+      hiddenStr = `, { index: ${attr.index}, hidden: true }`;
+    } else {
+      hiddenStr = `, { index: ${attr.index} }`;
     }
     return new SortedPair(attr.index, `${attr.name}: Projection.attr('${attr.caption}'${hiddenStr})`);
   }

@@ -192,7 +192,7 @@ export default Ember.Mixin.create({
     @method _generateColumns
     @private
   */
-  _generateColumns(attributes, columnsBuf, relationshipPath) {
+  _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
@@ -231,7 +231,7 @@ export default Ember.Mixin.create({
           }
 
           currentRelationshipPath += attrName + '.';
-          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
+          this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath);
           break;
 
         case 'attr':
@@ -305,6 +305,7 @@ export default Ember.Mixin.create({
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      isHasMany: isHasMany,
       index: index,
     };
 

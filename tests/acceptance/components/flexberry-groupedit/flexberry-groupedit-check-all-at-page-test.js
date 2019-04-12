@@ -40,17 +40,17 @@ test(testName, (assert) => {
       let done = assert.async();
       loadingList($thead, olvContainerClass, trTableClass).then(($list) => {
         assert.ok($list);
-        let $columns = Ember.$('.object-list-view-helper-column');
+        let $rows = Ember.$('.object-list-view-helper-column', $list);
 
         click('.ui.check-all-at-page-button');
         andThen(() => {
-          let $checkCheckBox = Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
-          assert.equal($checkCheckBox.length, $columns.length, 'all checkBox in row are select');
+          let $checkCheckBox = Ember.$('.flexberry-checkbox.checked', $rows);
+          assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
 
           click('.ui.check-all-at-page-button');
           andThen(() => {
-            let $checkCheckBox = Ember.$('.object-list-view-helper-column-cell .flexberry-checkbox.checked');
-            assert.equal($checkCheckBox.length, 0, 'all checkBox in row are unselect');
+            $checkCheckBox = Ember.$('.flexberry-checkbox.checked', $rows);
+            assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
           });
         });
 

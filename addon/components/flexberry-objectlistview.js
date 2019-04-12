@@ -478,6 +478,15 @@ export default FlexberryBaseComponent.extend({
   exportExcelButton: false,
 
   /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Flag to use filters in OLV component.
 
     @property enableFilters

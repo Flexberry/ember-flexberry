@@ -148,6 +148,15 @@ export default FlexberryBaseComponent.extend({
   defaultSettingsButton: true,
 
   /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Route of edit form.
 
     @example

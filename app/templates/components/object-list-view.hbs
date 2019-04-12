@@ -38,13 +38,13 @@
                 </button>
               {{/if}}
             {{/if}}
-            {{#if (not orderedProperty)}}
-            <button
-              class="ui clear-sorting-button {{buttonClass}} button"
-              title={{t "components.olv-toolbar.clear-sorting-button-text"}}
-              {{action "clearSorting"}}>
-                <i class="sort icon"></i>
-            </button>
+            {{#if (and defaultSortingButton (not orderedProperty))}}
+              <button
+                class="ui clear-sorting-button {{buttonClass}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
             {{/if}}
           {{/if}}
         </th>

@@ -16,15 +16,76 @@ export default EditFormController.extend({
   limitValue: undefined,
 
   /**
+    Indicates when limit predicate is enabled.
+
+    @property limitEnabled
+    @type Boolean
+    @default true
+   */
+  limitEnabled: true,
+
+  /**
+    Current readonly property value.
+
+    @property readonly
+    @type Boolean
+    @default false
+   */
+  readonly: false,
+
+  /**
+    Current autofillByLimit property value.
+
+    @property autofillByLimit
+    @type Boolean
+    @default true
+   */
+  autofillByLimit: true,
+
+  /**
     Current predicate to limit accessible values for lookup.
 
     @property lookupCustomLimitPredicate
     @type BasePredicate
     @default undefined
    */
-  lookupCustomLimitPredicate: Ember.computed(function() {
+  lookupCustomLimitPredicate: Ember.computed('limitEnabled', function() {
+    if (!this.get('limitEnabled')) {
+      return undefined;
+    }
+
     let limitValue = this.get('limitValue');
 
     return new SimplePredicate('id', FilterOperator.Eq, limitValue.get('id'));
+  }),
+
+  /**
+    Component settings metadata.
+
+    @property componentSettingsMetadata
+    @type Object[]
+  */
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
+    let componentSettingsMetadata = Ember.A();
+    componentSettingsMetadata.pushObject({
+      settingName: 'autofillByLimit',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'autofillByLimit'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'limitEnabled',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'limitEnabled'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'readonly',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'readonly'
+    });
+
+    return componentSettingsMetadata;
   })
 });

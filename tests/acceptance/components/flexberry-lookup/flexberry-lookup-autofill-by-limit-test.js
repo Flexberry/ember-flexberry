@@ -5,7 +5,7 @@ executeTest('flexberry-lookup autofillByLimit in readonly test', (store, assert,
   assert.expect(1);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
-    let $lookupFeild = Ember.$('.isreadonly .lookup-field');
+    let $lookupField = Ember.$('.isreadonly .lookup-field');
     let value = $lookupField.val();
     assert.ok(Ember.isBlank(value), 'Value was changed');
   });
@@ -21,11 +21,12 @@ executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert, ap
 
     Ember.run(() => {
       click('.isclean .ui-clear');
+      andThen(function() {
+        let $lookupFieldUpdate = Ember.$('.isclean .lookup-field');
+        let valueUpdate = $lookupFieldUpdate.val();
+        assert.ok(Ember.isBlank(valueUpdate), 'Value isn\'t empty');
+      });
     });
-
-    let $lookupFieldUpdate = Ember.$('.isclean .lookup-field');
-    let valueUpdate = $lookupFieldUpdate.val();
-    assert.ok(Ember.isBlank(valueUpdate), 'Value isn\'t empty');
   });
 });
 

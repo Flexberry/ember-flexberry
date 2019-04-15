@@ -276,9 +276,13 @@ export default FlexberryBaseComponent.extend({
   */
   _autofillByLimitObserver: Ember.on('init', Ember.observer('autofillByLimit', function() {
     if (this.get('autofillByLimit')) {
-      this.addObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+      this.addObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.addObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
     } else {
-      this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
     }
   })),
 
@@ -818,7 +822,9 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
     if (this.get('autofillByLimit')) {
-      this.removeObserver('relatedModel', 'relationName', 'lookupLimitPredicate', this, this._onAutofillByLimit);
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
     }
   },
 
@@ -1275,6 +1281,16 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Function for autofillByLimit observer.
+
+    @method _autofillByLimitObserverFunction
+    @private
+  */
+  _autofillByLimitObserverFunction() {
+    Ember.run.once(this, '_onAutofillByLimit');
+  },
+
+  /**
     Handles changing properties affecting the sample.
 
     @method _onAutofillByLimit
@@ -1304,8 +1320,8 @@ export default FlexberryBaseComponent.extend({
 
     builder.top(2);
     store.query(relationModelName, builder.build()).then((records) => {
-      let record = records.objectAt(0);
-      if (records.content.length === 1) {
+      if (Ember.get(records, 'length') === 1) {
+        let record = records.objectAt(0);
         _this.set('value', record);
         _this.get('currentController').send(_this.get('updateLookupAction'),
           {

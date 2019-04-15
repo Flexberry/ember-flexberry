@@ -498,6 +498,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'autofill-by-limit-example': {
+              'caption': 'Пример autofillByLimit',
+              'title': ''
+            },
             'limit-function-through-dynamic-properties-example': {
               'caption': 'Функция ограничения через динамические свойства',
               'title': ''
@@ -914,6 +918,10 @@ Ember.$.extend(true, translations, {
         },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
+          'titleLookup': 'Мастер'
+        },
+        'autofill-by-limit-example': {
+          'caption': 'Flexberry-lookup. Пример autofillByLimit в lookup-e',
           'titleLookup': 'Мастер'
         },
         'limit-function-example': {

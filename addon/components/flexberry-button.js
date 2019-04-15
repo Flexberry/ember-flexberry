@@ -8,7 +8,6 @@ import { htmlSafe, isHTMLSafe } from '@ember/string';
 import { get, computed  } from '@ember/object';
 import $ from 'jquery';
 import RequiredActionsMixin from '../mixins/required-actions';
-import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 
@@ -55,13 +54,11 @@ const flexberryClassNames = {
   @class FlexberryButtonComponent
   @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
-  @uses DomActionsMixin
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
 let FlexberryButtonComponent = Component.extend(
   RequiredActionsMixin,
-  DomActionsMixin,
   DynamicActionsMixin,
   DynamicPropertiesMixin, {
 

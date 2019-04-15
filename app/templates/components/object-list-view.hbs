@@ -38,7 +38,7 @@
                 </button>
               {{/if}}
             {{/if}}
-            {{#if defaultSortingButton}}
+            {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
                 class="ui clear-sorting-button {{buttonClass}} button"
                 title={{t "components.olv-toolbar.clear-sorting-button-text"}}

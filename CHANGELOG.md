@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add option to hide default sorting button.
 * `flexberry-groupedit` component:
     * Add check all at page button.
+    * Sorting by ordered property.
 * `flexberry-lookup` component:
     * Add property `autofillByLimit`.
 

@@ -63,6 +63,14 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
+    Flag indicates on availability in view order property.
+
+    @property orderedProperty
+    @type String
+  */
+  orderedProperty: undefined,
+
+  /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
 
@@ -473,12 +481,14 @@ export default FlexberryBaseComponent.extend(
         userSettings.sorting = [];
       }
 
-      for (let i = 0; i < userSettings.sorting.length; i++) {
-        let sorting = userSettings.sorting[i];
-        let propName = sorting.propName;
-        namedCols[propName].sorted = true;
-        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-        namedCols[propName].sortNumber = i + 1;
+      if (Ember.isNone(this.get('orderedProperty'))) {
+        for (let i = 0; i < userSettings.sorting.length; i++) {
+          let sorting = userSettings.sorting[i];
+          let propName = sorting.propName;
+          namedCols[propName].sorted = true;
+          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
+          namedCols[propName].sortNumber = i + 1;
+        }
       }
 
       if (userSettings.colsOrder !== undefined) {
@@ -915,7 +925,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.orderable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false || !Ember.isNone(this.get('orderedProperty'))) {
         return;
       }
 
@@ -1118,6 +1128,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
   },
 
   /**
@@ -1280,6 +1291,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1648,6 +1660,15 @@ export default FlexberryBaseComponent.extend(
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+
+      let orderedProperty = this.get('orderedProperty');
+      if (!Ember.isNone(orderedProperty) && orderedProperty === bindingPath) {
+        if (Ember.isNone(cellComponent.componentProperties)) {
+          cellComponent.componentProperties = {};
+        }
+
+        Ember.set(cellComponent.componentProperties, 'readonly', true);
+      }
     }
 
     let key = this._createKey(bindingPath);
@@ -1883,7 +1904,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (Ember.isArray(sorting)) {
+      if (Ember.isNone(this.get('orderedProperty')) && Ember.isArray(sorting)) {
         let columns = this.get('columns');
         if (Ember.isArray(columns)) {
           columns.forEach((column) => {
@@ -1992,6 +2013,17 @@ export default FlexberryBaseComponent.extend(
     let itemToRemove = this.get('contentWithKeys').findBy('key', key);
     if (itemToRemove) {
       this.get('contentWithKeys').removeObject(itemToRemove);
+
+      let orderedProperty = this.get('orderedProperty');
+      if (!Ember.isNone(orderedProperty)) {
+        let valueOrder = itemToRemove.get(`data.${orderedProperty}`);
+        let updateItems = this.get('contentWithKeys').filter((value) => value.get(`data.${orderedProperty}`) > valueOrder);
+        updateItems.forEach((updateItem) => {
+          let data = updateItem.get('data');
+          let oldOrder = data.get(`${orderedProperty}`);
+          data.set(`${orderedProperty}`, oldOrder - 1);
+        });
+      }
     }
   },
 
@@ -2068,6 +2100,9 @@ export default FlexberryBaseComponent.extend(
       } else {
         let modelName = this.get('modelProjection').modelName;
         let modelToAdd = this.get('store').createRecord(modelName, {});
+        if (!Ember.isNone(this.get('orderedProperty'))) {
+          modelToAdd.set(`${this.get('orderedProperty')}`, this.get('content').length + 1);
+        }
 
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
@@ -2489,6 +2524,39 @@ export default FlexberryBaseComponent.extend(
       if (!skipConfugureRows) {
         this.selectedRowsChanged();
       }
+    }
+  },
+
+  /**
+    Move all selected records.
+
+    @method _moveRow
+    @private
+  */
+  _moveRow(componentName, shift) {
+    if (componentName === this.componentName) {
+      let contentForRender = this.get('contentForRender');
+      let orderedProperty = this.get('orderedProperty');
+      let selectedRecords = this.get('selectedRecords').sortBy(`${orderedProperty}`);
+      if (shift > 0) {
+        selectedRecords.reverseObjects();
+      }
+
+      selectedRecords.forEach((record) => {
+        let content = contentForRender.map(i => i.data);
+        let indexRecord = content.indexOf(record);
+        let newIndex = indexRecord + shift;
+        if (newIndex >= 0 && newIndex < content.length && !selectedRecords.includes(content[newIndex])) {
+          let orderValue = content[indexRecord].get(`${orderedProperty}`);
+          let orderValueAbove = content[newIndex].get(`${orderedProperty}`);
+          content[indexRecord].set(`${orderedProperty}`, orderValueAbove);
+          content[newIndex].set(`${orderedProperty}`, orderValue);
+
+          let temp = contentForRender[indexRecord];
+          contentForRender.replace(indexRecord, 1);
+          contentForRender.replace(newIndex, 0, temp);
+        }
+      });
     }
   },
 });

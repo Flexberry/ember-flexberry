@@ -155,30 +155,37 @@ export default class ModelBlueprint {
           TAB + TAB + `@property ${attr.name}\n` +
           TAB + "*/\n" + TAB;
       }
-      let defaultValue = "";
+      var options = [];
+      var optionsStr = "";
       if (attr.defaultValue) {
         switch (attr.type) {
           case 'decimal':
           case 'number':
           case 'boolean':
-            defaultValue = `, { defaultValue: ${attr.defaultValue} }`;
+            options.push(`defaultValue: ${attr.defaultValue}`);
             break;
           case 'date':
             if (attr.defaultValue === 'Now') {
-              defaultValue = `, { defaultValue() { return new Date(); } }`;
+              options.push(`defaultValue() { return new Date(); }`);
               break;
             }
           default:
             if (this.enums.hasOwnProperty(attr.type)) {
               let enumName = `${this.enums[attr.type].className}Enum`;
               this.enumImports[enumName] = attr.type;
-              defaultValue = `, { defaultValue: ${enumName}.${attr.defaultValue} }`;
+              options.push(`defaultValue: ${enumName}.${attr.defaultValue}`);
             } else {
-              defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
+              options.push(`defaultValue: '${attr.defaultValue}'`);
             }
         }
       }
-      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${defaultValue})`);
+      if (attr.ordered) {
+          options.push("ordered: true");
+      }
+      if (options.length != 0) {
+          optionsStr = ", { " + options.join(', ') + ' }';
+      }
+      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${optionsStr})`);
       if (attr.notNull) {
         if (attr.type === "date") {
           validations.push(attr.name + ": { datetime: true }");

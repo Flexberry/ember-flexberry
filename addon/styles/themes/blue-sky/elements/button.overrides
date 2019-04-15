@@ -494,6 +494,28 @@ div.ui.secondary.menu.no-margin {
     }
 }
 
+.ui.ui-move-up.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
+.ui.ui-move-down.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
 .ui.custom.button {
     padding: 0px 18px;
     height: 30px;

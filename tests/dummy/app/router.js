@@ -61,6 +61,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
+  this.route('components-examples/flexberry-lookup/autofill-by-limit-example');
   this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');
   this.route('components-examples/flexberry-lookup/lookup-block-form-example');
   this.route('components-examples/flexberry-lookup/lookup-in-modal');
@@ -148,6 +149,7 @@ Router.map(function() {
   this.route('user-setting-forms/user-setting-delete');
 
   // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');

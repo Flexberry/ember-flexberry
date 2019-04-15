@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add index property generation for projection attributes.
 * List components:
     * Add option to hide default sorting button.
+    * Add option to fix table header (`fixedHeader`).
 * `flexberry-groupedit` component:
     * Add check all at page button.
     * Sorting by ordered property.

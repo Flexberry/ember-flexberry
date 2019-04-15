@@ -261,11 +261,16 @@ var ModelBlueprint = /** @class */ (function () {
         }
         var hiddenStr = "";
         if (belongsTo.hidden || belongsTo.index == -1) {
-            hiddenStr = ", { hidden: true }";
+            hiddenStr = ", { index: " + belongsTo.index + ", hidden: true }";
         }
         else {
-            if (belongsTo.lookupValueField)
-                hiddenStr = ", { displayMemberPath: '" + belongsTo.lookupValueField + "' }";
+            index = belongsToAttrs[0].index;
+            if (belongsTo.lookupValueField) {
+              hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
+            }
+            else {
+              hiddenStr = ", { index: " + belongsTo.index + " }";
+            }
         }
         var indent = [];
         for (var i = 0; i < level; i++) {
@@ -290,7 +295,10 @@ var ModelBlueprint = /** @class */ (function () {
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
         if (attr.hidden) {
-            hiddenStr = ", { hidden: true }";
+            hiddenStr = ", { index: " + attr.index + ", hidden: true }";
+        }
+        else {
+            hiddenStr = ", { index: " + attr.index + " }";
         }
         return new SortedPair(attr.index, attr.name + ": Projection.attr('" + attr.caption + "'" + hiddenStr + ")");
     };

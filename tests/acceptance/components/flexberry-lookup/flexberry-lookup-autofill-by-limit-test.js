@@ -5,12 +5,9 @@ executeTest('flexberry-lookup autofillByLimit in readonly test', (store, assert,
   assert.expect(1);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
-    let $lookupFild = Ember.$('.isreadonly .lookup-field');
-    let value = $lookupFild.val();
-    assert.strictEqual(
-      Ember.isBlank(value),
-      true,
-      'value is changes');
+    let $lookupFeild = Ember.$('.isreadonly .lookup-field');
+    let value = $lookupField.val();
+    assert.ok(Ember.isBlank(value), 'Value was changed');
   });
 });
 
@@ -18,23 +15,17 @@ executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert, ap
   assert.expect(2);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
-    let $lookupFild = Ember.$('.isclean .lookup-field');
-    let value = $lookupFild.val();
-    assert.strictEqual(
-      Ember.isBlank(value),
-      false,
-      'value is changes');
+    let $lookupField = Ember.$('.isclean .lookup-field');
+    let value = $lookupField.val();
+    assert.notOk(Ember.isBlank(value), 'Value wasn\'t changed');
 
     Ember.run(() => {
       click('.isclean .ui-clear');
     });
 
-    let $lookupFildUpdate = Ember.$('.isclean .lookup-field');
-    let valueUpdate = $lookupFildUpdate.val();
-    assert.strictEqual(
-      Ember.isBlank(valueUpdate),
-      true,
-      'value is not clean');
+    let $lookupFieldUpdate = Ember.$('.isclean .lookup-field');
+    let valueUpdate = $lookupFieldUpdate.val();
+    assert.ok(Ember.isBlank(valueUpdate), 'Value isn\'t empty');
   });
 });
 
@@ -45,12 +36,12 @@ executeTest('flexberry-lookup autofillByLimit changes select value test', (store
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let defaultValue = Ember.get(controller, 'defaultValue.name');
 
-    let $lookupFild = Ember.$('.exist .lookup-field');
-    let value = $lookupFild.val();
+    let $lookupField = Ember.$('.exist .lookup-field');
+    let value = $lookupField.val();
 
     assert.notEqual(
       defaultValue,
       value,
-      'defaultValue: \'' + defaultValue + '\' don\'t change');
+      'DefaultValue: \'' + defaultValue + '\' didn\'t change');
   });
 });

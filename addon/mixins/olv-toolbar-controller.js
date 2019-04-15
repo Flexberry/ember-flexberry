@@ -193,7 +193,7 @@ export default Ember.Mixin.create({
     @private
   */
   _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -209,7 +209,7 @@ export default Ember.Mixin.create({
           if (isExportExcel && !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, true);
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           break;
@@ -227,7 +227,7 @@ export default Ember.Mixin.create({
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -241,12 +241,12 @@ export default Ember.Mixin.create({
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sortBy('index');
   },
 
   /**
@@ -299,12 +299,14 @@ export default Ember.Mixin.create({
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = Ember.get(attr, 'options.index');
 
     let column = {
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
       isHasMany: isHasMany,
+      index: index,
     };
 
     if (valueFromLocales) {

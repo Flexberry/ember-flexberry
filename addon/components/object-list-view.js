@@ -428,7 +428,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      return [];
+      return Ember.A();
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -1527,7 +1527,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _generateColumns(attributes, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -1555,7 +1555,7 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -1569,12 +1569,12 @@ export default FlexberryBaseComponent.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sortBy('index');
   },
 
   /**
@@ -1652,11 +1652,13 @@ export default FlexberryBaseComponent.extend(
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = Ember.get(attr, 'options.index');
 
     let column = {
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      index: index,
     };
 
     if (valueFromLocales) {

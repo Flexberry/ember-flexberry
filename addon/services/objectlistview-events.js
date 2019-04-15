@@ -246,27 +246,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Trigger for "moveUpRow" event in objectlistview.
-    Event name: moveUpRow.
+    Trigger for "moveRowTrigger" event in objectlistview.
+    Event name: moveRow.
 
-    @method addRomoveUpRowTriggerwTrigger
-
-    @param {String} componentName The name of objectlistview component
-  */
-  moveUpRowTrigger(componentName) {
-    this.trigger('moveUpRow', componentName);
-  },
-
-  /**
-    Trigger for "moveDownRow" event in objectlistview.
-    Event name: moveDownRow.
-
-    @method moveDownRowTrigger
+    @method moveRowTrigger
 
     @param {String} componentName The name of objectlistview component
+    @param {Integer} shift Shift for rows
   */
-  moveDownRowTrigger(componentName) {
-    this.trigger('moveDownRow', componentName);
+  moveRowTrigger(componentName, shift) {
+    this.trigger('moveRow', componentName, shift);
   },
 
   /**

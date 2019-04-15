@@ -1128,8 +1128,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
-    this.get('objectlistviewEventsService').on('moveUpRow', this, this._moveUpRow);
-    this.get('objectlistviewEventsService').on('moveDownRow', this, this._moveDownRow);
+    this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
   },
 
   /**
@@ -1292,8 +1291,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
-    this.get('objectlistviewEventsService').off('moveUpRow', this, this._moveUpRow);
-    this.get('objectlistviewEventsService').off('moveDownRow', this, this._moveDownRow);
+    this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -2528,75 +2526,33 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Move up all select records.
+    Move all selected records.
 
-    @method _moveUpRow
+    @method _moveRow
     @private
   */
-  _moveUpRow(componentName) {
+  _moveRow(componentName, shift) {
     if (componentName === this.componentName) {
       let contentForRender = this.get('contentForRender');
       let orderedProperty = this.get('orderedProperty');
-      let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
-        if (a.get(`${orderedProperty}`) > b.get(`${orderedProperty}`)) {
-          return 1;
-        } else if (a.get(`${orderedProperty}`) < b.get(`${orderedProperty}`)) {
-          return -1;
-        }
-
-        return 0;
-      });
+      let selectedRecords = this.get('selectedRecords').sortBy(`${orderedProperty}`);
+      if (shift > 0) {
+        selectedRecords.reverseObjects();
+      }
 
       selectedRecords.forEach((record) => {
         let content = contentForRender.map(i => i.data);
         let indexRecord = content.indexOf(record);
-        if (indexRecord !== 0 && !selectedRecords.includes(content[indexRecord - 1])) {
+        let newIndex = indexRecord + shift;
+        if (newIndex >= 0 && newIndex < content.length && !selectedRecords.includes(content[newIndex])) {
           let orderValue = content[indexRecord].get(`${orderedProperty}`);
-          let orderValueAbove = content[indexRecord - 1].get(`${orderedProperty}`);
+          let orderValueAbove = content[newIndex].get(`${orderedProperty}`);
           content[indexRecord].set(`${orderedProperty}`, orderValueAbove);
-          content[indexRecord - 1].set(`${orderedProperty}`, orderValue);
+          content[newIndex].set(`${orderedProperty}`, orderValue);
 
           let temp = contentForRender[indexRecord];
           contentForRender.replace(indexRecord, 1);
-          contentForRender.replace(indexRecord - 1, 0, temp);
-        }
-      });
-    }
-  },
-
-  /**
-    Move down all select records.
-
-    @method _moveDownRow
-    @private
-  */
-  _moveDownRow(componentName) {
-    if (componentName === this.componentName) {
-      let contentForRender = this.get('contentForRender');
-
-      let orderedProperty = this.get('orderedProperty');
-      let selectedRecords = this.get('selectedRecords').sort(function(a, b) {
-        if (a.get(`${orderedProperty}`) < b.get(`${orderedProperty}`)) {
-          return 1;
-        } else if (a.get(`${orderedProperty}`) > b.get(`${orderedProperty}`)) {
-          return -1;
-        }
-
-        return 0;
-      });
-
-      selectedRecords.forEach((record) => {
-        let content = contentForRender.map(i => i.data);
-        let indexRecord = content.indexOf(record);
-        if (indexRecord !== content.length - 1 && !selectedRecords.includes(content[indexRecord + 1])) {
-          let orderValue = content[indexRecord].get(`${orderedProperty}`);
-          let orderValueBelow = content[indexRecord + 1].get(`${orderedProperty}`);
-          content[indexRecord].set(`${orderedProperty}`, orderValueBelow);
-          content[indexRecord + 1].set(`${orderedProperty}`, orderValue);
-
-          let temp = contentForRender[indexRecord];
-          contentForRender.replace(indexRecord, 1);
-          contentForRender.replace(indexRecord + 1, 0, temp);
+          contentForRender.replace(newIndex, 0, temp);
         }
       });
     }

@@ -187,32 +187,18 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Handles moveUp button click.
+      Handles arrow buttons click.
 
-      @method actions.moveUp
+      @method actions.moveRow
     */
-    moveUp() {
+    moveRow(shift) {
       if (this.get('readonly')) {
         return;
       }
 
       let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').moveUpRowTrigger(componentName);
+      this.get('_groupEditEventsService').moveRowTrigger(componentName, shift);
     },
-
-    /**
-      Handles moveDown button click.
-
-      @method actions.moveDown
-    */
-    moveDown() {
-      if (this.get('readonly')) {
-        return;
-      }
-
-      let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').moveDownRowTrigger(componentName);
-    }
   },
 
   /**

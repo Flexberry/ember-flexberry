@@ -281,6 +281,14 @@ export default ListFormController.extend({
   availableCollExpandMode: false,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'fixedHeader' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  fixedHeader: false,
+
+  /**
     Current records.
 
     @property _records
@@ -344,6 +352,7 @@ export default ListFormController.extend({
     '  previousPage=(action \"previousPage\")<br>' +
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
+    '  fixedHeader=fixedHeader<br>' +
     '}}'),
 
   /**
@@ -542,6 +551,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'availableCollExpandMode'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;

@@ -172,6 +172,15 @@ export default ListFormController.extend({
   refreshButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'defaultSortingButton' mode or not
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showCheckBoxInRow' mode or not.
 
     @property showCheckBoxInRow
@@ -317,6 +326,7 @@ export default ListFormController.extend({
     '  applyFilters=(action "applyFilters")<br>' +
     '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
+    '  defaultSortingButton=defaultSortingButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
     '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
@@ -475,6 +485,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'refreshButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'defaultSortingButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'defaultSortingButton'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showCheckBoxInRow',

@@ -162,12 +162,14 @@
                 {{action "checkAll" on="touchEnd"}}>
                   <i class="check-all-square-o icon"></i>
               </button>
-              <button
-                class="ui clear-sorting-button-mobile {{buttonClass}} button"
-                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
-                {{action "clearSorting" on="touchEnd"}}>
-                  <i class="sort icon"></i>
-              </button>
+              {{#if defaultSortingButton}}
+                <button
+                  class="ui clear-sorting-button-mobile {{buttonClass}} button"
+                  title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                  {{action "clearSorting" on="touchEnd"}}>
+                    <i class="sort icon"></i>
+                </button>
+              {{/if}}
             {{/if}}
           </th>
         {{/if}}

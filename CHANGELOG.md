@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.1.0-beta.4] - 2019-04-15
 ### Added
 * Blueprints:
     * Add index property generation for projection attributes.
@@ -18,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `flexberry-lookup` component:
     * Dropdown mode uses projection from `projection` property.
+* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.1`.
 
 ## [2.1.0-beta.3] - 2019-03-15
 ### Added

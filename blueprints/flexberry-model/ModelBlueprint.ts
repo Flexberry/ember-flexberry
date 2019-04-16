@@ -189,13 +189,6 @@ export default class ModelBlueprint {
           optionsStr = ", { " + options.join(', ') + ' }';
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${optionsStr})`);
-      if (attr.notNull) {
-        if (attr.type === "date") {
-          validations.push(attr.name + ": { datetime: true }");
-        } else {
-          validations.push(attr.name + ": { presence: true }");
-        }
-      }
       if (attr.stored)
         continue;
       let methodToSetNotStoredProperty =

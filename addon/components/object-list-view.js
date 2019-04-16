@@ -11,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { once } from '@ember/runloop';
+import { once, schedule } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
@@ -72,6 +72,14 @@ export default FlexberryBaseComponent.extend(
       return '';
     }
   }),
+
+  /**
+    Flag indicates on availability in view order property.
+
+    @property orderedProperty
+    @type String
+  */
+  orderedProperty: undefined,
 
   /**
     Model projection which should be used to display given content.
@@ -137,6 +145,15 @@ export default FlexberryBaseComponent.extend(
     @default true
   */
   allowColumnResize: true,
+
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
 
   /**
     Table add column to sorting action name.
@@ -438,7 +455,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      return [];
+      return A();
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -483,12 +500,14 @@ export default FlexberryBaseComponent.extend(
         userSettings.sorting = [];
       }
 
-      for (let i = 0; i < userSettings.sorting.length; i++) {
-        let sorting = userSettings.sorting[i];
-        let propName = sorting.propName;
-        namedCols[propName].sorted = true;
-        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-        namedCols[propName].sortNumber = i + 1;
+      if (isNone(this.get('orderedProperty'))) {
+        for (let i = 0; i < userSettings.sorting.length; i++) {
+          let sorting = userSettings.sorting[i];
+          let propName = sorting.propName;
+          namedCols[propName].sorted = true;
+          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
+          namedCols[propName].sortNumber = i + 1;
+        }
       }
 
       if (userSettings.colsOrder !== undefined) {
@@ -906,7 +925,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.orderable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false || !isNone(this.get('orderedProperty'))) {
         return;
       }
 
@@ -1116,6 +1135,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
     this.get('_contentObserver').apply(this);
     this.get('selectedRowsChanged').apply(this);
   },
@@ -1263,6 +1283,13 @@ export default FlexberryBaseComponent.extend(
     $('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
+
+    if (this.get('fixedHeader')) {
+      let $currentTable = this.$('table.object-list-view');
+      $currentTable.parent().addClass('fixed-header');
+
+      this._fixedTableHead($currentTable);
+    }
   },
 
   /**
@@ -1280,6 +1307,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+    this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1527,7 +1555,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _generateColumns(attributes, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -1555,7 +1583,7 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -1570,13 +1598,13 @@ export default FlexberryBaseComponent.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
         }
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sortBy('index');
   },
 
   /**
@@ -1650,15 +1678,26 @@ export default FlexberryBaseComponent.extend(
     if (!this.get('editOnSeparateRoute') && typeOf(getCellComponent) === 'function') {
       let recordModel = isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+
+      let orderedProperty = this.get('orderedProperty');
+      if (!isNone(orderedProperty) && orderedProperty === bindingPath) {
+        if (isNone(cellComponent.componentProperties)) {
+          cellComponent.componentProperties = {};
+        }
+
+        set(cellComponent.componentProperties, 'readonly', true);
+      }
     }
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = get(attr, 'options.index');
 
     let column = {
       header: valueFromLocales || attr.caption || capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      index: index,
     };
 
     if (valueFromLocales) {
@@ -1891,7 +1930,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (isArray(sorting)) {
+      if (isArray(sorting) && isNone(this.get('orderedProperty'))) {
         let columns = this.get('columns');
         if (isArray(columns)) {
           columns.forEach((column) => {
@@ -2000,6 +2039,17 @@ export default FlexberryBaseComponent.extend(
     let itemToRemove = this.get('contentWithKeys').findBy('key', key);
     if (itemToRemove) {
       this.get('contentWithKeys').removeObject(itemToRemove);
+
+      let orderedProperty = this.get('orderedProperty');
+      if (!isNone(orderedProperty)) {
+        let valueOrder = itemToRemove.get(`data.${orderedProperty}`);
+        let updateItems = this.get('contentWithKeys').filter((value) => value.get(`data.${orderedProperty}`) > valueOrder);
+        updateItems.forEach((updateItem) => {
+          let data = updateItem.get('data');
+          let oldOrder = data.get(`${orderedProperty}`);
+          data.set(`${orderedProperty}`, oldOrder - 1);
+        });
+      }
     }
   },
 
@@ -2078,6 +2128,9 @@ export default FlexberryBaseComponent.extend(
       } else {
         let modelName = this.get('modelProjection').modelName;
         let modelToAdd = this.get('store').createRecord(modelName, {});
+        if (!isNone(this.get('orderedProperty'))) {
+          modelToAdd.set(`${this.get('orderedProperty')}`, this.get('content').length + 1);
+        }
 
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
@@ -2503,6 +2556,167 @@ export default FlexberryBaseComponent.extend(
       if (!skipConfugureRows) {
         this.selectedRowsChanged();
       }
+    }
+  },
+
+  /**
+    It observes changes of flag {{#crossLink "FlexberryObjectlistviewComponent/showFilters:property"}}showFilters{{/crossLink}}.
+
+    If flag {{#crossLink "FlexberryObjectlistviewComponent/showFilters:property"}}{{/crossLink}} changes its value
+    and flag is true trigger scroll.
+
+    @method _showFiltersObserver
+    @private
+  */
+  _showFiltersObserver: observer('showFilters', function() {
+    let showFilters = this.get('showFilters');
+    if (showFilters) {
+      schedule('afterRender', this, function() {
+        $(this.element).scroll();
+      });
+    }
+  }),
+
+  /**
+    Set style of table parent.
+
+    @method _setParent
+    @private
+  */
+  _setParent(settings) {
+    let parent = $(settings.parent);
+    let table = $(settings.table);
+
+    parent.append(table);
+
+    $('.full.height .flexberry-content .ui.main.container').css('margin-bottom', '0');
+
+    let toolbarsHeight = parent.prev().outerHeight(true) +
+                          parent.next().outerHeight(true) +
+                          $('.background-logo').outerHeight() +
+                          $('h3').outerHeight(true) +
+                          $('.footer .flex-container').outerHeight();
+    let tableHeight = `calc(100vh - ${toolbarsHeight}px - 0.5rem)`;
+
+    parent
+        .css({
+          'overflow-x': 'auto',
+          'overflow-y': 'auto',
+          'max-height': tableHeight
+        });
+    parent.scroll(function () {
+      let top = parent.scrollTop();
+
+      this.find('thead tr > *').css('top', top);
+
+      // fixed filters.
+      if (this.find('tbody tr').is('.object-list-view-filters')) {
+        this.find('tbody tr.object-list-view-filters').find(' > *').css('top', top);
+      }
+
+    }.bind(table));
+  },
+
+  /**
+    Set fixed cells backgrounds.
+
+    @method _setBackground
+    @private
+  */
+  _setBackground(elements) {
+    elements.each(function (k, element) {
+      let _element = $(element);
+      let parent = $(_element).parent();
+
+      let elementBackground = _element.css('background-color');
+      elementBackground = (elementBackground === 'transparent' || elementBackground === 'rgba(0, 0, 0, 0)') ? null : elementBackground;
+
+      let parentBackground = parent.css('background-color');
+      parentBackground = (parentBackground === 'transparent' || parentBackground === 'rgba(0, 0, 0, 0)') ? null : parentBackground;
+
+      let background = parentBackground ? parentBackground : 'white';
+      background = elementBackground ? elementBackground : background;
+
+      _element.css('background-color', background);
+    });
+  },
+
+  /**
+    Fixed table head.
+
+    @method _setBackground
+    @private
+  */
+  _fixedTableHead($currentTable) {
+    let defaults = {
+      head: true,
+      foot: false,
+      left: 0,
+      right: 0,
+      'z-index': 0
+    };
+
+    /*
+    (Mozila Firefox(version >58) bug fixes)
+
+    If the browser is Firefox (version >58), then
+    tableHeadFixer is enabled, otherwise
+    thead position: sticky
+    */
+    let ua = navigator.userAgent;
+
+    if (ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) {
+      $currentTable
+            .find('thead tr > *')
+            .css({ 'position':'sticky', 'top':'0' });
+
+    } else {
+      let settings = $.extend({}, defaults);
+
+      settings.table = $currentTable;
+      settings.parent = $(settings.table).parent();
+      this._setParent(settings);
+
+      let thead = $(settings.table).find('thead');
+      let cells = thead.find('tr > *');
+
+      this._setBackground(cells);
+      cells.css({
+        'position': 'relative'
+      });
+    }
+  },
+
+  /**
+    Move all selected records.
+
+    @method _moveRow
+    @private
+  */
+  _moveRow(componentName, shift) {
+    if (componentName === this.componentName) {
+      let contentForRender = this.get('contentForRender');
+      let orderedProperty = this.get('orderedProperty');
+      let selectedRecords = this.get('selectedRecords').sortBy(`${orderedProperty}`);
+      if (shift > 0) {
+        selectedRecords.reverseObjects();
+      }
+
+      selectedRecords.forEach((record) => {
+        let content = contentForRender.map(i => i.data);
+        let indexRecord = content.indexOf(record);
+        let newIndex = indexRecord + shift;
+        if (newIndex >= 0 && newIndex < content.length && !selectedRecords.includes(content[newIndex])) {
+          let orderValue = content[indexRecord].get(`${orderedProperty}`);
+          let orderValueAbove = content[newIndex].get(`${orderedProperty}`);
+          content[indexRecord].set(`${orderedProperty}`, orderValueAbove);
+          content[newIndex].set(`${orderedProperty}`, orderValue);
+
+          let temp = contentForRender[indexRecord];
+          contentForRender.replace(indexRecord, 1);
+          contentForRender.replace(newIndex, 0, temp);
+        }
+      });
     }
   },
 });

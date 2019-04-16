@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { typeOf, isNone } from '@ember/utils';
 import { get, set } from '@ember/object';
-import { isArray } from '@ember/array';
+import { isArray, A } from '@ember/array';
 import { capitalize } from '@ember/string';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
@@ -200,7 +200,7 @@ export default Mixin.create({
     @private
   */
   _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -216,7 +216,7 @@ export default Mixin.create({
           if (isExportExcel && !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, true);
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           break;
@@ -235,7 +235,7 @@ export default Mixin.create({
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -250,13 +250,13 @@ export default Mixin.create({
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
         }
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sortBy('index');
   },
 
   /**
@@ -309,12 +309,14 @@ export default Mixin.create({
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = get(attr, 'options.index');
 
     let column = {
       header: valueFromLocales || attr.caption || capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
       isHasMany: isHasMany,
+      index: index,
     };
 
     if (valueFromLocales) {

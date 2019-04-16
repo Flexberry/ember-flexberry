@@ -737,6 +737,10 @@ $.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'autofill-by-limit-example': {
+              'caption': 'Example autofillByLimit',
+              'title': ''
+            },
             'limit-function-through-dynamic-properties-example': {
               'caption': 'Limit function with dinamic properties example',
               'title': ''
@@ -1159,6 +1163,10 @@ $.extend(true, translations, {
           'captionFirstLimitFunction': 'Limit function №1',
           'captionSecondLimitFunction': 'Limit function №2',
           'captionClearLimitFunction': 'Clear limit function'
+        },
+        'autofill-by-limit-example': {
+          'caption': 'Flexberry-lookup. Example autofillByLimit in lookup',
+          'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Lookup block form example',

@@ -4,23 +4,23 @@
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow }}
+            {{#if (or readonly allSelect)}}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} disabled button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                disabled="disabled"
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+            {{else}}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+            {{/if}}
             {{#if (not-eq class "groupedit-container") }}
-              {{#if (or readonly allSelect)}}
-                <button
-                  class="ui check-all-at-page-button {{buttonClass}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAllAtPage"}}>
-                    <i class="check-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  class="ui check-all-at-page-button {{buttonClass}} button"
-                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                  {{action "checkAllAtPage"}}>
-                    <i class="check-square-o icon"></i>
-                </button>
-              {{/if}}
               {{#if readonly}}
                 <button
                   class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
@@ -38,12 +38,14 @@
                 </button>
               {{/if}}
             {{/if}}
-            <button
-              class="ui clear-sorting-button {{buttonClass}} button"
-              title={{t "components.olv-toolbar.clear-sorting-button-text"}}
-              {{action "clearSorting"}}>
-                <i class="sort icon"></i>
-            </button>
+            {{#if (and defaultSortingButton (not orderedProperty))}}
+              <button
+                class="ui clear-sorting-button {{buttonClass}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
+            {{/if}}
           {{/if}}
         </th>
       {{/if}}
@@ -80,7 +82,7 @@
   </thead>
   <tbody>
     {{#if showFilters}}
-      <tr>
+      <tr class="object-list-view-filters">
         {{#if showHelperColumn}}
           <td rowspan="1"></td>
         {{/if}}
@@ -101,7 +103,7 @@
           <td rowspan="1"></td>
         {{/if}}
       </tr>
-      <tr>
+      <tr class="object-list-view-filters">
         {{#if showHelperColumn}}
           <td rowspan="1"></td>
         {{/if}}

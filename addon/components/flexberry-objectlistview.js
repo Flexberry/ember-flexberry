@@ -176,6 +176,15 @@ export default FlexberryBaseComponent.extend({
   allowColumnResize: true,
 
   /**
+  Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default false
+  */
+  fixedHeader: false,
+
+  /**
     Route for edit form by click row.
 
     @property editFormRoute
@@ -456,6 +465,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   exportExcelButton: false,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Flag to use filters in OLV component.

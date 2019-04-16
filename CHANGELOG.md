@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.1.0-beta.0`.
+
+### Removed
+* `flexberry-button` component:
+    * Remove `DomActionsMixin`.
 
 ## [3.0.1-beta.0] - 2018-12-24
 ### Added
@@ -90,6 +96,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.1.0-beta.4] - 2019-04-15
+### Added
+* Blueprints:
+    * Add index property generation for projection attributes.
+* List components:
+    * Add option to hide default sorting button.
+    * Add option to fix table header (`fixedHeader`).
+* `flexberry-groupedit` component:
+    * Add check all at page button.
+    * Sorting by ordered property.
+* `flexberry-lookup` component:
+    * Add property `autofillByLimit`.
+
+### Changed
+* `flexberry-lookup` component:
+    * Dropdown mode uses projection from `projection` property.
+* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.1`.
 
 ## [2.1.0-beta.3] - 2019-03-15
 ### Added

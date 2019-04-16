@@ -3,13 +3,14 @@
 */
 
 import { isNone } from '@ember/utils';
-import { get, observer } from '@ember/object';
+import { get, observer, computed } from '@ember/object';
 import { inject as service} from '@ember/service';
 import { A, isArray } from '@ember/array';
 import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
 import FlexberryBaseComponent from './flexberry-base-component';
+import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -31,6 +32,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: service(),
+
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -139,6 +149,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   defaultSettingsButton: true,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Route of edit form.
@@ -548,6 +567,34 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Check in view order property.
+
+    @property orderedProperty
+    @type computed
+  */
+  orderedProperty: computed('modelProjection', function() {
+    let projectionName = this.get('modelProjection');
+
+    if (isNone(projectionName)) {
+      return;
+    }
+
+    let information = new Information(this.get('store'));
+    let attributes = projectionName.attributes;
+    let attributesKeys = Object.keys(attributes);
+
+    let order = attributesKeys.find((key) => {
+      let attrubute = attributes[key];
+      if (attrubute.kind === 'attr' && information.isOrdered(projectionName.modelName, key)) {
+        this.set('sorting', [{ direction: 'asc', propName: key }]);
+        return key;
+      }
+    });
+
+    return order;
+  }),
+
+  /**
     Sorting records and trigger `geSortApply` action.
 
     @method sortingFunction
@@ -635,11 +682,14 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let developerUserSettings = this.currentController;
-    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
-    developerUserSettings = developerUserSettings[this.componentName] || {};
-    developerUserSettings = developerUserSettings.DEFAULT || {};
-    this.set('sorting', developerUserSettings.sorting || []);
+
+    if (isNone(this.get('orderedProperty'))) {
+      let developerUserSettings = this.currentController;
+      developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
+      developerUserSettings = developerUserSettings[this.componentName] || {};
+      developerUserSettings = developerUserSettings.DEFAULT || {};
+      this.set('sorting', developerUserSettings.sorting || []);
+    }
   },
 
   /**

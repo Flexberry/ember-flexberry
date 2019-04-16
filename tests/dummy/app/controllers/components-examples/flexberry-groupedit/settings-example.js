@@ -118,6 +118,15 @@ export default EditFormController.extend({
   deleteButton: true,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'defaultSortingButton' mode or not
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Flag for 'flexberry-groupedit' component 'allowColumnResize' property.
 
     @property allowColumnResize
@@ -209,6 +218,7 @@ export default EditFormController.extend({
       '  tableStriped=tableStriped<br>' +
       '  createNewButton=createNewButton<br>' +
       '  deleteButton=deleteButton<br>' +
+      '  defaultSortingButton=defaultSortingButton<br>' +
       '  allowColumnResize=allowColumnResize<br>' +
       '  showAsteriskInRow=showAsteriskInRow<br>' +
       '  showCheckBoxInRow=showCheckBoxInRow<br>' +
@@ -306,6 +316,12 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showDeleteButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'defaultSortingButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'defaultSortingButton'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showEditMenuItemInRow',

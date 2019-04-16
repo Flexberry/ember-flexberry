@@ -252,6 +252,19 @@ export default Service.extend(Evented, {
   },
 
   /**
+    Trigger for "moveRowTrigger" event in objectlistview.
+    Event name: moveRow.
+
+    @method moveRowTrigger
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} shift Shift for rows
+  */
+  moveRowTrigger(componentName, shift) {
+    this.trigger('moveRow', componentName, shift);
+  },
+
+  /**
     Current limit function for OLV.
 
     @property currentLimitFunction

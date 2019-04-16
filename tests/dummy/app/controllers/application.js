@@ -410,6 +410,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
           }]
         }, {
           link: null,

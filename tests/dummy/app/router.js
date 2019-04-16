@@ -53,6 +53,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-dropdown/items-example');
   this.route('components-examples/flexberry-field/settings-example');
   this.route('components-examples/flexberry-file/settings-example');
+  this.route('components-examples/flexberry-file/flexberry-file-in-modal');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-groupedit/model-update-example');
   this.route('components-examples/flexberry-groupedit/custom-buttons-example');

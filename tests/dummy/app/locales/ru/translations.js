@@ -445,7 +445,11 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
-            }
+            },
+            'flexberry-file-in-modal': {
+              'caption': 'Пример файла в модальном окне',
+              'title': ''
+            },
           },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',

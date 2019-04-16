@@ -3,9 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.1.0-beta.5] - 2019-04-16
 ### Fixed
 * `flexberry-groupedit` component:
     * Fix ordered property computing when `modelProjection` are string.
+* `flexberry-file` component:
+    * Fix spinner for preview when component is in modal.
 
 ## [2.1.0-beta.4] - 2019-04-15
 ### Added

@@ -565,23 +565,23 @@ export default FlexberryBaseComponent.extend({
     @type computed
   */
   orderedProperty: Ember.computed('modelProjection', function() {
-    let projectionName = this.get('modelProjection');
-    if (typeof projectionName === 'string') {
+    let projection = this.get('modelProjection');
+    if (typeof projection === 'string') {
       let modelName = this.get('modelName');
-      projectionName = getProjectionByName(projectionName, modelName, this.get('store'));
+      projection = getProjectionByName(projection, modelName, this.get('store'));
     }
 
-    if (Ember.isNone(projectionName)) {
+    if (Ember.isNone(projection)) {
       return;
     }
 
     let information = new Information(this.get('store'));
-    let attributes = projectionName.attributes;
+    let attributes = projection.attributes;
     let attributesKeys = Object.keys(attributes);
 
     let order = attributesKeys.find((key) => {
       let attrubute = attributes[key];
-      if (attrubute.kind === 'attr' && information.isOrdered(projectionName.modelName, key)) {
+      if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
         this.set('sorting', [{ direction: 'asc', propName: key }]);
         return key;
       }

@@ -6,6 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
+import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
   Component for create, edit and delete detail objects.
@@ -565,6 +566,10 @@ export default FlexberryBaseComponent.extend({
   */
   orderedProperty: Ember.computed('modelProjection', function() {
     let projectionName = this.get('modelProjection');
+    if (typeof projectionName === 'string') {
+      let modelName = this.get('modelName');
+      projectionName = getProjectionByName(projectionName, modelName, this.get('store'));
+    }
 
     if (Ember.isNone(projectionName)) {
       return;

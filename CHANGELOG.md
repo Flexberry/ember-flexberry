@@ -97,6 +97,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
+## [2.1.0-beta.5] - 2019-04-16
+### Fixed
+* `flexberry-groupedit` component:
+    * Fix ordered property computing when `modelProjection` are string.
+* `flexberry-file` component:
+    * Fix spinner for preview when component is in modal.
+
 ## [2.1.0-beta.4] - 2019-04-15
 ### Added
 * Blueprints:

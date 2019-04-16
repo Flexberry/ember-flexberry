@@ -315,6 +315,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-file/flexberry-file-in-modal',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.flexberry-file-in-modal.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.flexberry-file-in-modal.title'),
+            children: null
           }]
         }, {
           link: null,

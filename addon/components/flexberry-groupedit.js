@@ -12,6 +12,7 @@ import { merge } from '@ember/polyfills';
 import FlexberryBaseComponent from './flexberry-base-component';
 import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
+import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
   Component for create, edit and delete detail objects.
@@ -573,19 +574,23 @@ export default FlexberryBaseComponent.extend({
     @type computed
   */
   orderedProperty: computed('modelProjection', function() {
-    let projectionName = this.get('modelProjection');
+    let projection = this.get('modelProjection');
+    if (typeof projection === 'string') {
+      let modelName = this.get('modelName');
+      projection = getProjectionByName(projection, modelName, this.get('store'));
+    }
 
-    if (isNone(projectionName)) {
+    if (isNone(projection)) {
       return;
     }
 
     let information = new Information(this.get('store'));
-    let attributes = projectionName.attributes;
+    let attributes = projection.attributes;
     let attributesKeys = Object.keys(attributes);
 
     let order = attributesKeys.find((key) => {
       let attrubute = attributes[key];
-      if (attrubute.kind === 'attr' && information.isOrdered(projectionName.modelName, key)) {
+      if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
         /* eslint-disable ember/no-side-effects */
         this.set('sorting', [{ direction: 'asc', propName: key }]);
         /* eslint-enable ember/no-side-effects */

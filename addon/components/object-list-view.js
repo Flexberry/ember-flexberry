@@ -18,6 +18,7 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import getProjectionByName from '../utils/get-projection-by-name';
 import runAfter from '../utils/run-after';
 
 /**
@@ -96,13 +97,10 @@ export default FlexberryBaseComponent.extend(
     },
     set(key, value) {
       if (typeof value === 'string') {
+        let projectionName = value;
         let modelName = this.get('modelName');
-        assert('For define projection by name, model name is required.', modelName);
-        let modelConstructor = this.get('store').modelFor(modelName);
-        assert(`Model with name '${modelName}' is not found.`, modelConstructor);
-        let projections = get(modelConstructor, 'projections');
-        assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
-        value = projections[value];
+        value = getProjectionByName(projectionName, modelName, this.get('store'));
+        assert(`Projection with name '${projectionName}' for model with name '${modelName}' is not found.`, value);
       } else if (typeof value !== 'object') {
         throw new Error(`Property 'modelProjection' should be a string or object.`);
       }

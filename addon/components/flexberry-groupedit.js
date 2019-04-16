@@ -586,7 +586,9 @@ export default FlexberryBaseComponent.extend({
     let order = attributesKeys.find((key) => {
       let attrubute = attributes[key];
       if (attrubute.kind === 'attr' && information.isOrdered(projectionName.modelName, key)) {
+        /* eslint-disable ember/no-side-effects */
         this.set('sorting', [{ direction: 'asc', propName: key }]);
+        /* eslint-enable ember/no-side-effects */
         return key;
       }
     });

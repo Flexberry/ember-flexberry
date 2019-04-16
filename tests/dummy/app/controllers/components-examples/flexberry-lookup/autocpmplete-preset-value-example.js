@@ -3,6 +3,8 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
 
+  value: undefined,
+
   init() {
     this._super(...arguments);
   },
@@ -12,8 +14,8 @@ export default EditFormController.extend({
       let store = this.get('store');
       let base = store.createRecord('ember-flexberry-dummy-suggestion');
       base.set('type', null);
-      base.set('lookupDisplayValue', 'Значение для lookupDisplayValue');
-      this.set('model', base);
+      base.set('displayValue', 'Значение для lookupDisplayValue');
+      this.set('value', base);
     },
 
     onFillLookupDataClick: function() { 
@@ -23,7 +25,7 @@ export default EditFormController.extend({
       .selectByProjection('CustomizeLookupWindowExampleView').top(1);  
       store.query('ember-flexberry-dummy-suggestion-type', builder.build()).then(function(result) {
         let ressutArray = result.toArray();
-        _this.set('model.lookupDisplayValue',ressutArray[0]);
+        _this.set('value.type',ressutArray[0]);
       });
     }
   }

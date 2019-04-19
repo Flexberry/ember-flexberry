@@ -30,15 +30,6 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
     async: false
   }),
 
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    }
-  },
-
   /**
     Non-stored property.
 

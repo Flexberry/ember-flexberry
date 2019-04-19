@@ -9,6 +9,7 @@ import { A, isArray } from '@ember/array';
 import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
@@ -591,9 +592,12 @@ export default FlexberryBaseComponent.extend({
     let order = attributesKeys.find((key) => {
       let attrubute = attributes[key];
       if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
-        /* eslint-disable ember/no-side-effects */
-        this.set('sorting', [{ direction: 'asc', propName: key }]);
-        /* eslint-enable ember/no-side-effects */
+        once(this, function() {
+          /* eslint-disable ember/no-side-effects */
+          this.set('sorting', [{ direction: 'asc', propName: key }]);
+          /* eslint-enable ember/no-side-effects */
+        });
+
         return key;
       }
     });

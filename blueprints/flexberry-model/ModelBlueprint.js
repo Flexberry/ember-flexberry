@@ -247,7 +247,6 @@ var ModelBlueprint = /** @class */ (function () {
             hiddenStr = ", { index: " + belongsTo.index + ", hidden: true }";
         }
         else {
-            index = belongsToAttrs[0].index;
             if (belongsTo.lookupValueField) {
               hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
             }

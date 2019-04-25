@@ -2710,7 +2710,7 @@ export default FlexberryBaseComponent.extend(
           content[indexRecord].set(`${orderedProperty}`, orderValueAbove);
           content[newIndex].set(`${orderedProperty}`, orderValue);
 
-          let temp = contentForRender[indexRecord];
+          let temp = [contentForRender[indexRecord]];
           contentForRender.replace(indexRecord, 1);
           contentForRender.replace(newIndex, 0, temp);
         }

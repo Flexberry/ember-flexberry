@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Blueprints:
+    * Fix index property generation for projection belongsTo attributes.
 
 ## [3.1.0-beta.0] - 2019-04-16
 ### Changed

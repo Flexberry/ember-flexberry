@@ -287,7 +287,6 @@ export default class ModelBlueprint {
     if (belongsTo.hidden || belongsTo.index==-1) {
       hiddenStr = `, { index: ${belongsTo.index}, hidden: true }`;
     }else{
-      index = belongsToAttrs[0].index;
       if (belongsTo.lookupValueField) {
         hiddenStr = `, { index: ${belongsTo.index}, displayMemberPath: '${belongsTo.lookupValueField}' }`;
       } else {

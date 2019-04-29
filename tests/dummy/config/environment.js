@@ -1,7 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var backendUrl = 'http://flexberry.northeurope.cloudapp.azure.com';
+  var backendUrl = 'http://stands-backend.flexberry.net';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.

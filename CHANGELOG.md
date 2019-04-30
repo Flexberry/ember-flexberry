@@ -4,9 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.1.0-beta.0] - 2019-04-16
+## [3.1.0] - 2019-04-30
+### Added
+* Changes from 2.1.0.
+
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.1.0-beta.0`.
+* Update dependency on `ember-flexberry-data` to version `3.1.0`.
 
 ### Removed
 * `flexberry-button` component:
@@ -99,63 +102,41 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-## [2.1.0-beta.5] - 2019-04-16
-### Fixed
-* `flexberry-groupedit` component:
-    * Fix ordered property computing when `modelProjection` are string.
-* `flexberry-file` component:
-    * Fix spinner for preview when component is in modal.
-
-## [2.1.0-beta.4] - 2019-04-15
+## [2.1.0] - 2019-04-30
 ### Added
 * Blueprints:
     * Add index property generation for projection attributes.
+* `flexberry-lookup` component:
+    * Add preview button.
+    * Add persist value mode for autocomplete.
+    * Add optional projection for autocomplite (`autocompleteProjection` property).
+    * Add property `autofillByLimit`.
+* `flexberry-file` component:
+    * Added the ability to open files instead of downloading.
 * List components:
     * Add option to hide default sorting button.
     * Add option to fix table header (`fixedHeader`).
 * `flexberry-groupedit` component:
+    * Add text and icon custom buttons in toolbar.
     * Add check all at page button.
     * Sorting by ordered property.
-* `flexberry-lookup` component:
-    * Add property `autofillByLimit`.
 
 ### Changed
 * `flexberry-lookup` component:
     * Dropdown mode uses projection from `projection` property.
-* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.1`.
-
-## [2.1.0-beta.3] - 2019-03-15
-### Added
-* `flexberry-lookup` component:
-    * Add optional projection for autocomplite (`autocompleteProjection` property).
-
-### Deprecated
-* Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
-
-## [2.1.0-beta.2] - 2019-03-05
-### Added
-* `flexberry-groupedit` component:
-    * Add text and icon custom buttons in toolbar.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.1.0-beta.0`.
-
-## [2.1.0-beta.1] - 2019-02-14
-### Added
-* `flexberry-lookup` component:
-    * Add persist value mode for autocomplete.
+* Update dependency on `ember-flexberry-data` to version `2.1.0`.
 
 ### Fixed
 * `reload-list-mixin` mixin:
     * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
     * Fix filter by `null` for `string`, `number` and `date` data types.
-
-## [2.1.0-beta.0] - 2018-12-13
-### Added
-* `flexberry-lookup` component:
-    * Add preview button.
+* `flexberry-groupedit` component:
+    * Fix ordered property computing when `modelProjection` are string.
 * `flexberry-file` component:
-    * Added the ability to open files instead of downloading.
+    * Fix spinner for preview when component is in modal.
+
+### Deprecated
+* Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
 
 ## [2.0.0] - 2018-12-07
 ### Added

@@ -52,7 +52,7 @@ export default EditFormController.extend({
     @type String
     @default #example
   */
- _style:'#example',
+  _style:'#example',
 
   actions: {
     modalWindow(style) {

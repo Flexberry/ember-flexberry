@@ -51,8 +51,8 @@ export default EditFormController.extend({
     @property readonly
     @type String
     @default #example
-  */
-  _style:'#example',
+   */
+  style:'#example',
 
   actions: {
     modalWindow(style) {
@@ -65,7 +65,7 @@ export default EditFormController.extend({
           autofocus: false,
           detachable: false,
           allowMultiple: true,
-          context: this.get('_style'),
+          context: this.get('style'),
         });
 
       this.set('repeatWindow', repeatWindow);

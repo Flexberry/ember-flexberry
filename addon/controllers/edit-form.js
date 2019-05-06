@@ -702,7 +702,7 @@ FolvOnEditControllerMixin, {
         cellComponent.componentName = 'flexberry-checkbox';
         break;
       case 'date':
-        cellComponent.componentName = 'flexberry-datepicker';
+        cellComponent.componentName = 'flexberry-simpledatetime';
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';

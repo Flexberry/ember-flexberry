@@ -96,7 +96,7 @@ export default EditFormController.extend({
     @type Boolean
     @default false
    */
-  defaultSettingsButton: false, 
+  defaultSettingsButton: false,
 
   /**
     Flag for 'flexberry-groupedit' component 'tableStriped' property.
@@ -229,7 +229,7 @@ export default EditFormController.extend({
     '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
     '  rowClickable=rowClickable<br>' +
     '  immediateDelete=immediateDelete<br>' +
-    '  defaultSettingsButton=defaultSettingsButton<br>'+
+    '  defaultSettingsButton=defaultSettingsButton<br>' +
     '}}'),
 
   /**

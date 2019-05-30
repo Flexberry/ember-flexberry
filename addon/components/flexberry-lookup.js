@@ -804,7 +804,7 @@ export default FlexberryBaseComponent.extend({
 
     // Add select first autocomplete result by enter click.
     this.$('input').keyup(function(event) {
-      if (event.keyCode === 13) {          
+      if (event.keyCode === 13) {
         if (_this.get('autocomplete')) {
           let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
           if (resultField) {

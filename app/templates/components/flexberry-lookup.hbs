@@ -1,7 +1,7 @@
 {{#if dropdown}}
   {{flexberry-dropdown
     placeholder=placeholder
-    class="search"
+    class=(concat "search " dropdownClass)
     value=displayValue
     readonly=(if readonly "readonly")
     needChecksOnValue=false

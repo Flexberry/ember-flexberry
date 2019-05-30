@@ -136,6 +136,14 @@ export default FlexberryBaseComponent.extend({
   previewButtonClass: undefined,
 
   /**
+    CSS classes for flexberry-lookup at dropdown mode.
+
+    @property previewButtonClass
+    @type String
+  */
+  dropdownClass:undefined,
+
+  /**
     CSS classes for choose button.
 
     @property chooseButtonClass
@@ -782,6 +790,29 @@ export default FlexberryBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.addObserver('i18n.locale', this, this._languageReinit);
+
+    let _this = this;
+
+    // Off modal dialog open by enter click at autocomplete mode.
+    this.$('input').keydown(function(event){
+      if (event.keyCode === 13) {
+        if(_this.get('autocomplete')){
+            return false;
+        }
+      }
+    });
+
+    // Add select first autocomplete result by enter click.
+    this.$('input').keyup(function(event){
+      if (event.keyCode === 13) {          
+        if(_this.get('autocomplete')){
+          let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
+          if(resultField) {
+            resultField.click();
+          }
+        }
+      }
+    });
   },
 
   /**

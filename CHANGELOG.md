@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-lookup` component:
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to flexberry-lookup at drodpdown mode.
 
 ## [2.1.0] - 2019-04-30
 ### Added
@@ -13,6 +17,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add persist value mode for autocomplete.
     * Add optional projection for autocomplite (`autocompleteProjection` property).
     * Add property `autofillByLimit`.
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to flexberry-lookup at drodpdown mode.
 * `flexberry-file` component:
     * Added the ability to open files instead of downloading.
 * List components:

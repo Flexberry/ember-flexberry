@@ -138,7 +138,7 @@ export default FlexberryBaseComponent.extend({
   /**
     CSS classes for flexberry-lookup at dropdown mode.
 
-    @property previewButtonClass
+    @property dropdownClass
     @type String
   */
   dropdownClass:undefined,

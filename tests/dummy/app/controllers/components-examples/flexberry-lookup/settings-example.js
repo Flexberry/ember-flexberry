@@ -94,15 +94,14 @@ export default EditFormController.extend({
   */
   chooseButtonClass: '',
 
-  
   /**
     Text for 'flexberry-lookup' component 'dropdownClass' property.
 
-    @property chooseButtonClass
+    @property dropdownClass
     @type String
-    @default 'purple'
+    @default 'blue'
   */
-  dropdownClass: 'negative',
+  dropdownClass: '',
 
   /**
     Text for 'flexberry-lookup' component 'removeButtonClass' property.

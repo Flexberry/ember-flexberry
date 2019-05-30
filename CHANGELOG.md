@@ -17,8 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add persist value mode for autocomplete.
     * Add optional projection for autocomplite (`autocompleteProjection` property).
     * Add property `autofillByLimit`.
-    * Add select first autocomplete result by enter click.
-    * Add dropdown class to flexberry-lookup at drodpdown mode.
 * `flexberry-file` component:
     * Added the ability to open files instead of downloading.
 * List components:

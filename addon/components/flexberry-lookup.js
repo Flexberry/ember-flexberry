@@ -794,20 +794,20 @@ export default FlexberryBaseComponent.extend({
     let _this = this;
 
     // Off modal dialog open by enter click at autocomplete mode.
-    this.$('input').keydown(function(event){
+    this.$('input').keydown(function(event) {
       if (event.keyCode === 13) {
-        if(_this.get('autocomplete')){
-            return false;
+        if (_this.get('autocomplete')) {
+          return false;
         }
       }
     });
 
     // Add select first autocomplete result by enter click.
-    this.$('input').keyup(function(event){
+    this.$('input').keyup(function(event) {
       if (event.keyCode === 13) {          
-        if(_this.get('autocomplete')){
+        if (_this.get('autocomplete')) {
           let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
-          if(resultField) {
+          if (resultField) {
             resultField.click();
           }
         }

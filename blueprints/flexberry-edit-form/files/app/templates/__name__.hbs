@@ -1,4 +1,4 @@
-<h3 class="ui header">{{<%= caption %>}}</h3>
+<h3 class="ui header">{{<%= caption %>}}{{#if readonly}} ({{t "forms.edit-form.readonly"}}){{/if}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}

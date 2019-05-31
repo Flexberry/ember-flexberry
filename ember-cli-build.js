@@ -6,9 +6,14 @@ module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
     lessOptions: {
       paths: [
-        'bower_components/semantic-ui'
+          'bower_components/semantic-ui'
       ]
-    }
+    },
+    SemanticUI: {
+      css: false,
+      javascript: true,
+      fonts: true
+    },
   });
 
   app.import('vendor/font-icon.css');

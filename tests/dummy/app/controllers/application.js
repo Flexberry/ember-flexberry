@@ -181,11 +181,13 @@ export default Controller.extend({
         link: 'index',
         caption: i18n.t('forms.application.sitemap.index.caption'),
         title: i18n.t('forms.application.sitemap.index.title'),
+        icon: 'home',
         children: null
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.application.caption'),
         title: i18n.t('forms.application.sitemap.application.title'),
+        icon: 'clock outline',
         children: [{
           link: 'ember-flexberry-dummy-application-user-list',
           caption: i18n.t('forms.application.sitemap.application.application-users.caption'),
@@ -211,6 +213,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),
         title: i18n.t('forms.application.sitemap.log-service-examples.title'),
+        icon: 'thumbs up',
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
@@ -231,6 +234,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.lock.caption'),
         title: i18n.t('forms.application.sitemap.lock.caption'),
+        icon: 'lock',
         children: [{
           link: 'new-platform-flexberry-services-lock-list',
           caption: i18n.t('forms.application.sitemap.lock.title'),
@@ -241,6 +245,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
+        icon: 'comment outline',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.caption'),
@@ -584,6 +589,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
         title: i18n.t('forms.application.sitemap.integration-examples.title'),
+        icon: 'linkify',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
@@ -604,6 +610,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
         title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
+        icon: 'desktop',
         children: [{
           link: 'user-setting-forms/user-setting-delete',
           caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),

@@ -11,6 +11,7 @@
     "blueimp-file-upload": "9.11.2",
     "jquery-minicolors": "2.2.6",
     "js-beautify": "1.6.4",
-    "moment": "~2.22.0"
+    "moment": "~2.22.0",
+    "ember-flexberry-themes": "git://github.com/Flexberry/ember-flexberry-themes#develop"
   }
 }

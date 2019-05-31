@@ -44,6 +44,17 @@ export default EditFormController.extend({
    */
   showDownloadButton: true,
 
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+  */
+  previewSettings: {
+    detachable: true,
+    context: 'body',
+  },
+
   actions: {
     modalWindow(style) {
       if (!Ember.isNone(style)) {

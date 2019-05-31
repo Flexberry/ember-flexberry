@@ -71,6 +71,7 @@ export default Ember.Mixin.create({
       if (goToEditForm === false) {
         return;
       }
+
       if (methodOptions.editInModal) {
         this.openEditModalDialog(record);
       } else {
@@ -195,8 +196,7 @@ export default Ember.Mixin.create({
     let proj = modelClass.projections.get(modelProjName);
     modalContentController.set('modelProjection', proj);
     modalContentController.set('isModal', true);
-
-    this.send('showModalDialog', 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit', 
-      { controller: modalContentController, model: record }, loadingParams);   
+    this.send('showModalDialog', 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+      { controller: modalContentController, model: record }, loadingParams);
   }
 });

@@ -315,6 +315,16 @@ export default FlexberryBaseComponent.extend({
   showDeleteMenuItemInRow: false,
 
   /**
+    Flag indicate when edit form must be open in modal window.
+
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  editInModal: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @example
@@ -844,10 +854,12 @@ export default FlexberryBaseComponent.extend({
             this.sendAction('action', record);
           } else {
             let editFormRoute = this.get('editFormRoute');
+            let editInModal = this.get('editInModal');
             Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
             if (Ember.isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
+              options.editInModal = editInModal;
             } else {
               options = Ember.merge(options, { editFormRoute: editFormRoute });
             }

@@ -59,6 +59,15 @@ LimitedControllerMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin,
 FolvOnEditControllerMixin, {
   /**
+    Controller for modal dialog content.
+
+    @property editrecordModalController
+    @type <a href="http://emberjs.com/api/classes/Ember.Controller.html">Controller</a>
+    @default Injected editrecord-dialog controller.
+  */
+  editrecordModalController: Ember.inject.controller('editrecord-dialog'),
+
+  /**
     Flag to enable return to agregator's path if possible.
 
     @property returnToAgregatorRoute
@@ -482,10 +491,15 @@ FolvOnEditControllerMixin, {
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
   close(skipTransition, rollBackModel) {
-    this.get('appState').reset();
-    this.onCloseActionStarted();
-    if (!skipTransition) {
-      this.transitionToParentRoute(skipTransition, rollBackModel);
+    let isModal = this.get('isModal');
+    if (isModal) {
+      this.get('editrecordModalController').send('closeEditrecordDialog');
+    } else {
+      this.get('appState').reset();
+      this.onCloseActionStarted();
+      if (!skipTransition) {
+        this.transitionToParentRoute(skipTransition, rollBackModel);
+      }
     }
   },
 

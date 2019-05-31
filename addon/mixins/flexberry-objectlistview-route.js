@@ -13,6 +13,36 @@ import Ember from 'ember';
   @public
 */
 export default Ember.Mixin.create({
+  /**
+    Path for using modal content template
+
+    @property _modalContentTemplatePath
+    @type String
+    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
+    @private
+  */
+  _modalContentTemplatePath: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+
+  /**
+    Path for using modal content controller
+
+    @property _modalContentControllerPath
+    @type String
+    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
+    @private
+  */
+  _modalContentControllerPath: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+
+  /**
+    Name of modal content model projection
+
+    @property _modalContentModelProjection
+    @type String
+    @default 'SuggestionTypeE'
+    @private
+  */
+  _modalContentModelProjectionName: 'SuggestionTypeE',
+
   actions: {
     /**
       Table row click handler.
@@ -30,47 +60,52 @@ export default Ember.Mixin.create({
         modelName: undefined,
         detailArray: undefined,
         editFormRoute: undefined,
+        editInModal: true,
         readonly: false,
         goToEditForm: undefined,
         customParameters: undefined
       };
+
       methodOptions = Ember.merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
       if (goToEditForm === false) {
         return;
       }
-
-      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
-      let onEditForm = methodOptions.onEditForm;
-      let editFormRoute = methodOptions.editFormRoute;
-      let recordId = record.get('id') || record.get('data.id');
-      let thisRouteName = this.get('router.currentRouteName');
-      let thisRecordId = this.get('currentModel.id');
-      let transitionOptions = {
-        queryParams: {
-          modelName: methodOptions.modelName,
-          customParameters:  methodOptions.customParameters,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
-        }
-      };
-      if (!editFormRoute) {
-        throw new Error('Detail\'s edit form route is undefined.');
-      }
-
-      if (!onEditForm) {
-        this.transitionTo(editFormRoute, recordId, transitionOptions);
+      if (methodOptions.editInModal) {
+        this.openEditModalDialog(record);
       } else {
-        if (saveBeforeRouteLeave) {
-          this.controller.save(false, true).then(() => {
-            this.transitionTo(editFormRoute, recordId, transitionOptions);
-          }).catch((errorData) => {
-            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
-          });
-        } else {
+        let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+        let onEditForm = methodOptions.onEditForm;
+        let editFormRoute = methodOptions.editFormRoute;
+        let recordId = record.get('id') || record.get('data.id');
+        let thisRouteName = this.get('router.currentRouteName');
+        let thisRecordId = this.get('currentModel.id');
+        let transitionOptions = {
+          queryParams: {
+            modelName: methodOptions.modelName,
+            customParameters:  methodOptions.customParameters,
+            parentParameters: {
+              parentRoute: thisRouteName,
+              parentRouteRecordId: thisRecordId
+            }
+          }
+        };
+        if (!editFormRoute) {
+          throw new Error('Detail\'s edit form route is undefined.');
+        }
+
+        if (!onEditForm) {
           this.transitionTo(editFormRoute, recordId, transitionOptions);
+        } else {
+          if (saveBeforeRouteLeave) {
+            this.controller.save(false, true).then(() => {
+              this.transitionTo(editFormRoute, recordId, transitionOptions);
+            }).catch((errorData) => {
+              this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+            });
+          } else {
+            this.transitionTo(editFormRoute, recordId, transitionOptions);
+          }
         }
       }
     },
@@ -142,5 +177,26 @@ export default Ember.Mixin.create({
   */
   objectListViewLimitPredicate(options) {
     return undefined;
+  },
+
+  openEditModalDialog(record) {
+    this.send('showModalDialog', 'editrecord-dialog');
+
+    let loadingParams = {
+      view: 'editrecord-dialog',
+      outlet: 'editrecord-modal-content',
+    };
+
+    let modalContentControllerPath = this.get('_modalContentControllerPath');
+    let modalContentController = this.controllerFor(modalContentControllerPath);
+
+    let modelClass = record.constructor;
+    let modelProjName = this.get('_modalContentModelProjectionName');
+    let proj = modelClass.projections.get(modelProjName);
+    modalContentController.set('modelProjection', proj);
+    modalContentController.set('isModal', true);
+
+    this.send('showModalDialog', 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit', 
+      { controller: modalContentController, model: record }, loadingParams);   
   }
 });

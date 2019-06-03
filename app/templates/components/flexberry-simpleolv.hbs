@@ -347,14 +347,14 @@
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                             disabled="disabled"
-                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            {{action "objectListViewRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                             <i class="edit icon"></i>
                           </button>
                         {{else}}
                           <button
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
-                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            {{action "objectListViewRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                             <i class="edit icon"></i>
                           </button>
                         {{/if}}

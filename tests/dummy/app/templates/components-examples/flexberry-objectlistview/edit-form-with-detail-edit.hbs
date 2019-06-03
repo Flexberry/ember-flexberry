@@ -1,4 +1,6 @@
-<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
+{{#if (not isModal)}}
+  <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
+{{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -36,7 +38,9 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+      {{#if (not isModal)}}
+        <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+      {{/if}}
     </div>
   </div>
   <div class="field {{if model.errors.name "error" ""}}">

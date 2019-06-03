@@ -181,9 +181,13 @@ export default Ember.Mixin.create({
   },
 
   openEditModalDialog(record) {
-    this.send('showModalDialog', 'editrecord-dialog');
-
     let loadingParams = {
+      outlet: 'editrecord-modal',
+    };
+
+    this.send('showModalDialog', 'editrecord-dialog', null, loadingParams);
+
+    loadingParams = {
       view: 'editrecord-dialog',
       outlet: 'editrecord-modal-content',
     };

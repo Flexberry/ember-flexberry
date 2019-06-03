@@ -14,6 +14,16 @@ import { translationMacro as t } from 'ember-i18n';
 */
 export default Ember.Controller.extend({
   /**
+    Editrecord modal dialog outlet name
+
+    @property _modalOutletName
+    @type String
+    @default 'editrecord-modal'
+    @private
+  */
+  _modalOutletName: 'editrecord-modal',
+
+  /**
     Current open a modal window.
 
     @property _openedModalDialog
@@ -80,5 +90,8 @@ export default Ember.Controller.extend({
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
+
+    let modalOutletName = this.get('_modalOutletName');
+    this.send('removeModalDialog', { outlet: modalOutletName })
   }
 });

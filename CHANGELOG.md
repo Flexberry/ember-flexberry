@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add select first autocomplete result by enter click.
     * Add dropdown class to flexberry-lookup at drodpdown mode.
+* `flexberry-file` component:
+    * Added the ability correct settings to file preview modal dialog.
 
 ## [2.1.0] - 2019-04-30
 ### Added

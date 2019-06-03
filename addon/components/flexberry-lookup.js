@@ -790,8 +790,6 @@ export default FlexberryBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.addObserver('i18n.locale', this, this._languageReinit);
-
-    let _this = this;
   },
 
   /**

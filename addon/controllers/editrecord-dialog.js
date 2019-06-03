@@ -16,12 +16,20 @@ export default Ember.Controller.extend({
   /**
     Editrecord modal dialog outlet name
 
-    @property _modalOutletName
+    @property modalOutletName
     @type String
     @default 'editrecord-modal'
-    @private
   */
-  _modalOutletName: 'editrecord-modal',
+  modalOutletName: 'editrecord-modal',
+
+  /**
+    Editrecord modal dialog outlet name for content
+
+    @property modalContentOutletName
+    @type String
+    @default 'editrecord-modal-content'
+  */
+  modalContentOutletName: 'editrecord-modal-content',
 
   /**
     Current open a modal window.
@@ -91,7 +99,7 @@ export default Ember.Controller.extend({
       this.set('_openedModalDialog', undefined);
     }
 
-    let modalOutletName = this.get('_modalOutletName');
+    let modalOutletName = this.get('modalOutletName');
     this.send('removeModalDialog', { outlet: modalOutletName })
   }
 });

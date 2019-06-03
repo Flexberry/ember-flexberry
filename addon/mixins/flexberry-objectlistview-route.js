@@ -13,25 +13,46 @@ import Ember from 'ember';
   @public
 */
 export default Ember.Mixin.create({
-  /**
-    Path for using modal content template
 
-    @property _modalContentTemplatePath
+  /**
+    Name of using modal controller
+
+    @property _modalControllerName
+    @type String
+    @default 'editrecord-dialog'
+    @private
+  */
+  _modalControllerName: 'editrecord-dialog',
+
+  /**
+    Name of using modal template
+
+    @property _modalTemplateName
+    @type String
+    @default 'editrecord-dialog'
+    @private
+  */
+  _modalTemplateName: 'editrecord-dialog',
+
+  /**
+    Name for using modal content template
+
+    @property _modalContentTemplateName
     @type String
     @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
     @private
   */
-  _modalContentTemplatePath: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+  _modalContentTemplateName: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
 
   /**
-    Path for using modal content controller
+    Name for using modal content controller
 
-    @property _modalContentControllerPath
+    @property _modalContentControllerName
     @type String
     @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
     @private
   */
-  _modalContentControllerPath: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+  _modalContentControllerName: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
 
   /**
     Name of modal content model projection
@@ -181,26 +202,34 @@ export default Ember.Mixin.create({
   },
 
   openEditModalDialog(record) {
+    let modalControllerName = this.get('_modalControllerName');
+    let modalController = this.controllerFor(modalControllerName);
+    let modalControllerOutlet = modalController.get('modalOutletName');
+
     let loadingParams = {
-      outlet: 'editrecord-modal',
+      outlet: modalControllerOutlet,
     };
 
-    this.send('showModalDialog', 'editrecord-dialog', null, loadingParams);
+    let modalTemplateName = this.get('_modalTemplateName');
+    this.send('showModalDialog', modalTemplateName, null, loadingParams);
+
+    let modalControllerContentOutlet = modalController.get('modalContentOutletName');
 
     loadingParams = {
-      view: 'editrecord-dialog',
-      outlet: 'editrecord-modal-content',
+      view: modalTemplateName,
+      outlet: modalControllerContentOutlet ,
     };
 
-    let modalContentControllerPath = this.get('_modalContentControllerPath');
-    let modalContentController = this.controllerFor(modalContentControllerPath);
-
+    let modalContentControllerName = this.get('_modalContentControllerName');
+    let modalContentController = this.controllerFor(modalContentControllerName);
     let modelClass = record.constructor;
     let modelProjName = this.get('_modalContentModelProjectionName');
     let proj = modelClass.projections.get(modelProjName);
     modalContentController.set('modelProjection', proj);
     modalContentController.set('isModal', true);
-    this.send('showModalDialog', 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+    let modalContentTemplateName = this.get('_modalContentTemplateName');
+
+    this.send('showModalDialog', modalContentTemplateName,
       { controller: modalContentController, model: record }, loadingParams);
   }
 });

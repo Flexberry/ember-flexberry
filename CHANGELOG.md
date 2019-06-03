@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-file` component:
+    * Added the ability correct settings to file preview modal dialog.
+
 
 ## [2.1.0] - 2019-04-30
 ### Added

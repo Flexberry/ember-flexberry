@@ -485,6 +485,11 @@ FolvOnEditControllerMixin, {
     let isModal = this.get('isModal');
     let modalController = this.get('modalController');
     if (isModal && !Ember.isNone(modalController)) {
+      if (rollBackModel) {
+        let model = this.get('model');
+        model.rollbackAll();
+      }
+
       modalController.send('closeEditrecordDialog');
     } else {
       this.get('appState').reset();

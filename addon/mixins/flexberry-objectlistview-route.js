@@ -35,26 +35,6 @@ export default Ember.Mixin.create({
   _modalTemplateName: 'editrecord-dialog',
 
   /**
-    Name for using modal content template
-
-    @property _modalContentTemplateName
-    @type String
-    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
-    @private
-  */
-  _modalContentTemplateName: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
-
-  /**
-    Name for using modal content controller
-
-    @property _modalContentControllerName
-    @type String
-    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
-    @private
-  */
-  _modalContentControllerName: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
-
-  /**
     Name of modal content model projection
 
     @property _modalContentModelProjection
@@ -92,13 +72,14 @@ export default Ember.Mixin.create({
       if (goToEditForm === false) {
         return;
       }
-
+  
+      let editFormRoute = methodOptions.editFormRoute;
+  
       if (methodOptions.editInModal) {
-        this.openEditModalDialog(record);
+        this._openEditModalDialog(record, editFormRoute);
       } else {
         let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
         let onEditForm = methodOptions.onEditForm;
-        let editFormRoute = methodOptions.editFormRoute;
         let recordId = record.get('id') || record.get('data.id');
         let thisRouteName = this.get('router.currentRouteName');
         let thisRecordId = this.get('currentModel.id');
@@ -145,6 +126,49 @@ export default Ember.Mixin.create({
     saveAgregator(agregatorModel) {
       return false;
     }
+  },
+
+  /**
+    Open edit record in modal window.
+
+    @method _openEditModalDialog
+    @param {Object} record Record.
+    @param {String} editFormRoute name of edit record route for modal content.
+    @private
+  */
+  _openEditModalDialog(record, editFormRoute) {
+    let modalControllerName = this.get('_modalControllerName');
+    let modalController = this.controllerFor(modalControllerName);
+    let modalControllerOutlet = modalController.get('modalOutletName');
+
+    let loadingParams = {
+      outlet: modalControllerOutlet,
+    };
+
+    let modalTemplateName = this.get('_modalTemplateName');
+    this.send('showModalDialog', modalTemplateName, null, loadingParams);
+
+    let modalControllerContentOutlet = modalController.get('modalContentOutletName');
+
+    loadingParams = {
+      view: modalTemplateName,
+      outlet: modalControllerContentOutlet
+    };
+
+    let modalContentController = this.controllerFor(editFormRoute);
+
+    //get projection from record
+    let modelClass = record.constructor;
+    let modelProjName = this.get('_modalContentModelProjectionName');
+    let proj = modelClass.projections.get(modelProjName);
+
+    //set parameters in modal content controller
+    modalContentController.set('modelProjection', proj);
+    modalContentController.set('isModal', true);
+    modalContentController.set('modalController', modalController);
+
+    this.send('showModalDialog', editFormRoute,
+      { controller: modalContentController, model: record }, loadingParams);
   },
 
   /**
@@ -199,44 +223,5 @@ export default Ember.Mixin.create({
   */
   objectListViewLimitPredicate(options) {
     return undefined;
-  },
-
-  openEditModalDialog(record) {
-    let modalControllerName = this.get('_modalControllerName');
-    let modalController = this.controllerFor(modalControllerName);
-    let modalControllerOutlet = modalController.get('modalOutletName');
-
-    let loadingParams = {
-      outlet: modalControllerOutlet,
-    };
-
-    let modalTemplateName = this.get('_modalTemplateName');
-    this.send('showModalDialog', modalTemplateName, null, loadingParams);
-
-    let modalControllerContentOutlet = modalController.get('modalContentOutletName');
-
-    loadingParams = {
-      view: modalTemplateName,
-      outlet: modalControllerContentOutlet
-    };
-
-    let modalContentControllerName = this.get('_modalContentControllerName');
-    let modalContentController = this.controllerFor(modalContentControllerName);
-
-    //get projection from record
-    let modelClass = record.constructor;
-    let modelProjName = this.get('_modalContentModelProjectionName');
-    let proj = modelClass.projections.get(modelProjName);
-
-    //set parameters in modal content controller
-    modalContentController.set('modelProjection', proj);
-    modalContentController.set('isModal', true);
-    modalContentController.set('modalController', modalController);
-
-    //get modal content template
-    let modalContentTemplateName = this.get('_modalContentTemplateName');
-
-    this.send('showModalDialog', modalContentTemplateName,
-      { controller: modalContentController, model: record }, loadingParams);
-  }
+  }  
 });

@@ -13,6 +13,7 @@
 }
 
 .ui.modal .content .object-list-view-container {
+    overflow: scroll;
     max-height: 300px;
 }
 

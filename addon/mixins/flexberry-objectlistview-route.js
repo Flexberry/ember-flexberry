@@ -217,7 +217,7 @@ export default Ember.Mixin.create({
 
     loadingParams = {
       view: modalTemplateName,
-      outlet: modalControllerContentOutlet ,
+      outlet: modalControllerContentOutlet
     };
 
     let modalContentControllerName = this.get('_modalContentControllerName');

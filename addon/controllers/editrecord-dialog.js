@@ -6,11 +6,9 @@ import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
-  Controller to support a modal windows in FlexberryLookup component.
+  Controller for editing record modal window in OLV component.
 
-  @class LookupDialogController
-  @extends ListFormController
-  @uses SortableRouteMixin
+  @class EditrecordDialog
 */
 export default Ember.Controller.extend({
   /**
@@ -46,7 +44,7 @@ export default Ember.Controller.extend({
     @property title
     @type String
   */
-  title: t ('forms.ember-flexberry-dummy-suggestion-type-edit.caption'),
+  title: t('forms.ember-flexberry-dummy-suggestion-type-edit.caption'),
 
   /**
     Size of Semantic-UI modal.
@@ -100,6 +98,6 @@ export default Ember.Controller.extend({
     }
 
     let modalOutletName = this.get('modalOutletName');
-    this.send('removeModalDialog', { outlet: modalOutletName })
+    this.send('removeModalDialog', { outlet: modalOutletName });
   }
 });

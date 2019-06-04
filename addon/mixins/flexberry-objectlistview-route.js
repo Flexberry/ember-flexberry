@@ -222,11 +222,18 @@ export default Ember.Mixin.create({
 
     let modalContentControllerName = this.get('_modalContentControllerName');
     let modalContentController = this.controllerFor(modalContentControllerName);
+
+    //get projection from record
     let modelClass = record.constructor;
     let modelProjName = this.get('_modalContentModelProjectionName');
     let proj = modelClass.projections.get(modelProjName);
+
+    //set parameters in modal content controller
     modalContentController.set('modelProjection', proj);
     modalContentController.set('isModal', true);
+    modalContentController.set('modalController', modalController);
+
+    //get modal content template
     let modalContentTemplateName = this.get('_modalContentTemplateName');
 
     this.send('showModalDialog', modalContentTemplateName,

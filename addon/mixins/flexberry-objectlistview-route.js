@@ -61,7 +61,7 @@ export default Ember.Mixin.create({
         modelName: undefined,
         detailArray: undefined,
         editFormRoute: undefined,
-        editInModal: true,
+        editInModal: false,
         readonly: false,
         goToEditForm: undefined,
         customParameters: undefined
@@ -72,9 +72,9 @@ export default Ember.Mixin.create({
       if (goToEditForm === false) {
         return;
       }
-  
+
       let editFormRoute = methodOptions.editFormRoute;
-  
+
       if (methodOptions.editInModal) {
         this._openEditModalDialog(record, editFormRoute);
       } else {
@@ -223,5 +223,5 @@ export default Ember.Mixin.create({
   */
   objectListViewLimitPredicate(options) {
     return undefined;
-  }  
+  }
 });

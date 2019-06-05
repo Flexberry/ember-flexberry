@@ -57,9 +57,9 @@ export default Ember.Controller.extend({
 
     @property sizeClass
     @type String
-    @default 'small'
+    @default 'small editrecord-dialog'
   */
-  sizeClass: 'small',
+  sizeClass: 'small editrecord-dialog',
 
   actions: {
     /**
@@ -98,6 +98,11 @@ export default Ember.Controller.extend({
     }
 
     let modalOutletName = this.get('modalOutletName');
+
+    //close other opened modal windows
+    this.send('removeModalDialog', { outlet: 'modal' });
+
+    //close this modal window
     this.send('removeModalDialog', { outlet: modalOutletName });
   }
 });

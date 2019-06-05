@@ -861,7 +861,7 @@ export default FlexberryBaseComponent.extend({
               options.editFormRoute = editFormRoute;
               options.editInModal = editInModal;
             } else {
-              options = Ember.merge(options, { editFormRoute: editFormRoute });
+              options = Ember.merge(options, { editFormRoute: editFormRoute, editInModal: editInModal });
             }
 
             this.sendAction('action', record, options);

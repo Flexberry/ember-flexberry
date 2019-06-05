@@ -13,7 +13,6 @@
 }
 
 .ui.modal .content .object-list-view-container {
-    overflow: scroll;
     max-height: 300px;
 }
 
@@ -35,4 +34,8 @@
   .close-button {
     display: none;
   }
+}
+
+.ui.modal.editrecord-dialog .content {
+  overflow: scroll;
 }

@@ -374,7 +374,7 @@ export default FlexberryBaseComponent.extend({
     @example
       ```javascript
         lookupAdditionalLimitFunction = function (reletionModel) {
-        return new StringPredicate('eMail').contains(reletionModel.get('voteType'));
+        return new StringPredicate('LookUpField').contains(reletionModel.get('GroupEditField'));
       };
       ```
 

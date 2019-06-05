@@ -366,7 +366,7 @@ export default FlexberryBaseComponent.extend({
     @default undefined
   */
   lookupLimitPredicate: undefined,
-  
+
   /**
     Function of limit function for lookup in GroupEdit.
     It should not be function return BasePredicate.

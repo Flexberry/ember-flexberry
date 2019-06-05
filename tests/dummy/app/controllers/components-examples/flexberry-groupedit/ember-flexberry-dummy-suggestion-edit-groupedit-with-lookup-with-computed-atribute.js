@@ -51,8 +51,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       lookupLimitPredicate = new StringPredicate('name').contains(fieldvalue);
     }
 
-    lookupAdditionalLimitFunction = function (reletionModel) {
-      return new StringPredicate('eMail').contains(reletionModel.get('voteType'));
+    lookupAdditionalLimitFunction = function (relationModel) {
+      return new StringPredicate('eMail').contains(relationModel.get('voteType'));
     };
 
     return {

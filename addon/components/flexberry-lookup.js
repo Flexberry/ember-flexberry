@@ -366,7 +366,6 @@ export default FlexberryBaseComponent.extend({
     @default undefined
   */
   lookupLimitPredicate: undefined,
-
   
   /**
     Function of limit function for lookup in GroupEdit.
@@ -377,7 +376,7 @@ export default FlexberryBaseComponent.extend({
         lookupAdditionalLimitFunction = function (reletionModel) {
         return new StringPredicate('eMail').contains(reletionModel.get('voteType'));
       };
-      ```       
+      ```
 
     @property lookupAdditionalLimitFunction
     @type Function
@@ -693,7 +692,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
-      if (this.get('lookupAdditionalLimitFunction')){
+      if (this.get('lookupAdditionalLimitFunction')) {
         chooseData.predicate = this._connectPredicateAndAdditionalPredicate(
           this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
       }
@@ -1329,9 +1328,9 @@ export default FlexberryBaseComponent.extend({
     }
 
     let lookupAdditionalLimitPredicate;
-    
+
     if (lookupAdditionalLimitFunction) {
-      if((typeof lookupAdditionalLimitFunction === "function")) {
+      if ((typeof lookupAdditionalLimitFunction === 'function')) {
         let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
 
         if (compileAdditionakBasePredicate instanceof BasePredicate) {

@@ -132,3 +132,7 @@ option {
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
     padding-top: 20px;
 }
+
+.only-for-menu-setting-example .ui.segments .ui.segment.component .ui.segment.component {
+    height: 400px;
+}

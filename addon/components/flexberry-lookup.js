@@ -471,7 +471,7 @@ export default FlexberryBaseComponent.extend({
         projection: this.get('projection'),
         relationName: this.get('relationName'),
         title: this.get('title'),
-        predicate: this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'), undefined),
+        predicate: this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction')),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
@@ -692,7 +692,7 @@ export default FlexberryBaseComponent.extend({
 
       // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
       if (this.get('lookupAdditionalLimitFunction')) {
-        chooseData.predicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'), undefined);
+        chooseData.predicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
       }
 
       // Set state to active to add 'active' css-class.
@@ -1077,7 +1077,10 @@ export default FlexberryBaseComponent.extend({
               let builder = new Builder(store, relationModelName).select(displayAttributeName);
 
               let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
-              let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
+              let resultPredicate = _this._conjuctPredicates(
+                _this.get('lookupLimitPredicate'),
+                _this.get('lookupAdditionalLimitFunction'),
+                autocompletePredicate);
               if (resultPredicate) {
                 builder.where(resultPredicate);
               }
@@ -1326,11 +1329,7 @@ export default FlexberryBaseComponent.extend({
     if (limitArray.length > 1) {
       return new ComplexPredicate(Condition.And, ...limitArray);
     } else {
-      if ( limitArray === 1) {
-        return limitArray[0];
-      } else {
-        return undefined;
-      }
+      return limitArray[0];
     }
   },
 
@@ -1382,7 +1381,7 @@ export default FlexberryBaseComponent.extend({
 
     let builder = new Builder(store, relationModelName).selectByProjection(this.get('projection'));
 
-    let lookupLimitPredicate = this._this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), undefined);
+    let lookupLimitPredicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
     if (lookupLimitPredicate) {
       builder.where(lookupLimitPredicate);
     }

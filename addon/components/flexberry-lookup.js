@@ -1315,9 +1315,12 @@ export default FlexberryBaseComponent.extend({
     if (lookupAdditionalLimitFunction) {
       if ((lookupAdditionalLimitFunction instanceof Function)) {
         let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
-
-        if (compileAdditionakBasePredicate instanceof BasePredicate) {
-          limitArray.pushObject(compileAdditionakBasePredicate);
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
+          }
         }
       } else {
         throw new Error('lookupAdditionalLimitFunction must to be function.');

@@ -1318,8 +1318,6 @@ export default FlexberryBaseComponent.extend({
 
         if (compileAdditionakBasePredicate instanceof BasePredicate) {
           limitArray.pushObject(compileAdditionakBasePredicate);
-        } else {
-          throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
         }
       } else {
         throw new Error('lookupAdditionalLimitFunction must to be function.');

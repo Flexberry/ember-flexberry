@@ -136,6 +136,14 @@ export default FlexberryBaseComponent.extend({
   previewButtonClass: undefined,
 
   /**
+    CSS classes for flexberry-lookup at dropdown mode.
+
+    @property dropdownClass
+    @type String
+  */
+  dropdownClass: undefined,
+
+  /**
     CSS classes for choose button.
 
     @property chooseButtonClass
@@ -911,6 +919,16 @@ export default FlexberryBaseComponent.extend({
     if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
       throw new Error('maxResults has wrong value.');
     }
+
+    // Add select first autocomplete result by enter click.
+    this.$('input').keyup(function(event) {
+      if (event.keyCode === 13) {
+        let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
+        if (resultField) {
+          resultField.click();
+        }
+      }
+    });
 
     let state;
     let i18n = _this.get('i18n');

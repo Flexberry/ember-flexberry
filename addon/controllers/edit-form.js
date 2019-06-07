@@ -370,10 +370,11 @@ FolvOnEditControllerMixin, {
     let afterSaveModelFunction = () => {
       this.get('appState').success();
       _this.onSaveActionFulfilled();
+      let isModal = this.get('isModal');
       if (close) {
         this.get('appState').reset();
         _this.close(skipTransition);
-      } else if (!skipTransition) {
+      } else if (!skipTransition && !isModal) {
         let routeName = _this.get('routeName');
         if (routeName.indexOf('.new') > 0) {
           let qpars = {};

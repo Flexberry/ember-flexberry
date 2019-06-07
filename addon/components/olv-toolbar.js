@@ -5,13 +5,14 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import EditInModalOpen from '../mixins/edit-in-modal-open';
 const { getOwner } = Ember;
 
 /**
   @class OlvToolbar
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(EditInModalOpen, {
   /**
     Controller for model.
 
@@ -108,6 +109,17 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   filterText: null,
+
+  /**
+    Flag indicate when edit form of new record must be open in modal window.
+
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  editInModal: false,
+
   /**
     Used to link to objectListView with same componentName.
 
@@ -417,12 +429,17 @@ export default FlexberryBaseComponent.extend({
     */
     createNew() {
       let editFormRoute = this.get('editFormRoute');
-      Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('modelController');
-      this.get('objectlistviewEventsService').setLoadingState('loading');
-      Ember.run.later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new');
-      }), 50);
+      let editInModal = this.get('editInModal');
+      if (editInModal) {
+        this.openCreateModalDialog(modelController, editFormRoute);
+      } else {
+        Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
+        this.get('objectlistviewEventsService').setLoadingState('loading');
+        Ember.run.later((function() {
+          modelController.transitionToRoute(editFormRoute + '.new');
+        }), 50);
+      }
     },
 
     /**

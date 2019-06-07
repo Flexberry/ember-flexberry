@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-
-    _router: Ember.inject.service('-routing'),
   /**
     Name of using modal controller
 
@@ -23,16 +21,6 @@ export default Ember.Mixin.create({
     @private
   */
   _modalTemplateName: 'editrecord-dialog',
-
-  /**
-    Name of modal content model projection
-
-    @property _modalContentModelProjection
-    @type String
-    @default 'SuggestionTypeE'
-    @private
-  */
-  _modalContentModelProjectionName: 'SuggestionTypeE',
 
   /**
     Open modal window fo edit record or create new record.
@@ -68,7 +56,7 @@ export default Ember.Mixin.create({
 
     //get projection from record
     let modelClass = record.constructor;
-    let modelProjName = this.get('_modalContentModelProjectionName');
+    let modelProjName = Ember.getOwner(this).lookup('route:' + editFormRoute).get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
 
     //set parameters in modal content controller

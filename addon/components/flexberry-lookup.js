@@ -287,10 +287,12 @@ export default FlexberryBaseComponent.extend({
       this.addObserver('relatedModel', this, this._autofillByLimitObserverFunction);
       this.addObserver('relationName', this, this._autofillByLimitObserverFunction);
       this.addObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
     } else {
       this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
       this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
       this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
     }
   })),
 
@@ -364,6 +366,23 @@ export default FlexberryBaseComponent.extend({
     @default undefined
   */
   lookupLimitPredicate: undefined,
+
+  /**
+    Function of limit function for lookup in GroupEdit.
+    It should not be function return BasePredicate.
+
+    @example
+      ```javascript
+        lookupAdditionalLimitFunction = function (relationModel) {
+        return new StringPredicate('LookUpField').contains(relationModel.get('GroupEditField'));
+      };
+      ```
+
+    @property lookupAdditionalLimitFunction
+    @type Function
+    @default undefined
+  */
+  lookupAdditionalLimitFunction: undefined,
 
   /**
     This computed property forms a set of properties to send to lookup window.
@@ -452,7 +471,7 @@ export default FlexberryBaseComponent.extend({
         projection: this.get('projection'),
         relationName: this.get('relationName'),
         title: this.get('title'),
-        predicate: this.get('lookupLimitPredicate'),
+        predicate: this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction')),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
@@ -671,6 +690,11 @@ export default FlexberryBaseComponent.extend({
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
       }
 
+      // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
+      if (this.get('lookupAdditionalLimitFunction')) {
+        chooseData.predicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
+      }
+
       // Set state to active to add 'active' css-class.
       this.set('isActive', true);
 
@@ -833,6 +857,7 @@ export default FlexberryBaseComponent.extend({
       this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
       this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
       this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
     }
   },
 
@@ -967,7 +992,7 @@ export default FlexberryBaseComponent.extend({
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
@@ -1052,7 +1077,10 @@ export default FlexberryBaseComponent.extend({
               let builder = new Builder(store, relationModelName).select(displayAttributeName);
 
               let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
-              let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+              let resultPredicate = _this._conjuctPredicates(
+                _this.get('lookupLimitPredicate'),
+                _this.get('lookupAdditionalLimitFunction'),
+                autocompletePredicate);
               if (resultPredicate) {
                 builder.where(resultPredicate);
               }
@@ -1149,7 +1177,7 @@ export default FlexberryBaseComponent.extend({
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
@@ -1261,26 +1289,49 @@ export default FlexberryBaseComponent.extend({
     @method _conjuctPredicates
     @param {BasePredicate} limitPredicate The first predicate to concatenate.
     @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+    @param {Function} lookupAdditionalLimitFunction Function return BasePredicate to concatenate.
     @return {BasePredicate} Concatenation of two predicates.
     @throws {Error} Throws error if any of parameter predicates has wrong type.
   */
-  _conjuctPredicates(limitPredicate, autocompletePredicate) {
-    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
-      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+  _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
+    let limitArray = Ember.A();
+
+    if (limitPredicate) {
+      if (limitPredicate instanceof BasePredicate) {
+        limitArray.pushObject(limitPredicate);
+      } else {
+        throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    if (autocompletePredicate && !(autocompletePredicate instanceof BasePredicate)) {
-      throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+    if (autocompletePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
+        limitArray.pushObject(autocompletePredicate);
+      } else {
+        throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    let resultPredicate = (limitPredicate && autocompletePredicate) ?
-                          new ComplexPredicate(Condition.And, limitPredicate, autocompletePredicate) :
-                          (limitPredicate ?
-                            limitPredicate :
-                            (autocompletePredicate ?
-                              autocompletePredicate :
-                              undefined));
-    return resultPredicate;
+    if (lookupAdditionalLimitFunction) {
+      if ((lookupAdditionalLimitFunction instanceof Function)) {
+        let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
+          }
+        }
+      } else {
+        throw new Error('lookupAdditionalLimitFunction must to be function.');
+      }
+    }
+
+    if (limitArray.length > 1) {
+      return new ComplexPredicate(Condition.And, ...limitArray);
+    } else {
+      return limitArray[0];
+    }
   },
 
   /**
@@ -1331,7 +1382,7 @@ export default FlexberryBaseComponent.extend({
 
     let builder = new Builder(store, relationModelName).selectByProjection(this.get('projection'));
 
-    let lookupLimitPredicate = this.get('lookupLimitPredicate');
+    let lookupLimitPredicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
     if (lookupLimitPredicate) {
       builder.where(lookupLimitPredicate);
     }

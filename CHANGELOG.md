@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add select first autocomplete result by enter click.
     * Add dropdown class to flexberry-lookup at drodpdown mode.
+    * Add limitFunction in groupedit row to lookup limit by other component. 
 * `flexberry-file` component:
     * Added the ability correct settings to file preview modal dialog.
 * Opening edit record from flexberry objectlistview in modal window.

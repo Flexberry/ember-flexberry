@@ -97,6 +97,9 @@ export default Ember.Controller.extend({
       this.set('_openedModalDialog', undefined);
     }
 
+    let model = this.get('model');
+    model.rollbackAll();
+
     let modalOutletName = this.get('modalOutletName');
 
     //close other opened modal windows

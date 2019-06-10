@@ -40,9 +40,10 @@ export default Ember.Mixin.create({
     let loadingParams = {
       outlet: modalControllerOutlet,
     };
+    let record = (isNewRecord) ? dataObject.store.createRecord('ember-flexberry-dummy-suggestion-type') : dataObject;
 
     let modalTemplateName = this.get('_modalTemplateName');
-    controllerForShowModalAction.send('showModalDialog', modalTemplateName, null, loadingParams);
+    controllerForShowModalAction.send('showModalDialog', modalTemplateName, { model: record }, loadingParams);
     
     let modalControllerContentOutlet = modalController.get('modalContentOutletName');
 
@@ -52,7 +53,6 @@ export default Ember.Mixin.create({
     };
 
     let modalContentController = Ember.getOwner(this).lookup('controller:' + editFormRoute);
-    let record = (isNewRecord) ? dataObject.store.createRecord('ember-flexberry-dummy-suggestion-type') : dataObject;
 
     //get projection from record
     let modelClass = record.constructor;

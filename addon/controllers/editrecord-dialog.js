@@ -3,7 +3,6 @@
 */
 
 import Ember from 'ember';
-import { translationMacro as t } from 'ember-i18n';
 
 /**
   Controller for editing record modal window in OLV component.
@@ -39,18 +38,10 @@ export default Ember.Controller.extend({
   _openedModalDialog: undefined,
 
   /**
-    Title for modal window.
-
-    @property title
-    @type String
-  */
-  title: t('forms.ember-flexberry-dummy-suggestion-type-edit.caption'),
-
-  /**
-    Size of Semantic-UI modal.
+    Size of Semantic-UI modal and his class.
     [More info](http://semantic-ui.com/modules/modal.html#size).
 
-    Possible variants:
+    Possible variants of size:
     - **small**
     - **large**
     - **fullscreen**
@@ -96,9 +87,6 @@ export default Ember.Controller.extend({
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
-
-    let model = this.get('model');
-    model.rollbackAll();
 
     let modalOutletName = this.get('modalOutletName');
 

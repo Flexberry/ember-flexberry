@@ -10,7 +10,6 @@ export default Ember.Mixin.create({
     @private
   */
   _modalControllerName: 'editrecord-dialog',
-  
 
   /**
     Name of using modal template
@@ -40,11 +39,10 @@ export default Ember.Mixin.create({
     let loadingParams = {
       outlet: modalControllerOutlet,
     };
-    let record = (isNewRecord) ? dataObject.store.createRecord('ember-flexberry-dummy-suggestion-type') : dataObject;
 
     let modalTemplateName = this.get('_modalTemplateName');
-    controllerForShowModalAction.send('showModalDialog', modalTemplateName, { model: record }, loadingParams);
-    
+    controllerForShowModalAction.send('showModalDialog', modalTemplateName, null, loadingParams);
+
     let modalControllerContentOutlet = modalController.get('modalContentOutletName');
 
     loadingParams = {
@@ -53,6 +51,7 @@ export default Ember.Mixin.create({
     };
 
     let modalContentController = Ember.getOwner(this).lookup('controller:' + editFormRoute);
+    let record = (isNewRecord) ? dataObject.store.createRecord('ember-flexberry-dummy-suggestion-type') : dataObject;
 
     //get projection from record
     let modelClass = record.constructor;
@@ -63,7 +62,6 @@ export default Ember.Mixin.create({
     modalContentController.set('modelProjection', proj);
     modalContentController.set('isModal', true);
     modalContentController.set('modalController', modalController);
-
     controllerForShowModalAction.send('showModalDialog', editFormRoute,
       { controller: modalContentController, model: record }, loadingParams);
   },
@@ -90,5 +88,5 @@ export default Ember.Mixin.create({
   openCreateModalDialog(modelController, editFormRoute) {
     let openModalForCreateNew = true;
     this._openModalDialog(modelController, editFormRoute, openModalForCreateNew);
-  }  
+  }
 });

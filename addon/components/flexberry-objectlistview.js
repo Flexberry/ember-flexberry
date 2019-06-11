@@ -322,7 +322,7 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  editInModal: true,
+  editInModal: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.

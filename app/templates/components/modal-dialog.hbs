@@ -1,8 +1,10 @@
 {{#ui-modal class=(concat "flexberry-modal " sizeClass)}}
-  <i class="close icon"></i>
-  <div class="header">
-    {{title}}
-  </div>
+  {{#if showHeader}}
+    <i class="close icon"></i>
+    <div class="header">
+      {{title}}
+    </div>
+  {{/if}}
   <div class="{{if viewImageContent 'image' ''}} content">
     {{#if viewImageContent}}
       <div class="ui centered image">

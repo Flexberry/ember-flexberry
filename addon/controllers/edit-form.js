@@ -483,13 +483,15 @@ FolvOnEditControllerMixin, {
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
   close(skipTransition, rollBackModel) {
+    this.get('appState').reset();
+    this.onCloseActionStarted();
     let isModal = this.get('isModal');
     let modalController = this.get('modalController');
     if (isModal && !Ember.isNone(modalController)) {
+      let model = this.get('model');
+      model.rollbackAll();
       modalController.send('closeEditrecordDialog');
     } else {
-      this.get('appState').reset();
-      this.onCloseActionStarted();
       if (!skipTransition) {
         this.transitionToParentRoute(skipTransition, rollBackModel);
       }

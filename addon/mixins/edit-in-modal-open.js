@@ -25,33 +25,41 @@ export default Ember.Mixin.create({
     Open modal window fo edit record or create new record.
 
     @method _openModalDialog
-    @param {Object} dataObject record or model controller.
+    @param {Object} modelObject record or model controller, when record is created.
     @param {String} editFormRoute name of edit record route for modal content.
     @param {Boolean} isNewRecord flag indicates when modal record open fo create new record.
     @private
   */
-  _openModalDialog(dataObject, editFormRoute, isNewRecord) {
-    let controllerForShowModalAction = (isNewRecord) ? dataObject : this;
+  _openModalDialog(modelObject, editFormRoute, isNewRecord) {
+    let controllerForShowModalAction = (isNewRecord) ? modelObject : this;
+
+    // getting parameters for main modal window
     let modalControllerName = this.get('_modalControllerName');
     let modalController = Ember.getOwner(this).lookup('controller:' + modalControllerName);
     let modalControllerOutlet = modalController.get('modalOutletName');
+    let modalTemplateName = this.get('_modalTemplateName');
 
     let loadingParams = {
       outlet: modalControllerOutlet,
     };
 
-    let modalTemplateName = this.get('_modalTemplateName');
+    //show main modal window
     controllerForShowModalAction.send('showModalDialog', modalTemplateName, null, loadingParams);
 
-    let modalControllerContentOutlet = modalController.get('modalContentOutletName');
+    // getting parameters for content modal window
+    let modalContentControllerName = editFormRoute;
+    let modalContentController = Ember.getOwner(this).lookup('controller:' + modalContentControllerName);
+    let modalContentControllerOutlet = modalController.get('modalContentOutletName');
+    let modalContentTemplate = editFormRoute;
 
     loadingParams = {
       view: modalTemplateName,
-      outlet: modalControllerContentOutlet
+      outlet: modalContentControllerOutlet
     };
 
-    let modalContentController = Ember.getOwner(this).lookup('controller:' + editFormRoute);
-    let record = (isNewRecord) ? dataObject.store.createRecord('ember-flexberry-dummy-suggestion-type') : dataObject;
+    //setting data for modal content
+    let modelName = (isNewRecord) ? modelObject.get('modelProjection.modelName') : modelObject.constructor.modelName;
+    let record = (isNewRecord) ? modelObject.store.createRecord(modelName) : modelObject;
 
     //get projection from record
     let modelClass = record.constructor;
@@ -62,8 +70,18 @@ export default Ember.Mixin.create({
     modalContentController.set('modelProjection', proj);
     modalContentController.set('isModal', true);
     modalContentController.set('modalController', modalController);
-    controllerForShowModalAction.send('showModalDialog', editFormRoute,
-      { controller: modalContentController, model: record }, loadingParams);
+
+    //show content modal window
+    if (isNewRecord) {
+      controllerForShowModalAction.send('showModalDialog', modalContentTemplate,
+        { controller: modalContentController, model: record }, loadingParams);
+    } else {
+      let recordId = record.get('id') || record.get('data.id');
+      this.store.findRecord(modelName, recordId, { projection: modelProjName }).then((findingRecord) => {
+        controllerForShowModalAction.send('showModalDialog', modalContentTemplate,
+        { controller: modalContentController, model: findingRecord }, loadingParams);
+      });
+    }
   },
 
   /**

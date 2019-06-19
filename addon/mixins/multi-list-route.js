@@ -1,12 +1,18 @@
 import Ember from 'ember';
-import ListFormRoute from 'ember-flexberry/routes/list-form';
-import ListParameters from 'ember-flexberry/objects/list-parameters';
-import serializeSortingParam from 'ember-flexberry/utils/serialize-sorting-param';
+import ListParameters from '../objects/list-parameters';
+import serializeSortingParam from '../utils/serialize-sorting-param';
+
 import { Query } from 'ember-flexberry-data';
 const { Condition, ComplexPredicate } = Query;
 
-export default ListFormRoute.extend({
-  multiListSettings: {},
+export default Ember.Mixin.create({
+  /**
+    Settings for all lists on form.
+
+    @property multiListSettings
+    @type Object
+  */
+  multiListSettings: undefined,
 
   /**
     Service that triggers objectlistview events.
@@ -17,40 +23,9 @@ export default ListFormRoute.extend({
   objectlistviewEvents: Ember.inject.service(),
 
   init() {
-    this.set('multiListSettings.MultiUserList', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'MultiUserList',
-      modelName: 'ember-flexberry-dummy-application-user',
-      projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-application-user-edit'
-    }));
+    this._super(...arguments);
 
-    this.set('multiListSettings.MultiUserList2', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'MultiUserList2',
-      modelName: 'ember-flexberry-dummy-application-user',
-      projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-application-user-edit'
-    }));
-
-    this.set('multiListSettings.MultiSuggestionList', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'MultiSuggestionList',
-      modelName: 'ember-flexberry-dummy-suggestion',
-      projectionName: 'SuggestionL',
-      editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
-      exportExcelProjection: 'SuggestionL'
-    }));
-
-    this.set('multiListSettings.MultiHierarchyList', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'MultiHierarchyList',
-      modelName: 'ember-flexberry-dummy-suggestion-type',
-      projectionName: 'SuggestionTypeL',
-      editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
-      inHierarchicalMode: true,
-      hierarchicalAttribute: 'parent'
-    }));
+    this.set('multiListSettings', {});
   },
 
   model: function(params, transition) {
@@ -166,7 +141,11 @@ export default ListFormRoute.extend({
       let modelClass = this.store.modelFor(settings.get('modelName'));
       let proj = modelClass.projections.get(settings.get('projectionName'));
       settings.set('modelProjection', proj);
-      let predicate = this.objectListViewLimitPredicate({ modelName: settings.get('modelName'), projectionName: settings.get('projectionName'), params: settings });
+      let predicate = this.objectListViewLimitPredicate({
+        modelName: settings.get('modelName'),
+        projectionName: settings.get('projectionName'),
+        params: settings
+      });
       settings.set('predicate', predicate);
     }
 
@@ -179,31 +158,47 @@ export default ListFormRoute.extend({
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    this.get('objectlistviewEvents').on('refreshListOnly', function(componentName) {
-      controller.get('reloadListByName').apply(controller, [componentName]);
-    });
+    this.get('objectlistviewEvents').on('refreshListOnly', this, this._reloadListByName);
+  },
+
+  resetController: function(controller) {
+    this._super(...arguments);
+
+    this.get('objectlistviewEvents').off('refreshListOnly', this, this._reloadListByName);
   },
 
   actions: {
     /**
-      Set in `property` for `target` promise that load nested records.
+      Reload list's data by name.
 
-      @method actions.loadRecordsById
-      @param {String} id Record ID.
-      @param {ObjectListViewRowComponent} target Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
-      @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
-      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
-      @param {Object} recordParams Record params such as modelName, modelProjection and hierarchicalAttribute.
+      @method actions.reloadListByName
+      @param {String} componentName Component name.
     */
-    loadRecordsById(id, target, property, firstRunMode, recordParams) {
-      return this._super(...arguments);
-    }
+    reloadListByName(componentName) {
+      this.get('appState').loading();
+      let queryParameters = new ListParameters(this.get(`multiListSettings.${componentName}`));
+      queryParameters.set('filters', this._filtersPredicate(componentName));
+      if (!queryParameters.get('inHierarchicalMode')) {
+        queryParameters.set('hierarchicalAttribute', null);
+      }
+
+      this.reloadList(queryParameters).then(result => {
+        let controller = this.get('controller');
+        controller.set(`model.${componentName}`, result);
+        let settings = controller.get(`multiListSettings.${componentName}`);
+        settings.set('model', result);
+        settings.set('model.sorting', settings.get('sorting'));
+      }, this).finally(() => {
+        this.get('appState').reset();
+      }, this);
+    },
   },
 
   /**
     Return predicate for `QueryBuilder` or `undefined`.
 
     @method _filtersPredicate
+    @param {String} componentName Component name.
     @return {BasePredicate|undefined} Predicate for `QueryBuilder` or `undefined`.
     @private
   */
@@ -227,27 +222,13 @@ export default ListFormRoute.extend({
   },
 
   /**
-    Defined user settings developer.
-    For default userSetting use empty name ('').
-    Property `<componentName>` may contain any of properties: `colsOrder`, `sorting`, `colsWidth` or being empty.
+    Reloads list's data by name.
 
-    ```javascript
-    {
-      <componentName>: {
-        <settingName>: {
-          colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-          sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
-          colsWidths: [ <colName>:<colWidth>, ... ],
-        },
-        ...
-      },
-      ...
-    }
-    ```
-
-    @property developerUserSettings
-    @type Object
-    @default {}
+    @method _reloadListByName
+    @param {String} componentName Component name.
+    @private
   */
-  developerUserSettings: { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} },
+  _reloadListByName(componentName) {
+    this.send('reloadListByName', componentName);
+  }
 });

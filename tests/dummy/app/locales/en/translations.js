@@ -795,6 +795,10 @@ Ember.$.extend(true, translations, {
       'caption': 'Suggestion types'
     },
 
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Multi list form'
+    },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Log service. Settings example',

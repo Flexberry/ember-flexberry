@@ -805,6 +805,10 @@ Ember.$.extend(true, translations, {
       'caption': 'Типы предложений'
     },
 
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Несколько списков на форме'
+    },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',

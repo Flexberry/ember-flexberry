@@ -1,41 +1,28 @@
 import Ember from 'ember';
-import ListFormController from 'ember-flexberry/controllers/list-form';
-import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
-import ListParameters from 'ember-flexberry/objects/list-parameters';
-import serializeSortingParam from 'ember-flexberry/utils/serialize-sorting-param';
 
-export default ListFormController.extend(ReloadListMixin, {
+import serializeSortingParam from '../utils/serialize-sorting-param';
+
+export default Ember.Mixin.create({
   /**
-    Service for managing the state of the application.
+    Updates columns width in multisettings.
 
-    @property appState
-    @type AppStateService
+    @method setColumnsWidths
+    @param {String} componentName Component name.
+    @param {Object} columnWidths Current column widths.
   */
-  appState: Ember.inject.service(),
-
-  reloadListByName(componentName) {
-    this.get('appState').loading();
-    let queryParameters = new ListParameters(this.get(`multiListSettings.${componentName}`));
-    queryParameters.set('filters', this._filtersPredicate(componentName));
-    if (!queryParameters.get('inHierarchicalMode')) {
-      queryParameters.set('hierarchicalAttribute', null);
-    }
-
-    this.reloadList(queryParameters).then(result => {
-      this.set(`model.${componentName}`, result);
-      let settings = this.get(`multiListSettings.${componentName}`);
-      settings.set('model', result);
-      settings.set('model.sorting', settings.get('sorting'));
-    }, this).finally(() => {
-      this.get('appState').reset();
-    }, this);
-  },
-
   setColumnsWidths(componentName, columnWidths) {
     let settings = this.get(`multiListSettings.${componentName}`);
     settings.set('currentColumnsWidths', columnWidths);
   },
 
+  /**
+    Apply user settings to list by name.
+
+    @method userSettingsApply
+    @param {String} componentName Component name.
+    @param {Object} sorting Current list's sorting.
+    @param {Integer} perPage Current list's perPage value.
+  */
   userSettingsApply(componentName, sorting, perPage) {
     let settings = this.get(`multiListSettings.${componentName}`);
     settings.set('perPage', perPage || 5);
@@ -43,7 +30,7 @@ export default ListFormController.extend(ReloadListMixin, {
 
     let sort = serializeSortingParam(sorting, settings.get('sortDefaultValue'));
     settings.set('sort', sort);
-    this.reloadListByName(componentName);
+    this.send('reloadListByName', componentName);
   },
 
   actions: {
@@ -51,10 +38,10 @@ export default ListFormController.extend(ReloadListMixin, {
       This action is called when user click on refresh button.
 
       @method actions.refreshList
-      @public
+      @param {String} componentName Component name.
     */
     refreshList(componentName) {
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
@@ -62,38 +49,41 @@ export default ListFormController.extend(ReloadListMixin, {
 
       @method actions.gotoPage
       @param {Number} pageNum Number of page.
+      @param {String} componentName Component name.
     */
     gotoPage(pageNum, componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       let num = settings.get('_checkPageNumber').apply(settings, [pageNum]);
       settings.set('page', num);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
       Transition to next page.
 
       @method actions.nextPage
+      @param {String} componentName Component name.
     */
     nextPage(componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       let page = settings.get('page');
       let nextPage = settings.get('_checkPageNumber').apply(settings, [page + 1]);
       settings.set('page', nextPage);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
       Transition to previous page.
 
       @method actions.previousPage
+      @param {String} componentName Component name.
     */
     previousPage(componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       let page = settings.get('page');
       let prevPage = settings.get('_checkPageNumber').apply(settings, [page - 1]);
       settings.set('page', prevPage);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
@@ -101,6 +91,7 @@ export default ListFormController.extend(ReloadListMixin, {
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
+      @param {String} componentName Component name.
       @param {String} sortPath Path to oldSorting.
     */
     sortByColumn: function(column, componentName, sortPath = 'model.sorting') {
@@ -129,7 +120,7 @@ export default ListFormController.extend(ReloadListMixin, {
       let sortQueryParam = serializeSortingParam(newSorting, settings.get('sortDefaultValue'));
       settings.set('sort', sortQueryParam);
       this.get('_userSettingsService').setCurrentParams(componentName, settings);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
@@ -137,6 +128,7 @@ export default ListFormController.extend(ReloadListMixin, {
 
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
+      @param {String} componentName Component name.
       @param {String} sortPath Path to oldSorting.
     */
     addColumnToSorting: function(column, componentName, sortPath = 'model.sorting') {
@@ -167,9 +159,18 @@ export default ListFormController.extend(ReloadListMixin, {
       let sortQueryParam = serializeSortingParam(newSorting, settings.get('sortDefaultValue'));
       settings.set('sort', sortQueryParam);
       this.get('_userSettingsService').setCurrentParams(componentName, settings);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
+    /**
+      Show usersettings config dialog.
+
+      @method actions.showConfigDialog
+      @param {String} componentName Component name.
+      @param {String} settingName Current usersetting name.
+      @param {Boolean} isExportExcel Indicates when it's export dialog.
+      @param {Boolean} immediateExport Indicates when need export witout config dialog.
+    */
     showConfigDialog: function(componentName, settingName, isExportExcel = false, immediateExport = false) {
       let settingsSource = this.get(`multiListSettings.${componentName}`);
       this._showConfigDialog(componentName, settingName, settingsSource, isExportExcel, immediateExport);
@@ -179,26 +180,27 @@ export default ListFormController.extend(ReloadListMixin, {
       Save filters and refresh list.
 
       @method actions.applyFilters
-      @param {Object} filters
+      @param {Object} filters Current list's filters.
+      @param {String} componentName Component name.
     */
     applyFilters(filters, componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       settings.set('page', 1);
       settings.set('filters', filters);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
       Reset filters and refresh list.
 
       @method actions.resetFilters
-      @param {String} componentName The name of objectlistview component.
+      @param {String} componentName Component name.
     */
     resetFilters(componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       settings.set('page', 1);
       settings.set('filters', null);
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
 
@@ -208,6 +210,7 @@ export default ListFormController.extend(ReloadListMixin, {
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
       @param {String} filterCondition Condition for predicate, can be `or` or `and`.
+      @param {String} componentName Component name.
     */
     filterByAnyMatch(pattern, filterCondition, componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
@@ -220,7 +223,7 @@ export default ListFormController.extend(ReloadListMixin, {
             page: 1
           });
 
-          _this.reloadListByName(componentName);
+          _this.send('reloadListByName', componentName);
         }), 50);
       }
     },
@@ -229,22 +232,24 @@ export default ListFormController.extend(ReloadListMixin, {
       Switch hierarchical mode.
 
       @method actions.switchHierarchicalMode
+      @param {String} componentName Component name.
     */
     switchHierarchicalMode(componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       settings.toggleProperty('inHierarchicalMode');
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
       Switch collapse/expand mode.
 
       @method actions.switchExpandMode
+      @param {String} componentName Component name.
     */
     switchExpandMode(componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       settings.toggleProperty('inExpandMode');
-      this.reloadListByName(componentName);
+      this.send('reloadListByName', componentName);
     },
 
     /**
@@ -252,7 +257,8 @@ export default ListFormController.extend(ReloadListMixin, {
 
       @method actions.saveHierarchicalAttribute
       @param {String} hierarchicalAttribute Attribute name to hierarchy build.
-      @param {Boolean} [refresh] If `true`, then switch hierarchical mode.
+      @param {Boolean} refresh If `true`, then switch hierarchical mode.
+      @param {String} componentName Component name.
     */
     saveHierarchicalAttribute(hierarchicalAttribute, refresh, componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
@@ -272,13 +278,14 @@ export default ListFormController.extend(ReloadListMixin, {
 
       @method actions.loadRecords
       @param {String} id Record ID.
-      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {ObjectListViewRowComponent} target Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
-      @param {Boolean} Flag indicates that this is the first download of data.
+      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
+      @param {String} componentName Component name.
     */
     loadRecords(id, target, property, firstRunMode, componentName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       this.send('loadRecordsById', id, target, property, firstRunMode, settings);
     },
-  },
+  }
 });

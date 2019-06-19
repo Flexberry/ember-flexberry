@@ -7,7 +7,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   // Edit forms & list forms.
-  this.route('ember-flexberry-dummy-multi-user-suggestion-list');
+  this.route('ember-flexberry-dummy-multi-list');
   this.route('ember-flexberry-dummy-application-user-list');
   this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
   this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });

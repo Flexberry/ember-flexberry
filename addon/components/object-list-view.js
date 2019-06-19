@@ -2147,7 +2147,8 @@ export default FlexberryBaseComponent.extend(
       let modelName = this.get('modelName');
       let data = {
         cancel: false,
-        filterQuery: filterQuery
+        filterQuery: filterQuery,
+        componentName: componentName
       };
 
       if (beforeDeleteAllRecords) {

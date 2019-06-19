@@ -201,6 +201,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
+        }, {
+          link: 'ember-flexberry-dummy-multi-user-suggestion-list',
+          caption: i18n.t('forms.application.sitemap.application.multi.caption'),
+          title: i18n.t('forms.application.sitemap.application.multi.title'),
+          children: null
         }]
       }, {
         link: null,

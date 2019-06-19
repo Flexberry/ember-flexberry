@@ -344,6 +344,10 @@ Ember.$.extend(true, translations, {
           'suggestions': {
             'caption': 'Suggestions',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Multi list',
+            'title': ''
           }
         },
         'log-service-examples': {

@@ -937,7 +937,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      this.sendAction(action, column, this.get('componentName'));
     },
 
     /**
@@ -1623,7 +1623,12 @@ export default FlexberryBaseComponent.extend(
         currentWidths[currentPropertyName] = currentColumnWidth;
       });
 
-      this.set('currentController.currentColumnsWidths', currentWidths);
+      let widthsFunction = this.get('currentController.setColumnsWidths');
+      if (widthsFunction instanceof Function) {
+        widthsFunction.apply(this.get('currentController'), [this.get('componentName'), currentWidths]);
+      } else {
+        this.set('currentController.currentColumnsWidths', currentWidths);
+      }
     }
   },
 
@@ -1964,16 +1969,16 @@ export default FlexberryBaseComponent.extend(
           });
 
           if (hasFilters) {
-            this.sendAction('applyFilters', filters);
+            this.sendAction('applyFilters', filters, componentName);
           } else {
             if (this.get('currentController.filters')) {
-              this.get('currentController').send('resetFilters');
+              this.get('currentController').send('resetFilters', componentName);
             } else {
-              this.get('currentController').send('refreshList');
+              this.get('currentController').send('refreshList', componentName);
             }
           }
         } else {
-          this.get('currentController').send('refreshList');
+          this.get('currentController').send('refreshList', componentName);
         }
       }
     }
@@ -2343,7 +2348,7 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
     }
   },
 

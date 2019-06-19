@@ -1,0 +1,112 @@
+{{flexberry-error error=error}}
+<h3>{{t 'forms.ember-ember-flexberry-dummy-multi-user-suggestion-list.caption'}}</h3>
+<div class="row">
+  {{flexberry-objectlistview
+    modelName="ember-flexberry-dummy-application-user"
+    modelProjection=multiListSettings.MultiUserList.modelProjection
+    editFormRoute=multiListSettings.MultiUserList.editFormRoute
+    content=model.MultiUserList
+    createNewButton=true
+    refreshButton=true
+    sorting=multiListSettings.MultiUserList.computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    pages=multiListSettings.MultiUserList.pages
+    perPageValue=multiListSettings.MultiUserList.perPageValue
+    perPageValues=multiListSettings.MultiUserList.perPageValues
+    recordsTotalCount=multiListSettings.MultiUserList.recordsTotalCount
+    hasPreviousPage=multiListSettings.MultiUserList.hasPreviousPage
+    hasNextPage=multiListSettings.MultiUserList.hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="MultiUserList"
+  }}
+</div>
+<div class="row">
+  {{flexberry-objectlistview
+    modelName="ember-flexberry-dummy-application-user"
+    modelProjection=multiListSettings.MultiUserList2.modelProjection
+    editFormRoute=multiListSettings.MultiUserList2.editFormRoute
+    content=model.MultiUserList2
+    createNewButton=true
+    refreshButton=true
+    sorting=multiListSettings.MultiUserList2.computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    pages=multiListSettings.MultiUserList2.pages
+    perPageValue=multiListSettings.MultiUserList2.perPageValue
+    perPageValues=multiListSettings.MultiUserList2.perPageValues
+    recordsTotalCount=multiListSettings.MultiUserList2.recordsTotalCount
+    hasPreviousPage=multiListSettings.MultiUserList2.hasPreviousPage
+    hasNextPage=multiListSettings.MultiUserList2.hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="MultiUserList2"
+  }}
+</div>
+<div class="row">
+  {{flexberry-objectlistview
+    editFormRoute=multiListSettings.MultiSuggestionList.editFormRoute
+    showCheckBoxInRow=true
+    modelName="ember-flexberry-dummy-suggestion"
+    modelProjection=multiListSettings.MultiSuggestionList.modelProjection
+    content=model.MultiSuggestionList
+    createNewButton=true
+    enableFilters=true
+    filters=multiListSettings.MultiSuggestionList.filters
+    refreshButton=true
+    exportExcelButton=true
+    sorting=multiListSettings.MultiSuggestionList.computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    applyFilters=(action "applyFilters")
+    resetFilters=(action "resetFilters")
+    pages=multiListSettings.MultiSuggestionList.pages
+    perPageValue=multiListSettings.MultiSuggestionList.perPageValue
+    perPageValues=multiListSettings.MultiSuggestionList.perPageValues
+    recordsTotalCount=multiListSettings.MultiSuggestionList.recordsTotalCount
+    hasPreviousPage=multiListSettings.MultiSuggestionList.hasPreviousPage
+    hasNextPage=multiListSettings.MultiSuggestionList.hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="MultiSuggestionList"
+    showDeleteMenuItemInRow=true
+    deleteButton=true
+  }}
+</div>
+<div class="row">
+  {{flexberry-objectlistview
+    content=model.MultiHierarchyList
+    modelName="ember-flexberry-dummy-suggestion-type"
+    modelProjection=multiListSettings.MultiHierarchyList.modelProjection
+    editFormRoute=multiListSettings.MultiHierarchyList.editFormRoute
+    orderable=false
+    componentName="MultiHierarchyList"
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    colsConfigButton=false
+    disableHierarchicalMode=false
+    showCheckBoxInRow=true
+    pages=multiListSettings.MultiHierarchyList.pages
+    perPageValue=multiListSettings.MultiHierarchyList.perPageValue
+    perPageValues=multiListSettings.MultiHierarchyList.perPageValues
+    recordsTotalCount=multiListSettings.MultiHierarchyList.recordsTotalCount
+    hasPreviousPage=multiListSettings.MultiHierarchyList.hasPreviousPage
+    hasNextPage=multiListSettings.MultiHierarchyList.hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    availableCollExpandMode=true
+    inHierarchicalMode=multiListSettings.MultiHierarchyList.inHierarchicalMode
+    hierarchicalAttribute=multiListSettings.MultiHierarchyList.hierarchicalAttribute
+    inExpandMode=multiListSettings.MultiHierarchyList.inExpandMode
+  }}
+</div>

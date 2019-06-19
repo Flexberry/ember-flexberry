@@ -149,15 +149,21 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('model.exportParams.isExportExcel')) {
         let colsConfig = this._getSettings();
 
-        let router = getOwner(this).lookup('router:main');
         let savePromise = this._getSavePromise(undefined, colsConfig);
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
             this.get('appState').reset();
-            this.set('currentController.mainControler.sort', sort);
-            this.set('currentController.mainControler.perPage', colsConfig.perPage || 5);
-            router.router.refresh();
+            let mainController = this.get('currentController.mainControler');
+            let userSettingsApplyFunction = mainController.get('userSettingsApply');
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(mainController, [this.get('model.componentName'), colsConfig.sorting, colsConfig.perPage]);
+            } else {
+              mainController.set('sort', sort);
+              mainController.set('perPage', colsConfig.perPage || 5);
+              let router = getOwner(this).lookup('router:main');
+              router.router.refresh();
+            }
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
@@ -215,7 +221,7 @@ export default FlexberryBaseComponent.extend({
 
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
-      this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
       savePromise.then(
         record => {
           this.set('currentController.message.type', 'success');
@@ -304,7 +310,7 @@ export default FlexberryBaseComponent.extend({
 
     return this.get('userSettingsService').saveUserSetting(componentName, settingName, colsConfig, isExportExcel)
     .then(result => {
-      this.get('colsConfigMenu').updateNamedSettingTrigger();
+      this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
     });
   },
 

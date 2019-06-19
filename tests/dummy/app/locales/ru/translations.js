@@ -354,6 +354,10 @@ Ember.$.extend(true, translations, {
           'suggestions': {
             'caption': 'Предложения',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Несколько списков',
+            'title': ''
           }
         },
         'log-service-examples': {

@@ -336,8 +336,8 @@ FolvOnEditControllerMixin, {
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
     */
-    sortByColumn: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    sortByColumn: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
 
     /**
@@ -346,8 +346,8 @@ FolvOnEditControllerMixin, {
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
     */
-    addColumnToSorting: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    addColumnToSorting: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
   },
 

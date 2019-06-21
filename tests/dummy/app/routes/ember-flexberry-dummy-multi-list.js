@@ -1,8 +1,9 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
+import MultiListModel from 'ember-flexberry/mixins/multi-list-model';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
 
-export default ListFormRoute.extend(MultiListRoute, {
+export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
   init() {
     this._super(...arguments);
 
@@ -11,7 +12,7 @@ export default ListFormRoute.extend(MultiListRoute, {
       componentName: 'MultiUserList',
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-application-user-edit'
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
     }));
 
     this.set('multiListSettings.MultiUserList2', new ListParameters({
@@ -19,7 +20,7 @@ export default ListFormRoute.extend(MultiListRoute, {
       componentName: 'MultiUserList2',
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-application-user-edit'
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
     }));
 
     this.set('multiListSettings.MultiSuggestionList', new ListParameters({

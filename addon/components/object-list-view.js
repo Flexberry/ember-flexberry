@@ -7,7 +7,6 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
-import serializeSortingParam from '../utils/serialize-sorting-param';
 import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
@@ -1079,8 +1078,6 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this._router = Ember.getOwner(this).lookup('router:main');
-
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
       let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
@@ -1088,8 +1085,7 @@ export default FlexberryBaseComponent.extend(
       .then(record => {
         if (this.get('class') !== 'groupedit-container')
         {
-          let sort = serializeSortingParam(currentUserSetting.sorting);
-          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+          this.get('objectlistviewEventsService').setSortingTrigger(componentName, currentUserSetting.sorting);
         } else {
           this.set('sorting', currentUserSetting.sorting);
           let objectlistviewEventsService = this.get('objectlistviewEventsService');
@@ -2192,7 +2188,7 @@ export default FlexberryBaseComponent.extend(
       if (data.deletedCount > -1) {
         this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
-        currentController.onDeleteActionFulfilled();
+        currentController.onDeleteActionFulfilled(true);
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
         this.get('appState').error();
@@ -2297,7 +2293,7 @@ export default FlexberryBaseComponent.extend(
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
-      currentController.onDeleteActionFulfilled();
+      currentController.onDeleteActionFulfilled(true);
     }) : record.deleteRecord()).catch((reason) => {
 
       currentController.onDeleteActionRejected(reason, record);

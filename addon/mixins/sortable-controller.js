@@ -66,7 +66,7 @@ export default Ember.Mixin.create({
     @property sort
     @type String
   */
-  sort: Ember.computed.oneWay('sortDefaultValue'),
+  sort: null,
 
   _userSettingsService: Ember.inject.service('user-settings'),
 

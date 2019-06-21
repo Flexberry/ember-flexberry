@@ -505,8 +505,9 @@ export default FlexberryBaseComponent.extend({
       let _this = this;
 
       Ember.run.later((function() {
-        _this.set('filterText', null);
         _this.set('filterByAnyMatchText', null);
+        let componentName = _this.get('componentName');
+        _this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, null);
       }), 50);
     },
 

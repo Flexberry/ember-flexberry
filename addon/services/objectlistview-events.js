@@ -212,6 +212,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "setSorting" event in route.
+    Event name: setSorting.
+
+    @method setSortingTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  setSortingTrigger(componentName, sorting = []) {
+    this.trigger('setSorting', componentName, sorting);
+  },
+
+  /**
     Trigger for "geSortApply" event in object-list-view.
     Event name: geSortApply.
 

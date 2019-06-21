@@ -6,7 +6,7 @@
       modelName=settings.modelName
       modelProjection=settings.modelProjection
       editFormRoute=settings.editFormRoute
-      content=model.MultiUserList
+      content=settings.model
       createNewButton=true
       refreshButton=true
       sorting=settings.computedSorting
@@ -33,7 +33,7 @@
       modelName=settings.modelName
       modelProjection=settings.modelProjection
       editFormRoute=settings.editFormRoute
-      content=model.MultiUserList2
+      content=settings.model
       createNewButton=true
       refreshButton=true
       sorting=settings.computedSorting
@@ -61,10 +61,13 @@
       showCheckBoxInRow=true
       modelName=settings.modelName
       modelProjection=settings.modelProjection
-      content=model.MultiSuggestionList
+      content=settings.model
       createNewButton=true
       enableFilters=true
       filters=settings.filters
+      filterButton=true
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      filterText=settings.filter
       refreshButton=true
       exportExcelButton=true
       sorting=settings.computedSorting
@@ -92,7 +95,7 @@
 <div class="row">
   {{#with multiListSettings.MultiHierarchyList as |settings|}}
     {{flexberry-objectlistview
-      content=model.MultiHierarchyList
+      content=settings.model
       modelName=settings.modelName
       modelProjection=settings.modelProjection
       editFormRoute=settings.editFormRoute

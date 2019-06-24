@@ -33,7 +33,7 @@ test('check locale at month scrol hint', function(assert) {
   this.render(hbs`{{flexberry-simpledatetime}}`);
   this.set('i18n.locale', 'ru');
   assert.equal(Ember.$('.flatpickr-current-month .cur-month')[0].title,
-    this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text'),'Locale ru is correct');
+    this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text'), 'Locale ru is correct');
   this.set('i18n.locale', 'en');
   assert.equal(Ember.$('.flatpickr-current-month .cur-month')[0].title,
     this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text'), 'Locale en is correct');

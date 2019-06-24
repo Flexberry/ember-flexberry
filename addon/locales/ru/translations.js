@@ -30,6 +30,10 @@ export default {
   },
 
   'components': {
+    'flexberry-simpledatetime': {
+      'scroll-caption-text':'Используйте скролл для перемотки',
+    },
+
     'flexberry-error': {
       caption: 'Произошла ошибка',
       'show-more': 'Подробнее',

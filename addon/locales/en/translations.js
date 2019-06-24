@@ -30,6 +30,10 @@ export default {
   },
 
   'components': {
+    'flexberry-simpledatetime': {
+      'scroll-caption-text':'Scroll to increment',
+    },
+
     'flexberry-error': {
       caption: 'An error has occurred',
       'show-more': 'Show more',

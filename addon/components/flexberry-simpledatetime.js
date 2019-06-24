@@ -387,7 +387,7 @@ export default FlexberryBaseComponent.extend({
       }
     }, this));
 
-    if(this.get('i18n').locale != 'en') {
+    if (this.get('i18n').locale !== 'en') {
       Ember.$('.flatpickr-current-month .cur-month')[0].title = this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text');
     }
 

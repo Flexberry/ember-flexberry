@@ -387,9 +387,9 @@ export default FlexberryBaseComponent.extend({
       }
     }, this));
 
-    if (this.get('i18n').locale !== 'en') {
-      Ember.$('.flatpickr-current-month .cur-month')[0].title = this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text');
-    }
+    let flatpickr = this.get('_flatpickr');
+    let curMonth = $(flatpickr.monthNav).children('.flatpickr-current-month').children('.cur-month')[0];
+    curMonth.title = this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text');
 
     this.$('.custom-flatpickr').change(Ember.$.proxy(function (e) {
       this._validationDateTime();

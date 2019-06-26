@@ -12,7 +12,7 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
     let $lookupChooseButton = Ember.$('.ui-change', $lookup);
     $lookupChooseButton.click();
 
-    function $menuTableGetHeaders(){
+    function $menuTableGetHeaders() {
       let $menuTable = Ember.$('.content table.object-list-view');
       let $menuTableHead = $menuTable.children('thead');
       let $menuTableRow = $menuTableHead.children('tr');
@@ -23,15 +23,15 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
-        $menuTableGetHeaders().each( function() {
+        $menuTableGetHeaders().each(function() {
           let $header = $(this).children('div');
           let $headerName = $header.attr('data-olv-header-property-name');
           let $headerOrder = $header.children('.object-list-view-order-icon');
           let $headerOrderTitle = $headerOrder.children('div').attr('title');
 
-          if($headerName === 'name') {
+          if ($headerName === 'name') {
             assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
-          }else{
+          }else {
             assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
             $header.click();
           }
@@ -44,15 +44,15 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
-        $menuTableGetHeaders().each( function() {
+        $menuTableGetHeaders().each(function() {
           let $header = $(this).children('div');
           let $headerName = $header.attr('data-olv-header-property-name');
           let $headerOrder = $header.children('.object-list-view-order-icon');
           let $headerOrderTitle = $headerOrder.children('div').attr('title');
 
-          if($headerName === 'name') {
+          if ($headerName === 'name') {
             assert.equal($headerOrder.length === 0, true, $headerName + ' has no sorting');
-          }else{
+          }else {
             assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
           }
         });
@@ -69,15 +69,15 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
-        $menuTableGetHeaders().each( function() {
+        $menuTableGetHeaders().each(function() {
           let $header = $(this).children('div');
           let $headerName = $header.attr('data-olv-header-property-name');
           let $headerOrder = $header.children('.object-list-view-order-icon');
           let $headerOrderTitle = $headerOrder.children('div').attr('title');
 
-          if($headerName === 'name') {
+          if ($headerName === 'name') {
             assert.equal($headerOrder.length === 0, true, $headerName + ' has no sorting');
-          }else{
+          }else {
             assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
           }
         });
@@ -91,7 +91,7 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
 
     Ember.run(() => {
       var done = assert.async();
-      setTimeout(function() { 
+      setTimeout(function() {
         $lookupChooseButton.click();
         done();
       }, 4000);
@@ -101,15 +101,15 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
-        $menuTableGetHeaders().each( function() {
+        $menuTableGetHeaders().each(function() {
           let $header = $(this).children('div');
           let $headerName = $header.attr('data-olv-header-property-name');
           let $headerOrder = $header.children('.object-list-view-order-icon');
           let $headerOrderTitle = $headerOrder.children('div').attr('title');
 
-          if($headerName === 'name') {
+          if ($headerName === 'name') {
             assert.equal($headerOrder.length === 0, true, $headerName + ' has no sorting');
-          }else{
+          }else {
             assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
           }
         });

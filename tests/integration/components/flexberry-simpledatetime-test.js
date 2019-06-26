@@ -29,7 +29,7 @@ test('it renders', function(assert) {
   assert.ok(true);
 });
 
-test('check locale at month scrol hint', function(assert) {
+test('check locale at month scroll hint', function(assert) {
   this.render(hbs`{{flexberry-simpledatetime}}`);
   this.set('i18n.locale', 'ru');
   assert.equal(Ember.$('.flatpickr-current-month .cur-month')[0].title,

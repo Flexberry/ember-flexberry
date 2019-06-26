@@ -387,8 +387,7 @@ export default FlexberryBaseComponent.extend({
       }
     }, this));
 
-    let flatpickr = this.get('_flatpickr');
-    let curMonth = $(flatpickr.monthNav).children('.flatpickr-current-month').children('.cur-month')[0];
+    let curMonth = Ember.$(this.get('_flatpickr').monthNav).children('.flatpickr-current-month').children('.cur-month')[0];
     curMonth.title = this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text');
 
     this.$('.custom-flatpickr').change(Ember.$.proxy(function (e) {

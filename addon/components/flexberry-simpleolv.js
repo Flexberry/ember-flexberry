@@ -774,6 +774,18 @@ export default folv.extend(
     },
 
     /**
+      Handles action from row click (action is handled at route so it can't be closure action now).
+
+      @method actions.objectListViewRowClick
+      @public
+      @param {Object} record Clicked record.
+      @param {Object} options Different parameters to handle action.
+    */
+    objectListViewRowClick(record, options) {
+      this._super(record.get('data'), options);
+    },
+
+    /**
       This action is called when user click on menu in row.
 
       @method actions.deleteRow

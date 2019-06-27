@@ -368,5 +368,23 @@ export default Ember.Service.extend(Ember.Evented, {
     typeof this.get('_selectedRecords')[componentName].clear === 'function') {
       this.get('_selectedRecords')[componentName].clear();
     }
-  }
+  },
+
+  /**
+    Triggers when edit record dialog was created.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogCreatedTrigger() {
+    this.trigger('editRecordDialogCreated');
+  },
+
+  /**
+    Triggers when edit record dialog was hidden.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogHiddenTrigger() {
+    this.trigger('editRecordDialogHidden');
+  },
 });

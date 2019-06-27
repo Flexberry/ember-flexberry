@@ -10,6 +10,8 @@ import Ember from 'ember';
   @class EditrecordDialog
 */
 export default Ember.Controller.extend({
+  objectlistviewEvents: Ember.inject.service(),
+
   /**
     Editrecord modal dialog outlet name
 
@@ -62,16 +64,28 @@ export default Ember.Controller.extend({
     */
     createdModalDialog: function(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
+      this.get('objectlistviewEvents').editRecordDialogCreatedTrigger();
     },
 
     /**
       Handler for close editrecord modal dialog.
 
-      @method actions.closeEditrecordDialog
+      @method actions.onEditRecordDialogClosing
       @public
     */
-    closeEditrecordDialog: function() {
+    onEditRecordDialogClosing: function() {
       this._closeModalDialog();
+    },
+
+    /**
+      Handler for action after edit record dialog was closed.
+
+      @method actions.onEditRecordDialogHidden
+      @public
+    */
+    onEditRecordDialogHidden: function() {
+      this._closeModalDialog();
+      this.get('objectlistviewEvents').editRecordDialogHiddenTrigger();
     },
   },
 

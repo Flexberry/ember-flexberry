@@ -488,9 +488,7 @@ FolvOnEditControllerMixin, {
     let isModal = this.get('isModal');
     let modalController = this.get('modalController');
     if (isModal && !Ember.isNone(modalController)) {
-      let model = this.get('model');
-      model.rollbackAll();
-      modalController.send('closeEditrecordDialog');
+      modalController.send('onEditRecordDialogClosing');
     } else {
       if (!skipTransition) {
         this.transitionToParentRoute(skipTransition, rollBackModel);
@@ -749,6 +747,15 @@ FolvOnEditControllerMixin, {
   rollbackHasManyRelationships(model) {
     Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
+  },
+
+  /**
+    Rollback current model.
+
+    @method rollbackAll
+  */
+  rollbackAll() {
+    this.get('model').rollbackAll();
   },
 
   /**

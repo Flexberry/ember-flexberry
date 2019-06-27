@@ -45,18 +45,28 @@ export default EditFormController.extend({
    */
   showDownloadButton: true,
 
+  /**
+    Defaul style of modal context.
+
+    @property readonly
+    @type String
+    @default #example
+   */
+  style:'#example',
+
   actions: {
     modalWindow(style) {
       if (!isNone(style)) {
         this.set('_style', style);
       }
 
-      let repeatWindow = $('#repeat-window').modal({
-        closable: false,
-        autofocus: false,
-        detachable: true,
-        allowMultiple: true,
-      });
+      let repeatWindow = $('.repeat-window').modal({
+          closable: false,
+          autofocus: false,
+          detachable: false,
+          allowMultiple: true,
+          context: this.get('style'),
+        });
 
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');

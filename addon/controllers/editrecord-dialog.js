@@ -13,6 +13,22 @@ export default Ember.Controller.extend({
   objectlistviewEvents: Ember.inject.service(),
 
   /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
+  /**
     Editrecord modal dialog outlet name
 
     @property modalOutletName
@@ -65,6 +81,8 @@ export default Ember.Controller.extend({
     createdModalDialog: function(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
       this.get('objectlistviewEvents').editRecordDialogCreatedTrigger();
+      this.get('appState').loading();
+      this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._refreshDimmer);
     },
 
     /**
@@ -96,6 +114,8 @@ export default Ember.Controller.extend({
     @private
   */
   _closeModalDialog() {
+    this.get('appState').reset();
+    this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._refreshDimmer);
     let openedDialog = this.get('_openedModalDialog');
     if (openedDialog) {
       openedDialog.modal('hide');
@@ -109,5 +129,18 @@ export default Ember.Controller.extend({
 
     //close this modal window
     this.send('removeModalDialog', { outlet: modalOutletName });
+  },
+
+  /**
+    Refresh dimmer for modal dialog.
+
+    @method _refreshDimmer
+    @private
+  */
+  _refreshDimmer() {
+    let openedDialog = this.get('_openedModalDialog');
+    if (openedDialog) {
+      openedDialog.modal('show dimmer');
+    }
   }
 });

@@ -206,6 +206,33 @@ export default {
       'unresizable': 'Фиксированная ширина'
     },
 
+    'advlimit-dialog-content': {
+      'title': 'Настройка ограничений',
+      'export-modal-dialog-title': 'Настроить экспорт в Excel',
+      'export-title': 'Экспорт в Excel',
+      'dont-show-columns': 'Не отображать столбцы',
+      'columns-order': 'Определить порядок столбцов',
+      'column-name': 'Название столбца',
+      'sort-direction': 'Направление сортировки',
+      'sort-priority': 'Приоритет столбца при сортировке',
+      'column-width': 'Ширина столбца',
+      'save-colwidths': 'Сохранить ширину столбцов',
+      'setting-name': 'Название настройки',
+      'enter-setting-name': 'Введите название настройки',
+      'use': 'Применить',
+      'export': 'Выгрузить',
+      'use-without-save': 'Применить данные установки без сохранения в настройке ',
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении настройки возникли ошибки: ',
+      'setting': 'Настройка ',
+      'is-saved': ' сохранена',
+      'col-width-on': 'Включить настройку ширины столбцов',
+      'per-page': 'Записей на странице',
+      'det-separate-rows': 'Поля списков в отдельные строки',
+      'det-separate-cols': 'Поля списков в отдельные столбцы',
+      'unresizable': 'Фиксированная ширина'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Время загрузки',
       'render-time': 'Время отрисовки',

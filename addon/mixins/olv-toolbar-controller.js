@@ -334,10 +334,10 @@ export default Ember.Mixin.create({
         view: 'application',
         outlet: 'modal'
       };
-      this.send('showModalDialog', 'colsconfig-dialog');
+      this.send('showModalDialog', 'advlimit-dialog');
 
       loadingParams = {
-        view: 'colsconfig-dialog',
+        view: 'advlimit-dialog',
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',

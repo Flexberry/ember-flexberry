@@ -204,6 +204,32 @@ export default {
       'det-separate-cols': 'List\'s properties in separate columns'
     },
 
+    'advlimit-dialog-content': {
+      'title': 'Customize limit',
+      'export-modal-dialog-title': 'Customize export in Excel',
+      'export-title': 'Export in Excel',
+      'dont-show-columns': 'Do not display columns',
+      'columns-order': 'Specify the order of the columns',
+      'column-name': 'Column name',
+      'sort-direction': 'Sorting direction',
+      'sort-priority': 'Priority column sorting',
+      'column-width': 'Column width',
+      'save-colwidths': 'Save columns width',
+      'setting-name': 'Setting name',
+      'enter-setting-name': 'Enter setting name',
+      'use': 'Use',
+      'export': 'Unload',
+      'use-without-save': 'Use this settings without saving in setting ',
+      'save': 'Save',
+      'have-errors': 'When you save a configuration errors occurred: ',
+      'setting': 'Setting ',
+      'is-saved': ' is saved',
+      'col-width-on': 'Enable setting column widths',
+      'per-page': 'Records count on page',
+      'det-separate-rows': 'List\'s properties in separate rows',
+      'det-separate-cols': 'List\'s properties in separate columns'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Load time',
       'render-time': 'Render time',

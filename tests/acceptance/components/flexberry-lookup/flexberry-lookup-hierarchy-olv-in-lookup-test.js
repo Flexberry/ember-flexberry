@@ -42,7 +42,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $closeButton.click();
 
         done();
-      }, 5000);
+      }, 7000);
     });
 
     //Second lookup
@@ -52,7 +52,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $lookupChooseButtons[1].click();
 
         done();
-      }, 5500);
+      }, 7500);
     });
 
     Ember.run(() => {
@@ -66,7 +66,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $hierarchicalButton.click();
 
         done();
-      }, 6500);
+      }, 8500);
     });
 
     Ember.run(() => {
@@ -93,7 +93,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $closeButton.click();
 
         done();
-      }, 10500);
+      }, 12500);
     });
 
     //Third lookup
@@ -103,7 +103,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $lookupChooseButtons[2].click();
 
         done();
-      }, 11000);
+      }, 13000);
     });
 
     Ember.run(() => {
@@ -117,14 +117,14 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         $closeButton.click();
 
         done();
-      }, 12000);
+      }, 14000);
     });
 
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
         done();
-      }, 13000);
+      }, 15000);
     });
   });
 });

@@ -131,6 +131,22 @@
     {{/if}}
   </div>
 {{/if}}
+{{#if advLimitButton}}
+  <div class="ui buttons adv-limit-config">
+    <button
+      class="ui icon button adv-limit-button"
+      title={{t "components.colsconfig-dialog-content.title"}}
+      {{action "showAdvLimitDialog"}}>
+        <i class="flask icon"></i>
+    </button>
+    {{#if advLimitItems}}
+      {{flexberry-menu
+        items=advLimitItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}
 {{#each customButtons as |customButton|}}
   <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"

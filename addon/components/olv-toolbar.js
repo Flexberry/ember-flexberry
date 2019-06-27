@@ -83,6 +83,17 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag to use advLimitButton button at toolbar.
+
+    @property advLimitButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  advLimitButton: true,
+  
+
+  /**
     Flag indicates whether to show exportExcelButton button at toolbar.
 
     @property exportExcelButton
@@ -275,11 +286,70 @@ export default FlexberryBaseComponent.extend({
   ),
 
   /**
-    Observe colsSettingsItems changes.
-    @property _colsSettingsItems
+    @property advLimitItems
     @readOnly
   */
-  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
+  advLimitItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
+    let i18n = this.get('i18n');
+    let menus = [
+      { icon: 'angle right icon',
+        iconAlignment: 'right',
+        localeKey: 'components.olv-toolbar.use-setting-title',
+        items: []
+      },
+      { icon: 'angle right icon',
+        iconAlignment: 'right',
+        localeKey: 'components.olv-toolbar.edit-setting-title',
+        items: []
+      },
+      { icon: 'angle right icon',
+        iconAlignment: 'right',
+        localeKey: 'components.olv-toolbar.remove-setting-title',
+        items: []
+      }
+    ];
+    let rootItem = {
+      icon: 'dropdown icon',
+      iconAlignment: 'right',
+      title: '',
+      items: [],
+      localeKey: ''
+    };
+    let createSettitingItem = {
+      icon: 'table icon',
+      iconAlignment: 'left',
+      title: i18n.t('components.olv-toolbar.create-setting-title'),
+      localeKey: 'components.olv-toolbar.create-setting-title'
+    };
+    rootItem.items[rootItem.items.length] = createSettitingItem;
+    rootItem.items.push(...menus);
+
+    let setDefaultItem = {
+      icon: 'remove circle icon',
+      iconAlignment: 'left',
+      title: i18n.t('components.olv-toolbar.set-default-setting-title'),
+      localeKey: 'components.olv-toolbar.set-default-setting-title'
+    };
+    rootItem.items[rootItem.items.length] = setDefaultItem;
+    if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
+      let showDefaultItem = {
+        icon: 'unhide icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+        localeKey: 'components.olv-toolbar.show-default-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = showDefaultItem;
+    }
+
+    return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
+  }),
+
+  /**
+    Observe advLimitItems changes.
+    @property _advLimitItems
+    @readOnly
+  */
+  _advLimitItems: Ember.observer('cadvLimitItems', function() {
     this._updateListNamedUserSettings();
   }),
 
@@ -528,6 +598,17 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showAdvLimitDialog(settingName) {
+      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+    },
+
+    /**
       Action to show export dialog.
 
       @method actions.showExportDialog
@@ -756,6 +837,7 @@ export default FlexberryBaseComponent.extend({
     for (let i = 0; i < menus.length; i++) {
       Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
       Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
+      Ember.set(this.get('advLimitItems')[0].items[i + 1], 'items', []);
     }
   },
 

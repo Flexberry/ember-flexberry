@@ -186,9 +186,8 @@ export default Ember.Mixin.create({
     },
     
     showAdvLimitDialog: function(componentName, settingName, isExportExcel = false, immediateExport = false) {
-      let currentAdvLimit = this.get('_advLimitService').getCurrentColsOrder(componentName, settingName);
-
-      /*let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
+      let colsOrder = this.get('_advLimitService').getCurrentColsOrder(componentName, settingName);
+      let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
       let fixedColumns = this.get('defaultDeveloperUserSettings');
@@ -225,7 +224,7 @@ export default Ember.Mixin.create({
 
       if (Ember.isArray(colsOrder)) {
         
-         Remove propName, that are not in colList
+        // Remove propName, that are not in colList
          
         let reliableColsOrder = [];
         for (let i = 0; i < colsOrder.length; i++) {
@@ -344,7 +343,7 @@ export default Ember.Mixin.create({
       this.send('showModalDialog', 'colsconfig-dialog-content',
                 { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
                 settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
-                exportParams: exportParams, store: store } }, loadingParams);*/
+                exportParams: exportParams, store: store } }, loadingParams);
     }
   },
 

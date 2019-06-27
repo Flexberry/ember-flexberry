@@ -90,7 +90,7 @@ export default FlexberryBaseComponent.extend({
     @default true
     @readOnly
   */
-  advLimitButton: true,
+  advLimitButton: false,
   
 
   /**
@@ -604,8 +604,8 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     showAdvLimitDialog(settingName) {
-      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+      Ember.assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showAdvLimitDialog', this.componentName, settingName);
     },
 
     /**

@@ -31,7 +31,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         let $expandButton = Ember.$('button.hierarchy-expand');
         $expandButton[0].click();
 
-        assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded '+ $menuTableRowCount + " " + $menuTableBody.children('tr').length);
+        assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded');
 
         let $nextTableRow = $expandButton.parents('tr').next('tr');
         let $nextTableRowTd = $nextTableRow.children('td').next();
@@ -82,7 +82,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
         let $expandButton = Ember.$('button.hierarchy-expand');
         $expandButton[0].click();
 
-        assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded '+ $menuTableRowCount + " " + $menuTableBody.children('tr').length);
+        assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded');
 
         let $nextTableRow = $expandButton.parents('tr').next('tr');
         let $nextTableRowTd = $nextTableRow.children('td').next();
@@ -91,7 +91,7 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
 
         let $closeButton = Ember.$('i.close.icon');
         $closeButton.click();
-        
+
         done();
       }, 10500);
     });
@@ -123,9 +123,8 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
     Ember.run(() => {
       var done = assert.async();
       setTimeout(function() {
-
         done();
       }, 13000);
-    }); 
+    });
   });
 });

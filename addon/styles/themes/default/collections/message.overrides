@@ -7,3 +7,9 @@
     display: block;
   }
 }
+
+.ui.form .edit-form-message {
+  .success.message, .warning.message, .error.message {
+    display: block;
+  }
+}

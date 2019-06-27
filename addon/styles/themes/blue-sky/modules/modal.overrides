@@ -35,3 +35,7 @@
     display: none;
   }
 }
+
+.ui.modal.editrecord-dialog .content {
+  overflow: scroll;
+}

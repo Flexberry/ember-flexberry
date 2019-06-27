@@ -370,10 +370,11 @@ FolvOnEditControllerMixin, {
     let afterSaveModelFunction = () => {
       this.get('appState').success();
       _this.onSaveActionFulfilled();
+      let isModal = this.get('isModal');
       if (close) {
         this.get('appState').reset();
         _this.close(skipTransition);
-      } else if (!skipTransition) {
+      } else if (!skipTransition && !isModal) {
         let routeName = _this.get('routeName');
         if (routeName.indexOf('.new') > 0) {
           let qpars = {};
@@ -484,8 +485,14 @@ FolvOnEditControllerMixin, {
   close(skipTransition, rollBackModel) {
     this.get('appState').reset();
     this.onCloseActionStarted();
-    if (!skipTransition) {
-      this.transitionToParentRoute(skipTransition, rollBackModel);
+    let isModal = this.get('isModal');
+    let modalController = this.get('modalController');
+    if (isModal && !Ember.isNone(modalController)) {
+      modalController.send('onEditRecordDialogClosing');
+    } else {
+      if (!skipTransition) {
+        this.transitionToParentRoute(skipTransition, rollBackModel);
+      }
     }
   },
 
@@ -740,6 +747,15 @@ FolvOnEditControllerMixin, {
   rollbackHasManyRelationships(model) {
     Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
+  },
+
+  /**
+    Rollback current model.
+
+    @method rollbackAll
+  */
+  rollbackAll() {
+    this.get('model').rollbackAll();
   },
 
   /**

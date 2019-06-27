@@ -1,5 +1,6 @@
 {{#if isInAcceptanceTestMode}}
   {{outlet}}
+  {{outlet "editrecord-modal"}}
   {{outlet "modal"}}
 {{else}}
   {{#ui-sidebar
@@ -57,6 +58,7 @@
     </div>
   </div>
   <div class="ui main container">
+    {{outlet "editrecord-modal"}}
     {{outlet "modal"}}
   </div>
   <div class="ui vertical footer segment">

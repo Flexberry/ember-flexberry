@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add limitFunction in groupedit row to lookup limit by other component. 
 * `flexberry-file` component:
     * Added the ability correct settings to file preview modal dialog.
+* Opening edit record from flexberry objectlistview in modal window.
 
 ## [2.1.0] - 2019-04-30
 ### Added

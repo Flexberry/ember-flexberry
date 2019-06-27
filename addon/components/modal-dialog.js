@@ -66,6 +66,15 @@ export default Ember.Component.extend({
   useCloseButton: true,
 
   /**
+    Flag indicates whether to show header or not.
+
+    @property showHeader
+    @type Boolean
+    @default true
+  */
+  showHeader: true,
+
+  /**
     Flag indicates toolbar visibility, `true` if at least one of buttons is visible.
 
     @property toolbarVisible

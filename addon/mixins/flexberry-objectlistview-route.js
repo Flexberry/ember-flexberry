@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import EditInModalOpen from '../mixins/edit-in-modal-open';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
@@ -12,7 +13,7 @@ import Ember from 'ember';
   @extends Ember.Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Ember.Mixin.create(EditInModalOpen, {
   actions: {
     /**
       Table row click handler.
@@ -30,47 +31,54 @@ export default Ember.Mixin.create({
         modelName: undefined,
         detailArray: undefined,
         editFormRoute: undefined,
+        editInModal: false,
         readonly: false,
         goToEditForm: undefined,
         customParameters: undefined
       };
+
       methodOptions = Ember.merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
       if (goToEditForm === false) {
         return;
       }
 
-      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
-      let onEditForm = methodOptions.onEditForm;
       let editFormRoute = methodOptions.editFormRoute;
-      let recordId = record.get('id') || record.get('data.id');
-      let thisRouteName = this.get('router.currentRouteName');
-      let thisRecordId = this.get('currentModel.id');
-      let transitionOptions = {
-        queryParams: {
-          modelName: methodOptions.modelName,
-          customParameters:  methodOptions.customParameters,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
-        }
-      };
-      if (!editFormRoute) {
-        throw new Error('Detail\'s edit form route is undefined.');
-      }
 
-      if (!onEditForm) {
-        this.transitionTo(editFormRoute, recordId, transitionOptions);
+      if (methodOptions.editInModal) {
+        this.openEditModalDialog(record, editFormRoute);
       } else {
-        if (saveBeforeRouteLeave) {
-          this.controller.save(false, true).then(() => {
-            this.transitionTo(editFormRoute, recordId, transitionOptions);
-          }).catch((errorData) => {
-            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
-          });
-        } else {
+        let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+        let onEditForm = methodOptions.onEditForm;
+        let recordId = record.get('id') || record.get('data.id');
+        let thisRouteName = this.get('router.currentRouteName');
+        let thisRecordId = this.get('currentModel.id');
+        let transitionOptions = {
+          queryParams: {
+            modelName: methodOptions.modelName,
+            customParameters:  methodOptions.customParameters,
+            parentParameters: {
+              parentRoute: thisRouteName,
+              parentRouteRecordId: thisRecordId
+            }
+          }
+        };
+        if (!editFormRoute) {
+          throw new Error('Detail\'s edit form route is undefined.');
+        }
+
+        if (!onEditForm) {
           this.transitionTo(editFormRoute, recordId, transitionOptions);
+        } else {
+          if (saveBeforeRouteLeave) {
+            this.controller.save(false, true).then(() => {
+              this.transitionTo(editFormRoute, recordId, transitionOptions);
+            }).catch((errorData) => {
+              this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+            });
+          } else {
+            this.transitionTo(editFormRoute, recordId, transitionOptions);
+          }
         }
       }
     },

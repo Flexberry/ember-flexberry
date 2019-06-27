@@ -31,7 +31,7 @@ export default {
 
   'components': {
     'flexberry-simpledatetime': {
-      'scroll-caption-text':'Scroll to increment',
+      'scroll-caption-text': 'Scroll to increment',
     },
 
     'flexberry-error': {

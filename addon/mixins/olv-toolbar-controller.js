@@ -340,10 +340,10 @@ export default Ember.Mixin.create({
         view: 'advlimit-dialog',
         outlet: 'modal-content'
       };
-      this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
-                settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
-                exportParams: exportParams, store: store } }, loadingParams);
+      this.send('showModalDialog', 'advlimit-dialog-content',
+        { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+        settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
+        exportParams: exportParams, store: store } }, loadingParams);
     }
   },
 

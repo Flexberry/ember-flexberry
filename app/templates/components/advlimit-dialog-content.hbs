@@ -1,0 +1,31 @@
+<div class="ui form {{appState.state}}">
+  <div class="flexberry-colsconfig content">
+    <div class="ui action input">
+      <div>
+        {{flexberry-textarea
+          value=model.limit
+          class=class
+          rows='5'
+          cols='60'
+        }}
+      </div>
+      {{input
+        type="input"
+        class="setting-name-input fluid"
+        value=model.settingName
+        placeholder=(t "components.colsconfig-dialog-content.enter-setting-name")
+      }}
+      <div class="ui small button cols-config-save{{unless model.settingName " disabled"}}" {{action "saveAdvLimit"}}>
+        {{t "components.colsconfig-dialog-content.save"}}
+      </div>
+      <div class="ui right floated button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
+    </div>
+    {{ui-message
+      type=type
+      closeable=closeable
+      visible=visible
+      caption=caption
+      message=message
+    }}
+  </div>
+</div>

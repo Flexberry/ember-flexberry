@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.0] - 2019-06-28
 ### Added
 * `flexberry-lookup` component:
     * Add select first autocomplete result by enter click.

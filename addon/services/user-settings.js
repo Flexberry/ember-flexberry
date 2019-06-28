@@ -256,14 +256,14 @@ export default Ember.Service.extend({
    Get list components Names.
 
    @method getListComponentNames
-   @return {Array}
+   @return {Ember.NativeArray}
    */
   getListComponentNames() {
-    let ret = [];
+    let ret = Ember.A();
     let appPage = this.currentAppPage;
     if (appPage in this.currentUserSettings) {
       for (let componentName in this.currentUserSettings[appPage]) {
-        ret[ret.length] = componentName;
+        ret.pushObject(componentName);
       }
     }
 
@@ -445,7 +445,7 @@ export default Ember.Service.extend({
    */
   getCurrentSorting(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : [];
+    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : Ember.A();
   },
 
   /**

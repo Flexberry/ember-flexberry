@@ -7,9 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add select first autocomplete result by enter click.
     * Add dropdown class to flexberry-lookup at drodpdown mode.
-    * Add limitFunction in groupedit row to lookup limit by other component. 
+    * Add limitFunction in groupedit row to lookup limit by other component.
 * `flexberry-file` component:
     * Added the ability correct settings to file preview modal dialog.
+* Add mixins for multi list mode.
+
+### Breaking changes
+* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
 
 ## [2.1.0] - 2019-04-30
 ### Added

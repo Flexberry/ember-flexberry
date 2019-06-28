@@ -1,3 +1,7 @@
+/**
+  @module ember-flexberry
+*/
+
 import Ember from 'ember';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 

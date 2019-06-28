@@ -12,6 +12,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added the ability correct settings to file preview modal dialog.
 * Add mixins for multi list mode.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.0`.
+
 ### Breaking changes
 * Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
 

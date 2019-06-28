@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest} from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
 
 executeTest('check column config save button test', (store, assert, app) => {
   assert.expect(3);

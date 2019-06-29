@@ -133,6 +133,7 @@ export default {
       'menu-in-row': {
         'add-menu-item-title': 'Добавить запись',
         'edit-menu-item-title': 'Редактировать запись',
+        'prototype-menu-item-title': 'Создать запись на основе',
         'delete-menu-item-title': 'Удалить запись'
       },
       'hierarchy-buttons': {

@@ -131,8 +131,8 @@ export default {
       'sort-ascending': 'По возрастанию',
       'sort-descending': 'По убыванию',
       'menu-in-row': {
-        'edit-menu-item-title': 'Редактировать запись',
         'add-menu-item-title': 'Добавить запись',
+        'edit-menu-item-title': 'Редактировать запись',
         'delete-menu-item-title': 'Удалить запись'
       },
       'hierarchy-buttons': {

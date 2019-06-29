@@ -297,15 +297,6 @@ export default FlexberryBaseComponent.extend({
   showEditButtonInRow: false,
 
   /**
-    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
-
-    @property showEditMenuItemInRow
-    @type Boolean
-    @default false
-  */
-  showEditMenuItemInRow: false,
-
-  /**
     Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
 
     @property showDeleteMenuItemInRow
@@ -313,6 +304,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showDeleteMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showEditMenuItemInRow: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.

@@ -26,26 +26,6 @@
               }}
             </div>
           {{/if}}
-          {{#if showDeleteButtonInRow}}
-            <div class="cell">
-              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
-                <button
-                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
-                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                  disabled="disabled"
-                  {{action deleteRow record}}>
-                  <i class="minus icon"></i>
-                </button>
-              {{else}}
-                <button
-                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
-                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                  {{action deleteRow record}}>
-                  <i class="minus icon"></i>
-                </button>
-              {{/if}}
-            </div>
-          {{/if}}
           {{#if showEditButtonInRow}}
             <div class="cell">
               {{#if readonly}}
@@ -62,6 +42,26 @@
                   title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                   {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                   <i class="edit icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+          {{#if showDeleteButtonInRow}}
+            <div class="cell">
+              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+                <button
+                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  disabled="disabled"
+                  {{action deleteRow record}}>
+                  <i class="minus icon"></i>
+                </button>
+              {{else}}
+                <button
+                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  {{action deleteRow record}}>
+                  <i class="minus icon"></i>
                 </button>
               {{/if}}
             </div>

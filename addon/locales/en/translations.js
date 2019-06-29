@@ -131,8 +131,8 @@ export default {
       'sort-ascending': 'Order ascending',
       'sort-descending': 'Order descending',
       'menu-in-row': {
-        'edit-menu-item-title': 'Edit record',
         'add-menu-item-title': 'Add record',
+        'edit-menu-item-title': 'Edit record',
         'delete-menu-item-title': 'Delete record'
       },
       'hierarchy-buttons': {

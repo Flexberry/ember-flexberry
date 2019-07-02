@@ -8,7 +8,7 @@ executeTest('flexberry-lookup window search test', (store, assert, app) => {
 
   andThen(function() {
     assert.equal(currentPath(), path);
-  
+
     let $lookupField = Ember.$('input.lookup-field');
     let $lookupChooseButton = Ember.$('button.ui-change');
     let $lookupClearButton = Ember.$('button.ui-clear');
@@ -25,7 +25,7 @@ executeTest('flexberry-lookup window search test', (store, assert, app) => {
         let $lookupTableBody = $lookupTable.children('tbody');
         let $lookupTableRow = $lookupTableBody.children('tr');
         let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
-        
+
         $sampleText = $.trim($lookupTableRowText.text());
         fillIn($windowSearchField, $sampleText);
 

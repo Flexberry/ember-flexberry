@@ -82,46 +82,6 @@ export default FlexberryBaseComponent.extend({
   _availableHierarchicalMode: false,
 
   /**
-    Flag indicate when available the collapse/expand all hierarchies mode.
-
-    @property _availableCollExpandMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _availableCollExpandMode: false,
-
-  /**
-    Flag indicate when component is in the hierarchical mode.
-
-    @property _inHierarchicalMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
-    return this.get('currentController.inHierarchicalMode');
-  }),
-
-  /**
-    Flag indicate when component is in the collapse/expand mode.
-
-    @property _inExpandMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _inExpandMode: Ember.computed('currentController.inExpandMode', {
-    get(key) {
-      return this.get('currentController.inExpandMode');
-    },
-    set(key, value) {
-      this.set('currentController.inExpandMode',  value);
-      return value;
-    }
-  }),
-
-  /**
     Store the attribute name set by `hierarchyByAttribute`.
 
     @property _hierarchicalAttribute
@@ -143,10 +103,42 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       this.set('_hierarchicalAttribute', value);
-      this.sendAction('_saveHierarchicalAttribute', value, true);
+      this.sendAction('_saveHierarchicalAttribute', value, true, this.get('componentName'));
       return value;
     },
   }),
+
+  /**
+    Flag indicate when component is in the hierarchical mode.
+
+    @property inHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+    return this.get('currentController.inHierarchicalMode');
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property inExpandMode
+    @type Boolean
+    @default false
+  */
+  inExpandMode: Ember.computed('currentController.inExpandMode', function() {
+    return this.get('currentController.inExpandMode');
+  }),
+
+  /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  availableCollExpandMode: false,
 
   /**
     Indent in pixels to indicate hierarchy.
@@ -867,7 +859,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action previous page.
     */
-    previousPage(action) {
+    previousPage(action, componentName) {
       if (!action) {
         throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
@@ -876,7 +868,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action();
+      action(componentName);
     },
 
     /**
@@ -886,7 +878,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action next page.
     */
-    nextPage(action) {
+    nextPage(action, componentName) {
       if (!action) {
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
@@ -895,7 +887,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action();
+      action(componentName);
     },
 
     /**
@@ -906,7 +898,7 @@ export default FlexberryBaseComponent.extend({
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */
-    gotoPage(action, pageNumber) {
+    gotoPage(action, pageNumber, componentName) {
       if (!action) {
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
@@ -915,7 +907,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(pageNumber);
+      action(pageNumber, componentName);
     },
 
     /**
@@ -1002,7 +994,7 @@ export default FlexberryBaseComponent.extend({
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
-      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute);
+      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute, false, this.get('componentName'));
     },
 
     /**
@@ -1011,7 +1003,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
-      this.sendAction('_switchHierarchicalMode');
+      this.sendAction('_switchHierarchicalMode', this.get('componentName'));
     },
 
     /**
@@ -1020,7 +1012,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchExpandMode
     */
     switchExpandMode() {
-      this.sendAction('_switchExpandMode');
+      this.sendAction('_switchExpandMode', this.get('componentName'));
     },
 
     /**
@@ -1033,7 +1025,7 @@ export default FlexberryBaseComponent.extend({
       @param {Boolean} Flag indicates that this is the first download of data.
     */
     loadRecords(id, target, property, firstRunMode) {
-      this.sendAction('_loadRecords', id, target, property, firstRunMode);
+      this.sendAction('_loadRecords', id, target, property, firstRunMode, this.get('componentName'));
     },
 
     /**
@@ -1211,7 +1203,7 @@ export default FlexberryBaseComponent.extend({
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
-        if (componentName === this.get('componentName') && !this.get('_inHierarchicalMode')) {
+        if (componentName === this.get('componentName') && !this.get('inHierarchicalMode')) {
           this._setMenuWidth(tableWidth, containerWidth);
         }
       });

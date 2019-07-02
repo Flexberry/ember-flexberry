@@ -10,10 +10,9 @@ import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 import getCurrentAgregator from '../utils/get-current-agregator';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
-import ReloadListMixin from '../mixins/reload-list-mixin';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
-import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
+import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
 const { getOwner } = Ember;
@@ -53,11 +52,19 @@ FlexberryLookupMixin,
 ErrorableControllerMixin,
 FlexberryFileControllerMixin,
 PaginatedControllerMixin,
-ReloadListMixin,
 SortableControllerMixin,
 LimitedControllerMixin,
-FlexberryObjectlistviewHierarchicalControllerMixin,
-FolvOnEditControllerMixin, {
+FlexberryOlvToolbarMixin,
+FlexberryObjectlistviewHierarchicalControllerMixin, {
+  /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
+  */
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
   /**
     Flag to enable return to agregator's path if possible.
 
@@ -331,13 +338,22 @@ FolvOnEditControllerMixin, {
     },
 
     /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    },
+
+    /**
       Sorting list by column.
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
     */
-    sortByColumn: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    sortByColumn: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
 
     /**
@@ -346,8 +362,8 @@ FolvOnEditControllerMixin, {
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
     */
-    addColumnToSorting: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    addColumnToSorting: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
   },
 
@@ -384,6 +400,11 @@ FolvOnEditControllerMixin, {
           let transitionQuery = {};
           transitionQuery.queryParams = qpars;
           transitionQuery.queryParams.recordAdded = true;
+          let parentParameters = {
+            parentRoute: this.get('parentRoute'),
+            parentRouteRecordId: this.get('parentRouteRecordId')
+          };
+          transitionQuery.queryParams.parentParameters = parentParameters;
           _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
         }
       }

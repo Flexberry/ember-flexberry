@@ -7,7 +7,6 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
-import serializeSortingParam from '../utils/serialize-sorting-param';
 import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
@@ -937,7 +936,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      this.sendAction(action, column, this.get('componentName'));
     },
 
     /**
@@ -1079,8 +1078,6 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this._router = Ember.getOwner(this).lookup('router:main');
-
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
       let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
@@ -1088,8 +1085,7 @@ export default FlexberryBaseComponent.extend(
       .then(record => {
         if (this.get('class') !== 'groupedit-container')
         {
-          let sort = serializeSortingParam(currentUserSetting.sorting);
-          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+          this.get('objectlistviewEventsService').setSortingTrigger(componentName, currentUserSetting.sorting);
         } else {
           this.set('sorting', currentUserSetting.sorting);
           let objectlistviewEventsService = this.get('objectlistviewEventsService');
@@ -1623,7 +1619,12 @@ export default FlexberryBaseComponent.extend(
         currentWidths[currentPropertyName] = currentColumnWidth;
       });
 
-      this.set('currentController.currentColumnsWidths', currentWidths);
+      let widthsFunction = this.get('currentController.setColumnsWidths');
+      if (widthsFunction instanceof Function) {
+        widthsFunction.apply(this.get('currentController'), [this.get('componentName'), currentWidths]);
+      } else {
+        this.set('currentController.currentColumnsWidths', currentWidths);
+      }
     }
   },
 
@@ -1964,16 +1965,16 @@ export default FlexberryBaseComponent.extend(
           });
 
           if (hasFilters) {
-            this.sendAction('applyFilters', filters);
+            this.sendAction('applyFilters', filters, componentName);
           } else {
             if (this.get('currentController.filters')) {
-              this.get('currentController').send('resetFilters');
+              this.get('currentController').send('resetFilters', componentName);
             } else {
-              this.get('currentController').send('refreshList');
+              this.get('currentController').send('refreshList', componentName);
             }
           }
         } else {
-          this.get('currentController').send('refreshList');
+          this.get('currentController').send('refreshList', componentName);
         }
       }
     }
@@ -2142,7 +2143,8 @@ export default FlexberryBaseComponent.extend(
       let modelName = this.get('modelName');
       let data = {
         cancel: false,
-        filterQuery: filterQuery
+        filterQuery: filterQuery,
+        componentName: componentName
       };
 
       if (beforeDeleteAllRecords) {
@@ -2186,7 +2188,7 @@ export default FlexberryBaseComponent.extend(
       if (data.deletedCount > -1) {
         this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
-        currentController.onDeleteActionFulfilled();
+        currentController.onDeleteActionFulfilled(true);
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
         this.get('appState').error();
@@ -2291,7 +2293,7 @@ export default FlexberryBaseComponent.extend(
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
-      currentController.onDeleteActionFulfilled();
+      currentController.onDeleteActionFulfilled(true);
     }) : record.deleteRecord()).catch((reason) => {
 
       currentController.onDeleteActionRejected(reason, record);
@@ -2343,7 +2345,7 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
     }
   },
 

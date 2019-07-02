@@ -96,6 +96,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "refresh list" event in OLV component by name.
+
+    @method refreshListOnlyTrigger
+    @param {String} componentName The name of OLV component.
+  */
+  refreshListOnlyTrigger(componentName) {
+    this.trigger('refreshListOnly', componentName);
+  },
+
+  /**
     Trigger for "filter by any match" event in objectlistview.
 
     @method filterByAnyMatchTrigger
@@ -199,6 +209,19 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   resetFiltersTrigger(componentName) {
     this.trigger('resetFilters', componentName);
+  },
+
+  /**
+    Trigger for "setSorting" event in route.
+    Event name: setSorting.
+
+    @method setSortingTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  setSortingTrigger(componentName, sorting = []) {
+    this.trigger('setSorting', componentName, sorting);
   },
 
   /**

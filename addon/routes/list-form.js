@@ -185,7 +185,7 @@ ErrorableRouteMixin, {
         };
 
         this.onModelLoadingStarted(queryParameters, transition);
-        this.get('colsConfigMenu').updateNamedSettingTrigger();
+        this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
@@ -302,20 +302,23 @@ ErrorableRouteMixin, {
   */
   setupController: function(controller, model) {
     this._super(...arguments);
-    this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
 
-    // Define 'modelProjection' for controller instance.
-    // TODO: remove that when list-form controller will be moved to this route.
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    controller.set('error', undefined);
-    controller.set('userSettings', this.userSettings);
-    controller.set('modelProjection', proj);
-    controller.set('developerUserSettings', this.get('developerUserSettings'));
-    controller.set('resultPredicate', this.get('resultPredicate'));
-    controller.set('filtersPredicate', this.get('filtersPredicate'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (Ember.isNone(this.get('multiListSettings'))) {
+      this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
+
+      // Define 'modelProjection' for controller instance.
+      // TODO: remove that when list-form controller will be moved to this route.
+      let modelClass = this.store.modelFor(this.get('modelName'));
+      let proj = modelClass.projections.get(this.get('modelProjection'));
+      controller.set('error', undefined);
+      controller.set('userSettings', this.userSettings);
+      controller.set('modelProjection', proj);
+      controller.set('developerUserSettings', this.get('developerUserSettings'));
+      controller.set('resultPredicate', this.get('resultPredicate'));
+      controller.set('filtersPredicate', this.get('filtersPredicate'));
+      if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+        controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+      }
     }
   },
 

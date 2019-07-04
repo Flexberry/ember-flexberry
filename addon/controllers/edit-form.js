@@ -795,7 +795,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   },
 
   /**
-    Returns an array with the model and all its `hasMany` relationships.
+    Returns an array with the model and all its `hasMany` relationships, obtained recursively, for each model.
 
     @method _getModelWithHasMany
     @param {DS.Model} model The object model.

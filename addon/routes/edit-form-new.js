@@ -3,6 +3,8 @@
  */
 
 import Ember from 'ember';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
 import EditFormRoute from './edit-form';
 
 /**
@@ -35,11 +37,11 @@ export default EditFormRoute.extend({
     @method model
     @param {Object} params
     @param {Object} transition
-   */
+  */
   model(params, transition) {
-    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-    let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
-    let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
+    const flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+    const modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
+    const modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
     flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
     flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
 
@@ -51,10 +53,8 @@ export default EditFormRoute.extend({
       return modelSelectedDetail;
     }
 
-    // NOTE: record.id is null.
-    let modelName = transition.queryParams.modelName || this.modelName;
-    let record = this.store.createRecord(modelName);
-    return record;
+    const modelName = transition.queryParams.modelName || this.modelName;
+    return this.store.createRecord(modelName, { id: generateUniqueId() });
   },
 
   /**
@@ -64,9 +64,9 @@ export default EditFormRoute.extend({
     @method renderTemplate
     @param {Object} controller
     @param {Object} model
-   */
+  */
   renderTemplate(controller, model) {
-    var templateName = this.get('templateName');
+    const templateName = this.get('templateName');
     Ember.assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,

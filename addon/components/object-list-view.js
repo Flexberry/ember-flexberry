@@ -2,11 +2,13 @@
   @module ember-flexberry
 */
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
+import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
-import { translationMacro as t } from 'ember-i18n';
-import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
@@ -2113,8 +2115,8 @@ export default FlexberryBaseComponent.extend(
         // Depending on settings current model has to be saved before adding detail.
         this.send('rowClick', undefined, undefined);
       } else {
-        let modelName = this.get('modelProjection').modelName;
-        let modelToAdd = this.get('store').createRecord(modelName, {});
+        const modelName = this.get('modelProjection').modelName;
+        const modelToAdd = this.get('store').createRecord(modelName, { id: generateUniqueId() });
         if (!Ember.isNone(this.get('orderedProperty'))) {
           modelToAdd.set(`${this.get('orderedProperty')}`, this.get('content').length + 1);
         }

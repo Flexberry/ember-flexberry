@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.1] - 2019-07-05
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.
+
 ### Breaking changes
 * Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
 * If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.

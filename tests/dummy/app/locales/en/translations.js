@@ -492,6 +492,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
             },
+            'limit-hierarchy-olv-in-lookup-example': {
+              'caption': 'Example limit function for hierarchical OLV in lookup',
+              'title': ''
+            },
             'limit-function-example': {
               'caption': 'Limit function example',
               'title': ''
@@ -570,6 +574,10 @@ Ember.$.extend(true, translations, {
             },
             'hierarchy-example': {
               'caption': 'Hierarchy example',
+              'title': ''
+            },
+            'limit-hierarchy-example': {
+              'caption': 'Limit hierarchy example',
               'title': ''
             },
             'configurate-rows': {
@@ -921,6 +929,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
         },
+        'limit-hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Example limit function for hierarchical OLV in lookup',
+          'titleLookup': 'Master'
+        },
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
@@ -1020,6 +1032,9 @@ Ember.$.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
+        },
+        'limit-hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Limit hierarchy example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'

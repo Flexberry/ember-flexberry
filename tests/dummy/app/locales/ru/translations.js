@@ -499,7 +499,11 @@ Ember.$.extend(true, translations, {
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
-              'caption': 'Пример иерархического OLV-а в lookup-e',
+              'caption': 'Пример иерархического OLV в lookup',
+              'title': ''
+            },
+            'limit-hierarchy-olv-in-lookup-example': {
+              'caption': 'Пример функции ограничения для иерархического OLV в lookup',
               'title': ''
             },
             'limit-function-example': {
@@ -580,6 +584,10 @@ Ember.$.extend(true, translations, {
             },
             'hierarchy-example': {
               'caption': 'Пример иерархии на списке',
+              'title': ''
+            },
+            'limit-hierarchy-example': {
+              'caption': 'Пример ограничения для иерархического списка',
               'title': ''
             },
             'configurate-rows': {
@@ -929,7 +937,11 @@ Ember.$.extend(true, translations, {
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
-          'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
+          'caption': 'Flexberry-lookup. Пример иерархического OLV в lookup',
+          'titleLookup': 'Мастер'
+        },
+        'limit-hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Пример иерархического OLV в lookup',
           'titleLookup': 'Мастер'
         },
         'autofill-by-limit-example': {
@@ -1031,6 +1043,9 @@ Ember.$.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
+        },
+        'limit-hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Пример ограничения для иерархического списка'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'

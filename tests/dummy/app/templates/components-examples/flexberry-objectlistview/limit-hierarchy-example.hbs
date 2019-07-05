@@ -1,0 +1,36 @@
+{{flexberry-error error=error}}
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.limit-hierarchy-example.caption"}}</h3>
+<form class="ui form">
+  <div class="field">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-suggestion-type"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      orderable=false
+      showShowingEntries=false
+      componentName="HiearchyExampleObjectListView"
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      colsConfigButton=false
+      disableHierarchicalMode=false
+      showCheckBoxInRow=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      availableCollExpandMode=true
+    }}
+  </div>
+  <br>
+  <button class="ui button" {{action 'firstLimitFunction' on="click"}}>
+    {{concat (t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionFirstLimitFunction") ": " firstLimitType}}
+  </button>
+  <button class="ui button" {{action 'clearLimitFunction' on="click"}}>
+    {{t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionClearLimitFunction"}}
+  </button>
+</form>

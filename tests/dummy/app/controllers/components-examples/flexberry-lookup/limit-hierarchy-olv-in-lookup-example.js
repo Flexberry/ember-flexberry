@@ -40,33 +40,11 @@ export default EditFormController.extend({
       }, options);
 
       if (methodArgs.relationName === 'type') {
-        if (methodArgs.componentName === 'HierarchyLookup') {
-          return {
-            modelName: 'ember-flexberry-dummy-suggestion-type',
-            modelProjection: 'SettingLookupExampleView',
-            inHierarchicalMode: true,
-            hierarchicalAttribute: 'parent'
-          };
-        }
-
-        if (methodArgs.componentName === 'NoHierarchyLookup') {
-          return {
-            modelName: 'ember-flexberry-dummy-suggestion-type',
-            modelProjection: 'SettingLookupExampleView',
-            inHierarchicalMode: false,
-            hierarchicalAttribute: 'parent'
-          };
-        }
-
-        if (methodArgs.componentName === 'DisabledHierarchyLookup') {
-          return {
-            disableHierarchicalMode: true,
-            modelName: 'ember-flexberry-dummy-suggestion-type',
-            modelProjection: 'SettingLookupExampleView',
-            inHierarchicalMode: false,
-            hierarchicalAttribute: 'parent'
-          };
-        }
+        return {
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          modelProjection: 'SettingLookupExampleView',
+          hierarchicalAttribute: 'parent'
+        };
       }
 
       return undefined;

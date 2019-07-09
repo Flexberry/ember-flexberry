@@ -133,7 +133,7 @@ export default {
       'menu-in-row': {
         'add-menu-item-title': 'Add record',
         'edit-menu-item-title': 'Edit record',
-        'prototype-menu-item-title': 'Create record from prototype',
+        'prototype-menu-item-title': 'Create record by prototype',
         'delete-menu-item-title': 'Delete record'
       },
       'hierarchy-buttons': {

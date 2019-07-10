@@ -219,6 +219,8 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         componentName: this.get('componentName'),
         folvComponentName: this.get('folvComponentName')
       };
+      
+      reloadData.customPropertiesData.inHierarchicalMode = this.get('inHierarchicalMode');
 
       let folvComponentName = this.get('folvComponentName');
       if (folvComponentName) {

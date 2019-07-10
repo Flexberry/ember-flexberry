@@ -43,7 +43,8 @@ export default EditFormController.extend({
         return {
           modelName: 'ember-flexberry-dummy-suggestion-type',
           modelProjection: 'SettingLookupExampleView',
-          hierarchicalAttribute: 'parent'
+          hierarchicalAttribute: 'parent',
+          inHierarchicalMode: true,
         };
       }
 

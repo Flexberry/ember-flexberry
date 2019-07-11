@@ -57,7 +57,8 @@
               {{else}}
                 <button
                   class="ui ui-edit object-list-view-row-prototype-button {{buttonClass}} button"
-                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}>
+                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
+                  {{action createNewByPrototype (get record "data.id")}}>
                   <i class="copy icon"></i>
                 </button>
               {{/if}}
@@ -166,7 +167,7 @@
                   <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
                 </div>
               {{else}}
-                <div class="item prototype-menu">
+                <div class="item prototype-menu" {{action createNewByPrototype (get record "data.id")}}>
                   <i class="copy icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
                 </div>
@@ -179,7 +180,7 @@
                   <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                 </div>
               {{else}}
-                <div class="item delete-menu" {{ action deleteRow record }}>
+                <div class="item delete-menu" {{action deleteRow record}}>
                   <i class="trash icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                 </div>
@@ -220,6 +221,7 @@
         doRenderData=record.doRenderData
         rowClick=rowClick
         selectRow=selectRow
+        createNewByPrototype=createNewByPrototype
         deleteRow=deleteRow
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent

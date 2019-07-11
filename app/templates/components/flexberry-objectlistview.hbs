@@ -22,10 +22,10 @@
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
-  inHierarchicalMode=inHierarchicalMode
-  inExpandMode=inExpandMode
+  inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
-  availableCollExpandMode=availableCollExpandMode
+  availableCollExpandMode=_availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
@@ -41,6 +41,7 @@
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  createNewByPrototype=(action "createNewByPrototype")
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
@@ -81,8 +82,8 @@
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
-  inHierarchicalMode=inHierarchicalMode
-  inExpandMode=inExpandMode
+  inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
@@ -97,14 +98,14 @@
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
 }}
-{{#unless inHierarchicalMode}}
+{{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       {{#if hasPreviousPage}}
-        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}}>
+        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
         </button>
       {{else}}
-        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}} disabled="disabled">
+        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
         </button>
       {{/if}}
       {{#each pages as |page|}}
@@ -114,15 +115,15 @@
           {{#if page.isCurrent}}
             <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
           {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number componentName}}>{{page.number}}</button>
+            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
           {{/if}}
         {{/if}}
       {{/each}}
       {{#if hasNextPage}}
-        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}}>
+        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
         </button>
       {{else}}
-        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}} disabled="disabled">
+        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
         </button>
       {{/if}}
     </div>

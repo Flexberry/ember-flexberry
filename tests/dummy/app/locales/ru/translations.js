@@ -354,6 +354,10 @@ Ember.$.extend(true, translations, {
           'suggestions': {
             'caption': 'Предложения',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Несколько списков',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -799,6 +803,10 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Типы предложений'
+    },
+
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Несколько списков на форме'
     },
 
     'log-service-examples': {

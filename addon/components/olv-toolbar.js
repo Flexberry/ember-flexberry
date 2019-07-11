@@ -179,7 +179,7 @@ export default FlexberryBaseComponent.extend({
   _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
     let listNamedUserSettings = this.get('listNamedUserSettings');
     for (let namedSetting in listNamedUserSettings) {
-      this._addNamedSetting(namedSetting);
+      this._addNamedSetting(namedSetting, this.get('componentName'));
     }
 
     this._sortNamedSetting();
@@ -196,7 +196,7 @@ export default FlexberryBaseComponent.extend({
       let settName = namedSetting.split('/');
       settName.shift();
       settName = settName.join('/');
-      this._addNamedSetting(settName, true);
+      this._addNamedSetting(settName, this.get('componentName'), true);
     }
 
     this._sortNamedSetting(true);
@@ -280,7 +280,7 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
-    this._updateListNamedUserSettings();
+    this._updateListNamedUserSettings(this.get('componentName'));
   }),
 
   /**
@@ -420,8 +420,20 @@ export default FlexberryBaseComponent.extend({
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('modelController');
       this.get('objectlistviewEventsService').setLoadingState('loading');
+      let appController = getOwner(this).lookup('controller:application');
+      let thisRouteName = appController.get('currentRouteName');
+      let thisRecordId = modelController.get('model.id');
+      let transitionOptions = {
+        queryParams: {
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
       Ember.run.later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new');
+        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
       }), 50);
     },
 
@@ -493,8 +505,9 @@ export default FlexberryBaseComponent.extend({
       let _this = this;
 
       Ember.run.later((function() {
-        _this.set('filterText', null);
         _this.set('filterByAnyMatchText', null);
+        let componentName = _this.get('componentName');
+        _this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, null);
       }), 50);
     },
 
@@ -553,10 +566,10 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      this._router = getOwner(this).lookup('router:main');
+      let router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName  =  this.componentName;
+      let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
@@ -567,10 +580,16 @@ export default FlexberryBaseComponent.extend({
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listNamedUserSettings[namedSetting];
-          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
+          userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
             then(record => {
-              let sort = serializeSortingParam(colsConfig.sorting);
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              let currentController = this.get('currentController');
+              let userSettingsApplyFunction = currentController.get('userSettingsApply');
+              if (userSettingsApplyFunction instanceof Function) {
+                userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
+              } else {
+                let sort = serializeSortingParam(colsConfig.sorting);
+                router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              }
             });
           break;
         case 'setting icon':
@@ -579,7 +598,7 @@ export default FlexberryBaseComponent.extend({
         case 'remove icon':
           userSettingsService.deleteUserSetting(componentName, namedSetting)
           .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
             alert('Настройка ' + namedSetting + ' удалена');
           });
           break;
@@ -592,13 +611,19 @@ export default FlexberryBaseComponent.extend({
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
-            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            let currentController = this.get('currentController');
+            let userSettingsApplyFunction = currentController.get('userSettingsApply');
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
+            } else {
+              let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            }
           });
           break;
         case 'unhide icon':
-          let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(componentName);
+          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
       }
@@ -618,10 +643,9 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName  =  this.componentName;
+      let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
@@ -637,7 +661,7 @@ export default FlexberryBaseComponent.extend({
         case 'remove icon':
           userSettingsService.deleteUserSetting(componentName, namedSetting, true)
           .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
             alert('Настройка ' + namedSetting + ' удалена');
           });
           break;
@@ -671,7 +695,7 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
   },
 
@@ -688,7 +712,7 @@ export default FlexberryBaseComponent.extend({
       this.set('modelController', this.get('currentController'));
     }
 
-    this._updateListNamedUserSettings();
+    this._updateListNamedUserSettings(this.get('componentName'));
   },
 
   /**
@@ -700,7 +724,7 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
@@ -741,8 +765,8 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
-  _updateListNamedUserSettings() {
-    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+  _updateListNamedUserSettings(componentName) {
+    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && componentName === this.get('componentName'))) {
       return;
     }
 
@@ -759,7 +783,11 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
-  _addNamedSetting(namedSetting, isExportExcel) {
+  _addNamedSetting(namedSetting, componentName, isExportExcel) {
+    if (componentName !== this.get('componentName')) {
+      return;
+    }
+
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       let icon = menus[i].icon + ' icon';
@@ -788,13 +816,14 @@ export default FlexberryBaseComponent.extend({
     this._sortNamedSetting(isExportExcel);
   },
 
-  _deleteNamedSetting(namedSetting) {
-    this._updateListNamedUserSettings();
+  _deleteNamedSetting(namedSetting, componentName) {
+    if (componentName === this.get('componentName')) {
+      this._updateListNamedUserSettings(componentName);
+    }
   },
 
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.componentName)
-    {
+    if (componentName === this.get('componentName')) {
       this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }

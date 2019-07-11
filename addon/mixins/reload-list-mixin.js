@@ -67,18 +67,7 @@ export default Ember.Mixin.create({
     let store = this.store;
     Ember.assert('Store for data loading is not defined.', store);
 
-    let reloadOptions = Ember.merge({
-      modelName: undefined,
-      projectionName: undefined,
-      perPage: undefined,
-      page: undefined,
-      sorting: undefined,
-      filter: undefined,
-      filterCondition: undefined,
-      filters: undefined,
-      predicate: undefined,
-      hierarchicalAttribute: undefined,
-    }, options);
+    let reloadOptions = options;
 
     let modelName = reloadOptions.modelName;
     Ember.assert('Model name for data loading is not defined.', modelName);
@@ -125,9 +114,11 @@ export default Ember.Mixin.create({
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
     }
 
-    let sorting = reloadOptions.sorting.map(i => `${i.propName} ${i.direction}`).join(',');
-    if (sorting) {
-      builder.orderBy(sorting);
+    if (Ember.isArray(reloadOptions.sorting)) {
+      let sorting = reloadOptions.sorting.filter(i => i.direction !== 'none').map(i => `${i.propName} ${i.direction}`).join(',');
+      if (sorting) {
+        builder.orderBy(sorting);
+      }
     }
 
     let filter = reloadOptions.filter;

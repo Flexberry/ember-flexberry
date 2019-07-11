@@ -181,8 +181,8 @@ export default {
       'delete-button-text': 'Удалить',
       'clear-settings-button-text': 'Восстановить настройки по умолчанию',
       'custom-button-text': 'Пользовательская кнопка',
-      'move-up-button-text':'Передвинуть вверх',
-      'move-down-button-text':'Передвинуть вниз',
+      'move-up-button-text': 'Передвинуть вверх',
+      'move-down-button-text': 'Передвинуть вниз',
     },
 
     'colsconfig-dialog-content': {

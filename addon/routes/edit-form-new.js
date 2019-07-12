@@ -47,10 +47,11 @@ export default EditFormRoute.extend({
     @method model
     @param {Object} params
     @param {Object} transition
-  */
+   */
   model(params, transition) {
     let modelName = transition.queryParams.modelName || this.modelName;
     let prototypeId = transition.queryParams.prototypeId;
+    let store = this.get('store');
 
     if (Ember.isNone(prototypeId))
     {
@@ -68,11 +69,11 @@ export default EditFormRoute.extend({
         return modelSelectedDetail;
       }
 
-      return this.store.createRecord(modelName, { id: generateUniqueId() });
+      return store.createRecord(modelName, { id: generateUniqueId() });
     }
 
     // Get the copyable instance.
-    let prototype = this.store.peekRecord(modelName, prototypeId);
+    let prototype = store.peekRecord(modelName, prototypeId);
 
     let promise = prototype.copy(this.get('prototypeProjection'));
     return promise.then(record => {
@@ -80,8 +81,6 @@ export default EditFormRoute.extend({
         transition.queryParams.prototypeId = undefined;
         return this.model(...arguments);
       }
-
-      record.set('id', generateUniqueId());
 
       return record;
     });
@@ -94,7 +93,7 @@ export default EditFormRoute.extend({
     @method renderTemplate
     @param {Object} controller
     @param {Object} model
-  */
+   */
   renderTemplate(controller, model) {
     const templateName = this.get('templateName');
     Ember.assert('Template name must be defined.', templateName);

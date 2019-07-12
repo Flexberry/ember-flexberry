@@ -108,7 +108,7 @@ export default Ember.Mixin.create({
       .count();
 
     if (reloadOptions.hierarchicalAttribute) {
-      if (reloadOptions.hierarchyPaging || true) {
+      if (reloadOptions.hierarchyPaging) {
         builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
       }
       

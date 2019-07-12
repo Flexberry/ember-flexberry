@@ -582,6 +582,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример иерархии на списке',
               'title': ''
             },
+            'hierarchy-paging-example': {
+              'caption': 'Пример иерархии c пейджингом',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Раскраска строк',
               'title': ''
@@ -1031,6 +1035,9 @@ Ember.$.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Пример иерархии c пейджингом на списке'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'

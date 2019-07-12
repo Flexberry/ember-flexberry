@@ -32,12 +32,12 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
 
       andThen(() => {
         assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded');
-  
+
         let $nextTableRow = $expandButton.parents('tr').next('tr');
         let $nextTableRowTd = $nextTableRow.children('td').next();
-  
+
         assert.equal($nextTableRowTd.css('padding-left'), '20px', 'expanded text has padding-left: 20px');
-  
+
         click($lookupChooseButtons[1]);
       });
     });
@@ -54,20 +54,20 @@ executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
       andThen(() => {
         assert.equal(elementCheck('button.hierarchy-expand'), true, 'has hierarchy-expand');
         assert.equal(elementCheck('div.nav-bar'), false, 'no nav-bar');
-  
+
         let $menuTable = Ember.$('.content table.object-list-view');
         let $menuTableBody = $menuTable.children('tbody');
         let $menuTableRowCount = $menuTableBody.children('tr').length;
-  
+
         let $expandButton = Ember.$('button.hierarchy-expand');
         click($expandButton[0]);
-  
+
         andThen(() => {
           assert.equal($menuTableRowCount < $menuTableBody.children('tr').length, true, 'hierarchy expanded');
-    
+
           let $nextTableRow = $expandButton.parents('tr').next('tr');
           let $nextTableRowTd = $nextTableRow.children('td').next();
-    
+
           assert.equal($nextTableRowTd.css('padding-left'), '20px', 'expanded text has padding-left: 20px');
 
           click($lookupChooseButtons[2]);

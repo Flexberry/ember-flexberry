@@ -22,7 +22,7 @@ executeTest('flexberry-lookup window search test', (store, assert, app) => {
       let $lookupTableRow = $lookupTableBody.children('tr');
       let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
 
-      assert.equal($windowSearchField.length === 1, true, 'search exists')
+      assert.equal($windowSearchField.length === 1, true, 'search exists');
 
       $sampleText = $.trim($lookupTableRowText.text());
       fillIn($windowSearchField, $sampleText);

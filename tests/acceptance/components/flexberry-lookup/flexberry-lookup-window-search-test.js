@@ -9,63 +9,36 @@ executeTest('flexberry-lookup window search test', (store, assert, app) => {
   andThen(function() {
     assert.equal(currentPath(), path);
 
-    let $lookupField = Ember.$('input.lookup-field');
     let $lookupChooseButton = Ember.$('button.ui-change');
-    let $lookupClearButton = Ember.$('button.ui-clear');
     let $sampleText;
 
-    $lookupClearButton.click();
-    $lookupChooseButton.click();
+    click($lookupChooseButton);
 
-    Ember.run(() => {
-      var done = assert.async();
-      setTimeout(function() {
-        let $windowSearchField = Ember.$('div.block-action-input').children('input');
-        let $lookupTable = Ember.$('.content table.object-list-view');
-        let $lookupTableBody = $lookupTable.children('tbody');
-        let $lookupTableRow = $lookupTableBody.children('tr');
-        let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
+    //Search exists
+    andThen(() => {
+      let $windowSearchField = Ember.$('div.block-action-input').children('input');
+      let $lookupTable = Ember.$('.content table.object-list-view');
+      let $lookupTableBody = $lookupTable.children('tbody');
+      let $lookupTableRow = $lookupTableBody.children('tr');
+      let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
 
-        $sampleText = $.trim($lookupTableRowText.text());
-        fillIn($windowSearchField, $sampleText);
+      assert.equal($windowSearchField.length === 1, true, 'search exists')
 
-        done();
-      }, 2000);
+      $sampleText = $.trim($lookupTableRowText.text());
+      fillIn($windowSearchField, $sampleText);
+
+      let $windowSearchButton = Ember.$('button.search-button');
+      click($windowSearchButton);
     });
 
-    Ember.run(() => {
-      var done = assert.async();
-      setTimeout(function() {
-        let $windowSearchButton = Ember.$('button.search-button');
-        $windowSearchButton.click();
+    //Search works
+    andThen(() => {
+      let $lookupTable = Ember.$('.content table.object-list-view');
+      let $lookupTableBody = $lookupTable.children('tbody');
+      let $lookupTableRow = $lookupTableBody.children('tr');
+      let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').first();
 
-        done();
-      }, 3000);
-    });
-
-    Ember.run(() => {
-      var done = assert.async();
-      setTimeout(function() {
-        let $lookupTable = Ember.$('.content table.object-list-view');
-        let $lookupTableBody = $lookupTable.children('tbody');
-        let $lookupTableRow = $lookupTableBody.children('tr');
-        let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').first();
-
-        assert.equal($sampleText === $.trim($lookupTableRowText.text()), true);
-        $lookupTableRowText.click();
-
-        done();
-      }, 4000);
-    });
-
-    Ember.run(() => {
-      var done = assert.async();
-      setTimeout(function() {
-        assert.equal($sampleText === $lookupField.val(), true);
-        $lookupClearButton.click();
-
-        done();
-      }, 5000);
+      assert.equal($sampleText === $.trim($lookupTableRowText.text()), true,'search works');
     });
   });
 });

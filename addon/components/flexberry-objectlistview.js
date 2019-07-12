@@ -141,6 +141,16 @@ export default FlexberryBaseComponent.extend({
   availableCollExpandMode: false,
 
   /**
+    Flag used for disable the hierarchical paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+    @private
+  */
+  hierarchyPaging: false,
+
+  /**
     Indent in pixels to indicate hierarchy.
 
     @property hierarchicalIndent

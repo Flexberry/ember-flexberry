@@ -95,7 +95,7 @@
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
 }}
-{{#unless inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       {{#if hasPreviousPage}}
@@ -137,4 +137,4 @@
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

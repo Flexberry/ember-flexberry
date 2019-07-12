@@ -182,6 +182,7 @@ ErrorableRouteMixin, {
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
+          hierarchyPaging: controller.get('hierarchyPaging')
         };
 
         this.onModelLoadingStarted(queryParameters, transition);

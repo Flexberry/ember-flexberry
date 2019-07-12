@@ -3,6 +3,8 @@
  */
 
 import Ember from 'ember';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
 import EditFormRoute from './edit-form';
 
 /**
@@ -45,7 +47,7 @@ export default EditFormRoute.extend({
     @method model
     @param {Object} params
     @param {Object} transition
-   */
+  */
   model(params, transition) {
     let modelName = transition.queryParams.modelName || this.modelName;
     let prototypeId = transition.queryParams.prototypeId;
@@ -66,22 +68,21 @@ export default EditFormRoute.extend({
         return modelSelectedDetail;
       }
 
-      // NOTE: record.id is null.
-      let record = this.store.createRecord(modelName);
-      return record;
+      return this.store.createRecord(modelName, { id: generateUniqueId() });
     }
 
     // Get the copyable instance.
     let prototype = this.store.peekRecord(modelName, prototypeId);
 
-    let promise = prototype.copy(this.prototypeProjection);
+    let promise = prototype.copy(this.get('prototypeProjection'));
     return promise.then(record => {
       if (Ember.isNone(record)) {
         transition.queryParams.prototypeId = undefined;
         return this.model(...arguments);
       }
 
-      // NOTE: record.id is null.
+      record.set('id', generateUniqueId());
+
       return record;
     });
   },
@@ -93,9 +94,9 @@ export default EditFormRoute.extend({
     @method renderTemplate
     @param {Object} controller
     @param {Object} model
-   */
+  */
   renderTemplate(controller, model) {
-    var templateName = this.get('templateName');
+    const templateName = this.get('templateName');
     Ember.assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,

@@ -10,18 +10,19 @@ executeTest('check column config save button test', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let $configButton = Ember.$('button.config-button');
-    $configButton.click();
+    click($configButton);
 
-    let $field = Ember.$('div.ui.action.input');
-    let $fieldInput = $field.children('input');
+    andThen(() => {
+      let $field = Ember.$('div.ui.action.input');
+      let $fieldInput = $field.children('input');
 
-    assert.equal($field.children('.cols-config-save.disabled').length === 1, true, 'button disabled');
-    fillIn($fieldInput, 'aaayyyeee leemaauuuu');
+      assert.equal($field.children('.cols-config-save.disabled').length === 1, true, 'button disabled');
+      fillIn($fieldInput, 'aaayyyeee leemaauuuu');
+    });
 
-    let asyncOperationsCompleted = assert.async();
-    Ember.run.later(function() {
+    andThen(() => {
+      let $field = Ember.$('div.ui.action.input');
       assert.equal($field.children('.cols-config-save.disabled').length === 0, true, 'button active');
-      asyncOperationsCompleted();
-    }, 500);
+    });
   });
 });

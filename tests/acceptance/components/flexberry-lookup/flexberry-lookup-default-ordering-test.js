@@ -31,7 +31,7 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
           assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
         }else {
           assert.equal($headerOrder.length !== 0, true, $headerName + ' has sorting ' + $headerOrderTitle);
-          $header.click();
+          click($header);
         }
       });
     });
@@ -53,7 +53,7 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
 
       let $menuPageButtons = Ember.$('.ui.basic.buttons');
       let $menuNextPageButton = $menuPageButtons.children('.next-page-button');
-      $menuNextPageButton.click();
+      click($menuNextPageButton);
     });
 
     //Switch page check
@@ -72,11 +72,11 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
       });
 
       let $menuCloseButton = Ember.$('.close.icon');
-      $menuCloseButton.click();
+      click($menuCloseButton);
     });
 
     andThen(() => {
-      $lookupChooseButton.click();
+      click($lookupChooseButton);
     });
 
     //Close&open page check
@@ -96,7 +96,7 @@ executeTest('flexberry-lookup default ordering test', (store, assert, app) => {
 
       let $secondaryMenu = Ember.$('.ui.secondary.menu.no-margin.ember-view');
       let $defaultSortingButton = $secondaryMenu.children('.ui.button');
-      $defaultSortingButton.click();
+      click($defaultSortingButton);
     });
   });
 });

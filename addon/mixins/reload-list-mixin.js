@@ -111,6 +111,7 @@ export default Ember.Mixin.create({
       if (reloadOptions.hierarchyPaging) {
         builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
       }
+
       let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
       limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
     } else {

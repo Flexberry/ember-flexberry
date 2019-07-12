@@ -38,7 +38,7 @@ executeTest('flexberry-lookup window search test', (store, assert, app) => {
       let $lookupTableRow = $lookupTableBody.children('tr');
       let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').first();
 
-      assert.equal($sampleText === $.trim($lookupTableRowText.text()), true,'search works');
+      assert.equal($sampleText === $.trim($lookupTableRowText.text()), true, 'search works');
     });
   });
 });

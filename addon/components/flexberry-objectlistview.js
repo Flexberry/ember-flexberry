@@ -972,8 +972,21 @@ export default FlexberryBaseComponent.extend({
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('currentController');
       this.get('objectlistviewEventsService').setLoadingState('loading');
+      let appController = Ember.getOwner(this).lookup('controller:application');
+      let thisRouteName = appController.get('currentRouteName');
+      let thisRecordId = modelController.get('model.id');
+      let transitionOptions = {
+        queryParams: {
+          prototypeId: prototypeId,
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
       Ember.run.later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new', { queryParams: { prototypeId: prototypeId } });
+        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
       }), 50);
     },
 

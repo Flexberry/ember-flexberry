@@ -1,13 +1,19 @@
 ---
-language: node_js
-node_js:
-  - "5.10"
+sudo: required
 
-sudo: false
+language: node_js
+
+node_js:
+  - "6"
+
+services:
+  - docker
 
 cache:
+  yarn: true
   directories:
-    - node_modules
+    - $HOME/.npm
+    - $HOME/.cache
 
 env:
   - EMBER_TRY_SCENARIO=default
@@ -26,17 +32,27 @@ notifications:
     on_failure: always  # options: [always|never|change] default: always
     on_start: never     # options: [always|never|change] default: always
 
+dist: trusty
+
+addons:
+  chrome: stable
+
 before_install:
-  - npm config set spin false
-  - npm install -g npm@^2
+  - docker --version
+  - docker pull flexberry/ember-flexberry-stand-backend:latest
+  - docker pull flexberry/ember-flexberry-stand-postgres:latest
+  - curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+  - docker swarm init
+  - docker stack deploy -c ember-flexberry-stand-postgres.yml EmberFlexberryStand
+
+  - sudo chown root /opt/google/chrome/chrome-sandbox
+  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+  - yarn global add ember-cli@2.4.3
+  - yarn global add bower
+  - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 install:
-  - npm install -g phantomjs-prebuilt
-  - npm install -g ember-cli@2.4.3
-  - npm install -g bower
-  - npm install -g firebase-tools
-  - npm install
-  - npm rebuild node-sass
+  - yarn install
   - bower install
 
 script:
@@ -44,9 +60,15 @@ script:
   - bash ./scripts/test-generator.sh
 
 after_success:
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy --project flexberry-ember --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop") && bash scripts/update-docs.sh
+  - test $EMBER_TRY_SCENARIO == "default"
+    && test $TRAVIS_PULL_REQUEST == "false"
+    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop" || test $TRAVIS_BRANCH == "feature-ember-update")
+    && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+    && bash scripts/deploy-to-gh-pages.sh
 
 after_script:
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_BRANCH == "dummy-test" && ember build && firebase deploy --project flexberry-ember-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
+  - test $EMBER_TRY_SCENARIO == "default"
+    && test $TRAVIS_PULL_REQUEST == "false"
+    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
+    && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+    && bash scripts/deploy-to-gh-pages.sh no-doc

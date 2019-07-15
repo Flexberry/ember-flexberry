@@ -731,9 +731,14 @@ export default Ember.Service.extend({
     let ret = {};
     let addSettings = JSON.parse(JSON.stringify(setting2));
     for (let settingProperty in setting1) {
-      ret[settingProperty] = (settingProperty in addSettings) ?
+      if (settingProperty in addSettings) {
+        ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
         Ember.merge(setting1[settingProperty], addSettings[settingProperty]) :
-        setting1[settingProperty];
+        addSettings[settingProperty];
+      } else {
+        ret[settingProperty] = setting1[settingProperty];
+      }
+
       delete addSettings[settingProperty];
     }
 

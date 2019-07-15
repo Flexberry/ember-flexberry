@@ -8,27 +8,6 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditForm
   init() {
     this._super(...arguments);
 
-    this.set('multiListSettings.filesGroupEdit', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'filesGroupEdit',
-      modelName: 'ember-flexberry-dummy-suggestion-file',
-      projectionName: 'SuggestionFileE',
-    }));
-
-    this.set('multiListSettings.suggestionUserVotesGroupEdit', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'suggestionUserVotesGroupEdit',
-      modelName: 'ember-flexberry-dummy-vote',
-      projectionName: 'VoteE',
-    }));
-
-    this.set('multiListSettings.suggestionCommentsGroupEdit', new ListParameters({
-      objectlistviewEvents: this.get('objectlistviewEvents'),
-      componentName: 'suggestionCommentsGroupEdit',
-      modelName: 'ember-flexberry-dummy-comment',
-      projectionName: 'CommentE',
-    }));
-
     this.set('multiListSettings.MultiUserList', new ListParameters({
       objectlistviewEvents: this.get('objectlistviewEvents'),
       componentName: 'MultiUserList',

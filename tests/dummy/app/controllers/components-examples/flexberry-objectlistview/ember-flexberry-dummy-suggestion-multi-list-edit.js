@@ -34,7 +34,7 @@ export default EditFormController.extend(MultiListController, EditFormController
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    /*if (attr.kind === 'belongsTo') {
+    if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -71,7 +71,7 @@ export default EditFormController.extend(MultiListController, EditFormController
             readonly: true,
           };
       }
-    }*/
+    }
 
     return cellComponent;
   }

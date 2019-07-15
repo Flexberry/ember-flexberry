@@ -140,49 +140,43 @@
   </div>
   <div class="field {{if model.errors.files "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
-    {{#with multiListSettings.MultiUserList as |settings|}}
-      {{flexberry-groupedit
-        componentName=settings.componentName
-        content=model.files
-        modelProjection=settings.modelProjection
-        modelProjection=modelProjection.attributes.files
-        orderable=true
-        readonly=readonly
-      }}
-    {{/with}}
+    {{flexberry-groupedit
+      componentName="filesGroupEdit"
+      content=model.files
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.files
+      orderable=true
+      readonly=readonly
+    }}
     {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.userVotes "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
-    {{#with multiListSettings.MultiUserList as |settings|}}
-      {{flexberry-groupedit
-        componentName=settings.componentName
-        content=model.userVotes
-        modelProjection=settings.modelProjection
-        modelProjection=modelProjection.attributes.userVotes
-        orderable=true
-        readonly=readonly
-      }}
-    {{/with}}
+    {{flexberry-groupedit
+      componentName="suggestionUserVotesGroupEdit"
+      content=model.userVotes
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.userVotes
+      orderable=true
+      readonly=readonly
+    }}
     {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.comments "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
-    {{#with multiListSettings.MultiUserList as |settings|}}
-      {{flexberry-groupedit
-        componentName=settings.componentName
-        content=model.comments
-        modelProjection=settings.modelProjection
-        modelProjection=modelProjection.attributes.comments
-        rowClickable=true
-        rowClick="rowClick"
-        editOnSeparateRoute=true
-        editFormRoute=commentsEditRoute
-        saveBeforeRouteLeave=true
-        orderable=true
-        readonly=readonly
-      }}
-    {{/with}}
+    {{flexberry-groupedit
+      componentName="suggestionCommentsGroupEdit"
+      content=model.comments
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.comments
+      rowClickable=true
+      rowClick="rowClick"
+      editOnSeparateRoute=true
+      editFormRoute=commentsEditRoute
+      saveBeforeRouteLeave=true
+      orderable=true
+      readonly=readonly
+    }}
     {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
   </div>
 </form>

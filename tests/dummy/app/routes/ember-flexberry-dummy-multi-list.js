@@ -28,7 +28,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       componentName: 'MultiSuggestionList',
       modelName: 'ember-flexberry-dummy-suggestion',
       projectionName: 'SuggestionL',
-      editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
+      editFormRoute: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit',
       exportExcelProjection: 'SuggestionL'
     }));
 

@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.2] - 2019-07-12
+### Added
+* Add creating record by prototype for `flexberry-objectlistview`.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.3`.
+
 ## [2.2.0-beta.1] - 2019-07-05
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.

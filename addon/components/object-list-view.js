@@ -343,6 +343,15 @@ export default FlexberryBaseComponent.extend(
   showEditButtonInRow: false,
 
   /**
+    Flag indicates whether to show prototype button in first column of every row.
+
+    @property showPrototypeButtonInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeButtonInRow: false,
+
+  /**
     Flag indicates whether to not use userSetting from backend
     @property notUseUserSettings
     @type Boolean
@@ -360,22 +369,33 @@ export default FlexberryBaseComponent.extend(
   showHelperColumn: Ember.computed(
     'showAsteriskInRow',
     'showCheckBoxInRow',
-    'showDeleteButtonInRow',
     'showEditButtonInRow',
+    'showPrototypeButtonInRow',
+    'showDeleteButtonInRow',
     'customButtonsInRow',
     'modelProjection',
     function() {
       if (this.get('modelProjection')) {
         return this.get('showAsteriskInRow') ||
           this.get('showCheckBoxInRow') ||
-          this.get('showDeleteButtonInRow') ||
           this.get('showEditButtonInRow') ||
+          this.get('showPrototypeButtonInRow') ||
+          this.get('showDeleteButtonInRow') ||
           !!this.get('customButtonsInRow');
       } else {
         return false;
       }
     }
   ).readOnly(),
+
+  /**
+    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+
+    @property showDeleteMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteMenuItemInRow: false,
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -387,13 +407,13 @@ export default FlexberryBaseComponent.extend(
   showEditMenuItemInRow: false,
 
   /**
-    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+    Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
 
-    @property showDeleteMenuItemInRow
+    @property showPrototypeMenuItemInRow
     @type Boolean
     @default false
   */
-  showDeleteMenuItemInRow: false,
+  showPrototypeMenuItemInRow: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.
@@ -425,10 +445,16 @@ export default FlexberryBaseComponent.extend(
   */
   showMenuColumn: Ember.computed(
     'showEditMenuItemInRow',
+    'showPrototypeMenuItemInRow',
     'showDeleteMenuItemInRow',
     'menuInRowHasAdditionalItems',
     function() {
-      return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems');
+      return (
+        this.get('showEditMenuItemInRow') ||
+        this.get('showPrototypeMenuItemInRow') ||
+        this.get('showDeleteMenuItemInRow') ||
+        this.get('menuInRowHasAdditionalItems')
+      );
     }
   ),
 

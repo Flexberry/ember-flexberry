@@ -1,7 +1,8 @@
-import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormController from 'ember-flexberry/controllers/edit-form';
+import MultiListController from 'ember-flexberry/mixins/multi-list-controller';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 
-export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
+export default EditFormController.extend(MultiListController, EditFormControllerOperationsIndicationMixin, {
   /**
     Route name for transition after close edit form.
 
@@ -33,7 +34,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    if (attr.kind === 'belongsTo') {
+    /*if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -70,7 +71,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             readonly: true,
           };
       }
-    }
+    }*/
 
     return cellComponent;
   }

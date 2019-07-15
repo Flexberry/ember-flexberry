@@ -1,7 +1,70 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
+import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
+import MultiListModelEdit from 'ember-flexberry/mixins/multi-list-model-edit';
+import ListParameters from 'ember-flexberry/objects/list-parameters';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
-export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
+export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditFormRouteOperationsIndicationMixin, {
+  init() {
+    this._super(...arguments);
+
+    this.set('multiListSettings.filesGroupEdit', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'filesGroupEdit',
+      modelName: 'ember-flexberry-dummy-suggestion-file',
+      projectionName: 'SuggestionFileE',
+    }));
+
+    this.set('multiListSettings.suggestionUserVotesGroupEdit', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'suggestionUserVotesGroupEdit',
+      modelName: 'ember-flexberry-dummy-vote',
+      projectionName: 'VoteE',
+    }));
+
+    this.set('multiListSettings.suggestionCommentsGroupEdit', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'suggestionCommentsGroupEdit',
+      modelName: 'ember-flexberry-dummy-comment',
+      projectionName: 'CommentE',
+    }));
+
+    this.set('multiListSettings.MultiUserList', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'MultiUserList',
+      modelName: 'ember-flexberry-dummy-application-user',
+      projectionName: 'ApplicationUserL',
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
+    }));
+
+    this.set('multiListSettings.MultiUserList2', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'MultiUserList2',
+      modelName: 'ember-flexberry-dummy-application-user',
+      projectionName: 'ApplicationUserL',
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
+    }));
+
+    this.set('multiListSettings.MultiSuggestionList', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'MultiSuggestionList',
+      modelName: 'ember-flexberry-dummy-suggestion',
+      projectionName: 'SuggestionL',
+      editFormRoute: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit',
+      exportExcelProjection: 'SuggestionL'
+    }));
+
+    this.set('multiListSettings.MultiHierarchyList', new ListParameters({
+      objectlistviewEvents: this.get('objectlistviewEvents'),
+      componentName: 'MultiHierarchyList',
+      modelName: 'ember-flexberry-dummy-suggestion-type',
+      projectionName: 'SuggestionTypeL',
+      editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
+      inHierarchicalMode: true,
+      hierarchicalAttribute: 'parent'
+    }));
+  },
+
   /**
     Name of model projection to be used as record's properties limitation.
 

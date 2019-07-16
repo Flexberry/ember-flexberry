@@ -96,7 +96,7 @@ export default ListFormRoute.extend({
       }
     }
 
-    return undefined;
+    return new StringPredicate('name').contains("2");
   },
 
   /**

@@ -20,7 +20,7 @@
           {{#if showCheckBoxInRow}}
             <div class="cell">
               {{flexberry-checkbox
-                readonly=(or readonly (not record.rowConfig.canBeSelected))
+                readonly=(or disabled readonly (not record.rowConfig.canBeSelected))
                 onChange=(action selectRow record)
                 value=record.selected
               }}
@@ -28,7 +28,7 @@
           {{/if}}
           {{#if showDeleteButtonInRow}}
             <div class="cell">
-              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+              {{#if (or disabled readonly  (not record.rowConfig.canBeDeleted))}}
                 <button
                   class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
                   title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
@@ -48,7 +48,7 @@
           {{/if}}
           {{#if showEditButtonInRow}}
             <div class="cell">
-              {{#if readonly}}
+              {{#if (or disabled readonly)}}
                 <button
                   class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                   title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
@@ -131,13 +131,13 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+              <div class="item {{if (or disabled readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
+              <div class="item {{if (or disabled readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>

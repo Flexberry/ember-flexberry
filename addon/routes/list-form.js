@@ -105,13 +105,14 @@ ErrorableRouteMixin, {
     let sortString = null;
     this.set('filtersPredicate', filtersPredicate);
     let limitPredicate;
+    let curentlimitPredicate = this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
 
-    if (this.controller) {
-      if (!this.controller.get('inHierarchicalMode')) {
-        limitPredicate = this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
+    if (controller) {
+      controller.set('limitPredicate', curentlimitPredicate);
+      if (!controller.get('inHierarchicalMode')) {
+        limitPredicate = curentlimitPredicate;
       }
     }
-    
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');

@@ -4,6 +4,8 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { Query } from 'ember-flexberry-data';
+const { StringPredicate } = Query;
 
 /**
   Component for displayed one record in {{#crossLink "ObjectListViewComponent"}}{{/crossLink}}.
@@ -309,15 +311,17 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      if (!Ember.isBlank(e)) {
-        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
-      }
-
-      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
-      let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
-      {
-        this.sendAction('rowClick', record, params);
+      if (!record.disabled) {
+        if (!Ember.isBlank(e)) {
+          Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+        }
+  
+        // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
+        let classOfHierarchyExpandButton = 'hierarchy-expand';
+        if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
+        {
+          this.sendAction('rowClick', record, params);
+        }
       }
     }
   },
@@ -339,6 +343,14 @@ export default FlexberryBaseComponent.extend({
         this.set('recordsLoaded', true);
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);
+        }
+        let limitPredicate = this.currentController.get('limitPredicate');
+        if (limitPredicate) {
+          let data = this.get('record.data.' + limitPredicate._attributePath);
+          if (data.indexOf(limitPredicate._containsValue) < 0) {
+            this.set('disabled', true);
+            this.set('record.disabled', true);
+          }
         }
       }
     }

@@ -51,7 +51,7 @@ export default EditFormController.extend(MultiListController, EditFormController
               previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
             };
             break;
-  
+
           case 'ember-flexberry-dummy-comment+author':
             cellComponent.componentProperties = {
               choose: 'showLookupDialog',
@@ -63,7 +63,7 @@ export default EditFormController.extend(MultiListController, EditFormController
               autocomplete: true,
             };
             break;
-  
+
         }
       } else if (attr.kind === 'attr') {
         switch (`${model.modelName}+${bindingPath}`) {

@@ -16,7 +16,11 @@ export default Ember.Mixin.create({
   */
   setColumnsWidths(componentName, columnWidths) {
     let settings = this.get(`multiListSettings.${componentName}`);
-    settings.set('currentColumnsWidths', columnWidths);
+    if (settings) {
+      settings.set('currentColumnsWidths', columnWidths);
+    } else {
+      this._super(...arguments);
+    }
   },
 
   /**

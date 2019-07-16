@@ -34,42 +34,44 @@ export default EditFormController.extend(MultiListController, EditFormController
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    if (attr.kind === 'belongsTo') {
-      switch (`${model.modelName}+${bindingPath}`) {
-        case 'ember-flexberry-dummy-vote+author':
-          cellComponent.componentProperties = {
-            choose: 'showLookupDialog',
-            remove: 'removeLookupValue',
-            preview: 'previewLookupValue',
-            displayAttributeName: 'name',
-            required: true,
-            relationName: 'author',
-            projection: 'ApplicationUserL',
-            autocomplete: true,
-            showPreviewButton: true,
-            previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
-          };
-          break;
-
-        case 'ember-flexberry-dummy-comment+author':
-          cellComponent.componentProperties = {
-            choose: 'showLookupDialog',
-            remove: 'removeLookupValue',
-            displayAttributeName: 'name',
-            required: true,
-            relationName: 'author',
-            projection: 'ApplicationUserL',
-            autocomplete: true,
-          };
-          break;
-
-      }
-    } else if (attr.kind === 'attr') {
-      switch (`${model.modelName}+${bindingPath}`) {
-        case 'ember-flexberry-dummy-vote+author.eMail':
-          cellComponent.componentProperties = {
-            readonly: true,
-          };
+    if (model !== null) {
+      if (attr.kind === 'belongsTo') {
+        switch (`${model.modelName}+${bindingPath}`) {
+          case 'ember-flexberry-dummy-vote+author':
+            cellComponent.componentProperties = {
+              choose: 'showLookupDialog',
+              remove: 'removeLookupValue',
+              preview: 'previewLookupValue',
+              displayAttributeName: 'name',
+              required: true,
+              relationName: 'author',
+              projection: 'ApplicationUserL',
+              autocomplete: true,
+              showPreviewButton: true,
+              previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
+            };
+            break;
+  
+          case 'ember-flexberry-dummy-comment+author':
+            cellComponent.componentProperties = {
+              choose: 'showLookupDialog',
+              remove: 'removeLookupValue',
+              displayAttributeName: 'name',
+              required: true,
+              relationName: 'author',
+              projection: 'ApplicationUserL',
+              autocomplete: true,
+            };
+            break;
+  
+        }
+      } else if (attr.kind === 'attr') {
+        switch (`${model.modelName}+${bindingPath}`) {
+          case 'ember-flexberry-dummy-vote+author.eMail':
+            cellComponent.componentProperties = {
+              readonly: true,
+            };
+        }
       }
     }
 

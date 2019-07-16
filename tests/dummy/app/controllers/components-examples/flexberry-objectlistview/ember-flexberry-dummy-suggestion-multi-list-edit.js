@@ -8,9 +8,9 @@ export default EditFormController.extend(MultiListController, EditFormController
 
     @property parentRoute
     @type String
-    @default 'ember-flexberry-dummy-suggestion-list'
+    @default 'ember-flexberry-dummy-multi-list'
    */
-  parentRoute: 'ember-flexberry-dummy-suggestion-list',
+  parentRoute: 'ember-flexberry-dummy-multi-list',
 
   /**
     Name of model.comments edit route.
@@ -72,6 +72,12 @@ export default EditFormController.extend(MultiListController, EditFormController
               readonly: true,
             };
         }
+      }
+
+      if (model.modelName === 'ember-flexberry-dummy-application-user'
+        || model.modelName === 'ember-flexberry-dummy-suggestion'
+        || model.modelName === 'ember-flexberry-dummy-suggestion-type') {
+          cellComponent.componentName = undefined;
       }
     }
 

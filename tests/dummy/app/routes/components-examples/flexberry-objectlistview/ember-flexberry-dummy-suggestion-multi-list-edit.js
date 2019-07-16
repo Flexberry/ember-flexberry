@@ -105,7 +105,12 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditForm
           { 'propName': 'text', 'direction': 'asc' }
         ],
       }
-    }
+    },
+
+    MultiUserList: {},
+    MultiUserList2: {},
+    MultiSuggestionList: {},
+    MultiHierarchyList: {} 
   },
 
   /**

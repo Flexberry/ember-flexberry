@@ -106,11 +106,10 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditForm
         ],
       }
     },
-
     MultiUserList: {},
     MultiUserList2: {},
     MultiSuggestionList: {},
-    MultiHierarchyList: {} 
+    MultiHierarchyList: {},
   },
 
   /**

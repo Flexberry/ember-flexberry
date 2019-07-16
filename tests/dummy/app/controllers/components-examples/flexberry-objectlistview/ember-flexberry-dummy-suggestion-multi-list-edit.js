@@ -77,7 +77,7 @@ export default EditFormController.extend(MultiListController, EditFormController
       if (model.modelName === 'ember-flexberry-dummy-application-user'
         || model.modelName === 'ember-flexberry-dummy-suggestion'
         || model.modelName === 'ember-flexberry-dummy-suggestion-type') {
-          cellComponent.componentName = undefined;
+        cellComponent.componentName = undefined;
       }
     }
 

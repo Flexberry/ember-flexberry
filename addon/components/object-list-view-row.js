@@ -4,8 +4,6 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
-import { Query } from 'ember-flexberry-data';
-const { StringPredicate } = Query;
 
 /**
   Component for displayed one record in {{#crossLink "ObjectListViewComponent"}}{{/crossLink}}.
@@ -341,7 +339,7 @@ export default FlexberryBaseComponent.extend({
         let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
         this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
-        this.updateRowHierarhy(this.get('record'))
+        this.updateRowHierarhy(this.get('record'));
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);
         }

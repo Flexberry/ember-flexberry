@@ -135,8 +135,9 @@ export default {
       'sort-ascending': 'Order ascending',
       'sort-descending': 'Order descending',
       'menu-in-row': {
-        'edit-menu-item-title': 'Edit record',
         'add-menu-item-title': 'Add record',
+        'edit-menu-item-title': 'Edit record',
+        'prototype-menu-item-title': 'Create record by prototype',
         'delete-menu-item-title': 'Delete record'
       },
       'hierarchy-buttons': {
@@ -179,7 +180,9 @@ export default {
       'add-button-text': 'Add',
       'delete-button-text': 'Delete',
       'clear-settings-button-text': 'Restore default settings',
-      'custom-button-text': 'Custom button'
+      'custom-button-text': 'Custom button',
+      'move-up-button-text': 'Move up',
+      'move-down-button-text': 'Move down',
     },
 
     'colsconfig-dialog-content': {

@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `user-settings`:
+    * Fix of replacing perPage form developerUserSettings on reloading.
+
+
+## [2.2.0-beta.2] - 2019-07-12
+### Added
+* Add creating record by prototype for `flexberry-objectlistview`.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.3`.
+
+## [2.2.0-beta.1] - 2019-07-05
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.
+
+### Breaking changes
+* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
+* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
 
 ## [2.2.0-beta.0] - 2019-06-28
 ### Added

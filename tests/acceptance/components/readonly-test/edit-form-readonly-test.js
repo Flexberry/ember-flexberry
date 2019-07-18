@@ -278,27 +278,28 @@ test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
 
   visit(path);
   andThen(() => {
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
     let $addButton = Ember.$('.in-groupedit .ui-add');
-    assert.strictEqual(Ember.$.trim($addButton.attr('disabled')), 'disabled', 'Flexberry-groupedit\'s button \'Add\' is readonly');
-
     let $removeButton = Ember.$('.in-groupedit .ui-delete');
-    assert.strictEqual(Ember.$.trim($removeButton.attr('disabled')), 'disabled', 'Flexberry-groupedit\'s button \'Remove\' is readonly');
-
     let $checkbox = Ember.$('.in-groupedit .flexberry-checkbox');
-    assert.strictEqual($checkbox.hasClass('read-only'), true, 'Flexberry-groupedit\'s checkbox helper is readonly');
-
     let $removeButtonRow = Ember.$('.in-groupedit .object-list-view-row-delete-button');
-    assert.strictEqual($removeButtonRow.hasClass('disabled'), true, 'Flexberry-groupedit\'s button \'Remove in row\' is readonly');
-
     let $itemEditMenu = Ember.$('.in-groupedit .edit-menu');
-    assert.strictEqual($itemEditMenu.hasClass('disabled'), true, 'Flexberry-groupedit\'s item \'Edit\' in left menu is readonly');
     let $itemDeleteMenu = Ember.$('.in-groupedit .delete-menu');
+
+    assert.strictEqual(Ember.$.trim($addButton.attr('disabled')), 'disabled', 'Flexberry-groupedit\'s button \'Add\' is readonly');
+    assert.strictEqual(Ember.$.trim($removeButton.attr('disabled')), 'disabled', 'Flexberry-groupedit\'s button \'Remove\' is readonly');
+    assert.strictEqual($checkbox.hasClass('read-only'), true, 'Flexberry-groupedit\'s checkbox helper is readonly');
+    assert.strictEqual($removeButtonRow.hasClass('disabled'), true, 'Flexberry-groupedit\'s button \'Remove in row\' is readonly');
+    assert.strictEqual($itemEditMenu.hasClass('disabled'), true, 'Flexberry-groupedit\'s item \'Edit\' in left menu is readonly');
     assert.strictEqual($itemDeleteMenu.hasClass('disabled'), true, 'Flexberry-groupedit\'s item \'Delete\' in left menu is readonly');
 
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
+      $checkbox = Ember.$('.in-groupedit .flexberry-checkbox');
+      $itemEditMenu = Ember.$('.in-groupedit .edit-menu');
+      $itemDeleteMenu = Ember.$('.in-groupedit .delete-menu');
       $removeButtonRow = Ember.$('.in-groupedit .object-list-view-row-delete-button');
+
       assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
       assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
       assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper don\'t readonly');

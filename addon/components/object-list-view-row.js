@@ -356,15 +356,16 @@ export default FlexberryBaseComponent.extend({
   updateRowHierarhy(record) {
     let currentLimit = this.currentController.get('currentLimitPredicate');
     if (currentLimit) {
-      let data = record.get('data.' + currentLimit._attributePath);
-      if (data.indexOf(currentLimit._containsValue) === -1) {
+      let array = [];
+      array.push(record.get('data'))
+      let result = currentLimit(array);
+      if (result.length === 0) {
         this.set('disabled', true);
       } else {
         this.set('disabled', false);
       }
     } else {
       this.set('disabled', false);
-      record.disabled = false;
     }
   },
 });

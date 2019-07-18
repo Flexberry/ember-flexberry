@@ -1,1 +1,1 @@
-export { default } from 'ember-flexberry/components/colsconfig-dialog-content';
+export { default } from 'ember-flexberry/components/advlimit-dialog-content';

@@ -24,6 +24,8 @@ export default Ember.Mixin.create({
     let webPage = transition.targetName;
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
+    let advLimitService = this.get('advLimit');
+    advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
@@ -50,12 +52,13 @@ export default Ember.Mixin.create({
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
-    userSettingPromise
+    Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
       .then(currectPageUserSettings => {
         let result = {};
 
         listComponentNames.forEach(function(componentName) {
           this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
+          this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
           let settings = this.get(`multiListSettings.${componentName}`);
 
           if (!Ember.isNone(settings)) {
@@ -69,7 +72,10 @@ export default Ember.Mixin.create({
             let limitPredicate =
               this.objectListViewLimitPredicate({ modelName: settings.modelName, projectionName: settings.projectionName, params: settings });
 
+            const advLimit = advLimitService.getCurrentAdvLimit(componentName);
+
             let queryParameters = {
+              componentName: componentName,
               modelName: settings.modelName,
               projectionName: settings.projectionName,
               perPage: settings.perPage,
@@ -79,6 +85,7 @@ export default Ember.Mixin.create({
               filterCondition: settings.filterCondition,
               filters: settings.filtersPredicate,
               predicate: limitPredicate,
+              advLimit: advLimit,
               hierarchicalAttribute: settings.inHierarchicalMode ? settings.hierarchicalAttribute : null,
             };
 

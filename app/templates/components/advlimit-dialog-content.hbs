@@ -3,7 +3,7 @@
     <div class="ui action input">
       <div>
         {{flexberry-textarea
-          value=model.limit
+          value=model.advLimit
           class=class
           rows='5'
           cols='60'
@@ -12,13 +12,20 @@
       {{input
         type="input"
         class="setting-name-input fluid"
-        value=model.settingName
+        value=model.advLimitName
         placeholder=(t "components.colsconfig-dialog-content.enter-setting-name")
       }}
-      <div class="ui small button cols-config-save{{unless model.settingName " disabled"}}" {{action "saveAdvLimit"}}>
-        {{t "components.colsconfig-dialog-content.save"}}
+      {{#if advLimit.isAdvLimitServiceEnabled}}
+        <div class="ui small button cols-config-save{{unless model.advLimitName " disabled"}}" {{action "saveAdvLimit"}}>
+          {{t "components.colsconfig-dialog-content.save"}}
+        </div>
+      {{/if}}
+      <div class="ui right floated button cols-config-apply" {{action "apply"}}>
+        {{t "components.colsconfig-dialog-content.use"}}
       </div>
-      <div class="ui right floated button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
+      <div class="ui button cols-config-check" {{action "check"}}>
+        Проверить
+      </div>
     </div>
     {{ui-message
       type=type

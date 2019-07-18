@@ -3,69 +3,39 @@
 */
 
 import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-import deserializeSortingParam from '../utils/deserialize-sorting-param';
-import serializeSortingParam from '../utils/serialize-sorting-param';
 
-const { Builder, SimplePredicate, ComplexPredicate } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
+import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 const defaultSettingName = 'DEFAULT';
 
 /**
-  Service to store/read user settings to/from application storage.
+  Service to store/read adv limits to/from application storage.
 
-  @class UserSettingsService
+  @class AdvLimitService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
 export default Ember.Service.extend({
   /**
     Ember data store.
 
-    @property _store
+    @property store
     @type DS.Store
-    @private
   */
-  _store: Ember.inject.service('store'),
+  store: Ember.inject.service(),
 
   /**
-    Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
-    This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
+    Flag: indicates whether to use adv limit service.
+    This flag is readed from config setting `APP.isAdvLimitServiceEnabled` and can be changed programatically later.
 
-    @property isUserSettingsServiceEnabled
+    @property isAdvLimitServiceEnabled
     @type Boolean
     @default false
   */
-  isUserSettingsServiceEnabled: false,
+  isAdvLimitServiceEnabled: true,
 
   /**
-    User settings for all pages defined by developer
-
-    @property defaultDeveloperUserSettings
-    @type Object
-    @default {}
-   */
-  defaultDeveloperUserSettings: {},
-
-  /**
-    Current Application name.
-
-    @property appName
-    @type String
-    @default ''
-    */
-  appName: '',
-
-  /**
-    Current WEB page.
-
-    @property currentWebPage
-    @type String
-    @default ''
-    */
-  currentWebPage: '',
-
-  /**
-    Current App page.
+    Current application page name.
 
     @property currentAppPage
     @type String
@@ -73,60 +43,36 @@ export default Ember.Service.extend({
     */
   currentAppPage: '',
 
-  /**
-    User settings for all pages defined by developer
+  avdLimitModelName: 'flexberry-adv-limit',
 
-    @property developerUserSettings
-    @type Object
-    @default {}
-   */
-  developerUserSettings: {},
-
-  /**
-    User settings for all pages before params applying.
-
-    @property beforeParamUserSettings
-    @type Object
-    @default {}
-    */
-  beforeParamUserSettings: {},
+  avdLimitProjectionName: 'AdvLimitE',
 
   /**
     Current user settings for all pages
 
-    @property currentUserSettings
+    @property currentAdvLimits
     @type Object
     @default {}
-    */
-  currentUserSettings: {},
+  */
+  currentAdvLimits: Ember.computed(() => { return {}; }).readOnly(),
 
   init() {
     this._super(...arguments);
-    let appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
-    if (!Ember.isNone(appConfig.APP.useUserSettingsService)) {
-      this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
+    const appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
+    const useAdvLimitService = Ember.get(appConfig, 'APP.useAdvLimitService');
+    if (!Ember.isNone(useAdvLimitService)) {
+      this.set('isAdvLimitServiceEnabled', useAdvLimitService);
     }
   },
 
   /**
    Set current Web Page.
 
-   @method setCurrentWebPage
-   @param {String} webPage.
-   */
-  setCurrentWebPage(webPage) {
-    this.currentWebPage = webPage;
-    this.currentAppPage = webPage + '@' + this.appName;
-  },
-
-  /**
-   Get current Web Page.
-
-   @method getCurrentWebPage
-   @return {String}
-   */
-  getCurrentWebPage() {
-    return this.currentWebPage;
+   @method setCurrentAppPage
+   @param {String} pageName.
+  */
+  setCurrentAppPage(pageName) {
+    this.set('currentAppPage', pageName);
   },
 
   /**
@@ -134,714 +80,267 @@ export default Ember.Service.extend({
 
    @method getCurrentAppPage
    @return {String}
-   */
+  */
   getCurrentAppPage() {
-    return this.currentAppPage;
+    return this.get('currentAppPage');
   },
 
   /**
-   Get current App Name.
+    Get adv limits from store.
 
-   @method getCurrentAppName
-   @return {String}
-   */
-  getCurrentAppName() {
-    return this.currentAppPage;
-  },
+    @method getAdvLimitsFromStore
+    @param {Array} componentNames
+  */
+  getAdvLimitsFromStore(componentNames) {
+    if (this.get('isAdvLimitServiceEnabled')) {
+      return this._getAdvLimits(componentNames).then(
+        advLimits => {
+          const ret = {};
+          if (Ember.isArray(advLimits)) {
+            advLimits.forEach(({ record }) => {
+              let advLimitValue = record.get('value');
+              let advLimitName = record.get('name') || defaultSettingName;
+              let componentName = record.get('module').split('@')[1];
 
-  /**
-    Set initial userSetting for current webPage, defined by application developer
-    Structure of developerUserSettings:
-    {
-    <componentName>: {
-      <settingName>: {
-          colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-          sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
-          colsWidths: [ <colName>:<colWidth>, ... ],
-        },
-        ...
-      },
-      ...
-    }
-    For default userSetting use empty name ('').
-    <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
-
-    @method setDeveloperUserSettings
-    @param {Object} developerUserSettings.
-   */
-  setDeveloperUserSettings(developerUserSettings) {
-    for (let componentName in developerUserSettings) {
-      let componentSettings = developerUserSettings[componentName];
-      for (let settingName in componentSettings) {
-        if (!('sorting' in componentSettings[settingName])) {
-          componentSettings[settingName].sorting = [];
-        }
-      }
-
-      if (!(defaultSettingName in componentSettings)) {
-        componentSettings[defaultSettingName] = { sorting: [] };
-      }
-    }
-
-    let appPage = this.currentAppPage;
-    if (!(appPage in this.currentUserSettings)) {
-      this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
-      this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
-      if (this.isUserSettingsServiceEnabled) {
-        return this._getUserSettings().then(
-          foundRecords => {
-            let ret = {};
-            if (foundRecords) {
-              for (let i = 0; i < foundRecords.length; i++) {
-                let foundRecord = foundRecords[i];
-                let userSettingValue = foundRecord.record.get('txtVal');
-                let settName = foundRecord.record.get('settName');
-                let componentName = foundRecord.record.get('moduleName');
-                if (!settName) {
-                  settName = defaultSettingName;
+              if (advLimitValue) {
+                if (!(componentName in ret)) {
+                  ret[componentName] = {};
                 }
 
-                if (userSettingValue) {
-                  if (!(componentName in ret)) {
-                    ret[componentName] = {};
-                  }
-
-                  ret[componentName][settName] = JSON.parse(userSettingValue);
-                }
+                ret[componentName][advLimitName] = advLimitValue;
               }
-            }
-
-            return ret;
+            }, this);
           }
-        ).then(
-          appPageUserSettings => {
-            return this._setCurrentUserSettings(appPageUserSettings);
-          }
-        );
-      }
 
-    }
-
-    return new Ember.RSVP.Promise(function (resolve) {
-      resolve(undefined);
-    });
-  },
-
-  /**
-    Set initial userSetting for current webPage, defined by application developer
-
-    @method setDefaultDeveloperUserSettings
-    @param {Object} developerUserSettings.
-   */
-  setDefaultDeveloperUserSettings(developerUserSettings) {
-    for (let componentName in developerUserSettings) {
-      let componentSettings = developerUserSettings[componentName];
-      for (let settingName in componentSettings) {
-        if (!('sorting' in componentSettings[settingName])) {
-          componentSettings[settingName].sorting = [];
+          return ret;
         }
-      }
-
-      if (!(defaultSettingName in componentSettings)) {
-        componentSettings[defaultSettingName] = { sorting: [] };
-      }
+      ).then(appPageAdvLimits => {
+        return this._setCurrentAdvLimits(appPageAdvLimits);
+      });
     }
 
-    let appPage = this.currentAppPage;
-    this.defaultDeveloperUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+    return Ember.RSVP.resolve(undefined);
   },
 
   /**
-   Get list components Names.
+   Get list of component names.
 
    @method getListComponentNames
    @return {Array}
-   */
-  getListComponentNames() {
-    let ret = [];
-    let appPage = this.currentAppPage;
-    if (appPage in this.currentUserSettings) {
-      for (let componentName in this.currentUserSettings[appPage]) {
-        ret[ret.length] = componentName;
-      }
-    }
-
-    return ret;
-  },
-
-  /**
-   Implements current URL-params to currentUserSettings
-
-   @method setCurrentParams
-   @param {Object} params
-   @return {String} URL params
-   */
-  setCurrentParams(componentName, params) {
-    let appPage = this.currentAppPage;
-    if (params.sort === null) {
-      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
-      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
-    } else {
-      let sorting;
-      if ('sort' in params && params.sort) {
-        sorting = deserializeSortingParam(params.sort);
-      } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
-        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-      }
-
-      let userSetting = this.getCurrentUserSetting(componentName);
-      userSetting.sorting = sorting;
-      this.saveUserSetting(componentName, defaultSettingName, userSetting);
-      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
-      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
-    }
-  },
-
-  /**
-    Returns  true if userSettings for current appPage exists.
-
-    @method exists
-    @return {Boolean}
-   */
-  exists() {
-    let ret = this.currentAppPage in this.currentUserSettings;
-    return ret;
-  },
-
-  /**
-    Returns  true if default userSettings for current appPage exists.
-
-    @method exists
-    @return {Boolean}
-   */
-  haveDefaultUserSetting(componentName) {
-    let ret = this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage] &&
-      defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName];
-    return ret;
-  },
-
-  /**
-    Creates default user setting if setting for specified component isn't exists.
-
-    @method createDefaultUserSetting
-    @param {String} componentName
-   */
-  createDefaultUserSetting(componentName) {
-    if (!(this.exists())) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}`, {});
-    }
-
-    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
-    }
-
-    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
-    }
-  },
-
-  /**
-   *   Returns current list of userSetting.
-   *
-   *   @method getListCurrentUserSetting
-   *   @return {String}
-   */
-  getListCurrentUserSetting(componentName, isExportExcel) {
-    let ret = {};
-    if (this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage]
-    ) {
-      let sets = this.currentUserSettings[this.currentAppPage][componentName];
-
-      for (let settingName in sets) {
-        let settingNameSplit = settingName.split('/');
-        if (isExportExcel && settingNameSplit[0] === 'ExportExcel') {
-          ret[settingName] = sets[settingName];
-        }
-
-        if (!isExportExcel && settingNameSplit[0] !== 'ExportExcel') {
-          ret[settingName] = sets[settingName];
-        }
-      }
-    }
-
-    return ret;
-  },
-
-  /**
-    Returns current list of named userSetting.
-
-    @method getListCurrentNamedUserSetting
-    @return {String}
   */
-  getListCurrentNamedUserSetting(componentName, isExportExcel) {
-    let ret = {};
-    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName, isExportExcel);
-    for (let settingName in listCurrentUserSetting) {
+  getListComponentNames() {
+    const ret = Ember.A();
+    const appPage = this.getCurrentAppPage();
+    if (appPage in this.get('currentAdvLimits')) {
+      for (let componentName in this.get(`currentAdvLimits.${appPage}`)) {
+        ret.addObject(componentName);
+      }
+    }
+
+    return ret;
+  },
+
+  /**
+    Returns  true if adv limit for current appPage exists.
+
+    @method exists
+    @return {Boolean}
+  */
+  exists() {
+    return this.getCurrentAppPage() in this.get('currentAdvLimits');
+  },
+
+  /**
+    Returns current list of named adv limits.
+
+    @method getNamedAdvLimits
+    @param componentName
+    @return {Object}
+  */
+  getNamedAdvLimits(componentName) {
+    const ret = {};
+    const currentAdvLimits = this.getCurrentAdvLimits(componentName);
+    for (let settingName in currentAdvLimits) {
       if (settingName === defaultSettingName) {
         continue;
       }
 
-      ret[settingName] = listCurrentUserSetting[settingName];
+      ret[settingName] = currentAdvLimits[settingName];
     }
 
     return ret;
   },
 
   /**
-   Returns current userSetting.
+   Returns current adv limits for specified component.
 
-   @method getCurrentUserSetting
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {String}
-   */
-  getCurrentUserSetting(componentName, settingName) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
-
-    let ret;
-    if (this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage] &&
-      settingName in this.currentUserSettings[this.currentAppPage][componentName]
-    ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName];
-    }
-
-    return ret;
-  },
-
-  /**
-   Returns default developer user settings for component.
-
-   @method getDefaultDeveloperUserSetting
+   @method getCurrentAdvLimits
    @param {String} componentName Name of component.
    @return {Object}
-   */
-  getDefaultDeveloperUserSetting(componentName) {
-    let settingName = defaultSettingName;
+  */
+  getCurrentAdvLimits(componentName) {
+    const currentAppPage = this.getCurrentAppPage();
 
-    let ret;
-    if (this.currentAppPage in this.defaultDeveloperUserSettings &&
-      componentName in this.defaultDeveloperUserSettings[this.currentAppPage] &&
-      settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
-    ) {
-      ret = this.defaultDeveloperUserSettings[this.currentAppPage][componentName][settingName];
-    }
-
-    return ret;
+    return this.get(`currentAdvLimits.${currentAppPage}.${componentName}`);
   },
 
   /**
-   Returns current sorting .
+   Returns current adv limit by name.
 
-   @method getCurrentSorting
+   @method getCurrentAdvLimit
    @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Array}
-   */
-  getCurrentSorting(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : [];
+   @param {String} advLimitName Name of adv limit.
+   @return {Object}
+  */
+  getCurrentAdvLimit(componentName, advLimitName = defaultSettingName) {
+    const currentAppPage = this.getCurrentAppPage();
+
+    return this.get(`currentAdvLimits.${currentAppPage}.${componentName}.${advLimitName}`);
   },
 
   /**
-   Returns current perPageValue .
+   Deletes given adv limit from storage.
 
-   @method getCurrentPerPage
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Array}
-   */
-  getCurrentPerPage(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : 5;
-  },
+   @method deleteAdvLimit
+   @param {String} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Promise}
+  */
+  deleteAdvLimit(componentName, settingName = defaultSettingName) {
+    Ember.assert('deleteAdvLimit:: Adv limit componentName is not defined.', componentName);
+    Ember.assert('deleteAdvLimit:: Adv limit name is not defined.', settingName);
 
-  /**
-   Returns current colsOrder .
-
-   @method getCurrentColsOrder
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Array}
-   */
-  getCurrentColsOrder(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'colsOrder' in currentUserSetting ? currentUserSetting.colsOrder : undefined;
-  },
-
-  /**
-   Returns current columnWidths.
-
-   @method getCurrentColumnWidths
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Array}
-   */
-  getCurrentColumnWidths(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'columnWidths' in currentUserSetting ? currentUserSetting.columnWidths : undefined;
-  },
-
-  /**
-   Returns current detSeparateCols.
-
-   @method getDetSeparateCols
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Boolean}
-   */
-  getDetSeparateCols(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'detSeparateCols' in currentUserSetting ? currentUserSetting.detSeparateCols : false;
-  },
-
-  /**
-   Returns current detSeparateRows.
-
-   @method getDetSeparateRows
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @return {Boolean}
-   */
-  getDetSeparateRows(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'detSeparateRows' in currentUserSetting ? currentUserSetting.detSeparateRows : false;
-  },
-
-  /**
-   Set current columnWidths.
-
-   @method setCurrentColumnWidths
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @param {Array} columnWidths List columns width.
-   */
-  setCurrentColumnWidths(componentName, settingName, columnWidths) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
+    const appPage = this.getCurrentAppPage();
+    const currentAdvLimits = this.get(`currentAdvLimits.${appPage}.${componentName}`) || {};
+    if (settingName in currentAdvLimits) {
+      delete currentAdvLimits[settingName];
     }
 
-    let userSetting;
-    if (this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage] &&
-      settingName in this.currentUserSettings[this.currentAppPage][componentName]
-    ) {
-      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
-    } else {
-      userSetting = {};
-    }
-
-    userSetting.columnWidths = columnWidths;
-    if (this.isUserSettingsServiceEnabled) {
-      this.saveUserSetting(componentName, settingName, userSetting);
-    }
-  },
-
-  /**
-   Set current perPage.
-
-   @method setCurrentPerPage
-   @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
-   @param {Int} perPageValue Per page value.
-   */
-  setCurrentPerPage(componentName, settingName, perPageValue) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
-
-    let userSetting;
-    if (this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage] &&
-      settingName in this.currentUserSettings[this.currentAppPage][componentName]
-    ) {
-      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
-    } else {
-      userSetting = {};
-    }
-
-    userSetting.perPage = perPageValue;
-    if (this.isUserSettingsServiceEnabled) {
-      this.saveUserSetting(componentName, settingName, userSetting);
-    }
-  },
-
-  /**
-   Set toggler status
-
-   @method setTogglerStatus
-   @param {String} componentName Name of component.
-   @param {Boolean} togglerStatus Status to save.
-   */
-  setTogglerStatus(componentName, settingName, togglerStatus) {
-    let userSetting;
-
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
-
-    if (this.exists() &&
-      componentName in this.currentUserSettings[this.currentAppPage] &&
-      settingName in this.currentUserSettings[this.currentAppPage][componentName]
-    ) {
-      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
-    } else {
-      userSetting = {};
-    }
-
-    userSetting.togglerStatus = togglerStatus;
-    if (this.isUserSettingsServiceEnabled) {
-      this.saveUserSetting(componentName, settingName, userSetting);
-    }
-  },
-
-  /**
-   Returns toggler status from user service.
-
-   @method getTogglerStatus
-   @param {String} componentName component Name to search by.
-   @return {Boolean} Saved status.
-   */
-  getTogglerStatus(componentName, settingName) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
-
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-
-    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.togglerStatus : null;
-  },
-
-  /**
-   Deletes given user setting from storage.
-
-   @method deleteUserSetting
-   @param {Object} [options] Parameters for user setting getting.
-   @param {String} componentName component Name to search by.
-   @param {String} settingName Setting name to search by.
-   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
-   */
-  deleteUserSetting(componentName, settingName, isExportExcel) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
-
-    if (isExportExcel) {
-      settingName = 'ExportExcel/' + settingName;
-    }
-
-    Ember.assert('deleteUserSetting:: componentName name is not defined for user setting getting.', componentName);
-    Ember.assert('deleteUserSetting:: Setting name is not defined for user setting getting.', settingName);
-
-    let appPage = this.currentAppPage;
-    if (appPage in this.developerUserSettings &&
-      componentName in this.developerUserSettings[appPage] &&
-      settingName in this.developerUserSettings[appPage][componentName]) {
-      this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
-    } else {
-      if (settingName in this.currentUserSettings[appPage][componentName]) {
-        delete this.currentUserSettings[appPage][componentName][settingName];
-      }
-    }
-
-    if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise(function (resolve) {
-        resolve(undefined);
-      });
+    if (!this.get('isAdvLimitServiceEnabled')) {
+      return Ember.RSVP.resolve(undefined);
     }
 
     return this._deleteExistingRecord(componentName, settingName);
   },
 
   /**
-   Saves given user setting to storage.
+   Saves given adv limit to storage.
 
-   @method saveUserSetting
-   @param {String} componentName Name of module for what setting is saved.
-   @param {String} settingName Setting name to save as.
-   @param {String} userSetting User setting data to save.
-   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
-   */
-  saveUserSetting(componentName, settingName, userSetting, isExportExcel) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
-    }
+   @method saveAdvLimit
+   @param {String} advLimit Adv limit data to save.
+   @param {String} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Promise} Save operation promise.
+  */
+  saveAdvLimit(advLimit, componentName, settingName = defaultSettingName) {
+    Ember.assert('saveAdvLimit:: componentName is not defined.', componentName);
+    Ember.assert('saveAdvLimit:: Adv limit data are not defined.', !Ember.isNone(advLimit));
+    Ember.assert('saveAdvLimit:: Limit name is not defined.', !Ember.isNone(settingName));
 
-    if (isExportExcel) {
-      settingName = 'ExportExcel/' + settingName;
-    }
-
-    Ember.assert('saveUserSetting:: componentName is not defined for user setting saving.', componentName);
-    Ember.assert('saveUserSetting:: User setting data are not defined for user setting saving.', userSetting);
-    Ember.assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
+    const currentAppPage = this.getCurrentAppPage();
 
     if (!(this.exists())) {
-      this.currentUserSettings[this.currentAppPage] = {};
+      this.set(`currentAdvLimits.${currentAppPage}`, {});
     }
 
-    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      this.currentUserSettings[this.currentAppPage][componentName] = {};
+    if (!(componentName in this.get(`currentAdvLimits.${currentAppPage}`))) {
+      this.set(`currentAdvLimits.${currentAppPage}.${componentName}`, {});
     }
 
-    this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
-    this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
-    if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
+    this.set(`currentAdvLimits.${currentAppPage}.${componentName}.${settingName}`, advLimit);
+    if (!this.get('isAdvLimitServiceEnabled')) {
+      return Ember.RSVP.resolve();
     }
 
-    let store = this.get('_store');
-    let _this = this;
-    let ret = this._getExistingRecord(componentName, settingName).then(
+    const store = this.get('store');
+    return this._getExistingRecord(componentName, settingName).then(
       (foundRecord) => {
-        if (foundRecord) {
-          let prevUserSetting = JSON.parse(foundRecord.get('txtVal'));
-          if (!prevUserSetting) {
-            prevUserSetting = {};
-          }
-
-          for (let settingName in prevUserSetting) {
-            if (Ember.isNone(userSetting[settingName])) {
-              delete prevUserSetting[settingName];
-            }
-          }
-
-          for (let settingName in userSetting) {
-            prevUserSetting[settingName] = userSetting[settingName];
-          }
-
-          foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
-        } else {
-          let userService = Ember.getOwner(_this).lookup('service:user');
-          let currentUserName = userService.getCurrentUserName();
-          foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
-          foundRecord.set('userName', currentUserName);
-          foundRecord.set('appName', this.currentAppPage);
-          foundRecord.set('moduleName', componentName);
-          foundRecord.set('settName', settingName);
-          foundRecord.set('txtVal', JSON.stringify(userSetting));
+        if (!foundRecord) {
+          const userService = Ember.getOwner(this).lookup('service:user');
+          const currentUserName = userService.getCurrentUserName();
+          foundRecord = store.createRecord(this.get('avdLimitModelName'));
+          foundRecord.set('user', currentUserName);
+          foundRecord.set('module', `${this.get('currentAppPage')}@${componentName}`);
+          foundRecord.set('name', settingName);
         }
+
+        foundRecord.set('value', advLimit);
 
         return foundRecord.save();
       });
-    return ret;
   },
 
   /**
-    Returns  user setting for current appPage from storage.
+    Returns  adv limits for current appPage from storage.
 
-    @method _getUserSettings
+    @method _getAdvLimits
+    @param {Array} componentNames
     @return {Object}
-   */
-  _getUserSettings() {
-    if (!this.get('isUserSettingsServiceEnabled')) {
-      return {};
+  */
+  _getAdvLimits(componentNames) {
+    if (!this.get('isAdvLimitServiceEnabled')) {
+      return Ember.RSVP.resolve(Ember.A());
     }
 
-    let settingsPromise = this._getExistingSettings();
+    const promises = Ember.A();
+    componentNames.forEach(componentName => {
+      promises.pushObject(this._getExistingLimits(componentName));
+    });
 
-    return settingsPromise;
+    return Ember.RSVP.all(promises).then(results => {
+      const records = Ember.A();
+      results.forEach(result => {
+        records.addObjects(result);
+      });
+
+      return records;
+    });
   },
 
   /**
-    Merge current developerUserSettings with appPageUserSettings
+    Sets current adv limits
 
-    @method _setCurrentUserSettings
-    @param {Object} appPageUserSettings merged userSettings
+    @method _setCurrentAdvLimits
+    @param {Object} appPageAdvLimits Current adv limits
     @return {Object}
-   */
-  _setCurrentUserSettings(appPageUserSettings) {
-    let appPage = this.currentAppPage;
-    if (!(appPage in this.developerUserSettings)) {
-      return undefined;
+  */
+  _setCurrentAdvLimits(appPageAdvLimits) {
+    const appPage = this.getCurrentAppPage();
+
+    let currentAdvLimits = this.get(`currentAdvLimits.${appPage}`);
+
+    if (Ember.isNone(currentAdvLimits)) {
+      currentAdvLimits = {};
+      this.set(`currentAdvLimits.${appPage}`, currentAdvLimits);
     }
 
-    for (let componentName in this.developerUserSettings[appPage]) {
-      let namedSettings = this.developerUserSettings[appPage][componentName];
-      let settings = appPageUserSettings[componentName];
-      for (let settingName in namedSettings) {
-        if (componentName in appPageUserSettings && settingName in settings) {
-          this.currentUserSettings[appPage][componentName][settingName] = this._mergeSettings(namedSettings[settingName], settings[settingName]);
-          delete settings[settingName];
-        }
-      }
-
-      for (let settingName in settings) {
-        this.currentUserSettings[appPage][componentName][settingName] = settings[settingName];
-      }
-
-      delete appPageUserSettings[componentName];
+    for (let componentName in appPageAdvLimits) {
+      currentAdvLimits[componentName] = appPageAdvLimits[componentName];
     }
 
-    for (let componentName in appPageUserSettings) {
-      this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
-    }
-
-    this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-    return this.currentUserSettings[appPage];
+    return currentAdvLimits;
   },
 
   /**
-   Merge two settings.
-
-   @method _mergeSettings
-   @param {Object} setting1 base settings.
-   @param {Object} setting2 additions settings.
-   @return {Object} merged settings.
-   @private
-   */
-  _mergeSettings(setting1, setting2) {
-    let ret = {};
-    let addSettings = JSON.parse(JSON.stringify(setting2));
-    for (let settingProperty in setting1) {
-      ret[settingProperty] = (settingProperty in addSettings) ?
-        Ember.merge(setting1[settingProperty], addSettings[settingProperty]) :
-        setting1[settingProperty];
-      delete addSettings[settingProperty];
-    }
-
-    for (let settingProperty in addSettings) {
-      ret[settingProperty] = addSettings[settingProperty];
-    }
-
-    return ret;
-  },
-
-  /**
-   Deletes user settings record.
+   Deletes adv limit record from storage.
 
    @method _deleteExistingRecord
-   @param {Object} componentName Module name of looked for record.
-   @param {String} settingName Setting name of looked for record.
-   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
+   @param {Object} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Promise}
    @private
-   */
-  _deleteExistingRecord: function (componentName, settingName) {
-    // TODO: add search by username.
-    let cp = this._getSearchPredicate(componentName, settingName);
-    let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new Builder(store)
-      .from(modelName)
-      .selectByProjection('FlexberryUserSettingE')
-      .where(cp);
-
-    return store.query(modelName, builder.build()).then((result) => {
+  */
+  _deleteExistingRecord(componentName, settingName) {
+    return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        let delPromises = [];
-        let foundRecords = result.get('content');
+        const delPromises = Ember.A();
+        const foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i = 0; i < foundRecords.length; i++) {
-            delPromises[delPromises.length] = foundRecords[i].record.destroyRecord();
-          }
+          foundRecords.forEach(({ record }) => {
+            delPromises.addObject(record.destroyRecord());
+          }, this);
 
-          return Ember.RSVP.Promise.all(delPromises).then(
-            result => { return result; }
-          );
+          return Ember.RSVP.all(delPromises);
         }
       }
 
@@ -850,28 +349,19 @@ export default Ember.Service.extend({
   },
 
   /**
-   Looks for already created user settings record.
+   Looks for already created adv limit record.
 
    @method _getExistingRecord
-   @param {Object} componentName Module name of looked for record.
-   @param {String} settingName Setting name of looked for record.
+   @param {Object} componentName Component name.
+   @param {String} settingName Setting name.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded record
    or `undefined` if there is no such setting.
    @private
-   */
+  */
   _getExistingRecord(componentName, settingName) {
-    // TODO: add search by username.
-    let cp = this._getSearchPredicate(componentName, settingName);
-    let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new Builder(store)
-      .from(modelName)
-      .selectByProjection('FlexberryUserSettingE')
-      .orderBy('settLastAccessTime desc')
-      .where(cp);
-    return store.query(modelName, builder.build()).then((result) => {
+    return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        let foundRecords = result.get('content');
+        const foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
             foundRecords[i].record.destroyRecord();
@@ -886,30 +376,20 @@ export default Ember.Service.extend({
   },
 
   /**
-   Looks for all created user settings records.
+   Looks for all created adv limits.
 
-   @method _getExistingSettings
-   @param {String} componentName Component name of looked for record.
-   @param {String} settingName Setting name of looked for record.
-   @return {Promise} A promise that returns found record or `undefined` if there is no such setting.
+   @method _getExistingLimits
+   @param {String} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Promise} A promise that returns found records or `undefined` if there is no such adv limit.
    @private
-   */
-  _getExistingSettings(componentName, settingName) {
-    // TODO: add search by username.
-    let cp = this._getSearchPredicate(componentName, settingName);
-    let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new Builder(store)
-      .from(modelName)
-      .selectByProjection('FlexberryUserSettingE')
-      .where(cp);
-
-    return store.query(modelName, builder.build()).then((result) => {
-      let foundRecords = [];
+  */
+  _getExistingLimits(componentName, settingName) {
+    return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        foundRecords = result.get('content');
+        let foundRecords = result.get('content');
         if (!Ember.isArray(foundRecords)) {
-          foundRecords = [];
+          foundRecords = Ember.A();
         }
 
         return foundRecords;
@@ -917,25 +397,51 @@ export default Ember.Service.extend({
     });
   },
 
+  /**
+   Gets adv limit from storage.
+
+   @method _getLimitFromStore
+   @param {String} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Promise} A promise that returns found records or `undefined` if there is no such adv limit.
+   @private
+  */
+  _getLimitFromStore(componentName, settingName) {
+    const searchPredicate = this._getSearchPredicate(componentName, settingName);
+    const store = this.get('store');
+    const avdLimitModelName = this.get('avdLimitModelName');
+    const avdLimitProjectionName = this.get('avdLimitProjectionName');
+    const builder = new Builder(store)
+      .from(avdLimitModelName)
+      .selectByProjection(avdLimitProjectionName)
+      .where(searchPredicate);
+
+    return store.query(avdLimitModelName, builder.build());
+  },
+
+  /**
+   Creates predicate for adv limit.
+
+   @method _getLimitFromStore
+   @param {String} componentName Component name.
+   @param {String} settingName Setting name.
+   @return {Object} Predicate for adv limit.
+   @private
+  */
   _getSearchPredicate(componentName, settingName) {
-    let ret;
-    let userService = Ember.getOwner(this).lookup('service:user');
-    let currentUserName = userService.getCurrentUserName();
-    let p1 = new SimplePredicate('appName', 'eq', this.currentAppPage);
-    let p2 = new SimplePredicate('userName', 'eq', currentUserName);
-    if (componentName !== undefined) {
-      let p3 = new SimplePredicate('moduleName', 'eq', componentName);
-      if (settingName !== undefined) {
-        let p4 = new SimplePredicate('settName', 'eq', settingName);
-        ret = new ComplexPredicate('and', p1, p2, p3, p4);
-      } else {
-        ret = new ComplexPredicate('and', p1, p2, p3);
-      }
+    Ember.assert('Can\'t find adv limit for undefined componentName', !Ember.isNone(componentName));
+    let searchPredicate;
+    const userService = Ember.getOwner(this).lookup('service:user');
+    const currentUserName = userService.getCurrentUserName();
+    const p1 = new SimplePredicate('user', 'eq', currentUserName);
+    const p2 = new SimplePredicate('module', 'eq', `${this.getCurrentAppPage()}@${componentName}`);
+    if (!Ember.isNone(settingName)) {
+      const p3 = new SimplePredicate('name', 'eq', settingName);
+      searchPredicate = new ComplexPredicate('and', p1, p2, p3);
     } else {
-      Ember.assert('Find settingName of undefined componentName', settingName === undefined);
-      ret = new ComplexPredicate('and', p1, p2);
+      searchPredicate = new ComplexPredicate('and', p1, p2);
     }
 
-    return ret;
+    return searchPredicate;
   }
 });

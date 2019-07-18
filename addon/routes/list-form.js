@@ -113,6 +113,7 @@ ErrorableRouteMixin, {
         limitPredicate = curentlimitPredicate;
       }
     }
+
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');

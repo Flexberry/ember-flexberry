@@ -313,7 +313,7 @@ export default FlexberryBaseComponent.extend({
         if (!Ember.isBlank(e)) {
           Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
         }
-  
+
         // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
         let classOfHierarchyExpandButton = 'hierarchy-expand';
         if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
@@ -343,11 +343,10 @@ export default FlexberryBaseComponent.extend({
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);
         }
-        
       }
     }
   },
-  
+
   limitPredicateObserver: Ember.on('init', Ember.observer('this.currentController.currentLimitPredicate', function() {
     if (this.get('inHierarchicalMode')) {
       this.updateRowHierarhy(this.get('record'));

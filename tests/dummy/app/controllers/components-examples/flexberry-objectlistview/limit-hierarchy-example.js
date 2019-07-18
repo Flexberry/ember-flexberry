@@ -28,7 +28,7 @@ export default ListFormController.extend({
     @default undefined
    */
   firstLimitType: undefined,
-  
+
   /**
     Current predicate to limit accessible values for olv.
     @property secondLimitType
@@ -44,7 +44,7 @@ export default ListFormController.extend({
     @default undefined
    */
   limitFunction: undefined,
-  
+
   /**
     Name of related edit form route.
 
@@ -65,7 +65,7 @@ export default ListFormController.extend({
       this.set('limitFunction', this.get('firstLimitType'));
       this.send('refreshModel');
     },
-    
+
     /**
       This method set controller.limitFunction for olv window.
       @method secondLimitFunction

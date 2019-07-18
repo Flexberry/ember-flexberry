@@ -311,7 +311,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      if (!record.disabled) {
+      if (!this.get('disabled')) {
         if (!Ember.isBlank(e)) {
           Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
         }

@@ -44,6 +44,15 @@ export default ListFormController.extend({
     @default undefined
    */
   limitFunction: undefined,
+  
+  /**
+    Name of related edit form route.
+
+    @property editFormRoute
+    @type String
+    @default 'ember-flexberry-dummy-suggestion-type-edit'
+   */
+  editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
   loadCount: 0,
 

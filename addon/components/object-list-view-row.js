@@ -360,10 +360,8 @@ export default FlexberryBaseComponent.extend({
       let data = record.get('data.' + currentLimit._attributePath);
       if (data.indexOf(currentLimit._containsValue) === -1) {
         this.set('disabled', true);
-        record.disabled = true;
       } else {
         this.set('disabled', false);
-        record.disabled = false;
       }
     } else {
       this.set('disabled', false);

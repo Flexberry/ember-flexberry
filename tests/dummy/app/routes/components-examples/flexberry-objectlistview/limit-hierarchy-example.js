@@ -96,7 +96,7 @@ export default ListFormRoute.extend({
       }
     }
 
-    return new StringPredicate('name').contains("2");
+    return undefined;
   },
 
   /**
@@ -112,6 +112,7 @@ export default ListFormRoute.extend({
     store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((limitdata) => {
       let limitTypesArr = limitdata.toArray();
       this.set('firstLimitType', limitTypesArr.objectAt(0).get('name'));
+      this.set('secondLimitType', limitTypesArr.objectAt(1).get('name'));
     });
 
     return this._super(...arguments);
@@ -131,6 +132,8 @@ export default ListFormRoute.extend({
     this._super(...arguments);
 
     this.set('controller.firstLimitType', this.get('firstLimitType'));
+
+    this.set('controller.secondLimitType', this.get('secondLimitType'));
   },
 
   onModelLoadingAlways(data) {

@@ -341,18 +341,35 @@ export default FlexberryBaseComponent.extend({
         let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
         this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
+        this.updateRowHierarhy(this.get('record'))
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);
         }
-        let limitPredicate = this.currentController.get('limitPredicate');
-        if (limitPredicate) {
-          let data = this.get('record.data.' + limitPredicate._attributePath);
-          if (data.indexOf(limitPredicate._containsValue) < 0) {
-            this.set('disabled', true);
-            this.set('record.disabled', true);
-          }
-        }
+        
       }
+    }
+  },
+  
+  limitPredicateObserver: Ember.on('init', Ember.observer('this.currentController.currentLimitPredicate', function() {
+    if (this.get('inHierarchicalMode')) {
+      this.updateRowHierarhy(this.get('record'));
+    }
+  })),
+
+  updateRowHierarhy(record) {
+    let currentLimit = this.currentController.get('currentLimitPredicate');
+    if (currentLimit) {
+      let data = record.get('data.' + currentLimit._attributePath);
+      if (data.indexOf(currentLimit._containsValue) === -1) {
+        this.set('disabled', true);
+        record.disabled = true;
+      } else {
+        this.set('disabled', false);
+        record.disabled = false;
+      }
+    } else {
+      this.set('disabled', false);
+      record.disabled = false;
     }
   },
 });

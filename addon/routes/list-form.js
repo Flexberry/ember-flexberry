@@ -108,7 +108,7 @@ ErrorableRouteMixin, {
     let curentlimitPredicate = this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
 
     if (controller) {
-      controller.set('limitPredicate', curentlimitPredicate);
+      controller.set('currentLimitPredicate', curentlimitPredicate);
       if (!controller.get('inHierarchicalMode')) {
         limitPredicate = curentlimitPredicate;
       }

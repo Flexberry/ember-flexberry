@@ -13,18 +13,18 @@
         type="input"
         class="setting-name-input fluid"
         value=model.advLimitName
-        placeholder=(t "components.colsconfig-dialog-content.enter-setting-name")
+        placeholder=(t "components.advlimit-dialog-content.enter-limit-name")
       }}
       {{#if advLimit.isAdvLimitServiceEnabled}}
         <div class="ui small button cols-config-save{{unless model.advLimitName " disabled"}}" {{action "saveAdvLimit"}}>
-          {{t "components.colsconfig-dialog-content.save"}}
+          {{t "components.advlimit-dialog-content.save"}}
         </div>
       {{/if}}
       <div class="ui right floated button cols-config-apply" {{action "apply"}}>
-        {{t "components.colsconfig-dialog-content.use"}}
+        {{t "components.advlimit-dialog-content.use"}}
       </div>
       <div class="ui button cols-config-check" {{action "check"}}>
-        Проверить
+        {{t "components.advlimit-dialog-content.check"}}
       </div>
     </div>
     {{ui-message

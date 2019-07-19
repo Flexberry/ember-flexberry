@@ -32,7 +32,7 @@ export default Ember.Service.extend({
     @type Boolean
     @default false
   */
-  isAdvLimitServiceEnabled: true,
+  isAdvLimitServiceEnabled: false,
 
   /**
     Current application page name.
@@ -40,11 +40,25 @@ export default Ember.Service.extend({
     @property currentAppPage
     @type String
     @default ''
-    */
+  */
   currentAppPage: '',
 
+  /**
+    Adv limit model name.
+
+    @property avdLimitModelName
+    @type String
+    @default 'flexberry-adv-limit'
+  */
   avdLimitModelName: 'flexberry-adv-limit',
 
+  /**
+    Adv limit projection name.
+
+    @property avdLimitProjectionName
+    @type String
+    @default 'AdvLimitE'
+  */
   avdLimitProjectionName: 'AdvLimitE',
 
   /**

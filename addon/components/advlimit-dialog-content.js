@@ -54,7 +54,7 @@ export default FlexberryBaseComponent.extend({
       this._hideMessage();
       const advLimit = this.get('model.advLimit');
       if (!this._checkPredicate(advLimit)) {
-        this._showMessage('error', 'Can\'t convert current limit string to predicate');
+        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
         return;
       }
 
@@ -82,9 +82,9 @@ export default FlexberryBaseComponent.extend({
       this._hideMessage();
       const stringPredicate = this.get('model.advLimit');
       if (this._checkPredicate(stringPredicate)) {
-        this._showMessage('success', 'Current limit string is correct');
+        this._showMessage('success', this.get('i18n').t('components.advlimit-dialog-content.is-correct'));
       } else {
-        this._showMessage('error', 'Can\'t convert current limit string to predicate');
+        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
       }
     },
 
@@ -97,13 +97,13 @@ export default FlexberryBaseComponent.extend({
       this._hideMessage();
       const advLimitName = this.get('model.advLimitName');
       if (Ember.isBlank(advLimitName)) {
-        this._showMessage('warning', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this._showMessage('warning', this.get('i18n').t('components.advlimit-dialog-content.enter-setting-name'));
         return;
       }
 
       const advLimit = this.get('model.advLimit');
       if (!this._checkPredicate(advLimit)) {
-        this._showMessage('error', 'Can\'t convert current limit string to predicate');
+        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
         return;
       }
 
@@ -113,15 +113,15 @@ export default FlexberryBaseComponent.extend({
         record => {
           this._showMessage(
             'success',
-            this.get('i18n').t('components.colsconfig-dialog-content.setting') +
+            this.get('i18n').t('components.advlimit-dialog-content.limit') +
               advLimitName +
-              this.get('i18n').t('components.colsconfig-dialog-content.is-saved')
+              this.get('i18n').t('components.advlimit-dialog-content.is-saved')
           );
         },
         error => {
           this._showMessage(
             'error',
-            this.get('i18n').t('components.colsconfig-dialog-content.have-errors'),
+            this.get('i18n').t('components.advlimit-dialog-content.have-errors'),
             JSON.stringify(error)
           );
           this.sendAction('close', advLimit);

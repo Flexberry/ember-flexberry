@@ -317,13 +317,13 @@ export default FlexberryBaseComponent.extend({
       items: Ember.A(),
       localeKey: ''
     };
-    const createSettitingItem = {
+    const createLimitItem = {
       icon: 'flask icon',
       iconAlignment: 'left',
-      title: i18n.t('components.olv-toolbar.create-setting-title'),
-      localeKey: 'components.olv-toolbar.create-setting-title'
+      title: i18n.t('components.olv-toolbar.create-limit-title'),
+      localeKey: 'components.olv-toolbar.create-limit-title'
     };
-    rootItem.items.addObject(createSettitingItem);
+    rootItem.items.addObject(createLimitItem);
 
     const limitItems = this.get('namedAdvLimits');
     const menus = this.get('menus');
@@ -334,7 +334,7 @@ export default FlexberryBaseComponent.extend({
         editMenus.addObject({
           icon: 'angle right icon',
           iconAlignment: 'right',
-          localeKey: `components.olv-toolbar.${menu.name}-setting-title`,
+          localeKey: `components.olv-toolbar.${menu.name}-limit-title`,
           items: menuSubitem
         });
       }
@@ -347,8 +347,8 @@ export default FlexberryBaseComponent.extend({
     const setDefaultItem = {
       icon: 'remove circle icon',
       iconAlignment: 'left',
-      title: i18n.t('components.olv-toolbar.set-default-setting-title'),
-      localeKey: 'components.olv-toolbar.set-default-setting-title'
+      title: i18n.t('components.olv-toolbar.set-default-limit-title'),
+      localeKey: 'components.olv-toolbar.set-default-limit-title'
     };
     rootItem.items.addObject(setDefaultItem);
 
@@ -753,7 +753,11 @@ export default FlexberryBaseComponent.extend({
           advLimitService.deleteAdvLimit(componentName, advLimitName)
           .then(() => {
             this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
-            alert('Ограничение ' + advLimitName + ' удалено');
+            alert(
+              this.get('i18n').t('components.advlimit-dialog-content.limit') +
+              '"' + advLimitName + '"' +
+              this.get('i18n').t('components.advlimit-dialog-content.is-deleted')
+            );
           });
           break;
         case 'remove circle icon':

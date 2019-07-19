@@ -3,10 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `user-settings`:
-    * Fix of replacing perPage form developerUserSettings on reloading.
 
+## [2.2.0-beta.4] - 2019-07-19
+### Added
+* `flexberry-objectlistview` component:
+    * Add advlimit config dialog for editing and applying limits.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.4`.
+
+## [2.2.0-beta.3] - 2019-07-19
+### Fixed
+* `user-settings` service:
+    * Fix of replacing perPage form developerUserSettings on reloading.
+* `flexberry-objectlistview` component:
+    * Fix multi lists on edit form with `flexberry-groupedit` components.
 
 ## [2.2.0-beta.2] - 2019-07-12
 ### Added

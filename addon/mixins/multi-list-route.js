@@ -26,6 +26,14 @@ export default Ember.Mixin.create({
   */
   objectlistviewEvents: Ember.inject.service(),
 
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: Ember.inject.service(),
+
   init() {
     this._super(...arguments);
 
@@ -99,6 +107,10 @@ export default Ember.Mixin.create({
       if (!queryParameters.get('inHierarchicalMode')) {
         queryParameters.set('hierarchicalAttribute', null);
       }
+
+      const advLimitService = this.get('advLimit');
+      const advLimit = advLimitService.getCurrentAdvLimit(componentName);
+      queryParameters.set('advLimit', advLimit);
 
       this.reloadList(queryParameters).then(result => {
         let controller = this.get('controller');

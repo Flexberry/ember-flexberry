@@ -13,13 +13,30 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @uses <a href="https://api.emberjs.com/ember/release/classes/Mixin">Ember.Mixin</a>
 */
 export default Ember.Mixin.create({
-  beforeModel() {
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: Ember.inject.service(),
+
+  beforeModel(transition) {
+    const advLimitService = this.get('advLimit');
+
     return Ember.RSVP.Promise.resolve(this._super(...arguments)).then(() => {
+      const developerUserSettings = this.get('developerUserSettings');
+      const webPage = transition.targetName;
+      advLimitService.setCurrentAppPage(webPage);
+
+      return advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings));
+    }).then(() => {
       let userSettingsService = this.get('userSettingsService');
       let listComponentNames = userSettingsService.getListComponentNames();
       let result = {};
       listComponentNames.forEach(function(componentName) {
         this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
+        this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
         let settings = this.get(`multiListSettings.${componentName}`);
 
         if (!Ember.isNone(settings)) {
@@ -33,7 +50,10 @@ export default Ember.Mixin.create({
           let limitPredicate =
             this.objectListViewLimitPredicate({ modelName: settings.modelName, projectionName: settings.projectionName, params: settings });
 
+          const advLimit = advLimitService.getCurrentAdvLimit(componentName);
+
           let queryParameters = {
+            componentName: componentName,
             modelName: settings.modelName,
             projectionName: settings.projectionName,
             perPage: settings.perPage,
@@ -43,6 +63,7 @@ export default Ember.Mixin.create({
             filterCondition: settings.filterCondition,
             filters: settings.filtersPredicate,
             predicate: limitPredicate,
+            advLimit: advLimit,
             hierarchicalAttribute: settings.inHierarchicalMode ? settings.hierarchicalAttribute : null,
           };
 

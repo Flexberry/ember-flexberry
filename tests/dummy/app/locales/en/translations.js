@@ -796,7 +796,8 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-multi-list': {
-      'caption': 'Multi list form'
+      'caption': 'Multi list form',
+      'multi-edit-form': 'Multi list edit form'
     },
 
     'log-service-examples': {

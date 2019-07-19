@@ -3,10 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.3] - 2019-07-19
 ### Fixed
 * `user-settings`:
     * Fix of replacing perPage form developerUserSettings on reloading.
-
 
 ## [2.2.0-beta.2] - 2019-07-12
 ### Added

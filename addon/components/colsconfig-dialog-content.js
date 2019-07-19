@@ -287,7 +287,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction(this.get('model.componentName'));
     if (limitFunction) {
       builder.where(limitFunction);
     }

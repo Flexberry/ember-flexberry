@@ -168,6 +168,11 @@ export default {
       'show-default-setting-title': 'Показать установки',
       'show-setting-caption':
         'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
+      'create-limit-title': 'Новое ограничение',
+      'use-limit-title': 'Применить',
+      'edit-limit-title': 'Редактировать',
+      'remove-limit-title': 'Удалить',
+      'set-default-limit-title': 'Сбросить ограничение',
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
@@ -211,6 +216,21 @@ export default {
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
       'unresizable': 'Фиксированная ширина'
+    },
+
+    'advlimit-dialog-content': {
+      'title': 'Настройка ограничений',
+      'limit-name': 'Название ограничения',
+      'enter-limit-name': 'Введите название ограничения',
+      'use': 'Применить',
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении ограничения возникли ошибки: ',
+      'cant-parse': 'Текущая строка ограничения не является предикатом',
+      'limit': 'Ограничение ',
+      'is-saved': ' сохранено',
+      'is-deleted': ' удалено',
+      'is-correct': 'Текущая строка ограничения корректна',
+      'check': 'Проверить'
     },
 
     'form-load-time-tracker': {

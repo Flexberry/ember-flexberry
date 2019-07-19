@@ -3,9 +3,21 @@
  */
 
 import Ember from 'ember';
-import AdvLimitDialogController from '../mixins/colsconfig-dialog-controller';
+import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend(AdvLimitDialogController, {
+export default Ember.Controller.extend({
+  message: Ember.computed(() => {
+    const message = {
+      caption: '',
+      type: 'error',
+      visible: false,
+      message: '',
+      closeable: true
+    };
+
+    return message;
+  }).readOnly(),
+
   /**
    * Current opened modal window.
    *
@@ -14,6 +26,9 @@ export default Ember.Controller.extend(AdvLimitDialogController, {
    * @default undefined
    */
   _openedModalDialog: undefined,
+
+  title: t('components.advlimit-dialog-content.title'),
+
   actions: {
     /**
      * Handles create modal window action.
@@ -22,28 +37,22 @@ export default Ember.Controller.extend(AdvLimitDialogController, {
      * @method createdModalDialog
      * @param {JQuery} modalDialog Created modal window.
      */
-    createdModalDialog: function(modalDialog) {
+    createdModalDialog(modalDialog) {
       this.set('message.visible', false);
       this.set('_openedModalDialog', modalDialog);
-    }
-  },
+    },
 
-  /**
-   * Close current modal window if it exists.
-   *
-   * @method closeModalDialog
-   */
-  closeModalDialog: function () {
-    let openedDialog = this.get('_openedModalDialog');
-    if (openedDialog) {
-      openedDialog.modal('hide');
-      this.set('_openedModalDialog', undefined);
-    }
-  },
-
-  clear: function() {
-    this.set('_openedModalDialog', undefined);
-    return this;
+    /**
+     * Close current modal window if it exists.
+     *
+     * @method closeModalDialog
+     */
+    closeModalDialog() {
+      let openedDialog = this.get('_openedModalDialog');
+      if (openedDialog) {
+        openedDialog.modal('hide');
+        this.set('_openedModalDialog', undefined);
+      }
+    },
   }
-
 });

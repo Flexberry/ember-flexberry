@@ -5,6 +5,15 @@ export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
 
   /**
+    Controller to show advlimit config modal window.
+
+    @property advLimitController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('advlimit-dialog')
+  */
+  advLimitController: Ember.inject.controller('advlimit-dialog'),
+
+  /**
     Service for managing advLimits for lists.
 
     @property advLimit
@@ -57,7 +66,7 @@ export default Ember.Mixin.create({
 
       let store = this.get('store');
 
-      let controller = this.get('colsconfigController');
+      let controller = this.get('advLimitController');
       controller.set('mainControler', this);
 
       let loadingParams = {

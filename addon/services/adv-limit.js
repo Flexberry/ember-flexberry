@@ -274,7 +274,7 @@ export default Ember.Service.extend({
           const currentUserName = userService.getCurrentUserName();
           foundRecord = store.createRecord(this.get('avdLimitModelName'));
           foundRecord.set('user', currentUserName);
-          foundRecord.set('module', `${this.get('currentAppPage')}@${componentName}`);
+          foundRecord.set('module', `${currentAppPage}@${componentName}`);
           foundRecord.set('name', settingName);
         }
 

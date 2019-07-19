@@ -145,10 +145,10 @@ export default FlexberryBaseComponent.extend({
     @method _showMessage
   */
   _showMessage(type = 'error', caption = '', message = '') {
-    this.set('currentController.message.type', type);
-    this.set('currentController.message.visible', true);
-    this.set('currentController.message.caption', caption);
-    this.set('currentController.message.message', message);
+    this.set('message.type', type);
+    this.set('message.visible', true);
+    this.set('message.caption', caption);
+    this.set('message.message', message);
     this._scrollToBottom();
   },
 
@@ -158,7 +158,7 @@ export default FlexberryBaseComponent.extend({
     @method _hideMessage
   */
   _hideMessage() {
-    this.set('currentController.message.visible', false);
+    this.set('message.visible', false);
   },
 
   /**

@@ -1,14 +1,13 @@
 <div class="ui form {{appState.state}}">
   <div class="flexberry-colsconfig content">
-    <div class="ui action input">
-      <div>
-        {{flexberry-textarea
-          value=model.advLimit
-          class=class
-          rows='5'
-          cols='60'
-        }}
-      </div>
+    <div class="ui action input flexberry-advlimit-input">
+      {{flexberry-textarea
+        value=model.advLimit
+        class=class
+        rows='10'
+      }}
+    </div>
+    <div class="ui action input flexberry-advlimit-input">
       {{input
         type="input"
         class="setting-name-input fluid"
@@ -28,11 +27,11 @@
       </div>
     </div>
     {{ui-message
-      type=type
-      closeable=closeable
-      visible=visible
-      caption=caption
-      message=message
+      type=message.type
+      visible=message.visible
+      caption=message.caption
+      message=message.message
+      closeable=message.closeable
     }}
   </div>
 </div>

@@ -10,7 +10,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add advlimit config dialog for editing and applying limits.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.4`.
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.5`.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix select autocomplete result by enter click.
 
 ## [2.2.0-beta.3] - 2019-07-19
 ### Fixed

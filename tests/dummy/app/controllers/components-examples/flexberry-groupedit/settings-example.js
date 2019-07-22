@@ -219,7 +219,7 @@ export default EditFormController.extend({
     this._super(...arguments);
     this.set('componentTemplateText', new htmlSafe(
       '{{flexberry-groupedit<br>' +
-      '  componentName=\"aggregatorDetailsGroupedit\"<br>' +
+      '  componentName="aggregatorDetailsGroupedit"<br>' +
       '  content=model.details<br>' +
       '  modelProjection=detailsProjection<br>' +
       '  placeholder=placeholder<br>' +

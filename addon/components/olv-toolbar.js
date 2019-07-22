@@ -10,6 +10,7 @@ import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { later } from '@ember/runloop';
 import { getOwner } from '@ember/application';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
@@ -48,7 +49,7 @@ export default FlexberryBaseComponent.extend({
     @property advLimit
     @type AdvLimitService
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   /**
     Flag to use creation button at toolbar.
@@ -235,7 +236,7 @@ export default FlexberryBaseComponent.extend({
     @property menus
     @readOnly
   */
-  menus: Ember.computed(() => Ember.A([
+  menus: computed(() => A([
     { name: 'use', icon: 'checkmark box' },
     { name: 'edit', icon: 'setting' },
     { name: 'remove', icon: 'remove' }
@@ -305,13 +306,13 @@ export default FlexberryBaseComponent.extend({
     @property advLimitItems
     @readOnly
   */
-  advLimitItems: Ember.computed('i18n.locale', 'advLimit.isAdvLimitServiceEnabled', 'namedAdvLimits', function() {
+  advLimitItems: computed('i18n.locale', 'advLimit.isAdvLimitServiceEnabled', 'namedAdvLimits', function() {
     const i18n = this.get('i18n');
     const rootItem = {
       icon: 'dropdown icon',
       iconAlignment: 'right',
       title: '',
-      items: Ember.A(),
+      items: A(),
       localeKey: ''
     };
     const createLimitItem = {
@@ -324,7 +325,7 @@ export default FlexberryBaseComponent.extend({
 
     const limitItems = this.get('namedAdvLimits');
     const menus = this.get('menus');
-    const editMenus = Ember.A();
+    const editMenus = A();
     menus.forEach(menu => {
       const menuSubitem = this._createMenuSubitems(limitItems, menu.icon + ' icon');
       if (menuSubitem.length > 0) {
@@ -349,10 +350,10 @@ export default FlexberryBaseComponent.extend({
     };
     rootItem.items.addObject(setDefaultItem);
 
-    return this.get('advLimit.isAdvLimitServiceEnabled') ? Ember.A([rootItem]) : Ember.A();
+    return this.get('advLimit.isAdvLimitServiceEnabled') ? A([rootItem]) : A();
   }),
 
-  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
+  _colsSettingsItems: observer('colsSettingsItems', function() {
     this._updateListNamedUserSettings(this.get('componentName'));
   }),
 
@@ -620,7 +621,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     showAdvLimitDialog(settingName) {
-      Ember.assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
       this.get('modelController').send('showAdvLimitDialog', this.componentName, settingName);
     },
 
@@ -665,6 +666,7 @@ export default FlexberryBaseComponent.extend({
         case 'checkmark box icon': {
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          /* eslint-disable no-unused-vars */
           let colsConfig = this.listNamedUserSettings[namedSetting];
           userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
             then(record => {
@@ -677,6 +679,7 @@ export default FlexberryBaseComponent.extend({
                 router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
               }
             });
+          /* eslint-disable no-unused-vars */
           break;
         }
 
@@ -735,8 +738,8 @@ export default FlexberryBaseComponent.extend({
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onLimitMenuItemClick(e) {
-      const iTags = Ember.$(e.currentTarget).find('i');
-      const namedLimitSpans = Ember.$(e.currentTarget).find('span');
+      const iTags = $(e.currentTarget).find('i');
+      const namedLimitSpans = $(e.currentTarget).find('span');
       if (iTags.length <= 0 || namedLimitSpans.length <= 0) {
         return;
       }
@@ -750,13 +753,14 @@ export default FlexberryBaseComponent.extend({
         case 'flask icon':
           this.send('showAdvLimitDialog');
           break;
-        case 'checkmark box icon':
+        case 'checkmark box icon': {
           const advLimit = this.get(`namedAdvLimits.${advLimitName}`);
           advLimitService.saveAdvLimit(advLimit, componentName).
             then(() => {
               this.send('refresh');
             });
           break;
+        }
         case 'setting icon':
           this.send('showAdvLimitDialog', advLimitName);
           break;
@@ -1036,11 +1040,11 @@ export default FlexberryBaseComponent.extend({
     @param {String} icon Icon class for menu items.
   */
   _createMenuSubitems(itemsNameList, icon) {
-    if (Ember.isNone(itemsNameList)) {
-      return Ember.A();
+    if (isNone(itemsNameList)) {
+      return A();
     }
 
-    const itemsNames = Ember.A(Object.keys(itemsNameList)).sortBy('name');
+    const itemsNames = A(Object.keys(itemsNameList)).sortBy('name');
     return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
   }
 });

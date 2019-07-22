@@ -14,6 +14,8 @@ import { merge } from '@ember/polyfills';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { later } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import runAfter from '../utils/run-after';
 
 /**
@@ -78,7 +80,7 @@ export default FlexberryBaseComponent.extend({
     @property hierarchyByAttribute
     @type String
   */
-  hierarchyByAttribute: Ember.computed({
+  hierarchyByAttribute: computed({
     get() {
       return this.get('_hierarchicalAttribute');
     },
@@ -966,12 +968,12 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     createNewByPrototype(prototypeId) {
-      Ember.assert('The prototype record ID is not defined', prototypeId);
+      assert('The prototype record ID is not defined', prototypeId);
       let editFormRoute = this.get('editFormRoute');
-      Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
+      assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('currentController');
       this.get('objectlistviewEventsService').setLoadingState('loading');
-      let appController = Ember.getOwner(this).lookup('controller:application');
+      let appController = getOwner(this).lookup('controller:application');
       let thisRouteName = appController.get('currentRouteName');
       let thisRecordId = modelController.get('model.id');
       let transitionOptions = {
@@ -984,7 +986,7 @@ export default FlexberryBaseComponent.extend({
         }
       };
 
-      Ember.run.later((function() {
+      later((function() {
         modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
       }), 50);
     },

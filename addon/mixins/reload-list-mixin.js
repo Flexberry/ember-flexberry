@@ -8,7 +8,7 @@ import { merge } from '@ember/polyfills';
 import { assert } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
-import { A } from '@ember/array';
+import { A, isArray } from '@ember/array';
 
 import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
@@ -81,7 +81,7 @@ export default Mixin.create({
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
 
-    let allPredicates = Ember.A();
+    let allPredicates = A();
 
     if (reloadOptions.predicate && !(reloadOptions.predicate instanceof BasePredicate)) {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
@@ -123,7 +123,7 @@ export default Mixin.create({
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
     }
 
-    if (Ember.isArray(reloadOptions.sorting)) {
+    if (isArray(reloadOptions.sorting)) {
       let sorting = reloadOptions.sorting.filter(i => i.direction !== 'none').map(i => `${i.propName} ${i.direction}`).join(',');
       if (sorting) {
         builder.orderBy(sorting);

@@ -116,7 +116,7 @@ ReloadListMixin, {
     @property colsConfigMenu
     @type Service
   */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.

@@ -2,6 +2,7 @@ import ListFormRoute from 'ember-flexberry/routes/list-form';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import MultiListModel from 'ember-flexberry/mixins/multi-list-model';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
+import { computed } from '@ember/object';
 
 export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
   init() {
@@ -68,5 +69,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
     @type Object
     @default {}
   */
-  developerUserSettings: { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} },
+  developerUserSettings: computed(function() {
+    return { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} }
+  }),
 });

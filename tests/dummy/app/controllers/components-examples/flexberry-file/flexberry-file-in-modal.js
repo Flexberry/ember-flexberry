@@ -1,4 +1,5 @@
 import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
 import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import config from 'dummy/config/environment';
@@ -60,10 +61,10 @@ export default EditFormController.extend({
     @property previewSettings
     @type Object
   */
-  previewSettings: {
+  previewSettings: computed(() => ({
     detachable: true,
     context: 'body',
-  },
+  })),
 
   actions: {
     modalWindow(style) {

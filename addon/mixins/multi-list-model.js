@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { assert } from '@ember/debug';
+import { all } from 'rsvp';
+import { hash } from 'rsvp';
+import { isNone } from '@ember/utils';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -12,7 +16,7 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @class MultiListModelEditMixin
   @uses <a href="https://api.emberjs.com/ember/release/classes/Mixin">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   updateModelOnListReload: true,
 
   model: function(params, transition) {
@@ -27,7 +31,7 @@ export default Ember.Mixin.create({
     let advLimitService = this.get('advLimit');
     advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
-    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
     let nComponents = 0;
     for (let componentName in developerUserSettings) {
@@ -39,21 +43,21 @@ export default Ember.Mixin.create({
         case 'object':
           break;
         default:
-          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+          assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
       nComponents += 1;
     }
 
     if (nComponents === 0) {
-      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+      assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
     }
 
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
-    Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
-      .then(currectPageUserSettings => {
+    all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
+      .then(() => {
         let result = {};
 
         listComponentNames.forEach(function(componentName) {
@@ -61,7 +65,7 @@ export default Ember.Mixin.create({
           this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
           let settings = this.get(`multiListSettings.${componentName}`);
 
-          if (!Ember.isNone(settings)) {
+          if (!isNone(settings)) {
             let filtersPredicate = this._filtersPredicate(componentName);
             let sorting = userSettingsService.getCurrentSorting(componentName);
             let perPage = userSettingsService.getCurrentPerPage(componentName);
@@ -93,7 +97,7 @@ export default Ember.Mixin.create({
           }
         }, this);
 
-        return Ember.RSVP.hash(result);
+        return hash(result);
       }).then((hashModel) => {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.onModelLoadingFulfilled(hashModel, transition);
@@ -101,10 +105,10 @@ export default Ember.Mixin.create({
 
         listComponentNames.forEach(function(componentName) {
           let settings = this.get(`multiListSettings.${componentName}`);
-          if (!Ember.isNone(settings)) {
+          if (!isNone(settings)) {
             this.includeSorting(hashModel[componentName], settings.get('sorting'));
             settings.set('model', hashModel[componentName]);
-            if (Ember.isNone(settings.get('sort'))) {
+            if (isNone(settings.get('sort'))) {
               let sortQueryParam = serializeSortingParam(settings.get('sorting'), settings.get('sortDefaultValue'));
               settings.set('sort', sortQueryParam);
             }
@@ -122,7 +126,7 @@ export default Ember.Mixin.create({
     // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
-    if (Ember.isNone(model)) {
+    if (isNone(model)) {
       return { isLoading: true };
     } else {
       return model;

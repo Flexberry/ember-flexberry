@@ -3,6 +3,8 @@
  */
 
 import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -58,7 +60,7 @@ export default Mixin.create({
     @property objectlistviewEvents
     @type Service
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Apply sorting to result list.
@@ -81,7 +83,7 @@ export default Mixin.create({
     @param {Array} sorting Sorting object.
   */
   setSorting(componentName, sorting) {
-    let sort = serializeSortingParam(Ember.A(sorting));
+    let sort = serializeSortingParam(A(sorting));
     this.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
   },
 

@@ -13,6 +13,7 @@ import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { isNone } from '@ember/utils';
 import { set } from '@ember/object';
+import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
@@ -271,7 +272,7 @@ export default Service.extend({
    @return {Ember.NativeArray}
    */
   getListComponentNames() {
-    let ret = Ember.A();
+    let ret = A();
     let appPage = this.currentAppPage;
     if (appPage in this.currentUserSettings) {
       for (let componentName in this.currentUserSettings[appPage]) {
@@ -457,7 +458,7 @@ export default Service.extend({
    */
   getCurrentSorting(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : Ember.A();
+    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : A();
   },
 
   /**

@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
+import { resolve, hash } from 'rsvp';
+import { isNone } from '@ember/utils';
+
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -12,19 +16,19 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @class MultiListModelEditMixin
   @uses <a href="https://api.emberjs.com/ember/release/classes/Mixin">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Service for managing advLimits for lists.
 
     @property advLimit
     @type AdvLimitService
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   beforeModel(transition) {
     const advLimitService = this.get('advLimit');
 
-    return Ember.RSVP.Promise.resolve(this._super(...arguments)).then(() => {
+    return resolve(this._super(...arguments)).then(() => {
       const developerUserSettings = this.get('developerUserSettings');
       const webPage = transition.targetName;
       advLimitService.setCurrentAppPage(webPage);
@@ -39,7 +43,7 @@ export default Ember.Mixin.create({
         this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
         let settings = this.get(`multiListSettings.${componentName}`);
 
-        if (!Ember.isNone(settings)) {
+        if (!isNone(settings)) {
           let filtersPredicate = this._filtersPredicate(componentName);
           let sorting = userSettingsService.getCurrentSorting(componentName);
           let perPage = userSettingsService.getCurrentPerPage(componentName);
@@ -71,13 +75,13 @@ export default Ember.Mixin.create({
         }
       }, this);
 
-      return Ember.RSVP.hash(result).then(hashModel => {
+      return hash(result).then(hashModel => {
         listComponentNames.forEach(function(componentName) {
           let settings = this.get(`multiListSettings.${componentName}`);
-          if (!Ember.isNone(settings)) {
+          if (!isNone(settings)) {
             this.includeSorting(hashModel[componentName], settings.get('sorting'));
             settings.set('model', hashModel[componentName]);
-            if (Ember.isNone(settings.get('sort'))) {
+            if (isNone(settings.get('sort'))) {
               let sortQueryParam = serializeSortingParam(settings.get('sorting'), settings.get('sortDefaultValue'));
               settings.set('sort', sortQueryParam);
             }

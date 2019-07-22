@@ -2,11 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { later } from '@ember/runloop';
 
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Updates columns width in multisettings.
 
@@ -106,7 +108,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       let propName = column.propName;
       let oldSorting = settings.get(sortPath);
-      let newSorting = Ember.A();
+      let newSorting = A();
       let sortDirection;
       if (oldSorting) {
         sortDirection = 'asc';
@@ -143,7 +145,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       let propName = column.propName;
       let oldSorting = settings.get(sortPath);
-      let newSorting = Ember.A();
+      let newSorting = A();
       let changed = false;
 
       for (let i = 0; i < oldSorting.length; i++) {
@@ -224,7 +226,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       if (settings.get('filter') !== pattern || settings.get('filterCondition') !== filterCondition) {
         let _this = this;
-        Ember.run.later((function() {
+        later((function() {
           settings.setProperties({
             filterCondition: filterCondition,
             filter: pattern,

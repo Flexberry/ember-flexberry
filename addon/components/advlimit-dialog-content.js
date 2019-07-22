@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { isBlank } from '@ember/utils';
+import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { BasePredicate, stringToPredicate } from 'ember-flexberry-data/query/predicate';
@@ -17,7 +19,7 @@ export default FlexberryBaseComponent.extend({
    @type {Class}
    @default Ember.inject.service()
    */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
    Service that triggers objectlistview events.
@@ -26,7 +28,7 @@ export default FlexberryBaseComponent.extend({
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Service for managing the state of the application.
@@ -34,7 +36,7 @@ export default FlexberryBaseComponent.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Service for managing advLimits for lists.
@@ -42,7 +44,7 @@ export default FlexberryBaseComponent.extend({
     @property advLimit
     @type AdvLimitService
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   actions: {
     /**
@@ -60,6 +62,7 @@ export default FlexberryBaseComponent.extend({
 
       this.get('appState').loading();
       const savePromise = this._getSavePromise(advLimit);
+      /* eslint-disable no-unused-vars */
       savePromise.then(
         record => {
           this.get('objectlistviewEvents').refreshListTrigger(this.get('model.componentName'));
@@ -69,8 +72,9 @@ export default FlexberryBaseComponent.extend({
       }).finally(() => {
         this.get('appState').reset();
       });
+      /* eslint-disable no-unused-vars */
 
-      this.sendAction('close', advLimit);
+      this.get('close')(advLimit);
     },
 
     /**
@@ -96,7 +100,7 @@ export default FlexberryBaseComponent.extend({
     saveAdvLimit: function() {
       this._hideMessage();
       const advLimitName = this.get('model.advLimitName');
-      if (Ember.isBlank(advLimitName)) {
+      if (isBlank(advLimitName)) {
         this._showMessage('warning', this.get('i18n').t('components.advlimit-dialog-content.enter-setting-name'));
         return;
       }
@@ -109,6 +113,7 @@ export default FlexberryBaseComponent.extend({
 
       const savePromise = this._getSavePromise(advLimit, advLimitName);
       this.get('colsConfigMenu').updateNamedAdvLimitTrigger(advLimitName);
+      /* eslint-disable no-unused-vars */
       savePromise.then(
         record => {
           this._showMessage(
@@ -124,16 +129,19 @@ export default FlexberryBaseComponent.extend({
             this.get('i18n').t('components.advlimit-dialog-content.have-errors'),
             JSON.stringify(error)
           );
-          this.sendAction('close', advLimit);
+          this.get('close')(advLimit);
           this.get('currentController').send('handleError', error);
         }
       );
+      /* eslint-disable no-unused-vars */
     },
 
+    /* eslint-disable no-unused-vars */
     handleError(error) {
       this._super(...arguments);
       return true;
     }
+    /* eslint-disable no-unused-vars */
   },
 
   /**
@@ -170,7 +178,7 @@ export default FlexberryBaseComponent.extend({
   _checkPredicate(stringPredicate) {
     const predicate = stringToPredicate(stringPredicate);
 
-    return Ember.isBlank(stringPredicate) || predicate instanceof BasePredicate;
+    return isBlank(stringPredicate) || predicate instanceof BasePredicate;
   },
 
   /**
@@ -179,7 +187,7 @@ export default FlexberryBaseComponent.extend({
     @method _scrollToBottom
   */
   _scrollToBottom() {
-    Ember.run.scheduleOnce('afterRender', this, function() {
+    scheduleOnce('afterRender', this, function() {
       const scrollBlock = this.$('.flexberry-colsconfig.content');
       scrollBlock.animate({ scrollTop: scrollBlock.prop('scrollHeight') }, 1000);
     });
@@ -187,10 +195,11 @@ export default FlexberryBaseComponent.extend({
 
   _getSavePromise: function(advLimit, advLimitName) {
     const componentName = this.get('model.componentName');
-
+    /* eslint-disable no-unused-vars */
     return this.get('advLimit').saveAdvLimit(advLimit, componentName, advLimitName)
-    .then(result => {
+    .then(record => {
       this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
     });
+    /* eslint-disable no-unused-vars */
   }
 });

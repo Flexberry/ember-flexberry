@@ -10,7 +10,8 @@ import { inject as injectService} from '@ember/service';
 import { get, computed } from '@ember/object';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
+import { reject } from 'rsvp';
 import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/application/deprecations';
 import ResultCollection from 'ember-cp-validations/validations/result-collection';
@@ -71,7 +72,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('colsconfig-dialog')
   */
-  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  colsconfigController: injectController('colsconfig-dialog'),
 
   /**
     Flag to enable return to agregator's path if possible.
@@ -355,7 +356,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     */
     beforeDeleteAllRecords(modelName, data) {
       data.cancel = true;
-      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+      assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
     },
 
     /**
@@ -453,9 +454,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     const agragatorModel = getCurrentAgregator.call(this);
     if (needSaveCurrentAgregator.call(this, agragatorModel)) {
       savePromise = this._saveHasManyRelationships(model).then((result) => {
-        const errors = Ember.A(result || []).filterBy('state', 'rejected');
-        if (!Ember.isEmpty(errors)) {
-          return Ember.RSVP.reject(errors);
+        const errors = A(result || []).filterBy('state', 'rejected');
+        if (!isEmpty(errors)) {
+          return reject(errors);
         }
 
         return agragatorModel.save();
@@ -856,7 +857,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {Ember.NativeArray} An array with the model and all its `hasMany` relationships.
   */
   _getModelWithHasMany(model) {
-    const models = Ember.A([model]);
+    const models = A([model]);
 
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {

@@ -5,6 +5,7 @@
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
+import { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { deprecatingAlias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
@@ -294,7 +295,7 @@ export default Service.extend(Evented, {
     @type Object
     @default {}
   */
-  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
+  currentLimitFunctions: computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.

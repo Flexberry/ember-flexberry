@@ -9,6 +9,7 @@ import { later, run, once } from '@ember/runloop';
 import { merge } from '@ember/polyfills';
 import { isNone } from '@ember/utils';
 import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
@@ -1322,7 +1323,7 @@ export default FlexberryBaseComponent.extend({
     @throws {Error} Throws error if any of parameter predicates has wrong type.
   */
   _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
-    let limitArray = Ember.A();
+    let limitArray = A();
 
     if (limitPredicate) {
       if (limitPredicate instanceof BasePredicate) {

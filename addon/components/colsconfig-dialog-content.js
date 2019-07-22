@@ -163,6 +163,7 @@ export default FlexberryBaseComponent.extend({
         /* eslint-disable no-unused-vars */
         savePromise.then(
           record => {
+            let sort = serializeSortingParam(colsConfig.sorting);
             this.get('appState').reset();
             let mainController = this.get('currentController.mainControler');
             let userSettingsApplyFunction = mainController.get('userSettingsApply');

@@ -3,6 +3,7 @@
  */
 
 import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import EditFormRoute from './edit-form';
@@ -53,7 +54,7 @@ export default EditFormRoute.extend({
     let prototypeId = transition.queryParams.prototypeId;
     let store = this.get('store');
 
-    if (Ember.isNone(prototypeId))
+    if (isNone(prototypeId))
     {
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
       let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
@@ -77,7 +78,7 @@ export default EditFormRoute.extend({
 
     let promise = prototype.copy(this.get('prototypeProjection'));
     return promise.then(record => {
-      if (Ember.isNone(record)) {
+      if (isNone(record)) {
         transition.queryParams.prototypeId = undefined;
         return this.model(...arguments);
       }

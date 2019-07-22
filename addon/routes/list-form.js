@@ -7,6 +7,7 @@ import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
+import { all } from 'rsvp';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -99,7 +100,7 @@ ErrorableRouteMixin, {
     @property advLimit
     @type AdvLimitService
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -157,7 +158,7 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
+    all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
       .then(() => {
         if (this._invalidSorting(params.sort)) {
           controller.set('isSortingError', true);

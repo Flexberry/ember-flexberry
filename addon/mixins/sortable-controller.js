@@ -3,7 +3,6 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import { oneWay } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service} from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';

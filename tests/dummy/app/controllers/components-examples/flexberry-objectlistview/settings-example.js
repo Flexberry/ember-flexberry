@@ -330,12 +330,12 @@ export default ListFormController.extend({
     this.set('records', []);
     this.set('componentTemplateText', new htmlSafe(
       '{{flexberry-objectlistview<br>' +
-      '  componentName=\"SuggestionsObjectListView\"<br>' +
+      '  componentName="SuggestionsObjectListView"<br>' +
       '  colsConfigButton=colsConfigButton<br>' +
       '  exportExcelButton=exportExcelButton<br>' +
       '  content=model<br>' +
-      '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-      '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
+      '  modelName="ember-flexberry-dummy-suggestion"<br>' +
+      '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
       '  modelProjection=projection<br>' +
       '  placeholder=placeholder<br>' +
       '  readonly=readonly<br>' +
@@ -361,13 +361,13 @@ export default ListFormController.extend({
       '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
       '  rowClickable=rowClickable<br>' +
       '  orderable=orderable<br>' +
-      '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
+      '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
       '  filterText=filter<br>' +
       '  filterByAnyWord=filterByAnyWord<br>' +
       '  filterByAllWords=filterByAllWords<br>' +
       '  sorting=computedSorting<br>' +
-      '  sortByColumn=(action \"sortByColumn\")<br>' +
-      '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
+      '  sortByColumn=(action "sortByColumn")<br>' +
+      '  addColumnToSorting=(action "addColumnToSorting")<br>' +
       '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
       '  availableCollExpandMode=availableCollExpandMode<br>' +
       '  pages=pages<br>' +
@@ -375,9 +375,9 @@ export default ListFormController.extend({
       '  perPageValues=perPageValues<br>' +
       '  hasPreviousPage=hasPreviousPage<br>' +
       '  hasNextPage=hasNextPage<br>' +
-      '  previousPage=(action \"previousPage\")<br>' +
-      '  gotoPage=(action \"gotoPage\")<br>' +
-      '  nextPage=(action \"nextPage\")<br>' +
+      '  previousPage=(action "previousPage")<br>' +
+      '  gotoPage=(action "gotoPage")<br>' +
+      '  nextPage=(action "nextPage")<br>' +
       '  fixedHeader=fixedHeader<br>' +
       '}}'));
   },

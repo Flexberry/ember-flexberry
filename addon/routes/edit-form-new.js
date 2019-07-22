@@ -3,6 +3,8 @@
  */
 
 import { assert } from '@ember/debug';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
 import EditFormRoute from './edit-form';
 
 /**
@@ -29,6 +31,16 @@ export default EditFormRoute.extend({
   newSuffix: '.new',
 
   /**
+    The projection name to be used when creating record
+    by prototype (has value only on new routes).
+    Overrides the value of `prototypeProjection` model property.
+
+    @property prototypeProjection
+    @type String
+   */
+  prototypeProjection: undefined,
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
@@ -37,24 +49,41 @@ export default EditFormRoute.extend({
     @param {Object} transition
    */
   model(params, transition) {
-    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-    let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
-    let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
-    flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
-    flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
-
-    if (modelCurrentNotSaved) {
-      return modelCurrentNotSaved;
-    }
-
-    if (modelSelectedDetail) {
-      return modelSelectedDetail;
-    }
-
-    // NOTE: record.id is null.
     let modelName = transition.queryParams.modelName || this.modelName;
-    let record = this.store.createRecord(modelName);
-    return record;
+    let prototypeId = transition.queryParams.prototypeId;
+    let store = this.get('store');
+
+    if (Ember.isNone(prototypeId))
+    {
+      let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+      let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
+      let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
+      flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
+      flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
+
+      if (modelCurrentNotSaved) {
+        return modelCurrentNotSaved;
+      }
+
+      if (modelSelectedDetail) {
+        return modelSelectedDetail;
+      }
+
+      return store.createRecord(modelName, { id: generateUniqueId() });
+    }
+
+    // Get the copyable instance.
+    let prototype = store.peekRecord(modelName, prototypeId);
+
+    let promise = prototype.copy(this.get('prototypeProjection'));
+    return promise.then(record => {
+      if (Ember.isNone(record)) {
+        transition.queryParams.prototypeId = undefined;
+        return this.model(...arguments);
+      }
+
+      return record;
+    });
   },
 
   /**
@@ -66,7 +95,7 @@ export default EditFormRoute.extend({
     @param {Object} model
    */
   renderTemplate(controller, model) {
-    var templateName = this.get('templateName');
+    const templateName = this.get('templateName');
     assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,

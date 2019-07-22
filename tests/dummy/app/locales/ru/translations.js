@@ -621,6 +621,10 @@ $.extend(true, translations, {
           'suggestions': {
             'caption': 'Предложения',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Несколько списков',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -1058,6 +1062,11 @@ $.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Типы предложений'
+    },
+
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Несколько списков на форме',
+      'multi-edit-form': 'Несколько списков на эдитформе'
     },
 
     'log-service-examples': {

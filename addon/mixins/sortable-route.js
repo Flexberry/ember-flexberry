@@ -3,6 +3,7 @@
  */
 
 import Mixin from '@ember/object/mixin';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Mixin for route, that sorting on the list form.
@@ -52,6 +53,14 @@ export default Mixin.create({
   },
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEvents
+    @type Service
+  */
+  objectlistviewEvents: Ember.inject.service(),
+
+  /**
     Apply sorting to result list.
 
     @method includeSorting
@@ -63,4 +72,28 @@ export default Mixin.create({
     model.set('sorting', sorting);
     return model;
   },
+
+  /**
+    Sets sorting and reload component content by component name.
+
+    @method setSorting
+    @param {String} componentName Component name.
+    @param {Array} sorting Sorting object.
+  */
+  setSorting(componentName, sorting) {
+    let sort = serializeSortingParam(Ember.A(sorting));
+    this.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
+  },
+
+  setupController() {
+    this._super(...arguments);
+
+    this.get('objectlistviewEvents').on('setSorting', this, this.setSorting);
+  },
+
+  resetController() {
+    this._super(...arguments);
+
+    this.get('objectlistviewEvents').off('setSorting', this, this.setSorting);
+  }
 });

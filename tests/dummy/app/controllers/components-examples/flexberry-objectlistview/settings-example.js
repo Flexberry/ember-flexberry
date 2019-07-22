@@ -208,12 +208,12 @@ export default ListFormController.extend({
   showEditButtonInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showPrototypeButtonInRow' mode or not.
 
-    @property showEditMenuItemInRow
+    @property showPrototypeButtonInRow
     @type Boolean
    */
-  showEditMenuItemInRow: true,
+  showPrototypeButtonInRow: false,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
@@ -222,6 +222,22 @@ export default ListFormController.extend({
     @type Boolean
    */
   showDeleteMenuItemInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+   */
+  showEditMenuItemInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showPrototypeMenuItemInRow' mode or not.
+
+    @property showPrototypeMenuItemInRow
+    @type Boolean
+   */
+  showPrototypeMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.
@@ -314,12 +330,12 @@ export default ListFormController.extend({
     this.set('records', []);
     this.set('componentTemplateText', new htmlSafe(
       '{{flexberry-objectlistview<br>' +
-      '  componentName="SuggestionsObjectListView"<br>' +
+      '  componentName=\"SuggestionsObjectListView\"<br>' +
       '  colsConfigButton=colsConfigButton<br>' +
       '  exportExcelButton=exportExcelButton<br>' +
       '  content=model<br>' +
-      '  modelName="ember-flexberry-dummy-suggestion"<br>' +
-      '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
+      '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
+      '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
       '  modelProjection=projection<br>' +
       '  placeholder=placeholder<br>' +
       '  readonly=readonly<br>' +
@@ -337,29 +353,31 @@ export default ListFormController.extend({
       '  defaultSortingButton=defaultSortingButton<br>' +
       '  filterButton=filterButton<br>' +
       '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
       '  showEditButtonInRow=showEditButtonInRow<br>' +
+      '  showPrototypeButtonInRow=showPrototypeButtonInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
       '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow<br>' +
       '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
       '  rowClickable=rowClickable<br>' +
       '  orderable=orderable<br>' +
-      '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
+      '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
       '  filterText=filter<br>' +
       '  filterByAnyWord=filterByAnyWord<br>' +
       '  filterByAllWords=filterByAllWords<br>' +
       '  sorting=computedSorting<br>' +
-      '  sortByColumn=(action "sortByColumn")<br>' +
-      '  addColumnToSorting=(action "addColumnToSorting")<br>' +
+      '  sortByColumn=(action \"sortByColumn\")<br>' +
+      '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
       '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
-      '  _availableCollExpandMode=availableCollExpandMode<br>' +
+      '  availableCollExpandMode=availableCollExpandMode<br>' +
       '  pages=pages<br>' +
       '  perPageValue=perPageValue<br>' +
       '  perPageValues=perPageValues<br>' +
       '  hasPreviousPage=hasPreviousPage<br>' +
       '  hasNextPage=hasNextPage<br>' +
-      '  previousPage=(action "previousPage")<br>' +
-      '  gotoPage=(action "gotoPage")<br>' +
-      '  nextPage=(action "nextPage")<br>' +
+      '  previousPage=(action \"previousPage\")<br>' +
+      '  gotoPage=(action \"gotoPage\")<br>' +
+      '  nextPage=(action \"nextPage\")<br>' +
       '  fixedHeader=fixedHeader<br>' +
       '}}'));
   },
@@ -508,22 +526,34 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'showCheckBoxInRow'
     });
     componentSettingsMetadata.pushObject({
-      settingName: 'showDeleteButtonInRow',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'showDeleteButtonInRow'
-    });
-    componentSettingsMetadata.pushObject({
       settingName: 'showEditButtonInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showEditButtonInRow'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'showPrototypeButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPrototypeButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showDeleteButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showDeleteButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showEditMenuItemInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showEditMenuItemInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showPrototypeMenuItemInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPrototypeMenuItemInRow'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showDeleteMenuItemInRow',

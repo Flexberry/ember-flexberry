@@ -9,14 +9,12 @@ import { assert } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { A } from '@ember/array';
-import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+
 import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
-import { BasePredicate } from 'ember-flexberry-data/query/predicate';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { DatePredicate } from 'ember-flexberry-data/query/predicate';
-import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import { BasePredicate, SimplePredicate, StringPredicate, ComplexPredicate,
+  DatePredicate, stringToPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -69,18 +67,7 @@ export default Mixin.create({
     let store = this.store;
     assert('Store for data loading is not defined.', store);
 
-    let reloadOptions = merge({
-      modelName: undefined,
-      projectionName: undefined,
-      perPage: undefined,
-      page: undefined,
-      sorting: undefined,
-      filter: undefined,
-      filterCondition: undefined,
-      filters: undefined,
-      predicate: undefined,
-      hierarchicalAttribute: undefined,
-    }, options);
+    let reloadOptions = options;
 
     let modelName = reloadOptions.modelName;
     assert('Model name for data loading is not defined.', modelName);
@@ -94,18 +81,27 @@ export default Mixin.create({
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
 
-    let limitPredicate = reloadOptions.predicate;
-    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+    let allPredicates = Ember.A();
+
+    if (reloadOptions.predicate && !(reloadOptions.predicate instanceof BasePredicate)) {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
-    let filtersPredicate = reloadOptions.filters;
-    if (filtersPredicate && !(filtersPredicate instanceof BasePredicate)) {
+    allPredicates.addObject(reloadOptions.predicate);
+
+    if (reloadOptions.filters && !(reloadOptions.filters instanceof BasePredicate)) {
       throw new Error('Incorrect filters. It has to be instance of BasePredicate.');
     }
 
-    if (filtersPredicate) {
-      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, filtersPredicate) : filtersPredicate;
+    allPredicates.addObject(reloadOptions.filters);
+
+    if (reloadOptions.advLimit) {
+      const advPredicate = stringToPredicate(reloadOptions.advLimit);
+      if (!(advPredicate instanceof BasePredicate)) {
+        throw new Error('Incorrect advLimit. It has to be instance of BasePredicate.');
+      }
+
+      allPredicates.addObject(advPredicate);
     }
 
     let perPage = reloadOptions.perPage;
@@ -122,27 +118,28 @@ export default Mixin.create({
 
     if (reloadOptions.hierarchicalAttribute) {
       let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
-      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
+      allPredicates.addObject(hierarchicalPredicate);
     } else {
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
     }
 
-    let sorting = reloadOptions.sorting.map(i => `${i.propName} ${i.direction}`).join(',');
-    if (sorting) {
-      builder.orderBy(sorting);
+    if (Ember.isArray(reloadOptions.sorting)) {
+      let sorting = reloadOptions.sorting.filter(i => i.direction !== 'none').map(i => `${i.propName} ${i.direction}`).join(',');
+      if (sorting) {
+        builder.orderBy(sorting);
+      }
     }
 
-    let filter = reloadOptions.filter;
-    let filterCondition = reloadOptions.filterCondition;
-    let filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
-    let resultPredicate = (limitPredicate && filterPredicate) ?
-                          new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
-                          (limitPredicate ?
-                            limitPredicate :
-                            (filterPredicate ?
-                              filterPredicate :
-                              undefined));
-    this.get('objectlistviewEvents').setLimitFunction(resultPredicate);
+    const filter = reloadOptions.filter;
+    const filterCondition = reloadOptions.filterCondition;
+    const filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
+    allPredicates.addObject(filterPredicate);
+    allPredicates = allPredicates.compact();
+    const resultPredicate = allPredicates.length > 1 ?
+      new ComplexPredicate(Condition.And, ...allPredicates) :
+      allPredicates[0];
+
+    this.get('objectlistviewEvents').setLimitFunction(resultPredicate, reloadOptions.componentName);
 
     if (resultPredicate) {
       builder.where(resultPredicate);

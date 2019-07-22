@@ -54,6 +54,17 @@ export default EditFormController.extend({
    */
   style:'#example',
 
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+  */
+  previewSettings: {
+    detachable: true,
+    context: 'body',
+  },
+
   actions: {
     modalWindow(style) {
       if (!isNone(style)) {

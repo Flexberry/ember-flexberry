@@ -405,6 +405,7 @@ export default Mixin.create(ReloadListMixin, {
 
     let controller = currentContext.get('lookupController');
     let queryParameters = {
+      componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),

@@ -4,10 +4,11 @@ import { observer } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import OlvOnEditMixin from 'ember-flexberry/mixins/flexberry-objectlistview-on-edit-form-controller';
 
 import { Query } from 'ember-flexberry-data';
 
-export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
+export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerOperationsIndicationMixin, {
   /**
     Route name for transition after close edit form.
 

@@ -388,7 +388,9 @@ export default FlexberryBaseComponent.extend({
         return false;
       }
     }, this));
-    /* eslint-disable no-unused-vars */
+
+    this.get('_flatpickr').currentMonthElement.title = this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text');
+
     this.$('.custom-flatpickr').change($.proxy(function (e) {
       this._validationDateTime();
     }, this));

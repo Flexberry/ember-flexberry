@@ -491,8 +491,17 @@ export default FlexberryBaseComponent.extend({
     @property headers
     @type Object
     @default null
-   */
+  */
   headers: null,
+
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+    @default null
+  */
+  previewSettings: null,
 
   actions: {
     /**
@@ -506,11 +515,13 @@ export default FlexberryBaseComponent.extend({
       let fileName = this.get('_fileName');
       let previewImageAsBase64String = this.get('_previewImageAsBase64String');
       if (!isBlank(fileName) && !isBlank(previewImageAsBase64String)) {
+        let settings = this.get('previewSettings');
 
         /* eslint-disable ember/closure-actions */
         this.sendAction('viewImageAction', {
           fileSrc: previewImageAsBase64String,
-          fileName: fileName
+          fileName: fileName,
+          settings: settings
         });
         /* eslint-enable ember/closure-actions */
       }

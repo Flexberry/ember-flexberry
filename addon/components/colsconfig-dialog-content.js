@@ -158,15 +158,22 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('model.exportParams.isExportExcel')) {
         let colsConfig = this._getSettings();
 
-        let router = getOwner(this).lookup('router:main');
         let savePromise = this._getSavePromise(undefined, colsConfig);
 
         /* eslint-disable no-unused-vars */
         savePromise.then(
           record => {
             this.get('appState').reset();
-            let sort = serializeSortingParam(colsConfig.sorting);
-            router._routerMicrolib.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+            let mainController = this.get('currentController.mainControler');
+            let userSettingsApplyFunction = mainController.get('userSettingsApply');
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(mainController, [this.get('model.componentName'), colsConfig.sorting, colsConfig.perPage]);
+            } else {
+              mainController.set('sort', sort);
+              mainController.set('perPage', colsConfig.perPage || 5);
+              let router = getOwner(this).lookup('router:main');
+              router.router.refresh();
+            }
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
@@ -225,7 +232,7 @@ export default FlexberryBaseComponent.extend({
 
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
-      this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
 
       /* eslint-disable no-unused-vars */
       savePromise.then(
@@ -297,7 +304,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction(this.get('model.componentName'));
     if (limitFunction) {
       builder.where(limitFunction);
     }
@@ -321,7 +328,7 @@ export default FlexberryBaseComponent.extend({
 
     return this.get('userSettingsService').saveUserSetting(componentName, settingName, colsConfig, isExportExcel)
     .then(result => {
-      this.get('colsConfigMenu').updateNamedSettingTrigger();
+      this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
     });
   },
   /* eslint-enable no-unused-vars */

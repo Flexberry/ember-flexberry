@@ -1,26 +1,29 @@
 {{#if sitemap.link}}
-  {{#link-to sitemap.link class="item" title=sitemap.title}}
-    <div class="title-item-menu" {{action "menuToggle"}}><i class="icon {{sitemap.icon}}"></i>{{sitemap.caption}}</div>
+  {{#link-to sitemap.link title=sitemap.title}}
+    <div class="title-item-menu">
+      {{#if sitemap.icon}}
+        <i class="icon {{sitemap.icon}}"></i>
+      {{/if}}
+      {{sitemap.caption}}
+    </div>
   {{/link-to}}
 {{else if sitemap.caption}}
-  <div class="item item-menu">
-    <div class="title-item-menu" {{action "menuToggle"}}>
-      <i class="icon {{sitemap.icon}}"></i>
-      {{!-- {{#if sitemap.children.length}}
-        <i class="{{if nodeIsOpen "minus" "plus"}} square outline icon"></i>
-      {{/if}} --}}
+    <i class="dropdown icon"></i>
+    <div class="title-item-menu">
+      {{#if sitemap.icon}}
+        <i class="icon {{sitemap.icon}}"></i>
+      {{/if}}
       {{sitemap.caption}}
     </div>
     {{#if sitemap.children.length}}
-      <div class="menu subMenu hidden">
+      <div class="menu">
         {{#each sitemap.children as |child|}}
-          {{flexberry-sitemap sitemap=child}}
+          {{flexberry-sitemap sitemap=child isDropDown=false classNames="item"}}
         {{/each}}
       </div>
     {{/if}}
-  </div>
 {{else if sitemap.nodes}}
   {{#each sitemap.nodes as |node|}}
-    {{flexberry-sitemap sitemap=node}}
+    {{flexberry-sitemap sitemap=node isDropDown=true}}
   {{/each}}
 {{/if}}

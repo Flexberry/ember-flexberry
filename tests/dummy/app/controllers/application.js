@@ -218,17 +218,20 @@ export default Controller.extend({
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
-          children: null
+          children: null,
+          icon: 'clock outline'
         }, {
           link: 'log-service-examples/settings-example',
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
-          children: null
+          children: null,
+          icon: 'lock'
         }, {
           link: 'log-service-examples/clear-log-form',
           caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
-          children: null
+          children: null,
+          icon: 'comment outline'
         }]
       }, {
         link: null,

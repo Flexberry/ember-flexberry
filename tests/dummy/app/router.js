@@ -78,6 +78,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');
   this.route('components-examples/flexberry-lookup/lookup-block-form-example');
   this.route('components-examples/flexberry-lookup/lookup-in-modal');
+  this.route('components-examples/flexberry-lookup/lookup-in-modal-autocomplete');
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');

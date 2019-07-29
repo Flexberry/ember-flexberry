@@ -19,14 +19,13 @@
           readonly=readonly
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
-          autocomplete=true
         }}
       </div>
       <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}
-{{#modal-dialog settings=settings created=createdConsumer}}
+{{#ui-modal id="repeat-window-double"}}
   <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModalDouble"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
@@ -40,10 +39,9 @@
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
           readonly=readonly
-          autocomplete=true
         }}
       </div>
       <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
-{{/modal-dialog}}
+{{/ui-modal}}

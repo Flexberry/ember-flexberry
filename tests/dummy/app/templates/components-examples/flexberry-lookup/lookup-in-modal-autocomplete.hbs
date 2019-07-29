@@ -26,24 +26,25 @@
     </div>
   </div>
 {{/ui-modal}}
-{{#modal-dialog settings=settings created=createdConsumer}}
-  <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModalDouble"}}</div>
-  <div class="content">
-    <div class="ui form flexberry-vertical-form">
-      <div class="field">
-        {{flexberry-lookup
-          value=model.type
-          projection="SuggestionTypeL"
-          displayAttributeName="name"
-          title="Master"
-          relationName="type"
-          choose=(action "showLookupDialog")
-          remove=(action "removeLookupValue")
-          readonly=readonly
-          autocomplete=true
-        }}
+{{#if modaldialog}}
+  {{#modal-dialog settings=settings created=modalWindowDouble useOkButton=false}}
+    <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModalDouble"}}</div>
+    <div class="content">
+      <div class="ui form flexberry-vertical-form">
+        <div class="field">
+          {{flexberry-lookup
+            value=model.type
+            projection="SuggestionTypeL"
+            displayAttributeName="name"
+            title="Master"
+            relationName="type"
+            choose=(action "showLookupDialog")
+            remove=(action "removeLookupValue")
+            readonly=readonly
+            autocomplete=true
+          }}
+        </div>
       </div>
-      <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.buttonClose"}}</button>
     </div>
-  </div>
-{{/modal-dialog}}
+  {{/modal-dialog}}
+{{/if}}

@@ -11,6 +11,8 @@ export default EditFormController.extend({
   */
   _style:'#example',
 
+  modaldialog: false,
+
   actions: {
     modalWindow(style) {
       if (!Ember.isNone(style)) {
@@ -29,19 +31,7 @@ export default EditFormController.extend({
     },
 
     modalWindowDouble(style) {
-      if (!Ember.isNone(style)) {
-        this.set('_style', style);
-      }
-
-      let repeatWindow = Ember.$('#repeat-window-double').modal({
-        closable: false,
-        autofocus: false,
-        detachable: false,
-        allowMultiple: true,
-        context: this.get('_style'),
-      });
-      this.set('repeatWindowdouble', repeatWindow);
-      this.get('repeatWindowdouble').modal('show').modal('refresh');
+      this.set('modaldialog', !this.get('modaldialog'));
     },
 
     logOut() {

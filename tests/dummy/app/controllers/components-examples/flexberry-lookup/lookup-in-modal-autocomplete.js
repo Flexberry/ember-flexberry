@@ -11,7 +11,7 @@ export default EditFormController.extend({
   */
   _style:'#example',
 
-  modaldialog: false,
+  modalDialog: false,
 
   actions: {
     modalWindow(style) {
@@ -31,7 +31,7 @@ export default EditFormController.extend({
     },
 
     modalWindowDouble(style) {
-      this.set('modaldialog', !this.get('modaldialog'));
+      this.set('modalDialog', !this.get('modalDialog'));
     },
 
     logOut() {

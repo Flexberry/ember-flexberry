@@ -1004,10 +1004,10 @@ Ember.$.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
-          'captionModal': 'Custom modal window №1',
-          'captionModalDouble': 'Custom modal window №2',
-          'buttonModal': 'ui-modal',
-          'buttonModalDouble': 'modal-dialog',
+          'captionModal': 'Custom modal window ui-modal',
+          'captionModalDouble': 'Custom modal window modal-dialog',
+          'buttonModal': 'Custom modal window ui-modal',
+          'buttonModalDouble': 'Custom modal window modal-dialog',
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {

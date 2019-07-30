@@ -62,3 +62,33 @@
     </div>
   </a>
 </div>
+
+<div class="ui cards">
+
+  <div class="ui card big">
+    <div class="content">
+      <div class="header">Поиск</div>
+      <form class="ui form">
+        {{flexberry-field
+          label="Название поля"
+          placeholder="Фамилия, имя и отчество"
+        }}
+
+        {{flexberry-field
+          label="Название поля"
+          placeholder="ДД.ММ.ГГГГ или выберите в календаре"
+        }}
+
+        {{flexberry-button
+          class="blue"
+          caption="Поиск"
+        }}
+
+        {{flexberry-checkbox
+          label="По всем ОСЗ"
+        }}
+      </form>
+    </div>
+  </div>
+
+</div>

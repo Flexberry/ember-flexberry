@@ -23,4 +23,8 @@ export default Ember.Service.extend(Ember.Evented, {
   updateNamedSettingTrigger(componentName) {
     this.trigger('updateNamedSetting', componentName);
   },
+
+  updateNamedAdvLimitTrigger(componentName) {
+    this.trigger('updateNamedAdvLimit', componentName);
+  },
 });

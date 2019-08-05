@@ -810,7 +810,8 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-multi-list': {
-      'caption': 'Несколько списков на форме'
+      'caption': 'Несколько списков на форме',
+      'multi-edit-form': 'Несколько списков на эдитформе'
     },
 
     'log-service-examples': {

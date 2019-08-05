@@ -18,7 +18,8 @@ var Model = Projection.Model.extend({
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null, async: false
+    inverse: null,
+    async: false
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -77,7 +78,10 @@ var Model = Projection.Model.extend({
       result++;
     });
     this.set('commentsCount', result);
-  }
+
+  },
+
+  prototypeProjection: 'SuggestionE'
 });
 
 // Edit form projection.

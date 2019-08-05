@@ -87,6 +87,7 @@ export default Ember.Mixin.create({
               predicate: limitPredicate,
               advLimit: advLimit,
               hierarchicalAttribute: settings.inHierarchicalMode ? settings.hierarchicalAttribute : null,
+              hierarchyPaging: settings.hierarchyPaging
             };
 
             result[componentName] = this.reloadList(queryParameters);

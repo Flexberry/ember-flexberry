@@ -374,9 +374,8 @@ export default FlexberryBaseComponent.extend(
     'showDeleteButtonInRow',
     'customButtonsInRow',
     'modelProjection',
-    'hierarchyPaging',
     function() {
-      if (this.get('modelProjection') && !this.get('hierarchyPaging')) {
+      if (this.get('modelProjection')) {
         return this.get('showAsteriskInRow') ||
           this.get('showCheckBoxInRow') ||
           this.get('showEditButtonInRow') ||

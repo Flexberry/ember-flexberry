@@ -40,7 +40,8 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditForm
       projectionName: 'SuggestionTypeL',
       editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
       inHierarchicalMode: true,
-      hierarchicalAttribute: 'parent'
+      hierarchicalAttribute: 'parent',
+      hierarchyPaging: true
     }));
   },
 

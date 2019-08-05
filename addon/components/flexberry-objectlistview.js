@@ -131,6 +131,17 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Flag indicate when component in hierarchycal mode has paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+  */
+  hierarchyPaging: Ember.computed('currentController.hierarchyPaging', function() {
+    return this.get('currentController.hierarchyPaging');
+  }),
+
+  /**
     Flag indicate when available the collapse/expand all hierarchies mode.
 
     @property availableCollExpandMode
@@ -139,16 +150,6 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   availableCollExpandMode: false,
-
-  /**
-    Flag used for disable the hierarchical paging.
-
-    @property hierarchyPaging
-    @type Boolean
-    @default false
-    @private
-  */
-  hierarchyPaging: false,
 
   /**
     Indent in pixels to indicate hierarchy.

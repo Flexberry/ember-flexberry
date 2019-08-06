@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.2.0-beta.0] - 2019-08-06
+### Added
+* Changes from 2.2.0-beta.0 - 2.2.0-beta.5.
+
 ### Changed
 * Update dependency on `flatpickr` to version `4.6.1`.
 
@@ -103,6 +108,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.2.0-beta.5] - 2019-08-05
+* `flexberry-objectlistview` component:
+    * Add hierarchy paging option.
 
 ## [2.2.0-beta.4] - 2019-07-19
 ### Added

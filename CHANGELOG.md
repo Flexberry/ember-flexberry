@@ -4,7 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.6] - 2019-08-06
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy paging mode.
+
 ## [2.2.0-beta.5] - 2019-08-05
+### Added
 * `flexberry-objectlistview` component:
     * Add hierarchy paging option.
 

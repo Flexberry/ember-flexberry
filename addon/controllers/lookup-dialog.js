@@ -211,6 +211,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         filterCondition: this.get('filterCondition'),
         predicate: this.get('predicate'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
+        hierarchyPaging: this.get('hierarchyPaging'),
 
         title: this.get('title'),
         sizeClass: this.get('sizeClass'),

@@ -47,15 +47,6 @@ export default EditFormController.extend({
   showDownloadButton: true,
 
   /**
-    Defaul style of modal context.
-
-    @property readonly
-    @type String
-    @default #example
-   */
-  style:'#example',
-
-  /**
     Settings for preview modal dialog.
 
     @property previewSettings

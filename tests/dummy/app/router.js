@@ -114,6 +114,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
+  this.route('components-examples/flexberry-objectlistview/hierarchy-paging-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',

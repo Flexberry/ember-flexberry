@@ -821,6 +821,10 @@ $.extend(true, translations, {
               'caption': 'Hierarchy example',
               'title': ''
             },
+            'hierarchy-paging-example': {
+              'caption': 'Hierarchy with paginig example',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
@@ -1265,6 +1269,9 @@ $.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy paging example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'

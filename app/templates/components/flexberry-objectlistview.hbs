@@ -101,7 +101,7 @@
   customParameters=customParameters
   fixedHeader=fixedHeader
 }}
-{{#unless inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       {{#if hasPreviousPage}}
@@ -143,4 +143,4 @@
       {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

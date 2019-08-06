@@ -235,9 +235,8 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(settingName, colsConfig);
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
 
-      /* eslint-disable no-unused-vars */
       savePromise.then(
-        record => {
+        () => {
           this.set('currentController.message.type', 'success');
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.setting') +
@@ -256,7 +255,6 @@ export default FlexberryBaseComponent.extend({
           this.currentController.send('handleError', error);
         }
       );
-      /* eslint-enable no-unused-vars */
     },
 
     /* eslint-disable no-unused-vars */

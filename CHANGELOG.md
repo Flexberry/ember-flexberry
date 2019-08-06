@@ -154,6 +154,60 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking changes
 * Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
 
+## [2.2.0-beta.5] - 2019-08-05
+* `flexberry-objectlistview` component:
+    * Add hierarchy paging option.
+
+## [2.2.0-beta.4] - 2019-07-19
+### Added
+* `flexberry-objectlistview` component:
+    * Add advlimit config dialog for editing and applying limits.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.5`.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix select autocomplete result by enter click.
+
+## [2.2.0-beta.3] - 2019-07-19
+### Fixed
+* `user-settings` service:
+    * Fix of replacing perPage form developerUserSettings on reloading.
+* `flexberry-objectlistview` component:
+    * Fix multi lists on edit form with `flexberry-groupedit` components.
+
+## [2.2.0-beta.2] - 2019-07-12
+### Added
+* Add creating record by prototype for `flexberry-objectlistview`.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.3`.
+
+## [2.2.0-beta.1] - 2019-07-05
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.
+
+### Breaking changes
+* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
+* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
+
+## [2.2.0-beta.0] - 2019-06-28
+### Added
+* `flexberry-lookup` component:
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to flexberry-lookup at drodpdown mode.
+    * Add limitFunction in groupedit row to lookup limit by other component.
+* `flexberry-file` component:
+    * Added the ability correct settings to file preview modal dialog.
+* Add mixins for multi list mode.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.0`.
+
+### Breaking changes
+* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
+
 ## [2.1.0] - 2019-04-30
 ### Added
 * Blueprints:

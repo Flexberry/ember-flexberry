@@ -114,6 +114,17 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Flag indicate when component in hierarchycal mode has paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+  */
+  hierarchyPaging: computed('currentController.hierarchyPaging', function() {
+    return this.get('currentController.hierarchyPaging');
+  }),
+
+  /**
     Flag indicate when available the collapse/expand all hierarchies mode.
 
     @property availableCollExpandMode
@@ -1265,7 +1276,7 @@ export default FlexberryBaseComponent.extend({
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
-        if (componentName === this.get('componentName') && !this.get('inHierarchicalMode')) {
+        if (componentName === this.get('componentName') && (!this.get('inHierarchicalMode') || this.get('hierarchyPaging'))) {
           this._setMenuWidth(tableWidth, containerWidth);
         }
       });

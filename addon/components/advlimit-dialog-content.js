@@ -62,9 +62,8 @@ export default FlexberryBaseComponent.extend({
 
       this.get('appState').loading();
       const savePromise = this._getSavePromise(advLimit);
-      /* eslint-disable no-unused-vars */
       savePromise.then(
-        record => {
+        () => {
           this.get('objectlistviewEvents').refreshListTrigger(this.get('model.componentName'));
         }
       ).catch((reason) => {
@@ -72,7 +71,6 @@ export default FlexberryBaseComponent.extend({
       }).finally(() => {
         this.get('appState').reset();
       });
-      /* eslint-disable no-unused-vars */
 
       this.get('close')(advLimit);
     },
@@ -113,9 +111,8 @@ export default FlexberryBaseComponent.extend({
 
       const savePromise = this._getSavePromise(advLimit, advLimitName);
       this.get('colsConfigMenu').updateNamedAdvLimitTrigger(advLimitName);
-      /* eslint-disable no-unused-vars */
       savePromise.then(
-        record => {
+        () => {
           this._showMessage(
             'success',
             this.get('i18n').t('components.advlimit-dialog-content.limit') +
@@ -133,7 +130,6 @@ export default FlexberryBaseComponent.extend({
           this.get('currentController').send('handleError', error);
         }
       );
-      /* eslint-disable no-unused-vars */
     },
 
     /* eslint-disable no-unused-vars */
@@ -141,7 +137,7 @@ export default FlexberryBaseComponent.extend({
       this._super(...arguments);
       return true;
     }
-    /* eslint-disable no-unused-vars */
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -200,6 +196,6 @@ export default FlexberryBaseComponent.extend({
     .then(record => {
       this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
     });
-    /* eslint-disable no-unused-vars */
+    /* eslint-enable no-unused-vars */
   }
 });

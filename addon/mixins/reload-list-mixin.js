@@ -116,7 +116,7 @@ export default Mixin.create({
       .selectByProjection(projectionName)
       .count();
 
-    if (reloadOptions.hierarchicalAttribute) {
+    if (reloadOptions.hierarchicalAttribute && !reloadOptions.hierarchyPaging) {
       let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
       allPredicates.addObject(hierarchicalPredicate);
     } else {

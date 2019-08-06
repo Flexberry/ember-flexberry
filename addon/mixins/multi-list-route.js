@@ -11,8 +11,8 @@ import { A } from '@ember/array';
 import ListParameters from '../objects/list-parameters';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
-import { Query } from 'ember-flexberry-data';
-const { Condition, ComplexPredicate } = Query;
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { Condition } from 'ember-flexberry-data/query/condition';
 
 export default Mixin.create({
   /**

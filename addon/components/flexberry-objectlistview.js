@@ -109,14 +109,8 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  inExpandMode: computed('currentController.inExpandMode', {
-    get() {
-      return this.get('currentController.inExpandMode');
-    },
-    set(key, value) {
-      this.set('currentController.inExpandMode',  value);
-      return value;
-    }
+  inExpandMode: computed('currentController.inExpandMode', function() {
+    return this.get('currentController.inExpandMode');
   }),
 
   /**
@@ -1067,7 +1061,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchExpandMode
     */
     switchExpandMode() {
-      this.get('_switchExpandMode')(this.get('componentName'));
+      this.sendAction('_switchExpandMode', this.get('componentName'));
     },
 
     /**

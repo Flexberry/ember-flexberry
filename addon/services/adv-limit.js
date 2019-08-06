@@ -78,8 +78,8 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-    const appConfig = getOwner(this)._lookupFactory('config:environment');
-    const useAdvLimitService = get(appConfig, 'APP.useAdvLimitService');
+    const appConfig = getOwner(this).factoryFor('config:environment');
+    const useAdvLimitService = get(appConfig, 'class.APP.useAdvLimitService');
     if (!isNone(useAdvLimitService)) {
       this.set('isAdvLimitServiceEnabled', useAdvLimitService);
     }
@@ -117,10 +117,11 @@ export default Service.extend({
         advLimits => {
           const ret = {};
           if (isArray(advLimits)) {
-            advLimits.forEach(({ record }) => {
-              let advLimitValue = record.get('value');
-              let advLimitName = record.get('name') || defaultSettingName;
-              let componentName = record.get('module').split('@')[1];
+            advLimits.forEach(limit => {
+              const record = limit.getRecord();
+              const advLimitValue = record.get('value');
+              const advLimitName = record.get('name') || defaultSettingName;
+              const componentName = record.get('module').split('@')[1];
 
               if (advLimitValue) {
                 if (!(componentName in ret)) {
@@ -356,7 +357,8 @@ export default Service.extend({
         const delPromises = A();
         const foundRecords = result.get('content');
         if (isArray(foundRecords) && foundRecords.length > 0) {
-          foundRecords.forEach(({ record }) => {
+          foundRecords.forEach(limit => {
+            const record = limit.getRecord();
             delPromises.addObject(record.destroyRecord());
           }, this);
 
@@ -384,10 +386,10 @@ export default Service.extend({
         const foundRecords = result.get('content');
         if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i].record.destroyRecord();
+            foundRecords[i].getRecord().destroyRecord();
           }
 
-          return foundRecords[0].record;
+          return foundRecords[0].getRecord();
         }
       }
 

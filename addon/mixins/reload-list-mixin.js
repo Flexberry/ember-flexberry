@@ -116,7 +116,12 @@ export default Mixin.create({
       .selectByProjection(projectionName)
       .count();
 
-    if (reloadOptions.hierarchicalAttribute && !reloadOptions.hierarchyPaging) {
+    if (reloadOptions.hierarchicalAttribute) {
+      if (reloadOptions.hierarchyPaging) {
+        builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+        builder.orderBy('id asc');
+      }
+
       let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
       allPredicates.addObject(hierarchicalPredicate);
     } else {

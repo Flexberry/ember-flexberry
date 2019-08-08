@@ -621,6 +621,10 @@ $.extend(true, translations, {
           'suggestions': {
             'caption': 'Предложения',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Несколько списков',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -835,6 +839,10 @@ $.extend(true, translations, {
             },
             'hierarchy-example': {
               'caption': 'Пример иерархии на списке',
+              'title': ''
+            },
+            'hierarchy-paging-example': {
+              'caption': 'Пример иерархии c пейджингом',
               'title': ''
             },
             'configurate-rows': {
@@ -1060,6 +1068,11 @@ $.extend(true, translations, {
       'caption': 'Типы предложений'
     },
 
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Несколько списков на форме',
+      'multi-edit-form': 'Несколько списков на эдитформе'
+    },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',
@@ -1277,6 +1290,9 @@ $.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Пример иерархии c пейджингом на списке'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'

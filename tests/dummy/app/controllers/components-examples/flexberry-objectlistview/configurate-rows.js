@@ -91,12 +91,22 @@ export default ListFormController.extend({
   _configurateRowByAddress: observer('configurateRowByAddress', function() {
     let rowConfig = { customClass: '' };
 
-    /* eslint-disable no-unused-vars */
-    this.get('records').forEach((record, index, records) => {
+    this.get('records').forEach((record) => {
       this.send('configurateRow', rowConfig, record);
     });
-    /* eslint-enable no-unused-vars */
-}),
+  }),
+
+  _modelObserver: observer('model', function() {
+    if (isNone(this.get('configurateRowByAddress'))) {
+      const model = this.get('model');
+      if (model.get instanceof Function) {
+        const firstRecord = model.get('firstObject');
+        if (firstRecord) {
+          this.set('configurateRowByAddress', firstRecord.get('address'));
+        }
+      }
+    }
+  }),
 
   /**
     Template text for 'flexberry-objectlistview' component.

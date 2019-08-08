@@ -1,4 +1,5 @@
 import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
 import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import config from 'dummy/config/environment';
@@ -46,13 +47,15 @@ export default EditFormController.extend({
   showDownloadButton: true,
 
   /**
-    Defaul style of modal context.
+    Settings for preview modal dialog.
 
-    @property readonly
-    @type String
-    @default #example
-   */
-  style:'#example',
+    @property previewSettings
+    @type Object
+  */
+  previewSettings: computed(() => ({
+    detachable: true,
+    context: 'body',
+  })),
 
   actions: {
     modalWindow(style) {

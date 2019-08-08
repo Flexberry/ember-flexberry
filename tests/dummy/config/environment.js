@@ -71,6 +71,9 @@ module.exports = function(environment) {
       // Flag: indicates whether to use user settings service or not.
       useUserSettingsService: true,
 
+      // Flag: indicates whether to use adv limit service or not.
+      useAdvLimitService: true,
+
       // Custom property with components settings.
       components: {
         // Settings for flexberry-file component.

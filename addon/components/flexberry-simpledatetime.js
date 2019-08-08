@@ -388,11 +388,10 @@ export default FlexberryBaseComponent.extend({
         return false;
       }
     }, this));
-    /* eslint-disable no-unused-vars */
-    this.$('.custom-flatpickr').change($.proxy(function (e) {
+
+    this.$('.custom-flatpickr').change($.proxy(function () {
       this._validationDateTime();
     }, this));
-    /* eslint-enable no-unused-vars */
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   },
 

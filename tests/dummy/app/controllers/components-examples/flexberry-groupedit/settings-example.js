@@ -94,6 +94,15 @@ export default EditFormController.extend({
   readonly: false,
 
   /**
+    Flag: indicates whether to show default settings button at toolbar.
+
+    @property defaultSettingsButton
+    @type Boolean
+    @default false
+   */
+  defaultSettingsButton: false,
+
+  /**
     Flag for 'flexberry-groupedit' component 'tableStriped' property.
 
     @property tableStriped
@@ -228,6 +237,7 @@ export default EditFormController.extend({
       '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
       '  rowClickable=rowClickable<br>' +
       '  immediateDelete=immediateDelete<br>' +
+      '  defaultSettingsButton=defaultSettingsButton<br>' +
       '}}'));
   },
 
@@ -352,6 +362,12 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'immediateDelete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'defaultSettingsButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'defaultSettingsButton'
     });
 
     return componentSettingsMetadata;

@@ -43,10 +43,15 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   */
   lookupDynamicProperties: computed(function() {
     let lookupLimitPredicate;
+    let lookupAdditionalLimitFunction;
     let fieldvalue = this.get('fieldvalue');
     if (fieldvalue) {
       lookupLimitPredicate = new StringPredicate('name').contains(fieldvalue);
     }
+
+    lookupAdditionalLimitFunction = function (relationModel) {
+      return new StringPredicate('eMail').contains(relationModel.get('voteType'));
+    };
 
     return {
       choose: 'showLookupDialog',
@@ -58,6 +63,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       autocomplete: true,
       readonly: this.get('checkboxValue'),
       lookupLimitPredicate,
+      lookupAdditionalLimitFunction,
     };
   }).readOnly(),
 

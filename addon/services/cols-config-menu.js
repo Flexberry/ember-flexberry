@@ -13,15 +13,19 @@ import Evented from '@ember/object/evented';
  * @public
  */
 export default Service.extend(Evented, {
-  addNamedSettingTrigger(namedSetting) {
-    this.trigger('addNamedSetting', namedSetting);
+  addNamedSettingTrigger(namedSetting, componentName) {
+    this.trigger('addNamedSetting', namedSetting, componentName);
   },
 
-  deleteNamedSettingTrigger(namedSetting) {
-    this.trigger('deleteNamedSetting', namedSetting);
+  deleteNamedSettingTrigger(namedSetting, componentName) {
+    this.trigger('deleteNamedSetting', namedSetting, componentName);
   },
 
-  updateNamedSettingTrigger() {
-    this.trigger('updateNamedSetting');
+  updateNamedSettingTrigger(componentName) {
+    this.trigger('updateNamedSetting', componentName);
+  },
+
+  updateNamedAdvLimitTrigger(componentName) {
+    this.trigger('updateNamedAdvLimit', componentName);
   },
 });

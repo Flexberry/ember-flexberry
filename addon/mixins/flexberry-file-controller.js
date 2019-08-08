@@ -46,7 +46,8 @@ export default Mixin.create({
     flexberryFileViewImageAction(selectedFileOptions) {
       let options = merge({
         fileSrc: undefined,
-        fileName: undefined
+        fileName: undefined,
+        settings: undefined
       }, selectedFileOptions);
       let fileSrc = options.fileSrc;
       let fileName = options.fileName;
@@ -63,7 +64,8 @@ export default Mixin.create({
       let controller = this.get('flexberryFileModalController');
       controller.setProperties({
         title: fileName,
-        imageSrc: fileSrc
+        imageSrc: fileSrc,
+        settings:options.settings
       });
       this.send('showModalDialog', flexberryFileModalTemplateName, { controller: controller });
     },

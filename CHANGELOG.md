@@ -4,9 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.2.0-beta.0] - 2019-08-06
+## [3.2.0-beta.0] - 2019-08-08
 ### Added
-* Changes from 2.2.0-beta.0 - 2.2.0-beta.5.
+* Changes from 2.2.0-beta.0 - 2.2.0-beta.6.
 
 ### Changed
 * Update dependency on `flatpickr` to version `4.6.1`.

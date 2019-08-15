@@ -73,7 +73,7 @@ export default EditFormRoute.extend({
     }
 
     // Get the copyable instance.
-    let prototype = store.peekRecord(modelName, prototypeId);
+    let prototype = store.peekRecord(modelName, prototypeId) || store.createRecord(modelName, { id: prototypeId });
 
     let promise = prototype.copy(this.get('prototypeProjection'));
     return promise.then(record => {

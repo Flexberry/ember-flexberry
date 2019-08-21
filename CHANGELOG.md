@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.2] - 2019-08-21
+### Added
+* Changes from 2.2.0-beta.7 - 2.2.0-beta.9.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.3`.
+
 ## [3.2.0-beta.1] - 2019-08-08
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.2.0-beta.2`.
@@ -112,6 +119,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.2.0-beta.9] - 2019-08-21
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.7`.
+
+## [2.2.0-beta.8] - 2019-08-16
+### Fixed
+* Creating a prototype record when a prototype is not loaded into store.
 
 ## [2.2.0-beta.7] - 2019-08-08
 ### Changed

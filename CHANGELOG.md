@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.9] - 2019-08-21
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.7`.
+
 ## [2.2.0-beta.8] - 2019-08-16
 ### Fixed
 * Creating a prototype record when a prototype is not loaded into store.

@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `autocomplite` results after toogle readonly mode.
+
+### Changed
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
 
 ## [2.2.0-beta.9] - 2019-08-21
 ### Changed

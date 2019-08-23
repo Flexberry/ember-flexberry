@@ -366,7 +366,7 @@ export default Ember.Mixin.create({
     let index = Ember.get(attr, 'options.index');
 
     let column = {
-      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || Ember.String.htmlSafe(attr.caption || Ember.String.capitalize(attrName)),
       propName: bindingPath,
       cellComponent: cellComponent,
       isHasMany: isHasMany,

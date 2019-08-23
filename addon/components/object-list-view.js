@@ -2599,7 +2599,9 @@ export default FlexberryBaseComponent.extend(
     let parent = Ember.$(settings.parent);
     let table = Ember.$(settings.table);
 
-    parent.append(table);
+    if (!parent.children(table).length) {
+      parent.append(table);
+    }
 
     Ember.$('.full.height .flexberry-content .ui.main.container').css('margin-bottom', '0');
 

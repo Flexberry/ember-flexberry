@@ -1120,7 +1120,21 @@ export default FlexberryBaseComponent.extend(
           objectlistviewEventsService.updateWidthTrigger(componentName);
         }
       });
-    }
+    },
+
+    /**
+      Checks if "Enter" button was pressed.
+      If "Enter" button was pressed then apply filters.
+
+      @method actions.keyDownFilterAction
+    */
+    keyDownFilterAction(e) {
+      if (e.keyCode === 13) {
+        this.get('currentController').send('refreshList', this.get('componentName'));
+        e.preventDefault();
+        return false;
+      }
+    },
   },
 
   /**

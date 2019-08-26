@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.10] - 2019-08-26
 ### Fixed
 * `flexberry-lookup` component:
     * Fix `autocomplite` results after toogle readonly mode.
+* `flexberry-objectlistview` component:
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
 
 ### Changed
 * `flexberry-lookup` component:

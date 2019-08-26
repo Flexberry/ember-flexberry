@@ -1119,8 +1119,21 @@ export default FlexberryBaseComponent.extend(
           objectlistviewEventsService.updateWidthTrigger(componentName);
         }
       });
-    }
-    /* eslint-enable no-unused-vars */
+    },
+
+    /**
+      Checks if "Enter" button was pressed.
+      If "Enter" button was pressed then apply filters.
+
+      @method actions.keyDownFilterAction
+    */
+    keyDownFilterAction(e) {
+      if (e.keyCode === 13) {
+        this.get('currentController').send('refreshList', this.get('componentName'));
+        e.preventDefault();
+        return false;
+      }
+    },
   },
 
   /**
@@ -2616,7 +2629,9 @@ export default FlexberryBaseComponent.extend(
     let parent = $(settings.parent);
     let table = $(settings.table);
 
-    parent.append(table);
+    if (!parent.children(table).length) {
+      parent.append(table);
+    }
 
     $('.full.height .flexberry-content .ui.main.container').css('margin-bottom', '0');
 

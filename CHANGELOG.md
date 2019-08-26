@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.3] - 2019-08-26
+### Added
+* Changes from 2.2.0-beta.10.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.4`.
+
 ## [3.2.0-beta.2] - 2019-08-21
 ### Added
 * Changes from 2.2.0-beta.7 - 2.2.0-beta.9.
@@ -119,6 +126,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.2.0-beta.10] - 2019-08-26
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `autocomplite` results after toogle readonly mode.
+* `flexberry-objectlistview` component:
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
+
+### Changed
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.8`.
 
 ## [2.2.0-beta.9] - 2019-08-21
 ### Changed

@@ -7,6 +7,7 @@ import { typeOf, isNone } from '@ember/utils';
 import { get, set } from '@ember/object';
 import { isArray, A } from '@ember/array';
 import { capitalize } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
 export default Mixin.create({
@@ -377,7 +378,7 @@ export default Mixin.create({
     let index = get(attr, 'options.index');
 
     let column = {
-      header: valueFromLocales || attr.caption || capitalize(attrName),
+      header: valueFromLocales || htmlSafe(attr.caption || capitalize(attrName)),
       propName: bindingPath,
       cellComponent: cellComponent,
       isHasMany: isHasMany,

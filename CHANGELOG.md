@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `flexberry-lookup` component:
     * In `readonly` mode now has disabled class.
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.8`.
 
 ## [2.2.0-beta.9] - 2019-08-21
 ### Changed

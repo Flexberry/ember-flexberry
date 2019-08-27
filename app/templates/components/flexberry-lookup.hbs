@@ -10,10 +10,10 @@
     settings=dropdownSettings
   }}
 {{else}}
-  <div class="ui fluid action input">
+  <div class="ui fluid input">
     {{input
       type="text"
-      class=(concat "lookup-field " (if autocomplete "prompt"))
+      class=(concat (concat "lookup-field " (if autocomplete "prompt")) (if (or readonly isBlocked) " disabled"))
       placeholder=placeholder
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")
@@ -29,16 +29,16 @@
       {{/if}}
     {{/if}}
     <button
-      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-      title={{t "components.flexberry-lookup.choose-button-text"}}
-      {{action "choose" chooseData}}>
-      {{{chooseText}}}
-    </button>
-    <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
       {{action "remove" removeData}}>
       {{{removeText}}}
+    </button>
+    <button
+      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+      title={{t "components.flexberry-lookup.choose-button-text"}}
+      {{action "choose" chooseData}}>
+      {{{chooseText}}}
     </button>
   </div>
 {{/if}}

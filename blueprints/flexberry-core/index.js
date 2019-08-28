@@ -11,10 +11,12 @@ var Locales_1 = require("../flexberry-core/Locales");
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var TAB = "  ";
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates core entities for flexberry.',
     availableOptions: [
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -79,6 +81,16 @@ module.exports = {
         this._excludeIfExists();
         return this._files;
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    },
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

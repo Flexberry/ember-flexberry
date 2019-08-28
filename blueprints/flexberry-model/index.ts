@@ -7,6 +7,7 @@ import lodash = require('lodash');
 import path = require('path');
 import metadata = require('MetadataClasses');
 import CommonUtils from '../flexberry-common/CommonUtils';
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 
 module.exports = {
 
@@ -14,7 +15,8 @@ module.exports = {
 
   availableOptions: [
     { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -45,6 +47,15 @@ module.exports = {
     if (this.project.isEmberCLIAddon()) {
       CommonUtils.installFlexberryAddon(options, ["model", "serializer"]);
     }
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
   },
 
   /**

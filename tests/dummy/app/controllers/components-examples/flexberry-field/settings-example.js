@@ -121,6 +121,15 @@ export default Controller.extend({
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'maxlength'
     });
+    componentSettingsMetadata.pushObject({
+      settingName: 'class',
+      settingType: 'css',
+      settingDefaultValue: '',
+      bindedControllerPropertieName: 'class',
+      settingAvailableItems: [
+        'large'
+      ],
+    });
 
     return componentSettingsMetadata;
   })

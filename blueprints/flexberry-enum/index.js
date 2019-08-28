@@ -3,11 +3,13 @@ var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
 var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data enum for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -17,6 +19,16 @@ module.exports = {
             CommonUtils_1.default.installFlexberryAddon(options, ["enum", "transform"]);
         }
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super.processFiles.appy(this, [intoDir, templateVariables]);
+    },
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

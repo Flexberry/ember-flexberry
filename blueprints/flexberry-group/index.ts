@@ -16,7 +16,8 @@ module.exports = {
   description: 'Generates an group of entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {

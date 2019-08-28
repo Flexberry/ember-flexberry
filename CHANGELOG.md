@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.11] - 2019-08-28
+### Added
+* Blueprints:
+    * Add skip-confirmation option.
+
 ## [2.2.0-beta.10] - 2019-08-26
 ### Fixed
 * `flexberry-lookup` component:

@@ -11,12 +11,14 @@ import { ApplicationMenuLocales } from '../flexberry-core/Locales';
 import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 import CommonUtils from '../flexberry-common/CommonUtils';
 const TAB = "  ";
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 
 module.exports = {
   description: 'Generates core entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -79,6 +81,15 @@ module.exports = {
     }
     this._excludeIfExists();
     return this._files;
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super.processFiles.appy(this, [intoDir, templateVariables]);
   },
 
   /**

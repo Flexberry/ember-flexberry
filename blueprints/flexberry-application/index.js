@@ -37,7 +37,7 @@ module.exports = {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
 
-        return this._super.processFiles.appy(this, [intoDir, templateVariables]);
+        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
     },
 };
 var ElapsedTime = (function () {

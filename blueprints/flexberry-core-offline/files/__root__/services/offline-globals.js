@@ -4,7 +4,9 @@ import Ember from 'ember';
 export default OfflineGlobals.extend({
   getOfflineSchema() {
     let parentSchema= this._super(...arguments);
-    let returnedSchema = Ember.merge(parentSchema, {});
+    let returnedSchema = Ember.merge(parentSchema, {
+      <%= offlineSchema %>
+    });
 
     return returnedSchema;
   }

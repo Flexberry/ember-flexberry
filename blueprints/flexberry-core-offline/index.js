@@ -30,7 +30,7 @@ module.exports = {
                 + this.updateOfflineSchemaString(hasMany) + "'");
         }
 
-        return models.join(",\n");
+        return models.join(",\n\t\t\t");
     },
 
     updateOfflineSchemaString: function (valueString) {

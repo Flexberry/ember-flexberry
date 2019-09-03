@@ -4,7 +4,6 @@
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-import { observer } from '@ember/object';
 
 /**
   Field component for Semantic UI.
@@ -90,16 +89,4 @@ export default FlexberryBaseComponent.extend({
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
   },
-
-  valueObserver: observer('value', function () {
-    let value = this.get('value');
-    let isLabeledInside = this.$().hasClass('labeled-inside');
-    const labelAwayClass = 'label-away';
-
-    if (isLabeledInside && value != '') {
-      this.$().addClass(labelAwayClass);
-    } else {
-      this.$().removeClass(labelAwayClass);
-    }
-  }),
 });

@@ -12,7 +12,7 @@ module.exports = {
         { name: 'skip-confirmation', type: Boolean },
         { name: 'enable-offline', type: Boolean }
 		],
-		
+
   supportsAddon: function () {
     return false;
   },
@@ -27,9 +27,9 @@ module.exports = {
       var attrs = model.attrs.map((a) => a.name).join(",");
       var belongsTo = model.belongsTo.map((a) => a.name).join(",");
       var hasMany = model.hasMany.map((a) => { return "*" + a.name }).join(",");
-      models.push("'" + modelName +  "': 'id" 
-        + this.updateOfflineSchemaString(attrs) 
-        + this.updateOfflineSchemaString(belongsTo) 
+      models.push("'" + modelName +  "': 'id"
+        + this.updateOfflineSchemaString(attrs)
+        + this.updateOfflineSchemaString(belongsTo)
         + this.updateOfflineSchemaString(hasMany) + "'");
     }
 
@@ -39,7 +39,9 @@ module.exports = {
   updateOfflineSchemaString: function (valueString) {
     if (valueString != undefined && valueString !== "") {
       valueString = "," + valueString;
-		}
+    } else {
+      valueString = "";
+    }
 
     return valueString;
   },

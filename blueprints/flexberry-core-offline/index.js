@@ -8,7 +8,8 @@ module.exports = {
     availableOptions: [
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String },
-        { name: 'skip-confirmation', type: Boolean }
+        { name: 'skip-confirmation', type: Boolean },
+        { name: 'enable-offline', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -63,6 +64,7 @@ module.exports = {
     locals: function (options) {
         return {
             offlineSchema: this.createOfflineSchema(options),
+            enableOffline: options.enableOffline
         };
     }
 };

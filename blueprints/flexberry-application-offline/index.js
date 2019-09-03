@@ -9,7 +9,8 @@ module.exports = {
     description: 'Generates required entities for flexberry-offline.',
     availableOptions: [
         { name: 'metadata-dir', type: String },
-        { name: 'skip-confirmation', type: Boolean }
+        { name: 'skip-confirmation', type: Boolean },
+        { name: 'enable-offline', type: Boolean }
     ],
     supportsAddon: function () {
         return false;

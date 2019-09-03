@@ -2,7 +2,7 @@
 var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
-    description: 'Generates an ember-data model for flexberry.',
+    description: 'Generates an ember-data offline  model for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String },

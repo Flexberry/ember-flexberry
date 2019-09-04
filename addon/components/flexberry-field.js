@@ -4,7 +4,7 @@
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-import { observer } from '@ember/object';
+import { computed } from '@ember/object';
 
 /**
   Field component for Semantic UI.
@@ -54,6 +54,14 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-field', 'ui', 'field'],
 
   /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+  */
+  classNameBindings: ['hasText'],
+
+  /**
     Type of html input.
 
     @property type
@@ -82,6 +90,17 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
+    Indicates if field has text.
+
+    @property hasText
+    @type Boolean
+    @default false
+  */
+  hasText: computed('value', function () {
+    return this.get('value') !== '';
+  }),
+
+  /**
     Initializes component.
   */
   init() {
@@ -90,16 +109,4 @@ export default FlexberryBaseComponent.extend({
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
   },
-
-  valueObserver: observer('value', function () {
-    let value = this.get('value');
-    let isLabeledInside = this.$().hasClass('labeled-inside');
-    const labelAwayClass = 'label-away';
-
-    if (isLabeledInside && value != '') {
-      this.$().addClass(labelAwayClass);
-    } else {
-      this.$().removeClass(labelAwayClass);
-    }
-  }),
 });

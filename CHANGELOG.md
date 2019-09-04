@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* Blueprints:
+    * Add offline option.
+
 ## [2.2.0-beta.11] - 2019-08-28
 ### Added
 * Blueprints:

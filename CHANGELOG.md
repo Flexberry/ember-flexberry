@@ -6,8 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.0-beta.12] - 2019-09-02]
 ### Added
-- `offline-globals`:
-  - Add `getOfflineSchema` method for get offline schema.
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
+* Blueprints:
+    * Add offline option.
 
 ## [2.2.0-beta.11] - 2019-08-28
 ### Added

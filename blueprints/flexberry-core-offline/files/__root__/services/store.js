@@ -1,5 +1,6 @@
 import { Projection, Offline } from 'ember-flexberry-data';
 import config from '../config/environment';
+import Ember from 'ember';
 
 export default Offline.Store.reopen(Projection.StoreMixin, {
   /**
@@ -13,9 +14,7 @@ export default Offline.Store.reopen(Projection.StoreMixin, {
 
   init() {
     this.set('offlineSchema', {
-      [config.APP.offline.dbName]: {
-        offlineGlobals.getOfflineSchema();
-      }
+      [config.APP.offline.dbName]: this.get('offlineGlobals').getOfflineSchema(),
     });
     return this._super(...arguments);
   }

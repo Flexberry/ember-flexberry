@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "2.2.0-beta.11",
+  "version": "2.2.0-beta.12",
   "dependencies": {
     "ember": "~2.4.3",
     "ember-cli-shims": "0.1.1",

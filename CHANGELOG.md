@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2.0-beta.13] - 2019-09-06]
 ### Fixed
 * Blueprints:
+    * Fix createOfflineSchema method.
     * Fix offline schema setting in store service.
 
 ## [2.2.0-beta.12] - 2019-09-02]

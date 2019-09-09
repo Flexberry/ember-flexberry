@@ -1,4 +1,4 @@
-import OfflineGlobals from 'ember-flexberry';
+import OfflineGlobals from 'ember-flexberry/services/offline-globals';
 import Ember from 'ember';
 
 export default OfflineGlobals.extend({

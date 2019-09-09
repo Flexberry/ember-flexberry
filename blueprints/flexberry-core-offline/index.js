@@ -17,15 +17,15 @@ module.exports = {
 
     createOfflineSchema: function (options) {
         let modelsDir = path.join(options.metadataDir, "models");
-        var listModels = fs.readdirSync(modelsDir);
+        var modelsFiles = fs.readdirSync(modelsDir);
         var models = [];
-        for (var _i = 0, listModels_1 = listModels; _i < listModels_1.length; _i++) {
-            var modelName = listModels_1[_i];
-            var model = ModelBlueprint.default.loadModel(modelsDir, modelName);
+        for (var _i = 0; _i < modelsFiles.length; _i++) {
+            var modelFileName = modelsFiles[_i];
+            var model = ModelBlueprint.default.loadModel(modelsDir, modelFileName);
             var attrs = model.attrs.map((a) => a.name).join(",");
             var belongsTo = model.belongsTo.map((a) => a.name).join(",");
             var hasMany = model.hasMany.map((a) => { return "*" + a.name }).join(",");
-            models.push("'" + modelName +  "': 'id"
+            models.push("'" + model.modelName +  "': 'id"
                 + this.updateOfflineSchemaString(attrs)
                 + this.updateOfflineSchemaString(belongsTo)
                 + this.updateOfflineSchemaString(hasMany) + "'");

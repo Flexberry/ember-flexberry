@@ -129,7 +129,6 @@ export default Controller.extend({
       settingAvailableItems: [
         'large',
         'labeled-inside',
-        'label-away'
       ],
     });
 

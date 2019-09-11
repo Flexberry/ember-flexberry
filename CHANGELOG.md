@@ -4,10 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.2.0-beta.13] - 2019-09-06]
+## [2.2.0-beta.13] - 2019-09-11]
 ### Fixed
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
 * Blueprints:
-    * Fix createOfflineSchema method.
     * Fix offline schema setting in store service.
 
 ## [2.2.0-beta.12] - 2019-09-02]

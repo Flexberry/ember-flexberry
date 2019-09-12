@@ -4,7 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.2.0-beta.13] - 2019-09-06]
+## [2.2.0-beta.14] - 2019-09-12]
+### Added
+* Blueprints:
+    * Add check for file exist in model-offline.
+### Fixed
+* Blueprints:
+    * Fix call generate method for model-offline in flexberry-group.
+
+## [2.2.0-beta.13] - 2019-09-11]
 ### Fixed
 * Blueprints:
     * Fix createOfflineSchema method.

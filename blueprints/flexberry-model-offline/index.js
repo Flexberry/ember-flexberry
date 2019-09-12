@@ -1,6 +1,8 @@
 "use strict";
 var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
+var fs = require("fs");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 module.exports = {
     description: 'Generates an ember-data offline  model for flexberry.',
     availableOptions: [
@@ -10,6 +12,18 @@ module.exports = {
     ],
     supportsAddon: function () {
         return false;
+    },
+
+    _files: null,
+
+    files: function () {
+        if (fs.existsSync("app/serializers/" + this.options.entity.name + "-offline.js")) {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/serializers/__name__-offline.js"; });
+        } else {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this);
+        }
+
+        return this._files;
     },
 
     processFiles(intoDir, templateVariables) {

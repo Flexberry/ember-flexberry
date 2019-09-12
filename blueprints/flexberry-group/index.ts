@@ -96,9 +96,8 @@ class GroupBlueprint {
         this.emberGenerate("models", true, projectTypeName + "/serializers");
         break;
       case 'flexberry-model-offline':
-          this.emberGenerate("models", true, projectTypeName + "/serializers");
-          this.emberGenerate("models", true, projectTypeName + "/mixins/regenerated/serializers");
-          break;
+        this.emberGenerate("models");
+        break;
       default:
         throw new Error(`Unknown blueprint: ${this.blueprintName}`);
 

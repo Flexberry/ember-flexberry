@@ -14,8 +14,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.0-beta.13] - 2019-09-11]
 ### Fixed
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
 * Blueprints:
-    * Fix createOfflineSchema method.
     * Fix offline schema setting in store service.
 
 ## [2.2.0-beta.12] - 2019-09-02]
@@ -77,6 +78,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-lookup` component:
     * Fix select autocomplete result by enter click.
+    
+### Breaking changes
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
 
 ## [2.2.0-beta.3] - 2019-07-19
 ### Fixed

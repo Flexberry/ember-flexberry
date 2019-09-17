@@ -13,7 +13,7 @@
   <div class="ui fluid action input">
     {{input
       type="text"
-      class=(concat "lookup-field " (if autocomplete "prompt"))
+      class=(concat (concat "lookup-field " (if autocomplete "prompt")) (if (or readonly isBlocked) " disabled"))
       placeholder=placeholder
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")

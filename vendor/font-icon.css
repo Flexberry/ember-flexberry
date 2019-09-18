@@ -46,25 +46,3 @@
     url("fonts/GOSTUI2-w706-bold_g_temp.ttf") format('truetype');
   font-weight: bold;
 }
-@font-face {
-  font-family: 'guideline-icons';
-  src: url("fonts/guideline-icons/guideline-icons.eot");
-  src: url("fonts/guideline-icons/guideline-icons.woff2") format('woff2'),
-    url("fonts/guideline-icons/guideline-icons.woff") format('woff'),
-    url("fonts/guideline-icons/guideline-icons.ttf") format('truetype'),
-    url("fonts/guideline-icons/guideline-icons.svg") format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
-
-@font-face {
-  font-family: 'Material Icons';
-  src: url("fonts/material-icons/MaterialIcons-Regular.eot");
-  src: url("fonts/material-icons/MaterialIcons-Regular.woff2") format('woff2'),
-    url("fonts/material-icons/MaterialIcons-Regular.woff") format('woff'),
-    url("fonts/material-icons/MaterialIcons-Regular.ttf") format('truetype'),
-    url("fonts/material-icons/MaterialIcons-Regular.svg") format('svg');
-    font-weight: 400;
-    font-style: normal;
-}

@@ -599,7 +599,11 @@ Ember.$.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
@@ -1004,6 +1008,9 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
+        },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Limited text size example'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',

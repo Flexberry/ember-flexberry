@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
 
 ## [2.2.0-beta.14] - 2019-09-12]
 ### Added
@@ -78,7 +81,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-lookup` component:
     * Fix select autocomplete result by enter click.
-    
+
 ### Breaking changes
 * Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
 

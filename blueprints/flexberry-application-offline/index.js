@@ -10,7 +10,8 @@ module.exports = {
     availableOptions: [
         { name: 'metadata-dir', type: String },
         { name: 'skip-confirmation', type: Boolean },
-        { name: 'enable-offline', type: Boolean }
+        { name: 'enable-offline', type: Boolean },
+        { name: 'offline-db-name', type: String }
     ],
     supportsAddon: function () {
         return false;

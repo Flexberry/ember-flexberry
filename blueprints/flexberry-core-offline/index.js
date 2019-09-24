@@ -50,7 +50,7 @@ module.exports = {
 
     setOfflineDbNameInEnvironment: function() {
         const projectName = this.options.offlineDbName;
-        const dbName = '\n        dbName: \'' + projectName + '\'';
+        const dbName = '\n        dbName: \'' + projectName + '\',';
         
         this.insertIntoFile('config/environment.js', dbName, { after: 'offline: {' });
     },

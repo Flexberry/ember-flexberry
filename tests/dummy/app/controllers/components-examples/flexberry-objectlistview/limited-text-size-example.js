@@ -61,14 +61,24 @@ export default ListFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr) {
-    var cellComponent = {
+    let cellComponent = {
+      componentName: 'object-list-view-cell',
+      componentProperties: {
+        maxTextLength: this.get('maxTextLength'),
+        cutBySpaces: this.get('cutBySpaces'),
+        displayMemberPath: Ember.get(attr, 'options.displayMemberPath')
+      }
+    };
+
+    if (attr.caption === 'Text') {
+      cellComponent = {
         componentName: 'flexberry-text-cell',
         componentProperties: {
           maxTextLength: this.get('maxTextLength'),
-          cutBySpaces: this.get('cutBySpaces'),
-          displayMemberPath: Ember.get(attr, 'options.displayMemberPath')
+          cutBySpaces: this.get('cutBySpaces')
         }
       };
+    }
 
     return cellComponent;
   }

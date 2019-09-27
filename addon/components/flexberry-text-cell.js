@@ -1,7 +1,20 @@
 import Ember from 'ember';
-import OlvCell from './object-list-view-cell';
+import FlexberryBaseComponent from './flexberry-base-component';
 
-export default OlvCell.extend({
+export default FlexberryBaseComponent.extend({
+  /**
+    Overload wrapper tag name for disabling wrapper.
+  */
+  tagName: '',
+
+  /**
+    Displaying value.
+
+    @property value
+    @type String
+  */
+  value: undefined,
+
   /**
     Max number of displayed symbols.
     Unlimited when 0.
@@ -20,41 +33,30 @@ export default OlvCell.extend({
   cutBySpaces: false,
 
   /**
-    Path to property for display.
-
-    @property displayMemberPath
-    @type String
-  */
-  displayMemberPath: undefined,
-
-  /**
     Displaying value.
 
     @property displayValue
     @type String
     @readOnly
   */
-  displayValue: Ember.computed('formattedValue', 'maxTextLength', 'cutBySpaces', function() {
+  displayValue: Ember.computed('value', 'maxTextLength', 'cutBySpaces', function() {
     const value = this.get('value');
-    const valueType = Ember.typeOf(value);
     const maxTextLength = this.get('maxTextLength');
-    let formattedValue = this.get('formattedValue');
 
-    const displayMemberPath = this.get('displayMemberPath');
-    if (!Ember.isNone(displayMemberPath) && formattedValue.get) {
-      formattedValue = formattedValue.get(displayMemberPath);
-    }
-
-    if (valueType === 'boolean' || Ember.isBlank(value) || !maxTextLength) {
-      return formattedValue;
+    if (Ember.isBlank(value) || !maxTextLength) {
+      return value;
     }
 
     const cutBySpaces = this.get('cutBySpaces');
-    const reg = new RegExp(`^(.{1,${maxTextLength}}${cutBySpaces ? '(?=\\s|$)' : ''}|.{1,${maxTextLength}})`);
+    const formattedValue = String(value);
 
-    formattedValue = String(formattedValue);
-
-    const result = formattedValue.match(reg)[0];
+    let result = formattedValue.substr(0, maxTextLength);
+    if (cutBySpaces && formattedValue[maxTextLength] !== ' ') {
+      const spaceIndex = result.lastIndexOf(' ');
+      if (spaceIndex > -1) {
+        result = result.substring(0, spaceIndex);
+      }
+    }
 
     return result === formattedValue ? result : result + '...';
   }).readOnly(),
@@ -66,19 +68,14 @@ export default OlvCell.extend({
     @type String
     @readOnly
   */
-  titleValue: Ember.computed('formattedValue', 'displayValue', 'displayMemberPath', function() {
-    let formattedValue = this.get('formattedValue');
+  titleValue: Ember.computed('value', 'displayValue', function() {
+    let value = this.get('value');
     const displayValue = this.get('displayValue');
 
-    const displayMemberPath = this.get('displayMemberPath');
-    if (!Ember.isNone(displayMemberPath) && formattedValue.get) {
-      formattedValue = formattedValue.get(displayMemberPath);
+    if (Ember.typeOf(value) !== Ember.typeOf(displayValue)) {
+      value = String(value);
     }
 
-    if (Ember.typeOf(formattedValue) !== Ember.typeOf(displayValue)) {
-      formattedValue = String(formattedValue);
-    }
-
-    return formattedValue !== displayValue ? formattedValue : '';
+    return value !== displayValue ? value : '';
   }).readOnly(),
 });

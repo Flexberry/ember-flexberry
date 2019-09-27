@@ -8,13 +8,16 @@ export function initialize() {
     init() {
       this._super(...arguments);
       if (this.isDropDown) {
-        this.classNames = ['item', 'ui', 'pointing', 'dropdown', 'link'];
+        this.classNames = ['item', 'ui', 'dropdown', 'link'];
       }
     },
 
     didRender() {
       this._super(...arguments);
-      $('.dropdown').dropdown({on: 'hover' });
+      $('.dropdown').dropdown({
+        on: 'hover',
+        transition: 'slide right',
+      });
     }
   });
 }

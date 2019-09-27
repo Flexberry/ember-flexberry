@@ -1,4 +1,5 @@
 import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
 import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import config from 'dummy/config/environment';
@@ -45,18 +46,30 @@ export default EditFormController.extend({
    */
   showDownloadButton: true,
 
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+  */
+  previewSettings: computed(() => ({
+    detachable: true,
+    context: 'body',
+  })),
+
   actions: {
     modalWindow(style) {
       if (!isNone(style)) {
         this.set('_style', style);
       }
 
-      let repeatWindow = $('#repeat-window').modal({
-        closable: false,
-        autofocus: false,
-        detachable: true,
-        allowMultiple: true,
-      });
+      let repeatWindow = $('.repeat-window').modal({
+          closable: false,
+          autofocus: false,
+          detachable: false,
+          allowMultiple: true,
+          context: this.get('style'),
+        });
 
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');

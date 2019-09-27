@@ -97,6 +97,15 @@ export default EditFormController.extend({
   chooseButtonClass: '',
 
   /**
+    Text for 'flexberry-lookup' component 'dropdownClass' property.
+
+    @property dropdownClass
+    @type String
+    @default 'blue'
+  */
+  dropdownClass: '',
+
+  /**
     Text for 'flexberry-lookup' component 'removeButtonClass' property.
 
     @property removeButtonClass
@@ -207,6 +216,13 @@ export default EditFormController.extend({
       settingDefaultValue: '',
       settingAvailableItems: ['purple basic', 'negative', 'yellow colored'],
       bindedControllerPropertieName: 'removeButtonClass'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownClass',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['blue'],
+      bindedControllerPropertieName: 'dropdownClass'
     });
 
     return componentSettingsMetadata;

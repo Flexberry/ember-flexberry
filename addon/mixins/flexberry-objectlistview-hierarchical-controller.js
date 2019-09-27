@@ -21,6 +21,16 @@ export default Mixin.create({
   inHierarchicalMode: false,
 
   /**
+    Flag used for disable the hierarchical paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+    @private
+  */
+  hierarchyPaging: false,
+
+  /**
     Flag indicate whether component is in collapse/expand mode.
 
     @property inExpandMode

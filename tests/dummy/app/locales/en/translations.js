@@ -601,6 +601,10 @@ $.extend(true, translations, {
           'suggestions': {
             'caption': 'Suggestions',
             'title': ''
+          },
+          'multi': {
+            'caption': 'Multi list',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -815,6 +819,10 @@ $.extend(true, translations, {
             },
             'hierarchy-example': {
               'caption': 'Hierarchy example',
+              'title': ''
+            },
+            'hierarchy-paging-example': {
+              'caption': 'Hierarchy with paginig example',
               'title': ''
             },
             'configurate-rows': {
@@ -1040,6 +1048,11 @@ $.extend(true, translations, {
       'caption': 'Suggestion types'
     },
 
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Multi list form',
+      'multi-edit-form': 'Multi list edit form'
+    },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Log service. Settings example',
@@ -1256,6 +1269,9 @@ $.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy paging example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'

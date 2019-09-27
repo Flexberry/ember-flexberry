@@ -8,6 +8,9 @@ import { isBlank, isNone } from '@ember/utils';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import ProjectedModelFormRoute from './projected-model-form';
+import ReloadListMixin from '../mixins/reload-list-mixin';
+import LimitedRouteMixin from '../mixins/limited-route';
+import SortableRouteMixin from '../mixins/sortable-route';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
@@ -43,7 +46,10 @@ export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
 FlexberryGroupeditRouteMixin,
 FlexberryObjectlistviewHierarchicalRouteMixin,
-ErrorableRouteMixin, {
+ErrorableRouteMixin,
+LimitedRouteMixin,
+SortableRouteMixin,
+ReloadListMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -105,6 +111,12 @@ ErrorableRouteMixin, {
     @type AppStateService
   */
   appState: service(),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: service(),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.

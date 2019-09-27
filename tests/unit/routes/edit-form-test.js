@@ -7,6 +7,7 @@ moduleFor('route:edit-form', 'Unit | Route | edit form', {
     'service:objectlistview-events',
     'service:user-settings',
     'service:app-state',
+    'service:adv-limit',
   ],
 });
 

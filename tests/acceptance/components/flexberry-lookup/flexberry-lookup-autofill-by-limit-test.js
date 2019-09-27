@@ -38,7 +38,7 @@ executeTest('flexberry-lookup autofillByLimit changes select value test', (store
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let defaultValue = get(controller, 'defaultValue.name');
+    let defaultValue = get(controller, 'defaultValue.id');
 
     let $lookupField = $('.exist .lookup-field');
     let value = $lookupField.val();

@@ -3,7 +3,6 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import { oneWay } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service} from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -69,11 +68,9 @@ export default Mixin.create({
     @property sort
     @type String
   */
-  sort: oneWay('sortDefaultValue'),
+  sort: null,
 
   _userSettingsService: service('user-settings'),
-
-  _router: undefined,
 
   /**
     Dictionary with sorting data related to properties.
@@ -90,7 +87,7 @@ export default Mixin.create({
       for (let i = 0; i < sorting.length; i++) {
         let propName = sorting[i].propName;
         let sortDef = {
-          sortAscending: sorting[i].direction === 'asc' ? true : false,
+          sortAscending: sorting[i].direction === 'asc',
           sortNumber: i + 1
         };
         result[propName] = sortDef;
@@ -108,7 +105,7 @@ export default Mixin.create({
       @param {Object} column Column for sorting.
       @param {String} sortPath Path to oldSorting.
     */
-    sortByColumn: function(column, sortPath = 'model.sorting') {
+    sortByColumn: function(column, componentName, sortPath = 'model.sorting') {
       let propName = column.propName;
       let oldSorting = this.get(sortPath);
       let newSorting = [];
@@ -138,7 +135,7 @@ export default Mixin.create({
       @param {Object} column Column for sorting.
       @param {String} sortPath Path to oldSorting.
     */
-    addColumnToSorting: function(column, sortPath = 'model.sorting') {
+    addColumnToSorting: function(column, componentName, sortPath = 'model.sorting') {
       let propName = column.propName;
       let oldSorting = this.get(sortPath);
       let newSorting = [];

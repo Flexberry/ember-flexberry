@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "3.1.0",
+  "version": "3.2.0-beta.3",
   "description": "Ember Flexberry Addon",
   "keywords": [
     "ember-addon",
@@ -30,11 +30,12 @@
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "ember-flexberry-data": "3.1.0",
+    "ember-flexberry-data": "3.2.0-beta.4",
     "ember-i18n": "5.2.1",
     "ember-i18n-cp-validations": "~3.1.0",
     "ember-truth-helpers": "2.0.0",
     "lodash": "^4.4.0",
+    "flatpickr": "4.6.1",
     "strip-bom": "^2.0.0"
   },
   "devDependencies": {
@@ -81,6 +82,9 @@
     "moment-timezone": "0.5.14",
     "node-uuid": "^1.4.7",
     "ui-ember-slider": "0.5.0"
+  },
+  "resolutions": {
+    "ws": "6.2.1"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

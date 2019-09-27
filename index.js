@@ -34,8 +34,8 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/flatpickr-calendar/dist/flatpickr.js',
-      production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
+      development: 'node_modules/flatpickr/dist/flatpickr.js',
+      production:  'node_modules/flatpickr/dist/flatpickr.min.js'
     });
 
     app.import({
@@ -48,8 +48,8 @@ module.exports = {
       production: 'bower_components/semantic-ui/dist/semantic.min.css'
     });
 
-    app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
-    app.import('bower_components/flatpickr-calendar/src/l10n/ru.js');
+    app.import('node_modules/flatpickr/dist/flatpickr.min.css');
+    app.import('node_modules/flatpickr/dist/l10n/ru.js');
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',

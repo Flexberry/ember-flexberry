@@ -38,7 +38,8 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null, async: false
+    inverse: null,
+    async: false
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -76,7 +77,9 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
     if (!this.get('isDeleted')) {
       this.set('commentsCount', this.get('comments.length'));
     }
-  }
+  },
+
+  prototypeProjection: 'SuggestionE'
 });
 
 // Edit form projection.

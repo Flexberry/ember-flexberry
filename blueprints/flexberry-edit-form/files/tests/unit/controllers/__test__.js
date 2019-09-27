@@ -3,12 +3,15 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('controller:<%= entityName %>', 'Unit | Controller | <%= entityName %>', {
   // Specify the other units that are required for this test.
   needs: [
+    'controller:advlimit-dialog',
+    'controller:colsconfig-dialog',
     'controller:flexberry-file-view-dialog',
     'controller:lookup-dialog',
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
     'service:app-state',
+    'service:adv-limit',
   ],
 });
 

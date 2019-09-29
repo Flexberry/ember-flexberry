@@ -4,6 +4,7 @@
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { isBlank } from '@ember/utils';
 import { computed } from '@ember/object';
 
 /**
@@ -97,7 +98,7 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   hasText: computed('value', function () {
-    return this.get('value') !== '';
+    return !isBlank(this.get('value'));
   }),
 
   /**

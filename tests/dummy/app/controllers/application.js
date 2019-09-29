@@ -26,19 +26,6 @@ export default Controller.extend({
   */
   appState: service(),
 
-  /**
-    Flag indicates sidebar visible
-    @private
-    @property _sidebarVisible
-    @type Boolean
-    @default true
-  */
-  _sidebarVisible: true,
-
-  sidebarWidth: '240px',
-
-  sidebarMiniWidth: '56px',
-
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -58,14 +45,7 @@ export default Controller.extend({
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
       sidebar.toggleClass('sidebar-mini');
-
-      let sidebarVisible = sidebar.hasClass('visible');
-      this.set('_sidebarVisible', !sidebarVisible);
-
-      let currentSidebarWidth = sidebarVisible ? this.sidebarMiniWidth : this.sidebarWidth;
-      let contentWidth = `calc(100% - ${currentSidebarWidth})`;
-
-      $('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: contentWidth });
+      $('.full.height').toggleClass('content-opened');
 
       // For reinit overflowed tabs.
       $(window).trigger('resize');
@@ -88,7 +68,17 @@ export default Controller.extend({
         $('.sidebar.icon.text-menu-hide').removeClass('hidden');
         $('.bgw-opacity').removeClass('hidden');
       }
+    },
+
+    /**
+      Осуществляет выход текущего пользователя из приложения и переход к логин-форме.
+
+      @method actions.logout
+    */
+    logout() {
+      this.transitionToRoute('login');
     }
+
   },
 
   /**

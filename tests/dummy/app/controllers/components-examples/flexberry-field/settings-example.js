@@ -127,7 +127,8 @@ export default Controller.extend({
       settingDefaultValue: '',
       bindedControllerPropertieName: 'class',
       settingAvailableItems: [
-        'large'
+        'large',
+        'labeled-inside'
       ],
     });
 

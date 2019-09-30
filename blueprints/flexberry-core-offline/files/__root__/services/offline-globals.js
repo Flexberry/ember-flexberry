@@ -7,7 +7,7 @@ export default OfflineGlobals.extend({
     <% if (enableOffline) {%>this.setOnlineAvailable(false);<%}%>
   },
   getOfflineSchema() {
-    let parentSchema= this._super(...arguments);
+    let parentSchema = this._super(...arguments);
     let returnedSchema = Ember.merge(parentSchema, {
       <%= offlineSchema %>
     });

@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-text-cell` component:
     * Add `flexberry-text-cell` for displaying limited text in olv component.
+* Blueprints:
+    * Add setting offline database name.
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
 
 ## [2.2.0-beta.14] - 2019-09-12]
 ### Added

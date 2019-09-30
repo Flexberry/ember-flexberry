@@ -3,12 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.15] - 2019-09-30]
 ### Added
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
 * Blueprints:
     * Add setting offline database name.
+* Add `cut-string-by-length` util for cutting string by specified length.
 ### Fixed
 * `flexberry-objectlistview` component:
     * Fix paging and expand in hierarchical mode at mobile.
+### Changed
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
 
 ## [2.2.0-beta.14] - 2019-09-12]
 ### Added
@@ -84,7 +92,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-lookup` component:
     * Fix select autocomplete result by enter click.
-    
+
 ### Breaking changes
 * Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
 

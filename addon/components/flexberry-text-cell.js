@@ -43,15 +43,9 @@ export default FlexberryBaseComponent.extend({
   displayValue: Ember.computed('value', 'maxTextLength', 'cutBySpaces', function() {
     const value = this.get('value');
     const maxTextLength = this.get('maxTextLength');
-
-    if (Ember.isBlank(value) || !maxTextLength) {
-      return value;
-    }
-
     const cutBySpaces = this.get('cutBySpaces');
-    const formattedValue = String(value);
 
-    return cutStringByLength(formattedValue, maxTextLength, cutBySpaces);
+    return cutStringByLength(value, maxTextLength, cutBySpaces);
   }).readOnly(),
 
   /**

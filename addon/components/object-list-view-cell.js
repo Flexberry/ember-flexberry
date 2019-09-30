@@ -101,13 +101,11 @@ export default FlexberryBaseComponent.extend({
       formattedValue = formattedValue.get(displayMemberPath);
     }
 
-    if (valueType === 'boolean' || Ember.isBlank(value) || !maxTextLength) {
+    if (valueType === 'boolean') {
       return formattedValue;
     }
 
     const cutBySpaces = this.get('cutBySpaces');
-
-    formattedValue = String(formattedValue);
 
     return cutStringByLength(formattedValue, maxTextLength, cutBySpaces);
   }).readOnly(),

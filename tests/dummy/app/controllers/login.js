@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 /**
   Коннтрллер логин-формы.
@@ -6,7 +6,7 @@ import Ember from 'ember';
   @class LoginController
   @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
 */
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   actions: {
 

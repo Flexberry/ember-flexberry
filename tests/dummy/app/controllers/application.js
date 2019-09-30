@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import config from '../config/environment';
 import { isNone } from '@ember/utils';
-import { later } from '@ember/runloop';
 import $ from 'jquery';
 
 const version = config.APP.version;

@@ -613,6 +613,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-textarea': {
             'caption': 'flexberry-textarea',
             'title': '',
@@ -1085,6 +1093,11 @@ Ember.$.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Settings example'
         }
       },
       'flexberry-textarea': {

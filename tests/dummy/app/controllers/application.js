@@ -580,6 +580,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-textarea.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-textarea.title'),
           children: [{

@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import cutStringByLength from '../utils/cut-string-by-length';
 
 /**
   @class ObjectListViewCell
@@ -108,15 +109,7 @@ export default FlexberryBaseComponent.extend({
 
     formattedValue = String(formattedValue);
 
-    let result = formattedValue.substr(0, maxTextLength);
-    if (cutBySpaces && formattedValue[maxTextLength] !== ' ') {
-      const spaceIndex = result.lastIndexOf(' ');
-      if (spaceIndex > -1) {
-        result = result.substring(0, spaceIndex);
-      }
-    }
-
-    return result === formattedValue ? result : result + '...';
+    return cutStringByLength(formattedValue, maxTextLength, cutBySpaces);
   }).readOnly(),
 
   /**

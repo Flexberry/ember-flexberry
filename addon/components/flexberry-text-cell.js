@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import cutStringByLength from '../utils/cut-string-by-length';
 
 export default FlexberryBaseComponent.extend({
   /**
@@ -50,15 +51,7 @@ export default FlexberryBaseComponent.extend({
     const cutBySpaces = this.get('cutBySpaces');
     const formattedValue = String(value);
 
-    let result = formattedValue.substr(0, maxTextLength);
-    if (cutBySpaces && formattedValue[maxTextLength] !== ' ') {
-      const spaceIndex = result.lastIndexOf(' ');
-      if (spaceIndex > -1) {
-        result = result.substring(0, spaceIndex);
-      }
-    }
-
-    return result === formattedValue ? result : result + '...';
+    return cutStringByLength(formattedValue, maxTextLength, cutBySpaces);
   }).readOnly(),
 
   /**

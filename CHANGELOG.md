@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.15] - 2019-09-30]
 ### Added
 * `flexberry-text-cell` component:
     * Add `flexberry-text-cell` for displaying limited text in olv component.

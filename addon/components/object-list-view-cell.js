@@ -21,6 +21,7 @@ export default FlexberryBaseComponent.extend({
 
     @property value
     @type String
+    @default undefined
   */
   value: undefined,
 
@@ -29,6 +30,7 @@ export default FlexberryBaseComponent.extend({
 
     @property dateFormat
     @type String
+    @default undefined
   */
   dateFormat: undefined,
 
@@ -38,6 +40,7 @@ export default FlexberryBaseComponent.extend({
 
     @property maxTextLength
     @type Integer
+    @default 0
   */
   maxTextLength: 0,
 
@@ -46,6 +49,7 @@ export default FlexberryBaseComponent.extend({
 
     @property cutBySpaces
     @type Boolean
+    @default false
   */
   cutBySpaces: false,
 
@@ -54,6 +58,7 @@ export default FlexberryBaseComponent.extend({
 
     @property displayMemberPath
     @type String
+    @default undefined
   */
   displayMemberPath: undefined,
 

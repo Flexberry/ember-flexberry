@@ -28,7 +28,7 @@
       <div class="ui top attached">
         <div class="ui attached menu">
           <div class="ui container flex-container">
-            <a {{!-- {{action 'toggleSidebar'}} --}}
+            <a {{action 'toggleSidebar'}}
               class="launch icon item"
               title={{t "forms.application.header.menu.sitemap-button.title"}}>
               {{t "forms.application.header.menu.sitemap-button.caption"}}
@@ -62,6 +62,7 @@
             Имя Фамилия
         </span>
         <i class="dropdown icon"></i>
+        <a id="ExitButton" class="exit-btn" href="javascript:void(0)" {{action "logout" on="click"}}>{{t "forms.application.header.logout.caption"}}</a>
       </div>
     </div>
   </div>

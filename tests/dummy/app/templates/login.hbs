@@ -1,0 +1,25 @@
+<form id="form1" {{action "onLoginFormSubmit" on="submit"}}>
+  <div class="container">
+    <div class="login-form-inner">
+      <div class="ui {{if loginIsInProcess "active"}} inverted dimmer">
+        <div class="ui loader"></div>
+      </div>
+      <h3 class="ui header">Вход в систему</h3>
+      {{flexberry-field
+        label='Логин'
+        placeholder="Логин"
+        class='labeled-inside large'
+      }}
+      {{flexberry-field
+        label='Пароль'
+        placeholder="Пароль"
+        class='labeled-inside large'
+        type='password'
+      }}
+      {{flexberry-button
+        class='primary large fluid'
+        caption='Войти'
+      }}
+    </div>
+  </div>
+</form>

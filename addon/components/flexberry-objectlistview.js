@@ -594,7 +594,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  columnsWidthAutoresize: false,
+  columnsWidthAutoresize: true,
 
   /**
     List of component names, which can overflow table cell.

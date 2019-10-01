@@ -2,7 +2,9 @@ import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:new-platform-flexberry-services-lock-list', 'Unit | Controller | new-platform-flexberry-services-lock-list', {
   needs: [
+    'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
+    'service:adv-limit',
     'service:objectlistview-events',
     'service:user-settings',
   ],

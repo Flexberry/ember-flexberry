@@ -36,4 +36,12 @@ export default Component.extend({
     @type String
    */
   componentTemplateText: null,
+
+  /**
+    Overflow style of component block.
+
+    @property componentBlockOverflow
+    @type String
+   */
+  componentBlockOverflow: 'scroll',
 });

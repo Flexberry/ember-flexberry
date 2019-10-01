@@ -7,6 +7,7 @@ moduleFor('route:<%= entityName %>', 'Unit | Route | <%= entityName %>', {
     'service:form-load-time-tracker',
     'service:objectlistview-events',
     'service:app-state',
+    'service:adv-limit',
   ],
 });
 

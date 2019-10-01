@@ -13,6 +13,7 @@ import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { isNone } from '@ember/utils';
 import { set } from '@ember/object';
+import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
@@ -268,14 +269,14 @@ export default Service.extend({
    Get list components Names.
 
    @method getListComponentNames
-   @return {Array}
+   @return {Ember.NativeArray}
    */
   getListComponentNames() {
-    let ret = [];
+    let ret = A();
     let appPage = this.currentAppPage;
     if (appPage in this.currentUserSettings) {
       for (let componentName in this.currentUserSettings[appPage]) {
-        ret[ret.length] = componentName;
+        ret.pushObject(componentName);
       }
     }
 
@@ -457,7 +458,7 @@ export default Service.extend({
    */
   getCurrentSorting(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : [];
+    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : A();
   },
 
   /**
@@ -812,9 +813,14 @@ export default Service.extend({
     let ret = {};
     let addSettings = JSON.parse(JSON.stringify(setting2));
     for (let settingProperty in setting1) {
-      ret[settingProperty] = (settingProperty in addSettings) ?
+      if (settingProperty in addSettings) {
+        ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
         merge(setting1[settingProperty], addSettings[settingProperty]) :
-        setting1[settingProperty];
+        addSettings[settingProperty];
+      } else {
+        ret[settingProperty] = setting1[settingProperty];
+      }
+
       delete addSettings[settingProperty];
     }
 

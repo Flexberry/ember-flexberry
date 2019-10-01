@@ -52,7 +52,7 @@ export default {
       'placeholder': '(нет значения)'
     },
 
-    'flexberry-simpledatetime': {
+    'flexberry-datepicker': {
       placeholder: '(нет значения)',
 
       // Months and days of week names are taken from moment.js.
@@ -131,8 +131,9 @@ export default {
       'sort-ascending': 'По возрастанию',
       'sort-descending': 'По убыванию',
       'menu-in-row': {
-        'edit-menu-item-title': 'Редактировать запись',
         'add-menu-item-title': 'Добавить запись',
+        'edit-menu-item-title': 'Редактировать запись',
+        'prototype-menu-item-title': 'Создать запись на основе',
         'delete-menu-item-title': 'Удалить запись'
       },
       'hierarchy-buttons': {
@@ -163,6 +164,11 @@ export default {
       'show-default-setting-title': 'Показать установки',
       'show-setting-caption':
         'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
+      'create-limit-title': 'Новое ограничение',
+      'use-limit-title': 'Применить',
+      'edit-limit-title': 'Редактировать',
+      'remove-limit-title': 'Удалить',
+      'set-default-limit-title': 'Сбросить ограничение',
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
@@ -176,7 +182,9 @@ export default {
       'add-button-text': 'Добавить',
       'delete-button-text': 'Удалить',
       'clear-settings-button-text': 'Восстановить настройки по умолчанию',
-      'custom-button-text': 'Пользовательская кнопка'
+      'custom-button-text': 'Пользовательская кнопка',
+      'move-up-button-text': 'Передвинуть вверх',
+      'move-down-button-text': 'Передвинуть вниз',
     },
 
     'colsconfig-dialog-content': {
@@ -204,6 +212,21 @@ export default {
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
       'unresizable': 'Фиксированная ширина'
+    },
+
+    'advlimit-dialog-content': {
+      'title': 'Настройка ограничений',
+      'limit-name': 'Название ограничения',
+      'enter-limit-name': 'Введите название ограничения',
+      'use': 'Применить',
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении ограничения возникли ошибки: ',
+      'cant-parse': 'Текущая строка ограничения не является предикатом',
+      'limit': 'Ограничение ',
+      'is-saved': ' сохранено',
+      'is-deleted': ' удалено',
+      'is-correct': 'Текущая строка ограничения корректна',
+      'check': 'Проверить'
     },
 
     'form-load-time-tracker': {

@@ -8,14 +8,14 @@ export function initialize() {
     init() {
       this._super(...arguments);
       if (this.isDropDown) {
-        this.classNames = ['item', 'ui', 'pointing', 'dropdown', 'link'];
+        this.classNames = ['item', 'ui', 'dropdown', 'link'];
+
+        $('.dropdown').dropdown({
+          on: 'hover',
+          transition: 'slide right',
+        });
       }
     },
-
-    didRender() {
-      this._super(...arguments);
-      $('.dropdown').dropdown({on: 'hover' });
-    }
   });
 }
 

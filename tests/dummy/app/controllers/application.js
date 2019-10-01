@@ -1,10 +1,10 @@
-import $ from 'jquery';
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import { isNone } from '@ember/utils';
 import { computed, observer } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import config from '../config/environment';
+import { isNone } from '@ember/utils';
+import $ from 'jquery';
 
 const version = config.APP.version;
 
@@ -43,18 +43,11 @@ export default Controller.extend({
     toggleSidebar() {
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
+      $('.full.height').toggleClass('content-opened');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-        $('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-        $('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**
@@ -74,7 +67,17 @@ export default Controller.extend({
         $('.sidebar.icon.text-menu-hide').removeClass('hidden');
         $('.bgw-opacity').removeClass('hidden');
       }
+    },
+
+    /**
+      Осуществляет выход текущего пользователя из приложения и переход к логин-форме.
+
+      @method actions.logout
+    */
+    logout() {
+      this.transitionToRoute('login');
     }
+
   },
 
   /**

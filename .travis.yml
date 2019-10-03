@@ -13,11 +13,7 @@ services:
 addons:
   chrome: stable
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+cache: false
 
 env:
   global:

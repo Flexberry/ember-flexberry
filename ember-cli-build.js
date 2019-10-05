@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const autoprefixer = require('autoprefixer');
 
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
@@ -10,11 +11,23 @@ module.exports = function(defaults) {
           'bower_components/ember-flexberry-themes',
       ]
     },
-    SemanticUI: {
-      css: false,
-      javascript: true,
-      fonts: true
-    },
+    postcssOptions: {
+      compile: {
+        enabled: false,
+        browsers: ['last 3 versions'],
+      },
+      filter: {
+        enabled: true,
+        plugins: [
+          {
+            module: autoprefixer,
+            options: {
+              browsers: ['last 2 versions']
+            }
+          }
+        ]
+      }
+    }
   });
 
   app.import('vendor/font-icon.css');

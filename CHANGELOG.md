@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.4] - 2019-10-09
+### Added
+* Changes from 2.2.0-beta.11 - 2.2.0-beta.15.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.5`.
+
 ## [3.2.0-beta.3] - 2019-08-26
 ### Added
 * Changes from 2.2.0-beta.10.
@@ -127,6 +134,47 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
+## [2.2.0-beta.15] - 2019-09-30]
+### Added
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
+* Blueprints:
+    * Add setting offline database name.
+* Add `cut-string-by-length` util for cutting string by specified length.
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
+### Changed
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
+
+## [2.2.0-beta.14] - 2019-09-12]
+### Added
+* Blueprints:
+    * Add check for file exist in model-offline.
+### Fixed
+* Blueprints:
+    * Fix call generate method for model-offline in flexberry-group.
+
+## [2.2.0-beta.13] - 2019-09-11]
+### Fixed
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
+* Blueprints:
+    * Fix offline schema setting in store service.
+
+## [2.2.0-beta.12] - 2019-09-02]
+### Added
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
+* Blueprints:
+    * Add offline option.
+
+## [2.2.0-beta.11] - 2019-08-28
+### Added
+* Blueprints:
+    * Add skip-confirmation option.
+
 ## [2.2.0-beta.10] - 2019-08-26
 ### Fixed
 * `flexberry-lookup` component:
@@ -174,6 +222,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-lookup` component:
     * Fix select autocomplete result by enter click.
+
+### Breaking changes
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
 
 ## [2.2.0-beta.3] - 2019-07-19
 ### Fixed

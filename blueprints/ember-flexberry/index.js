@@ -76,7 +76,6 @@ module.exports = {
       '      useAdvLimitService: true,\n\n' +
       '      // Custom property with offline mode settings.\n' +
       '      offline: {\n' +
-      '        dbName: \'ember-app\',\n\n' +
       '        // Flag that indicates whether offline mode in application is enabled or not.\n' +
       '        offlineEnabled: true,\n\n' +
       '        // Flag that indicates whether to switch to offline mode when got online connection errors or not.\n' +

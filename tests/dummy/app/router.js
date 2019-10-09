@@ -131,8 +131,10 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
+  this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');

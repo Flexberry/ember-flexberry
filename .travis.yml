@@ -4,16 +4,12 @@ sudo: required
 language: node_js
 
 node_js:
-  - "6"
+  - "8"
 
 services:
   - docker
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+cache: false
 
 env:
   - EMBER_TRY_SCENARIO=default

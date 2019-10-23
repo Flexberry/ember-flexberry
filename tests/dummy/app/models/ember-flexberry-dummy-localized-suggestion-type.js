@@ -40,11 +40,11 @@ var Model = Projection.Model.extend({
   },
 
   detailComputedFieldChanged: Ember.on('init', Ember.observer('name', function() {
-      Ember.run.once(this, '_detailComputedFieldCompute');
+    Ember.run.once(this, '_detailComputedFieldCompute');
   })),
 
-  localizationChanged: Ember.on('localization', Ember.observer('name', function() {
-      Ember.run.once(this, '_detailComputedFieldCompute');
+  localizationChanged: Ember.on('init', Ember.observer('localization', function() {
+    Ember.run.once(this, '_detailComputedFieldCompute');
   })),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -89,6 +89,5 @@ Model.defineProjection('LocalizedSuggestionTypeEWithComputedField', 'ember-flexb
   suggestionType: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
   })
 });
-
 
 export default Model;

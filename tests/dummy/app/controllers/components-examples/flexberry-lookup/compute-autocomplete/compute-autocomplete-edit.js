@@ -26,7 +26,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     var cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo') {
-      if ( model && model.modelName === 'ember-flexberry-dummy-localized-suggestion-type' && bindingPath === 'localization') {
+      if (model && model.modelName === 'ember-flexberry-dummy-localized-suggestion-type' && bindingPath === 'localization') {
         cellComponent.componentProperties = {
           projection: 'LocalizationL',
           displayAttributeName: 'name',

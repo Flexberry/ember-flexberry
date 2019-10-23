@@ -120,10 +120,6 @@
 
 .icon-guideline-error:before {
   content: "\e915";
-
-  color: #e94b3d;
-
-
 }
 
 .icon-guideline-excel:before {
@@ -220,9 +216,6 @@
 
 .icon-guideline-success:before {
   content: "\e92d";
-
-  color: #71bc90;
-
 }
 
 .icon-guideline-upload:before {
@@ -230,10 +223,4 @@
 }
 
 .icon-guideline-warning:before {
-
-  content: "\e92f"
-}
-
   content: "\e92f";
-}
-

@@ -122,6 +122,7 @@ Model.defineProjection('SuggestionTypeEWithComputedField', 'ember-flexberry-dumm
   }),
   localizedTypes: Projection.hasMany('ember-flexberry-dummy-localized-suggestion-type', '', {
     name: Projection.attr('Name'),
+    detailComputedField: Projection.attr(''),
     localization: Projection.belongsTo('ember-flexberry-dummy-localization', 'Localization', {
       name: Projection.attr('Name', { hidden: true })
     }, { displayMemberPath: 'name' }),

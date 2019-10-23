@@ -43,6 +43,10 @@ var Model = Projection.Model.extend({
       Ember.run.once(this, '_detailComputedFieldCompute');
   })),
 
+  localizationChanged: Ember.on('localization', Ember.observer('name', function() {
+      Ember.run.once(this, '_detailComputedFieldCompute');
+  })),
+
   // This property is for flexberry-lookup component. No inverse relationship here.
   localization: DS.belongsTo('ember-flexberry-dummy-localization', {
     inverse: null,

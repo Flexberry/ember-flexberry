@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { Model as LocalizedSuggestionTypeMixin, defineNamespace, defineProjections } from
   '../mixins/regenerated/models/ember-flexberry-dummy-localized-suggestion-type';
 import { Projection } from 'ember-flexberry-data';

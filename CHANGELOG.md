@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.5] - 2019-10-25
+### Fixed
+* Blueprints:
+    * Fix require promise in offline-blueprints;.
+
 ## [3.2.0-beta.4] - 2019-10-09
 ### Added
 * Changes from 2.2.0-beta.11 - 2.2.0-beta.15.

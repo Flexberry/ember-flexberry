@@ -5,7 +5,7 @@ const minimatch = require('minimatch');
 const fs = require('fs-extra');
 const stat = RSVP.denodeify(fs.stat);
 const Blueprint = require('ember-cli/lib/models/blueprint');
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 
 module.exports = function skipConfirmation(context, intoDir, templateVariables) {
     let files = context._getFilesForInstall(templateVariables.targetFiles);

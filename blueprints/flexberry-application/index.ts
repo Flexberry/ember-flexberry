@@ -7,7 +7,7 @@ import path = require('path');
 import child_process = require('child_process');
 const stripBom = require("strip-bom");
 const Blueprint = require('ember-cli/lib/models/blueprint');
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 import lodash = require('lodash');
 

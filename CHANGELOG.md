@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Blueprints:
+    * Fix require promise in offline-blueprints;.
 
 ## [2.2.0-beta.15] - 2019-09-30]
 ### Added

@@ -405,7 +405,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', 'min', 'max', function () {
     this._flatpickrDestroy();
     scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

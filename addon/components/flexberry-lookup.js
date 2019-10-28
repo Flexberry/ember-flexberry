@@ -1174,7 +1174,8 @@ export default FlexberryBaseComponent.extend({
         responseAsync(settings, callback) {
           console.log('load');
           let projectionName = _this.get('projection');
-          let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
+          let autocompleteOrder = _this.get('autocompleteOrder'); 
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :

@@ -5,6 +5,7 @@
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
+      componentBlockOverflow="visible"
     }}
       {{flexberry-lookup
         placeholder=placeholder
@@ -18,9 +19,12 @@
         choose="showLookupDialog"
         remove="removeLookupValue"
         autocomplete=autocomplete
+        autocompletePersistValue=autocompletePersistValue
+        displayValue=model.lookupDisplayValue
         dropdown=dropdown
         chooseText=chooseText
         removeText=removeText
+        dropdownClass=dropdownClass
         chooseButtonClass=chooseButtonClass
         removeButtonClass=removeButtonClass
         multiselect=true

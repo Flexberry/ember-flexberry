@@ -4,13 +4,12 @@ sudo: required
 language: node_js
 
 node_js:
-  - "6"
+  - "8"
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+services:
+  - docker
+
+cache: false
 
 env:
   - EMBER_TRY_SCENARIO=default
@@ -35,6 +34,13 @@ addons:
   chrome: stable
 
 before_install:
+  - docker --version
+  - docker pull flexberry/ember-flexberry-stand-backend:latest
+  - docker pull flexberry/ember-flexberry-stand-postgres:latest
+  - curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+  - docker swarm init
+  - docker stack deploy -c ember-flexberry-stand-postgres.yml EmberFlexberryStand
+
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - yarn global add ember-cli@2.4.3
@@ -52,7 +58,7 @@ script:
 after_success:
   - test $EMBER_TRY_SCENARIO == "default"
     && test $TRAVIS_PULL_REQUEST == "false"
-    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop")
+    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop" || test $TRAVIS_BRANCH == "feature-ember-update")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
     && bash scripts/deploy-to-gh-pages.sh
 

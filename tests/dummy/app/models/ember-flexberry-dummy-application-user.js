@@ -58,4 +58,9 @@ Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-us
   karma: Projection.attr('Karma')
 });
 
+// Projection for lookup example on window customization.
+Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-application-user', {
+  name: Projection.attr('Name'),
+});
+
 export default Model;

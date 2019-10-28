@@ -1,0 +1,31 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.caption"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  <button class="ui button" {{action 'modalWindow' "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
+</form>
+
+{{#ui-modal id="repeat-window"}}
+  <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModal"}}</div>
+  <div class="content">
+    <div class="ui form flexberry-vertical-form">
+      <div class="field">
+        {{flexberry-file
+          value=model.file
+          placeholder=placeholder
+          readonly=readonly
+          uploadUrl=uploadUrl
+          maxUploadFileSize=maxUploadFileSize
+          showPreview=showPreview
+          showUploadButton=showUploadButton
+          showDownloadButton=showDownloadButton
+          showModalDialogOnUploadError=showModalDialogOnUploadError
+          showModalDialogOnDownloadError=showModalDialogOnDownloadError
+          inputClass=inputClass
+          buttonClass=buttonClass
+          previewSettings=previewSettings
+        }}
+      </div>
+      <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+    </div>
+  </div>
+{{/ui-modal}}

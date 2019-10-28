@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import cutStringByLength from '../utils/cut-string-by-length';
 
 /**
   @class ObjectListViewCell
@@ -20,6 +21,7 @@ export default FlexberryBaseComponent.extend({
 
     @property value
     @type String
+    @default undefined
   */
   value: undefined,
 
@@ -28,8 +30,37 @@ export default FlexberryBaseComponent.extend({
 
     @property dateFormat
     @type String
+    @default undefined
   */
   dateFormat: undefined,
+
+  /**
+    Max number of displayed symbols.
+    Unlimited when 0.
+
+    @property maxTextLength
+    @type Integer
+    @default 0
+  */
+  maxTextLength: 0,
+
+  /**
+    Indicates when component value cuts by spaces.
+
+    @property cutBySpaces
+    @type Boolean
+    @default false
+  */
+  cutBySpaces: false,
+
+  /**
+    Path to property for display.
+
+    @property displayMemberPath
+    @type String
+    @default undefined
+  */
+  displayMemberPath: undefined,
 
   /**
     Formatted displaying value.
@@ -55,5 +86,55 @@ export default FlexberryBaseComponent.extend({
       default:
         return value;
     }
-  })
+  }),
+
+  /**
+    Displaying value.
+
+    @property displayValue
+    @type String
+    @readOnly
+  */
+  displayValue: Ember.computed('formattedValue', 'maxTextLength', 'cutBySpaces', function() {
+    const value = this.get('value');
+    const valueType = Ember.typeOf(value);
+    const maxTextLength = this.get('maxTextLength');
+    let formattedValue = this.get('formattedValue');
+
+    const displayMemberPath = this.get('displayMemberPath');
+    if (!Ember.isNone(displayMemberPath) && formattedValue.get) {
+      formattedValue = formattedValue.get(displayMemberPath);
+    }
+
+    if (valueType === 'boolean') {
+      return formattedValue;
+    }
+
+    const cutBySpaces = this.get('cutBySpaces');
+
+    return cutStringByLength(formattedValue, maxTextLength, cutBySpaces);
+  }).readOnly(),
+
+  /**
+    Title value.
+
+    @property titleValue
+    @type String
+    @readOnly
+  */
+  titleValue: Ember.computed('formattedValue', 'displayValue', 'displayMemberPath', function() {
+    let formattedValue = this.get('formattedValue');
+    const displayValue = this.get('displayValue');
+
+    const displayMemberPath = this.get('displayMemberPath');
+    if (!Ember.isNone(displayMemberPath) && formattedValue.get) {
+      formattedValue = formattedValue.get(displayMemberPath);
+    }
+
+    if (Ember.typeOf(formattedValue) !== Ember.typeOf(displayValue)) {
+      formattedValue = String(formattedValue);
+    }
+
+    return formattedValue !== displayValue ? formattedValue : '';
+  }).readOnly(),
 });

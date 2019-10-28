@@ -5,6 +5,7 @@
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  advLimitButton=advLimitButton
   enableFilters=enableFilters
   exportExcelButton=exportExcelButton
   showFilters=_showFilters
@@ -21,11 +22,12 @@
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  showAdvLimitDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
-  availableCollExpandMode=_availableCollExpandMode
+  availableCollExpandMode=availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
@@ -41,12 +43,15 @@
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  createNewByPrototype=(action "createNewByPrototype")
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
-  showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
+  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
@@ -79,8 +84,8 @@
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
@@ -90,17 +95,19 @@
   onEditForm=onEditForm
   customButtonInRowAction='customButtonInRowAction'
   customButtonsInRow=customButtonsInRow
+  defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
 }}
-{{#unless _inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       {{#if hasPreviousPage}}
-        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
+        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}}>
         </button>
       {{else}}
-        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
+        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}} disabled="disabled">
         </button>
       {{/if}}
       {{#each pages as |page|}}
@@ -110,15 +117,15 @@
           {{#if page.isCurrent}}
             <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
           {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number componentName}}>{{page.number}}</button>
           {{/if}}
         {{/if}}
       {{/each}}
       {{#if hasNextPage}}
-        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
+        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}}>
         </button>
       {{else}}
-        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
+        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}} disabled="disabled">
         </button>
       {{/if}}
     </div>
@@ -135,4 +142,4 @@
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

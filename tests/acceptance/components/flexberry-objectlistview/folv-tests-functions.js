@@ -130,7 +130,6 @@ export function refreshListByFunction(refreshFunction, controller) {
 
     let $lastLoadCount = controller.loadCount;
     refreshFunction();
-
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {
         let loadCount = controller.loadCount;
@@ -277,18 +276,24 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
     let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
+    let fillPromise;
     if (textbox.length !== 0) {
-      fillIn(textbox, filterValue);
+      fillPromise = fillIn(textbox, filterValue);
     }
 
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
 
-    let timeout = 300;
-    Ember.run.later((() => {
-      resolve();
-    }), timeout);
+    if (fillPromise) {
+      fillPromise.then(() => resolve());
+    } else {
+      let timeout = 300;
+      Ember.run.later((() => {
+        resolve();
+      }), timeout);
+    }
+
   });
 }
 

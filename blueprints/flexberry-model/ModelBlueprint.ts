@@ -155,30 +155,37 @@ export default class ModelBlueprint {
           TAB + TAB + `@property ${attr.name}\n` +
           TAB + "*/\n" + TAB;
       }
-      let defaultValue = "";
+      var options = [];
+      var optionsStr = "";
       if (attr.defaultValue) {
         switch (attr.type) {
           case 'decimal':
           case 'number':
           case 'boolean':
-            defaultValue = `, { defaultValue: ${attr.defaultValue} }`;
+            options.push(`defaultValue: ${attr.defaultValue}`);
             break;
           case 'date':
             if (attr.defaultValue === 'Now') {
-              defaultValue = `, { defaultValue() { return new Date(); } }`;
+              options.push(`defaultValue() { return new Date(); }`);
               break;
             }
           default:
             if (this.enums.hasOwnProperty(attr.type)) {
               let enumName = `${this.enums[attr.type].className}Enum`;
               this.enumImports[enumName] = attr.type;
-              defaultValue = `, { defaultValue: ${enumName}.${attr.defaultValue} }`;
+              options.push(`defaultValue: ${enumName}.${attr.defaultValue}`);
             } else {
-              defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
+              options.push(`defaultValue: '${attr.defaultValue}'`);
             }
         }
       }
-      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${defaultValue})`);
+      if (attr.ordered) {
+          options.push("ordered: true");
+      }
+      if (options.length != 0) {
+          optionsStr = ", { " + options.join(', ') + ' }';
+      }
+      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${optionsStr})`);
       if (attr.notNull) {
         if (attr.type === "date") {
           validations.push(attr.name + ": { datetime: true }");
@@ -278,10 +285,13 @@ export default class ModelBlueprint {
     }
     let hiddenStr = "";
     if (belongsTo.hidden || belongsTo.index==-1) {
-      hiddenStr = ", { hidden: true }";
+      hiddenStr = `, { index: ${belongsTo.index}, hidden: true }`;
     }else{
-      if(belongsTo.lookupValueField)
-        hiddenStr = `, { displayMemberPath: '${belongsTo.lookupValueField}' }`;
+      if (belongsTo.lookupValueField) {
+        hiddenStr = `, { index: ${belongsTo.index}, displayMemberPath: '${belongsTo.lookupValueField}' }`;
+      } else {
+        hiddenStr = `, { index: ${belongsTo.index} }`;
+      }
     }
     let indent: string[] = [];
     for (let i = 0; i < level; i++) {
@@ -306,7 +316,9 @@ export default class ModelBlueprint {
   declareProjAttr(attr: metadata.ProjAttr): SortedPair {
     let hiddenStr = "";
     if (attr.hidden) {
-      hiddenStr = ", { hidden: true }";
+      hiddenStr = `, { index: ${attr.index}, hidden: true }`;
+    } else {
+      hiddenStr = `, { index: ${attr.index} }`;
     }
     return new SortedPair(attr.index, `${attr.name}: Projection.attr('${attr.caption}'${hiddenStr})`);
   }

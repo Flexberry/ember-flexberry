@@ -32,7 +32,7 @@ export default Ember.Mixin.create({
       let modelName = params.modelName || this.get('modelName');
 
       if (firstRunMode) {
-        let projectionName = params.modelProjection || this.get('modelProjection');
+        let projectionName = params.projectionName || this.get('modelProjection');
         let builder = new Builder(this.store)
           .from(modelName)
           .selectByProjection(projectionName)

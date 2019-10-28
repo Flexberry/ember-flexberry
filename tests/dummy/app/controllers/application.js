@@ -201,6 +201,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
+        }, {
+          link: 'ember-flexberry-dummy-multi-list',
+          caption: i18n.t('forms.application.sitemap.application.multi.caption'),
+          title: i18n.t('forms.application.sitemap.application.multi.title'),
+          children: null
         }]
       }, {
         link: null,
@@ -320,6 +325,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-file/flexberry-file-in-modal',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.flexberry-file-in-modal.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.flexberry-file-in-modal.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -329,6 +339,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-groupedit/model-update-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-groupedit/custom-buttons-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
             children: null
           }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
@@ -405,6 +420,16 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -464,6 +489,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/hierarchy-paging-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/configurate-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
@@ -492,6 +522,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/lock-services-editor-view-list',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/limited-text-size-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
           }]
         }, {
@@ -541,6 +576,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
             children: null
           }]
         }, {

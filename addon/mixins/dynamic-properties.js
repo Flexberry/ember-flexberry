@@ -135,6 +135,7 @@ export default Ember.Mixin.create({
     };
 
     if (propertyName === 'computedProperties') {
+      Ember.deprecate(`Just don't use it.`, true, { id: 'dynamic-properties-mixin.computed-properties' });
       let propertyValue = this.get(`dynamicProperties.computedProperties`);
       let thisController = propertyValue.thisController;
       thisController.set('computedProperties', this);

@@ -55,6 +55,11 @@ export default FlexberryBaseComponent.extend({
 
     this.set('store', this.get('model.store'));
     this.set('model.colDescs', Ember.A(this.get('model.colDescs')));
+
+    let per = this.get('model.colDescs');
+    for (var i = 0; i < per.length; i++) {
+      this.set(`model.colDescs.${i}.startIndex`, i);  
+    }
   },
 
   didRender: function() {
@@ -94,6 +99,17 @@ export default FlexberryBaseComponent.extend({
      @param {String} value Selected value.
      */
     setSortOrder: function(index, element, value) {
+      // Correct index, if it was moved.
+      if (this.get(`model.colDescs.${index}.startIndex`) !== index) {
+        let array =  this.get('model.colDescs');
+        for (var i = 0; i < array.length; i++) {
+          if (array[i].startIndex === index) {
+            index = i;
+            break;
+          }
+        }
+      }
+
       let currentValue = this.get(`model.colDescs.${index}.sortOrder`);
       if (currentValue !== parseInt(value)) {
         if (value === '0') {

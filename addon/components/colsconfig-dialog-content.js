@@ -58,7 +58,7 @@ export default FlexberryBaseComponent.extend({
 
     let per = this.get('model.colDescs');
     for (var i = 0; i < per.length; i++) {
-      this.set(`model.colDescs.${i}.startIndex`, i);  
+      this.set(`model.colDescs.${i}.startIndex`, i);
     }
   },
 

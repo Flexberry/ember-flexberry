@@ -44,6 +44,10 @@ export default {
       placeholder: '(нет значения)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(нет значения)'
+    },
+
     'flexberry-textarea': {
       placeholder: '(нет значения)'
     },

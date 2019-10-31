@@ -55,11 +55,6 @@ export default FlexberryBaseComponent.extend({
 
     this.set('store', this.get('model.store'));
     this.set('model.colDescs', Ember.A(this.get('model.colDescs')));
-
-    let per = this.get('model.colDescs');
-    for (var i = 0; i < per.length; i++) {
-      this.set(`model.colDescs.${i}.startIndex`, i);
-    }
   },
 
   didRender: function() {
@@ -98,31 +93,18 @@ export default FlexberryBaseComponent.extend({
      @param {Object} element Dropdown.
      @param {String} value Selected value.
      */
-    setSortOrder: function(index, element, value) {
-      // Correct index, if it was moved.
-      if (this.get(`model.colDescs.${index}.startIndex`) !== index) {
-        let array =  this.get('model.colDescs');
-        for (var i = 0; i < array.length; i++) {
-          if (array[i].startIndex === index) {
-            index = i;
-            break;
-          }
-        }
-      }
-
-      let currentValue = this.get(`model.colDescs.${index}.sortOrder`);
-      if (currentValue !== parseInt(value)) {
+    setSortOrder: function(object, element, value) {
+      if (object.sortOrder !== parseInt(value)) {
         if (value === '0') {
-          this.set(`model.colDescs.${index}.sortPriority`, undefined);
-          this.set(`model.colDescs.${index}.sortOrder`, undefined);
+          Ember.set(object, 'sortPriority', undefined);
+          Ember.set(object, 'sortOrder', undefined);
         } else {
-          let sortPriority = this.get(`model.colDescs.${index}.sortPriority`);
+          let sortPriority = object.sortPriority;
           if (Ember.isNone(sortPriority)) {
             sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
-            this.set(`model.colDescs.${index}.sortPriority`, sortPriority);
+            Ember.set(object, 'sortPriority', sortPriority);
           }
-
-          this.set(`model.colDescs.${index}.sortOrder`, parseInt(value));
+          Ember.set(object, 'sortOrder', parseInt(value));
         }
       }
     },

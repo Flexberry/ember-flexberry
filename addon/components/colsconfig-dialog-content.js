@@ -99,10 +99,14 @@ export default FlexberryBaseComponent.extend({
           Ember.set(object, 'sortPriority', undefined);
           Ember.set(object, 'sortOrder', undefined);
         } else {
-          let sortPriority = object.sortPriority;
-          if (Ember.isNone(sortPriority)) {
-            sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
-            Ember.set(object, 'sortPriority', sortPriority);
+          if (Ember.isNone(object.sortPriority)) {
+            let max = 0;
+            this.get('model.colDescs').filter(c => {
+              if (max < c.sortPriority) {
+                max = c.sortPriority;
+              }
+            });
+            Ember.set(object, 'sortPriority', max + 1);
           }
 
           Ember.set(object, 'sortOrder', parseInt(value));

@@ -104,6 +104,7 @@ export default FlexberryBaseComponent.extend({
             sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
             Ember.set(object, 'sortPriority', sortPriority);
           }
+
           Ember.set(object, 'sortOrder', parseInt(value));
         }
       }

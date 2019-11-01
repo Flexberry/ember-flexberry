@@ -2,7 +2,6 @@ import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import { isBlank, isNone } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -172,8 +171,7 @@ export default FlexberryBaseComponent.extend({
             } else {
               mainController.set('sort', sort);
               mainController.set('perPage', colsConfig.perPage || 5);
-              let router = getOwner(this).lookup('router:main');
-              router.router.refresh();
+              mainController.send('refreshList', this.get('model.componentName'));
             }
           }
         ).catch((reason) => {

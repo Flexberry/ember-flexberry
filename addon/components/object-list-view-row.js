@@ -269,9 +269,6 @@ export default FlexberryBaseComponent.extend({
     */
     expand() {
       this.toggleProperty('_expanded');
-      if (!this.get('_expanded')) {
-        this.set('inExpandMode', false);
-      }
     },
 
     /**

@@ -600,7 +600,6 @@ export default Ember.Service.extend({
     }
   },
 
-  
   /**
     Check sort, order and with of cloumns and set default if it broken.
 
@@ -647,7 +646,7 @@ export default Ember.Service.extend({
     if (invalid) {
       this.setCurrentUserSettingsToDefault(componentName);
     }
-    
+
     return invalid;
   },
 

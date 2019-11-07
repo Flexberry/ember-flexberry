@@ -472,7 +472,7 @@ export default FlexberryBaseComponent.extend(
     if (!projection) {
       return Ember.A();
     }
-      
+
     let per = this.get('userSettingsService').checkDeletedAtributes(
       this.get('store'),
       this.get('modelProjection').modelName,

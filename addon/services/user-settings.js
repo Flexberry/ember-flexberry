@@ -615,9 +615,9 @@ export default Ember.Service.extend({
     let modelClass = store.modelFor(modelName);
     let attributes = Ember.get(modelClass, 'fields');
 
-    if(developerUserSettings.columnWidths) {
+    if (developerUserSettings.columnWidths) {
       developerUserSettings.columnWidths.forEach((withProp) => {
-        if (withProp.propName !=='OlvRowToolbar' && withProp.propName !=='OlvRowMenu') { 
+        if (withProp.propName !== 'OlvRowToolbar' && withProp.propName !== 'OlvRowMenu') {
           let prop = attributes.get(withProp.propName.split('.')[0]);
           if (!prop) {
             invalid = true;
@@ -626,7 +626,7 @@ export default Ember.Service.extend({
       });
     }
 
-    if(developerUserSettings.colsOrder) {
+    if (developerUserSettings.colsOrder) {
       developerUserSettings.colsOrder.forEach((orderProp) => {
         let prop = attributes.get(orderProp.propName.split('.')[0]);
         if (!prop) {
@@ -635,7 +635,7 @@ export default Ember.Service.extend({
       });
     }
 
-    if(developerUserSettings.sorting) {
+    if (developerUserSettings.sorting) {
       developerUserSettings.sorting.forEach((sortProp) => {
         let prop = attributes.get(sortProp.propName.split('.')[0]);
         if (!prop) {
@@ -644,7 +644,7 @@ export default Ember.Service.extend({
       });
     }
 
-    if(invalid) {
+    if (invalid) {
       this.setCurrentUserSettingsToDefault(componentName);
     }
     

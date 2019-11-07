@@ -600,6 +600,67 @@ export default Ember.Service.extend({
     }
   },
 
+  
+  /**
+    Check sort, order and with of cloumns and set default if it broken.
+
+    @method checkDeletedAtributes
+    @param {Object} store Current store.
+    @param {Object} modelName Name of model.
+    @param {String} componentName Name of component.
+   */
+  checkDeletedAtributes(store, modelName, componentName) {
+    let developerUserSettings = this.getCurrentUserSetting(componentName);
+    let invalid = false;
+    let modelClass = store.modelFor(modelName);
+    let attributes = Ember.get(modelClass, 'fields');
+
+    if(developerUserSettings.columnWidths) {
+      developerUserSettings.columnWidths.forEach((withProp) => {
+        if (withProp.propName !=='OlvRowToolbar' && withProp.propName !=='OlvRowMenu') { 
+          let prop = attributes.get(withProp.propName.split('.')[0]);
+          if (!prop) {
+            invalid = true;
+          }
+        }
+      });
+    }
+
+    if(developerUserSettings.colsOrder) {
+      developerUserSettings.colsOrder.forEach((orderProp) => {
+        let prop = attributes.get(orderProp.propName.split('.')[0]);
+        if (!prop) {
+          invalid = true;
+        }
+      });
+    }
+
+    if(developerUserSettings.sorting) {
+      developerUserSettings.sorting.forEach((sortProp) => {
+        let prop = attributes.get(sortProp.propName.split('.')[0]);
+        if (!prop) {
+          invalid = true;
+        }
+      });
+    }
+
+    if(invalid) {
+      this.setCurrentUserSettingsToDefault(componentName);
+    }
+    
+    return invalid;
+  },
+
+  /**
+    Set default to current user setting.
+
+    @method clearUserSettingAndSetDefault
+    @param {String} componentName Name of component.
+   */
+  setCurrentUserSettingsToDefault(componentName) {
+    this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = this.getDefaultDeveloperUserSetting(componentName);
+  },
+
   /**
    Returns toggler status from user service.
 

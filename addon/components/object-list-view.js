@@ -472,6 +472,16 @@ export default FlexberryBaseComponent.extend(
     if (!projection) {
       return Ember.A();
     }
+      
+    let per = this.get('userSettingsService').checkDeletedAtributes(
+      this.get('store'),
+      this.get('modelProjection').modelName,
+      this.get('componentName')
+    );
+
+    if (per) {
+      this.set('currentController.developerUserSettings', null);
+    }
 
     let cols = this._generateColumns(projection.attributes);
     let userSettings;

@@ -148,6 +148,8 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
+    userSettingsService.checkDeletedAtributes(this.get('store'), modelName, componentName);
+    
     Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
       .then(() => {
         if (this._invalidSorting(params.sort)) {

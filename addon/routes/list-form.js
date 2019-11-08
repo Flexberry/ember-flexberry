@@ -105,7 +105,8 @@ ErrorableRouteMixin, {
 
     let controller = this.controllerFor(this.routeName);
     this.get('appState').loading();
-
+    
+    let componentName;
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -123,7 +124,6 @@ ErrorableRouteMixin, {
     userSettingsService.checkDeletedAtributes(this.get('store'), modelName, componentName);
 
     let nComponents = 0;
-    let componentName;
     for (componentName in developerUserSettings) {
       let componentDesc = developerUserSettings[componentName];
       switch (typeof componentDesc) {

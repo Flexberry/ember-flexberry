@@ -625,7 +625,7 @@ export default Ember.Service.extend({
           }
         });
       }
-  
+
       if (developerUserSettings.colsOrder) {
         developerUserSettings.colsOrder.forEach((orderProp) => {
           let prop = attributes.get(orderProp.propName.split('.')[0]);
@@ -634,7 +634,7 @@ export default Ember.Service.extend({
           }
         });
       }
-  
+
       if (developerUserSettings.sorting) {
         developerUserSettings.sorting.forEach((sortProp) => {
           let prop = attributes.get(sortProp.propName.split('.')[0]);
@@ -644,7 +644,6 @@ export default Ember.Service.extend({
         });
       }
     }
-
 
     if (invalid) {
       this.setCurrentUserSettingsToDefault(componentName);

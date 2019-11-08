@@ -120,6 +120,7 @@ ErrorableRouteMixin, {
     advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    userSettingsService.checkDeletedAtributes(this.get('store'), modelName, componentName);
 
     let nComponents = 0;
     let componentName;
@@ -148,7 +149,6 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    userSettingsService.checkDeletedAtributes(this.get('store'), modelName, componentName);
 
     Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
       .then(() => {

@@ -1004,22 +1004,7 @@ export default FlexberryBaseComponent.extend({
           let autocompleteOrder = _this.get('autocompleteOrder');
 
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
-
-          let displayAttributeNameType = _this.get('displayAttributeNameType');
-          let autocompletePredicate;
-          if (settings.urlData.query) {
-            switch (displayAttributeNameType) {
-              case 'int':
-              case 'decimal':
-              case 'long':
-                autocompletePredicate = new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settings.urlData.query);
-                break;
-
-              default:
-                autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
-            }
-          }
-
+          let autocompletePredicate = _getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1202,21 +1187,7 @@ export default FlexberryBaseComponent.extend({
           let projectionName = _this.get('projection');
           let autocompleteOrder = _this.get('autocompleteOrder');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
-          let displayAttributeNameType = _this.get('displayAttributeNameType');
-          let autocompletePredicate;
-          if (settings.urlData.query) {
-            switch (displayAttributeNameType) {
-              case 'decimal':
-              case 'int':
-              case 'long':
-                autocompletePredicate = new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settings.urlData.query);
-                break;
-
-              default:
-                autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
-            }
-          }
-
+          let autocompletePredicate = _getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1267,6 +1238,23 @@ export default FlexberryBaseComponent.extend({
           });
       }
     });
+  },
+
+  _getAutocomplitePredicate(settingsUrlDataQuery) {
+    if (settingsUrlDataQuery) {
+      let displayAttributeNameType = this.get('displayAttributeNameType');
+      let displayAttributeName = this.get('displayAttributeName');
+      switch (displayAttributeNameType) {
+        case 'decimal':
+        case 'int':
+        case 'long':
+          return new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settingsUrlDataQuery);
+          break;
+
+        default:
+          return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);
+      }
+    }
   },
 
   /**

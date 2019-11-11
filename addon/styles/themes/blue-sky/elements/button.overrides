@@ -144,6 +144,12 @@ div.ui.secondary.menu.no-margin {
     border: 0px;
 }
 
+.ui.buttons.filter-active {
+    border: 1px solid @uiBorderColor;
+    height: 35px;
+    border-radius: 5px;
+}
+
 .ui.buttons.removeFilter-button {
     border-left: 1px solid @uiBorderColor;
     height: 33px ;
@@ -329,7 +335,7 @@ div.ui.secondary.menu.no-margin {
     padding: 0px;
     height: 30px;
     width: 30px;
-    border: none;
+    border: 1px solid @uiHoveredNegitveBorderColor;
     &:hover {
         border: 1px solid @uiHoveredNegitveBorderColor;
         background: @white;

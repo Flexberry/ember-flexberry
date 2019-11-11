@@ -426,6 +426,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete/numeric-autocomplete-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),

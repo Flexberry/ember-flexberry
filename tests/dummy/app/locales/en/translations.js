@@ -488,6 +488,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with numeric-autocomplete',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -932,6 +936,10 @@ Ember.$.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Example lookup with compute autocomplete',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with numeric-autocomplete',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

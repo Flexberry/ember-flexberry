@@ -498,6 +498,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа с числовым автокомплитом',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Пример иерархического OLV-а в lookup-e',
               'title': ''
@@ -943,6 +947,10 @@ Ember.$.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа с числовым автокомплитом',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

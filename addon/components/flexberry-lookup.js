@@ -529,11 +529,9 @@ export default FlexberryBaseComponent.extend({
   
   /**
     Type of the attribute of the model to display for the user.
-    Is required for autocomplete and dropdown modes.
 
-    @property displayAttributeName
+    @property displayAttributeNameType
     @type String
-    @default null
   */
   displayAttributeNameType: Ember.computed('displayAttributeName', function() {
     let information = new Information(this.get('store'));
@@ -1012,11 +1010,7 @@ export default FlexberryBaseComponent.extend({
           let autocompletePredicate = undefined;
     
           if (settings.urlData.query) {
-            switch (displayAttributeNameType) {
-              case 'string':
-                autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
-                break;
-      
+            switch (displayAttributeNameType) {    
               case 'int':
               case 'decimal':
               case 'long':
@@ -1024,7 +1018,7 @@ export default FlexberryBaseComponent.extend({
                 break;
       
               default:
-                throw new Error(`Not supported type:'${displayAttributeNameType}'.`);
+                autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
             }
           }
 
@@ -1210,10 +1204,22 @@ export default FlexberryBaseComponent.extend({
           let projectionName = _this.get('projection');
           let autocompleteOrder = _this.get('autocompleteOrder');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
+          let displayAttributeNameType = _this.get('displayAttributeNameType');
+          let autocompletePredicate = undefined;
+    
+          if (settings.urlData.query) {
+            switch (displayAttributeNameType) {   
+              case 'decimal':
+              case 'int':
+              case 'long':
+                autocompletePredicate = new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settings.urlData.query);
+                break;
+      
+              default:
+                autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
+            }
+          }
 
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);

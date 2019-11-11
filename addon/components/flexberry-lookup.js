@@ -1004,7 +1004,7 @@ export default FlexberryBaseComponent.extend({
           let autocompleteOrder = _this.get('autocompleteOrder');
 
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
-          let autocompletePredicate = _getAutocomplitePredicate(settings.urlData.query);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1187,7 +1187,7 @@ export default FlexberryBaseComponent.extend({
           let projectionName = _this.get('projection');
           let autocompleteOrder = _this.get('autocompleteOrder');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
-          let autocompletePredicate = _getAutocomplitePredicate(settings.urlData.query);
+          let autocompletePredicate = this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);

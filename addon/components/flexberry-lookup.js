@@ -1249,7 +1249,6 @@ export default FlexberryBaseComponent.extend({
         case 'int':
         case 'long':
           return new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settingsUrlDataQuery);
-          break;
 
         default:
           return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);

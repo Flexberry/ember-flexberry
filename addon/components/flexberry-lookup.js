@@ -526,7 +526,6 @@ export default FlexberryBaseComponent.extend({
   */
   displayAttributeName: null,
 
-  
   /**
     Type of the attribute of the model to display for the user.
 
@@ -1007,16 +1006,15 @@ export default FlexberryBaseComponent.extend({
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
 
           let displayAttributeNameType = _this.get('displayAttributeNameType');
-          let autocompletePredicate = undefined;
-    
+          let autocompletePredicate;
           if (settings.urlData.query) {
-            switch (displayAttributeNameType) {    
+            switch (displayAttributeNameType) {
               case 'int':
               case 'decimal':
               case 'long':
                 autocompletePredicate = new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settings.urlData.query);
                 break;
-      
+
               default:
                 autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
             }
@@ -1205,16 +1203,15 @@ export default FlexberryBaseComponent.extend({
           let autocompleteOrder = _this.get('autocompleteOrder');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
           let displayAttributeNameType = _this.get('displayAttributeNameType');
-          let autocompletePredicate = undefined;
-    
+          let autocompletePredicate;
           if (settings.urlData.query) {
-            switch (displayAttributeNameType) {   
+            switch (displayAttributeNameType) {
               case 'decimal':
               case 'int':
               case 'long':
                 autocompletePredicate = new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settings.urlData.query);
                 break;
-      
+
               default:
                 autocompletePredicate = new StringPredicate(displayAttributeName).contains(settings.urlData.query);
             }

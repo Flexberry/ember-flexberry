@@ -364,8 +364,8 @@ i.icon.file.text.outline:before { content: "\f0f6"; }
 i.icon.folder.outline:before { content: "\f114"; }
 i.icon.folder.open.outline:before { content: "\f115"; }
 i.icon.file.pdf.outline:before { content: "\f1c1"; }
-i.icon.file.word.outline:before { content: "\f1c2"; }
-i.icon.file.excel.outline:before { content: "\e80a"; font-size:20px; font-family: 'Crimean';}
+i.icon.large.file.excel.outline { font-size: 28px; }
+i.icon.file.excel.outline:before { content: "\e80a"; font-family: 'Crimean';}
 i.icon.file.powerpoint.outline:before { content: "\f1c4"; }
 i.icon.file.image.outline:before { content: "\f1c5"; }
 i.icon.file.archive.outline:before { content: "\f1c6"; }

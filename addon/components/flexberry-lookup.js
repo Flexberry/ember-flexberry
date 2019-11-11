@@ -1240,6 +1240,13 @@ export default FlexberryBaseComponent.extend({
     });
   },
 
+  /**
+    Build predicate with settingsUrlDataQuery.
+
+    @method _getAutocomplitePredicate
+    @returns {String}
+    @private
+  */
   _getAutocomplitePredicate(settingsUrlDataQuery) {
     if (settingsUrlDataQuery) {
       let displayAttributeNameType = this.get('displayAttributeNameType');

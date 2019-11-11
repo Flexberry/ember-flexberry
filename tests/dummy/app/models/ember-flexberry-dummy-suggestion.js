@@ -101,7 +101,8 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
-    })
+    }),
+    karma: Projection.attr(''),
   }, {
     displayMemberPath: 'name'
   }),
@@ -352,7 +353,7 @@ Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-su
   votes: Projection.attr(''),
   moderated: Projection.attr(''),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
-    name: Projection.attr('')
+    name: Projection.attr(''),
   }),
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
     name: Projection.attr(''),

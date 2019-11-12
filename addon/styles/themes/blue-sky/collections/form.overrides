@@ -73,7 +73,7 @@ input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
 }
 
 .ui.form textarea, .ui.form input[type="checkbox"] {
-    margin: 5px;
+    margin: 0;
 }
 
 .ui.form .olv-toolbar-info-modal-dialog-content textarea {
@@ -125,6 +125,43 @@ option {
     width: 100%;
 }
 
+form.ui.form.flexberry-vertical-form {
+    .ember-text-area  {
+        border: none;
+        border-bottom: 1px solid @inputBorderColor;
+        border-radius: 0px;
+        padding-top: 0;
+    }
+}
+
+form.ui.form.flexberry-vertical-form {
+    .ember-text-field,
+    .ember-text-area,
+    .flexberry-simpledatetime,
+    .flexberry-dropdown,
+    .custom-flatpickr {
+        padding-left: 0; 
+        height: 37px;
+    }
+    .field {
+        margin-bottom: 2em;
+        label {
+            margin-bottom: 5px;
+        }
+        > .field {
+            margin: 0;
+        }
+    }  
+    .column {
+        margin-bottom: 2em;
+        padding-bottom: 0;
+        padding-top: 0;
+        > .column {
+            margin: 0;
+        }
+    }  
+}
+
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-content {
     text-align: center;
 }
@@ -132,3 +169,4 @@ option {
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
     padding-top: 20px;
 }
+

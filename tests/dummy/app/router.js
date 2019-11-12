@@ -146,6 +146,8 @@ Router.map(function() {
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/validation');
+  this.route('integration-examples/edit-form/markup-form-fields');
+  this.route('integration-examples/edit-form/markup-grid');
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');

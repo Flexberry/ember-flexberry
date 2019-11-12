@@ -93,11 +93,13 @@ i.icon.table:before {
     font-family: 'Crimean';
     content: "\e819";
 }
+i.icon.large.file.excel.outline {
+    font-size: 28px;
+}
 i.icon.file.excel.outline:before {
     font-family: 'Crimean';
     content: "\e80a";
-    font-size:20px;
-}
+}    
 i.icon.filter:before {
     font-family: 'Crimean';
     content: "\e809";

@@ -17,17 +17,50 @@
  * Flexberry-colsconfig.
  */
 .flexberry-colsconfig {
+  table {
+    tbody {
+      max-width: 718px;
+      tr {
+        table-layout: fixed;
+        display: table;
+        td {
+          &:nth-child(1) {
+            width: 50px;
+          }
+          &:nth-child(2) {
+            width: 115px;
+          }
+          &:nth-child(4) {
+            width: 86px;
+          }
+          &:nth-child(5) {
+            width: 70px;
+          }
+          &:nth-child(6) {
+            width: 81px;
+          }
+        }
+      }
+    }
+    tfoot {
+      th {
+        &:last-child {
+          width: 90px;
+        }
+      }
+    }
+  }
   .show-columns {
     width: 55px;
   }
   .columns-order {
-    width: 90px;
+    width: 115px;
   }
   .column-width {
     width: 85px;
   }
   .sort-direction {
-    width: 80px;
+    width: 86px;
   }
   .sort-priority {
     width: 70px;
@@ -48,12 +81,16 @@
   th {
     > .input {
       input.setting-name {
-        width: 250px;
+        width: 400px;
       }
     }
     .ui.action.input .ui.button {
       display: inline-flex;
     }
+  }
+  tr {
+    width: 100%;
+    display: table;
   }
 }
 

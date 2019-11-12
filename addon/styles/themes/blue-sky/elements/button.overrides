@@ -21,7 +21,7 @@
 
 .ui.small.button {
     border: none;
-    font-size: 12px;
+    font-size: 14px;
     &:hover {
         background: #d01919;
     }
@@ -109,9 +109,12 @@ div.ui.secondary.menu.no-margin {
 .ui.button.delete-button {
     border: none;
     font-size: 0px;
-    padding-top: 10px;
+    padding-right: 10px;
     padding-left: 10px;
     height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
         background: none;
         border :none;
@@ -120,6 +123,8 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.icon.hierarchical-button {
     border: 0px;
+    padding: 0 5px 0;
+    font-size: 1.5rem;
     &:hover {
         background: @white;
     }
@@ -136,12 +141,6 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.collexp-button {
     border: 0px;
-}
-
-.ui.buttons.filter-active {
-    border: 1px solid @uiBorderColor;
-    height: 35px;
-    border-radius: 5px;
 }
 
 .ui.buttons.removeFilter-button {
@@ -344,7 +343,7 @@ div.ui.secondary.menu.no-margin {
     width: 30px;
     border: 1px solid @uiBorderColor;
     &:hover {
-        border: 1px solid @uiHoveredNegitveBorderColor;
+        border: none;
         background: @white;
         & i.icon.minus:before {
             color: @uiHoveredNegitveTextColor;
@@ -608,11 +607,12 @@ div.ui.secondary.menu.no-margin {
         border: 1px solid @uiBorderColor;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
+            border-radius: 5px;
         }
     }
-
     .cols-config-save {
         border: 1px solid @uiBorderColor;
+        border-radius: 5px !important;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             background-color: @uiHoveredPositiveBackgroundColor;
@@ -621,7 +621,9 @@ div.ui.secondary.menu.no-margin {
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {
-    margin-top: -4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ui.buttons > .ui.button:not(.basic):not(.inverted),
@@ -643,12 +645,10 @@ div.ui.secondary.menu.no-margin {
 
 .ui.icon.tiny.button {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.icon.tiny.button.no-margin {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.buttons:not(.basic):not(.inverted) {

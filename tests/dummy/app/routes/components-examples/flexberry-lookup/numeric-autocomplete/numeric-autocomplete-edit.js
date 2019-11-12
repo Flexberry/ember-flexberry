@@ -9,7 +9,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'SuggestionE'
    */
-  modelProjection: 'SuggestionE',
+  modelProjection: 'SuggestionEWithKarma',
 
   /**
   developerUserSettings.

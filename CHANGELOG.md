@@ -4,6 +4,54 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.5] - 2019-10-25
+### Fixed
+* Blueprints:
+    * Fix require promise in offline-blueprints;.
+
+## [3.2.0-beta.4] - 2019-10-09
+### Added
+* Changes from 2.2.0-beta.11 - 2.2.0-beta.15.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.5`.
+
+## [3.2.0-beta.3] - 2019-08-26
+### Added
+* Changes from 2.2.0-beta.10.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.4`.
+
+## [3.2.0-beta.2] - 2019-08-21
+### Added
+* Changes from 2.2.0-beta.7 - 2.2.0-beta.9.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.3`.
+
+## [3.2.0-beta.1] - 2019-08-08
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.2`.
+
+## [3.2.0-beta.0] - 2019-08-08
+### Added
+* Changes from 2.2.0-beta.0 - 2.2.0-beta.6.
+
+### Changed
+* Update dependency on `flatpickr` to version `4.6.1`.
+
+## [3.1.0] - 2019-04-30
+### Added
+* Changes from 2.1.0.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.1.0`.
+
+### Removed
+* `flexberry-button` component:
+    * Remove `DomActionsMixin`.
+
 ## [3.0.1-beta.0] - 2018-12-24
 ### Added
 * Blueprints:
@@ -91,12 +139,171 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-## [2.1.0-beta.0] - 2018-12-13
+## [2.2.0-beta.15] - 2019-09-30]
+### Added
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
+* Blueprints:
+    * Add setting offline database name.
+* Add `cut-string-by-length` util for cutting string by specified length.
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
+### Changed
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
+
+## [2.2.0-beta.14] - 2019-09-12]
+### Added
+* Blueprints:
+    * Add check for file exist in model-offline.
+### Fixed
+* Blueprints:
+    * Fix call generate method for model-offline in flexberry-group.
+
+## [2.2.0-beta.13] - 2019-09-11]
+### Fixed
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
+* Blueprints:
+    * Fix offline schema setting in store service.
+
+## [2.2.0-beta.12] - 2019-09-02]
+### Added
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
+* Blueprints:
+    * Add offline option.
+
+## [2.2.0-beta.11] - 2019-08-28
+### Added
+* Blueprints:
+    * Add skip-confirmation option.
+
+## [2.2.0-beta.10] - 2019-08-26
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `autocomplite` results after toogle readonly mode.
+* `flexberry-objectlistview` component:
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
+
+### Changed
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.8`.
+
+## [2.2.0-beta.9] - 2019-08-21
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.7`.
+
+## [2.2.0-beta.8] - 2019-08-16
+### Fixed
+* Creating a prototype record when a prototype is not loaded into store.
+
+## [2.2.0-beta.7] - 2019-08-08
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.6`.
+
+## [2.2.0-beta.6] - 2019-08-06
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy paging mode.
+
+## [2.2.0-beta.5] - 2019-08-05
+### Added
+* `flexberry-objectlistview` component:
+    * Add hierarchy paging option.
+
+## [2.2.0-beta.4] - 2019-07-19
+### Added
+* `flexberry-objectlistview` component:
+    * Add advlimit config dialog for editing and applying limits.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.5`.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix select autocomplete result by enter click.
+
+### Breaking changes
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
+
+## [2.2.0-beta.3] - 2019-07-19
+### Fixed
+* `user-settings` service:
+    * Fix of replacing perPage form developerUserSettings on reloading.
+* `flexberry-objectlistview` component:
+    * Fix multi lists on edit form with `flexberry-groupedit` components.
+
+## [2.2.0-beta.2] - 2019-07-12
+### Added
+* Add creating record by prototype for `flexberry-objectlistview`.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.3`.
+
+## [2.2.0-beta.1] - 2019-07-05
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.
+
+### Breaking changes
+* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
+* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
+
+## [2.2.0-beta.0] - 2019-06-28
 ### Added
 * `flexberry-lookup` component:
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to flexberry-lookup at drodpdown mode.
+    * Add limitFunction in groupedit row to lookup limit by other component.
+* `flexberry-file` component:
+    * Added the ability correct settings to file preview modal dialog.
+* Add mixins for multi list mode.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.0`.
+
+### Breaking changes
+* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
+
+## [2.1.0] - 2019-04-30
+### Added
+* Blueprints:
+    * Add index property generation for projection attributes.
+* `flexberry-lookup` component:
     * Add preview button.
+    * Add persist value mode for autocomplete.
+    * Add optional projection for autocomplite (`autocompleteProjection` property).
+    * Add property `autofillByLimit`.
 * `flexberry-file` component:
     * Added the ability to open files instead of downloading.
+* List components:
+    * Add option to hide default sorting button.
+    * Add option to fix table header (`fixedHeader`).
+* `flexberry-groupedit` component:
+    * Add text and icon custom buttons in toolbar.
+    * Add check all at page button.
+    * Sorting by ordered property.
+
+### Changed
+* `flexberry-lookup` component:
+    * Dropdown mode uses projection from `projection` property.
+* Update dependency on `ember-flexberry-data` to version `2.1.0`.
+
+### Fixed
+* `reload-list-mixin` mixin:
+    * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
+    * Fix filter by `null` for `string`, `number` and `date` data types.
+* `flexberry-groupedit` component:
+    * Fix ordered property computing when `modelProjection` are string.
+* `flexberry-file` component:
+    * Fix spinner for preview when component is in modal.
+
+### Deprecated
+* Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
 
 ## [2.0.0] - 2018-12-07
 ### Added

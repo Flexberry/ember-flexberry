@@ -140,6 +140,7 @@ export default Mixin.create(ReloadListMixin, {
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -175,6 +176,7 @@ export default Mixin.create(ReloadListMixin, {
         filter: undefined,
         predicate: limitPredicate,
         hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
 
         title: title,
         sizeClass: sizeClass,
@@ -374,6 +376,7 @@ export default Mixin.create(ReloadListMixin, {
       filterCondition: undefined,
       predicate: undefined,
       hierarchicalAttribute: undefined,
+      hierarchyPaging: false,
 
       title: undefined,
       sizeClass: undefined,
@@ -405,6 +408,7 @@ export default Mixin.create(ReloadListMixin, {
 
     let controller = currentContext.get('lookupController');
     let queryParameters = {
+      componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
@@ -414,7 +418,8 @@ export default Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
-      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging
     };
 
     controller.clear(reloadData.initialLoad);
@@ -436,6 +441,7 @@ export default Mixin.create(ReloadListMixin, {
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

@@ -175,6 +175,15 @@ export default ListFormController.extend({
   refreshButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'defaultSortingButton' mode or not
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showCheckBoxInRow' mode or not.
 
     @property showCheckBoxInRow
@@ -199,12 +208,12 @@ export default ListFormController.extend({
   showEditButtonInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showPrototypeButtonInRow' mode or not.
 
-    @property showEditMenuItemInRow
+    @property showPrototypeButtonInRow
     @type Boolean
    */
-  showEditMenuItemInRow: true,
+  showPrototypeButtonInRow: false,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
@@ -213,6 +222,22 @@ export default ListFormController.extend({
     @type Boolean
    */
   showDeleteMenuItemInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+   */
+  showEditMenuItemInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showPrototypeMenuItemInRow' mode or not.
+
+    @property showPrototypeMenuItemInRow
+    @type Boolean
+   */
+  showPrototypeMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.
@@ -275,6 +300,14 @@ export default ListFormController.extend({
   availableCollExpandMode: false,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'fixedHeader' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  fixedHeader: false,
+
+  /**
     Current records.
 
     @property _records
@@ -317,11 +350,14 @@ export default ListFormController.extend({
       '  applyFilters=(action "applyFilters")<br>' +
       '  resetFilters=(action "resetFilters")<br>' +
       '  refreshButton=refreshButton<br>' +
+      '  defaultSortingButton=defaultSortingButton<br>' +
       '  filterButton=filterButton<br>' +
       '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
       '  showEditButtonInRow=showEditButtonInRow<br>' +
+      '  showPrototypeButtonInRow=showPrototypeButtonInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
       '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow<br>' +
       '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
       '  rowClickable=rowClickable<br>' +
       '  orderable=orderable<br>' +
@@ -333,7 +369,7 @@ export default ListFormController.extend({
       '  sortByColumn=(action "sortByColumn")<br>' +
       '  addColumnToSorting=(action "addColumnToSorting")<br>' +
       '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
-      '  _availableCollExpandMode=availableCollExpandMode<br>' +
+      '  availableCollExpandMode=availableCollExpandMode<br>' +
       '  pages=pages<br>' +
       '  perPageValue=perPageValue<br>' +
       '  perPageValues=perPageValues<br>' +
@@ -342,6 +378,7 @@ export default ListFormController.extend({
       '  previousPage=(action "previousPage")<br>' +
       '  gotoPage=(action "gotoPage")<br>' +
       '  nextPage=(action "nextPage")<br>' +
+      '  fixedHeader=fixedHeader<br>' +
       '}}'));
   },
 
@@ -477,16 +514,16 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'refreshButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'defaultSortingButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'defaultSortingButton'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showCheckBoxInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showCheckBoxInRow'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'showDeleteButtonInRow',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'showDeleteButtonInRow'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showEditButtonInRow',
@@ -495,10 +532,28 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'showEditButtonInRow'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'showPrototypeButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPrototypeButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showDeleteButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showDeleteButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showEditMenuItemInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showEditMenuItemInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showPrototypeMenuItemInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPrototypeMenuItemInRow'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showDeleteMenuItemInRow',
@@ -535,6 +590,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'availableCollExpandMode'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;

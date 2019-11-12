@@ -335,7 +335,7 @@ export default Mixin.create({
 
           // Trigger component's outer action if inner action handler doesn't return 'false'.
           if (canSendAction) {
-            if(!isNone(this.get(componentActionName))){
+            if (!isNone(this.get(componentActionName))) {
               this.get(componentActionName)(...args);
             }
 

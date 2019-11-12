@@ -72,6 +72,17 @@ span.lookup-field {
 .setting-name-input {
     margin-right: 15px !important;
 }
+
 .per-page-input {
     width: 53px !important;
+}
+
+.ui.form .flexberry-advlimit-input {
+  width: 100%;
+  .flexberry-textarea {
+    width: 100%;
+    textarea {
+      resize: none;
+    }
+  }
 }

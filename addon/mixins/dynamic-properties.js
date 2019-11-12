@@ -8,6 +8,7 @@ import { get, computed, observer } from '@ember/object';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { typeOf, isNone } from '@ember/utils';
+import { deprecate } from '@ember/application/deprecations';
 
 /**
   Mixin containing logic making available passing all desirable properties to components
@@ -137,6 +138,7 @@ export default Mixin.create({
     };
 
     if (propertyName === 'computedProperties') {
+      deprecate(`Just don't use it.`, true, { id: 'dynamic-properties-mixin.computed-properties' });
       let propertyValue = this.get(`dynamicProperties.computedProperties`);
       let thisController = propertyValue.thisController;
       thisController.set('computedProperties', this);

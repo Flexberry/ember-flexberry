@@ -175,8 +175,8 @@ div.ui.secondary.menu.no-margin {
 }
 
 .ui.secondary.menu {
-    .ui.buttons.export-config, .ui.buttons.cols-config {
-        .export-button, .config-button.settings-enabled {
+    .ui.buttons.export-config, .ui.buttons.cols-config, .ui.buttons.adv-limit-config {
+        .export-button, .config-button.settings-enabled, .adv-limit-button {
             padding-right: 0em;
         }
 
@@ -503,6 +503,46 @@ div.ui.secondary.menu.no-margin {
     text-align: right;
     &:hover {
         background: @white;
+    }
+}
+
+.ui.ui-move-up.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
+.ui.ui-move-down.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
+.ui.custom.button {
+    padding: 0px 18px;
+    height: 30px;
+    border: 1px solid @uiBorderColor;
+}
+
+.ui.custom.icon.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+	  &:hover {
+        & i.icon:before {
+            color: @white;
+        }
     }
 }
 

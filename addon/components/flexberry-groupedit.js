@@ -3,14 +3,17 @@
 */
 
 import { isNone } from '@ember/utils';
-import { get, observer } from '@ember/object';
+import { get, observer, computed } from '@ember/object';
 import { inject as service} from '@ember/service';
 import { A, isArray } from '@ember/array';
 import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
+import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
+import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
   Component for create, edit and delete detail objects.
@@ -31,6 +34,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: service(),
+
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -97,6 +109,23 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+		    iconClasses: '' // Css classes for icon.
+      }
+      ```
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Custom classes for table.
 
     @property customTableClass
@@ -122,6 +151,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   defaultSettingsButton: true,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Route of edit form.
@@ -510,10 +548,61 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.get(actionName)(record);
     },
+
+    /**
+      Handler to get user button's actions and send action to corresponding controllers's handler.
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit toolbar was found.');
+      }
+
+      this.get(actionName)();
+    },
   },
 
   sortingObserver: observer('sorting', function() {
     this.sortingFunction();
+  }),
+
+  /**
+    Check in view order property.
+
+    @property orderedProperty
+    @type computed
+  */
+  orderedProperty: computed('modelProjection', function() {
+    let projection = this.get('modelProjection');
+    if (typeof projection === 'string') {
+      let modelName = this.get('modelName');
+      projection = getProjectionByName(projection, modelName, this.get('store'));
+    }
+
+    if (isNone(projection)) {
+      return;
+    }
+
+    let information = new Information(this.get('store'));
+    let attributes = projection.attributes;
+    let attributesKeys = Object.keys(attributes);
+
+    let order = attributesKeys.find((key) => {
+      let attrubute = attributes[key];
+      if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
+        once(this, function() {
+          /* eslint-disable ember/no-side-effects */
+          this.set('sorting', [{ direction: 'asc', propName: key }]);
+          /* eslint-enable ember/no-side-effects */
+        });
+
+        return key;
+      }
+    });
+
+    return order;
   }),
 
   /**
@@ -604,11 +693,14 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let developerUserSettings = this.currentController;
-    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
-    developerUserSettings = developerUserSettings[this.componentName] || {};
-    developerUserSettings = developerUserSettings.DEFAULT || {};
-    this.set('sorting', developerUserSettings.sorting || []);
+
+    if (isNone(this.get('orderedProperty'))) {
+      let developerUserSettings = this.currentController;
+      developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
+      developerUserSettings = developerUserSettings[this.componentName] || {};
+      developerUserSettings = developerUserSettings.DEFAULT || {};
+      this.set('sorting', developerUserSettings.sorting || []);
+    }
   },
 
   /**

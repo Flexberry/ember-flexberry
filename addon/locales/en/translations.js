@@ -52,7 +52,7 @@ export default {
       'placeholder': '(no value)'
     },
 
-    'flexberry-simpledatetime': {
+    'flexberry-datepicker': {
       placeholder: '(no value)',
 
       // Months and days of week names are taken from moment.js.
@@ -131,8 +131,9 @@ export default {
       'sort-ascending': 'Order ascending',
       'sort-descending': 'Order descending',
       'menu-in-row': {
-        'edit-menu-item-title': 'Edit record',
         'add-menu-item-title': 'Add record',
+        'edit-menu-item-title': 'Edit record',
+        'prototype-menu-item-title': 'Create record by prototype',
         'delete-menu-item-title': 'Delete record'
       },
       'hierarchy-buttons': {
@@ -160,6 +161,11 @@ export default {
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
       'set-default-setting-title': 'Default setting',
+      'create-limit-title': 'New limit',
+      'use-limit-title': 'Use',
+      'edit-limit-title': 'Edit',
+      'remove-limit-title': 'Remove',
+      'set-default-limit-title': 'Default limit',
       'show-default-setting-title': 'Show settings',
       'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
       'close': 'Close',
@@ -174,7 +180,10 @@ export default {
     'groupedit-toolbar': {
       'add-button-text': 'Add',
       'delete-button-text': 'Delete',
-      'clear-settings-button-text': 'Restore default settings'
+      'clear-settings-button-text': 'Restore default settings',
+      'custom-button-text': 'Custom button',
+      'move-up-button-text': 'Move up',
+      'move-down-button-text': 'Move down',
     },
 
     'colsconfig-dialog-content': {
@@ -201,6 +210,21 @@ export default {
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
       'det-separate-cols': 'List\'s properties in separate columns'
+    },
+
+    'advlimit-dialog-content': {
+      'title': 'Customize limit',
+      'limit-name': 'Limit name',
+      'enter-limit-name': 'Enter limit name',
+      'use': 'Use',
+      'save': 'Save',
+      'have-errors': 'When you save a limit errors occurred: ',
+      'cant-parse': 'Can\'t convert current limit string to predicate',
+      'limit': 'Limit ',
+      'is-saved': ' was saved',
+      'is-deleted': ' was deleted',
+      'is-correct': 'Current limit string is correct',
+      'check': 'Check'
     },
 
     'form-load-time-tracker': {

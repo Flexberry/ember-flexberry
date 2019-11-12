@@ -38,7 +38,8 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null, async: false
+    inverse: null,
+    async: false
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -76,7 +77,9 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
     if (!this.get('isDeleted')) {
       this.set('commentsCount', this.get('comments.length'));
     }
-  }
+  },
+
+  prototypeProjection: 'SuggestionE'
 });
 
 // Edit form projection.
@@ -145,41 +148,29 @@ Model.defineProjection('SuggestionMainModelProjectionTest', 'ember-flexberry-dum
 
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
-  address: attr('Address'),
-  text: attr('Text'),
-  date: attr('Date'),
-  votes: attr('Votes'),
-  moderated: attr('Moderated'),
+  address: attr('Address', { index: 0 }),
+  text: attr('Text', { index: 1 }),
+  date: attr('Date', { index: 2 }),
+  votes: attr('Votes', { index: 3 }),
+  moderated: attr('Moderated', { index: 4 }),
   type: belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: attr('Name', { index: 6, hidden: true })
+  }, { index: 5, displayMemberPath: 'name' }),
   author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: attr('Name', {
-      hidden: true
-    }),
-    eMail: attr('Email')
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: attr('Name', { index: 8, hidden: true }),
+    eMail: attr('Email', { index: 9 })
+  }, { index: 7, displayMemberPath: 'name' }),
   editor1: belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
-  commentsCount: attr('Comments Count'),
+    name: attr('Name', { index: 11, hidden: true })
+  }, { index: 10, displayMemberPath: 'name' }),
+  commentsCount: attr('Comments Count', { index: 15 }),
   comments: hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: attr('Text'),
-    votes: attr('Votes'),
-    moderated: attr('Moderated'),
+    text: attr('Text', { index: 0 }),
+    votes: attr('Votes', { index: 1 }),
+    moderated: attr('Moderated', { index: 2 }),
     author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: attr('Name', { hidden: true })
-    }, { displayMemberPath: 'name' })
+      name: attr('Name', { index: 4, hidden: true })
+    }, { index: 3, displayMemberPath: 'name' })
   })
 });
 
@@ -192,6 +183,33 @@ Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-sugges
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup example on preview example.
+Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-suggestion', {
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  editor1: belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  userVotes: hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    author: belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: attr('Name', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'name'
+    })
+  }),
 });
 
 // Projection for lookup example on window customization.
@@ -322,6 +340,30 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup with computed field test.
+Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+  address: attr(''),
+  text: attr(''),
+  date: attr(''),
+  votes: attr(''),
+  moderated: attr(''),
+  author: belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: attr('')
+  }),
+  type: belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: attr(''),
+    moderated: attr(''),
+    computedField: attr('')
+  }),
+  editor1: belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: attr('')
+  }),
+  createTime: attr(''),
+  creator: attr(''),
+  editTime: attr(''),
+  editor: attr('')
 });
 
 export default Model;

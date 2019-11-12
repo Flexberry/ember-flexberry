@@ -1,3 +1,6 @@
+import { on } from '@ember/object/evented';
+import { observer } from '@ember/object';
+import { once } from '@ember/runloop';
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
@@ -26,6 +29,26 @@ let Model = EmberFlexberryDataModel.extend(Validations, {
     inverse: 'suggestionType',
     async: false
   }),
+
+  /**
+    Non-stored property.
+
+    @property computedField
+  */
+  computedField: DS.attr('string'),
+
+  moderatedChanged: on('init', observer('Name', function() {
+    once(this, 'computedFieldCompute');
+  })),
+
+  nameChanged: on('init', observer('Moderated', function() {
+    once(this, 'computedFieldCompute');
+  })),
+
+  computedFieldCompute: function() {
+    let result =  this.get('name') + ' ' + this.get('moderated');
+    this.set('computedField', result);
+  },
 });
 
 // Edit form projection.
@@ -86,6 +109,33 @@ Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-du
 Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
   name: attr('Name'),
   moderated: attr('Moderated')
+});
+
+Model.defineProjection('SuggestionTypeEWithComputedField', 'ember-flexberry-dummy-suggestion-type', {
+  name: attr(''),
+  moderated: attr(''),
+  computedField: attr(''),
+  parent: belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: attr(''),
+    moderated: attr(''),
+    computedField: attr('')
+  }, {
+    displayMemberPath: 'computedField'
+  }),
+  localizedTypes: hasMany('ember-flexberry-dummy-localized-suggestion-type', '', {
+    name: attr('Name'),
+    localization: belongsTo('ember-flexberry-dummy-localization', 'Localization', {
+      name: attr('Name', { hidden: true })
+    }, { displayMemberPath: 'name' }),
+    suggestionType: belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    }, { hidden: true })
+  })
+});
+
+Model.defineProjection('AutocompleteProjectionExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: attr('Name'),
+  moderated: attr('Moderated'),
+  computedField: attr(''),
 });
 
 export default Model;

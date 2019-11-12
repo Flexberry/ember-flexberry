@@ -1,10 +1,12 @@
 <div class="ui segments">
+  {{#if componentTemplateText}}
   <div class="ui segment">
     <div class="ui segment">
       <h4 class="ui header">{{t "components.settings-example.component-template-caption"}}</h4>
       <pre><code>{{componentTemplateText}}</code></pre>
     </div>
   </div>
+  {{/if}}
   <div class="ui segment">
     <table class="ui celled table flexberry-word-break">
       <thead>
@@ -101,7 +103,7 @@
     </table>
   </div>
   <div class="ui segment">
-    <div class="ui segment">
+    <div class="ui segment" style="overflow: {{componentBlockOverflow}}">
       <h4 class="ui header">{{t "components.settings-example.component-with-applied-settings-caption"}}</h4>
       {{yield}}
     </div>

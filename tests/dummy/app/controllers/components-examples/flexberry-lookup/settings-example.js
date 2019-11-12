@@ -52,6 +52,15 @@ export default EditFormController.extend({
   autocomplete: false,
 
   /**
+    Flag indicates whether 'flexberry-lookup' component is in 'autocompletePersistValue' mode or not.
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
     Flag indicates whether 'flexberry-lookup' component is in 'dropdown' mode or not.
 
     @property dropdown
@@ -88,6 +97,15 @@ export default EditFormController.extend({
   chooseButtonClass: '',
 
   /**
+    Text for 'flexberry-lookup' component 'dropdownClass' property.
+
+    @property dropdownClass
+    @type String
+    @default 'blue'
+  */
+  dropdownClass: '',
+
+  /**
     Text for 'flexberry-lookup' component 'removeButtonClass' property.
 
     @property removeButtonClass
@@ -119,6 +137,8 @@ export default EditFormController.extend({
       '  choose=(action "showLookupDialog")<br>' +
       '  remove=(action "removeLookupValue")<br>' +
       '  autocomplete=autocomplete<br>' +
+      '  autocompletePersistValue=autocompletePersistValue<br>' +
+      '  displayValue=model.lookupDisplayValue<br>' +
       '  dropdown=dropdown<br>' +
       '  chooseText=chooseText<br>' +
       '  removeText=removeText<br>' +
@@ -160,6 +180,12 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'autocomplete'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'autocompletePersistValue',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'autocompletePersistValue'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'dropdown',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -190,6 +216,13 @@ export default EditFormController.extend({
       settingDefaultValue: '',
       settingAvailableItems: ['purple basic', 'negative', 'yellow colored'],
       bindedControllerPropertieName: 'removeButtonClass'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownClass',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['blue'],
+      bindedControllerPropertieName: 'dropdownClass'
     });
 
     return componentSettingsMetadata;

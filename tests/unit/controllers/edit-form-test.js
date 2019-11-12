@@ -9,12 +9,15 @@ var App;
 
 moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
   needs: [
+    'controller:advlimit-dialog',
+    'controller:colsconfig-dialog',
     'controller:flexberry-file-view-dialog',
     'controller:lookup-dialog',
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',
     'service:app-state',
+    'service:adv-limit',
   ],
 
   beforeEach: function() {

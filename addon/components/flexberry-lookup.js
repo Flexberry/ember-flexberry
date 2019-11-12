@@ -4,20 +4,19 @@
 
 import { assert, warn, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
-import { computed, observer } from '@ember/object';
-import { later, run } from '@ember/runloop';
+import { computed, observer, get } from '@ember/object';
+import { later, run, once } from '@ember/runloop';
 import { merge } from '@ember/polyfills';
 import { isNone } from '@ember/utils';
 import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
-import { BasePredicate } from 'ember-flexberry-data/query/predicate';
-import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { BasePredicate, SimplePredicate, ComplexPredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Lookup component for Semantic UI.
@@ -135,6 +134,14 @@ export default FlexberryBaseComponent.extend({
     @type String
   */
   previewButtonClass: undefined,
+
+  /**
+    CSS classes for flexberry-lookup at dropdown mode.
+
+    @property dropdownClass
+    @type String
+  */
+  dropdownClass: undefined,
 
   /**
     CSS classes for choose button.
@@ -276,6 +283,36 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
+    Flag to fill value by limitPredicate.
+
+    @property autofillByLimit
+    @type Boolean
+    @default false
+  */
+  autofillByLimit: false,
+
+  /* eslint-disable  ember/no-on-calls-in-components */
+  /**
+    Observer on 'autofillByLimit'.
+
+    @property _autofillByLimitObserver
+  */
+  _autofillByLimitObserver: on('init', observer('autofillByLimit', function() {
+    if (this.get('autofillByLimit')) {
+      this.addObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.addObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    } else {
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    }
+  })),
+  /* eslint-enable  ember/no-on-calls-in-components */
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -319,6 +356,24 @@ export default FlexberryBaseComponent.extend({
   maxResults: 10,
 
   /**
+    Flag for remove autocomplete value if it's not in the results (remove when false).
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
+    Stores autocomplete value, when autocompletePersistValue=true and lookup value clearing.
+
+    @property autocompletePersistValueCache
+    @type String
+    @default undefined
+  */
+  autocompletePersistValueCache: undefined,
+
+  /**
     Limit function on lookup.
     It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
 
@@ -345,6 +400,23 @@ export default FlexberryBaseComponent.extend({
     @default undefined
   */
   hierarchicalAttribute: undefined,
+
+  /**
+    Function of limit function for lookup in GroupEdit.
+    It should not be function return BasePredicate.
+
+    @example
+      ```javascript
+        lookupAdditionalLimitFunction = function (relationModel) {
+        return new StringPredicate('LookUpField').contains(relationModel.get('GroupEditField'));
+      };
+      ```
+
+    @property lookupAdditionalLimitFunction
+    @type Function
+    @default undefined
+  */
+  lookupAdditionalLimitFunction: undefined,
 
   /**
     This computed property forms a set of properties to send to lookup window.
@@ -435,7 +507,7 @@ export default FlexberryBaseComponent.extend({
         projection: this.get('projection'),
         relationName: this.get('relationName'),
         title: this.get('title'),
-        predicate: this.get('lookupLimitPredicate'),
+        predicate: this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction')),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
@@ -503,6 +575,15 @@ export default FlexberryBaseComponent.extend({
   autocompleteOrder: null,
 
   /**
+    Projection name for autocomplete query.
+
+    @property autocompleteProjection
+    @type String
+    @default undefined
+  */
+  autocompleteProjection: undefined,
+
+  /**
     Current selected instance of the model.
 
     @property value
@@ -552,11 +633,8 @@ export default FlexberryBaseComponent.extend({
 
     @property displayValue
     @type String
-    @readOnly
   */
-  displayValue: computed('value', function() {
-    return this._buildDisplayValue();
-  }),
+  displayValue: undefined,
 
   /**
     Standard CSS class names to apply to the view's outer element.
@@ -638,6 +716,11 @@ export default FlexberryBaseComponent.extend({
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
       }
 
+      // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
+      if (this.get('lookupAdditionalLimitFunction')) {
+        chooseData.predicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
+      }
+
       // Set state to active to add 'active' css-class.
       this.set('isActive', true);
 
@@ -666,6 +749,11 @@ export default FlexberryBaseComponent.extend({
     remove(removeData) {
       if (this.get('readonly')) {
         return;
+      }
+
+      if (this.get('autocompletePersistValue')) {
+        this.set('autocompletePersistValueCache', undefined);
+        this.set('displayValue', undefined);
       }
 
       let remove = this.get('remove');
@@ -728,14 +816,24 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
 
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.addObserver('value', this, this._valueObserver);
-    this.addObserver('displayAttributeName', this, this._valueObserver);
-    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autocompletePersistValue') && isNone(this.get('value'))) {
+      this.set('autocompletePersistValueCache', this.get('displayValue'));
+    }
+
+    this._valueObserver();
+
+    if (this.get('autofillByLimit')) {
+      this._onAutofillByLimit();
+    }
   },
 
   /**
-    It seems to me a mistake here, it should be [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement).
+    Observe lookup value changes.
+  */
+  valueObserver: observer('value', 'displayAttributeName', function() { once(this, '_valueObserver'); }),
+
+  /**
+    It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
     # WRANING!
 
     @method didDestroyElement
@@ -789,11 +887,12 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
-
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.removeObserver('value', this, this._valueObserver);
-    this.removeObserver('displayAttributeName', this, this._valueObserver);
-    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autofillByLimit')) {
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    }
   },
 
   /**
@@ -868,7 +967,6 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = this.get('displayAttributeName');
-    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
       throw new Error('`displayAttributeName` is required property for autocomplete mode in `flexberry-lookup`.');
     }
@@ -882,6 +980,18 @@ export default FlexberryBaseComponent.extend({
     if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
       throw new Error('maxResults has wrong value.');
     }
+
+    // Add select first autocomplete result by enter click.
+    this.$('input').keyup(function(event) {
+      if (event.keyCode === 13) {
+        let result = _this.$('div.results.transition.visible');
+        let activeField = result.children('a.result.active');
+        let resultField = result.children('a.result')[0];
+        if (resultField && activeField.length === 0) {
+          resultField.click();
+        }
+      }
+    });
 
     let state;
     let i18n = _this.get('i18n');
@@ -914,20 +1024,15 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder;
-          if (autocompleteOrder) {
-            builder = new Builder(store, relationModelName)
-            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
-          } else {
-            builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
-          }
+          let autocompleteProjection = _this.get('autocompleteProjection');
+          let autocompleteOrder = _this.get('autocompleteOrder');
+
+          let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
@@ -1006,8 +1111,40 @@ export default FlexberryBaseComponent.extend({
         // and Ember won't change computed property.
 
         if (state !== 'selected') {
-          if (_this.get('displayValue')) {
-            _this.set('displayValue', _this._buildDisplayValue());
+          let displayValue = _this.get('displayValue');
+          if (displayValue) {
+            if (_this.get('autocompletePersistValue')) {
+              let builder = new Builder(store, relationModelName).select(displayAttributeName);
+
+              let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
+              let resultPredicate = _this._conjuctPredicates(
+                _this.get('lookupLimitPredicate'),
+                _this.get('lookupAdditionalLimitFunction'),
+                autocompletePredicate);
+              if (resultPredicate) {
+                builder.where(resultPredicate);
+              }
+
+              run(() => {
+                store.query(relationModelName, builder.build()).then((records) => {
+                  let record = records.objectAt(0);
+                  if (isNone(record)) {
+                    _this.set('autocompletePersistValueCache', displayValue);
+                    _this.sendAction('remove', _this.get('removeData'));
+                  } else {
+                    _this.set('value', record);
+                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                      {
+                        relationName: relationName,
+                        modelToLookup: relatedModel,
+                        newRelationValue: record
+                      });
+                  }
+                });
+              });
+            } else {
+              _this.set('displayValue', _this._buildDisplayValue());
+            }
           } else {
             _this.sendAction('remove', _this.get('removeData'));
           }
@@ -1057,14 +1194,13 @@ export default FlexberryBaseComponent.extend({
       },
       apiSettings: {
         responseAsync(settings, callback) {
-          let builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+          let projectionName = _this.get('projection');
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
@@ -1130,10 +1266,15 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _buildDisplayValue() {
+    let autocompletePersistValueCache = this.get('autocompletePersistValueCache');
+    if (autocompletePersistValueCache) {
+      this.set('autocompletePersistValueCache', undefined);
+    }
+
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      return '';
+      return autocompletePersistValueCache ? autocompletePersistValueCache : '';
     }
 
     if (!displayAttributeName) {
@@ -1145,31 +1286,81 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Creates an instance of the Builder class with selection and sorting specified in the component parameters.
+
+    @method _createQueryBuilder
+    @param {DS.Store} store
+    @param {String} modelName
+    @param {String} projection
+    @param {String} order
+    @return {Builder}
+  */
+  _createQueryBuilder(store, modelName, projection, order) {
+    let sorting = this.get('sorting');
+    let displayAttributeName = this.get('displayAttributeName');
+
+    let builder = new Builder(store, modelName);
+
+    if (projection) {
+      builder.selectByProjection(projection);
+    } else {
+      builder.select(displayAttributeName);
+    }
+
+    builder.orderBy(`${order ? order : `${displayAttributeName} ${sorting}`}`);
+
+    return builder;
+  },
+
+  /**
     Concatenates predicates.
 
     @method _conjuctPredicates
     @param {BasePredicate} limitPredicate The first predicate to concatenate.
     @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+    @param {Function} lookupAdditionalLimitFunction Function return BasePredicate to concatenate.
     @return {BasePredicate} Concatenation of two predicates.
     @throws {Error} Throws error if any of parameter predicates has wrong type.
   */
-  _conjuctPredicates(limitPredicate, autocompletePredicate) {
-    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
-      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+  _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
+    let limitArray = A();
+
+    if (limitPredicate) {
+      if (limitPredicate instanceof BasePredicate) {
+        limitArray.pushObject(limitPredicate);
+      } else {
+        throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    if (autocompletePredicate && !(autocompletePredicate instanceof BasePredicate)) {
-      throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+    if (autocompletePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
+        limitArray.pushObject(autocompletePredicate);
+      } else {
+        throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    let resultPredicate = (limitPredicate && autocompletePredicate) ?
-                          new ComplexPredicate(Condition.And, limitPredicate, autocompletePredicate) :
-                          (limitPredicate ?
-                            limitPredicate :
-                            (autocompletePredicate ?
-                              autocompletePredicate :
-                              undefined));
-    return resultPredicate;
+    if (lookupAdditionalLimitFunction) {
+      if ((lookupAdditionalLimitFunction instanceof Function)) {
+        let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
+          }
+        }
+      } else {
+        throw new Error('lookupAdditionalLimitFunction must to be function.');
+      }
+    }
+
+    if (limitArray.length > 1) {
+      return new ComplexPredicate(Condition.And, ...limitArray);
+    } else {
+      return limitArray[0];
+    }
   },
 
   /**
@@ -1185,5 +1376,58 @@ export default FlexberryBaseComponent.extend({
     } else if (this.get('dropdown')) {
       this._onDropdown();
     }
+  },
+
+  /**
+    Function for autofillByLimit observer.
+
+    @method _autofillByLimitObserverFunction
+    @private
+  */
+  _autofillByLimitObserverFunction() {
+    once(this, '_onAutofillByLimit');
+  },
+
+  /**
+    Handles changing properties affecting the sample.
+
+    @method _onAutofillByLimit
+    @private
+  */
+  _onAutofillByLimit() {
+    if (this.get('readonly')) {
+      return;
+    }
+
+    let _this = this;
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let store = this.get('store');
+    let relatedModel = this.get('relatedModel');
+    let relationModelName = getRelationType(relatedModel, relationName);
+
+    let builder = new Builder(store, relationModelName).selectByProjection(this.get('projection'));
+
+    let lookupLimitPredicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
+    if (lookupLimitPredicate) {
+      builder.where(lookupLimitPredicate);
+    }
+
+    builder.top(2);
+    store.query(relationModelName, builder.build()).then((records) => {
+      if (get(records, 'length') === 1) {
+        let record = records.objectAt(0);
+        _this.set('value', record);
+        _this.get('currentController').send(_this.get('updateLookupAction'),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: record
+          });
+      }
+    });
   }
 });

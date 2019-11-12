@@ -2,7 +2,7 @@
 language: node_js
 
 node_js:
-  - "6"
+  - "8"
 
 sudo: required
 dist: trusty
@@ -13,11 +13,7 @@ services:
 addons:
   chrome: stable
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+cache: false
 
 env:
   global:
@@ -72,7 +68,7 @@ script:
 after_success:
   - test $EMBER_TRY_SCENARIO == "ember-default"
     && test $TRAVIS_PULL_REQUEST == "false"
-    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop")
+    && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop" || test $TRAVIS_BRANCH == "feature-ember-update")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
     && bash scripts/deploy-to-gh-pages.sh
 

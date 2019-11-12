@@ -9,7 +9,7 @@ var Model = EmberFlexberryDataModel.extend({
     inverse: 'files',
     async: false
   }),
-  order: DS.attr('number'),
+  order: DS.attr('number', { ordered: true }),
   file: DS.attr('file'),
 });
 

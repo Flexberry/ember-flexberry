@@ -1,0 +1,62 @@
+<div class="in-modal">
+  {{
+    flexberry-lookup
+    placeholder=placeholder
+    readonly=readonly
+    value=model.author
+    projection="PreviewExampleView"
+    displayAttributeName="name"
+    title=title
+    relatedModel=model
+    relationName="author"
+    showPreviewButton=true
+    previewFormRoute="components-acceptance-tests/flexberry-lookup/settings-example-preview-page"
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    preview=(action "previewLookupValue")
+    autocomplete=autocomplete
+    dropdown=dropdown
+    chooseText=chooseText
+    removeText=removeText
+    chooseButtonClass=chooseButtonClass
+    removeButtonClass=removeButtonClass
+    previewButtonClass=previewButtonClass
+  }}
+</div>
+<div class="in-separate-route">
+  {{
+    flexberry-lookup
+    placeholder=placeholder
+    readonly=readonly
+    value=model.editor1
+    projection="PreviewExampleView"
+    displayAttributeName="name"
+    title=title
+    relatedModel=model
+    relationName="editor1"
+    showPreviewButton=true
+    previewOnSeparateRoute=true
+    previewFormRoute="components-acceptance-tests/flexberry-lookup/settings-example-preview-page"
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    preview=(action "previewLookupValue")
+    autocomplete=autocomplete
+    dropdown=dropdown
+    chooseText=chooseText
+    removeText=removeText
+    chooseButtonClass=chooseButtonClass
+    removeButtonClass=removeButtonClass
+    previewButtonClass=previewButtonClass
+  }}
+</div>
+<div class="in-groupedit">
+  {{flexberry-groupedit
+    componentName="suggestionUserVotesGroupEdit"
+    content=model.userVotes
+    mainModelProjection=modelProjection
+    modelProjection=modelProjection.attributes.userVotes
+    readonly=readonly
+    createNewButton=false
+    deleteButton=false
+  }}
+</div>

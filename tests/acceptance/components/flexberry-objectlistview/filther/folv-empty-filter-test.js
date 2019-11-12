@@ -1,6 +1,7 @@
 import { run } from '@ember/runloop';
 import { A } from '@ember/array';
 import $ from 'jquery';
+import { isNone } from '@ember/utils';
 import { executeTest, addDataForDestroy } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
@@ -58,13 +59,13 @@ executeTest('check empty filter', (store, assert, app) => {
           let successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let address = filtherResult[i]._data.address;
-            if (address === undefined) {
+            if (!isNone(address)) {
               successful = false;
             }
           }
 
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal(successful, true, 'Filter successfully worked');
+          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
+          assert.equal(successful, true, 'Filter not successfully worked');
         }).finally(() => {
           newRecords[2].destroyRecord().then(() => {
             run(() => {

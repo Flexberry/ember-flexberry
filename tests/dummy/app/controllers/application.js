@@ -426,7 +426,7 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
-            link: 'components-examples/flexberry-lookup/numeric-autocomplete/numeric-autocomplete-list',
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
             children: null

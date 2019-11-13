@@ -529,10 +529,10 @@ export default FlexberryBaseComponent.extend({
   /**
     Type of the attribute of the model to display for the user.
 
-    @property displayAttributeNameType
+    @property displayAttributeType
     @type String
   */
-  displayAttributeNameType: Ember.computed('displayAttributeName', function() {
+  displayAttributeType: Ember.computed('displayAttributeName', function() {
     let information = new Information(this.get('store'));
     let relationModelName = getRelationType(this.get('relatedModel'), this.get('relationName'));
     let attrType = information.getType(relationModelName, this.get('displayAttributeName'));
@@ -1187,7 +1187,7 @@ export default FlexberryBaseComponent.extend({
           let projectionName = _this.get('projection');
           let autocompleteOrder = _this.get('autocompleteOrder');
           let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
-          let autocompletePredicate = this._getAutocomplitePredicate(settings.urlData.query);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1249,9 +1249,9 @@ export default FlexberryBaseComponent.extend({
   */
   _getAutocomplitePredicate(settingsUrlDataQuery) {
     if (settingsUrlDataQuery) {
-      let displayAttributeNameType = this.get('displayAttributeNameType');
+      let displayAttributeType = this.get('displayAttributeType');
       let displayAttributeName = this.get('displayAttributeName');
-      switch (displayAttributeNameType) {
+      switch (displayAttributeType) {
         case 'decimal':
         case 'int':
         case 'long':

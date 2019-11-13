@@ -489,7 +489,7 @@ Ember.$.extend(true, translations, {
               'title': ''
             },
             'numeric-autocomplete': {
-              'caption': 'Example lookup with numeric autocomplete and dropdwon',
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -939,7 +939,7 @@ Ember.$.extend(true, translations, {
           'title': ''
         },
         'numeric-autocomplete': {
-          'caption': 'Example lookup with numeric autocomplete and dropdwon',
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

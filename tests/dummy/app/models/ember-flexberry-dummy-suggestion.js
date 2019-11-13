@@ -370,18 +370,6 @@ Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-su
 
 // Edit form projection with Karma.
 Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion', {
-  address: Projection.attr('Address'),
-  text: Projection.attr('Text'),
-  date: Projection.attr('Date'),
-  votes: Projection.attr('Votes'),
-  moderated: Projection.attr('Moderated'),
-  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
@@ -389,40 +377,6 @@ Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion
     karma: Projection.attr(''),
   }, {
     displayMemberPath: 'name'
-  }),
-  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
-  files: Projection.hasMany('ember-flexberry-dummy-suggestion-file', 'Files', {
-    order: Projection.attr('Order'),
-    file: Projection.attr('File')
-  }),
-  userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
-    voteType: Projection.attr('Vote type'),
-    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-      name: Projection.attr('Name', {
-        hidden: true
-      }),
-      eMail: Projection.attr('Email')
-    }, {
-      displayMemberPath: 'name'
-    })
-  }),
-  comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: Projection.attr('Text'),
-    votes: Projection.attr('Votes'),
-    moderated: Projection.attr('Moderated'),
-    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Projection.attr('Name', {
-        hidden: true
-      })
-    }, {
-      displayMemberPath: 'name'
-    })
   })
 });
 

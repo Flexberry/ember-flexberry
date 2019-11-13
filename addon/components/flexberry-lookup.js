@@ -1244,7 +1244,8 @@ export default FlexberryBaseComponent.extend({
     Build predicate with settingsUrlDataQuery.
 
     @method _getAutocomplitePredicate
-    @returns {String}
+    @param {String} settingsUrlDataQuery
+    @returns {Predicate}
     @private
   */
   _getAutocomplitePredicate(settingsUrlDataQuery) {

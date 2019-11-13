@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
 
 ## [2.2.0-beta.16] - 2019-10-29]
 ### Added

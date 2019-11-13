@@ -94,7 +94,7 @@ i.icon.table:before {
     content: "\e819";
 }
 i.icon.large.file.excel.outline {
-    font-size: 28px;
+    font-size: 24px;
 }
 i.icon.file.excel.outline:before {
     font-family: 'Crimean';

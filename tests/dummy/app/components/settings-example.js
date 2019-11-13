@@ -43,5 +43,5 @@ export default Ember.Component.extend({
     @property componentBlockOverflow
     @type String
    */
-  componentBlockOverflow: 'scroll',
+  componentBlockOverflow: 'visible',
 });

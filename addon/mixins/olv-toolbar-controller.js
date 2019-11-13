@@ -3,6 +3,24 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
+
+  /**
+    Controller to show advlimit config modal window.
+
+    @property advLimitController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('advlimit-dialog')
+  */
+  advLimitController: Ember.inject.controller('advlimit-dialog'),
+
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type advLimit
+  */
+  advLimit: Ember.inject.service(),
+
   /**
     Default cell component that will be used to display values in columns cells.
 
@@ -23,12 +41,61 @@ export default Ember.Mixin.create({
   currentColumnsWidths: undefined,
 
   actions: {
-    showConfigDialog: function(componentName, settingName, isExportExcel = false, immediateExport = false) {
+    /**
+      Show columns config dialog.
+
+      @method actions.showConfigDialog
+      @param componentName Component name.
+      @param settingName Setting name.
+      @param isExportExcel Indicates if it's export excel dialog.
+      @param immediateExport Indicate if auto export is needed.
+    */
+    showConfigDialog(componentName, settingName, isExportExcel = false, immediateExport = false) {
       this._showConfigDialog(componentName, settingName, this, isExportExcel, immediateExport);
+    },
+
+    /**
+      Show adv limit config dialog.
+
+      @method actions.showAdvLimitDialog
+      @param componentName Component name.
+      @param advLimitName Adv limit name.
+    */
+    showAdvLimitDialog(componentName, advLimitName) {
+      let advLimit = this.get('advLimit').getCurrentAdvLimit(componentName, advLimitName);
+
+      let store = this.get('store');
+
+      let controller = this.get('advLimitController');
+      controller.set('mainControler', this);
+
+      let loadingParams = {
+        view: 'application',
+        outlet: 'modal'
+      };
+      this.send('showModalDialog', 'advlimit-dialog');
+
+      loadingParams = {
+        view: 'advlimit-dialog',
+        outlet: 'modal-content'
+      };
+      this.send('showModalDialog', 'advlimit-dialog-content',
+        { controller: controller, model: { advLimit: advLimit, advLimitName: advLimitName, componentName: componentName, store: store } }, loadingParams);
     }
   },
 
-  _showConfigDialog: function(componentName, settingName, settingsSource, isExportExcel = false, immediateExport = false) {
+  /**
+    Show columns config dialog.
+
+    @method _showConfigDialog
+    @param componentName
+    @param settingName
+    @param settingsSource
+    @param isExportExcel
+    @param immediateExport
+    @private
+  */
+  _showConfigDialog(componentName, settingName, settingsSource, isExportExcel = false, immediateExport = false) {
     let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
     let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
     let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
@@ -171,7 +238,6 @@ export default Ember.Mixin.create({
 
     let controller = this.get('colsconfigController');
     controller.set('mainControler', this);
-
     let loadingParams = {
       view: 'application',
       outlet: 'modal'
@@ -300,7 +366,7 @@ export default Ember.Mixin.create({
     let index = Ember.get(attr, 'options.index');
 
     let column = {
-      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || Ember.String.htmlSafe(attr.caption || Ember.String.capitalize(attrName)),
       propName: bindingPath,
       cellComponent: cellComponent,
       isHasMany: isHasMany,

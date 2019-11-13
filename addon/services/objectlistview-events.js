@@ -282,13 +282,13 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Current limit function for OLV.
+    Current limit functions for OLV by componentNames.
 
-    @property currentLimitFunction
-    @type BasePredicate
-    @default undefined
+    @property currentLimitFunctions
+    @type Object
+    @default {}
   */
-  currentLimitFunction: undefined,
+  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -312,19 +312,21 @@ export default Ember.Service.extend(Ember.Evented, {
     @method setLimitFunction
 
     @param {BasePredicate} limitFunction Current limit function.
+    @param {String} componentName Component name.
   */
-  setLimitFunction(limitFunction) {
-    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  setLimitFunction(limitFunction, componentName) {
+    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
   },
 
   /**
     Gets current limit function for OLV.
 
     @method getLimitFunction
+    @param {String} componentName Component name.
     @return {BasePredicate} Current limit function.
   */
-  getLimitFunction() {
-    return this.get('currentLimitFunction');
+  getLimitFunction(componentName) {
+    return this.get(`currentLimitFunctions.${componentName}`);
   },
 
   /**

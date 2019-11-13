@@ -488,6 +488,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -580,6 +584,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit hierarchy example',
               'title': ''
             },
+            'hierarchy-paging-example': {
+              'caption': 'Hierarchy with paginig example',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
@@ -603,10 +611,22 @@ Ember.$.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -804,7 +824,8 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-multi-list': {
-      'caption': 'Multi list form'
+      'caption': 'Multi list form',
+      'multi-edit-form': 'Multi list edit form'
     },
 
     'log-service-examples': {
@@ -925,6 +946,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Example lookup with compute autocomplete',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
@@ -1012,6 +1037,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
@@ -1035,6 +1063,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Limit hierarchy example'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy paging example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'
@@ -1085,6 +1116,11 @@ Ember.$.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Settings example'
         }
       },
       'flexberry-textarea': {

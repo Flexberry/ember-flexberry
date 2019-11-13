@@ -305,6 +305,14 @@ export default ListFormController.extend({
   fixedHeader: false,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'advLimitButton' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  advLimitButton: false,
+
+  /**
     Current records.
 
     @property _records
@@ -371,6 +379,7 @@ export default ListFormController.extend({
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
     '  fixedHeader=fixedHeader<br>' +
+    '  advLimitButton=advLimitButton<br>' +
     '}}'),
 
   /**
@@ -587,6 +596,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'fixedHeader'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'advLimitButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'advLimitButton'
     });
 
     return componentSettingsMetadata;

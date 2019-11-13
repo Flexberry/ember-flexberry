@@ -8,6 +8,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
+import Information from 'ember-flexberry-data/utils/information';
 
 const {
   Builder,
@@ -526,6 +527,19 @@ export default FlexberryBaseComponent.extend({
   displayAttributeName: null,
 
   /**
+    Type of the attribute of the model to display for the user.
+
+    @property displayAttributeType
+    @type String
+  */
+  displayAttributeType: Ember.computed('displayAttributeName', function() {
+    let information = new Information(this.get('store'));
+    let relationModelName = getRelationType(this.get('relatedModel'), this.get('relationName'));
+    let attrType = information.getType(relationModelName, this.get('displayAttributeName'));
+    return attrType;
+  }),
+
+  /**
     Name of the attribute of the model to display for the user
     for hidden attribute by master.
     Is required for autocomplete and dropdown modes.
@@ -948,8 +962,10 @@ export default FlexberryBaseComponent.extend({
     // Add select first autocomplete result by enter click.
     this.$('input').keyup(function(event) {
       if (event.keyCode === 13) {
-        let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
-        if (resultField) {
+        let result = _this.$('div.results.transition.visible');
+        let activeField = result.children('a.result.active');
+        let resultField = result.children('a.result')[0];
+        if (resultField && activeField.length === 0) {
           resultField.click();
         }
       }
@@ -988,10 +1004,7 @@ export default FlexberryBaseComponent.extend({
           let autocompleteOrder = _this.get('autocompleteOrder');
 
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
-
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1172,11 +1185,9 @@ export default FlexberryBaseComponent.extend({
         responseAsync(settings, callback) {
           console.log('load');
           let projectionName = _this.get('projection');
-          let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
-
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
+          let autocompleteOrder = _this.get('autocompleteOrder');
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1227,6 +1238,30 @@ export default FlexberryBaseComponent.extend({
           });
       }
     });
+  },
+
+  /**
+    Build predicate with settingsUrlDataQuery.
+
+    @method _getAutocomplitePredicate
+    @param {String} settingsUrlDataQuery
+    @returns {Predicate}
+    @private
+  */
+  _getAutocomplitePredicate(settingsUrlDataQuery) {
+    if (settingsUrlDataQuery) {
+      let displayAttributeType = this.get('displayAttributeType');
+      let displayAttributeName = this.get('displayAttributeName');
+      switch (displayAttributeType) {
+        case 'decimal':
+        case 'int':
+        case 'long':
+          return new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settingsUrlDataQuery);
+
+        default:
+          return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);
+      }
+    }
   },
 
   /**

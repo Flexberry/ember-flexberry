@@ -113,6 +113,7 @@
               {{component column.filter.component.name
                 value=column.filter.pattern
                 dynamicProperties=column.filter.component.properties
+                key-down=(action "keyDownFilterAction")
               }}
             {{/if}}
           </td>
@@ -163,6 +164,7 @@
           defaultLeftPadding=defaultLeftPadding
           overflowedComponents=overflowedComponents
           folvComponentName=componentName
+          hierarchyPaging=hierarchyPaging
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

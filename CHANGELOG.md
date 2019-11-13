@@ -3,10 +3,120 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `user-settings`:
-    * Fix of replacing perPage form developerUserSettings on reloading.
 
+## [2.2.0-beta.17] - 2019-11-13
+### Fixed
+* `flexberry-lookup` component:
+    * Fix autocomplete for numeric properties.
+* `colsconfig-dialog-content` component:
+    * Fix set sorting method.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.10` (batchUpdate fixes).
+
+## [2.2.0-beta.16] - 2019-10-29
+### Added
+* `flexberry-lookup` component:
+    * Add `autocompleteOrder` in dropdown mode.
+
+## [2.2.0-beta.15] - 2019-09-30
+### Added
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
+* Blueprints:
+    * Add setting offline database name.
+* Add `cut-string-by-length` util for cutting string by specified length.
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
+### Changed
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
+
+## [2.2.0-beta.14] - 2019-09-12
+### Added
+* Blueprints:
+    * Add check for file exist in model-offline.
+### Fixed
+* Blueprints:
+    * Fix call generate method for model-offline in flexberry-group.
+
+## [2.2.0-beta.13] - 2019-09-11
+### Fixed
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
+* Blueprints:
+    * Fix offline schema setting in store service.
+
+## [2.2.0-beta.12] - 2019-09-02
+### Added
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
+* Blueprints:
+    * Add offline option.
+
+## [2.2.0-beta.11] - 2019-08-28
+### Added
+* Blueprints:
+    * Add skip-confirmation option.
+
+## [2.2.0-beta.10] - 2019-08-26
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `autocomplite` results after toogle readonly mode.
+* `flexberry-objectlistview` component:
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
+
+### Changed
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.8`.
+
+## [2.2.0-beta.9] - 2019-08-21
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.7`.
+
+## [2.2.0-beta.8] - 2019-08-16
+### Fixed
+* Creating a prototype record when a prototype is not loaded into store.
+
+## [2.2.0-beta.7] - 2019-08-08
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.6`.
+
+## [2.2.0-beta.6] - 2019-08-06
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy paging mode.
+
+## [2.2.0-beta.5] - 2019-08-05
+### Added
+* `flexberry-objectlistview` component:
+    * Add hierarchy paging option.
+
+## [2.2.0-beta.4] - 2019-07-19
+### Added
+* `flexberry-objectlistview` component:
+    * Add advlimit config dialog for editing and applying limits.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.5`.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix select autocomplete result by enter click.
+
+### Breaking changes
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
+
+## [2.2.0-beta.3] - 2019-07-19
+### Fixed
+* `user-settings` service:
+    * Fix of replacing perPage form developerUserSettings on reloading.
+* `flexberry-objectlistview` component:
+    * Fix multi lists on edit form with `flexberry-groupedit` components.
 
 ## [2.2.0-beta.2] - 2019-07-12
 ### Added

@@ -9,7 +9,7 @@
     isSearchReadOnly=dropdownIsSearch
   }}
 {{else}}
-  <div class="ui fluid action input">
+  <div class="ui fluid action input {{if readonly "disabled"}}">
     {{input
       type="text"
       class=(concat "lookup-field " (if autocomplete "prompt"))
@@ -44,6 +44,6 @@
     </button>
   </div>
 {{/if}}
-{{#if (and (not readonly) autocomplete)}}
+{{#if autocomplete}}
   <div class="results"></div>
 {{/if}}

@@ -498,6 +498,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Пример иерархического OLV в lookup',
               'title': ''
@@ -589,6 +593,10 @@ Ember.$.extend(true, translations, {
             'limit-hierarchy-example': {
               'caption': 'Пример ограничения для иерархического списка',
               'title': ''
+             },
+            'hierarchy-paging-example': {
+              'caption': 'Пример иерархии c пейджингом',
+              'title': ''
             },
             'configurate-rows': {
               'caption': 'Раскраска строк',
@@ -613,10 +621,22 @@ Ember.$.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -814,7 +834,8 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-multi-list': {
-      'caption': 'Несколько списков на форме'
+      'caption': 'Несколько списков на форме',
+      'multi-edit-form': 'Несколько списков на эдитформе'
     },
 
     'log-service-examples': {
@@ -936,6 +957,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Пример иерархического OLV в lookup',
           'titleLookup': 'Мастер'
@@ -1023,6 +1048,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
@@ -1046,6 +1074,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример ограничения для иерархического списка'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Пример иерархии c пейджингом на списке'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'
@@ -1096,6 +1127,11 @@ Ember.$.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Пример работы с настройками'
         }
       },
       'flexberry-textarea': {

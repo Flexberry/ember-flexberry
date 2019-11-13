@@ -4,17 +4,11 @@
 
 import Ember from 'ember';
 
-import { Query } from 'ember-flexberry-data';
-
-const {
-  Builder,
-  Condition,
-  BasePredicate,
-  SimplePredicate,
-  StringPredicate,
-  ComplexPredicate,
-  DatePredicate
-} = Query;
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import { BasePredicate, SimplePredicate, StringPredicate, ComplexPredicate,
+  DatePredicate, stringToPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -81,18 +75,27 @@ export default Ember.Mixin.create({
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
 
-    let limitPredicate = reloadOptions.predicate;
-    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+    let allPredicates = Ember.A();
+
+    if (reloadOptions.predicate && !(reloadOptions.predicate instanceof BasePredicate)) {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
-    let filtersPredicate = reloadOptions.filters;
-    if (filtersPredicate && !(filtersPredicate instanceof BasePredicate)) {
+    allPredicates.addObject(reloadOptions.predicate);
+
+    if (reloadOptions.filters && !(reloadOptions.filters instanceof BasePredicate)) {
       throw new Error('Incorrect filters. It has to be instance of BasePredicate.');
     }
 
-    if (filtersPredicate) {
-      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, filtersPredicate) : filtersPredicate;
+    allPredicates.addObject(reloadOptions.filters);
+
+    if (reloadOptions.advLimit) {
+      const advPredicate = stringToPredicate(reloadOptions.advLimit);
+      if (!(advPredicate instanceof BasePredicate)) {
+        throw new Error('Incorrect advLimit. It has to be instance of BasePredicate.');
+      }
+
+      allPredicates.addObject(advPredicate);
     }
 
     let perPage = reloadOptions.perPage;
@@ -108,8 +111,13 @@ export default Ember.Mixin.create({
       .count();
 
     if (reloadOptions.hierarchicalAttribute) {
+      if (reloadOptions.hierarchyPaging) {
+        builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+        builder.orderBy('id asc');
+      }
+
       let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
-      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
+      allPredicates.addObject(hierarchicalPredicate);
     } else {
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
     }
@@ -121,17 +129,16 @@ export default Ember.Mixin.create({
       }
     }
 
-    let filter = reloadOptions.filter;
-    let filterCondition = reloadOptions.filterCondition;
-    let filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
-    let resultPredicate = (limitPredicate && filterPredicate) ?
-                          new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
-                          (limitPredicate ?
-                            limitPredicate :
-                            (filterPredicate ?
-                              filterPredicate :
-                              undefined));
-    this.get('objectlistviewEvents').setLimitFunction(resultPredicate);
+    const filter = reloadOptions.filter;
+    const filterCondition = reloadOptions.filterCondition;
+    const filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
+    allPredicates.addObject(filterPredicate);
+    allPredicates = allPredicates.compact();
+    const resultPredicate = allPredicates.length > 1 ?
+      new ComplexPredicate(Condition.And, ...allPredicates) :
+      allPredicates[0];
+
+    this.get('objectlistviewEvents').setLimitFunction(resultPredicate, reloadOptions.componentName);
 
     if (resultPredicate) {
       builder.where(resultPredicate);
@@ -323,7 +330,7 @@ export default Ember.Mixin.create({
       let sp1 = predicate;
       let sp2;
       if (predicate instanceof SimplePredicate || predicate instanceof DatePredicate) {
-        sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+        sp2 = new SimplePredicate(sp1._attributePath, FilterOperator.Eq, null);
       }
 
       result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;

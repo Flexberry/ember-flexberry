@@ -24,6 +24,8 @@
       gotoPage=(action "gotoPage")
       nextPage=(action "nextPage")
       componentName=settings.componentName
+      advLimitButton=true
+      advLimitButton=settings.advLimitButton
     }}
   {{/with}}
 </div>
@@ -51,10 +53,12 @@
       gotoPage=(action "gotoPage")
       nextPage=(action "nextPage")
       componentName=settings.componentName
+      advLimitButton=settings.advLimitButton
     }}
   {{/with}}
 </div>
 <div class="row">
+  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
   {{#with multiListSettings.MultiSuggestionList as |settings|}}
     {{flexberry-objectlistview
       editFormRoute=settings.editFormRoute
@@ -118,6 +122,7 @@
       inHierarchicalMode=settings.inHierarchicalMode
       hierarchicalAttribute=settings.hierarchicalAttribute
       inExpandMode=settings.inExpandMode
+      hierarchyPaging=settings.hierarchyPaging
     }}
   {{/with}}
 </div>

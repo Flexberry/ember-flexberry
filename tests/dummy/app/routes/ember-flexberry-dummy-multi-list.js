@@ -12,7 +12,8 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       componentName: 'MultiUserList',
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
+      advLimitButton: true
     }));
 
     this.set('multiListSettings.MultiUserList2', new ListParameters({
@@ -20,7 +21,8 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       componentName: 'MultiUserList2',
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
-      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit'
+      editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
+      advLimitButton: true
     }));
 
     this.set('multiListSettings.MultiSuggestionList', new ListParameters({
@@ -28,7 +30,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       componentName: 'MultiSuggestionList',
       modelName: 'ember-flexberry-dummy-suggestion',
       projectionName: 'SuggestionL',
-      editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
+      editFormRoute: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit',
       exportExcelProjection: 'SuggestionL'
     }));
 
@@ -39,7 +41,8 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       projectionName: 'SuggestionTypeL',
       editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
       inHierarchicalMode: true,
-      hierarchicalAttribute: 'parent'
+      hierarchicalAttribute: 'parent',
+      hierarchyPaging: true
     }));
   },
 

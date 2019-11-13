@@ -87,6 +87,14 @@ ErrorableRouteMixin, {
   appState: Ember.inject.service(),
 
   /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: Ember.inject.service(),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -126,6 +134,8 @@ ErrorableRouteMixin, {
 
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
+    let advLimitService = this.get('advLimit');
+    advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
@@ -156,8 +166,8 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    userSettingPromise
-      .then(currectPageUserSettings => {
+    Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
+      .then(() => {
         if (this._invalidSorting(params.sort)) {
           controller.set('isSortingError', true);
           transition.abort();
@@ -189,7 +199,10 @@ ErrorableRouteMixin, {
           }
         }
 
+        const advLimit = advLimitService.getCurrentAdvLimit(componentName);
+
         let queryParameters = {
+          componentName: componentName,
           modelName: modelName,
           projectionName: projectionName,
           perPage: this.perPage,
@@ -199,11 +212,14 @@ ErrorableRouteMixin, {
           filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
+          advLimit: advLimit,
           hierarchicalAttribute: hierarchicalAttribute,
+          hierarchyPaging: controller.get('hierarchyPaging')
         };
 
         this.onModelLoadingStarted(queryParameters, transition);
         this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
+        this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".

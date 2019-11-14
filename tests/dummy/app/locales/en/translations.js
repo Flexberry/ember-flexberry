@@ -737,6 +737,10 @@ $.extend(true, translations, {
               'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -1176,6 +1180,10 @@ $.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Example lookup with compute autocomplete',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

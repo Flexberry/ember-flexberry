@@ -757,6 +757,10 @@ $.extend(true, translations, {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Пример иерархического OLV-а в lookup-e',
               'title': ''
@@ -1197,6 +1201,10 @@ $.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

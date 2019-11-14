@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
+import { set, get } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -72,12 +73,13 @@ export default FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super(...arguments);
     this.$('.sort-direction-dropdown').each((index, element) => {
+      const colDesc = this.get(`model.colDescs.${index}`);
       $(element).dropdown({
         onChange: (value) => {
-          this.send('setSortOrder', index, element, value);
+          this.send('setSortOrder', colDesc, element, value);
         }
       });
-      $(element).dropdown('set selected', this.get(`model.colDescs.${index}.sortOrder`));
+      $(element).dropdown('set selected', get(colDesc, 'sortOrder'));
     });
   },
 
@@ -97,24 +99,27 @@ export default FlexberryBaseComponent.extend({
      Set sort order and priority for column.
 
      @method actions.setSortOrder
-     @param {Integer} index Row number.
+     @param {Object} colDesc Column description object.
      @param {Object} element Dropdown.
      @param {String} value Selected value.
      */
-    setSortOrder: function(index, element, value) {
-      let currentValue = this.get(`model.colDescs.${index}.sortOrder`);
-      if (currentValue !== parseInt(value)) {
+    setSortOrder: function(colDesc, element, value) {
+      if (colDesc.sortOrder !== parseInt(value)) {
         if (value === '0') {
-          this.set(`model.colDescs.${index}.sortPriority`, undefined);
-          this.set(`model.colDescs.${index}.sortOrder`, undefined);
+          set(colDesc, 'sortPriority', undefined);
+          set(colDesc, 'sortOrder', undefined);
         } else {
-          let sortPriority = this.get(`model.colDescs.${index}.sortPriority`);
-          if (isNone(sortPriority)) {
-            sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
-            this.set(`model.colDescs.${index}.sortPriority`, sortPriority);
+          if (isNone(colDesc.sortPriority)) {
+            let max = 0;
+            this.get('model.colDescs').filter(c => {
+              if (max < c.sortPriority) {
+                max = c.sortPriority;
+              }
+            });
+            set(colDesc, 'sortPriority', max + 1);
           }
 
-          this.set(`model.colDescs.${index}.sortOrder`, parseInt(value));
+          set(colDesc, 'sortOrder', parseInt(value));
         }
       }
     },

@@ -30,7 +30,7 @@
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "ember-flexberry-data": "3.2.0-beta.5",
+    "ember-flexberry-data": "3.2.0-beta.6",
     "ember-i18n": "5.2.1",
     "ember-i18n-cp-validations": "~3.1.0",
     "ember-truth-helpers": "2.0.0",

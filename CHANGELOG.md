@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.6] - 2019-11-13
+### Added
+* Changes from 2.2.0-beta.16 - 2.2.0-beta.17.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.6`.
+
 ## [3.2.0-beta.5] - 2019-10-25
 ### Fixed
 * Blueprints:
@@ -139,7 +146,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-## [2.2.0-beta.15] - 2019-09-30]
+## [2.2.0-beta.17] - 2019-11-13
+### Fixed
+* `flexberry-lookup` component:
+    * Fix autocomplete for numeric properties.
+* `colsconfig-dialog-content` component:
+    * Fix set sorting method.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.10` (batchUpdate fixes).
+
+## [2.2.0-beta.16] - 2019-10-29
+### Added
+* `flexberry-lookup` component:
+    * Add `autocompleteOrder` in dropdown mode.
+
+## [2.2.0-beta.15] - 2019-09-30
 ### Added
 * `flexberry-text-cell` component:
     * Add `flexberry-text-cell` for displaying limited text in olv component.
@@ -153,7 +175,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `object-list-view-cell` component:
     * Component template was changed. If it's redefined in your project, you need to change it to support new features.
 
-## [2.2.0-beta.14] - 2019-09-12]
+## [2.2.0-beta.14] - 2019-09-12
 ### Added
 * Blueprints:
     * Add check for file exist in model-offline.
@@ -161,14 +183,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Fix call generate method for model-offline in flexberry-group.
 
-## [2.2.0-beta.13] - 2019-09-11]
+## [2.2.0-beta.13] - 2019-09-11
 ### Fixed
 * `offline-globals`:
     * Fix `getOfflineSchema` method.
 * Blueprints:
     * Fix offline schema setting in store service.
 
-## [2.2.0-beta.12] - 2019-09-02]
+## [2.2.0-beta.12] - 2019-09-02
 ### Added
 * `offline-globals`:
   * Add `getOfflineSchema` method for get offline schema.

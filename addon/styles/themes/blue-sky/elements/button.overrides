@@ -181,8 +181,8 @@ div.ui.secondary.menu.no-margin {
 }
 
 .ui.secondary.menu {
-    .ui.buttons.export-config, .ui.buttons.cols-config {
-        .export-button, .config-button.settings-enabled {
+    .ui.buttons.export-config, .ui.buttons.cols-config, .ui.buttons.adv-limit-config {
+        .export-button, .config-button.settings-enabled, .adv-limit-button {
             padding-right: 0em;
         }
 

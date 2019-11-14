@@ -593,7 +593,7 @@ Ember.$.extend(true, translations, {
             'limit-hierarchy-example': {
               'caption': 'Пример ограничения для иерархического списка',
               'title': ''
-             },
+            },
             'hierarchy-paging-example': {
               'caption': 'Пример иерархии c пейджингом',
               'title': ''

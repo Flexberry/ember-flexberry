@@ -357,7 +357,7 @@ export default FlexberryBaseComponent.extend({
     let currentLimit = this.currentController.get('currentLimitPredicate');
     if (currentLimit) {
       let array = [];
-      array.push(record.get('data'))
+      array.push(record.get('data'));
       let result = currentLimit(array);
       if (result.length === 0) {
         this.set('disabled', true);

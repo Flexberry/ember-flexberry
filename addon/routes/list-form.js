@@ -13,6 +13,7 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
 import ErrorableRouteMixin from '../mixins/errorable-route';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import moment from 'moment';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import JSAdapter from 'ember-flexberry-data/query/js-adapter';

@@ -63,14 +63,21 @@ export default Component.extend({
 
   isDropDown: false,
 
-  init() {
+  didInsertElement(){
     this._super(...arguments);
     if (this.isDropDown) {
-      this.classNames = ['item', 'ui', 'dropdown', 'link'];
+      this.element.classList.add('item', 'ui', 'dropdown', 'link');
 
-      $('.dropdown').dropdown({
+      $(this.element).dropdown({
         on: 'hover',
         transition: 'slide right',
+        maxSelections: 1,
+        onChange: () => {
+          let selectedItem = this.targetObject.$('.active.selected');
+          if (selectedItem.length > 0) {
+            selectedItem.removeClass('active selected');
+          }
+        }
       });
     }
   },

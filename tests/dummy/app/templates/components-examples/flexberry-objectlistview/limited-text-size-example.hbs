@@ -1,0 +1,38 @@
+{{flexberry-error error=error}}
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.limited-text-size-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=''
+    }}
+    {{flexberry-objectlistview
+      editFormRoute=editFormRoute
+      showCheckBoxInRow=true
+      modelName="ember-flexberry-dummy-suggestion"
+      modelProjection=modelProjection
+      content=model
+      filters=filters
+      refreshButton=true
+      createNewButton=true
+      sorting=computedSorting
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="LimitedSizeOlv"
+    }}
+    {{/settings-example}}
+  </div>
+</form>

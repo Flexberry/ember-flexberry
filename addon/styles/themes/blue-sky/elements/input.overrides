@@ -68,3 +68,13 @@ span.lookup-field {
   color: #9F3A38;
   box-shadow: none;
 }
+
+.ui.form .flexberry-advlimit-input {
+  width: 100%;
+  .flexberry-textarea {
+    width: 100%;
+    textarea {
+      resize: none;
+    }
+  }
+}

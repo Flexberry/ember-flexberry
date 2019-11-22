@@ -135,6 +135,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -170,6 +171,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         filter: undefined,
         predicate: limitPredicate,
         hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
 
         title: title,
         sizeClass: sizeClass,
@@ -369,6 +371,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: undefined,
       predicate: undefined,
       hierarchicalAttribute: undefined,
+      hierarchyPaging: false,
 
       title: undefined,
       sizeClass: undefined,
@@ -400,6 +403,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
     let controller = currentContext.get('lookupController');
     let queryParameters = {
+      componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
@@ -409,7 +413,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
-      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging
     };
 
     controller.clear(reloadData.initialLoad);
@@ -431,6 +436,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

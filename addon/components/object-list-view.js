@@ -2,12 +2,13 @@
   @module ember-flexberry
 */
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
+import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
-import { translationMacro as t } from 'ember-i18n';
-import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
-import serializeSortingParam from '../utils/serialize-sorting-param';
 import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
@@ -342,6 +343,15 @@ export default FlexberryBaseComponent.extend(
   showEditButtonInRow: false,
 
   /**
+    Flag indicates whether to show prototype button in first column of every row.
+
+    @property showPrototypeButtonInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeButtonInRow: false,
+
+  /**
     Flag indicates whether to not use userSetting from backend
     @property notUseUserSettings
     @type Boolean
@@ -359,22 +369,33 @@ export default FlexberryBaseComponent.extend(
   showHelperColumn: Ember.computed(
     'showAsteriskInRow',
     'showCheckBoxInRow',
-    'showDeleteButtonInRow',
     'showEditButtonInRow',
+    'showPrototypeButtonInRow',
+    'showDeleteButtonInRow',
     'customButtonsInRow',
     'modelProjection',
     function() {
       if (this.get('modelProjection')) {
         return this.get('showAsteriskInRow') ||
           this.get('showCheckBoxInRow') ||
-          this.get('showDeleteButtonInRow') ||
           this.get('showEditButtonInRow') ||
+          this.get('showPrototypeButtonInRow') ||
+          this.get('showDeleteButtonInRow') ||
           !!this.get('customButtonsInRow');
       } else {
         return false;
       }
     }
   ).readOnly(),
+
+  /**
+    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+
+    @property showDeleteMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteMenuItemInRow: false,
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -386,13 +407,13 @@ export default FlexberryBaseComponent.extend(
   showEditMenuItemInRow: false,
 
   /**
-    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+    Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
 
-    @property showDeleteMenuItemInRow
+    @property showPrototypeMenuItemInRow
     @type Boolean
     @default false
   */
-  showDeleteMenuItemInRow: false,
+  showPrototypeMenuItemInRow: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.
@@ -424,10 +445,16 @@ export default FlexberryBaseComponent.extend(
   */
   showMenuColumn: Ember.computed(
     'showEditMenuItemInRow',
+    'showPrototypeMenuItemInRow',
     'showDeleteMenuItemInRow',
     'menuInRowHasAdditionalItems',
     function() {
-      return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems');
+      return (
+        this.get('showEditMenuItemInRow') ||
+        this.get('showPrototypeMenuItemInRow') ||
+        this.get('showDeleteMenuItemInRow') ||
+        this.get('menuInRowHasAdditionalItems')
+      );
     }
   ),
 
@@ -937,7 +964,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      this.sendAction(action, column, this.get('componentName'));
     },
 
     /**
@@ -1079,8 +1106,6 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this._router = Ember.getOwner(this).lookup('router:main');
-
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
       let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
@@ -1088,15 +1113,28 @@ export default FlexberryBaseComponent.extend(
       .then(record => {
         if (this.get('class') !== 'groupedit-container')
         {
-          let sort = serializeSortingParam(currentUserSetting.sorting);
-          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+          this.get('objectlistviewEventsService').setSortingTrigger(componentName, currentUserSetting.sorting);
         } else {
           this.set('sorting', currentUserSetting.sorting);
           let objectlistviewEventsService = this.get('objectlistviewEventsService');
           objectlistviewEventsService.updateWidthTrigger(componentName);
         }
       });
-    }
+    },
+
+    /**
+      Checks if "Enter" button was pressed.
+      If "Enter" button was pressed then apply filters.
+
+      @method actions.keyDownFilterAction
+    */
+    keyDownFilterAction(e) {
+      if (e.keyCode === 13) {
+        this.get('currentController').send('refreshList', this.get('componentName'));
+        e.preventDefault();
+        return false;
+      }
+    },
   },
 
   /**
@@ -1623,7 +1661,12 @@ export default FlexberryBaseComponent.extend(
         currentWidths[currentPropertyName] = currentColumnWidth;
       });
 
-      this.set('currentController.currentColumnsWidths', currentWidths);
+      let widthsFunction = this.get('currentController.setColumnsWidths');
+      if (widthsFunction instanceof Function) {
+        widthsFunction.apply(this.get('currentController'), [this.get('componentName'), currentWidths]);
+      } else {
+        this.set('currentController.currentColumnsWidths', currentWidths);
+      }
     }
   },
 
@@ -1964,16 +2007,16 @@ export default FlexberryBaseComponent.extend(
           });
 
           if (hasFilters) {
-            this.sendAction('applyFilters', filters);
+            this.sendAction('applyFilters', filters, componentName);
           } else {
             if (this.get('currentController.filters')) {
-              this.get('currentController').send('resetFilters');
+              this.get('currentController').send('resetFilters', componentName);
             } else {
-              this.get('currentController').send('refreshList');
+              this.get('currentController').send('refreshList', componentName);
             }
           }
         } else {
-          this.get('currentController').send('refreshList');
+          this.get('currentController').send('refreshList', componentName);
         }
       }
     }
@@ -2112,8 +2155,8 @@ export default FlexberryBaseComponent.extend(
         // Depending on settings current model has to be saved before adding detail.
         this.send('rowClick', undefined, undefined);
       } else {
-        let modelName = this.get('modelProjection').modelName;
-        let modelToAdd = this.get('store').createRecord(modelName, {});
+        const modelName = this.get('modelProjection').modelName;
+        const modelToAdd = this.get('store').createRecord(modelName, { id: generateUniqueId() });
         if (!Ember.isNone(this.get('orderedProperty'))) {
           modelToAdd.set(`${this.get('orderedProperty')}`, this.get('content').length + 1);
         }
@@ -2142,7 +2185,8 @@ export default FlexberryBaseComponent.extend(
       let modelName = this.get('modelName');
       let data = {
         cancel: false,
-        filterQuery: filterQuery
+        filterQuery: filterQuery,
+        componentName: componentName
       };
 
       if (beforeDeleteAllRecords) {
@@ -2186,7 +2230,7 @@ export default FlexberryBaseComponent.extend(
       if (data.deletedCount > -1) {
         this.get('appState').success();
         this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
-        currentController.onDeleteActionFulfilled();
+        currentController.onDeleteActionFulfilled(true);
         this.get('objectlistviewEventsService').refreshListTrigger(componentName);
       } else {
         this.get('appState').error();
@@ -2291,7 +2335,7 @@ export default FlexberryBaseComponent.extend(
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
-      currentController.onDeleteActionFulfilled();
+      currentController.onDeleteActionFulfilled(true);
     }) : record.deleteRecord()).catch((reason) => {
 
       currentController.onDeleteActionRejected(reason, record);
@@ -2343,7 +2387,7 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
     }
   },
 
@@ -2569,7 +2613,9 @@ export default FlexberryBaseComponent.extend(
     let parent = Ember.$(settings.parent);
     let table = Ember.$(settings.table);
 
-    parent.append(table);
+    if (!parent.children(table).length) {
+      parent.append(table);
+    }
 
     Ember.$('.full.height .flexberry-content .ui.main.container').css('margin-bottom', '0');
 

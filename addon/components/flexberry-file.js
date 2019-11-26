@@ -334,6 +334,15 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-file'],
 
   /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default ['readonly:disabled']
+  */
+  classNameBindings: ['readonly:disabled'],
+
+  /**
     Component's input additional CSS-class names.
     See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
 
@@ -628,6 +637,8 @@ export default FlexberryBaseComponent.extend({
 
       uploadData.headers = this.get('headers');
       this.set('_uploadData', uploadData);
+
+      this.$('.flexberry-file-add-button').addClass('hidden');
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
@@ -692,6 +703,8 @@ export default FlexberryBaseComponent.extend({
     this.set('_uploadDataCopy', null);
     this.set('value', null);
     this.set('_previewImageAsBase64String', null);
+
+    this.$('.flexberry-file-add-button').removeClass('hidden');
   },
 
   /**

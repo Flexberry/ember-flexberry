@@ -258,6 +258,14 @@ export default FlexberryBaseComponent.extend({
   removeButton: true,
 
   /**
+    If true, then flatpickr has open button.
+
+    @property openButton
+    @type Bool
+  */
+  openButton: true,
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
@@ -508,6 +516,15 @@ export default FlexberryBaseComponent.extend({
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
+    },
+
+    /**
+      Open flatpickr.
+
+      @method actions.open
+    */
+    open() {
+      this.click();
     }
   }
 });

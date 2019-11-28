@@ -63,3 +63,8 @@ div.ui.secondary.menu.no-margin.nav-bar {
     left: auto;
     right: 100%;
 }
+
+div.ui.secondary.menu.no-margin.nav-bar .right.menu {
+    flex-basis: 0px;
+    flex-grow: 1;
+} 

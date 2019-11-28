@@ -7,9 +7,9 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
     @property modelProjection
     @type String
-    @default 'LocalizationL'
+    @default 'SuggestionFileE'
    */
-  modelProjection: 'LocalizationL',
+  modelProjection: 'SuggestionFileE',
 
   /**
   developerUserSettings.
@@ -38,7 +38,7 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
     @property modelName
     @type String
-    @default 'ember-flexberry-dummy-localization'
+    @default 'ember-flexberry-dummy-suggestion-file'
    */
-  modelName: 'ember-flexberry-dummy-localization'
+  modelName: 'ember-flexberry-dummy-suggestion-file'
 });

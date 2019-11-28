@@ -7,7 +7,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
     @property editFormRoute
     @type String
-    @default 'ember-flexberry-dummy-localization-edit'
+    @default 'ember-flexberry-dummy-suggestion-file-edit'
    */
-  editFormRoute: 'ember-flexberry-dummy-localization-edit'
+  editFormRoute: 'ember-flexberry-dummy-suggestion-file-edit'
 });

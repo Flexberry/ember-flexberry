@@ -7,16 +7,16 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
     @property modelProjection
     @type String
-    @default 'LocalizationE'
+    @default 'SuggestionFileE'
    */
-  modelProjection: 'LocalizationE',
+  modelProjection: 'SuggestionFileE',
 
   /**
     Name of model to be used as form's record type.
 
     @property modelName
     @type String
-    @default 'ember-flexberry-dummy-localization'
+    @default 'ember-flexberry-dummy-suggestion-file'
    */
-  modelName: 'ember-flexberry-dummy-localization'
+  modelName: 'ember-flexberry-dummy-suggestion-file'
 });

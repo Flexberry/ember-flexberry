@@ -19,6 +19,6 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @default 'ember-flexberry-dummy-suggestion-file'
    */
   modelName: 'ember-flexberry-dummy-suggestion-file',
-  
+
   uploadUrl: 'http://localhost:6500/api/File',
 });

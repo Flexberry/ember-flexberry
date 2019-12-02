@@ -50,9 +50,14 @@
 }
 
 .ui.buttons.cols-config > .ui.dropdown:last-child .menu,
-.ui.buttons.export-config > .ui.dropdown:last-child .menu {
+.ui.buttons.export-config > .ui.dropdown:last-child .menu,
+.ui.buttons.adv-limit-config > .ui.dropdown:last-child .menu{
     left: -2em;
     right: auto;
+    .menu {
+        left: 100%;
+        right: auto;
+    }
 }
 
 .flexberry-dropdown {

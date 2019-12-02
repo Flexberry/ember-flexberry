@@ -67,4 +67,4 @@ div.ui.secondary.menu.no-margin.nav-bar {
 div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     flex-basis: 0px;
     flex-grow: 1;
-} 
+}

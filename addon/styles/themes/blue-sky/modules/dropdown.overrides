@@ -24,10 +24,6 @@
     cursor: pointer;
 }
 
-.ui.dropdown.icon.button > .dropdown.icon {
-    margin-left: -20px;
-    margin-top: -4px;
-}
 
 .ui.icon.dropdown > .icon.dropdown:before {
     font-size:20px;

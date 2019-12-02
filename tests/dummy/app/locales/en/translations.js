@@ -548,6 +548,10 @@ $.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {
@@ -1031,6 +1035,17 @@ $.extend(true, translations, {
       'editor-validation-message-caption': 'Editor is required',
       'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly for LookUp "Application User" in GroupEdit "User votes"',
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
+    },
+
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {

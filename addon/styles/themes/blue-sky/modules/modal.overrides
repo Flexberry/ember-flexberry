@@ -2,6 +2,11 @@
          Theme Overrides
 *******************************/
 
+.ui.modal > .header:not(.ui) {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .ui.modal > .close {
     top: 0rem;
     right: -0.2rem;

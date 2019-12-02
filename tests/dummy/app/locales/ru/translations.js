@@ -492,6 +492,21 @@ $.extend(true, translations, {
         }
       }
     },
+    'ember-flexberry-dummy-suggestion-file': {
+      'projections': {
+        'SuggestionFileL': {
+          'order': {
+            __caption__: 'Порядок'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'suggestion': {
+            __caption__: 'Предложение'
+          },
+        }
+      }
+    },
     'integration-examples/edit-form/validation/base': {
       'projections': {
         'BaseE': {
@@ -624,6 +639,10 @@ $.extend(true, translations, {
           },
           'multi': {
             'caption': 'Несколько списков',
+            'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Файлы предложения',
             'title': ''
           }
         },
@@ -1051,6 +1070,17 @@ $.extend(true, translations, {
       'editor-validation-message-caption': 'Заполните поле "Редактор"',
       'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"',
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
+    },
+
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Файлы предложения',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Файл предложения',
+      'suggestion': 'Предложение',
+      'order': 'Номер',
+      'file': 'Файл',
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {

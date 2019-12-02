@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.components-examples.flexberry-simpledatetime.settings-example.caption"}}</h3>
+<h3 class="ui header">{{t "forms.components-examples.flexberry-datepicker.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     {{#settings-example
@@ -7,14 +7,15 @@
       componentTemplateText=componentTemplateText
       componentBlockOverflow="visible"
     }}
-      {{flexberry-simpledatetime
-        type=type
-        removeButton=removeButton
-        value=value
-        min=min
-        max=max
+      {{flexberry-datepicker
+        dateTimeFormat=dateTimeFormat
+        hasTimePicker=hasTimePicker
+        minDate=minDate
+        maxDate=maxDate
+        value=model.date
+        placeholder=placeholder
         readonly=readonly
-        class="example-simpledatetime"
+        drops='up'
       }}
     {{/settings-example}}
   </div>

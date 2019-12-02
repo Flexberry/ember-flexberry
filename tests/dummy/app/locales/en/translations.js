@@ -784,6 +784,17 @@ Ember.$.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Master',
       'toggler-example-master-property-caption': 'Master property',

@@ -9,7 +9,7 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
     @type String
     @default 'SuggestionFileE'
    */
-  modelProjection: 'SuggestionFileE',
+  modelProjection: 'SuggestionFileL',
 
   /**
   developerUserSettings.

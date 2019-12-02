@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.ember-flexberry-dummy-localization-edit.caption"}}</h3>
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-file-edit.header"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -43,9 +43,32 @@
   <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
       value=model.order
-      label=(t "forms.ember-flexberry-dummy-suggestion-file.name-caption")
+      label=(t "forms.ember-flexberry-dummy-suggestion-file-edit.order")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-file-edit.file"}}</label>
+    {{flexberry-file
+      value=model.file
+      showPreview=true
+      showUploadButton=true
+      showDownloadButton=true
+    }}
+
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-file-edit.suggestion"}}</label>
+    {{flexberry-lookup
+      value=model.suggestion
+      relatedModel=model
+      relationName="suggestion"
+      projection="SuggestionL"
+      displayAttributeName="address"
+      title=(t "forms.ember-flexberry-dummy-suggestion-file-edit.suggestion")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      preview=(action "previewLookupValue")
+      readonly=readonly
+      componentName="Suggestion"
+    }}
   </div>
 </form>

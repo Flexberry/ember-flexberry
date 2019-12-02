@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.2.0-beta.7] - 2019-12-02
+### Added
+* Changes from 2.2.0-beta.18.
+
 ## [3.2.0-beta.6] - 2019-11-13
 ### Added
 * Changes from 2.2.0-beta.16 - 2.2.0-beta.17.
@@ -145,6 +149,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * In dropdown mode instead of many properties one `dropdownSettings` property for manage `Semantic UI` settings.
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+
+## [2.2.0-beta.18] - 2019-12-02
+### Fixed
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
 
 ## [2.2.0-beta.17] - 2019-11-13
 ### Fixed

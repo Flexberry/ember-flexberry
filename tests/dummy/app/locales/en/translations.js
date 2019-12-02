@@ -291,6 +291,10 @@ Ember.$.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {

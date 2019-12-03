@@ -68,7 +68,7 @@ export default EditFormController.extend({
           autofocus: false,
           detachable: false,
           allowMultiple: true,
-          context: this.get('style'),
+          context: this.get('_style'),
         });
 
       this.set('repeatWindow', repeatWindow);

@@ -3,6 +3,24 @@
 {{else}}
   <div class="ui fluid action input flatpickr">
     <input type="text" placeholder={{placeholder}}/>
+    {{#if openButton}}
+      {{#if readonlyAttr}}
+        <button
+          class="ui ui-open disabled button"
+          title={{t "components.flexberry-datepicker.apply-button-text"}}
+          disabled="disabled"
+          {{action "open" bubbles=false}}>
+          <i class="{{type}} icon"></i>
+        </button>
+      {{else}}
+        <button
+          class="ui ui-open button"
+          title={{t "components.flexberry-datepicker.apply-button-text"}}
+          {{action "open" bubbles=false}}>
+          <i class="{{type}} icon"></i>
+        </button>
+      {{/if}}
+    {{/if}}
     {{#if removeButton}}
       {{#if readonlyAttr}}
         <button

@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
 
+### Changed
+* Update dependency on the `jquery-minicolors` bower package to version `2.3.4`.
+
 ## [2.2.0-beta.17] - 2019-11-13
 ### Fixed
 * `flexberry-lookup` component:

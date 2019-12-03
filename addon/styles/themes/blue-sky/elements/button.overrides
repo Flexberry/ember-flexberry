@@ -350,7 +350,7 @@ div.ui.secondary.menu.no-margin {
     padding: 0px;
     height: 30px;
     width: 30px;
-    border: 1px solid @uiHoveredNegitveBorderColor;
+    border: 1px solid @uiBorderColor;
     &:hover {
         border: 1px solid @uiHoveredNegitveBorderColor;
         background: @white;

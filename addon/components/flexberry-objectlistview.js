@@ -25,6 +25,9 @@ import runAfter from '../utils/run-after';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  
+  classNames: ['flexberry-objectlistview'],
+
   /**
     Flag used to display filters.
 

@@ -37,7 +37,7 @@ export default Component.extend({
     @type Array
     @default ['ui', 'message']
   */
-  classNames: ['ui', 'message'],
+  classNames: ['ui', 'message', 'flexberry-validationsummary'],
 
   /**
     See [EmberJS API](https://emberjs.com/api/).

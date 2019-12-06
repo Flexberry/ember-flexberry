@@ -218,9 +218,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-simpledatetime.placeholder')'
+    @default 't('components.flexberry-datepicker.placeholder')'
   */
-  placeholder: t('components.flexberry-simpledatetime.placeholder'),
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   /**
     Array CSS class names.
@@ -256,6 +256,14 @@ export default FlexberryBaseComponent.extend({
     @type Bool
   */
   removeButton: true,
+
+  /**
+    If true, then flatpickr has open button.
+
+    @property openButton
+    @type Bool
+  */
+  openButton: true,
 
   /**
     Initializes DOM-related component's logic.
@@ -508,6 +516,15 @@ export default FlexberryBaseComponent.extend({
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
+    },
+
+    /**
+      Open flatpickr.
+
+      @method actions.open
+    */
+    open() {
+      this.click();
     }
   }
 });

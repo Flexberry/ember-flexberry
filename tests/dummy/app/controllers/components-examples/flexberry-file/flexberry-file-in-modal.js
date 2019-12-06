@@ -66,9 +66,9 @@ export default EditFormController.extend({
       let repeatWindow = $('.repeat-window').modal({
           closable: false,
           autofocus: false,
-          detachable: false,
+          detachable: true,
           allowMultiple: true,
-          context: this.get('_style'),
+          context: 'body',
         });
 
       this.set('repeatWindow', repeatWindow);

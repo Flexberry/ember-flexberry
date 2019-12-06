@@ -40,6 +40,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             choose: 'showLookupDialog',
             remove: 'removeLookupValue',
             preview: 'previewLookupValue',
+            previewOnSeparateRoute: true,
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',

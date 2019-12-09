@@ -66,7 +66,7 @@ executeTest('check sorting', (store, assert, app) => {
                 let $divOrd = $('div', $ord);
 
                 assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-descending'), 'title is Order descending');
-                assert.equal($('.icon', $divOrd).hasClass("ascending"), true, 'sorting symbol added');
+                assert.equal($('.icon', $divOrd).hasClass("descending"), true, 'sorting symbol added');
                 assert.equal(controller.sort, '-address', 'down sorting in URL');
 
                 let done4 = assert.async();

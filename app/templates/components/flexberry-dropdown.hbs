@@ -1,16 +1,16 @@
-  {{#if isSearch}}
-    {{#if isSearchReadOnly}}
-      <input class="search" autocomplete="off">
-    {{else}}
-      <input class="search" autocomplete="off" readonly>
-    {{/if}}
+{{#if isSearch}}
+  {{#if isSearchReadOnly}}
+    <input class="search" autocomplete="off">
+  {{else}}
+    <input class="search" autocomplete="off" readonly>
   {{/if}}
+{{/if}}
 
-  <i class="dropdown icon"></i>
-  <div class="{{unless value "default"}} text">{{text}}</div>
-  <div class="menu {{if canFixElement fixedElementClass}}">
-    {{yield}}
-    {{#each-in items as |key value|}}
-      <div class="item" data-value="{{key}}">{{value}}</div>
-    {{/each-in}}
-  </div>
+<i class="dropdown icon"></i>
+<div class="{{unless value "default"}} text">{{text}}</div>
+<div class="menu {{if canFixElement fixedElementClass}}">
+  {{yield}}
+  {{#each-in items as |key value|}}
+    <div class="item" data-value="{{key}}">{{value}}</div>
+  {{/each-in}}
+</div>

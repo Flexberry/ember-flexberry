@@ -115,6 +115,7 @@
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+              canFixElement=(eq column.cellComponent.componentName 'flexberry-dropdown')
             }}
             {{#if showValidationMessages}}
               {{flexberry-validationmessage error=(v-get record.data column.propName "messages")}}

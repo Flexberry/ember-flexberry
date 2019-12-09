@@ -193,7 +193,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @method onShowHide
    */
   onShowHide() {
-    this.showFixedElement({ top: -2, left: 1, innerElementClass: 'item', innerElementHeight: 40 });
+    this.showFixedElement({ top: -2, left: 1 });
   },
 
   /**
@@ -217,10 +217,14 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         });
       },
       onShow: () => {
+        run.next(() => {
           this.onShowHide();
+        });
       },
       onHide: () => {
+        run.next(() => {
           this.onShowHide();
+        });
       },
     }, this.get('settings'));
 

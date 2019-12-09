@@ -116,15 +116,9 @@ export default Mixin.create({
       const { height, left, width, bottom } = component.getBoundingClientRect();
       let { top } = component.getBoundingClientRect();
       const optionWidth = options.width || 0;
-      const optionInnerElementClass = options.innerElementClass || null;
-      const optionInnerElementHeight = options.innerElementHeight || 0;
 
       if (this.get('isInsideOlv')) {
         let elementHeight = $(element).outerHeight();
-
-        if (elementHeight == 0 && optionInnerElementClass != null && optionInnerElementHeight != 0) {
-          elementHeight = $(element).find(`.${optionInnerElementClass}`).length * optionInnerElementHeight;
-        }
 
         const upward = window.innerHeight - bottom < elementHeight;
         const optionLeft = options.left || 0;

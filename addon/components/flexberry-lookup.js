@@ -1023,7 +1023,7 @@ export default FlexberryBaseComponent.extend({
                   let attributeName = i.get(displayAttributeName);
                   if (iCount > maxRes && records.meta.count > maxRes) {
                     return {
-                      title: '...',
+                      title: '...'
                     };
                   } else {
                     iCount += 1;

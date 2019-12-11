@@ -1060,12 +1060,12 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        if (result.title !== '...'){
+        if (result.title !== '...') {
           state = 'selected';
-  
+
           Ember.run(() => {
             Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
-  
+
             _this.set('value', result.instance);
             _this.get('currentController').send(_this.get('updateLookupAction'),
               {

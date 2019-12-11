@@ -1023,7 +1023,8 @@ export default FlexberryBaseComponent.extend({
                   let attributeName = i.get(displayAttributeName);
                   if (iCount > maxRes && records.meta.count > maxRes) {
                     return {
-                      title: '...'
+                      title: '...',
+                      noResult: true
                     };
                   } else {
                     iCount += 1;
@@ -1060,19 +1061,21 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        state = 'selected';
-
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
-
-          _this.set('value', result.instance);
-          _this.get('currentController').send(_this.get('updateLookupAction'),
-            {
-              relationName: relationName,
-              modelToLookup: relatedModel,
-              newRelationValue: result.instance
-            });
-        });
+        if(!result.noResult){
+          state = 'selected';
+  
+          Ember.run(() => {
+            Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+  
+            _this.set('value', result.instance);
+            _this.get('currentController').send(_this.get('updateLookupAction'),
+              {
+                relationName: relationName,
+                modelToLookup: relatedModel,
+                newRelationValue: result.instance
+              });
+          });
+        }
       },
 
       /**

@@ -1024,7 +1024,6 @@ export default FlexberryBaseComponent.extend({
                   if (iCount > maxRes && records.meta.count > maxRes) {
                     return {
                       title: '...',
-                      noResult: true
                     };
                   } else {
                     iCount += 1;
@@ -1061,7 +1060,7 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        if(!result.noResult){
+        if (result.title !== '...'){
           state = 'selected';
   
           Ember.run(() => {

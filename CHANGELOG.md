@@ -3,17 +3,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.0-beta.19] - 2019-12-11
 ### Added
 * `flexberry-lookup` component:
-    * Add show button at mobile mode.
+    * Add preview button in mobile mode.
+
+### Changed
+* Update dependency on the `jquery-minicolors` bower package to version `2.3.4`.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Fix `fixedHeader` mode in mobile.
+* `flexberry-lookup` component:
+    * Fix ellipsis in lookup autocomplete results.
 
 ## [2.2.0-beta.18] - 2019-12-02
 ### Fixed
 * `olv-toolbar` component:
     * Fix styles of `export excel` and `cols config` buttons.
-
-### Changed
-* Update dependency on the `jquery-minicolors` bower package to version `2.3.4`.
 
 ## [2.2.0-beta.17] - 2019-11-13
 ### Fixed

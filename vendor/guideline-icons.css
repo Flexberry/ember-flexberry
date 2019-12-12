@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'guideline-icons';
-  src:  url('fonts/guideline-icons/guideline-icons.eot?mhp9y');
-  src:  url('fonts/guideline-icons/guideline-icons.eot?mhp9y#iefix') format('embedded-opentype'),
-    url('fonts/guideline-icons/guideline-icons.ttf?mhp9y') format('truetype'),
-    url('fonts/guideline-icons/guideline-icons.woff?mhp9y') format('woff'),
-    url('fonts/guideline-icons/guideline-icons.svg?mhp9y#guideline-icons') format('svg');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?227e7x');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?227e7x#iefix') format('embedded-opentype'),
+    url('fonts/guideline-icons/guideline-icons.ttf?227e7x') format('truetype'),
+    url('fonts/guideline-icons/guideline-icons.woff?227e7x') format('woff'),
+    url('fonts/guideline-icons/guideline-icons.svg?227e7x#guideline-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guideline-flask:before {
+  content: "\e930";
+}
+.icon-guideline-copy:before {
+  content: "\e931";
+}
 .icon-guideline-arrow-long-down:before {
   content: "\e900";
 }
@@ -87,10 +93,6 @@
 }
 .icon-guideline-edit:before {
   content: "\e914";
-}
-
-.icon-guideline-error:before {
-  content: "\e915";
 }
 .icon-guideline-excel:before {
   content: "\e916";
@@ -169,4 +171,7 @@
 }
 .icon-guideline-warning:before {
   content: "\e92f";
+}
+.icon-guideline-error:before {
+  content: "\e915";
 }

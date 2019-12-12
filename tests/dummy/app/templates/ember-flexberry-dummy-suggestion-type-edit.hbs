@@ -40,37 +40,45 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
-    {{flexberry-field
-      value=model.name
-      label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+  <div class="ui one column grid stackable">
+    <div class="column">
+      <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+        {{flexberry-field
+          value=model.name
+          label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+      </div>
+      <div class="two fields">
+        <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
+          <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
+          {{flexberry-lookup
+            value=model.parent
+            relatedModel=model
+            relationName="parent"
+            projection="SuggestionTypeL"
+            displayAttributeName="name"
+            title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
+            choose=(action "showLookupDialog")
+            remove=(action "removeLookupValue")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
+        </div>
+
+        <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
+          <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.moderated
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.moderated
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
-  </div>
-  <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
-    {{flexberry-lookup
-      value=model.parent
-      relatedModel=model
-      relationName="parent"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
-  </div>
+
   <div class="field {{if (v-get validationObject "localizedTypes" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit

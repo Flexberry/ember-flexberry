@@ -20,7 +20,7 @@
           {{#if showCheckBoxInRow}}
             <div class="cell">
               {{flexberry-checkbox
-                readonly=(or readonly (not record.rowConfig.canBeSelected))
+                readonly=(or disabled readonly (not record.rowConfig.canBeSelected))
                 onChange=(action selectRow record)
                 value=record.selected
               }}
@@ -28,7 +28,7 @@
           {{/if}}
           {{#if showEditButtonInRow}}
             <div class="cell">
-              {{#if readonly}}
+              {{#if (or disabled readonly)}}
                 <button
                   class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                   title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
@@ -47,7 +47,7 @@
           {{/if}}
           {{#if showPrototypeButtonInRow}}
             <div class="cell">
-              {{#if readonly}}
+              {{#if (or disabled readonly)}}
                 <button
                   class="ui ui-edit object-list-view-row-prototype-button {{buttonClass}} disabled button"
                   title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
@@ -148,7 +148,7 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              {{#if readonly}}
+              {{#if  (or disabled readonly)}}
                 <div class="item disabled edit-menu">
                   <i class="edit icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
@@ -161,7 +161,7 @@
               {{/if}}
             {{/if}}
             {{#if showPrototypeMenuItemInRow}}
-              {{#if readonly}}
+              {{#if (or disabled readonly)}}
                 <div class="item disabled prototype-menu">
                   <i class="copy icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
@@ -174,7 +174,7 @@
               {{/if}}
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+              {{#if (or disabled readonly (not record.rowConfig.canBeDeleted))}}
                 <div class="item disabled delete-menu">
                   <i class="trash icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>

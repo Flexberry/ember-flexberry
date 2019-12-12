@@ -13,7 +13,10 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
 import ErrorableRouteMixin from '../mixins/errorable-route';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import moment from 'moment';
 
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import JSAdapter from 'ember-flexberry-data/query/js-adapter';
 /**
   Base route for the List Forms.
 
@@ -112,8 +115,24 @@ ErrorableRouteMixin, {
     let filtersPredicate = this._filtersPredicate();
     let sortString = null;
     this.set('filtersPredicate', filtersPredicate);
-    let limitPredicate =
-      this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
+    let limitPredicate;
+    let curentlimitPredicate = this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
+
+    if (controller) {
+      if (!controller.get('inHierarchicalMode')) {
+        limitPredicate = curentlimitPredicate;
+      } else {
+        if (curentlimitPredicate) {
+          const adapter = new JSAdapter(moment);
+          let builder = new QueryBuilder(this.get('store'), modelName).where(curentlimitPredicate);
+          let filter = adapter.buildFunc(builder.build());
+          controller.set('currentLimitPredicate', filter);
+        } else {
+          controller.set('currentLimitPredicate', undefined);
+        }
+      }
+    }
+
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let advLimitService = this.get('advLimit');

@@ -116,8 +116,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     params.sorting = sorting;
     params.filter = filter;
     params.filterCondition = filterCondition;
-    let limitPredicate =
-      this.objectListViewLimitPredicate({ modelName: folvModelName, projectionName: folvProjection, params: params });
+    let limitPredicate = this.objectListViewLimitPredicate({ modelName: folvModelName, projectionName: folvProjection, params: params });
     if (folvModelName && folvProjection) {
       let queryParameters = {
         modelName: folvModelName,

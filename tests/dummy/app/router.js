@@ -71,6 +71,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example');
+  this.route('components-examples/flexberry-lookup/limit-hierarchy-olv-in-lookup-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
   this.route('components-examples/flexberry-lookup/autofill-by-limit-example');
   this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');
@@ -119,6 +120,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
+  this.route('components-examples/flexberry-objectlistview/limit-hierarchy-example');
   this.route('components-examples/flexberry-objectlistview/hierarchy-paging-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');

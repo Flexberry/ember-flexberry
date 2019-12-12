@@ -1,5 +1,5 @@
 {{flexberry-error error=error}}
-<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.hierarchy-example.caption"}}</h3>
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.limit-hierarchy-example.caption"}}</h3>
 <form class="ui form">
   <div class="field">
     {{flexberry-objectlistview
@@ -27,4 +27,14 @@
       refreshButton=true
     }}
   </div>
+  <br>
+  <button class="ui button" {{action 'firstLimitFunction' on="click"}}>
+    {{concat (t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionFirstLimitFunction") ": " firstLimitType}}
+  </button>
+    <button class="ui button" {{action 'secondLimitFunction' on="click"}}>
+    {{concat (t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionSecondLimitFunction") ": " secondLimitType}}
+  </button>
+  <button class="ui button" {{action 'clearLimitFunction' on="click"}}>
+    {{t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionClearLimitFunction"}}
+  </button>
 </form>

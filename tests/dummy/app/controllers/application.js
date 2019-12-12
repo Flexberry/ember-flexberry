@@ -391,6 +391,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/limit-hierarchy-olv-in-lookup-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-hierarchy-olv-in-lookup-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-hierarchy-olv-in-lookup-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/limit-function-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
@@ -498,6 +503,10 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/limit-hierarchy-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-hierarchy-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-hierarchy-example.title'),
           }, {
             link: 'components-examples/flexberry-objectlistview/hierarchy-paging-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.caption'),

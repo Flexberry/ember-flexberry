@@ -309,15 +309,17 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      if (!Ember.isBlank(e)) {
-        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
-      }
+      if (!this.get('disabled')) {
+        if (!Ember.isBlank(e)) {
+          Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+        }
 
-      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
-      let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
-      {
-        this.sendAction('rowClick', record, params);
+        // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
+        let classOfHierarchyExpandButton = 'hierarchy-expand';
+        if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
+        {
+          this.sendAction('rowClick', record, params);
+        }
       }
     }
   },
@@ -337,10 +339,33 @@ export default FlexberryBaseComponent.extend({
         let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
         this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
+        this.updateRowHierarhy(this.get('record'));
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);
         }
       }
+    }
+  },
+
+  limitPredicateObserver: Ember.on('init', Ember.observer('this.currentController.currentLimitPredicate', function() {
+    if (this.get('inHierarchicalMode')) {
+      this.updateRowHierarhy(this.get('record'));
+    }
+  })),
+
+  updateRowHierarhy(record) {
+    let currentLimit = this.currentController.get('currentLimitPredicate');
+    if (currentLimit) {
+      let array = [];
+      array.push(record.get('data'));
+      let result = currentLimit(array);
+      if (result.length === 0) {
+        this.set('disabled', true);
+      } else {
+        this.set('disabled', false);
+      }
+    } else {
+      this.set('disabled', false);
     }
   },
 });

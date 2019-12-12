@@ -52,7 +52,7 @@ executeTest('check sorting clear', (store, assert, app) => {
             let $divOrd = $('div', $ord);
 
             assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
-            assert.equal($.trim($divOrd.text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
+            assert.equal($.trim($divOrd.text()), /* String.fromCharCode('9650') +*/ '1', 'sorting symbol added');
 
             let done2 = assert.async();
             checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {

@@ -637,8 +637,6 @@ export default FlexberryBaseComponent.extend({
 
       uploadData.headers = this.get('headers');
       this.set('_uploadData', uploadData);
-
-      this.$('.flexberry-file-add-button').addClass('hidden');
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
@@ -703,8 +701,6 @@ export default FlexberryBaseComponent.extend({
     this.set('_uploadDataCopy', null);
     this.set('value', null);
     this.set('_previewImageAsBase64String', null);
-
-    this.$('.flexberry-file-add-button').removeClass('hidden');
   },
 
   /**

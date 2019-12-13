@@ -11,7 +11,7 @@
   {{#unless readonly}}
     {{#if _addButtonIsVisible}}
       <label
-        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} button"
+        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} {{if _hasFile "hidden"}} button"
         title={{t "components.flexberry-file.add-button-title"}}
         for={{_fileInputId}}
         {{action "addButtonClick" on="click" preventDefault=false}}>

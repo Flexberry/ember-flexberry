@@ -55,7 +55,7 @@ export default Component.extend({
 
     @property classNameBindings
   */
-  classNameBindings: ['sizeClass'],
+  classNameBindings: ['sizeClass', 'sidePage:flexberry-sidepage'],
 
   /**
     See [EmberJS API](https://emberjs.com/api/).
@@ -111,6 +111,15 @@ export default Component.extend({
     @default true
   */
   useCloseButton: true,
+
+  /**
+    Flag indicates whether to show modal dialog as a sidepage or not.
+
+    @property sidePage
+    @type Boolean
+    @default false
+  */
+  sidePage: false,
 
   /**
     Used to identify lookup on the page.

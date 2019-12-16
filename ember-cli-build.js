@@ -17,7 +17,7 @@ module.exports = function(defaults) {
         browsers: ['last 3 versions'],
       },
       filter: {
-        enabled: true,
+        enabled: false,
         plugins: [
           {
             module: autoprefixer,

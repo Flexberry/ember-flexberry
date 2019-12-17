@@ -60,14 +60,14 @@
             {{/if}}
             </span>
             {{#if column.sorted}}
-              <div class="object-list-view-order-icon" style="float:right;">
+              <div class="object-list-view-order-icon">
                 {{#if column.sortAscending}}
                   <div title="{{t 'components.object-list-view.sort-ascending'}}">
-                  ▲{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="ascending icon"></i>
                   </div>
                 {{else}}
                   <div title="{{t 'components.object-list-view.sort-descending'}}">
-                  ▼{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="descending icon"></i>
                   </div>
                 {{/if}}
               </div>

@@ -1,11 +1,11 @@
 {{#modal-dialog
   title=(if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export-modal-dialog-title") (t "components.colsconfig-dialog-content.title"))
-  sizeClass="small flexberry-sidepage"
+  sizeClass="small"
   close="removeModalDialog"
   created="createdModalDialog"
   useOkButton=false
   useCloseButton=false
-  settings=(hash transition="slide left")
+  useSidePageMode=true
 }}
   {{outlet "modal-content"}}
 {{/modal-dialog}}

@@ -18,6 +18,8 @@ import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
 import { BasePredicate, SimplePredicate, ComplexPredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
 
+import FixableComponent from '../mixins/fixable-component';
+
 /**
   Lookup component for Semantic UI.
 
@@ -53,7 +55,7 @@ import { BasePredicate, SimplePredicate, ComplexPredicate, StringPredicate } fro
   @class FlexberryLookup
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     This property is used in order to cache loaded for dropdown mode values.
     Values are kept as array with master id as key and master object as value.
@@ -696,6 +698,13 @@ export default FlexberryBaseComponent.extend({
   */
   dropdownSettings: undefined,
 
+  /**
+    @method onShowHide
+  */
+  onShowHide(fixedOnVisible = false) {
+    this.showFixedElement({ top: -1, fixedOnVisible: fixedOnVisible });
+  },
+
   actions: {
     /**
       Open window for select value.
@@ -1061,6 +1070,9 @@ export default FlexberryBaseComponent.extend({
                   }
                 })
               });
+              run.next(() => {
+                _this.onShowHide(true);
+              });
             }, () => {
               callback({ success: false });
             });
@@ -1077,6 +1089,10 @@ export default FlexberryBaseComponent.extend({
 
         run(() => {
           debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
+
+        run.next(() => {
+          _this.onShowHide();
         });
       },
 
@@ -1154,6 +1170,10 @@ export default FlexberryBaseComponent.extend({
 
         run(() => {
           debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
+
+        run.next(() => {
+          _this.onShowHide();
         });
       }
     });

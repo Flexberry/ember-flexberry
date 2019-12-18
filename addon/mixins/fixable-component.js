@@ -111,8 +111,9 @@ export default Mixin.create({
     const element = this.get('fixedElementRef');
     const component = this.get('componentRef');
     const isVisible = element.classList.contains('visible');
+    const fixedOnVisible = options.fixedOnVisible || false;
 
-    if (!isVisible) {
+    if (!isVisible || fixedOnVisible) {
       const { height, left, width, bottom } = component.getBoundingClientRect();
       let { top } = component.getBoundingClientRect();
       const optionWidth = options.width || 0;

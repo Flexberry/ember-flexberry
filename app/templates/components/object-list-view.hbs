@@ -3,41 +3,16 @@
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
-          {{#if showCheckBoxInRow }}
-            {{#if (or readonly allSelect)}}
-              <button
-                class="ui check-all-at-page-button {{buttonClass}} disabled button"
-                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                disabled="disabled"
-                {{action "checkAllAtPage"}}>
-                  <i class="check-square-o icon"></i>
-              </button>
-            {{else}}
-              <button
-                class="ui check-all-at-page-button {{buttonClass}} button"
-                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                {{action "checkAllAtPage"}}>
-                  <i class="check-square-o icon"></i>
-              </button>
-            {{/if}}
-            {{#if (not-eq class "groupedit-container") }}
-              {{#if readonly}}
-                <button
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
+          {{#if showCheckBoxInRow}}
+            <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
+              <i class="check-square-o icon"></i>
+              {{#if checkRowsSettingsItems}}
+                {{flexberry-menu
+                  items=checkRowsSettingsItems
+                  onItemClick=(action "onCheckRowMenuItemClick")
+                }}
               {{/if}}
-            {{/if}}
+            </div>
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
                 class="ui clear-sorting-button {{buttonClass}} button"

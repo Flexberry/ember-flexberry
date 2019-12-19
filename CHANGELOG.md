@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0-beta.20] - 2019-12-19
+### Fixed
+* `errorable-route` mixin:
+    * Add `_super` call to `resetController` method.
+
 ## [2.2.0-beta.19] - 2019-12-11
 ### Added
 * `flexberry-lookup` component:

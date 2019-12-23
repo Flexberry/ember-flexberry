@@ -4,15 +4,24 @@
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow}}
-            <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
-              <i class="check-square-o icon"></i>
-              {{#if checkRowsSettingsItems}}
-                {{flexberry-menu
-                  items=checkRowsSettingsItems
-                  onItemClick=(action "onCheckRowMenuItemClick")
-                }}
-              {{/if}}
-            </div>
+            {{#if (not-eq class "groupedit-container")}}
+              <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
+                <i class="check-square-o icon"></i>
+                {{#if checkRowsSettingsItems}}
+                  {{flexberry-menu
+                    items=checkRowsSettingsItems
+                    onItemClick=(action "onCheckRowMenuItemClick")
+                  }}
+                {{/if}}
+              </div>
+            {{else}}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+            {{/if}}
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
                 class="ui clear-sorting-button {{buttonClass}} button"

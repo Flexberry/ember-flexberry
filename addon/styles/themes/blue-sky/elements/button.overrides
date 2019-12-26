@@ -312,7 +312,7 @@ div.ui.secondary.menu.no-margin {
 }
 
 .flexberry-lookup {
-    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear {
+    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear,  .ui.action.input .ui.ui-preview.button {
         padding: 0em 0.3em 0em 0.3em;
         font-size: 1em;
         border: none;

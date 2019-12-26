@@ -85,6 +85,7 @@ export default Mixin.create({
 
   /* eslint-disable no-unused-vars */
   resetController(controller, isExiting, transition) {
+    this._super(...arguments);
     if (isExiting) {
       if (controller.get('isSortingError')) {
         controller.set('sort', null);

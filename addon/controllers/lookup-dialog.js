@@ -132,6 +132,15 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   */
   lookupEventsService: Ember.inject.service('lookup-events'),
 
+  /**
+    Semantic UI Modal settings, [more info here](http://semantic-ui.com/modules/modal.html#settings).
+
+    @property settings
+    @type Object
+    @default {}
+  */
+  settings: {},
+
   actions: {
     /**
       Handlers OLV row click, Save selected row to object master property and close modal window.
@@ -259,7 +268,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
+  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function () {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }
@@ -272,7 +281,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @method clear
     @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
   */
-  clear: function(initialClear) {
+  clear: function (initialClear) {
     this.set('reloadObserverIsActive', false);
 
     if (initialClear) {

@@ -57,7 +57,36 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @property loaderTemplate
       @type String
     */
-    loaderTemplate: undefined
+    loaderTemplate: undefined,
+
+    /**
+      Object with settings for modal window.
+
+      @property modalDialogSettings
+      @type Object
+    */
+    modalDialogSettings: {
+
+      /**
+        Modal detachable param.
+        If set to false will prevent the modal from being moved to inside the dimmer.
+
+        @property detachable
+        @type Boolean
+        @default false
+      */
+      detachable: false,
+
+      /**
+        Modal context param.
+        Selector or jquery object specifying the area to dim.
+
+        @property context
+        @type String
+        @default '.ember-application > .ember-view'
+      */
+      context: '.ember-application > .ember-view'
+    }
   },
 
   /**
@@ -445,7 +474,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     });
 
     if (reloadData.initialLoad) {
-      currentContext.send('showModalDialog', lookupSettings.template);
+      currentContext.send('showModalDialog', lookupSettings.template, { model: { modalDialogSettings: lookupSettings.modalDialogSettings } });
     }
 
     controller.set('reloadObserverIsActive', true);

@@ -132,15 +132,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   */
   lookupEventsService: Ember.inject.service('lookup-events'),
 
-  /**
-    Semantic UI Modal settings, [more info here](http://semantic-ui.com/modules/modal.html#settings).
-
-    @property settings
-    @type Object
-    @default {}
-  */
-  settings: {},
-
   actions: {
     /**
       Handlers OLV row click, Save selected row to object master property and close modal window.

@@ -47,7 +47,7 @@
     }
 }
 
-.flexberry-simpledatetime {
+html.mobile .overflowed-cell .flexberry-simpledatetime {
     width:100%;
 }
 

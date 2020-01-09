@@ -50,6 +50,15 @@ export default EditFormController.extend({
   autocomplete: false,
 
   /**
+    Flag indicates whether 'flexberry-lookup' component is in 'autocompletePersistValue' mode or not.
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
     Flag indicates whether 'flexberry-lookup' component is in 'dropdown' mode or not.
 
     @property dropdown
@@ -57,6 +66,15 @@ export default EditFormController.extend({
     @default false
   */
   dropdown: false,
+
+  /**
+    Flag indicates whether 'flexberry-lookup' component  in 'dropdown' mode is search.
+
+    @property dropdownIsSearch
+    @type Boolean
+    @default false
+  */
+  dropdownIsSearch: false,
 
   /**
     Content for 'flexberry-lookup' component 'chooseText' property.
@@ -86,6 +104,15 @@ export default EditFormController.extend({
   chooseButtonClass: '',
 
   /**
+    Text for 'flexberry-lookup' component 'dropdownClass' property.
+
+    @property dropdownClass
+    @type String
+    @default 'blue'
+  */
+  dropdownClass: '',
+
+  /**
     Text for 'flexberry-lookup' component 'removeButtonClass' property.
 
     @property removeButtonClass
@@ -93,6 +120,24 @@ export default EditFormController.extend({
     @default 'olive'
   */
   removeButtonClass: '',
+
+  /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
 
   /**
     Template text for 'flexberry-lookup' component.
@@ -113,11 +158,17 @@ export default EditFormController.extend({
     '  choose="showLookupDialog"<br>' +
     '  remove="removeLookupValue"<br>' +
     '  autocomplete=autocomplete<br>' +
+    '  autocompletePersistValue=autocompletePersistValue<br>' +
+    '  displayValue=model.lookupDisplayValue<br>' +
     '  dropdown=dropdown<br>' +
+    '  dropdownIsSearch=dropdownIsSearch<br>' +
     '  chooseText=chooseText<br>' +
     '  removeText=removeText<br>' +
     '  chooseButtonClass=chooseButtonClass<br>' +
     '  removeButtonClass=removeButtonClass<br>' +
+    '  showPreviewButton=showPreviewButton<br>' +
+    '  previewOnSeparateRoute=previewOnSeparateRoute<br>' +
+    '  previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"<br>' +
     '}}'),
 
   /**
@@ -153,10 +204,22 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'autocomplete'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'autocompletePersistValue',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'autocompletePersistValue'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'dropdown',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'dropdown'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownIsSearch',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'dropdownIsSearch'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'chooseText',
@@ -184,7 +247,25 @@ export default EditFormController.extend({
       settingAvailableItems: ['purple basic', 'negative', 'yellow colored'],
       bindedControllerPropertieName: 'removeButtonClass'
     });
-
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownClass',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['blue'],
+      bindedControllerPropertieName: 'dropdownClass'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showPreviewButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPreviewButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'previewOnSeparateRoute',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'previewOnSeparateRoute'
+    });
     return componentSettingsMetadata;
   })
 });

@@ -4,6 +4,110 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0] - 2019-12-26
+### Added
+* `flexberry-lookup` component:
+    * Add preview button in mobile mode.
+    * Add `autocompleteOrder` in dropdown mode.
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to `flexberry-lookup` at drodpdown mode.
+    * Add limitFunction in groupedit row to lookup limit by other component.
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
+* `flexberry-objectlistview` component:
+    * Add hierarchy paging option.
+    * Add advlimit config dialog for editing and applying limits.
+    * Add creating record by prototype.
+* Blueprints:
+    * Add setting offline database name.
+    * Add check for file exist in `model-offline`.
+    * Add offline option.
+    * Add skip-confirmation option.
+* Add `cut-string-by-length` util for cutting string by specified length.
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
+* `flexberry-file` component:
+    * Add ability to change file preview's modal dialog settings.
+* Add mixins for multi list mode.
+
+### Changed
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
+* Update dependency on the `jquery-minicolors` bower package to version `2.3.4`.
+* Update dependency on `ember-flexberry-data` to version `2.2.0`.
+
+### Fixed
+* Blueprints:
+    * Fix call generate method for `model-offline` in `flexberry-group`.
+    * Fix offline schema setting in store service.
+* `errorable-route` mixin:
+    * Add `_super` call to `resetController` method.
+* `flexberry-simpleolv` component:
+    * Fix `fixedHeader` mode in mobile.
+* `flexberry-lookup` component:
+    * Fix ellipsis in lookup `autocomplete` results.
+    * Fix `autocomplete` for numeric properties.
+    * Fix `autocomplete` results after toogle readonly mode.
+    * Fix select `autocomplete` result by enter click.
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
+* `colsconfig-dialog-content` component:
+    * Fix set sorting method.
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
+* `user-settings` service:
+    * Fix perPage from developerUserSettings on reloading.
+* Creating a prototype record when a prototype is not loaded into store.
+
+### Breaking changes
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
+* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
+* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
+* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins for multilists or include old mixin in yours forms with olv on edit form.
+
+## [2.1.0] - 2019-04-30
+### Added
+* Blueprints:
+    * Add index property generation for projection attributes.
+* `flexberry-lookup` component:
+    * Add preview button.
+    * Add persist value mode for autocomplete.
+    * Add optional projection for autocomplite (`autocompleteProjection` property).
+    * Add property `autofillByLimit`.
+* `flexberry-file` component:
+    * Added the ability to open files instead of downloading.
+* List components:
+    * Add option to hide default sorting button.
+    * Add option to fix table header (`fixedHeader`).
+* `flexberry-groupedit` component:
+    * Add text and icon custom buttons in toolbar.
+    * Add check all at page button.
+    * Sorting by ordered property.
+
+### Changed
+* `flexberry-lookup` component:
+    * Dropdown mode uses projection from `projection` property.
+* Update dependency on `ember-flexberry-data` to version `2.1.0`.
+
+### Fixed
+* `reload-list-mixin` mixin:
+    * Fix `DatePredicate`'s normalize, when condition equals `neq` and value is `null`.
+    * Fix filter by `null` for `string`, `number` and `date` data types.
+* `flexberry-groupedit` component:
+    * Fix ordered property computing when `modelProjection` are string.
+* `flexberry-file` component:
+    * Fix spinner for preview when component is in modal.
+
+### Deprecated
+* Specific behavior for the `computedProperties` property in the `dynamic-properties` mixin.
+
 ## [2.0.0] - 2018-12-07
 ### Added
 * `flexberry-objectlistview-route` mixin:

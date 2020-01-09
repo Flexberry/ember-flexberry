@@ -53,7 +53,7 @@
           src={{_previewImageAsBase64String}}
           alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
       {{/unless}}
-      <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
+      <div class="ui {{if _previewDownloadIsInProgress "active" "disabled"}} loader"></div>
     </div>
   {{else}}
     <span>{{_fileName}}</span>&nbsp;<span style ="color:red">{{_errorPreviewCaption}}</span>
@@ -72,7 +72,7 @@
       {{_errorModalDialogContent}}
     </div>
   </div>
-  <div class="center aligned ui grid">
+  <div class="flexberry-file-error-modal-dialog-button center aligned ui grid">
     <div class="actions">
       <div class="ui button flexberry-file-error-modal-dialog-ok-button approve">
         <i class="checkmark icon"></i>

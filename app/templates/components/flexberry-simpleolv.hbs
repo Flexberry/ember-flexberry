@@ -203,12 +203,14 @@
                     <i class="check-all-square-o icon"></i>
                 </button>
               {{/if}}
-              <button
-                class="ui clear-sorting-button {{buttonClass}} button"
-                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
-                {{action "clearSorting"}}>
-                  <i class="sort icon"></i>
-              </button>
+              {{#if defaultSortingButton}}
+                <button
+                  class="ui clear-sorting-button {{buttonClass}} button"
+                  title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                  {{action "clearSorting"}}>
+                    <i class="sort icon"></i>
+                </button>
+              {{/if}}
             {{/if}}
           </th>
         {{/if}}
@@ -247,7 +249,7 @@
     </thead>
     <tbody>
       {{#if showFilters}}
-        <tr>
+        <tr class="object-list-view-filters">
           {{#if showHelperColumn}}
             <td rowspan="1"></td>
           {{/if}}
@@ -270,7 +272,7 @@
             <td rowspan="1"></td>
           {{/if}}
         </tr>
-        <tr>
+        <tr class="object-list-view-filters">
           {{#if showHelperColumn}}
             <td rowspan="1"></td>
           {{/if}}
@@ -345,14 +347,14 @@
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                             disabled="disabled"
-                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            {{action "objectListViewRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                             <i class="edit icon"></i>
                           </button>
                         {{else}}
                           <button
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
-                            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                            {{action "objectListViewRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                             <i class="edit icon"></i>
                           </button>
                         {{/if}}

@@ -82,46 +82,6 @@ export default FlexberryBaseComponent.extend({
   _availableHierarchicalMode: false,
 
   /**
-    Flag indicate when available the collapse/expand all hierarchies mode.
-
-    @property _availableCollExpandMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _availableCollExpandMode: false,
-
-  /**
-    Flag indicate when component is in the hierarchical mode.
-
-    @property _inHierarchicalMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
-    return this.get('currentController.inHierarchicalMode');
-  }),
-
-  /**
-    Flag indicate when component is in the collapse/expand mode.
-
-    @property _inExpandMode
-    @type Boolean
-    @default false
-    @private
-  */
-  _inExpandMode: Ember.computed('currentController.inExpandMode', {
-    get(key) {
-      return this.get('currentController.inExpandMode');
-    },
-    set(key, value) {
-      this.set('currentController.inExpandMode',  value);
-      return value;
-    }
-  }),
-
-  /**
     Store the attribute name set by `hierarchyByAttribute`.
 
     @property _hierarchicalAttribute
@@ -143,10 +103,53 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       this.set('_hierarchicalAttribute', value);
-      this.sendAction('_saveHierarchicalAttribute', value, true);
+      this.sendAction('_saveHierarchicalAttribute', value, true, this.get('componentName'));
       return value;
     },
   }),
+
+  /**
+    Flag indicate when component is in the hierarchical mode.
+
+    @property inHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+    return this.get('currentController.inHierarchicalMode');
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property inExpandMode
+    @type Boolean
+    @default false
+  */
+  inExpandMode: Ember.computed('currentController.inExpandMode', function() {
+    return this.get('currentController.inExpandMode');
+  }),
+
+  /**
+    Flag indicate when component in hierarchycal mode has paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+  */
+  hierarchyPaging: Ember.computed('currentController.hierarchyPaging', function() {
+    return this.get('currentController.hierarchyPaging');
+  }),
+
+  /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  availableCollExpandMode: false,
 
   /**
     Indent in pixels to indicate hierarchy.
@@ -191,6 +194,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   allowColumnResize: true,
+
+  /**
+  Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default false
+  */
+  fixedHeader: false,
 
   /**
     Route for edit form by click row.
@@ -288,13 +300,13 @@ export default FlexberryBaseComponent.extend({
   showEditButtonInRow: false,
 
   /**
-    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
+    Flag indicates whether to show prototype button in first column of every row.
 
-    @property showEditMenuItemInRow
+    @property showPrototypeButtonInRow
     @type Boolean
     @default false
   */
-  showEditMenuItemInRow: false,
+  showPrototypeButtonInRow: false,
 
   /**
     Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
@@ -304,6 +316,24 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showDeleteMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showEditMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
+
+    @property showPrototypeMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeMenuItemInRow: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.
@@ -342,8 +372,9 @@ export default FlexberryBaseComponent.extend({
       ```
 
     For in-row menu following properties are used:
-    - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/showPrototypeMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
 
     @property menuInRowAdditionalItems
@@ -476,6 +507,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   exportExcelButton: false,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Flag to use filters in OLV component.
@@ -849,7 +889,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action previous page.
     */
-    previousPage(action) {
+    previousPage(action, componentName) {
       if (!action) {
         throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
@@ -858,7 +898,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action();
+      action(componentName);
     },
 
     /**
@@ -868,7 +908,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action next page.
     */
-    nextPage(action) {
+    nextPage(action, componentName) {
       if (!action) {
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
@@ -877,7 +917,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action();
+      action(componentName);
     },
 
     /**
@@ -888,7 +928,7 @@ export default FlexberryBaseComponent.extend({
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */
-    gotoPage(action, pageNumber) {
+    gotoPage(action, pageNumber, componentName) {
       if (!action) {
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
@@ -897,7 +937,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(pageNumber);
+      action(pageNumber, componentName);
     },
 
     /**
@@ -928,6 +968,37 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction(actionName, model);
+    },
+
+    /**
+      This action is called when user click on menu in row.
+
+      @method actions.createNewByPrototype
+      @param {String|Number} prototypeId The prototype record ID in row.
+      @public
+    */
+    createNewByPrototype(prototypeId) {
+      Ember.assert('The prototype record ID is not defined', prototypeId);
+      let editFormRoute = this.get('editFormRoute');
+      Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
+      let modelController = this.get('currentController');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
+      let appController = Ember.getOwner(this).lookup('controller:application');
+      let thisRouteName = appController.get('currentRouteName');
+      let thisRecordId = modelController.get('model.id');
+      let transitionOptions = {
+        queryParams: {
+          prototypeId: prototypeId,
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
+      Ember.run.later((function() {
+        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
+      }), 50);
     },
 
     /**
@@ -984,7 +1055,7 @@ export default FlexberryBaseComponent.extend({
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
-      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute);
+      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute, false, this.get('componentName'));
     },
 
     /**
@@ -993,7 +1064,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
-      this.sendAction('_switchHierarchicalMode');
+      this.sendAction('_switchHierarchicalMode', this.get('componentName'));
     },
 
     /**
@@ -1002,7 +1073,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchExpandMode
     */
     switchExpandMode() {
-      this.sendAction('_switchExpandMode');
+      this.sendAction('_switchExpandMode', this.get('componentName'));
     },
 
     /**
@@ -1015,7 +1086,7 @@ export default FlexberryBaseComponent.extend({
       @param {Boolean} Flag indicates that this is the first download of data.
     */
     loadRecords(id, target, property, firstRunMode) {
-      this.sendAction('_loadRecords', id, target, property, firstRunMode);
+      this.sendAction('_loadRecords', id, target, property, firstRunMode, this.get('componentName'));
     },
 
     /**
@@ -1193,7 +1264,7 @@ export default FlexberryBaseComponent.extend({
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
-        if (componentName === this.get('componentName') && !this.get('_inHierarchicalMode')) {
+        if (componentName === this.get('componentName') && (!this.get('inHierarchicalMode') || this.get('hierarchyPaging'))) {
           this._setMenuWidth(tableWidth, containerWidth);
         }
       });

@@ -1,8 +1,10 @@
 var inflector = require("inflection");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an import wrapper.',
     availableOptions: [
-        { name: 'middle-path', type: String }
+        { name: 'middle-path', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     fileMapTokens: function () {
         return {
@@ -17,6 +19,16 @@ module.exports = {
             }
         };
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    },
+
     /**
     * Blueprint Hook locals.
     * Use locals to add custom template variables. The method receives one argument: options.

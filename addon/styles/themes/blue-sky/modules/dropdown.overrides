@@ -24,10 +24,6 @@
     cursor: pointer;
 }
 
-.ui.dropdown.icon.button > .dropdown.icon {
-    margin-left: -20px;
-    margin-top: -4px;
-}
 
 .ui.icon.dropdown > .icon.dropdown:before {
     font-size:20px;
@@ -55,8 +51,8 @@
 
 .ui.buttons.cols-config > .ui.dropdown:last-child .menu,
 .ui.buttons.export-config > .ui.dropdown:last-child .menu {
-    left: auto;
-    right: -5em;
+    left: -2em;
+    right: auto;
 }
 
 .flexberry-dropdown {

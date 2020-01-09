@@ -80,6 +80,14 @@ export default ListFormController.extend({
   allowColumnResize: true,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'fixedHeader' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  fixedHeader: false,
+
+  /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'createNewButton' mode or not.
 
     @property createNewButton
@@ -118,6 +126,15 @@ export default ListFormController.extend({
     @type Boolean
    */
   refreshButton: false,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'defaultSortingButton' mode or not
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'showCheckBoxInRow' mode or not.
@@ -237,6 +254,7 @@ export default ListFormController.extend({
     '  applyFilters=(action "applyFilters")<br>' +
     '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
+    '  defaultSortingButton=defaultSortingButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
     '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
@@ -260,6 +278,7 @@ export default ListFormController.extend({
     '  previousPage=(action \"previousPage\")<br>' +
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
+    '  fixedHeader=fixedHeader<br>' +
     '}}'),
 
   /**
@@ -394,6 +413,12 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'refreshButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'defaultSortingButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'defaultSortingButton'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showCheckBoxInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -440,6 +465,12 @@ export default ListFormController.extend({
       settingType: 'string',
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'singleColumnHeaderTitle'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;

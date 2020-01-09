@@ -89,24 +89,27 @@ export default FlexberryBaseComponent.extend({
      Set sort order and priority for column.
 
      @method actions.setSortOrder
-     @param {Integer} index Row number.
+     @param {Object} colDesc Column description object.
      @param {Object} element Dropdown.
      @param {String} value Selected value.
      */
-    setSortOrder: function(index, element, value) {
-      let currentValue = this.get(`model.colDescs.${index}.sortOrder`);
-      if (currentValue !== parseInt(value)) {
+    setSortOrder: function(colDesc, element, value) {
+      if (colDesc.sortOrder !== parseInt(value)) {
         if (value === '0') {
-          this.set(`model.colDescs.${index}.sortPriority`, undefined);
-          this.set(`model.colDescs.${index}.sortOrder`, undefined);
+          Ember.set(colDesc, 'sortPriority', undefined);
+          Ember.set(colDesc, 'sortOrder', undefined);
         } else {
-          let sortPriority = this.get(`model.colDescs.${index}.sortPriority`);
-          if (Ember.isNone(sortPriority)) {
-            sortPriority = this.get('model.colDescs').filter(c => c.sortPriority).length + 1;
-            this.set(`model.colDescs.${index}.sortPriority`, sortPriority);
+          if (Ember.isNone(colDesc.sortPriority)) {
+            let max = 0;
+            this.get('model.colDescs').filter(c => {
+              if (max < c.sortPriority) {
+                max = c.sortPriority;
+              }
+            });
+            Ember.set(colDesc, 'sortPriority', max + 1);
           }
 
-          this.set(`model.colDescs.${index}.sortOrder`, parseInt(value));
+          Ember.set(colDesc, 'sortOrder', parseInt(value));
         }
       }
     },
@@ -149,15 +152,21 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('model.exportParams.isExportExcel')) {
         let colsConfig = this._getSettings();
 
-        let router = getOwner(this).lookup('router:main');
         let savePromise = this._getSavePromise(undefined, colsConfig);
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
             this.get('appState').reset();
-            this.set('currentController.mainControler.sort', sort);
-            this.set('currentController.mainControler.perPage', colsConfig.perPage || 5);
-            router.router.refresh();
+            let mainController = this.get('currentController.mainControler');
+            let userSettingsApplyFunction = mainController.get('userSettingsApply');
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(mainController, [this.get('model.componentName'), colsConfig.sorting, colsConfig.perPage]);
+            } else {
+              mainController.set('sort', sort);
+              mainController.set('perPage', colsConfig.perPage || 5);
+              let router = getOwner(this).lookup('router:main');
+              router.router.refresh();
+            }
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
@@ -215,7 +224,7 @@ export default FlexberryBaseComponent.extend({
 
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
-      this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
       savePromise.then(
         record => {
           this.set('currentController.message.type', 'success');
@@ -281,7 +290,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction(this.get('model.componentName'));
     if (limitFunction) {
       builder.where(limitFunction);
     }
@@ -304,7 +313,7 @@ export default FlexberryBaseComponent.extend({
 
     return this.get('userSettingsService').saveUserSetting(componentName, settingName, colsConfig, isExportExcel)
     .then(result => {
-      this.get('colsConfigMenu').updateNamedSettingTrigger();
+      this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
     });
   },
 

@@ -82,6 +82,7 @@ export default Ember.Mixin.create({
   },
 
   resetController(controller, isExiting, transition) {
+    this._super(...arguments);
     if (isExiting) {
       if (controller.get('isSortingError')) {
         controller.set('sort', null);

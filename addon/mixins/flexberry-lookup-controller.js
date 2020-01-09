@@ -135,6 +135,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -170,6 +171,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         filter: undefined,
         predicate: limitPredicate,
         hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
 
         title: title,
         sizeClass: sizeClass,
@@ -216,6 +218,82 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
+    },
+
+    /**
+      Handlers action from FlexberryLookup preview action.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInSeparateRoute, projection, modelName, controller }.
+    */
+    previewLookupValue(previewData) {
+      let options = Ember.$.extend(true, {
+        recordId: undefined,
+        transitionRoute: undefined,
+        transitionOptions: undefined,
+        showInSeparateRoute: undefined,
+        modelName: undefined,
+        controller: undefined,
+        projection: undefined
+      }, previewData);
+      let recordId = options.recordId;
+      let transitionRoute = options.transitionRoute;
+
+      if (options.showInSeparateRoute) {
+        let transitionOptions = options.transitionOptions || {};
+        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+      } else {
+        let routeName = options.controller || transitionRoute;
+        let modelName = options.modelName;
+
+        let controller = Ember.getOwner(this).lookup(`controller:${routeName}`);
+        if (Ember.isNone(controller)) {
+          throw new Error(`Controller with '${routeName}' name does not exist.`);
+        }
+
+        let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
+        let projectionName = options.projection || (route ? route.get('modelProjection') : undefined);
+        if (Ember.isNone(projectionName)) {
+          throw new Error('\`previewFormProjection\` is undefined.');
+        }
+
+        let modelConstructor = this.store.modelFor(modelName);
+        let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
+        if (!projection) {
+          throw new Error(
+            `No projection with '${projectionName}' name defined in '${modelName}' model.`);
+        }
+
+        controller.setProperties({
+          readonly: true,
+          routeName: routeName,
+          modelProjection: projection
+        });
+
+        let lookupController = this.get('lookupController');
+        lookupController.setProperties({
+          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          sizeClass: 'small preview-model',
+        });
+
+        let lookupSettings = this.get('lookupSettings');
+        this.send('showModalDialog', lookupSettings.template);
+
+        let loadingParams = {
+          view: lookupSettings.template,
+          outlet: 'modal-content'
+        };
+
+        this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+        this.store.findRecord(modelName, recordId).then(data => {
+          this.send('removeModalDialog', loadingParams);
+          this.send('showModalDialog', transitionRoute, {
+            controller: controller,
+            model: data
+          }, loadingParams);
+        });
+      }
     },
 
     /**
@@ -293,6 +371,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: undefined,
       predicate: undefined,
       hierarchicalAttribute: undefined,
+      hierarchyPaging: false,
 
       title: undefined,
       sizeClass: undefined,
@@ -311,7 +390,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       reloadData.saveTo);
 
     let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
-    let projection = Ember.get(modelConstructor, 'projections')[reloadData.projectionName];
+    let projection = Ember.get(modelConstructor, `projections.${reloadData.projectionName}`);
     if (!projection) {
       throw new Error(
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);
@@ -324,6 +403,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
     let controller = currentContext.get('lookupController');
     let queryParameters = {
+      componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
@@ -333,7 +413,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
-      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging
     };
 
     controller.clear(reloadData.initialLoad);
@@ -355,6 +436,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

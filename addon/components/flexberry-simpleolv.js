@@ -143,6 +143,15 @@ export default folv.extend(
   allowColumnResize: true,
 
   /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
+  /**
     Table add column to sorting action name.
 
     @property addColumnToSorting
@@ -1307,6 +1316,12 @@ export default folv.extend(
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
+    if (this.get('fixedHeader')) {
+      let $currentTable = this.$('table.object-list-view');
+      $currentTable.parent().addClass('fixed-header');
+
+      this._fixedTableHead($currentTable);
+    }
   },
 
   /**
@@ -1727,7 +1742,7 @@ export default folv.extend(
               }
             }
 
-            columnsBuf.push(column);
+            columnsBuf.pushObject(column);
           }
 
           currentRelationshipPath += attrName + '.';
@@ -1741,12 +1756,12 @@ export default folv.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
-          columnsBuf.push(column);
+          columnsBuf.pushObject(column);
           break;
       }
     }
 
-    return columnsBuf;
+    return columnsBuf.sortBy('index');
   },
 
   /**
@@ -1799,11 +1814,13 @@ export default folv.extend(
 
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let index = Ember.get(attr, 'options.index');
 
     let column = Ember.Object.create({
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      index: index,
     });
 
     if (valueFromLocales) {
@@ -2569,6 +2586,15 @@ export default folv.extend(
   filterButton: false,
 
   /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
     Used to specify default 'filter by any match' field text.
 
     @property filterText
@@ -2976,4 +3002,134 @@ export default folv.extend(
       }
     }
   },
+
+  /**
+    It observes changes of flag {{#crossLink "FlexberryObjectlistviewComponent/showFilters:property"}}showFilters{{/crossLink}}.
+
+    If flag {{#crossLink "FlexberryObjectlistviewComponent/showFilters:property"}}{{/crossLink}} changes its value
+    and flag is true trigger scroll.
+
+    @method _showFiltersObserver
+    @private
+  */
+  _showFiltersObserver: Ember.observer('showFilters', function() {
+    let showFilters = this.get('showFilters');
+    if (showFilters) {
+      Ember.run.schedule('afterRender', this, function() {
+        Ember.$(this.element).scroll();
+      });
+    }
+  }),
+
+  /**
+    Set style of table parent.
+
+    @method _setParent
+    @private
+  */
+  _setParent(settings) {
+    let parent = Ember.$(settings.parent);
+    let table = Ember.$(settings.table);
+
+    parent.append(table);
+
+    Ember.$('.full.height .flexberry-content .ui.main.container').css('margin-bottom', '0');
+
+    let toolbarsHeight = parent.prev().outerHeight(true) +
+                          parent.next().outerHeight(true) +
+                          Ember.$('.background-logo').outerHeight() +
+                          Ember.$('h3').outerHeight(true) +
+                          Ember.$('.footer .flex-container').outerHeight();
+    let tableHeight = `calc(100vh - ${toolbarsHeight}px - 0.5rem)`;
+
+    parent
+        .css({
+          'overflow-x': 'auto',
+          'overflow-y': 'auto',
+          'max-height': tableHeight
+        });
+    parent.scroll(function () {
+      let top = parent.scrollTop();
+
+      this.find('thead tr > *').css('top', top);
+
+      // fixed filters.
+      if (this.find('tbody tr').is('.object-list-view-filters')) {
+        this.find('tbody tr.object-list-view-filters').find(' > *').css('top', top);
+      }
+
+    }.bind(table));
+  },
+
+  /**
+    Set fixed cells backgrounds.
+
+    @method _setBackground
+    @private
+  */
+  _setBackground(elements) {
+    elements.each(function (k, element) {
+      let _element = Ember.$(element);
+      let parent = Ember.$(_element).parent();
+
+      let elementBackground = _element.css('background-color');
+      elementBackground = (elementBackground === 'transparent' || elementBackground === 'rgba(0, 0, 0, 0)') ? null : elementBackground;
+
+      let parentBackground = parent.css('background-color');
+      parentBackground = (parentBackground === 'transparent' || parentBackground === 'rgba(0, 0, 0, 0)') ? null : parentBackground;
+
+      let background = parentBackground ? parentBackground : 'white';
+      background = elementBackground ? elementBackground : background;
+
+      _element.css('background-color', background);
+    });
+  },
+
+  /**
+    Fixed table head.
+
+    @method _setBackground
+    @private
+  */
+  _fixedTableHead($currentTable) {
+    let defaults = {
+      head: true,
+      foot: false,
+      left: 0,
+      right: 0,
+      'z-index': 0
+    };
+
+    /*
+    (Mozila Firefox(version >58) bug fixes)
+
+    If the browser is Firefox (version >58), then
+    tableHeadFixer is enabled, otherwise
+    thead position: sticky
+    */
+    let ua = navigator.userAgent;
+
+    if ((ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) ||
+        (ua.search(/iPhone|iPad/) !== -1 && ua.split('Version/')[1].substr(0, 2) >= 8) ||
+        (ua.search(/Android/) !== -1 && ua.split('Chrome/')[1].substr(0, 2) >= 78)) {
+      $currentTable
+            .find('thead tr > *')
+            .css({ 'position':'sticky', 'top':'0' });
+
+    } else {
+      let settings = Ember.$.extend({}, defaults);
+
+      settings.table = $currentTable;
+      settings.parent = Ember.$(settings.table).parent();
+      this._setParent(settings);
+
+      let thead = Ember.$(settings.table).find('thead');
+      let cells = thead.find('tr > *');
+
+      this._setBackground(cells);
+      cells.css({
+        'position': 'relative'
+      });
+    }
+  }
 });

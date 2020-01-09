@@ -469,13 +469,31 @@ export default FlexberryBaseComponent.extend({
   showModalDialogOnUploadError: undefined,
 
   /**
+    Flag: download by clicking download or open file in new window.
+
+    @property openInNewWindowInsteadOfLoading
+    @type Boolean
+    @default false
+  */
+  openFileInNewWindowInsteadOfLoading: undefined,
+
+  /**
     Headers to the file upload request.
 
     @property headers
     @type Object
     @default null
-   */
+  */
   headers: null,
+
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+    @default null
+  */
+  previewSettings: null,
 
   actions: {
     /**
@@ -489,9 +507,12 @@ export default FlexberryBaseComponent.extend({
       let fileName = this.get('_fileName');
       let previewImageAsBase64String = this.get('_previewImageAsBase64String');
       if (!Ember.isBlank(fileName) && !Ember.isBlank(previewImageAsBase64String)) {
+        let settings = this.get('previewSettings');
+
         this.sendAction('viewImageAction', {
           fileSrc: previewImageAsBase64String,
-          fileName: fileName
+          fileName: fileName,
+          settings: settings
         });
       }
     },
@@ -556,6 +577,7 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'showDownloadButton', defaultValue: true });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
+    this.initProperty({ propertyName: 'openFileInNewWindowInsteadOfLoading', defaultValue: false });
 
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
@@ -734,6 +756,7 @@ export default FlexberryBaseComponent.extend({
       url: fileUrl,
       headers: this.get('headers'),
       fileName: fileName,
+      openFileInNewWindowInsteadOfLoading: this.get('openFileInNewWindowInsteadOfLoading'),
       onSuccess: () => {
         this.sendAction('onDownloadSuccess');
       },

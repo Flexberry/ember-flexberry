@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.3.0-beta.0] - 2019-01-10
+### Added
+* `flexberry-lookup` controller:
+    * Add ability to specify modal dialog settings.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix styles when inside OLV filters in mobile mode.
+
 ## [2.2.0] - 2019-12-26
 ### Added
 * `flexberry-lookup` component:

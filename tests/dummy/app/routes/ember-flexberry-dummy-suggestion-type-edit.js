@@ -45,6 +45,14 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
       'DEFAULT': {
         'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 55 }]
       }
-    }
+    },
+
+    suggestionTypeLocalizedTypesGroupEdit: {
+      'DEFAULT': {
+        'sorting': [
+          { 'propName': 'name', 'direction': 'desc' },
+        ]
+      }
+    },
   }
 });

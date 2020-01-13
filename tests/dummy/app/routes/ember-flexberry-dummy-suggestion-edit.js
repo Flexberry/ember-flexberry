@@ -63,7 +63,16 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
           { 'propName': 'text', 'direction': 'asc' }
         ],
       }
-    }
+    },
+
+    SuggestionEditAuthor: {
+      'DEFAULT': {
+        'sorting': [
+          { 'propName': 'name', 'direction': 'desc' },
+          { 'propName': 'eMail', 'direction': 'asc' }
+        ]
+      }
+    },
   },
 
   /**

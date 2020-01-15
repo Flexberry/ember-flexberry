@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-lookup` controller:
+    * Fix lookup modal olv reload.
 
 ## [2.3.0-beta.0] - 2019-01-10
 ### Added

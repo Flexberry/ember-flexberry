@@ -1075,6 +1075,52 @@ export default FlexberryBaseComponent.extend({
                 newRelationValue: result.instance
               });
           });
+        } else {
+          let autocompleteProjection = _this.get('autocompleteProjection');
+          let autocompleteOrder = _this.get('autocompleteOrder');
+
+          let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          let maxRes = _this.get('maxResults');
+          let iCount = 1;
+          builder.top(maxRes + 1);
+          builder.count();
+
+            store.query(relationModelName, builder.build()).then((records) => {
+              callback({
+                success: true,
+                results: records.map(i => {
+                  let attributeName = i.get(displayAttributeName);
+                  if (iCount > maxRes && records.meta.count > maxRes) {
+                    return {
+                      title: '...',
+                      noResult: true
+                    };
+                  } else {
+                    iCount += 1;
+                    return {
+                      title: attributeName,
+                      instance: i
+                    };
+                  }
+                })
+              });
+            }, () => {
+              callback({ success: false });
+            });
+          });
+
+          this.$().search(
+            'generate results',
+            {
+              
+            }
+          )
         }
       },
 

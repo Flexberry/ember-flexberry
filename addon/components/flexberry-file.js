@@ -334,6 +334,15 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-file'],
 
   /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default ['readonly:disabled']
+  */
+  classNameBindings: ['readonly:disabled'],
+
+  /**
     Component's input additional CSS-class names.
     See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
 

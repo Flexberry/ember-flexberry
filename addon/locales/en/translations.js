@@ -194,8 +194,11 @@ export default {
       'columns-order': 'Specify the order of the columns',
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
+      'sort-direction-caption': 'Sorting',
       'sort-priority': 'Priority column sorting',
+      'sort-priority-caption': 'Priority',
       'column-width': 'Column width',
+      'column-width-caption': 'Width',
       'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
@@ -209,7 +212,10 @@ export default {
       'col-width-on': 'Enable setting column widths',
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
-      'det-separate-cols': 'List\'s properties in separate columns'
+      'det-separate-cols': 'List\'s properties in separate columns',
+      'sort-direction-none': 'None',
+      'sort-direction-asc': 'Ascending',
+      'sort-direction-desc': 'Descending',
     },
 
     'advlimit-dialog-content': {

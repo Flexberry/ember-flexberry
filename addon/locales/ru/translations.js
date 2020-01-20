@@ -195,8 +195,11 @@ export default {
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
+      'sort-direction-caption': 'Сортировка',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'sort-priority-caption': 'Приоритет',
       'column-width': 'Ширина столбца',
+      'column-width-caption': 'Ширина',
       'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
@@ -211,7 +214,10 @@ export default {
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
-      'unresizable': 'Фиксированная ширина'
+      'unresizable': 'Фиксированная ширина',
+      'sort-direction-none': 'Нет',
+      'sort-direction-asc': 'По возрастанию',
+      'sort-direction-desc': 'По убыванию',
     },
 
     'advlimit-dialog-content': {

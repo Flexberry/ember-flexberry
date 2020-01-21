@@ -62,7 +62,7 @@
   {{/if}}
 {{/if}}
 {{#if enableFilters}}
-  <div class="ui icon buttons filter-active">
+  <div class="ui icon buttons filter-active {{if filters "show-filter"}}">
     <button
       class="ui button {{buttonClass}} {{if showFilters "active"}}"
       title={{t "components.olv-toolbar.filter-button-text"}}

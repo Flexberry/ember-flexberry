@@ -338,7 +338,7 @@ export default FlexberryBaseComponent.extend({
     @type Number
     @default 10
   */
-  maxResults: 10,
+  maxResults: 2,
 
   /**
     Flag for remove autocomplete value if it's not in the results (remove when false).
@@ -683,6 +683,8 @@ export default FlexberryBaseComponent.extend({
   allowTab: true,
   transition: 'auto',
   duration: 200,
+  additionalAutocompleteLoading: 1,
+  autocompleteResult: undefined,
 
   actions: {
     /**
@@ -1011,29 +1013,35 @@ export default FlexberryBaseComponent.extend({
           }
 
           let maxRes = _this.get('maxResults');
+          
           let iCount = 1;
           builder.top(maxRes + 1);
           builder.count();
 
           Ember.run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
-              callback({
+              let autocompleteResult = records.map(i => {
+                let attributeName = i.get(displayAttributeName);
+                if (iCount > maxRes && records.meta.count > maxRes) {
+                  return {
+                    title: '...',
+                    noResult: true
+                  };
+                } else {
+                  iCount += 1;
+                  return {
+                    title: attributeName,
+                    instance: i
+                  };
+                }
+              })
+
+              _this.set('autocompleteResult',autocompleteResult);
+
+              callback(
+                {
                 success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...',
-                      noResult: true
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
+                results: autocompleteResult
               });
             }, () => {
               callback({ success: false });
@@ -1064,6 +1072,7 @@ export default FlexberryBaseComponent.extend({
         if (!result.noResult) {
           state = 'selected';
 
+          _this.set('loadingStartRecord', 1);
           Ember.run(() => {
             Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
@@ -1076,51 +1085,135 @@ export default FlexberryBaseComponent.extend({
               });
           });
         } else {
+          /*let maxRes = _this.get('maxResults');
+          let loadingStartRecord = maxRes * _this.get('additionalAutocompleteLoading');
+          _this.set('additionalAutocompleteLoading', _this.get('additionalAutocompleteLoading') + 1);
+          _this.$().search({maxResults: loadingStartRecord + maxRes + 1,});
+
+          _this.$().search({
+            maxResults: loadingStartRecord + maxResults + 1,
+            apiSettings: {
+              **
+                Mocks call to the data source,
+                Uses query language and store for loading data explicitly.
+      
+                @param {Object} settings
+                @param {Function} callback
+              *
+              responseAsync(settings, callback) {
+                // Prevent async data-request from being sent in readonly mode.
+                if (_this.get('readonly')) {
+                  return;
+                }
+      
+                let autocompleteProjection = _this.get('autocompleteProjection');
+                let autocompleteOrder = _this.get('autocompleteOrder');
+      
+                let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
+                let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+                let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
+                if (resultPredicate) {
+                  builder.where(resultPredicate);
+                }
+      
+                let maxRes = _this.get('maxResults');
+                
+                let iCount = 1;
+                builder.top(loadingStartRecord + maxRes + 1);
+                builder.count();
+      
+                Ember.run(() => {
+                  store.query(relationModelName, builder.build()).then((records) => {
+                    let autocompleteResult = records.map(i => {
+                      let attributeName = i.get(displayAttributeName);
+                      if (iCount > maxRes && records.meta.count > maxRes) {
+                        return {
+                          title: '...',
+                          noResult: true
+                        };
+                      } else {
+                        iCount += 1;
+                        return {
+                          title: attributeName,
+                          instance: i
+                        };
+                      }
+                    })
+      
+                    _this.set('autocompleteResult',autocompleteResult);
+      
+                    callback(
+                      {
+                      success: true,
+                      results: autocompleteResult
+                    });
+                  }, () => {
+                    callback({ success: false });
+                  });
+                });
+              }
+            },
+          });
+          return false;
+          }*/
+
+
           let autocompleteProjection = _this.get('autocompleteProjection');
           let autocompleteOrder = _this.get('autocompleteOrder');
-
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
-          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let autocompletePredicate = _this._getAutocomplitePredicate( _this.$().search('get value'));
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
 
           let maxRes = _this.get('maxResults');
+          let loadingStartRecord = maxRes * _this.get('additionalAutocompleteLoading');
+          _this.set('additionalAutocompleteLoading', _this.get('additionalAutocompleteLoading') + 1);
+          _this.$().search({maxResults: loadingStartRecord + maxRes + 1,});
+
           let iCount = 1;
+          builder.skip(loadingStartRecord)
           builder.top(maxRes + 1);
           builder.count();
 
-            store.query(relationModelName, builder.build()).then((records) => {
-              callback({
-                success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...',
-                      noResult: true
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
-              });
-            }, () => {
-              callback({ success: false });
-            });
-          });
-
-          this.$().search(
-            'generate results',
-            {
+          _this.set('maxResults', loadingStartRecord)
+          store.query(relationModelName, builder.build()).then((records) => {
+            //if (iCount > loadingStartRecord + maxRes && records.meta.count > loadingStartRecord + maxRes) {
               
-            }
-          )
+              let autocompleteResult = _this.get('autocompleteResult');
+              autocompleteResult.splice(autocompleteResult.length - 1, 1);
+              let loadResult = records.map(i => {
+                let attributeName = i.get(displayAttributeName);
+                if (iCount > maxRes && records.meta.count > maxRes) {
+                  return {
+                    title: '...',
+                    noResult: true
+                  };
+                } else {
+                  iCount += 1;
+                  return {
+                    title: attributeName,
+                    instance: loadingStartRecord + i
+                  };
+                }
+              });
+              loadResult.forEach(element => autocompleteResult.pushObject(element));
+              _this.set('autocompleteResult', autocompleteResult);
+
+              _this.$().search(
+                'add results',
+                _this.$().search(
+                  'generate results',
+                  {
+                    success: true,
+                    results: autocompleteResult
+                  }
+                )
+              )
+            //}
+          })
+          return false;
         }
       },
 
@@ -1173,6 +1266,7 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
+        _this.set('loadingStartRecord', 1);
 
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);

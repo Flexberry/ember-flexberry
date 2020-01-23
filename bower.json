@@ -7,7 +7,7 @@
     "ember-cli-test-loader": "0.2.2",
     "ember-qunit-notifications": "0.1.0",
     "jquery-mockjax": "2.2.0",
-    "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
+    "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fix-on-select-event-stop",
     "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
@@ -19,6 +19,6 @@
   },
   "resolutions": {
     "ember": "2.4.3",
-    "semantic-ui": "fixed-abort"
+    "semantic-ui": "fix-on-select-event-stop"
   }
 }

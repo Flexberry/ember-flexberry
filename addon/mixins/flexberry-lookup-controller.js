@@ -431,6 +431,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     }
 
     let controller = currentContext.get('lookupController');
+    let colsconfigController = currentContext.get('colsconfigController');
     let queryParameters = {
       componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
@@ -473,11 +474,38 @@ export default Ember.Mixin.create(ReloadListMixin, {
       reloadDataHandler: currentContext._reloadModalData
     });
 
+    colsconfigController.setProperties({
+      modelProjection: projection,
+      title: reloadData.title,
+      sizeClass: reloadData.sizeClass,
+      saveTo: reloadData.saveTo,
+      currentLookupRow: reloadData.currentLookupRow,
+      customPropertiesData: reloadData.customPropertiesData,
+      componentName: reloadData.componentName,
+      folvComponentName: reloadData.folvComponentName,
+      notUseUserSettings: reloadData.notUseUserSettings,
+
+      perPage: queryParameters.perPage,
+      page: queryParameters.page,
+
+      filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
+      predicate: limitPredicate,
+
+      hierarchyPaging: reloadData.hierarchyPaging,
+
+      modelType: reloadData.relatedToType,
+      projectionName: reloadData.projectionName,
+      reloadContext: currentContext,
+      reloadDataHandler: currentContext._reloadModalData
+    });
+
     if (reloadData.initialLoad) {
       currentContext.send('showModalDialog', lookupSettings.template, { model: { modalDialogSettings: lookupSettings.modalDialogSettings } });
     }
 
     controller.set('reloadObserverIsActive', true);
+    colsconfigController.set('reloadObserverIsActive', true);
 
     let loadingParams = {
       view: lookupSettings.template,
@@ -490,6 +518,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentContext.send('removeModalDialog', loadingParams);
       currentContext.send('showModalDialog', lookupSettings.contentTemplate, {
         controller: controller,
+        colsconfigController: colsconfigController,
         model: data
       }, loadingParams);
     });

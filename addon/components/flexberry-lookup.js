@@ -91,6 +91,19 @@ export default FlexberryBaseComponent.extend({
   _cachedDropdownValue: undefined,
 
   /**
+    Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
+    return Ember.merge({
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get('modalDialogSettings'));
+  }),
+
+  /**
     Text to be displayed in field, if value not selected.
 
     @property placeholder
@@ -493,10 +506,7 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
-        modalDialogSettings: Ember.merge({
-          useOkButton: false,
-          useCloseButton: false,
-        }, this.get('modalDialogSettings')),
+        modalDialogSettings: this.get('_modalDialogSettings'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -793,7 +803,8 @@ export default FlexberryBaseComponent.extend({
         showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
         controller: this.get('controllerForPreview'),
-        projection: this.get('previewFormProjection')
+        projection: this.get('previewFormProjection'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
 
       this.sendAction('preview', previewData);

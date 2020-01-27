@@ -300,10 +300,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
           modelProjection: projection
         });
 
-        let lookupController = this.get('lookupController');
+        const modalDialogSettings = Ember.merge({}, options.modalDialogSettings);
+        const lookupController = this.get('lookupController');
         lookupController.setProperties({
           title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
           sizeClass: 'small preview-model',
+          modalDialogSettings: modalDialogSettings,
         });
 
         let lookupSettings = this.get('lookupSettings');

@@ -386,6 +386,19 @@ export default FlexberryBaseComponent.extend({
   lookupAdditionalLimitFunction: undefined,
 
   /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
@@ -465,6 +478,7 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
@@ -479,6 +493,10 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
+        modalDialogSettings: Ember.merge({
+          useOkButton: false,
+          useCloseButton: false,
+        }, this.get('modalDialogSettings')),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')

@@ -213,6 +213,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         componentName: componentName,
         folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
       };
 
       this._reloadModalData(this, reloadData);
@@ -446,6 +447,9 @@ export default Ember.Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
+    const modalDialogSettings = Ember.merge(reloadData.modalDialogSettings, lookupSettings.modalDialogSettings);
+    delete reloadData.modalDialogSettings;
+
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
@@ -470,11 +474,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       reloadContext: currentContext,
-      reloadDataHandler: currentContext._reloadModalData
+      reloadDataHandler: currentContext._reloadModalData,
+      modalDialogSettings: modalDialogSettings,
     });
 
     if (reloadData.initialLoad) {
-      currentContext.send('showModalDialog', lookupSettings.template, { model: { modalDialogSettings: lookupSettings.modalDialogSettings } });
+      currentContext.send('showModalDialog', lookupSettings.template);
     }
 
     controller.set('reloadObserverIsActive', true);

@@ -98,6 +98,7 @@ export default FlexberryBaseComponent.extend({
   */
   _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
     return Ember.merge({
+      sizeClass: this.get('_sizeClass'),
       useOkButton: false,
       useCloseButton: false,
     }, this.get('modalDialogSettings'));
@@ -402,6 +403,7 @@ export default FlexberryBaseComponent.extend({
     An object with options and settings for the modal dialog of the component.
 
     The following options and settings are available:
+      - {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}}, not set by default.
       - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
       - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
       - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
@@ -410,6 +412,18 @@ export default FlexberryBaseComponent.extend({
     @type Object
   */
   modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use `modalDialogSettings.sizeClass`.
+  */
+  sizeClass: Ember.computed.deprecatingAlias('_sizeClass', {
+    id: 'flexberry-lookup.modal-dialog-size-class',
+    until: '3.0',
+  }),
 
   /**
     This computed property forms a set of properties to send to lookup window.
@@ -507,9 +521,6 @@ export default FlexberryBaseComponent.extend({
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
         modalDialogSettings: this.get('_modalDialogSettings'),
-
-        //TODO: move to modal settings.
-        sizeClass: this.get('sizeClass')
       };
     }),
 

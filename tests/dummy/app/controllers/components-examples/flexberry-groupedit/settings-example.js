@@ -393,6 +393,7 @@ export default EditFormController.extend({
         projection: 'MasterL',
         displayAttributeName: 'text',
         title: 'Master',
+        dropdown: true,
         relationName: 'master',
         choose: 'showLookupDialog',
         remove: 'removeLookupValue'

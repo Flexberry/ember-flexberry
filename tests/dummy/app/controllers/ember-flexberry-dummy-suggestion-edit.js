@@ -20,13 +20,13 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
-  actions: {   
+  actions: {
 
     getLookupFolvProperties: function() {
       return {
         colsConfigButton: true
       };
-    } 
+    }
   },
 
   /**

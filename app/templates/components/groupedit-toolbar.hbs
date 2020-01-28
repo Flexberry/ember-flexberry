@@ -27,7 +27,7 @@
   <button
     class="ui ui-move-up {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.move-up-button-text"}}
-    disabled={{readonly}}
+    disabled={{or _disableMoveUpButton readonly}}
     {{action 'moveRow' -1}}>
       <i class="arrow up icon"></i>
   </button>
@@ -35,7 +35,7 @@
   <button
     class="ui ui-move-down {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.move-down-button-text"}}
-    disabled={{readonly}}
+    disabled={{or _disableMoveDownButton readonly}}
     {{action 'moveRow' 1}}>
       <i class="arrow down icon"></i>
   </button>

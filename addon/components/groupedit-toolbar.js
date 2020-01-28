@@ -33,6 +33,22 @@ export default FlexberryBaseComponent.extend({
   _isDeleteRowsEnabled: undefined,
 
   /**
+    @private
+    @property _disableMoveUpButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveUpButton: false,
+
+  /**
+    @private
+    @property _disableMoveDownButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveDownButton: false,
+
+  /**
     Default class for component wrapper.
 
     @property classNames
@@ -248,6 +264,12 @@ export default FlexberryBaseComponent.extend({
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', count > 0);
+
+      const $tbody = this.$().parent().find('tbody');
+      const $tr = $tbody.find('tr.active');
+
+      this.set('_disableMoveUpButton', $tr.first().get(0) === $tbody.get(0).firstElementChild);
+      this.set('_disableMoveDownButton', $tr.last().get(0) === $tbody.get(0).lastElementChild);
     }
   },
 

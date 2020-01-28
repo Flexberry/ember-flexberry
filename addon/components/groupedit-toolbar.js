@@ -22,15 +22,12 @@ export default FlexberryBaseComponent.extend({
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
-    Boolean flag to indicate enabled state of delete rows button.
-
-    If rows at {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} are selected this flag is enabled.
-
-    @property _isDeleteRowsEnabled
-    @type Boolean
     @private
+    @property _hasSelectedRows
+    @type Boolean
+    @default false
   */
-  _isDeleteRowsEnabled: undefined,
+  _hasSelectedRows: false,
 
   /**
     @private
@@ -263,7 +260,7 @@ export default FlexberryBaseComponent.extend({
   */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', count > 0);
+      this.set('_hasSelectedRows', count > 0);
 
       const $tbody = this.$().parent().find('tbody');
       const $tr = $tbody.find('tr.active');
@@ -284,7 +281,7 @@ export default FlexberryBaseComponent.extend({
   */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', false);
+      this.set('_hasSelectedRows', false);
     }
   }
 });

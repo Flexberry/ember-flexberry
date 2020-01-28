@@ -20,10 +20,8 @@ executeTest('check detail delete', (store, assert, app) => {
     let $validationFlexberryOLVDeleteButton = Ember.$(Ember.$('.ui.disabled.button')[1]);
 
     // Delete detail.
-    Ember.run(() => {
-      $validationFlexberryCheckbox.click();
-      $validationFlexberryOLVDeleteButton.click();
-    });
+    Ember.run($validationFlexberryCheckbox, $validationFlexberryCheckbox.click);
+    Ember.run($validationFlexberryOLVDeleteButton, $validationFlexberryOLVDeleteButton.click);
 
     // Сounting the number of validationmessage = 8 afther detail delete.
     $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');

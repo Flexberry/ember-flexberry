@@ -1,8 +1,12 @@
-o# Ember Flexberry Changelog
+# Ember Flexberry Changelog
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.2.1] - 2020-01-28
+### Added
+* Changes from 2.2.1.
 
 ## [3.2.0] - 2019-12-26
 ### Added

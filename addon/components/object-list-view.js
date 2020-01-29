@@ -580,6 +580,41 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
+    @property checkRowsSettingsItems
+    @readOnly
+  */
+  checkRowsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', 'readonly', 'allSelect', function() {
+    let i18n = this.get('i18n');
+    let readonly = this.get('readonly');
+    let allSelect = this.get('allSelect');
+
+    let rootItem = {
+      icon: 'dropdown icon',
+      iconAlignment: 'right',
+      title: '',
+      items: [],
+      localeKey: ''
+    };
+
+    if (!readonly) {
+      if (!allSelect)
+        rootItem.items.push({
+          title: i18n.t('components.olv-toolbar.check-all-at-page-button-text'),
+          localeKey: 'components.olv-toolbar.check-all-at-page-button-text'
+        });
+
+      let classNames = this.get('classNames');
+      if (classNames != null && !classNames.includes('groupedit-container'))
+        rootItem.items.push({
+          title: i18n.t('components.olv-toolbar.check-all-button-text'),
+          localeKey: 'components.olv-toolbar.check-all-button-text'
+        });
+    }
+
+    return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
+  }),
+
+  /**
     Flag indicates whether some column contains editable component instead of default cellComponent.
     Don't work if change `componentName` inside `cellComponent`.
 
@@ -1086,6 +1121,35 @@ export default FlexberryBaseComponent.extend(
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
       this.selectedRowsChanged();
     },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onCheckRowMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onCheckRowMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case i18n.t('components.olv-toolbar.check-all-at-page-button-text').toString(): {
+          this.send('checkAllAtPage');
+          break;
+        }
+        case i18n.t('components.olv-toolbar.check-all-button-text').toString(): {
+          this.send('checkAll');
+          break;
+        }
+      }
+    },
+
     /* eslint-enable no-unused-vars */
 
     /**

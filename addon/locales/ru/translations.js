@@ -111,7 +111,9 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'confirm-button-caption': 'Да',
+      'cancel-button-caption': 'Отмена',
     },
 
     'flexberry-groupedit': {

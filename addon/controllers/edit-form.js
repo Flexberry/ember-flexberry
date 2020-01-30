@@ -489,6 +489,23 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   delete(skipTransition) {
     this.send('dismissErrorMessages');
 
+    let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
+    if (beforeDeleteModalDialog) {
+      assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
+
+      let possiblePromise = beforeDeleteModalDialog();
+
+      if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          return this._actualDeleteRecords(skipTransition)
+        });
+      }
+    } else {
+      return this._actualDeleteRecords(skipTransition)
+    }
+  },
+
+  _actualDeleteRecords(skipTransition) {
     this.onDeleteActionStarted();
     this.get('appState').loading();
 
@@ -523,7 +540,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
 
     return deletePromise;
   },
-
   /**
     Сlose edit form and transition to parent route.
 

@@ -1,5 +1,6 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import RSVP from 'rsvp';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -73,5 +74,25 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
+  },
+
+  beforeDeleteModalDialog: function() {
+    return new RSVP.Promise((resolve, reject) => {
+      let settings ={
+        closable  : false,
+        context: '.ember-application > .ember-view',
+        transition: 'slide left',
+        onDeny: function(){
+          $(this).modal('hide');
+          reject();
+        },
+        onApprove: function(){
+          $(this).modal('hide');
+          resolve();
+        },
+      };
+  
+      $('.flexberry-editform-delete-record-modal-dialog').modal(settings).modal('show');
+    });
   }
 });

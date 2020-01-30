@@ -46,7 +46,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
           },
         };
     
-        $('.delete-record-modal-dialog').modal(settings).modal('show');
+        $('.flexberry-olv-delete-record-modal-dialog').modal(settings).modal('show');
       });
     }
   },

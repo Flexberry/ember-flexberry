@@ -1,12 +1,6 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
 import $ from 'jquery';
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import { run } from '@ember/runloop';
-import { isEmpty } from '@ember/utils';
-
 import RSVP from 'rsvp';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {

@@ -24,7 +24,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       data.cancel = false;
     },
 
-    beforeDeleteMadalDialog: function() {
+    beforeDeleteModalDialog: function() {
       return new RSVP.Promise((resolve, reject) => {
         let settings ={
           closable  : false,

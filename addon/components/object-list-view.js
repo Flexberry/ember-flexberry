@@ -2280,24 +2280,24 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
 
-      let beforeDeleteMadalDialog = this.get('beforeDeleteMadalDialog');  
-      if (beforeDeleteMadalDialog) {
-        assert('beforeDeleteMadalDialog must be a function', typeof beforeDeleteMadalDialog === 'function');
+      let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
+      if (beforeDeleteModalDialog) {
+        assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
   
-        let possiblePromise = beforeDeleteMadalDialog();
+        let possiblePromise = beforeDeleteModalDialog();
   
         if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
           possiblePromise.then(() => {
-            this._deleteRowsClearSelectRecordAndTrigger(componentName, count, immediately, selectedRecords)
+            this._actualDeleteRecords(componentName, count, immediately, selectedRecords)
           });
         }
       } else {
-        this._deleteRowsClearSelectRecordAndTrigger(componentName, count, immediately, selectedRecords)
+        this._actualDeleteRecords(componentName, count, immediately, selectedRecords)
       }
     }
   },
 
-  _deleteRowsClearSelectRecordAndTrigger(componentName, count, immediately, selectedRecords) {
+  _actualDeleteRecords(componentName, count, immediately, selectedRecords) {
     /* eslint-disable no-unused-vars */
     selectedRecords.forEach((item) => {
       once(this, function() {

@@ -283,7 +283,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
-    Ember.$(this.scrollSelectors[0]).unbind('scroll');
+    Ember.$(this.scrollSelectors.join()).unbind('scroll');
   },
 
   /**

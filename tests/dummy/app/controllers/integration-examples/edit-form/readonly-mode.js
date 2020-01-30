@@ -35,6 +35,18 @@ export default EditFormController.extend({
         remove: 'removeLookupValue'
       };
     }
+    
+    if (attr.kind === 'belongsTo' && bindingPath === 'masterDropdown') {
+      cellComponent.componentProperties = {
+        projection: 'MasterDropdownL',
+        displayAttributeName: 'text',
+        dropdown: true,
+        title: 'Master dropdown',
+        relationName: 'masterDropdown',
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue'
+      };
+    }
 
     return cellComponent;
   }

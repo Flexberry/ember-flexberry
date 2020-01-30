@@ -91,6 +91,14 @@ export default FlexberryBaseComponent.extend({
   _cachedDropdownValue: undefined,
 
   /**
+    @private
+    @property _pageInResultsForAutocomplete
+    @type Number
+    @default 1
+  */
+  _pageInResultsForAutocomplete: 1,
+
+  /**
     Text to be displayed in field, if value not selected.
 
     @property placeholder
@@ -1012,6 +1020,7 @@ export default FlexberryBaseComponent.extend({
 
           let maxRes = _this.get('maxResults');
           let iCount = 1;
+          builder.skip(maxRes * (_this.get('_pageInResultsForAutocomplete') - 1));
           builder.top(maxRes + 1);
           builder.count();
 
@@ -1063,6 +1072,7 @@ export default FlexberryBaseComponent.extend({
       onSelect(result) {
         if (!result.noResult) {
           state = 'selected';
+          _this.set('_pageInResultsForAutocomplete', 1);
 
           Ember.run(() => {
             Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
@@ -1075,6 +1085,17 @@ export default FlexberryBaseComponent.extend({
                 newRelationValue: result.instance
               });
           });
+        } else {
+          state = 'loading';
+          _this.incrementProperty('_pageInResultsForAutocomplete');
+
+          // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
+          // This function allows us to start the search again, thanks to the `searchOnFocus` option.
+          Ember.run.later(() => {
+            _this.$('input').focus();
+          }, 500);
+
+          return false;
         }
       },
 
@@ -1086,7 +1107,8 @@ export default FlexberryBaseComponent.extend({
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
 
-        if (state !== 'selected') {
+        if (state !== 'selected' && state !== 'loading') {
+          _this.set('_pageInResultsForAutocomplete', 1);
           let displayValue = _this.get('displayValue');
           if (displayValue) {
             if (_this.get('autocompletePersistValue')) {

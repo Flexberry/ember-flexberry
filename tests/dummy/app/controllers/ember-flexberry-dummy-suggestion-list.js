@@ -30,7 +30,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       data.cancel = false;
     },
 
-    beforeDeleteRecord: function(record, data) {
+    beforeDeleteMadalDialog: function() {
       return new RSVP.Promise((resolve, reject) => {
         let settings ={
           closable  : false,
@@ -38,12 +38,10 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
           transition: 'slide left',
           onDeny: function(){
             $(this).modal('hide');
-            data.cancel = true;
-            resolve();
+            reject();
           },
           onApprove: function(){
             $(this).modal('hide');
-            data.cancel = false;
             resolve();
           },
         };

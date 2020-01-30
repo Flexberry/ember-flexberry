@@ -111,7 +111,10 @@ export default {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'confirm-button-caption': 'Yes',
+      'cancel-button-caption': 'Cancel',
+      'delete-ask-caption': 'Are you sure you want to delete the selected entries?',
     },
 
     'flexberry-groupedit': {

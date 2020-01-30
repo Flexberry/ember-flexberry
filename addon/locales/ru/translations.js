@@ -114,6 +114,7 @@ export default {
       },
       'confirm-button-caption': 'Да',
       'cancel-button-caption': 'Отмена',
+      'delete-ask-caption': 'Вы уверены, что хотите удалить выбранные записи?',
     },
 
     'flexberry-groupedit': {

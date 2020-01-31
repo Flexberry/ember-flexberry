@@ -238,7 +238,7 @@ export default FlexberryBaseComponent.extend({
     @property scrollClassNames
     @type Array
   */
-  scrollSelectors: ['.full.height'],
+  scrollSelectors: computed(() => (['.full.height'])),
 
   /**
     If true, then onClick calling flatpickr.open().
@@ -272,7 +272,7 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
-      Ember.$(this.scrollSelectors.join()).scroll(() => this.get('_flatpickr').close());
+      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -285,7 +285,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
-    Ember.$(this.scrollSelectors.join()).unbind('scroll');
+    $(this.get('scrollSelectors').join()).unbind('scroll');
   },
 
   /**

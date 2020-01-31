@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
 
 ## [2.2.1] - 2020-01-15
 ### Added

@@ -231,6 +231,14 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-simpledatetime'],
 
   /**
+    Array CSS class names for scroll.
+
+    @property scrollClassNames
+    @type Array
+  */
+  scrollSelectors: ['.full.height'],
+
+  /**
     If true, then onClick calling flatpickr.open().
 
     @property canClick
@@ -262,6 +270,7 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
+      Ember.$(this.scrollSelectors.join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -274,6 +283,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
+    Ember.$(this.scrollSelectors.join()).unbind('scroll');
   },
 
   /**

@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* `flexberry-simpledatetime` component:
+    * Hide datepicker window on scroll.
+
+### Fixed
+* The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
 
 ## [3.2.1] - 2020-01-28
 ### Added

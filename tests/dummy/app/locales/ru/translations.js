@@ -492,6 +492,21 @@ $.extend(true, translations, {
         }
       }
     },
+    'ember-flexberry-dummy-suggestion-file': {
+      'projections': {
+        'SuggestionFileL': {
+          'order': {
+            __caption__: 'Порядок'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'suggestion': {
+            __caption__: 'Предложение'
+          },
+        }
+      }
+    },
     'integration-examples/edit-form/validation/base': {
       'projections': {
         'BaseE': {
@@ -625,6 +640,10 @@ $.extend(true, translations, {
           'multi': {
             'caption': 'Несколько списков',
             'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Файлы предложения',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -757,6 +776,10 @@ $.extend(true, translations, {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Пример иерархического OLV-а в lookup-e',
               'title': ''
@@ -868,10 +891,22 @@ $.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -1037,6 +1072,17 @@ $.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Файлы предложения',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Файл предложения',
+      'suggestion': 'Предложение',
+      'order': 'Номер',
+      'file': 'Файл',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Мастер',
       'toggler-example-master-property-caption': 'Свойство мастера',
@@ -1187,6 +1233,10 @@ $.extend(true, translations, {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
           'titleLookup': 'Мастер'
@@ -1270,6 +1320,9 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
@@ -1315,6 +1368,11 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Пример работы с настройками'
         }
       },
       'flexberry-textarea': {

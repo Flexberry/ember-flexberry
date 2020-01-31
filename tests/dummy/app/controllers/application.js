@@ -244,6 +244,11 @@ export default Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.multi.caption'),
           title: i18n.t('forms.application.sitemap.application.multi.title'),
           children: null
+        }, {
+          link: 'ember-flexberry-dummy-suggestion-file-list',
+          caption: i18n.t('forms.application.sitemap.application.suggestion-file.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-file.title'),
+          children: null
         }]
       }, {
         link: null,
@@ -460,6 +465,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
@@ -557,6 +567,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/limited-text-size-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -566,6 +581,16 @@ export default Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
             children: null
           }]
         }, {

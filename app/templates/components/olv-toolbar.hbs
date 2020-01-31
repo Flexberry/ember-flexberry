@@ -54,10 +54,10 @@
   </button>
   {{#if availableCollExpandMode}}
     <button
-      class="ui button icon hierarchical-button {{buttonClass}}"
-      title={{t "components.olv-toolbar.coll-expand-button-text"}}
+      class="ui button icon hierarchical-button {{buttonClass}} active"
+      title={{if inExpandMode (t "components.olv-toolbar.coll-comspres-button-text") (t "components.olv-toolbar.coll-expand-button-text")}}
       {{action switchExpandMode}}>
-        <i class="expand icon"></i>
+        <i class="{{if inExpandMode "compress" "expand"}} icon"></i>
     </button>
   {{/if}}
 {{/if}}

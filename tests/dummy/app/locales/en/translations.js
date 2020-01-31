@@ -548,6 +548,10 @@ $.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {
@@ -737,6 +741,10 @@ $.extend(true, translations, {
               'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -848,10 +856,22 @@ $.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -1017,6 +1037,17 @@ $.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Master',
       'toggler-example-master-property-caption': 'Master property',
@@ -1166,6 +1197,10 @@ $.extend(true, translations, {
           'caption': 'Example lookup with compute autocomplete',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
@@ -1249,6 +1284,9 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
@@ -1294,6 +1332,11 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Settings example'
         }
       },
       'flexberry-textarea': {

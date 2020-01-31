@@ -29,5 +29,14 @@ export default Mixin.create({
     removeLookupValue() {
       this.get('currentController').send('removeLookupValue', ...arguments);
     },
+
+    /**
+      View selected value.
+
+      @method actions.previewLookupValue
+     */
+    previewLookupValue() {
+      this.get('currentController').send('previewLookupValue', ...arguments);
+    },
   },
 });

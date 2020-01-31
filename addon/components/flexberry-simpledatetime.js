@@ -233,6 +233,14 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-simpledatetime'],
 
   /**
+    Array CSS class names for scroll.
+
+    @property scrollClassNames
+    @type Array
+  */
+  scrollSelectors: computed(() => (['.full.height'])),
+
+  /**
     If true, then onClick calling flatpickr.open().
 
     @property canClick
@@ -272,6 +280,7 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
+      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -284,6 +293,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
+    $(this.get('scrollSelectors').join()).unbind('scroll');
   },
 
   /**
@@ -413,7 +423,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', 'min', 'max', function () {
     this._flatpickrDestroy();
     scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

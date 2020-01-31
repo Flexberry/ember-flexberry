@@ -44,6 +44,10 @@ export default {
       placeholder: '(no value)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(no value)'
+    },
+
     'flexberry-textarea': {
       placeholder: '(no value)'
     },
@@ -148,7 +152,8 @@ export default {
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
-      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'coll-expand-button-text':'Expand all hierarchies',
+      'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',

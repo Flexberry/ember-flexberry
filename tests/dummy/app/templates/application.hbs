@@ -49,7 +49,6 @@
         <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
       </a>
       <div class="page-header-actions">
-        some actions
         {{!-- {{flexberry-dropdown
           class="compact"
           items=locales
@@ -57,12 +56,12 @@
           placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
         }} --}}
       </div>
+
       <div class="page-header-userbar">
-        <span id="fio">
-            Имя Фамилия
-        </span>
-        <i class="dropdown icon"></i>
-        <a id="ExitButton" class="exit-btn" href="javascript:void(0)" {{action "logout" on="click"}}>{{t "forms.application.header.logout.caption"}}</a>
+        {{flexberry-menu
+          items=itemsUserMenu
+          onItemClick=(action "onMenuItemClick")
+        }}
       </div>
     </div>
   </div>

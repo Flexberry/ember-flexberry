@@ -76,8 +76,25 @@ export default Controller.extend({
     */
     logout() {
       this.transitionToRoute('login');
-    }
+    },
 
+    onMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case "Выход": {
+          this.send('logout');
+          break;
+        }
+      }
+      return null;
+    },
   },
 
   /**
@@ -168,6 +185,18 @@ export default Controller.extend({
     } else {
       i18n.set('locale', shortCurrentLocale);
     }
+
+    let itemsUserMenu = [{
+      icon: 'dropdown icon',
+      title: "Личный кабинет",
+      iconAlignment: 'right',
+      items: [{
+        title: "Выход",
+        items: null
+      }]
+    }];
+
+    this.set('itemsUserMenu', itemsUserMenu);
   },
 
   /**

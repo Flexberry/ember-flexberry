@@ -1092,6 +1092,7 @@ export default FlexberryBaseComponent.extend({
           // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
           // This function allows us to start the search again, thanks to the `searchOnFocus` option.
           Ember.run.later(() => {
+            _this.$().search('add results', '');
             _this.$('input').focus();
           }, 500);
 

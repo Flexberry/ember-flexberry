@@ -1018,32 +1018,20 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          let maxRes = _this.get('maxResults');
-          let iCount = 1;
-          builder.skip(maxRes * (_this.get('_pageInResultsForAutocomplete') - 1));
-          builder.top(maxRes + 1);
+          const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
+          builder.skip(skip);
+          builder.top(maxResults);
           builder.count();
 
           Ember.run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
-              callback({
-                success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...',
-                      noResult: true
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
-              });
+              const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
+
+              if (skip + records.get('length') < records.get('meta.count')) {
+                results.push({ title: '...', noResult: true });
+              }
+
+              callback({ success: true, results: results });
             }, () => {
               callback({ success: false });
             });

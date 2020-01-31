@@ -96,24 +96,25 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       $('.flexberry-editform-delete-record-modal-dialog').modal(settings).modal('show');
     });
   },
+  actions: {
+    delete(skipTransition) {
+      let _this = this;
+      let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
+      if (beforeDeleteModalDialog) {
+      assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
   
-  delete() {
-    let _this = this;
-    let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
-    if (beforeDeleteModalDialog) {
-    assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
-
-    let possiblePromise = beforeDeleteModalDialog();
-
-    if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
-        possiblePromise.then(() => {
-          _this._super(...arguments);
-          return;
-        });
-    }
-    } else {
-      _this._super(...arguments);
-      return
-    }
-  },
+      let possiblePromise = beforeDeleteModalDialog();
+  
+      if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
+          possiblePromise.then(() => {
+            _this.delete(skipTransition);
+            return;
+          });
+      }
+      } else {
+        _this.delete(skipTransition);
+        return
+      }
+    },
+  }
 });

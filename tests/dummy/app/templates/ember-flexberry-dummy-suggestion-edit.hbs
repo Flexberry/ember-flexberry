@@ -150,7 +150,7 @@
   {{#flexberry-toggler
     caption=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
     expanded=true}}
-    <div class="field {{if (v-get validationObject "files" "isInvalid") "error"}}">
+    <div class="field">
       {{flexberry-groupedit
         componentName="filesGroupEdit"
         content=model.files
@@ -165,7 +165,7 @@
   {{#flexberry-toggler
     caption=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
     expanded=true}}
-    <div class="field {{if (v-get validationObject "userVotes" "isInvalid") "error"}}">
+    <div class="field">
       {{flexberry-groupedit
         componentName="suggestionUserVotesGroupEdit"
         content=model.userVotes
@@ -179,7 +179,7 @@
   {{#flexberry-toggler
     caption=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
     expanded=true}}
-    <div class="field {{if (v-get validationObject "comments" "isInvalid") "error"}}">
+    <div class="field">
       {{flexberry-groupedit
         componentName="suggestionCommentsGroupEdit"
         content=model.comments

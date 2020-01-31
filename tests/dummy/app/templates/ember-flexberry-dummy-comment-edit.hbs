@@ -79,7 +79,7 @@
     }}
     {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
   </div>
-  <div class="field {{if (v-get validationObject "userVotes" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="commentUserVotesGroupEdit"

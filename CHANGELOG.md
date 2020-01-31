@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
+* In the `flexberry-lookup` component for autocomplete results, an extra record was loaded.
+
+### Changed
+* Now, when you click on `...` in the results for autocomplete in the `flexberry-lookup` component, the next page of results will be loaded.
 
 ## [2.2.1] - 2020-01-15
 ### Added

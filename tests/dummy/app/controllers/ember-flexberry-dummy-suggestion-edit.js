@@ -2,6 +2,7 @@ import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import RSVP from 'rsvp';
 import { assert } from '@ember/debug';
+import $ from 'jquery';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**

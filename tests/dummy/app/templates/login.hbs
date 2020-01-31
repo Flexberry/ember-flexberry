@@ -1,25 +1,28 @@
 <form id="form1" {{action "onLoginFormSubmit" on="submit"}}>
-  <div class="container">
-    <div class="login-form-inner">
-      <div class="ui {{if loginIsInProcess "active"}} inverted dimmer">
-        <div class="ui loader"></div>
-      </div>
-      <h3 class="ui header">Вход в систему</h3>
-      {{flexberry-field
-        label='Логин'
-        placeholder="Логин"
-        class='labeled-inside large'
-      }}
-      {{flexberry-field
-        label='Пароль'
-        placeholder="Пароль"
-        class='labeled-inside large'
-        type='password'
-      }}
-      {{flexberry-button
-        class='primary large fluid'
-        caption='Войти'
-      }}
+    <div class="container">
+        <div class="login-form-inner">
+            <div class="ui {{if loginIsInProcess "active"}} inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <h3 class="ui header">Войти в систему</h3>
+            <a class="sign-up">Или зарегистрироваться</a>
+          {{flexberry-field
+                  label='Введите ваш логин'
+                  placeholder="Введите ваш логин"
+                  class='labeled-inside large'
+          }}
+            <div class="labeled-inside large ui field">
+                <label>Введите пароль</label>
+                <div class="labeled-inside large ui input icon">
+                    <input placeholder="Введите пароль" type="password">
+                    <i class="icon-guideline-eye icon"></i>
+                </div>
+            </div>
+          {{flexberry-button
+                  class='primary huge fluid'
+                  caption='Войти'
+          }}
+            <a class="reset-password">Забыли пароль?</a>
+        </div>
     </div>
-  </div>
 </form>

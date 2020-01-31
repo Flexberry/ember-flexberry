@@ -76,9 +76,37 @@ export default Controller.extend({
     */
     logout() {
       this.transitionToRoute('login');
-    }
+    },
 
+    showModalSupport(style) {
+      if (!isNone(style)) {
+        this.set('_style', style);
+      }
+
+      let modalSupport = $('.modal-support').modal({
+        closable: false,
+        autofocus: false,
+        detachable: false,
+        allowMultiple: true,
+        context: this.get('_style'),
+      });
+      this.set('modalSupport', modalSupport);
+      this.get('modalSupport').modal('show').modal('refresh');
+    },
+
+    hideModalSupport() {
+      this.get('modalSupport').modal('hide');
+    },
   },
+
+  /**
+   Default style of modal context.
+
+   @property readonly
+   @type String
+   @default #example
+   */
+  _style: '#example',
 
   /**
     Flag: indicates that form to which controller is related designed for acceptance tests &

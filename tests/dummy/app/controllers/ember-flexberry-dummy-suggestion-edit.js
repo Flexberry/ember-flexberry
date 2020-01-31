@@ -1,6 +1,7 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import RSVP from 'rsvp';
+import { assert } from '@ember/debug';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -94,5 +95,23 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   
       $('.flexberry-editform-delete-record-modal-dialog').modal(settings).modal('show');
     });
-  }
+  },
+  
+  delete() {
+    let _this = this;
+    let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
+    if (beforeDeleteModalDialog) {
+    assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
+
+    let possiblePromise = beforeDeleteModalDialog();
+
+    if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._super(...arguments);
+        });
+    }
+    } else {
+      this._super(...arguments);
+    }
+},
 });

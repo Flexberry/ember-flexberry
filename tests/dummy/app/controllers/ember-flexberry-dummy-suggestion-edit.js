@@ -107,11 +107,13 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
     if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
         possiblePromise.then(() => {
-          this._super(...arguments);
+          _this._super(...arguments);
+          return;
         });
     }
     } else {
-      this._super(...arguments);
+      _this._super(...arguments);
+      return
     }
-},
+  },
 });

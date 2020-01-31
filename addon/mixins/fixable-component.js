@@ -66,6 +66,11 @@ export default Mixin.create({
   formClasses: '.full.height',
 
   /**
+   * Класс логотипа
+   */
+  logoClass: '.background-logo',
+
+  /**
    * Находит и сохраняет ссылки на компонент и дочерний элемент
    * Задает начальное значение фиксированному элементу.
    * @inheritdoc
@@ -126,7 +131,15 @@ export default Mixin.create({
         const optionTop = options.top || 0;
 
         if (upward) {
-          top = `${top - optionTop - elementHeight}px`;
+          element.style.overflowY = 'auto';
+          if (elementHeight > top) {
+            let logoHeight = $(this.get('logoClass')).outerHeight();
+            element.style.maxHeight = `${top - logoHeight}px`;
+            top = `${top - optionTop - elementHeight + (elementHeight - (top - logoHeight))}px`;
+          } else {
+            top = `${top - optionTop - elementHeight}px`;
+          }
+
           element.style.bottom = 'auto';
           component.classList.add('upward');
         } else {
@@ -154,6 +167,7 @@ export default Mixin.create({
 
     const element = this.get('fixedElementRef');
     element.style.left = '-9999px';
+    element.style.maxHeight = 'none';
 
     const component = this.get('componentRef');
     $(component).blur();

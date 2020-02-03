@@ -558,6 +558,13 @@ $.extend(true, translations, {
         }
       },
 
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Yes',
+        'cancel-button-caption': 'Cancel',
+        'delete-ask-caption': 'Are you sure you want to delete the selected entries?',
+        'delete-at-editform-ask-caption': 'Are you sure you want to delete entries?',
+      },
+
       'footer': {
         'application-name': 'Test stand for ember-flexberry',
         'application-version': {

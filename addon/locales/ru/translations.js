@@ -112,10 +112,6 @@ export default {
         'of': ' из ',
         'entries': ' записей'
       },
-      'confirm-button-caption': 'Да',
-      'cancel-button-caption': 'Отмена',
-      'delete-ask-caption': 'Вы уверены, что хотите удалить выбранные записи?',
-      'delete-at-editform-ask-caption': 'Вы уверены, что хотите удалить запись?',
     },
 
     'flexberry-groupedit': {

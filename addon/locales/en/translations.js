@@ -112,10 +112,6 @@ export default {
         'of': ' of ',
         'entries': ' entries'
       },
-      'confirm-button-caption': 'Yes',
-      'cancel-button-caption': 'Cancel',
-      'delete-ask-caption': 'Are you sure you want to delete the selected entries?',
-      'delete-at-editform-ask-caption': 'Are you sure you want to delete entries?',
     },
 
     'flexberry-groupedit': {

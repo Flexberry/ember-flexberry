@@ -2280,34 +2280,17 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
 
-      let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
-      if (beforeDeleteModalDialog) {
-        assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
-  
-        let possiblePromise = beforeDeleteModalDialog();
-  
-        if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
-          possiblePromise.then(() => {
-            this._actualDeleteRecords(componentName, count, immediately, selectedRecords)
-          });
-        }
-      } else {
-        this._actualDeleteRecords(componentName, count, immediately, selectedRecords)
-      }
+      /* eslint-disable no-unused-vars */
+      selectedRecords.forEach((item) => {
+        once(this, function() {
+          this._deleteRecord(item, immediately);
+        });
+      }, this);
+      /* eslint-enable no-unused-vars */
+
+      selectedRecords.clear();
+      this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);
     }
-  },
-
-  _actualDeleteRecords(componentName, count, immediately, selectedRecords) {
-    /* eslint-disable no-unused-vars */
-    selectedRecords.forEach((item) => {
-      once(this, function() {
-        this._deleteRecord(item, immediately);
-      });
-    }, this);
-    /* eslint-enable no-unused-vars */
-
-    selectedRecords.clear();
-    this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);
   },
 
   /**

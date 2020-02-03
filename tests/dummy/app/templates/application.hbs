@@ -3,38 +3,38 @@
   {{outlet "modal"}}
 {{else}}
   {{#flexberry-sidebar
-          class="inverted vertical main menu visible"
-          settings=(hash
-                  closable=false
-                  dimPage=false
-                  onShow=(action "updateWidth")
-                  onHidden=(action "updateWidth")
-          )
+    class="inverted vertical main menu visible"
+    settings=(hash
+      closable=false
+      dimPage=false
+      onShow=(action "updateWidth")
+      onHidden=(action "updateWidth")
+    )
   }}
 
     {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
     <div class="sitebar-footer">
-        <a {{action 'showModalSupport' "#example"}}
-                class="item"
-                target="_blank"
-                title="Написать в техподдержку">
-            Написать в техподдержку
-        </a>
-        <a class="item"
-           href={{addonVersionHref}}
-           target="_blank"
-           title={{t "forms.application.sitemap.application-version.title"}}>
-          {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-        </a>
+      <a {{action 'showModalSupport' "#example"}}
+              class="item"
+              target="_blank"
+              title="Написать в техподдержку">
+          Написать в техподдержку
+      </a>
+      <a class="item"
+        href={{addonVersionHref}}
+        target="_blank"
+        title={{t "forms.application.sitemap.application-version.title"}}>
+        {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+      </a>
     </div>
 
   {{/flexberry-sidebar}}
   <div class="bgw-fix">
-      <div class="background-logo">
-          <div class="ui top attached">
-              <div class="ui attached menu">
-                  <div class="ui container flex-container">
-                      <a {{action 'toggleSidebar'}}
+    <div class="background-logo">
+      <div class="ui top attached">
+        <div class="ui attached menu">
+          <div class="ui container flex-container">
+            <a {{action 'toggleSidebar'}}
               class="launch icon item"
               title={{t "forms.application.header.menu.sitemap-button.title"}}>
               {{t "forms.application.header.menu.sitemap-button.caption"}}
@@ -43,8 +43,8 @@
             </a>
           </div>
         </div>
-          </div>
-          <a class="item logo"
+      </div>
+      <a class="item logo"
         href="https://github.com/flexberry"
         target="_blank"
         title={{t "forms.application.sitemap.application-name.title"}}>
@@ -56,14 +56,14 @@
       </a>
       <div class="page-header-actions">
         some actions
-            {{!-- {{flexberry-dropdown
-              class="compact"
-              items=locales
-              value=i18n.locale
-              placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            }} --}}
-          </div>
-          <div class="page-header-userbar">
+        {{!-- {{flexberry-dropdown
+          class="compact"
+          items=locales
+          value=i18n.locale
+          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+        }} --}}
+      </div>
+      <div class="page-header-userbar">
         <span id="fio">
             Имя Фамилия
         </span>
@@ -73,18 +73,18 @@
     </div>
   </div>
   <div id="example" class="pusher">
-      <div class="ui form {{appState.state}}">
-          <div class="bgw-opacity hidden"></div>
-          <div class="full height">
-              <div class="flexberry-content ui attached segment">
-                  <div class="ui main container">
-                      <div class="stackable grid container">
-                        {{outlet}}
-                      </div>
-                  </div>
-              </div>
+    <div class="ui form {{appState.state}}">
+      <div class="bgw-opacity hidden"></div>
+      <div class="full height">
+        <div class="flexberry-content ui attached segment">
+          <div class="ui main container">
+            <div class="stackable grid container">
+              {{outlet}}
+            </div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
   <div class="ui main container">
     {{outlet "modal"}}
@@ -128,44 +128,44 @@
     </div>
   </div> --}}
   <div class="ui modal modal-support hidden" style="width: 640px">
-      <i class="close icon"></i>
-      <div class="ui header" style="padding-bottom: 4px">Написать в техподдержку</div>
-      <div class="" style="color: #848E99; margin-left: 24px; line-height: 20px">Контакты техподдержки: 8 (800)
-          300-44-44, rgirsk-support@ics.perm.ru
-      </div>
-      <div class="content">
-          <div class="ui form">
-              <div class="two fields">
-                  <div class="field">
-                    {{ flexberry-field
-                            class='labeled-inside large'
-                            label="Введите ваше имя"
-                            placeholder="Введите ваше имя"
-                            required=true
-                    }}
-                  </div>
-                  <div class="field">
-                    {{ flexberry-field
-                            class='labeled-inside large'
-                            label="Введите почту"
-                            placeholder="Введите вашу почту"
-                            required=true
-                    }}
-                  </div>
-              </div>
-              <div class="field">
-                  <textarea rows="5" style="font-family: 'GOSTUI2'; font-size: 16px; line-height: 24px" placeholder="Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот"></textarea>
-              </div>
-              <div class="two fields">
-                  <div class="field" style="padding: 18px 24px 18px 11px">
-                      <i class="icon-guideline-file" style="font-size: 16px; line-height: 24px; color: #0C49CD"></i>
-                      <a style="font-size: 16px; line-height: 24px; color: #0C49CD">Прикрепить файл</a>
-                  </div>
-                  <div class="field">
-                      <button class="ui button primary huge fluid" {{action 'hideModalSupport'}}>Отправить</button>
-                  </div>
-              </div>
+    <i class="close icon"></i>
+    <div class="ui header" style="padding-bottom: 4px">Написать в техподдержку</div>
+    <div class="" style="color: #848E99; margin-left: 24px; line-height: 20px">Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru</div>
+    <div class="content">
+      <div class="ui form">
+        <div class="two fields">
+          <div class="field">
+            {{ flexberry-field
+                class='labeled-inside large'
+                label="Введите ваше имя"
+                placeholder="Введите ваше имя"
+                required=true
+            }}
           </div>
+          <div class="field">
+            {{ flexberry-field
+                class='labeled-inside large'
+                label="Введите почту"
+                placeholder="Введите вашу почту"
+                required=true
+            }}
+          </div>
+        </div>
+        <div class="field">
+          <textarea rows="5" style="font-family: 'GOSTUI2'; font-size: 16px; line-height: 24px"
+            placeholder="Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот">
+          </textarea>
+        </div>
+        <div class="two fields">
+          <div class="field" style="padding: 18px 24px 18px 11px">
+            <i class="icon-guideline-file" style="font-size: 16px; line-height: 24px; color: #0C49CD"></i>
+            <a style="font-size: 16px; line-height: 24px; color: #0C49CD">Прикрепить файл</a>
+          </div>
+          <div class="field">
+            <button class="ui button primary huge fluid" {{action 'hideModalSupport'}}>Отправить</button>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 {{/if}}

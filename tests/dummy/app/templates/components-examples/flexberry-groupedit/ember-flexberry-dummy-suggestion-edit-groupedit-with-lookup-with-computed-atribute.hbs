@@ -131,7 +131,7 @@
     }}
     {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
   </div>
-  <div class="field {{if (v-get validationObject "files" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{flexberry-groupedit
       componentName="filesGroupEdit"
@@ -155,7 +155,7 @@
       value=fieldvalue
     }}
   </div>
-  <div class="field {{if (v-get validationObject "userVotes" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionUserVotesGroupEdit"
@@ -167,7 +167,7 @@
     }}
     {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
   </div>
-  <div class="field {{if (v-get validationObject "comments" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionCommentsGroupEdit"

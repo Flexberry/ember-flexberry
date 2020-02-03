@@ -79,6 +79,7 @@ module.exports = {
             lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
         }
         this._excludeIfExists();
+        this.setLocales(this._files);
         return this._files;
     },
 
@@ -89,6 +90,22 @@ module.exports = {
         }
 
         return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    },
+
+    setLocales: function (files) {
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/translations.js"), 1);
+        };
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/translations.js"), 1);
+        };
+        return files;
     },
 
     /**

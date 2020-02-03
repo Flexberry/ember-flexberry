@@ -2,6 +2,8 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
+const stripBom = require("strip-bom");
+const fs = require("fs");
 Object.defineProperty(exports, "__esModule", { value: true });
 var ModelBlueprint_1 = require("./ModelBlueprint");
 var lodash = require("lodash");
@@ -36,6 +38,7 @@ module.exports = {
         else {
             this._files = CommonUtils_1.default.getFilesForGeneration(this);
         }
+        this.setLocales(this._files);
         return this._files;
     },
     afterInstall: function (options) {
@@ -51,6 +54,22 @@ module.exports = {
         }
 
         return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    },
+
+    setLocales: function (files) {        
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/models/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/models/__name__.js"), 1);
+        };
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/models/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/models/__name__.js"), 1);
+        };
+        return files;
     },
 
     /**

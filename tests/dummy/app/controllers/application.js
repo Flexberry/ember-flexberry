@@ -88,7 +88,7 @@ export default Controller.extend({
       let namedSetting = namedItemSpans.get(0).innerText;
 
       switch (namedSetting) {
-        case "Выход": {
+        case i18n.t('forms.application.header.logout.caption').toString(): {
           this.send('logout');
           break;
         }
@@ -185,18 +185,6 @@ export default Controller.extend({
     } else {
       i18n.set('locale', shortCurrentLocale);
     }
-
-    let itemsUserMenu = [{
-      icon: 'dropdown icon',
-      title: "Личный кабинет",
-      iconAlignment: 'right',
-      items: [{
-        title: "Выход",
-        items: null
-      }]
-    }];
-
-    this.set('itemsUserMenu', itemsUserMenu);
   },
 
   /**
@@ -689,5 +677,25 @@ export default Controller.extend({
         }]
       }]
     };
-  })
+  }),
+
+  /**
+    Application usermenu.
+
+    @property itemsUserMenu
+    @type Object
+  */
+  itemsUserMenu: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let itemsUserMenu = [{
+      icon: 'dropdown icon',
+      title: i18n.t('forms.application.header.profile.caption'),
+      iconAlignment: 'right',
+      items: [{
+        title: i18n.t('forms.application.header.logout.caption'),
+        items: null
+      }]
+    }];
+    return itemsUserMenu
+  }),
 });

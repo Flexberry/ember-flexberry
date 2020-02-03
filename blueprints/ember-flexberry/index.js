@@ -76,7 +76,6 @@ module.exports = {
       '      useAdvLimitService: true,\n\n' +
       '      // Custom property with offline mode settings.\n' +
       '      offline: {\n' +
-      '        dbName: \'ember-app\',\n\n' +
       '        // Flag that indicates whether offline mode in application is enabled or not.\n' +
       '        offlineEnabled: true,\n\n' +
       '        // Flag that indicates whether to switch to offline mode when got online connection errors or not.\n' +
@@ -261,10 +260,9 @@ module.exports = {
       return _this.addBowerPackagesToProject([
         { name: 'devicejs', target: '0.2.7' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
-        { name: 'flatpickr-calendar', target: '2.6.3' },
         { name: 'semantic-ui', target: '2.2.14' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
-        { name: 'jquery-minicolors', target: '2.2.6' },
+        { name: 'jquery-minicolors', target: '2.3.4' },
         { name: 'js-beautify', target: '1.6.4' },
         { name: 'moment', target: '~2.22.0' }
       ]);
@@ -283,6 +281,7 @@ module.exports = {
         { name: 'dexie', target: '^2.0.2' },
         { name: 'inflection', target: '^1.12.0' },
         { name: 'node-uuid', target: '^1.4.7' },
+        { name: 'flatpickr', target: '4.6.1' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

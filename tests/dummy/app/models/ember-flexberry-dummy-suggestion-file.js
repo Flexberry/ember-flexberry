@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
-import { attr } from 'ember-flexberry-data/utils/attributes';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
 var Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
@@ -13,9 +13,25 @@ var Model = EmberFlexberryDataModel.extend({
   file: DS.attr('file'),
 });
 
+// List form projection.
+Model.defineProjection('SuggestionFileL', 'ember-flexberry-dummy-suggestion-file', {
+  order: attr('Order'),
+  suggestion: belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: attr('Address', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'address'
+  }),
+  file: attr('File')
+});
+
 // Edit form projection.
 Model.defineProjection('SuggestionFileE', 'ember-flexberry-dummy-suggestion-file', {
   order: attr('Order'),
+  suggestion: belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: attr('Address')
+  }),
   file: attr('File')
 });
 

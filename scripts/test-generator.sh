@@ -18,7 +18,7 @@ pushd "$TMP_DIR"
 ember -v
 
 # Initialize new ember app and install ember-flexberry from the build.
-ember new ember-app --skip-npm
+ember new ember-app --yarn
 cd ember-app
 
 # EmberCLI asks whether it needs to overwrite existing files,
@@ -27,8 +27,7 @@ cp app/index.html .
 rm -r app/*
 mv index.html app
 
-yarn install --no-lockfile
-ember install "${ADDON_DIR}"
+ember install "${ADDON_DIR}" --yarn
 
 # Default blueprint not execute when install addon from local folder, run it manual.
 ember generate ember-flexberry
@@ -53,11 +52,10 @@ mkdir -p "$TMP_DIR"
 rm -rf "$TMP_DIR/*"
 pushd "$TMP_DIR"
 
-ember addon new-addon-for-tests --skip-npm
+ember addon new-addon-for-tests --yarn
 cd new-addon-for-tests
 
-yarn install --no-lockfile
-ember install "${ADDON_DIR}"
+ember install "${ADDON_DIR}" --yarn
 
 # Default blueprint not execute when install addon from local folder, run it manual.
 ember generate ember-flexberry

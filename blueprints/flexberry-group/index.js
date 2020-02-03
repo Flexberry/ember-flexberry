@@ -62,6 +62,9 @@ var GroupBlueprint = (function () {
             case 'flexberry-serializer-init':
                 this.emberGenerate("models", true, projectTypeName + "/serializers");
                 break;
+            case 'flexberry-model-offline':
+                this.emberGenerate("models");
+                break;
             default:
                 throw new Error("Unknown blueprint: " + this.blueprintName);
         }
@@ -91,11 +94,14 @@ var GroupBlueprint = (function () {
             if (pp.ext != ".json")
                 continue;
             var entityName = pp.name;
+
             if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 continue;
+
             var entity = JSON.parse(stripBom(fs.readFileSync(path.join(metadataSubDir, file), "utf8")));
             if (entity.external)
                 continue;
+
             var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
             this.promise = this.promise.then(GroupBlueprint.funCallback);

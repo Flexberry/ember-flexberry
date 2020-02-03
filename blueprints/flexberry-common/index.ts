@@ -19,5 +19,4 @@ module.exports = {
 
     return this._super(...arguments);
   },
-
 };

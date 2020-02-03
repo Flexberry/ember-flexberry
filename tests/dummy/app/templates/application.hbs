@@ -49,15 +49,16 @@
         <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
       </a>
       <div class="page-header-actions">
-        {{!-- {{flexberry-dropdown
+        {{flexberry-dropdown
           class="compact"
           items=locales
           value=i18n.locale
           placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-        }} --}}
+        }}
       </div>
 
       <div class="page-header-userbar">
+        <img src="assets/images/user-foto.jpg"/>
         {{flexberry-menu
           items=itemsUserMenu
           onItemClick=(action "onMenuItemClick")

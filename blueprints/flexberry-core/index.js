@@ -94,7 +94,13 @@ module.exports = {
 
     setLocales: function (files) {
         var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (!fs.existsSync(localesFile)) {
+            return files;
+        };
         var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (locales.locales == undefined) {
+            return files;
+        };
         if (!locales.locales.en) {
             files.splice(files.indexOf("__root__/locales/en/"), 1);
             files.splice(files.indexOf("addon/locales/en/"), 1);

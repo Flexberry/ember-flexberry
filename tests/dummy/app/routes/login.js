@@ -1,11 +1,11 @@
 import Route from '@ember/routing/route';
-const { $, run } = Ember;
-const { next } = run;
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 
 export default Route.extend({
   activate() {
     this._super();
-    next(this, function(){
+    run.next(this, function(){
       $('.main.menu.ui.sidebar').css('cssText', `display: none !important;`);
       $('.full.height').css('margin-left', 0);
     });

@@ -14,18 +14,13 @@
 
     {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
     <div class="sitebar-footer">
-      <a {{action 'showModalSupport' "#example"}}
-              class="item"
-              target="_blank"
-              title="Написать в техподдержку">
-          Написать в техподдержку
-      </a>
       <a class="item"
         href={{addonVersionHref}}
         target="_blank"
         title={{t "forms.application.sitemap.application-version.title"}}>
         {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
       </a>
+      <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
     </div>
 
   {{/flexberry-sidebar}}
@@ -90,82 +85,41 @@
     {{outlet "modal"}}
   </div>
   {{!-- <div class="ui vertical footer segment">
-    <div class="ui container flex-container">
-      <div class="ui text menu">
-        <a class="brand item" href="#">
-          {{t "forms.application.footer.application-name"}}
-        </a>
-        <div class="right item">
-          <label style="margin-right: 5px;">
-            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
-          </label>
-          {{flexberry-checkbox
-            class="toggle"
-            value=userSettingsService.isUserSettingsServiceEnabled
-          }}
-        </div>
-        <div class="item lang">
-          <label style="margin-right: 5px;">
-            {{t "forms.application.header.menu.language-dropdown.caption"}}
-          </label>
-          {{flexberry-dropdown
-            class="compact"
-            items=locales
-            value=i18n.locale
-            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            settings=(hash direction="upward")
-          }}
-        </div>
-        <div class="right menu">
-          <a class="item"
-            href={{addonVersionHref}}
-            target="_blank"
-            title={{t "forms.application.footer.application-version.title"}}>
-              {{t "forms.application.footer.application-version.caption" version=addonVersion}}
-          </a>
-        </div>
+  <div class="ui container flex-container">
+    <div class="ui text menu">
+      <a class="brand item" href="#">
+        {{t "forms.application.footer.application-name"}}
+      </a>
+      <div class="right item">
+        <label style="margin-right: 5px;">
+          {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+        </label>
+        {{flexberry-checkbox
+          class="toggle"
+          value=userSettingsService.isUserSettingsServiceEnabled
+        }}
       </div>
-    </div>
-  </div> --}}
-  <div class="ui modal modal-support hidden" style="width: 640px">
-    <i class="close icon"></i>
-    <div class="ui header" style="padding-bottom: 4px">Написать в техподдержку</div>
-    <div class="" style="color: #848E99; margin-left: 24px; line-height: 20px">Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru</div>
-    <div class="content">
-      <div class="ui form">
-        <div class="two fields">
-          <div class="field">
-            {{ flexberry-field
-                class='labeled-inside large'
-                label="Введите ваше имя"
-                placeholder="Введите ваше имя"
-                required=true
-            }}
-          </div>
-          <div class="field">
-            {{ flexberry-field
-                class='labeled-inside large'
-                label="Введите почту"
-                placeholder="Введите вашу почту"
-                required=true
-            }}
-          </div>
-        </div>
-        <div class="field">
-          <textarea rows="5" style="font-family: 'GOSTUI2'; font-size: 16px; line-height: 24px"
-            placeholder="Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот">
-          </textarea>
-        </div>
-        <div class="two fields">
-          <div class="field" style="padding: 18px 24px 18px 11px">
-            <i class="icon-guideline-file" style="font-size: 16px; line-height: 24px; color: #0C49CD"></i>
-            <a style="font-size: 16px; line-height: 24px; color: #0C49CD">Прикрепить файл</a>
-          </div>
-          <div class="field">
-            <button class="ui button primary huge fluid" {{action 'hideModalSupport'}}>Отправить</button>
-          </div>
-        </div>
+      <div class="item lang">
+        <label style="margin-right: 5px;">
+          {{t "forms.application.header.menu.language-dropdown.caption"}}
+        </label>
+        {{flexberry-dropdown
+          class="compact"
+          items=locales
+          value=i18n.locale
+          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          settings=(hash direction="upward")
+        }}
+      </div>
+      <div class="right menu">
+        <a class="item"
+          href={{addonVersionHref}}
+          target="_blank"
+          title={{t "forms.application.footer.application-version.title"}}>
+            {{t "forms.application.footer.application-version.caption" version=addonVersion}}
+        </a>
       </div>
     </div>
   </div>
+</div> --}}
 {{/if}}

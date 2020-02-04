@@ -960,6 +960,25 @@ $.extend(true, translations, {
       }
     },
 
+    'login-form': {
+      'header': 'Sign in',
+      'sign-up-caption': 'Or register',
+      'enter-login-caption': 'Enter your login',
+      'enter-password-caption': 'Enter password',
+      'reset-password-caption': 'Forgot your password?',
+      'login-button-caption': 'Login'
+    },
+
+    'support-form' : {
+      'caption': 'Write to tech support',
+      'contacts-caption': 'Technical support contacts: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Enter your name',
+      'enter-email-caption': 'Enter your mail',
+      'enter-message-placeholder': 'If you encounter a problem, describe in detail: how it manifests itself, what actions and in what order you performed. If possible, attach a screenshot',
+      'send-button-caption': 'Submit',
+      'attach-file-caption':'Attach file'
+    },
+
     'edit-form': {
       'save-success-message-caption': 'Save operation succeed',
       'save-success-message': 'Object saved',

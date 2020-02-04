@@ -10,6 +10,10 @@ export default Route.extend(ModalApplicationRouteMixin, {
     */
     onRefresh() {
       this.refresh();
-    }
+    },
+
+    showModalSupport() {
+      this.send('showModalDialog', 'modals/ember-flexberry-support-modal');
+    },
   }
 });

@@ -999,6 +999,25 @@ $.extend(true, translations, {
       }
     },
 
+    'login-form': {
+      'header': 'Войти в систему',
+      'sign-up-caption': 'Или зарегистрироваться',
+      'enter-login-caption': 'Введите ваш логин',
+      'enter-password-caption': 'Введите пароль',
+      'reset-password-caption': 'Забыли пароль?',
+      'login-button-caption': 'Войти'
+    },
+
+    'support-form' : {
+      'caption': 'Написать в техподдержку',
+      'contacts-caption': 'Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Введите Ваше имя',
+      'enter-email-caption': 'Введите Вашу почту',
+      'enter-message-placeholder': 'Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот',
+      'send-button-caption': 'Отправить',
+      'attach-file-caption':'Прикрепить файл'
+    },
+
     'edit-form': {
       'save-success-message-caption': 'Сохранение завершилось успешно',
       'save-success-message': 'Объект сохранен',

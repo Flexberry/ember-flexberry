@@ -590,6 +590,9 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Выход'
+        },
+        'profile': {
+          'caption': 'Личный кабинет'
         }
       },
 

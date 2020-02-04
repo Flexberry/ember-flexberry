@@ -559,6 +559,9 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Logout'
+        },
+        'profile': {
+          'caption': 'Profile'
         }
       },
 

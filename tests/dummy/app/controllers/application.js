@@ -97,6 +97,24 @@ export default Controller.extend({
     hideModalSupport() {
       this.get('modalSupport').modal('hide');
     },
+
+    onMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case i18n.t('forms.application.header.logout.caption').toString(): {
+          this.send('logout');
+          break;
+        }
+      }
+      return null;
+    },
   },
 
   /**
@@ -688,5 +706,25 @@ export default Controller.extend({
         }]
       }]
     };
-  })
+  }),
+
+  /**
+    Application usermenu.
+
+    @property itemsUserMenu
+    @type Object
+  */
+  itemsUserMenu: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let itemsUserMenu = [{
+      icon: 'dropdown icon',
+      title: i18n.t('forms.application.header.profile.caption'),
+      iconAlignment: 'right',
+      items: [{
+        title: i18n.t('forms.application.header.logout.caption'),
+        items: null
+      }]
+    }];
+    return itemsUserMenu
+  }),
 });

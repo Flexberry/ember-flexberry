@@ -1,0 +1,55 @@
+{{#if appContextLightboxIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.lightbox-title")
+    useOkButton=false
+    useCloseButton=false
+    close=(action "closeLightbox")
+  }}
+    <button class="ui button" {{action set "appContextSidepageIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-sidepage"}}
+    </button>
+    <button class="ui button" {{action set "appContextSecondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if appContextSidepageIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.sidepage-title")
+    useSidePageMode=true
+    useOkButton=false
+    useCloseButton=false
+    close=(action "closeSidepage")
+  }}
+    <button class="ui button" {{action set "appContextSecondSidepageIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-sidepage"}}
+    </button>
+    <button class="ui button" {{action set "appContextSecondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if appContextSecondSidepageIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.second-sidepage-title")
+    useSidePageMode=true
+    useOkButton=false
+    useCloseButton=false
+    close=(action set "appContextSecondSidepageIsOpen" false)
+  }}
+    <button class="ui button" {{action set "appContextSecondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if appContextSecondLightboxIsOpen}}
+  {{modal-dialog
+    title=(t "forms.components-examples.modal-dialog.second-lightbox-title")
+    sizeClass="large"
+    useCloseButton=false
+    close=(action set "appContextSecondLightboxIsOpen" false)
+  }}
+{{/if}}

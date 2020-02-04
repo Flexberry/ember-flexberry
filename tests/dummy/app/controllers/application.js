@@ -633,6 +633,11 @@ export default Controller.extend({
             children: null
           }]
         }, {
+          link: 'components-examples/modal-dialog',
+          caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.modal-dialog.title'),
+          children: null
+        }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),

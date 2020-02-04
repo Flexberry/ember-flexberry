@@ -1,0 +1,87 @@
+<h3 class="ui header">{{t "forms.components-examples.modal-dialog.caption" component="{{modal-dialog}}"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  <h4 class="ui header">{{t "forms.components-examples.modal-dialog.in-current-context"}}</h4>
+  <button class="ui button" {{action set "lightboxIsOpen" true}}>
+    {{t "forms.components-examples.modal-dialog.open-lightbox"}}
+  </button>
+  <button class="ui button" {{action set "sidepageIsOpen" true}}>
+    {{t "forms.components-examples.modal-dialog.open-sidepage"}}
+  </button>
+
+  <h4 class="ui header">{{t "forms.components-examples.modal-dialog.application-context"}}</h4>
+  <button class="ui button" {{action "openLightbox"}}>
+    {{t "forms.components-examples.modal-dialog.open-lightbox"}}
+  </button>
+  <button class="ui button" {{action "openSidepage"}}>
+    {{t "forms.components-examples.modal-dialog.open-sidepage"}}
+  </button>
+</form>
+
+{{#if lightboxIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.lightbox-title")
+    useOkButton=false
+    useCloseButton=false
+    close=(action set "lightboxIsOpen" false)
+    settings=(hash
+      context=".stackable.grid.container"
+    )
+  }}
+    <button class="ui button" {{action set "sidepageIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-sidepage"}}
+    </button>
+    <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if sidepageIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.sidepage-title")
+    useSidePageMode=true
+    useOkButton=false
+    useCloseButton=false
+    close=(action set "sidepageIsOpen" false)
+    settings=(hash
+      context=".stackable.grid.container"
+    )
+  }}
+    <button class="ui button" {{action set "secondSidepageIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-sidepage"}}
+    </button>
+    <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if secondSidepageIsOpen}}
+  {{#modal-dialog
+    title=(t "forms.components-examples.modal-dialog.second-sidepage-title")
+    useSidePageMode=true
+    useOkButton=false
+    useCloseButton=false
+    close=(action set "secondSidepageIsOpen" false)
+    settings=(hash
+      context=".stackable.grid.container"
+    )
+  }}
+    <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+    </button>
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if secondLightboxIsOpen}}
+  {{modal-dialog
+    title=(t "forms.components-examples.modal-dialog.second-lightbox-title")
+    sizeClass="large"
+    useCloseButton=false
+    close=(action set "secondLightboxIsOpen" false)
+    settings=(hash
+      context=".stackable.grid.container"
+    )
+  }}
+{{/if}}

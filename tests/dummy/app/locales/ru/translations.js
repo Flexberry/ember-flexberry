@@ -952,6 +952,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -1406,6 +1410,19 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
           'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
+      },
+      'modal-dialog': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'in-current-context': 'В контексте текущего шаблона',
+        'application-context': 'В контексте шаблона приложения',
+        'open-lightbox': 'Открыть модальное окно',
+        'open-second-lightbox': 'Открыть второе модальное окно',
+        'lightbox-title': 'Модальное окно',
+        'second-lightbox-title': 'Второе модальное окно',
+        'open-sidepage': 'Открыть модальное окно в режиме «sidepage»',
+        'open-second-sidepage': 'Открыть второе модальное окно в режиме «sidepage»',
+        'sidepage-title': 'Модальное окно в режиме «sidepage»',
+        'second-sidepage-title': 'Второе модальное окно в режиме «sidepage»',
       },
       'ui-message': {
         'settings-example': {

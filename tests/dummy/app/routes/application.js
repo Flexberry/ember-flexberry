@@ -13,7 +13,7 @@ export default Route.extend(ModalApplicationRouteMixin, {
     },
 
     showModalSupport() {
-      this.send('showModalDialog', 'modals/ember-flexberry-support-modal');
+      this.send('showModalDialog', 'modal/ember-flexberry-support-modal');
     },
   }
 });

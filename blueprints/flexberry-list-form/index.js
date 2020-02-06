@@ -69,10 +69,10 @@ module.exports = {
             modelName: listFormBlueprint.listForm.projections[0].modelName,
             modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,
             caption: listFormBlueprint.listForm.caption, // for use in files\__root__\templates\__name__.hbs
-            importFormRouteName: listFormBlueprint.importFormRoute.name,
-            importFormRoutePath: listFormBlueprint.importFormRoute.path,
-            importFormControllerName: listFormBlueprint.importFormController.name,
-            importFormControllerPath: listFormBlueprint.importFormController.path,
+            importFormRouteName: listFormBlueprint.importFormRouteName,
+            importFormRoutePath: listFormBlueprint.importFormRoutePath,
+            importFormControllerName: listFormBlueprint.importFormControllerName,
+            importFormControllerPath: listFormBlueprint.importFormControllerPath,
         }, listFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -94,25 +94,29 @@ var ListFormBlueprint = /** @class */ (function () {
         if (fs.existsSync(configsFile)) {
             var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
             if (configs.listForms == undefined) {
-                this.importFormRoute.name = 'ListFormRoute';
-                this.importFormRoute.path = 'ember-flexberry/routes/list-form';
-                this.importFormController.name = 'ListFormController';
-                this.importFormController.path = 'ember-flexberry/controllers/list-form';
+                this.importFormRouteName = 'ListFormRoute';
+                this.importFormRoutePath = 'ember-flexberry/routes/list-form';
+                this.importFormControllerName = 'ListFormController';
+                this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
             } else {
                 if (configs.listForms[options.entity.name] != undefined) {
-                    this.importFormRoute = configs.listForms[options.entity.name].baseRoute;
-                    this.importFormController = configs.listForms[options.entity.name].baseController;
+                    this.importFormRouteName = configs.listForms[options.entity.name].baseRoute.name;
+                    this.importFormRoutePath = configs.listForms[options.entity.name].baseRoute.path;
+                    this.importFormControllerName = configs.listForms[options.entity.name].baseController.name;
+                    this.importFormControllerPath = configs.listForms[options.entity.name].baseController.path;
                 }
                 else if (configs.listForms.defaultForm != undefined) {
-                    this.importFormRoute = configs.listForms.defaultForm.baseRoute;
-                    this.importFormController = configs.listForms.defaultForm.baseController;
+                    this.importFormRouteName = configs.listForms.defaultForm.baseRoute.name;
+                    this.importFormRoutePath = configs.listForms.defaultForm.baseRoute.path;
+                    this.importFormControllerName = configs.listForms.defaultForm.baseController.name;
+                    this.importFormControllerPath = configs.listForms.defaultForm.baseController.path;
                 };
             };
         } else {
-            this.importFormRoute.name = 'ListFormRoute';
-            this.importFormRoute.path = 'ember-flexberry/routes/list-form';
-            this.importFormController.name = 'ListFormController';
-            this.importFormController.path = 'ember-flexberry/controllers/list-form';
+            this.importFormRouteName = 'ListFormRoute';
+            this.importFormRoutePath = 'ember-flexberry/routes/list-form';
+            this.importFormControllerName = 'ListFormController';
+            this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
         };
     }
     ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {

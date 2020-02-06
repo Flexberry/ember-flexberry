@@ -204,6 +204,15 @@ export default FlexberryBaseComponent.extend({
   autocomplete: false,
 
   /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
     Flag to show that lookup is in dropdown mode.
 
     @property dropdown
@@ -983,7 +992,9 @@ export default FlexberryBaseComponent.extend({
     let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults + 1,
+
+      // +2 for page switch buttons.
+      maxResults: maxResults + 2,
       cache: false,
       templates: {
         message: function(message, type) {
@@ -1018,6 +1029,7 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
+          const usePagination = _this.get('usePaginationForAutocomplete');
           const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
           builder.skip(skip);
           builder.top(maxResults);
@@ -1027,8 +1039,13 @@ export default FlexberryBaseComponent.extend({
             store.query(relationModelName, builder.build()).then((records) => {
               const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
 
+              if (usePagination && skip > 0) {
+                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
+              }
+
               if (skip + records.get('length') < records.get('meta.count')) {
-                results.push({ title: '...', noResult: true });
+                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
+                results.push({ title: title, nextPage: usePagination });
               }
 
               callback({ success: true, results: results });
@@ -1058,7 +1075,7 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        if (!result.noResult) {
+        if (result.instance) {
           state = 'selected';
           _this.set('_pageInResultsForAutocomplete', 1);
 
@@ -1073,9 +1090,15 @@ export default FlexberryBaseComponent.extend({
                 newRelationValue: result.instance
               });
           });
-        } else {
+        } else if (_this.get('usePaginationForAutocomplete')) {
           state = 'loading';
-          _this.incrementProperty('_pageInResultsForAutocomplete');
+          if (result.nextPage) {
+            _this.incrementProperty('_pageInResultsForAutocomplete');
+          }
+
+          if (result.prevPage) {
+            _this.decrementProperty('_pageInResultsForAutocomplete');
+          }
 
           // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
           // This function allows us to start the search again, thanks to the `searchOnFocus` option.

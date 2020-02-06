@@ -87,7 +87,10 @@ module.exports = {
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
-      isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
+      importFormRouteName: editFormBlueprint.importFormRoute.name,
+      importFormRoutePath: editFormBlueprint.importFormRoute.path,
+      importFormControllerName: editFormBlueprint.importFormController.name,
+      importFormControllerPath: editFormBlueprint.importFormController.path,
       },
       editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
@@ -107,6 +110,8 @@ class EditFormBlueprint {
   private modelsDir: string;
   private blueprint;
   private options;
+  importFormRoute: any;
+  importFormController: any;
 
   constructor(blueprint, options) {
     this.isEmberCpValidationsUsed = true;
@@ -133,6 +138,25 @@ class EditFormBlueprint {
     } else {
       this.functionGetCellComponent = null;
     }
+    var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+      if (fs.existsSync(configsFile)) {
+          var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+          if (configs.editForms == undefined) {
+              this.importFormRoute.name = 'EditFormRoute';
+              this.importFormRoute.path = 'ember-flexberry/routes/edit-form';
+              this.importFormController.name = 'EditFormController';
+              this.importFormController.path = 'ember-flexberry/controllers/edit-form';
+          } else {
+              if (configs.editForms[options.entity.name] != undefined) {
+                  this.importFormRoute = configs.editForms[options.entity.name].baseRoute;
+                  this.importFormController = configs.editForms[options.entity.name].baseController;
+              }
+              else if (configs.editForms.defaultForm != undefined) {
+                  this.importFormRoute = configs.editForms.defaultForm.baseRoute;
+                  this.importFormController = configs.editForms.defaultForm.baseController;
+              };
+          };
+      };
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {

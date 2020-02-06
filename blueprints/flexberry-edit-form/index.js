@@ -79,7 +79,10 @@ module.exports = {
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
             functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
-            isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
+            importFormRouteName: editFormBlueprint.importFormRoute.name,
+            importFormRoutePath: editFormBlueprint.importFormRoute.path,
+            importFormControllerName: editFormBlueprint.importFormController.name,
+            importFormControllerPath: editFormBlueprint.importFormController.path,
         }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -114,6 +117,26 @@ var EditFormBlueprint = /** @class */ (function () {
         else {
             this.functionGetCellComponent = null;
         }
+
+        var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (fs.existsSync(configsFile)) {
+            var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+            if (configs.editForms == undefined) {
+                this.importFormRoute.name = 'EditFormRoute';
+                this.importFormRoute.path = 'ember-flexberry/routes/edit-form';
+                this.importFormController.name = 'EditFormController';
+                this.importFormController.path = 'ember-flexberry/controllers/edit-form';
+            } else {
+                if (configs.editForms[options.entity.name] != undefined) {
+                    this.importFormRoute = configs.editForms[options.entity.name].baseRoute;
+                    this.importFormController = configs.editForms[options.entity.name].baseController;
+                }
+                else if (configs.editForms.defaultForm != undefined) {
+                    this.importFormRoute = configs.editForms.defaultForm.baseRoute;
+                    this.importFormController = configs.editForms.defaultForm.baseController;
+                };
+            };
+        };
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
         var snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";

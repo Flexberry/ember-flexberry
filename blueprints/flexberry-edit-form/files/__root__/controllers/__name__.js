@@ -1,4 +1,4 @@
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import <%=importFormControllerName%> from '<%=importFormControllerPath%>';
 
 export default EditFormController.extend({<%if(parentRoute){%>
   parentRoute: '<%= parentRoute %>',<%}if (functionGetCellComponent) {%>

@@ -1,4 +1,4 @@
-import ListFormController from 'ember-flexberry/controllers/list-form';
+import <%=importFormControllerName%> from '<%=importFormControllerPath%>';
 
 export default ListFormController.extend({
   /**

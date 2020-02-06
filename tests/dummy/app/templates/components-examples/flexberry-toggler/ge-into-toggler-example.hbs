@@ -1,31 +1,33 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.components-examples.flexberry-toggler.ge-into-toggler-example.caption"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    editFormRoute=editFormRoute
-    showCheckBoxInRow=true
-    modelName="ember-flexberry-dummy-toggler-example-master"
-    modelProjection=modelProjection
-    content=model
-    createNewButton=true
-    refreshButton=true
-    exportExcelButton=true
-    sorting=computedSorting
-    orderable=true
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="SuggestionObjectListView"
-    showDeleteMenuItemInRow=true
-    deleteButton=true
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+    {{flexberry-objectlistview
+      editFormRoute=editFormRoute
+      showCheckBoxInRow=true
+      modelName="ember-flexberry-dummy-toggler-example-master"
+      modelProjection=modelProjection
+      content=model
+      createNewButton=true
+      refreshButton=true
+      exportExcelButton=true
+      sorting=computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="SuggestionObjectListView"
+      showDeleteMenuItemInRow=true
+      deleteButton=true
+    }}
+  </div>
+</form>

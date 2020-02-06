@@ -1,27 +1,29 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.i-i-s-caseberry-logging-objects-application-log-l.caption"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName="i-i-s-caseberry-logging-objects-application-log"
-    modelProjection=modelProjection
-    editFormRoute=editFormRoute
-    createNewButton=false
-    refreshButton=true
-    sorting=computedSorting
-    orderable=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="IISLoggingObjectListView"
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-objectlistview
+      content=model
+      modelName="i-i-s-caseberry-logging-objects-application-log"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      createNewButton=false
+      refreshButton=true
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="IISLoggingObjectListView"
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    }}
+  </div>
+</form>

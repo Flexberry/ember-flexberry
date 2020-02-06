@@ -1,37 +1,39 @@
 {{flexberry-error error=error}}
 <h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.caption"}}</h3>
-<div class="row">
-{{flexberry-objectlistview
-  modelName="ember-flexberry-dummy-suggestion"
-  modelProjection=modelProjection
-  content=model
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+  {{flexberry-objectlistview
+    modelName="ember-flexberry-dummy-suggestion"
+    modelProjection=modelProjection
+    content=model
 
-  createNewButton=false
-  showCheckBoxInRow=false
-  showDeleteButtonInRow=false
-  showEditMenuItemInRow=false
-  showDeleteMenuItemInRow=false
-  rowClickable=false
-  refreshButton=false
-  colsConfigButton=false
+    createNewButton=false
+    showCheckBoxInRow=false
+    showDeleteButtonInRow=false
+    showEditMenuItemInRow=false
+    showDeleteMenuItemInRow=false
+    rowClickable=false
+    refreshButton=false
+    colsConfigButton=false
 
-  pages=pages
-  perPageValue=perPageValue
-  perPageValues=perPageValues
-  recordsTotalCount=recordsTotalCount
-  hasPreviousPage=hasPreviousPage
-  hasNextPage=hasNextPage
-  previousPage=(action "previousPage")
-  gotoPage=(action "gotoPage")
-  nextPage=(action "nextPage")
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
 
-  customButtons=customButtons
-  userButtonActionTest=(action "userButtonActionTest")
-  toggleHiButton=(action "toggleHiButton")
-  customButtonsInRow=customButtonsInRow
-  userButtonInRowActionTest=(action "userButtonInRowActionTest")
+    customButtons=customButtons
+    userButtonActionTest=(action "userButtonActionTest")
+    toggleHiButton=(action "toggleHiButton")
+    customButtonsInRow=customButtonsInRow
+    userButtonInRowActionTest=(action "userButtonInRowActionTest")
 
-  componentName="FOLVToolbarCustomButtonsExample"
-}}
-</div>
-<div class="row">{{messageForUser}}</div>
+    componentName="FOLVToolbarCustomButtonsExample"
+  }}
+  </div>
+  <div class="row">{{messageForUser}}</div>
+</form>

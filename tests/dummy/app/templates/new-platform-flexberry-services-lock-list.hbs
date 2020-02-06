@@ -1,34 +1,36 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.new-platform-flexberry-services-lock-list.caption"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName=modelName
-    modelProjection=modelProjection
-    editFormRoute=editFormRoute
-    refreshButton=true
-    createNewButton=false
-    deleteButton=true
-    showCheckBoxInRow=true
-    showDeleteButtonInRow=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    previousPage=(action "previousPage")
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    orderable=true
-    sorting=computedSorting
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    componentName="LockObjectListView"
-    customButtons=customButtons
-    changeUserName=(action 'changeUserName')
-    openReadOnly=(action 'openReadOnly')
-    unlockObject=(action 'unlockObject')
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+    {{flexberry-objectlistview
+      content=model
+      modelName=modelName
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      refreshButton=true
+      createNewButton=false
+      deleteButton=true
+      showCheckBoxInRow=true
+      showDeleteButtonInRow=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      previousPage=(action "previousPage")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      orderable=true
+      sorting=computedSorting
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      componentName="LockObjectListView"
+      customButtons=customButtons
+      changeUserName=(action 'changeUserName')
+      openReadOnly=(action 'openReadOnly')
+      unlockObject=(action 'unlockObject')
+    }}
+  </div>
+</form>

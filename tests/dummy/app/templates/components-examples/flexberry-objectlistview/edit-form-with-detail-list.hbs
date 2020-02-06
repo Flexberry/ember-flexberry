@@ -1,31 +1,33 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName="ember-flexberry-dummy-suggestion-type"
-    modelProjection=modelProjection
-    editFormRoute=editFormRoute
-    createNewButton=true
-    refreshButton=true
-    sorting=computedSorting
-    orderable=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="suggestionTypeLocalizedTypesObjectListView"
-    showCheckBoxInRow=true
-    showEditMenuItemInRow=true
-    showDeleteMenuItemInRow=true
-    showDeleteButtonInRow=true
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-suggestion-type"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      createNewButton=true
+      refreshButton=true
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="suggestionTypeLocalizedTypesObjectListView"
+      showCheckBoxInRow=true
+      showEditMenuItemInRow=true
+      showDeleteMenuItemInRow=true
+      showDeleteButtonInRow=true
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    }}
+  </div>
+</form>

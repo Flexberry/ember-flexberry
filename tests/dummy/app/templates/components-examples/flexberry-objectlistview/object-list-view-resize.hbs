@@ -1,23 +1,24 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.components-examples.flexberry-objectlistview.object-list-view-resize.caption"}}</h3>
-
-<div class="ui stackable grid">
-  {{#flexberry-toggler
-    expanded=true
-  }}
-  <div>
-    <button class="ui button create-button" {{action 'addRecord'}}>{{t "forms.components-examples.flexberry-objectlistview.object-list-view-resize.button-сaption"}}</button>
-    {{object-list-view
-        modelName='ember-flexberry-dummy-suggestion'
-        modelProjection=modelProjection
-        componentName="ObjectListViewResize"
-        content=model
-        editOnSeparateRoute=true
-        rowClickable=true
-        action='objectListViewRowClick'
-        searchForContentChange=searchForContentChange
-        singleColumnCellComponent=singleColumnCellComponent
-    }}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+      {{#flexberry-toggler
+        expanded=true
+      }}
+      <div>
+        <button class="ui button create-button" {{action 'addRecord'}}>{{t "forms.components-examples.flexberry-objectlistview.object-list-view-resize.button-сaption"}}</button>
+        {{object-list-view
+          modelName='ember-flexberry-dummy-suggestion'
+          modelProjection=modelProjection
+          componentName="ObjectListViewResize"
+          content=model
+          editOnSeparateRoute=true
+          rowClickable=true
+          action='objectListViewRowClick'
+          searchForContentChange=searchForContentChange
+          singleColumnCellComponent=singleColumnCellComponent
+        }}
+      </div>
+      {{/flexberry-toggler}}
   </div>
-  {{/flexberry-toggler}}
-</div>
+</form>

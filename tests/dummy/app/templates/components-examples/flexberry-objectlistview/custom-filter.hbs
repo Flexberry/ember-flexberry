@@ -1,44 +1,46 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.components-examples.flexberry-objectlistview.custom-filter.caption"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName="ember-flexberry-dummy-suggestion"
-    modelProjection=modelProjection
-    editFormRoute=editFormRoute
-    createNewButton=false
-    refreshButton=true
-    enableFilters=true
-    filters=filters
-    applyFilters=(action "applyFilters")
-    resetFilters=(action "resetFilters")
-    componentForFilter=(action "componentForFilter")
-    conditionsByType=(action "conditionsByType")
-    filterButton=true
-    filterText=filter
-    filterByAnyWord=filterByAnyWord
-    filterByAllWords=filterByAllWords
-    filterByAnyMatch=(action 'filterByAnyMatch')
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    sorting=computedSorting
-    orderable=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    colsConfigButton=false
-    componentName="FOLVCustomFilterObjectListView"
-    customButtons=customButtons
-    toggleFilterByAnyWord=(action 'toggleFilterByAnyWord')
-    toggleFilterByAllWords=(action 'toggleFilterByAllWords')
-    showCheckBoxInRow=true
-    deleteButton=true
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-suggestion"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      createNewButton=false
+      refreshButton=true
+      enableFilters=true
+      filters=filters
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      componentForFilter=(action "componentForFilter")
+      conditionsByType=(action "conditionsByType")
+      filterButton=true
+      filterText=filter
+      filterByAnyWord=filterByAnyWord
+      filterByAllWords=filterByAllWords
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      colsConfigButton=false
+      componentName="FOLVCustomFilterObjectListView"
+      customButtons=customButtons
+      toggleFilterByAnyWord=(action 'toggleFilterByAnyWord')
+      toggleFilterByAllWords=(action 'toggleFilterByAllWords')
+      showCheckBoxInRow=true
+      deleteButton=true
+    }}
+  </div>
+</form>

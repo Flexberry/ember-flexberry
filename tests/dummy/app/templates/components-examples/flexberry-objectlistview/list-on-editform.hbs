@@ -2,37 +2,37 @@
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-  {{flexberry-objectlistview
-    editFormRoute=editFormRoute
-    showCheckBoxInRow=true
-    modelName="ember-flexberry-dummy-suggestion"
-    modelProjection=modelProjection
-    content=model
-    createNewButton=false
-    enableFilters=true
-    filters=filters
-    refreshButton=true
-    exportExcelButton=true
-    sorting=computedSorting
-    orderable=true
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    applyFilters=(action "applyFilters")
-    resetFilters=(action "resetFilters")
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="SuggestionObjectListView"
-    showDeleteMenuItemInRow=true
-    deleteButton=true
-    componentName="FOLVListOnEditformObjectListView"
-  }}
-</div>
+    {{flexberry-objectlistview
+      editFormRoute=editFormRoute
+      showCheckBoxInRow=true
+      modelName="ember-flexberry-dummy-suggestion"
+      modelProjection=modelProjection
+      content=model
+      createNewButton=false
+      enableFilters=true
+      filters=filters
+      refreshButton=true
+      exportExcelButton=true
+      sorting=computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="SuggestionObjectListView"
+      showDeleteMenuItemInRow=true
+      deleteButton=true
+      componentName="FOLVListOnEditformObjectListView"
+    }}
+  </div>
 </form>

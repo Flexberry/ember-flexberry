@@ -1,27 +1,29 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.buttonSuccessorSoc"}}</h3>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName="ember-flexberry-dummy-successor-social-network"
-    modelProjection="SuccessorL"
-    editFormRoute=editFormRoute
-    createNewButton=true
-    refreshButton=true
-    sorting=computedSorting
-    orderable=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="OLVInheritanceModels"
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="row">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-successor-social-network"
+      modelProjection="SuccessorL"
+      editFormRoute=editFormRoute
+      createNewButton=true
+      refreshButton=true
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="OLVInheritanceModels"
+    }}
+  </div>
+</form>

@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
 * `flexberry-groupedit` component:
     * Add `fixedHeader` mode.
+* Blueprints:
+    * Add `modelName` field in `list-form` controller.
 
 ### Changed
 * `flexberry-simpledatetime` component:

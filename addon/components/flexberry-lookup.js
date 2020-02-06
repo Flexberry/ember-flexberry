@@ -826,6 +826,15 @@ export default FlexberryBaseComponent.extend({
   valueObserver: Ember.on('init', Ember.observer('value', 'displayAttributeName', function() { Ember.run.once(this, '_valueObserver'); })),
 
   /**
+    Observe lookup autocomplete max results changes.
+  */
+  maxResultsObserver: Ember.observer('maxResults', function() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    }
+  }),
+
+  /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
     # WRANING!
 

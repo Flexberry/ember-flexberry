@@ -149,6 +149,15 @@ export default EditFormController.extend({
   usePaginationForAutocomplete: false,
 
   /**
+    Max number of the results for autocomplete.
+
+    @property maxResults
+    @type Integer
+    @default 10
+  */
+  maxResults: 10,
+
+  /**
     Template text for 'flexberry-lookup' component.
 
     @property componentTemplateText
@@ -168,6 +177,8 @@ export default EditFormController.extend({
     '  remove="removeLookupValue"<br>' +
     '  autocomplete=autocomplete<br>' +
     '  autocompletePersistValue=autocompletePersistValue<br>' +
+    '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
+    '  maxResults=maxResults<br>' +
     '  displayValue=model.lookupDisplayValue<br>' +
     '  dropdown=dropdown<br>' +
     '  dropdownIsSearch=dropdownIsSearch<br>' +
@@ -178,7 +189,6 @@ export default EditFormController.extend({
     '  showPreviewButton=showPreviewButton<br>' +
     '  previewOnSeparateRoute=previewOnSeparateRoute<br>' +
     '  previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"<br>' +
-    '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
     '}}'),
 
   /**
@@ -218,6 +228,18 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'autocompletePersistValue'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'usePaginationForAutocomplete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'usePaginationForAutocomplete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxResults',
+      settingType: 'number',
+      settingDefaultValue: 10,
+      bindedControllerPropertieName: 'maxResults'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'dropdown',
@@ -275,12 +297,6 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'previewOnSeparateRoute'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'usePaginationForAutocomplete',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'usePaginationForAutocomplete'
     });
     return componentSettingsMetadata;
   })

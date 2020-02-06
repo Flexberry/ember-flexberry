@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Generates `flexberry-simpledatetime` instead of `flexberry-datepicker` component on forms for date type.
 
 ## [2.2.1] - 2020-01-15
 ### Added

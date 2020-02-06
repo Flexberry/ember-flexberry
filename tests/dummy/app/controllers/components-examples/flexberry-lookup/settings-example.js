@@ -140,6 +140,15 @@ export default EditFormController.extend({
   previewOnSeparateRoute: false,
 
   /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
     Template text for 'flexberry-lookup' component.
 
     @property componentTemplateText
@@ -169,6 +178,7 @@ export default EditFormController.extend({
     '  showPreviewButton=showPreviewButton<br>' +
     '  previewOnSeparateRoute=previewOnSeparateRoute<br>' +
     '  previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"<br>' +
+    '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
     '}}'),
 
   /**
@@ -265,6 +275,12 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'previewOnSeparateRoute'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'usePaginationForAutocomplete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'usePaginationForAutocomplete'
     });
     return componentSettingsMetadata;
   })

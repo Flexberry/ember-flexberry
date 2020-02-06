@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-groupedit` component:
     * Add `fixedHeader` mode.
+* Blueprints:
+    * Add `modelName` field in `list-form` controller.
 
 ### Changed
 * `flexberry-simpledatetime` component:

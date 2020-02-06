@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
 * `flexberry-groupedit` component:
     * Add `fixedHeader` mode.
 
@@ -13,6 +14,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
+* `flexberry-lookup` component:
+    * Loading an extra record in the results for autocomplete.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
 
 ## [2.2.1] - 2020-01-15
 ### Added

@@ -136,6 +136,11 @@ var EditFormBlueprint = /** @class */ (function () {
                     this.importFormController = configs.editForms.defaultForm.baseController;
                 };
             };
+        } else {
+            this.importFormRoute.name = 'EditFormRoute';
+                this.importFormRoute.path = 'ember-flexberry/routes/edit-form';
+                this.importFormController.name = 'EditFormController';
+                this.importFormController.path = 'ember-flexberry/controllers/edit-form';
         };
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {

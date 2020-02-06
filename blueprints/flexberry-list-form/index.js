@@ -108,6 +108,11 @@ var ListFormBlueprint = /** @class */ (function () {
                     this.importFormController = configs.listForms.defaultForm.baseController;
                 };
             };
+        } else {
+            this.importFormRoute.name = 'ListFormRoute';
+            this.importFormRoute.path = 'ember-flexberry/routes/list-form';
+            this.importFormController.name = 'ListFormController';
+            this.importFormController.path = 'ember-flexberry/controllers/list-form';
         };
     }
     ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {

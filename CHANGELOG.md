@@ -3,16 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-* `flexberry-simpledatetime` component:
-    * Hide datepicker window on scroll.
+### Added
+* The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
 
 ### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
-* In the `flexberry-lookup` component for autocomplete results, an extra record was loaded.
+* `flexberry-lookup` component:
+    * Loading an extra record in the results for autocomplete.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
 
 ### Changed
-* Now, when you click on `...` in the results for autocomplete in the `flexberry-lookup` component, the next page of results will be loaded.
+* `flexberry-simpledatetime` component:
+    * Hide datepicker window on scroll.
 
 ## [2.2.1] - 2020-01-15
 ### Added

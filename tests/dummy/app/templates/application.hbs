@@ -49,13 +49,27 @@
         <span class="page-header-caption-app-name">{{t "application-name"}}</span>
         <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
       </a>
-      <div class="page-header-actions">
-        {{flexberry-dropdown
-          class="compact"
-          items=locales
-          value=i18n.locale
-          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-        }}
+      <div class="page-header-actions ui text menu">
+        <div class="item">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+          </label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=userSettingsService.isUserSettingsServiceEnabled
+          }}
+        </div>
+        <div class="item lang">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.language-dropdown.caption"}}
+          </label>
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
+        </div>
       </div>
 
       <div class="page-header-userbar">

@@ -369,6 +369,7 @@ export default FlexberryBaseComponent.extend({
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
       locale: locale,
+      appendTo: $('body > .ember-view').get(0),
       onChange: (dates) => {
         if (dates.length) {
           if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
@@ -411,6 +412,13 @@ export default FlexberryBaseComponent.extend({
       this._validationDateTime();
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
+
+    $(document).mousedown($.proxy(function(e) {
+      let clicky = $(e.target);
+      if (clicky.closest('.flatpickr-calendar').length == 0 && clicky.get(0) != this.$('.custom-flatpickr').get(0)) {
+        this.get('_flatpickr').close();
+      }
+    }, this));
   },
 
   /**
@@ -440,6 +448,7 @@ export default FlexberryBaseComponent.extend({
       flatpickr.destroy();
       this.set('_flatpickr', null);
     }
+    $(document).off('mousedown');
   },
 
   /**

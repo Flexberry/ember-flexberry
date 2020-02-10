@@ -28,12 +28,18 @@
       context=".stackable.grid.container"
     )
   }}
-    <button class="ui button" {{action set "sidepageIsOpen" true}}>
-      {{t "forms.components-examples.modal-dialog.open-sidepage"}}
-    </button>
-    <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
-      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
-    </button>
+    <p>{{t "forms.components-examples.modal-dialog.lightbox-title"}} {{t "forms.components-examples.modal-dialog.in-current-context"}}. 
+      {{t "forms.components-examples.modal-dialog.open-sidepage"}}, 
+      {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}.
+    </p>
+    <div>
+      <button class="ui button primary" {{action set "sidepageIsOpen" true}}>
+        {{t "forms.components-examples.modal-dialog.open-sidepage"}}
+      </button>
+      <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
+        {{t "forms.components-examples.modal-dialog.open-second-lightbox"}}
+      </button>
+    </div>
   {{/modal-dialog}}
 {{/if}}
 
@@ -48,7 +54,7 @@
       context=".stackable.grid.container"
     )
   }}
-    <button class="ui button" {{action set "secondSidepageIsOpen" true}}>
+    <button class="ui button primary" {{action set "secondSidepageIsOpen" true}}>
       {{t "forms.components-examples.modal-dialog.open-second-sidepage"}}
     </button>
     <button class="ui button" {{action set "secondLightboxIsOpen" true}}>
@@ -75,13 +81,15 @@
 {{/if}}
 
 {{#if secondLightboxIsOpen}}
-  {{modal-dialog
+  {{#modal-dialog
     title=(t "forms.components-examples.modal-dialog.second-lightbox-title")
-    sizeClass="large"
+    sizeClass="tiny"
     useCloseButton=false
     close=(action set "secondLightboxIsOpen" false)
     settings=(hash
       context=".stackable.grid.container"
     )
   }}
+    <p>{{t "forms.components-examples.modal-dialog.second-lightbox-title"}}</p>
+  {{/modal-dialog}}
 {{/if}}

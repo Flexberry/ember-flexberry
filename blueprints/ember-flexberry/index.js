@@ -241,7 +241,7 @@ module.exports = {
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
-        { name: 'jquery-minicolors', target: '2.2.6' },
+        { name: 'jquery-minicolors', target: '2.3.4' },
         { name: 'js-beautify', target: '1.6.4' }
       ]);
     }).then(function() {

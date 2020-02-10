@@ -68,6 +68,15 @@ export default EditFormController.extend({
   dropdown: false,
 
   /**
+    Flag indicates whether 'flexberry-lookup' component  in 'dropdown' mode is search.
+
+    @property dropdownIsSearch
+    @type Boolean
+    @default false
+  */
+  dropdownIsSearch: false,
+
+  /**
     Content for 'flexberry-lookup' component 'chooseText' property.
 
     @property chooseText
@@ -113,6 +122,42 @@ export default EditFormController.extend({
   removeButtonClass: '',
 
   /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
+    Max number of the results for autocomplete.
+
+    @property maxResults
+    @type Integer
+    @default 10
+  */
+  maxResults: 10,
+
+  /**
     Template text for 'flexberry-lookup' component.
 
     @property componentTemplateText
@@ -132,12 +177,18 @@ export default EditFormController.extend({
     '  remove="removeLookupValue"<br>' +
     '  autocomplete=autocomplete<br>' +
     '  autocompletePersistValue=autocompletePersistValue<br>' +
+    '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
+    '  maxResults=maxResults<br>' +
     '  displayValue=model.lookupDisplayValue<br>' +
     '  dropdown=dropdown<br>' +
+    '  dropdownIsSearch=dropdownIsSearch<br>' +
     '  chooseText=chooseText<br>' +
     '  removeText=removeText<br>' +
     '  chooseButtonClass=chooseButtonClass<br>' +
     '  removeButtonClass=removeButtonClass<br>' +
+    '  showPreviewButton=showPreviewButton<br>' +
+    '  previewOnSeparateRoute=previewOnSeparateRoute<br>' +
+    '  previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"<br>' +
     '}}'),
 
   /**
@@ -179,10 +230,28 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'autocompletePersistValue'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'usePaginationForAutocomplete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'usePaginationForAutocomplete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxResults',
+      settingType: 'number',
+      settingDefaultValue: 10,
+      bindedControllerPropertieName: 'maxResults'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'dropdown',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'dropdown'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownIsSearch',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'dropdownIsSearch'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'chooseText',
@@ -217,7 +286,18 @@ export default EditFormController.extend({
       settingAvailableItems: ['blue'],
       bindedControllerPropertieName: 'dropdownClass'
     });
-
+    componentSettingsMetadata.pushObject({
+      settingName: 'showPreviewButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPreviewButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'previewOnSeparateRoute',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'previewOnSeparateRoute'
+    });
     return componentSettingsMetadata;
   })
 });

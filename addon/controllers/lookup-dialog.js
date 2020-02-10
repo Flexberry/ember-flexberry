@@ -221,6 +221,10 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         folvComponentName: this.get('folvComponentName')
       };
 
+      if (reloadData.customPropertiesData) {
+        reloadData.customPropertiesData.inHierarchicalMode = this.get('inHierarchicalMode');
+      }
+
       let folvComponentName = this.get('folvComponentName');
       if (folvComponentName) {
         let userSettingsParams = {
@@ -258,7 +262,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
+  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function () {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }
@@ -271,7 +275,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @method clear
     @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
   */
-  clear: function(initialClear) {
+  clear: function (initialClear) {
     this.set('reloadObserverIsActive', false);
 
     if (initialClear) {

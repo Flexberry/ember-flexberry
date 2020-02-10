@@ -31,6 +31,10 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-edit', { path: 'ember-flexberry-dummy-suggestion-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-edit.new', { path: 'ember-flexberry-dummy-suggestion-edit/new' });
 
+  this.route('ember-flexberry-dummy-suggestion-file-list');
+  this.route('ember-flexberry-dummy-suggestion-file-edit', { path: 'ember-flexberry-dummy-suggestion-file-edit/:id' });
+  this.route('ember-flexberry-dummy-suggestion-file-edit.new', { path: 'ember-flexberry-dummy-suggestion-file-edit/new' });
+
   this.route('ember-flexberry-dummy-suggestion-type-list');
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });

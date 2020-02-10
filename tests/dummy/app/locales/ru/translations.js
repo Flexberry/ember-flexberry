@@ -492,6 +492,21 @@ $.extend(true, translations, {
         }
       }
     },
+    'ember-flexberry-dummy-suggestion-file': {
+      'projections': {
+        'SuggestionFileL': {
+          'order': {
+            __caption__: 'Порядок'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'suggestion': {
+            __caption__: 'Предложение'
+          },
+        }
+      }
+    },
     'integration-examples/edit-form/validation/base': {
       'projections': {
         'BaseE': {
@@ -575,6 +590,9 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Выход'
+        },
+        'profile': {
+          'caption': 'Личный кабинет'
         }
       },
 
@@ -631,6 +649,10 @@ $.extend(true, translations, {
           },
           'multi': {
             'caption': 'Несколько списков',
+            'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Файлы предложения',
             'title': ''
           }
         },
@@ -764,6 +786,10 @@ $.extend(true, translations, {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Пример иерархического OLV-а в lookup-e',
               'title': ''
@@ -875,10 +901,22 @@ $.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -924,6 +962,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -962,6 +1004,25 @@ $.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Войти в систему',
+      'sign-up-caption': 'Или зарегистрироваться',
+      'enter-login-caption': 'Введите ваш логин',
+      'enter-password-caption': 'Введите пароль',
+      'reset-password-caption': 'Забыли пароль?',
+      'login-button-caption': 'Войти'
+    },
+
+    'support-form' : {
+      'caption': 'Написать в техподдержку',
+      'contacts-caption': 'Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Введите Ваше имя',
+      'enter-email-caption': 'Введите Вашу почту',
+      'enter-message-placeholder': 'Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот',
+      'send-button-caption': 'Отправить',
+      'attach-file-caption':'Прикрепить файл'
     },
 
     'edit-form': {
@@ -1042,6 +1103,17 @@ $.extend(true, translations, {
       'editor-validation-message-caption': 'Заполните поле "Редактор"',
       'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"',
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
+    },
+
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Файлы предложения',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Файл предложения',
+      'suggestion': 'Предложение',
+      'order': 'Номер',
+      'file': 'Файл',
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {
@@ -1194,6 +1266,10 @@ $.extend(true, translations, {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
           'titleLookup': 'Мастер'
@@ -1277,6 +1353,9 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
@@ -1324,6 +1403,11 @@ $.extend(true, translations, {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
         }
       },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Пример работы с настройками'
+        }
+      },
       'flexberry-textarea': {
         'settings-example': {
           'caption': 'Flexberry-textarea. Пример работы с настройками'
@@ -1355,6 +1439,19 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
           'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
+      },
+      'modal-dialog': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'in-current-context': 'В контексте текущего шаблона',
+        'application-context': 'В контексте шаблона приложения',
+        'open-lightbox': 'Открыть модальное окно',
+        'open-second-lightbox': 'Открыть второе модальное окно',
+        'lightbox-title': 'Модальное окно',
+        'second-lightbox-title': 'Второе модальное окно',
+        'open-sidepage': 'Открыть модальное окно в режиме «sidepage»',
+        'open-second-sidepage': 'Открыть второе модальное окно в режиме «sidepage»',
+        'sidepage-title': 'Модальное окно в режиме «sidepage»',
+        'second-sidepage-title': 'Второе модальное окно в режиме «sidepage»',
       },
       'ui-message': {
         'settings-example': {

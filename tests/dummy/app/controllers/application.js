@@ -76,8 +76,25 @@ export default Controller.extend({
     */
     logout() {
       this.transitionToRoute('login');
-    }
+    },
 
+    onMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case i18n.t('forms.application.header.logout.caption').toString(): {
+          this.send('logout');
+          break;
+        }
+      }
+      return null;
+    },
   },
 
   /**
@@ -215,6 +232,11 @@ export default Controller.extend({
           link: 'ember-flexberry-dummy-multi-list',
           caption: i18n.t('forms.application.sitemap.application.multi.caption'),
           title: i18n.t('forms.application.sitemap.application.multi.title'),
+          children: null
+        }, {
+          link: 'ember-flexberry-dummy-suggestion-file-list',
+          caption: i18n.t('forms.application.sitemap.application.suggestion-file.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-file.title'),
           children: null
         }]
       }, {
@@ -432,6 +454,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
@@ -529,6 +556,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/limited-text-size-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -538,6 +570,16 @@ export default Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
             children: null
           }]
         }, {
@@ -591,6 +633,11 @@ export default Controller.extend({
             children: null
           }]
         }, {
+          link: 'components-examples/modal-dialog',
+          caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.modal-dialog.title'),
+          children: null
+        }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
@@ -635,5 +682,25 @@ export default Controller.extend({
         }]
       }]
     };
-  })
+  }),
+
+  /**
+    Application usermenu.
+
+    @property itemsUserMenu
+    @type Object
+  */
+  itemsUserMenu: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let itemsUserMenu = [{
+      icon: 'dropdown icon',
+      title: i18n.t('forms.application.header.profile.caption'),
+      iconAlignment: 'right',
+      items: [{
+        title: i18n.t('forms.application.header.logout.caption'),
+        items: null
+      }]
+    }];
+    return itemsUserMenu
+  }),
 });

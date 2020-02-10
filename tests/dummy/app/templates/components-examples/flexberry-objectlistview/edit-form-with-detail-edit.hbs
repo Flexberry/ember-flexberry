@@ -70,7 +70,7 @@
     }}
     {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
   </div>
-  <div class="field {{if (v-get validationObject "localizedTypes" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionTypeLocalizedTypesGroupEdit"

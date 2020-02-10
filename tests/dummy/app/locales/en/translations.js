@@ -548,6 +548,10 @@ $.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {
@@ -555,6 +559,9 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Logout'
+        },
+        'profile': {
+          'caption': 'Profile'
         }
       },
 
@@ -744,6 +751,10 @@ $.extend(true, translations, {
               'caption': 'Example lookup with compute autocomplete',
               'title': ''
             },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
@@ -855,10 +866,22 @@ $.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -904,6 +927,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -942,6 +969,25 @@ $.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Sign in',
+      'sign-up-caption': 'Or register',
+      'enter-login-caption': 'Enter your login',
+      'enter-password-caption': 'Enter password',
+      'reset-password-caption': 'Forgot your password?',
+      'login-button-caption': 'Login'
+    },
+
+    'support-form' : {
+      'caption': 'Write to tech support',
+      'contacts-caption': 'Technical support contacts: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Enter your name',
+      'enter-email-caption': 'Enter your mail',
+      'enter-message-placeholder': 'If you encounter a problem, describe in detail: how it manifests itself, what actions and in what order you performed. If possible, attach a screenshot',
+      'send-button-caption': 'Submit',
+      'attach-file-caption':'Attach file'
     },
 
     'edit-form': {
@@ -1022,6 +1068,17 @@ $.extend(true, translations, {
       'editor-validation-message-caption': 'Editor is required',
       'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly for LookUp "Application User" in GroupEdit "User votes"',
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
+    },
+
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {
@@ -1173,6 +1230,10 @@ $.extend(true, translations, {
           'caption': 'Example lookup with compute autocomplete',
           'title': ''
         },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
@@ -1256,6 +1317,9 @@ $.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
@@ -1303,6 +1367,11 @@ $.extend(true, translations, {
           'caption': 'Flexberry-simpledatetime. Settings example'
         }
       },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Settings example'
+        }
+      },
       'flexberry-textarea': {
         'settings-example': {
           'caption': 'Flexberry-textarea. Settings example'
@@ -1334,6 +1403,19 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
+      },
+      'modal-dialog': {
+        'caption': 'Examples of using the {{component}} component',
+        'in-current-context': 'In the context of the current template',
+        'application-context': 'In the context of the application template',
+        'open-lightbox': 'Open modal window',
+        'open-second-lightbox': 'Open second modal window',
+        'lightbox-title': 'Modal window',
+        'second-lightbox-title': 'Second modal window',
+        'open-sidepage': 'Open modal window in «sidepage» mode',
+        'open-second-sidepage': 'Open second modal window in «sidepage» mode',
+        'sidepage-title': 'Modal window in «sidepage» mode',
+        'second-sidepage-title': 'Second modal window in «sidepage» mode',
       },
       'ui-message': {
         'settings-example': {

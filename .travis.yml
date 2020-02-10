@@ -2,7 +2,7 @@
 language: node_js
 
 node_js:
-  - "8"
+  - "10"
 
 sudo: required
 dist: trusty
@@ -13,11 +13,7 @@ services:
 addons:
   chrome: stable
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+cache: false
 
 env:
   global:

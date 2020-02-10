@@ -99,7 +99,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: attr('Name', {
       hidden: true
-    })
+    }),
   }, {
     displayMemberPath: 'name'
   }),
@@ -364,6 +364,18 @@ Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-su
   creator: attr(''),
   editTime: attr(''),
   editor: attr('')
+});
+
+// Edit form projection with Karma.
+Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion', {
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
+      hidden: true
+    }),
+    karma: attr(''),
+  }, {
+    displayMemberPath: 'name'
+  })
 });
 
 export default Model;

@@ -892,7 +892,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setModalIsStartToShow(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.get('componentName') === componentName && this.get('modalIsShow')) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }

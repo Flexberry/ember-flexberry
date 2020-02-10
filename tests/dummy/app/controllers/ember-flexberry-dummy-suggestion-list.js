@@ -1,5 +1,6 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
+import { translationMacro as t } from 'ember-i18n';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**
@@ -13,7 +14,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
   exportExcelProjection: 'SuggestionL',
 
-  //title: this.get('i18n').t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
+  title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
   
 
   actions: {

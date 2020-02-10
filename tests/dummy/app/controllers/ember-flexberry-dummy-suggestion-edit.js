@@ -2,7 +2,7 @@ import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import RSVP from 'rsvp';
 import { assert } from '@ember/debug';
-import $ from 'jquery';
+import { translationMacro as t } from 'ember-i18n';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -23,6 +23,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
+  title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-editform-question-caption'),
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.
@@ -78,44 +79,26 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     return cellComponent;
   },
 
-  beforeDeleteModalDialog: function() {
-    return new RSVP.Promise((resolve, reject) => {
-      let settings ={
-        closable  : false,
-        context: '.ember-application > .ember-view',
-        transition: 'slide left',
-        onDeny: function(){
-          $(this).modal('hide');
-          reject();
-        },
-        onApprove: function(){
-          $(this).modal('hide');
-          resolve();
-        },
-      };
-  
-      $('.flexberry-editform-delete-record-modal-dialog').modal(settings).modal('show');
-    });
-  },
   actions: {
-    delete(skipTransition) {
-      let _this = this;
-      let beforeDeleteModalDialog = this.get('beforeDeleteModalDialog');  
-      if (beforeDeleteModalDialog) {
-      assert('beforeDeleteModalDialog must be a function', typeof beforeDeleteModalDialog === 'function');
-  
-      let possiblePromise = beforeDeleteModalDialog();
-  
-      if (possiblePromise && (possiblePromise instanceof RSVP.Promise)) {
-          possiblePromise.then(() => {
-            _this.delete(skipTransition);
-            return;
-          });
-      }
-      } else {
-        _this.delete(skipTransition);
-        return
-      }
+    delete(skipTransition) {  
+      // Сохраняем функции для резолва или реджекта промиса
+      // Сохраняем до рендера шаблона, что бы во время рендера они уже были
+      this.set('approve', ()=>{this.delete(skipTransition)});
+      this.set('deny',()=>{});
+
+      // Рендерим шаблон
+      this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
+        controller: 'ember-flexberry-dummy-suggestion-edit'
+      });
+    },
+    
+    closeModalDialog() {
+      // Очищаем сохраненные функции
+      this.set('approve', null);
+      this.set('deny', null);
+
+      // Очищаем оутлет куда рендерился шаблон
+      this.send('removeModalDialog');
     },
   }
 });

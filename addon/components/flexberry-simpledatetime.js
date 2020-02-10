@@ -413,12 +413,12 @@ export default FlexberryBaseComponent.extend({
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
 
-    $(document).mousedown($.proxy(function(e) {
+    $(document).mousedown((e) => {
       let clicky = $(e.target);
-      if (clicky.closest('.flatpickr-calendar').length == 0 && clicky.get(0) != this.$('.custom-flatpickr').get(0)) {
+      if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
         this.get('_flatpickr').close();
       }
-    }, this));
+    });
   },
 
   /**

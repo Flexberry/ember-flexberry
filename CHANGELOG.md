@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-lookup` component:
+    * Loading image on target lookup choose button.
 
 ## [2.3.0-beta.1] - 2020-02-07
 ### Added

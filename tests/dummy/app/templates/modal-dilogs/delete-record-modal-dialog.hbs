@@ -1,0 +1,22 @@
+{{#modal-dialog
+  title=title
+  useOkButton=false
+  useCloseButton=false
+  close=(action "closeModalDialog")
+  settings=(hash
+    closable=false
+    onApprove=(action approve)
+    onDeny=(action deny)
+  )
+}}
+    <div class="delete-record-modal-dialog center actions aligned ui grid">
+        <div class="ui green approve button" style="width: 150px">
+            <i class="checkmark icon"></i>
+            {{t "forms.application.flexberry-objectlistview-modal-question-caption.confirm-button-caption"}}
+        </div>
+        <div class="ui red cancel button" style="width: 150px; margin-left: 10px;">
+            <i class="cancel icon"></i>
+            {{t "forms.application.flexberry-objectlistview-modal-question-caption.cancel-button-caption"}}
+        </div>
+    </div>
+{{/modal-dialog}}

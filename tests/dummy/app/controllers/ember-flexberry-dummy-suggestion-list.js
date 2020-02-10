@@ -1,19 +1,20 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
-import $ from 'jquery';
-import RSVP from 'rsvp';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**
     Name of related edit form route.
 
-    @property editFormRoute
+    @property editFormRoutes
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
    */
   editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
 
   exportExcelProjection: 'SuggestionL',
+
+  //title: this.get('i18n').t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
+  
 
   actions: {
     /**
@@ -25,23 +26,26 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     },
 
     beforeDeleteRecord: function() {
-      return new RSVP.Promise((resolve, reject) => {
-        let settings ={
-          closable  : false,
-          context: '.ember-application > .ember-view',
-          transition: 'slide left',
-          onDeny: function(){
-            $(this).modal('hide');
-            reject();
-          },
-          onApprove: function(){
-            $(this).modal('hide');
-            resolve();
-          },
-        };
-    
-        $('.flexberry-olv-delete-record-modal-dialog').modal(settings).modal('show');
+      return new Promise((resolve, reject) => {
+        // Сохраняем функции для резолва или реджекта промиса
+        // Сохраняем до рендера шаблона, что бы во время рендера они уже были
+        this.set('approve', resolve);
+        this.set('deny', reject);
+
+        // Рендерим шаблон
+        this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
+          controller: 'ember-flexberry-dummy-suggestion-list'
+        });
       });
-    }
+    },
+
+    closeModalDialog() {
+      // Очищаем сохраненные функции
+      this.set('approve', null);
+      this.set('deny', null);
+
+      // Очищаем оутлет куда рендерился шаблон
+      this.send('removeModalDialog');
+    },
   },
 });

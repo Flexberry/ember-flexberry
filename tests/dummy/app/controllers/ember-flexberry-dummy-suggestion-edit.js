@@ -6,7 +6,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   /**
     Route name for transition after close edit form.
 
-    @property parentRoute
+    @property parentRoutes
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */
@@ -22,6 +22,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
   title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-editform-question-caption'),
+
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.
@@ -78,24 +79,28 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   },
 
   actions: {
+    /**
+      Show delete modal dialog before deleting.
+    */
     delete(skipTransition) {  
-      // Сохраняем функции для резолва или реджекта промиса
-      // Сохраняем до рендера шаблона, что бы во время рендера они уже были
-      this.set('approve', ()=>{this.delete(skipTransition)});
-      this.set('deny',()=>{});
+      // Continue deletion when accepting modal dialog.
+      this.set('approve', () => {this.delete(skipTransition)});
 
-      // Рендерим шаблон
+      //Stops deletion when a modal dialog is canceled.
+      this.set('deny',() => {});
+
       this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
         controller: 'ember-flexberry-dummy-suggestion-edit'
       });
     },
-    
+
+    /**
+      Close modal dialog and clear actions.
+    */
     closeModalDialog() {
-      // Очищаем сохраненные функции
       this.set('approve', null);
       this.set('deny', null);
 
-      // Очищаем оутлет куда рендерился шаблон
       this.send('removeModalDialog');
     }
   }

@@ -15,7 +15,6 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
   exportExcelProjection: 'SuggestionL',
 
   title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
-  
 
   actions: {
     /**
@@ -26,26 +25,30 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       data.cancel = false;
     },
 
+    /**
+      Show delete modal dialog before deleting.
+    */
     beforeDeleteRecord: function() {
-      return new Promise((resolve, reject) => {
-        // Сохраняем функции для резолва или реджекта промиса
-        // Сохраняем до рендера шаблона, что бы во время рендера они уже были
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        // Continue deletion when accepting modal dialog.
         this.set('approve', resolve);
+
+        //Stops deletion when a modal dialog is canceled.
         this.set('deny', reject);
 
-        // Рендерим шаблон
         this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
           controller: 'ember-flexberry-dummy-suggestion-list'
         });
       });
     },
 
+    /**
+      Close modal dialog and clear actions.
+    */
     closeModalDialog() {
-      // Очищаем сохраненные функции
       this.set('approve', null);
       this.set('deny', null);
 
-      // Очищаем оутлет куда рендерился шаблон
       this.send('removeModalDialog');
     },
   },

@@ -174,7 +174,7 @@
               {{#if (or readonly allSelect)}}
                 <button
                   class="ui check-all-at-page-button {{buttonClass}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                  title={{checkAllAtPageButtonCaption}}
                   disabled="disabled"
                   {{action "checkAllAtPage"}}>
                     <i class="check-square-o icon"></i>
@@ -182,7 +182,7 @@
               {{else}}
                 <button
                   class="ui check-all-at-page-button {{buttonClass}} button"
-                  title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                  title={{checkAllAtPageButtonCaption}}
                   {{action "checkAllAtPage"}}>
                     <i class="check-square-o icon"></i>
                 </button>

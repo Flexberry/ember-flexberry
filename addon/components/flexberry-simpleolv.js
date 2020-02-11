@@ -512,6 +512,15 @@ export default folv.extend(
   placeholder: t('components.object-list-view.placeholder'),
 
   /**
+    Caption of button, that check and uncheck all items on page.
+
+    @property checkAllAtPageButtonCaption
+    @type String
+    @default 't('components.olv-toolbar.check-all-at-page-button-text')'
+  */
+  checkAllAtPageButtonCaption: t('components.olv-toolbar.check-all-at-page-button-text'),
+
+  /**
     Flag indicates whether table headers are clickable.
 
     @property orderable
@@ -646,6 +655,14 @@ export default folv.extend(
     if (configurateSelectedRows) {
       Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
+    }
+
+    // Set caption of select all at page button.
+    let contentWithKeys = this.get('contentWithKeys');
+    if (contentWithKeys && contentWithKeys.length == selectedRecords.length) {
+      this.set('checkAllAtPageButtonCaption', t('components.olv-toolbar.uncheck-all-at-page-button-text'));
+    } else {
+      this.set('checkAllAtPageButtonCaption', t('components.olv-toolbar.check-all-at-page-button-text'));
     }
   })),
 
@@ -1169,6 +1186,10 @@ export default folv.extend(
         return;
       }
 
+      if (this.get('selectedRecords')) {
+        this.get('selectedRecords').clear();
+      }
+
       this._router = Ember.getOwner(this).lookup('router:main');
 
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
@@ -1274,9 +1295,9 @@ export default folv.extend(
 
     // Restore selected records.
     // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-    if (this.get('selectedRecords')) {
+    /*if (this.get('selectedRecords')) {
       this.get('selectedRecords').clear();
-    }
+    }*/
 
     let componentName = this.get('componentName');
 

@@ -177,6 +177,7 @@ export default {
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy',
       'check-all-at-page-button-text': 'Check all entries on the current page',
+      'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
       'clear-sorting-button-text': 'Set the default sorting'
     },

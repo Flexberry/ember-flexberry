@@ -1,7 +1,7 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
 import { translationMacro as t } from 'ember-i18n';
-import { Promise } from 'rsvp';
+import RSVP from 'rsvp';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**
@@ -30,14 +30,14 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       Show delete modal dialog before deleting.
     */
     beforeDeleteRecord: function() {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new RSVP.Promise((resolve, reject) => {
         // Continue deletion when accepting modal dialog.
         this.set('approve', resolve);
 
         // Stops deletion when a modal dialog is canceled.
         this.set('deny', reject);
 
-        this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
+        this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
           controller: 'ember-flexberry-dummy-suggestion-list'
         });
       });

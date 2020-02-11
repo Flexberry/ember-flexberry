@@ -1,0 +1,22 @@
+{{#modal-dialog
+  title=title
+  useOkButton=false
+  useCloseButton=false
+  close=(action "closeModalDialog")
+  settings=(hash
+    closable=false
+    onApprove=(action approve)
+    onDeny=(action deny)
+  )
+}}
+  <div class="actions">
+    <div class="ui green approve button">
+      <i class="checkmark icon"></i>
+      {{t "forms.application.flexberry-objectlistview-modal-question-caption.confirm-button-caption"}}
+    </div>
+    <div class="ui red cancel button">
+      <i class="cancel icon"></i>
+      {{t "forms.application.flexberry-objectlistview-modal-question-caption.cancel-button-caption"}}
+    </div>
+  </div>
+{{/modal-dialog}}

@@ -89,7 +89,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       // Stops deletion when a modal dialog is canceled.
       this.set('deny',() => {});
 
-      this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {
+      this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
         controller: 'ember-flexberry-dummy-suggestion-edit'
       });
     },

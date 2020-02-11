@@ -6,7 +6,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
   /**
     Name of related edit form route.
 
-    @property editFormRoutes
+    @property editFormRoute
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
    */

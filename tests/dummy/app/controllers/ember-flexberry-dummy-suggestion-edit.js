@@ -6,7 +6,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   /**
     Route name for transition after close edit form.
 
-    @property parentRoutes
+    @property parentRoute
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */

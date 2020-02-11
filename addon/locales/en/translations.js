@@ -115,7 +115,7 @@ export default {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      },
+      }
     },
 
     'flexberry-groupedit': {

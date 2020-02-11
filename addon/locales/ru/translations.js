@@ -115,7 +115,7 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      },
+      }
     },
 
     'flexberry-groupedit': {

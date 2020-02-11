@@ -86,7 +86,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       // Continue deletion when accepting modal dialog.
       this.set('approve', () => {this.delete(skipTransition)});
 
-      //Stops deletion when a modal dialog is canceled.
+      // Stops deletion when a modal dialog is canceled.
       this.set('deny',() => {});
 
       this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {

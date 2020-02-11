@@ -33,7 +33,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
         // Continue deletion when accepting modal dialog.
         this.set('approve', resolve);
 
-        //Stops deletion when a modal dialog is canceled.
+        // Stops deletion when a modal dialog is canceled.
         this.set('deny', reject);
 
         this.send('showModalDialog', 'modal-dilogs/delete-record-modal-dialog', {

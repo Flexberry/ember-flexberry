@@ -83,11 +83,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       Show delete modal dialog before deleting.
     */
     delete(skipTransition) {  
-      // Continue deletion when accepting modal dialog.
-      this.set('approve', () => {this.delete(skipTransition)});
-
-      // Stops deletion when a modal dialog is canceled.
-      this.set('deny',() => {});
+      this.set('approveDeleting', () => {this.delete(skipTransition)});
+      this.set('denyDeleting',() => {});
 
       this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
         controller: 'ember-flexberry-dummy-suggestion-edit'
@@ -98,8 +95,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       Close modal dialog and clear actions.
     */
     closeModalDialog() {
-      this.set('approve', null);
-      this.set('deny', null);
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
 
       this.send('removeModalDialog');
     }

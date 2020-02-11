@@ -31,11 +31,8 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     */
     beforeDeleteRecord: function() {
       return new RSVP.Promise((resolve, reject) => {
-        // Continue deletion when accepting modal dialog.
-        this.set('approve', resolve);
-
-        // Stops deletion when a modal dialog is canceled.
-        this.set('deny', reject);
+        this.set('approveDeleting', resolve);
+        this.set('denyDeleting', reject);
 
         this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
           controller: 'ember-flexberry-dummy-suggestion-list'
@@ -47,8 +44,8 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       Close modal dialog and clear actions.
     */
     closeModalDialog() {
-      this.set('approve', null);
-      this.set('deny', null);
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
 
       this.send('removeModalDialog');
     },

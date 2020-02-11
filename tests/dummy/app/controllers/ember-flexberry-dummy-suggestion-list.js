@@ -1,6 +1,7 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
 import { translationMacro as t } from 'ember-i18n';
+import { Promise } from 'rsvp';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**

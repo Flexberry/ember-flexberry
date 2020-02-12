@@ -11,6 +11,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Loading image on target lookup choose button.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.0`.
+
 ## [2.3.0-beta.1] - 2020-02-07
 ### Added
 * The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.

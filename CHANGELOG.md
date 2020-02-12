@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* Some errors in the `perf` service.
 * `flexberry-lookup` component:
     * Loading image on target lookup choose button.
 

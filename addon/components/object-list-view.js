@@ -427,6 +427,15 @@ export default FlexberryBaseComponent.extend(
   showPrototypeMenuItemInRow: false,
 
   /**
+    Flag indicates that on page selected all records.
+
+    @property allSelectAtPage
+    @type Boolean
+    @default false
+  */
+  allSelectAtPage: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @property menuInRowAdditionalItems
@@ -583,36 +592,50 @@ export default FlexberryBaseComponent.extend(
     @property checkRowsSettingsItems
     @readOnly
   */
-  checkRowsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', 'readonly', 'allSelect', function() {
-    let i18n = this.get('i18n');
-    let readonly = this.get('readonly');
-    let allSelect = this.get('allSelect');
+  checkRowsSettingsItems: computed(
+    'i18n.locale',
+    'userSettingsService.isUserSettingsServiceEnabled',
+    'readonly',
+    'allSelect',
+    'allSelectAtPage',
+    function() {
+      let i18n = this.get('i18n');
+      let readonly = this.get('readonly');
+      let allSelect = this.get('allSelect');
 
-    let rootItem = {
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [],
-      localeKey: ''
-    };
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
 
-    if (!readonly) {
-      if (!allSelect)
-        rootItem.items.push({
-          title: i18n.t('components.olv-toolbar.check-all-at-page-button-text'),
-          localeKey: 'components.olv-toolbar.check-all-at-page-button-text'
-        });
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitleKey = isUncheckAllAtPage ? 'components.olv-toolbar.uncheck-all-at-page-button-text' : 'components.olv-toolbar.check-all-at-page-button-text';
 
-      let classNames = this.get('classNames');
-      if (classNames != null && !classNames.includes('groupedit-container'))
-        rootItem.items.push({
-          title: i18n.t('components.olv-toolbar.check-all-button-text'),
-          localeKey: 'components.olv-toolbar.check-all-button-text'
-        });
+      let checkAllTitle = allSelect ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitleKey = allSelect ? 'components.olv-toolbar.uncheck-all-button-text' : 'components.olv-toolbar.check-all-button-text';
+
+      if (!readonly) {
+        if (!allSelect)
+          rootItem.items.push({
+            title: checkAllAtPageTitle,
+            localeKey: checkAllAtPageTitleKey
+          });
+
+        let classNames = this.get('classNames');
+        if (classNames != null && !classNames.includes('groupedit-container'))
+          rootItem.items.push({
+            title: checkAllTitle,
+            localeKey: checkAllTitleKey
+          });
+      }
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
-
-    return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
-  }),
+  ),
 
   /**
     Flag indicates whether some column contains editable component instead of default cellComponent.
@@ -837,6 +860,21 @@ export default FlexberryBaseComponent.extend(
       assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
+
+    // Set title flag of select all at page button.
+    const contentWithKeys = this.get('contentWithKeys');
+    if (contentWithKeys) {
+      let isAllSelectAtPage = true;
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get('selected')) {
+          isAllSelectAtPage = false;
+        }
+      }
+  
+      this.set('allSelectAtPage', isAllSelectAtPage);
+    }
+
+
   }),
 
   /**
@@ -1138,12 +1176,18 @@ export default FlexberryBaseComponent.extend(
       let i18n = this.get('i18n');
       let namedSetting = namedItemSpans.get(0).innerText;
 
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+
+      let isUncheckAll = this.get('allSelect');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+     
       switch (namedSetting) {
-        case i18n.t('components.olv-toolbar.check-all-at-page-button-text').toString(): {
+        case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
           break;
         }
-        case i18n.t('components.olv-toolbar.check-all-button-text').toString(): {
+        case checkAllTitle.toString(): {
           this.send('checkAll');
           break;
         }

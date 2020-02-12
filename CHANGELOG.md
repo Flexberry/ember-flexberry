@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-simpledatetime` component:
     * Hide datepicker window on scroll.
 
+* `object-list-view` component:
+    * Toggle title of checkAll buttons.
+
 ### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
 

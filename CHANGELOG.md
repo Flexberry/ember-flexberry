@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `modalDialogSettings` property for the `flexberry-lookup` component.
+
 ### Fixed
 * `flexberry-lookup` component:
     * Loading image on target lookup choose button.

@@ -99,6 +99,20 @@ export default FlexberryBaseComponent.extend({
   _pageInResultsForAutocomplete: 1,
 
   /**
+    Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
+    return Ember.merge({
+      sizeClass: this.get('_sizeClass'),
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get('modalDialogSettings'));
+  }),
+
+  /**
     Text to be displayed in field, if value not selected.
 
     @property placeholder
@@ -403,6 +417,32 @@ export default FlexberryBaseComponent.extend({
   lookupAdditionalLimitFunction: undefined,
 
   /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}}, not set by default.
+      - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use `modalDialogSettings.sizeClass`.
+  */
+  sizeClass: Ember.computed.deprecatingAlias('_sizeClass', {
+    id: 'flexberry-lookup.modal-dialog-size-class',
+    until: '3.0',
+  }),
+
+  /**
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
@@ -482,6 +522,7 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
@@ -496,9 +537,7 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
-
-        //TODO: move to modal settings.
-        sizeClass: this.get('sizeClass')
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
     }),
 
@@ -792,7 +831,8 @@ export default FlexberryBaseComponent.extend({
         showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
         controller: this.get('controllerForPreview'),
-        projection: this.get('previewFormProjection')
+        projection: this.get('previewFormProjection'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
 
       this.sendAction('preview', previewData);

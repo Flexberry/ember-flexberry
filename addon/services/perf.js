@@ -217,7 +217,7 @@ export default Ember.Service.extend({
           },
           didTransition: function() {
             this._super(...arguments);
-            this._runOnTransitionEnd();
+            _this._runOnTransitionEnd();
           }
         }
       });

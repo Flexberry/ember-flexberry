@@ -349,6 +349,7 @@ ErrorableRouteMixin, {
       controller.set('error', undefined);
       controller.set('userSettings', this.userSettings);
       controller.set('modelProjection', proj);
+      controller.set('modelName', this.get('modelName'));
       controller.set('developerUserSettings', this.get('developerUserSettings'));
       controller.set('resultPredicate', this.get('resultPredicate'));
       controller.set('filtersPredicate', this.get('filtersPredicate'));

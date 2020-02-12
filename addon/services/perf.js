@@ -156,7 +156,7 @@ export default Service.extend({
       let sizeWidth = dims.left + (dims.width / 2);
       let sizeHeight = dims.top + (dims.height / 2);
 
-      let perfElems = document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF').without(dataElement);
+      let perfElems = Ember.A(document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF')).without(dataElement);
 
       if (perfElems.length) {
         perfElem = perfElems.find((item) => item.classList.includes('nudger')) || perfElems[0];
@@ -220,7 +220,7 @@ export default Service.extend({
           },
           didTransition: function() {
             this._super(...arguments);
-            this._runOnTransitionEnd();
+            _this._runOnTransitionEnd();
           }
         }
       });

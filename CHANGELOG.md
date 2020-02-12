@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `modalDialogSettings` property for the `flexberry-lookup` component.
 
 ### Fixed
+* Some errors in the `perf` service.
 * `flexberry-lookup` component:
     * Loading image on target lookup choose button.
 

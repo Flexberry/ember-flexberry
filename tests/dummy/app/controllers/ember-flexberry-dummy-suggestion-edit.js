@@ -1,5 +1,6 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import { merge } from '@ember/polyfills';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -73,5 +74,33 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
+  },
+
+  actions: {
+    /**
+      This method returns custom properties for lookup window.
+      @method getLookupFolvProperties
+
+      @param {Object} options Parameters of lookup that called this method.
+      @param {String} [options.projection] Lookup projection.
+      @param {String} [options.relationName] Lookup relation name.
+      @return {Object} Set of options for lookup window.
+     */
+    getLookupFolvProperties: function(options) {
+      let methodArgs = merge({
+        projection: undefined,
+        relationName: undefined
+      }, options);
+
+      if (methodArgs.relationName === 'editor1' || methodArgs.relationName === 'author') {
+        return {
+          refreshButton:true,
+          enableFilters: true,
+          filterButton: true
+        };
+      }
+
+      return undefined;
+    }
   }
 });

@@ -2387,13 +2387,11 @@ export default FlexberryBaseComponent.extend(
     if (componentName === this.get('componentName')) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
-      /* eslint-disable no-unused-vars */
-      selectedRecords.forEach((item, index, enumerable) => {
+      selectedRecords.forEach((item) => {
         once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
-      /* eslint-enable no-unused-vars */
 
       selectedRecords.clear();
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);

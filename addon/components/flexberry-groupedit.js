@@ -434,6 +434,15 @@ export default FlexberryBaseComponent.extend({
   */
   overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
 
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -676,6 +685,13 @@ export default FlexberryBaseComponent.extend({
       developerUserSettings = developerUserSettings[this.componentName] || {};
       developerUserSettings = developerUserSettings.DEFAULT || {};
       this.set('sorting', developerUserSettings.sorting || []);
+    }
+
+    if (this.get('fixedHeader')) {
+      let $currentTable = this.$('table.object-list-view');
+      $currentTable.parent().addClass('fixed-header');
+
+      this._fixedTableHead($currentTable);
     }
   },
 

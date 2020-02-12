@@ -8,9 +8,9 @@
 {{/if}}
 {{#if deleteButton}}
   <button
-    class="ui ui-delete {{if _isDeleteRowsEnabled '' 'disabled'}} {{buttonClass}} button"
+    class="ui ui-delete {{unless _hasSelectedRows "disabled"}} {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.delete-button-text"}}
-    disabled={{readonly}} {{action 'deleteRows'}}>
+    disabled={{or (not _hasSelectedRows) readonly}} {{action 'deleteRows'}}>
       <i class="minus icon"></i>
   </button>
 {{/if}}
@@ -27,7 +27,7 @@
   <button
     class="ui ui-move-up {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.move-up-button-text"}}
-    disabled={{readonly}}
+    disabled={{or (not _hasSelectedRows) _disableMoveUpButton readonly}}
     {{action 'moveRow' -1}}>
       <i class="arrow up icon"></i>
   </button>
@@ -35,7 +35,7 @@
   <button
     class="ui ui-move-down {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.move-down-button-text"}}
-    disabled={{readonly}}
+    disabled={{or (not _hasSelectedRows) _disableMoveDownButton readonly}}
     {{action 'moveRow' 1}}>
       <i class="arrow down icon"></i>
   </button>

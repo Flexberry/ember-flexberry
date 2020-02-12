@@ -6,6 +6,28 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * The `modalDialogSettings` property for the `flexberry-lookup` component.
 
+### Fixed
+* `flexberry-lookup` component:
+    * Loading image on target lookup choose button.
+
+## [2.3.0-beta.1] - 2020-02-07
+### Added
+* The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
+* `flexberry-groupedit` component:
+    * Add `fixedHeader` mode.
+* Blueprints:
+    * Add `modelName` field in `list-form` controller.
+
+### Changed
+* `flexberry-simpledatetime` component:
+    * Hide datepicker window on scroll.
+
+### Fixed
+* The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
+* `flexberry-lookup` component:
+    * Loading an extra record in the results for autocomplete.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+
 ## [2.2.1] - 2020-01-15
 ### Added
 * `flexberry-lookup` controller:

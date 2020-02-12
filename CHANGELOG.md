@@ -3,10 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.3.0-beta.2] - 2020-02-12
 ### Added
 * The `modalDialogSettings` property for the `flexberry-lookup` component.
 
 ### Fixed
+* Displaying fixed header in the `flexberry-objectlistview` component for some browsers (#982).
 * Some errors in the `perf` service.
 * `flexberry-lookup` component:
     * Loading image on target lookup choose button.

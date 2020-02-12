@@ -443,8 +443,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
-    const modalDialogSettings = Ember.merge(reloadData.modalDialogSettings, lookupSettings.modalDialogSettings);
-    delete reloadData.modalDialogSettings;
+    const modalDialogSettings = Ember.merge(Ember.merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
 
     controller.clear(reloadData.initialLoad);
     controller.setProperties({

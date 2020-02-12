@@ -522,7 +522,7 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
-    'modalDialogSettings',
+    '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));

@@ -5,6 +5,7 @@
 import { assert, warn, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { computed, observer, get } from '@ember/object';
+import { deprecatingAlias } from '@ember/object/computed';
 import { later, run, once } from '@ember/runloop';
 import { merge } from '@ember/polyfills';
 import { isNone } from '@ember/utils';
@@ -104,8 +105,8 @@ export default FlexberryBaseComponent.extend({
     @private
     @property _modalDialogSettings
   */
-  _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
-    return Ember.merge({
+  _modalDialogSettings: computed('modalDialogSettings', function () {
+    return merge({
       sizeClass: this.get('_sizeClass'),
       useOkButton: false,
       useCloseButton: false,
@@ -471,7 +472,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @deprecated Use `modalDialogSettings.sizeClass`.
   */
-  sizeClass: Ember.computed.deprecatingAlias('_sizeClass', {
+  sizeClass: deprecatingAlias('_sizeClass', {
     id: 'flexberry-lookup.modal-dialog-size-class',
     until: '3.0',
   }),
@@ -906,7 +907,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Observe lookup autocomplete max results changes.
   */
-  maxResultsObserver: Ember.observer('maxResults', function() {
+  maxResultsObserver: observer('maxResults', function() {
     if (this.get('autocomplete')) {
       this._onAutocomplete();
     }
@@ -1189,7 +1190,7 @@ export default FlexberryBaseComponent.extend({
 
           // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
           // This function allows us to start the search again, thanks to the `searchOnFocus` option.
-          Ember.run.later(() => {
+          later(() => {
             _this.$().search('add results', '');
             _this.$('input').focus();
           }, 500);

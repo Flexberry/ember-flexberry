@@ -302,7 +302,7 @@ export default Mixin.create(ReloadListMixin, {
           modelProjection: projection
         });
 
-        const modalDialogSettings = Ember.merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
+        const modalDialogSettings = merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
         const lookupController = this.get('lookupController');
         lookupController.setProperties({
           title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
@@ -448,7 +448,7 @@ export default Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
-    const modalDialogSettings = Ember.merge(Ember.merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
+    const modalDialogSettings = merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
 
     controller.clear(reloadData.initialLoad);
     controller.setProperties({

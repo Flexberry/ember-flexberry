@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import { A } from '@ember/array';
 import Service from '@ember/service';
 import { schedule } from '@ember/runloop';
 import Route from '@ember/routing/route';
@@ -156,7 +157,7 @@ export default Service.extend({
       let sizeWidth = dims.left + (dims.width / 2);
       let sizeHeight = dims.top + (dims.height / 2);
 
-      let perfElems = Ember.A(document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF')).without(dataElement);
+      let perfElems = A(document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF')).without(dataElement);
 
       if (perfElems.length) {
         perfElem = perfElems.find((item) => item.classList.includes('nudger')) || perfElems[0];

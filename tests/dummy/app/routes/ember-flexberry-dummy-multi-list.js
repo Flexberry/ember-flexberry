@@ -14,7 +14,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
       editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
-      advLimitButton: true
+      advLimitButton: false
     }));
 
     this.set('multiListSettings.MultiUserList2', new ListParameters({
@@ -23,7 +23,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
       editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
-      advLimitButton: true
+      advLimitButton: false
     }));
 
     this.set('multiListSettings.MultiSuggestionList', new ListParameters({

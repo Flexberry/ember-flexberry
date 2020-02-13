@@ -142,6 +142,24 @@ export default EditFormController.extend({
   previewOnSeparateRoute: false,
 
   /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
+    Max number of the results for autocomplete.
+
+    @property maxResults
+    @type Integer
+    @default 10
+  */
+  maxResults: 10,
+
+  /**
     Template text for 'flexberry-lookup' component.
 
     @property componentTemplateText
@@ -165,6 +183,8 @@ export default EditFormController.extend({
       '  remove=(action "removeLookupValue")<br>' +
       '  autocomplete=autocomplete<br>' +
       '  autocompletePersistValue=autocompletePersistValue<br>' +
+      '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
+      '  maxResults=maxResults<br>' +
       '  displayValue=model.lookupDisplayValue<br>' +
       '  dropdown=dropdown<br>' +
       '  dropdownIsSearch=dropdownIsSearch<br>' +
@@ -215,6 +235,18 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'autocompletePersistValue'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'usePaginationForAutocomplete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'usePaginationForAutocomplete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxResults',
+      settingType: 'number',
+      settingDefaultValue: 10,
+      bindedControllerPropertieName: 'maxResults'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'dropdown',

@@ -1,6 +1,7 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import { merge } from '@ember/polyfills';
+import { translationMacro as t } from 'ember-i18n';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -20,6 +21,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @default 'ember-flexberry-dummy-comment-edit'
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
+
+  title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-editform-question-caption'),
 
   /**
     Method to get type and attributes of a component,
@@ -101,8 +104,28 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           filterButton: true
         };
       }
+    },
 
-      return undefined;
+    /**
+      Show delete modal dialog before deleting.
+    */
+    delete(skipTransition) {  
+      this.set('approveDeleting', () => {this.delete(skipTransition)});
+      this.set('denyDeleting',() => {});
+
+      this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
+        controller: 'ember-flexberry-dummy-suggestion-edit'
+      });
+    },
+
+    /**
+      Close modal dialog and clear actions.
+    */
+    closeModalDialog() {
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
+
+      this.send('removeModalDialog');
     }
   }
 });

@@ -179,7 +179,9 @@ export default {
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования',
       'check-all-at-page-button-text': 'Выбрать все на странице',
+      'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
       'check-all-button-text': 'Выбрать все на всех страницах',
+      'uncheck-all-button-text': 'Отменить выбор на всех страницах',
       'clear-sorting-button-text': 'Установить сортировку по умолчанию'
     },
 

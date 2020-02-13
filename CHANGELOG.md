@@ -3,12 +3,40 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.3.0-beta.2] - 2020-02-12
+### Added
+* The `modalDialogSettings` property for the `flexberry-lookup` component.
+
+### Fixed
+* Displaying fixed header in the `flexberry-objectlistview` component for some browsers (#982).
+* Some errors in the `perf` service.
+* `flexberry-lookup` component:
+    * Loading image on target lookup choose button.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.0`.
+
+## [2.3.0-beta.1] - 2020-02-07
+### Added
+* The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
+* `flexberry-groupedit` component:
+    * Add `fixedHeader` mode.
+* Blueprints:
+    * Add `modelName` field in `list-form` controller.
+
 ### Changed
 * `flexberry-simpledatetime` component:
     * Hide datepicker window on scroll.
 
+* `object-list-view` component:
+    * Toggle title of checkAll buttons.
+
 ### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
+* `flexberry-lookup` component:
+    * Loading an extra record in the results for autocomplete.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
 
 ## [3.2.1] - 2020-01-28
 ### Added

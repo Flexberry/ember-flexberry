@@ -34,6 +34,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
+    let i18n = this.get('i18n');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
@@ -42,6 +43,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             remove: 'removeLookupValue',
             preview: 'previewLookupValue',
             displayAttributeName: 'name',
+            title: i18n.t('forms.ember-flexberry-dummy-application-user-list.caption'),
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',

@@ -2815,7 +2815,9 @@ export default FlexberryBaseComponent.extend(
     */
     let ua = navigator.userAgent;
 
-    if (ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) {
+    if ((ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) ||
+        (ua.search(/iPhone|iPad/) !== -1 && ua.split('Version/')[1].substr(0, 2) >= 8) ||
+        (ua.search(/Android/) !== -1 && ua.split('Chrome/')[1].substr(0, 2) >= 78)) {
       $currentTable
             .find('thead tr > *')
             .css({ 'position':'sticky', 'top':'0' });

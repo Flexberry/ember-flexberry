@@ -1,0 +1,6 @@
+.ui.cards > .card a {
+  color: @primaryColor;
+  &:hover {
+    color: shade(@primaryColor, 30%);
+  }
+}

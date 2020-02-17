@@ -1,130 +1,124 @@
 {{flexberry-error error=error}}
 <h3>{{t 'forms.ember-flexberry-dummy-multi-list.caption'}}</h3>
-<form class="ui form flexberry-vertical-form" role="form">
-  <div class="row">
-    {{#with multiListSettings.MultiUserList as |settings|}}
-      {{flexberry-objectlistview
-        modelName=settings.modelName
-        modelProjection=settings.modelProjection
-        editFormRoute=settings.editFormRoute
-        content=settings.model
-        createNewButton=true
-        refreshButton=true
-        sorting=settings.computedSorting
-        orderable=true
-        sortByColumn=(action "sortByColumn")
-        addColumnToSorting=(action "addColumnToSorting")
-        beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-        pages=settings.pages
-        perPageValue=settings.perPageValue
-        perPageValues=settings.perPageValues
-        recordsTotalCount=settings.recordsTotalCount
-        hasPreviousPage=settings.hasPreviousPage
-        hasNextPage=settings.hasNextPage
-        previousPage=(action "previousPage")
-        gotoPage=(action "gotoPage")
-        nextPage=(action "nextPage")
-        componentName=settings.componentName
-        advLimitButton=true
-        advLimitButton=settings.advLimitButton
-      }}
-    {{/with}}
-  </div>
-  <div class="row">
-    {{#with multiListSettings.MultiUserList2 as |settings|}}
-      {{flexberry-objectlistview
-        modelName=settings.modelName
-        modelProjection=settings.modelProjection
-        editFormRoute=settings.editFormRoute
-        content=settings.model
-        createNewButton=true
-        refreshButton=true
-        sorting=settings.computedSorting
-        orderable=true
-        sortByColumn=(action "sortByColumn")
-        addColumnToSorting=(action "addColumnToSorting")
-        beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-        pages=settings.pages
-        perPageValue=settings.perPageValue
-        perPageValues=settings.perPageValues
-        recordsTotalCount=settings.recordsTotalCount
-        hasPreviousPage=settings.hasPreviousPage
-        hasNextPage=settings.hasNextPage
-        previousPage=(action "previousPage")
-        gotoPage=(action "gotoPage")
-        nextPage=(action "nextPage")
-        componentName=settings.componentName
-        advLimitButton=settings.advLimitButton
-      }}
-    {{/with}}
-  </div>
-  <div class="row">
-    <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
-    {{#with multiListSettings.MultiSuggestionList as |settings|}}
-      {{flexberry-objectlistview
-        editFormRoute=settings.editFormRoute
-        showCheckBoxInRow=true
-        modelName=settings.modelName
-        modelProjection=settings.modelProjection
-        content=settings.model
-        createNewButton=true
-        enableFilters=true
-        filters=settings.filters
-        filterButton=true
-        filterByAnyMatch=(action 'filterByAnyMatch')
-        filterText=settings.filter
-        refreshButton=true
-        exportExcelButton=true
-        sorting=settings.computedSorting
-        orderable=true
-        sortByColumn=(action "sortByColumn")
-        addColumnToSorting=(action "addColumnToSorting")
-        beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-        applyFilters=(action "applyFilters")
-        resetFilters=(action "resetFilters")
-        pages=settings.pages
-        perPageValue=settings.perPageValue
-        perPageValues=settings.perPageValues
-        recordsTotalCount=settings.recordsTotalCount
-        hasPreviousPage=settings.hasPreviousPage
-        hasNextPage=settings.hasNextPage
-        previousPage=(action "previousPage")
-        gotoPage=(action "gotoPage")
-        nextPage=(action "nextPage")
-        componentName=settings.componentName
-        showDeleteMenuItemInRow=true
-        deleteButton=true
-      }}
-    {{/with}}
-  </div>
-  <div class="row">
-    {{#with multiListSettings.MultiHierarchyList as |settings|}}
-      {{flexberry-objectlistview
-        content=settings.model
-        modelName=settings.modelName
-        modelProjection=settings.modelProjection
-        editFormRoute=settings.editFormRoute
-        orderable=false
-        componentName=settings.componentName
-        beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-        colsConfigButton=false
-        disableHierarchicalMode=false
-        showCheckBoxInRow=true
-        pages=settings.pages
-        perPageValue=settings.perPageValue
-        perPageValues=settings.perPageValues
-        recordsTotalCount=settings.recordsTotalCount
-        hasPreviousPage=settings.hasPreviousPage
-        hasNextPage=settings.hasNextPage
-        previousPage=(action "previousPage")
-        gotoPage=(action "gotoPage")
-        nextPage=(action "nextPage")
-        availableCollExpandMode=true
-        inHierarchicalMode=settings.inHierarchicalMode
-        hierarchicalAttribute=settings.hierarchicalAttribute
-        inExpandMode=settings.inExpandMode
-        hierarchyPaging=settings.hierarchyPaging
-      }}
-    {{/with}}
-  </div>
-</form>
+<div class="row">
+  {{#with multiListSettings.MultiUserList as |settings|}}
+    {{flexberry-objectlistview
+      modelName=settings.modelName
+      modelProjection=settings.modelProjection
+      editFormRoute=settings.editFormRoute
+      content=settings.model
+      createNewButton=true
+      refreshButton=true
+      sorting=settings.computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      pages=settings.pages
+      perPageValue=settings.perPageValue
+      perPageValues=settings.perPageValues
+      recordsTotalCount=settings.recordsTotalCount
+      hasPreviousPage=settings.hasPreviousPage
+      hasNextPage=settings.hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName=settings.componentName
+      advLimitButton=settings.advLimitButton
+    }}
+  {{/with}}
+  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
+  {{#with multiListSettings.MultiUserList2 as |settings|}}
+    {{flexberry-objectlistview
+      modelName=settings.modelName
+      modelProjection=settings.modelProjection
+      editFormRoute=settings.editFormRoute
+      content=settings.model
+      createNewButton=true
+      refreshButton=true
+      sorting=settings.computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      pages=settings.pages
+      perPageValue=settings.perPageValue
+      perPageValues=settings.perPageValues
+      recordsTotalCount=settings.recordsTotalCount
+      hasPreviousPage=settings.hasPreviousPage
+      hasNextPage=settings.hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName=settings.componentName
+      advLimitButton=settings.advLimitButton
+    }}
+  {{/with}}
+
+  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
+  {{#with multiListSettings.MultiSuggestionList as |settings|}}
+    {{flexberry-objectlistview
+      editFormRoute=settings.editFormRoute
+      showCheckBoxInRow=true
+      modelName=settings.modelName
+      modelProjection=settings.modelProjection
+      content=settings.model
+      createNewButton=true
+      enableFilters=true
+      filters=settings.filters
+      filterButton=true
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      filterText=settings.filter
+      refreshButton=true
+      exportExcelButton=true
+      sorting=settings.computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      pages=settings.pages
+      perPageValue=settings.perPageValue
+      perPageValues=settings.perPageValues
+      recordsTotalCount=settings.recordsTotalCount
+      hasPreviousPage=settings.hasPreviousPage
+      hasNextPage=settings.hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName=settings.componentName
+      showDeleteMenuItemInRow=true
+      deleteButton=true
+    }}
+  {{/with}}
+  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
+  {{#with multiListSettings.MultiHierarchyList as |settings|}}
+    {{flexberry-objectlistview
+      content=settings.model
+      modelName=settings.modelName
+      modelProjection=settings.modelProjection
+      editFormRoute=settings.editFormRoute
+      orderable=false
+      componentName=settings.componentName
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      colsConfigButton=false
+      disableHierarchicalMode=false
+      showCheckBoxInRow=true
+      pages=settings.pages
+      perPageValue=settings.perPageValue
+      perPageValues=settings.perPageValues
+      recordsTotalCount=settings.recordsTotalCount
+      hasPreviousPage=settings.hasPreviousPage
+      hasNextPage=settings.hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      availableCollExpandMode=true
+      inHierarchicalMode=settings.inHierarchicalMode
+      hierarchicalAttribute=settings.hierarchicalAttribute
+      inExpandMode=settings.inExpandMode
+      hierarchyPaging=settings.hierarchyPaging
+    }}
+  {{/with}}
+</div>

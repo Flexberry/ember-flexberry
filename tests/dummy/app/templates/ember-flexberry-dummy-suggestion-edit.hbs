@@ -123,6 +123,7 @@
           preview=(action "previewLookupValue")
           readonly=readonly
           componentName="SuggestionEditAuthor"
+          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
         }}
         {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
       </div>
@@ -142,6 +143,7 @@
           preview=(action "previewLookupValue")
           readonly=readonly
           componentName="SuggestionEditEditor1"
+          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
         }}
         {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
       </div>

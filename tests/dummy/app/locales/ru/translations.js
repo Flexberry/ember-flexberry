@@ -597,7 +597,7 @@ $.extend(true, translations, {
       },
 
       'flexberry-objectlistview-modal-question-caption': {
-        'confirm-button-caption': 'Да',
+        'confirm-button-caption': 'Удалить',
         'cancel-button-caption': 'Отмена',
         'delete-at-listform-question-caption': 'Вы уверены, что хотите удалить выбранные записи?',
         'delete-at-editform-question-caption': 'Вы уверены, что хотите удалить запись?',

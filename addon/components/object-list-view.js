@@ -1060,6 +1060,8 @@ export default FlexberryBaseComponent.extend(
     },
     /* eslint-enable no-unused-vars */
 
+    needReinitResizablePlugin: true,
+
     /**
       This action is called when user select the row.
 
@@ -1069,6 +1071,11 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
+      this.set('needReinitResizablePlugin', false);
+      this.send('_selectRow', recordWithKey, e);
+    },
+
+    _selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
       let selectedRow = this._getRowByKey(recordWithKey.key);
 
@@ -1411,12 +1418,15 @@ export default FlexberryBaseComponent.extend(
     } else {
       this._restoreSelectedRecords();
 
-      if (this.get('allowColumnResize')) {
-        this._reinitResizablePlugin();
-      } else {
-        let $table = this.$('table.object-list-view');
-        $table.colResizable({ disable: true });
+      if (this.get('needReinitResizablePlugin')) {
+        if (this.get('allowColumnResize')) {
+          this._reinitResizablePlugin();
+        } else {
+          let $table = this.$('table.object-list-view');
+          $table.colResizable({ disable: true });
+        }
       }
+      this.set('needReinitResizablePlugin', true);
 
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
@@ -2654,7 +2664,7 @@ export default FlexberryBaseComponent.extend(
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
-          this.send('selectRow', recordWithData, e);
+          this.send('_selectRow', recordWithData, e);
         }
       });
       /* eslint-enable no-unused-vars */

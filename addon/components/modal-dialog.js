@@ -136,7 +136,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let transitionMode = "slide top";
+    let transitionMode = "scale";
 
     if (this.get('useSidePageMode')) {
       this.element.classList.add('flexberry-sidepage');

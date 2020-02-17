@@ -241,6 +241,14 @@ export default FlexberryBaseComponent.extend({
   scrollSelectors: computed(() => (['.full.height'])),
 
   /**
+    Namespase for page event.
+
+    @property eventNamespace
+    @type String
+  */
+  eventNamespace: undefined,
+
+  /**
     If true, then onClick calling flatpickr.open().
 
     @property canClick
@@ -280,7 +288,6 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
-      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -293,7 +300,10 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
-    $(this.get('scrollSelectors').join()).unbind('scroll');
+
+    let namespace = this.get('eventNamespace');
+    $(this.get('scrollSelectors').join()).off(`scroll.${namespace}`);
+    $(document).off(`mousedown.${namespace}`);
   },
 
   /**
@@ -413,12 +423,15 @@ export default FlexberryBaseComponent.extend({
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
 
-    $(document).mousedown((e) => {
+    let namespace = this.elementId;
+    this.set('eventNamespace', namespace);
+    $(document).on(`mousedown.${namespace}`, (e) => {
       let clicky = $(e.target);
       if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
         this.get('_flatpickr').close();
       }
     });
+    $(this.get('scrollSelectors').join()).on(`scroll.${namespace}`, () => this.get('_flatpickr').close());
   },
 
   /**
@@ -448,7 +461,6 @@ export default FlexberryBaseComponent.extend({
       flatpickr.destroy();
       this.set('_flatpickr', null);
     }
-    $(document).off('mousedown');
   },
 
   /**

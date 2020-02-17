@@ -33,7 +33,7 @@ export default ListFormRoute.extend({
     return {
       SOLVSuggestionTypeObjectListView: {
         'DEFAULT': {
-          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 90 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
         }
       }
     }

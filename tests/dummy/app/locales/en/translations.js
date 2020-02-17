@@ -974,7 +974,7 @@ $.extend(true, translations, {
     'login-form': {
       'header': 'Sign in',
       'sign-up-caption': 'Or register',
-      'enter-login-caption': 'Enter your login',
+      'enter-login-caption': 'Enter login',
       'enter-password-caption': 'Enter password',
       'reset-password-caption': 'Forgot your password?',
       'login-button-caption': 'Login'

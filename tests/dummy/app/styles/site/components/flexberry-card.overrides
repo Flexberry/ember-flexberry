@@ -1,6 +1,46 @@
-.ui.cards > .card a {
+.card a {
   color: @primaryColor;
   &:hover {
     color: shade(@primaryColor, 30%);
+  }
+}
+
+.ui.card .content {
+  .header{
+    position: relative;
+  }
+
+  .card-icon.icon {
+    float: right;
+    width: auto;
+  }
+}
+
+.ui.card {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1500px) {
+  .ui.grid > .row > .column.need-pd-computer {
+    padding-top: 1em;
+    padding-bottom: 2em;
+  }
+
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1500px) {
+  .ui.grid > .row > [class*="eight wide middle computer"].column,
+  .ui.grid > .column.row > [class*="eight wide middle computer"].column,
+  .ui.grid > [class*="eight wide middle computer"].column,
+  .ui.column.grid > [class*="eight wide middle computer"].column {
+    width: 50% !important;
+  }
+  .ui.grid > .row > [class*="sixteen wide middle computer"].column,
+  .ui.grid > .column.row > [class*="sixteen wide middle computer"].column,
+  .ui.grid > [class*="sixteen wide middle computer"].column,
+  .ui.column.grid > [class*="sixteen wide middle computer"].column {
+    width: 100% !important;
   }
 }

@@ -1,6 +1,15 @@
 @import 'src/flexberry-imports';
 
-.ui.card .content .card-icon.icon {
-  position: relative;
-  bottom: calc(~'-100% + 3rem');
+// Поправить генератор и перенести в тему
+.ui.main.container > .stackable.grid.container > .row,
+.ui.form.flexberry-vertical-form {
+  padding-top: 1em;
+}
+
+.ui.form .field.flexberry-validationsummary-container {
+  margin: 0;
+}
+
+.flexberry-validationsummary.ui.red.message {
+  margin-bottom: 1rem;
 }

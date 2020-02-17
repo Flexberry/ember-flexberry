@@ -1009,7 +1009,7 @@ $.extend(true, translations, {
     'login-form': {
       'header': 'Войти в систему',
       'sign-up-caption': 'Или зарегистрироваться',
-      'enter-login-caption': 'Введите ваш логин',
+      'enter-login-caption': 'Введите логин',
       'enter-password-caption': 'Введите пароль',
       'reset-password-caption': 'Забыли пароль?',
       'login-button-caption': 'Войти'

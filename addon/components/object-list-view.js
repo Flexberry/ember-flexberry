@@ -604,7 +604,7 @@ export default FlexberryBaseComponent.extend(
       let allSelect = this.get('allSelect');
 
       let rootItem = {
-        icon: 'dropdown icon',
+        icon: 'icon-guideline-check-menu icon',
         iconAlignment: 'right',
         title: '',
         items: [],

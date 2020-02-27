@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-lookup` controller:
+    * Fix disabled buttons after closing colsconfig window.
 
 ## [2.3.0-beta.2] - 2020-02-12
 ### Added

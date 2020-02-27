@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Blueprints:
     * Generates `flexberry-simpledatetime` instead of `flexberry-datepicker` component on forms for date type.
+* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.1`.
 
 ### Fixed
 * `flexberry-lookup` controller:

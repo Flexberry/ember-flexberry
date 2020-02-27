@@ -3,14 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-* Blueprints:
-    * Generates `flexberry-simpledatetime` instead of `flexberry-datepicker` component on forms for date type.
-* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.1`.
 
+## [2.3.0-beta.3] - 2020-02-27
 ### Fixed
-* `flexberry-lookup` controller:
-    * Fix disabled buttons after closing colsconfig window.
+* After closing the columns settings window for the `flexberry-objectlistview` component in the `flexberry-lookup` component with the close button (`X`), buttons of the `flexberry-lookup` component remained disabled.
+
+### Changed
+* In templates of edit forms for the dates the `flexberry-simpledatetime` component is generated instead of `flexberry-datepicker`.
+* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.1`.
 
 ## [2.3.0-beta.2] - 2020-02-12
 ### Added

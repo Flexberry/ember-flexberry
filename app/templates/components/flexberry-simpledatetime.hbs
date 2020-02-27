@@ -4,24 +4,14 @@
   <div class="ui fluid action input flatpickr">
     <input type="text" placeholder={{placeholder}}/>
     {{#if removeButton}}
-      {{#if readonlyAttr}}
-        <button
-          class="ui ui-clear disabled button"
-          title={{t "components.flexberry-lookup.remove-button-text"}}
-          disabled="disabled"
-          type="button"
-          {{action "remove" bubbles=false}}>
-          <i class="remove icon"></i>
-        </button>
-      {{else}}
-        <button
-          class="ui ui-clear button"
-          title={{t "components.flexberry-lookup.remove-button-text"}}
-          type="button"
-          {{action "remove" bubbles=false}}>
-          <i class="remove icon"></i>
-        </button>
-      {{/if}}
+      <button
+        class="ui ui-clear {{if readonlyAttr "disabled"}} button"
+        title={{t "components.flexberry-lookup.remove-button-text"}}
+        disabled={{readonlyAttr}}
+        type="button"
+        {{action "remove" bubbles=false}}>
+        <i class="remove icon"></i>
+      </button>
     {{/if}}
   </div>
 {{/if}}

@@ -91,6 +91,28 @@ export default FlexberryBaseComponent.extend({
   _cachedDropdownValue: undefined,
 
   /**
+    @private
+    @property _pageInResultsForAutocomplete
+    @type Number
+    @default 1
+  */
+  _pageInResultsForAutocomplete: 1,
+
+  /**
+    Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
+    return Ember.merge({
+      sizeClass: this.get('_sizeClass'),
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get('modalDialogSettings'));
+  }),
+
+  /**
     Text to be displayed in field, if value not selected.
 
     @property placeholder
@@ -194,6 +216,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   autocomplete: false,
+
+  /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
 
   /**
     Flag to show that lookup is in dropdown mode.
@@ -386,6 +417,32 @@ export default FlexberryBaseComponent.extend({
   lookupAdditionalLimitFunction: undefined,
 
   /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}}, not set by default.
+      - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use `modalDialogSettings.sizeClass`.
+  */
+  sizeClass: Ember.computed.deprecatingAlias('_sizeClass', {
+    id: 'flexberry-lookup.modal-dialog-size-class',
+    until: '3.0',
+  }),
+
+  /**
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
@@ -465,6 +522,7 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
@@ -479,9 +537,7 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
-
-        //TODO: move to modal settings.
-        sizeClass: this.get('sizeClass')
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
     }),
 
@@ -775,7 +831,8 @@ export default FlexberryBaseComponent.extend({
         showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
         controller: this.get('controllerForPreview'),
-        projection: this.get('previewFormProjection')
+        projection: this.get('previewFormProjection'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
 
       this.sendAction('preview', previewData);
@@ -807,6 +864,15 @@ export default FlexberryBaseComponent.extend({
     Observe lookup value changes.
   */
   valueObserver: Ember.on('init', Ember.observer('value', 'displayAttributeName', function() { Ember.run.once(this, '_valueObserver'); })),
+
+  /**
+    Observe lookup autocomplete max results changes.
+  */
+  maxResultsObserver: Ember.observer('maxResults', function() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    }
+  }),
 
   /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
@@ -892,7 +958,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setModalIsStartToShow(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.get('componentName') === componentName && this.get('modalIsShow')) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }
@@ -975,7 +1041,9 @@ export default FlexberryBaseComponent.extend({
     let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults + 1,
+
+      // +2 for page switch buttons.
+      maxResults: maxResults + 2,
       cache: false,
       templates: {
         message: function(message, type) {
@@ -1010,31 +1078,26 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          let maxRes = _this.get('maxResults');
-          let iCount = 1;
-          builder.top(maxRes + 1);
+          const usePagination = _this.get('usePaginationForAutocomplete');
+          const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
+          builder.skip(skip);
+          builder.top(maxResults);
           builder.count();
 
           Ember.run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
-              callback({
-                success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...',
-                      noResult: true
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
-              });
+              const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
+
+              if (usePagination && skip > 0) {
+                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
+              }
+
+              if (skip + records.get('length') < records.get('meta.count')) {
+                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
+                results.push({ title: title, nextPage: usePagination });
+              }
+
+              callback({ success: true, results: results });
             }, () => {
               callback({ success: false });
             });
@@ -1061,8 +1124,9 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        if (!result.noResult) {
+        if (result.instance) {
           state = 'selected';
+          _this.set('_pageInResultsForAutocomplete', 1);
 
           Ember.run(() => {
             Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
@@ -1075,6 +1139,24 @@ export default FlexberryBaseComponent.extend({
                 newRelationValue: result.instance
               });
           });
+        } else if (_this.get('usePaginationForAutocomplete')) {
+          state = 'loading';
+          if (result.nextPage) {
+            _this.incrementProperty('_pageInResultsForAutocomplete');
+          }
+
+          if (result.prevPage) {
+            _this.decrementProperty('_pageInResultsForAutocomplete');
+          }
+
+          // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
+          // This function allows us to start the search again, thanks to the `searchOnFocus` option.
+          Ember.run.later(() => {
+            _this.$().search('add results', '');
+            _this.$('input').focus();
+          }, 500);
+
+          return false;
         }
       },
 
@@ -1086,7 +1168,8 @@ export default FlexberryBaseComponent.extend({
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
 
-        if (state !== 'selected') {
+        if (state !== 'selected' && state !== 'loading') {
+          _this.set('_pageInResultsForAutocomplete', 1);
           let displayValue = _this.get('displayValue');
           if (displayValue) {
             if (_this.get('autocompletePersistValue')) {

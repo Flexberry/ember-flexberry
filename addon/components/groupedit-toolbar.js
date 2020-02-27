@@ -22,15 +22,28 @@ export default FlexberryBaseComponent.extend({
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
-    Boolean flag to indicate enabled state of delete rows button.
-
-    If rows at {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} are selected this flag is enabled.
-
-    @property _isDeleteRowsEnabled
-    @type Boolean
     @private
+    @property _hasSelectedRows
+    @type Boolean
+    @default false
   */
-  _isDeleteRowsEnabled: undefined,
+  _hasSelectedRows: false,
+
+  /**
+    @private
+    @property _disableMoveUpButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveUpButton: false,
+
+  /**
+    @private
+    @property _disableMoveDownButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveDownButton: false,
 
   /**
     Default class for component wrapper.
@@ -246,8 +259,14 @@ export default FlexberryBaseComponent.extend({
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', count > 0);
+    if (componentName === this.get('componentName') && !this.get('isDestroying')) {
+      this.set('_hasSelectedRows', count > 0);
+
+      const $tbody = this.$().parent().find('tbody');
+      const $tr = $tbody.find('tr.active');
+
+      this.set('_disableMoveUpButton', $tr.first().get(0) === $tbody.get(0).firstElementChild);
+      this.set('_disableMoveDownButton', $tr.last().get(0) === $tbody.get(0).lastElementChild);
     }
   },
 
@@ -262,7 +281,7 @@ export default FlexberryBaseComponent.extend({
   */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', false);
+      this.set('_hasSelectedRows', false);
     }
   }
 });

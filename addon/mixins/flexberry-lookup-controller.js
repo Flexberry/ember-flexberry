@@ -131,7 +131,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
         title: undefined,
         predicate: undefined,
         modelToLookup: undefined,
-        sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
         folvComponentName: undefined,
@@ -159,7 +158,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let title = options.title;
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
-      let sizeClass = options.sizeClass;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
@@ -203,7 +201,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
         hierarchyPaging: hierarchyPaging,
 
         title: title,
-        sizeClass: sizeClass,
         saveTo: {
           model: model,
           propName: relationName
@@ -213,6 +210,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         componentName: componentName,
         folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
       };
 
       this._reloadModalData(this, reloadData);
@@ -299,10 +297,11 @@ export default Ember.Mixin.create(ReloadListMixin, {
           modelProjection: projection
         });
 
-        let lookupController = this.get('lookupController');
+        const modalDialogSettings = Ember.merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
+        const lookupController = this.get('lookupController');
         lookupController.setProperties({
           title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
-          sizeClass: 'small preview-model',
+          modalDialogSettings: modalDialogSettings,
         });
 
         let lookupSettings = this.get('lookupSettings');
@@ -373,7 +372,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
-    @param {String} [options.sizeClass] Size of modal lookup window.
     @param {String} [options.saveTo] Options to save selected lookup value.
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
@@ -403,7 +401,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
       hierarchyPaging: false,
 
       title: undefined,
-      sizeClass: undefined,
       saveTo: undefined,
       currentLookupRow: undefined,
       customPropertiesData: undefined,
@@ -446,11 +443,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
+    const modalDialogSettings = Ember.merge(Ember.merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
+
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
       title: reloadData.title,
-      sizeClass: reloadData.sizeClass,
       saveTo: reloadData.saveTo,
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
@@ -470,11 +468,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       reloadContext: currentContext,
-      reloadDataHandler: currentContext._reloadModalData
+      reloadDataHandler: currentContext._reloadModalData,
+      modalDialogSettings: modalDialogSettings,
     });
 
     if (reloadData.initialLoad) {
-      currentContext.send('showModalDialog', lookupSettings.template, { model: { modalDialogSettings: lookupSettings.modalDialogSettings } });
+      currentContext.send('showModalDialog', lookupSettings.template);
     }
 
     controller.set('reloadObserverIsActive', true);

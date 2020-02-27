@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Generates `flexberry-simpledatetime` instead of `flexberry-datepicker` component on forms for date type.
+
 ### Fixed
 * `flexberry-lookup` controller:
     * Fix disabled buttons after closing colsconfig window.

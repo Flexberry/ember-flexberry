@@ -600,6 +600,16 @@ export default FlexberryBaseComponent.extend({
   columnsWidthAutoresize: false,
 
   /**
+    It is used to set how the resize method works.
+    Values: 'fit', 'flex', 'overflow'
+
+    @property columnsResizeMode
+    @type String
+    @default 'overflow'
+  */
+  columnsResizeMode: 'overflow',
+
+  /**
     List of component names, which can overflow table cell.
 
     @property overflowedComponents

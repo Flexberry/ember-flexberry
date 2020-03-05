@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* An error occurs when applying the saved user settings to the list, if attributes were removed from the projection of this list.
 
 ## [2.3.0-beta.3] - 2020-02-27
 ### Fixed

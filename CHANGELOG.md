@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * An error occurs when applying the saved user settings to the list, if attributes were removed from the projection of this list.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.3.0`.
+
 ## [2.3.0-beta.3] - 2020-02-27
 ### Fixed
 * After closing the columns settings window for the `flexberry-objectlistview` component in the `flexberry-lookup` component with the close button (`X`), buttons of the `flexberry-lookup` component remained disabled.

@@ -3,50 +3,31 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.3.0] - 2020-03-10
+### Added
+* The `fixedHeader` property for the `flexberry-groupedit` component.
+* `flexberry-lookup` component:
+    * The `modalDialogSettings` property for configuring the modal window in the component.
+    * The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete.
+
 ### Fixed
 * An error occurs when applying the saved user settings to the list, if attributes were removed from the projection of this list.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.3.0`.
-
-## [2.3.0-beta.3] - 2020-02-27
-### Fixed
-* After closing the columns settings window for the `flexberry-objectlistview` component in the `flexberry-lookup` component with the close button (`X`), buttons of the `flexberry-lookup` component remained disabled.
-
-### Changed
-* In templates of edit forms for the dates the `flexberry-simpledatetime` component is generated instead of `flexberry-datepicker`.
-* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.1`.
-
-## [2.3.0-beta.2] - 2020-02-12
-### Added
-* The `modalDialogSettings` property for the `flexberry-lookup` component.
-
-### Fixed
 * Displaying fixed header in the `flexberry-objectlistview` component for some browsers (#982).
 * Some errors in the `perf` service.
-* `flexberry-lookup` component:
-    * Loading image on target lookup choose button.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.3.0-beta.0`.
-
-## [2.3.0-beta.1] - 2020-02-07
-### Added
-* The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete in the `flexberry-lookup` component.
-* `flexberry-groupedit` component:
-    * Add `fixedHeader` mode.
-* Blueprints:
-    * Add `modelName` field in `list-form` controller.
-
-### Changed
-* `flexberry-simpledatetime` component:
-    * Hide datepicker window on scroll.
-
-### Fixed
 * The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
 * `flexberry-lookup` component:
     * Loading an extra record in the results for autocomplete.
     * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * The load icon on the choose button applied to all components built into the `flexberry-groupedit` component.
+    * After closing the columns settings window for the `flexberry-objectlistview` component with the close button (`X`), buttons of the component remained disabled.
+
+### Changed
+* Blueprints:
+    * In list form templates, the model name is generated as a property of the controller.
+    * In templates of edit forms for the dates the `flexberry-simpledatetime` component is generated instead of `flexberry-datepicker`.
+* Now the `flexberry-simpledatetime` component hides the calendar when scrolling the window.
+* Update dependency on `ember-flexberry-data` to version `2.3.0`.
 
 ## [2.2.1] - 2020-01-15
 ### Added

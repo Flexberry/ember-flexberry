@@ -20,6 +20,15 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
+  actions: {
+
+    getLookupFolvProperties: function() {
+      return {
+        colsConfigButton: true
+      };
+    }
+  },
+
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.
@@ -39,11 +48,14 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
             remove: 'removeLookupValue',
+            preview: 'previewLookupValue',
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            showPreviewButton: true,
+            previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
           };
           break;
 

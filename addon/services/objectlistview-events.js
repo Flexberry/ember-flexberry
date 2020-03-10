@@ -96,6 +96,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "refresh list" event in OLV component by name.
+
+    @method refreshListOnlyTrigger
+    @param {String} componentName The name of OLV component.
+  */
+  refreshListOnlyTrigger(componentName) {
+    this.trigger('refreshListOnly', componentName);
+  },
+
+  /**
     Trigger for "filter by any match" event in objectlistview.
 
     @method filterByAnyMatchTrigger
@@ -202,6 +212,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "setSorting" event in route.
+    Event name: setSorting.
+
+    @method setSortingTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  setSortingTrigger(componentName, sorting = []) {
+    this.trigger('setSorting', componentName, sorting);
+  },
+
+  /**
     Trigger for "geSortApply" event in object-list-view.
     Event name: geSortApply.
 
@@ -246,13 +269,26 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Current limit function for OLV.
+    Trigger for "moveRowTrigger" event in objectlistview.
+    Event name: moveRow.
 
-    @property currentLimitFunction
-    @type BasePredicate
-    @default undefined
+    @method moveRowTrigger
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} shift Shift for rows
   */
-  currentLimitFunction: undefined,
+  moveRowTrigger(componentName, shift) {
+    this.trigger('moveRow', componentName, shift);
+  },
+
+  /**
+    Current limit functions for OLV by componentNames.
+
+    @property currentLimitFunctions
+    @type Object
+    @default {}
+  */
+  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -276,19 +312,21 @@ export default Ember.Service.extend(Ember.Evented, {
     @method setLimitFunction
 
     @param {BasePredicate} limitFunction Current limit function.
+    @param {String} componentName Component name.
   */
-  setLimitFunction(limitFunction) {
-    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  setLimitFunction(limitFunction, componentName) {
+    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
   },
 
   /**
     Gets current limit function for OLV.
 
     @method getLimitFunction
+    @param {String} componentName Component name.
     @return {BasePredicate} Current limit function.
   */
-  getLimitFunction() {
-    return this.get('currentLimitFunction');
+  getLimitFunction(componentName) {
+    return this.get(`currentLimitFunctions.${componentName}`);
   },
 
   /**

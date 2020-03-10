@@ -21,7 +21,7 @@
 
 .ui.small.button {
     border: none;
-    font-size: 12px;
+    font-size: 14px;
     &:hover {
         background: #d01919;
     }
@@ -109,9 +109,12 @@ div.ui.secondary.menu.no-margin {
 .ui.button.delete-button {
     border: none;
     font-size: 0px;
-    padding-top: 10px;
+    padding-right: 10px;
     padding-left: 10px;
     height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
         background: none;
         border :none;
@@ -120,6 +123,8 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.icon.hierarchical-button {
     border: 0px;
+    padding: 0 5px 0;
+    font-size: 1.5rem;
     &:hover {
         background: @white;
     }
@@ -173,6 +178,22 @@ div.ui.secondary.menu.no-margin {
     background-color: @uiHoveredNegitveBackgroundColor;
     border: 1px solid @uiHoveredNegitveBorderColor;
     color: @white;
+}
+
+.ui.secondary.menu {
+    .ui.buttons.export-config .export-button,
+    .ui.buttons.cols-config .config-button,
+    .ui.buttons.adv-limit-config .adv-limit-button {
+        padding-right: 0em;
+    }
+
+    .ui.buttons.export-config,
+    .ui.buttons.cols-config,
+    .ui.buttons.adv-limit-config {
+        .dropdown.button {
+            padding-left: 0.2em;
+        }
+    }
 }
 
 /**************************************
@@ -291,7 +312,7 @@ div.ui.secondary.menu.no-margin {
 }
 
 .flexberry-lookup {
-    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear {
+    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear,  .ui.action.input .ui.ui-preview.button {
         padding: 0em 0.3em 0em 0.3em;
         font-size: 1em;
         border: none;
@@ -304,6 +325,14 @@ div.ui.secondary.menu.no-margin {
 .flexberry-lookup .ui.fluid.action.input .ui.button.ui-clear:hover {
     color: @uiHoveredNegitveTextColor;
     opacity: 1;
+}
+
+html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.button {
+    width: 20px;
+    margin-right: 3px;
+    .remove.icon {
+      margin-left: 0px;
+    }
 }
 
 .ui.fluid.action.input:hover {
@@ -494,6 +523,46 @@ div.ui.secondary.menu.no-margin {
     }
 }
 
+.ui.ui-move-up.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
+.ui.ui-move-down.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
+.ui.custom.button {
+    padding: 0px 18px;
+    height: 30px;
+    border: 1px solid @uiBorderColor;
+}
+
+.ui.custom.icon.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+	  &:hover {
+        & i.icon:before {
+            color: @white;
+        }
+    }
+}
+
 .right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
     color: @white;
 }
@@ -555,11 +624,13 @@ div.ui.secondary.menu.no-margin {
         border: 1px solid @uiBorderColor;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
+            border-radius: 5px;
         }
     }
 
     .cols-config-save {
         border: 1px solid @uiBorderColor;
+        border-radius: 5px !important;
         &:hover {
             border: 1px solid @uiHoveredPositiveBorderColor;
             background-color: @uiHoveredPositiveBackgroundColor;
@@ -568,14 +639,16 @@ div.ui.secondary.menu.no-margin {
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {
-    margin-top: -4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ui.buttons > .ui.button:not(.basic):not(.inverted),
 .ui.buttons:not(.basic):not(.inverted) > .button {
     border: none;
     background: none!important;
-    padding: 0.7400em 0.8571em!important;
+    padding: 0.7400em 0.8571em;
 }
 
 .ui.basic.buttons .active.button {
@@ -590,12 +663,10 @@ div.ui.secondary.menu.no-margin {
 
 .ui.icon.tiny.button {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.icon.tiny.button.no-margin {
     border: 1px solid @uiBorderColor;
-    margin: 2px 15px;
 }
 
 .ui.buttons:not(.basic):not(.inverted) {

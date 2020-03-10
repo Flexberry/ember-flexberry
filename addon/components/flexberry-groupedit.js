@@ -4,7 +4,9 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
+import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
   Component for create, edit and delete detail objects.
@@ -25,6 +27,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: Ember.inject.service('store'),
+
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -94,6 +105,23 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+		    iconClasses: '' // Css classes for icon.
+      }
+      ```
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Custom classes for table.
 
     @property customTableClass
@@ -119,6 +147,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   defaultSettingsButton: true,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Route of edit form.
@@ -397,6 +434,15 @@ export default FlexberryBaseComponent.extend({
   */
   overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
 
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -501,10 +547,56 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+
+    /**
+      Handler to get user button's actions and send action to corresponding controllers's handler.
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction: function customButtonAction(actionName) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit toolbar was found.');
+      }
+
+      this.sendAction(actionName);
+    },
   },
 
   sortingObserver: Ember.observer('sorting', function() {
     this.sortingFunction();
+  }),
+
+  /**
+    Check in view order property.
+
+    @property orderedProperty
+    @type computed
+  */
+  orderedProperty: Ember.computed('modelProjection', function() {
+    let projection = this.get('modelProjection');
+    if (typeof projection === 'string') {
+      let modelName = this.get('modelName');
+      projection = getProjectionByName(projection, modelName, this.get('store'));
+    }
+
+    if (Ember.isNone(projection)) {
+      return;
+    }
+
+    let information = new Information(this.get('store'));
+    let attributes = projection.attributes;
+    let attributesKeys = Object.keys(attributes);
+
+    let order = attributesKeys.find((key) => {
+      let attrubute = attributes[key];
+      if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
+        this.set('sorting', [{ direction: 'asc', propName: key }]);
+        return key;
+      }
+    });
+
+    return order;
   }),
 
   /**
@@ -586,11 +678,21 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let developerUserSettings = this.currentController;
-    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
-    developerUserSettings = developerUserSettings[this.componentName] || {};
-    developerUserSettings = developerUserSettings.DEFAULT || {};
-    this.set('sorting', developerUserSettings.sorting || []);
+
+    if (Ember.isNone(this.get('orderedProperty'))) {
+      let developerUserSettings = this.currentController;
+      developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
+      developerUserSettings = developerUserSettings[this.componentName] || {};
+      developerUserSettings = developerUserSettings.DEFAULT || {};
+      this.set('sorting', developerUserSettings.sorting || []);
+    }
+
+    if (this.get('fixedHeader')) {
+      let $currentTable = this.$('table.object-list-view');
+      $currentTable.parent().addClass('fixed-header');
+
+      this._fixedTableHead($currentTable);
+    }
   },
 
   /**

@@ -28,6 +28,37 @@
   overflow: visible;
 }
 
+.object-list-view-container.fixed-header {
+  max-height: calc(~'100vh - 350px');
+  width: intrinsic;           /* Safari/WebKit uses a non-standard name */
+  width: -moz-max-content;    /* Firefox/Gecko */
+  width: -webkit-max-content; /* Chrome */
+  width: max-content;
+
+  .ui.celled.table tr th{
+    border-top: @cellBorder;
+    z-index: 1;
+  }
+
+  .ui.table{
+    border-top: 0px;
+  }
+  
+  tr.object-list-view-filters > *{
+    position: relative;
+    background-color: @olvFiltersBackground;
+    z-index: 1;
+  }
+
+  tr.object-list-view-filters:first-child > *{
+    z-index: 2;
+  }
+
+  tr.object-list-view-filters:last-child > *{
+    border-bottom: @cellBorder;
+  }
+}
+
 table.object-list-view.selectable tbody,
 table.object-list-view.selectable thead {
   cursor: pointer;

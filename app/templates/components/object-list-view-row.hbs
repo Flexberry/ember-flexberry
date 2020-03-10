@@ -26,34 +26,13 @@
               }}
             </div>
           {{/if}}
-          {{#if showDeleteButtonInRow}}
-            <div class="cell">
-              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
-                <button
-                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
-                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                  disabled="disabled"
-                  {{action deleteRow record}}>
-                  <i class="minus icon"></i>
-                </button>
-              {{else}}
-                <button
-                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
-                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                  {{action deleteRow record}}>
-                  <i class="minus icon"></i>
-                </button>
-              {{/if}}
-            </div>
-          {{/if}}
           {{#if showEditButtonInRow}}
             <div class="cell">
               {{#if readonly}}
                 <button
                   class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                   title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
-                  disabled="disabled"
-                  {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                  disabled="disabled">
                   <i class="edit icon"></i>
                 </button>
               {{else}}
@@ -62,6 +41,44 @@
                   title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                   {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                   <i class="edit icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+          {{#if showPrototypeButtonInRow}}
+            <div class="cell">
+              {{#if readonly}}
+                <button
+                  class="ui ui-edit object-list-view-row-prototype-button {{buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
+                  disabled="disabled">
+                  <i class="copy icon"></i>
+                </button>
+              {{else}}
+                <button
+                  class="ui ui-edit object-list-view-row-prototype-button {{buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
+                  {{action createNewByPrototype (get record "data.id")}}>
+                  <i class="copy icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+          {{#if showDeleteButtonInRow}}
+            <div class="cell">
+              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+                <button
+                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  disabled="disabled">
+                  <i class="minus icon"></i>
+                </button>
+              {{else}}
+                <button
+                  class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  {{action deleteRow record}}>
+                  <i class="minus icon"></i>
                 </button>
               {{/if}}
             </div>
@@ -131,16 +148,43 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
-                <i class="edit icon"></i>
-                <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
-              </div>
+              {{#if readonly}}
+                <div class="item disabled edit-menu">
+                  <i class="edit icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div class="item edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                  <i class="edit icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+                </div>
+              {{/if}}
+            {{/if}}
+            {{#if showPrototypeMenuItemInRow}}
+              {{#if readonly}}
+                <div class="item disabled prototype-menu">
+                  <i class="copy icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div class="item prototype-menu" {{action createNewByPrototype (get record "data.id")}}>
+                  <i class="copy icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
+                </div>
+              {{/if}}
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
-                <i class="trash icon"></i>
-                <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
-              </div>
+              {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
+                <div class="item disabled delete-menu">
+                  <i class="trash icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div class="item delete-menu" {{action deleteRow record}}>
+                  <i class="trash icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+                </div>
+              {{/if}}
             {{/if}}
             {{#each menuInRowAdditionalItems as |menuItem|}}
               <div class="item" {{action sendMenuItemAction menuItem.actionName record.data}}>
@@ -168,14 +212,16 @@
         showValidationMessages=showValidationMessages
         showAsteriskInRow=showAsteriskInRow
         showCheckBoxInRow=showCheckBoxInRow
-        showDeleteButtonInRow=showDeleteButtonInRow
         showEditButtonInRow=showEditButtonInRow
+        showPrototypeButtonInRow=showPrototypeButtonInRow
+        showDeleteButtonInRow=showDeleteButtonInRow
         inHierarchicalMode=inHierarchicalMode
         inExpandMode=(unbound inExpandMode)
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick
         selectRow=selectRow
+        createNewByPrototype=createNewByPrototype
         deleteRow=deleteRow
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent

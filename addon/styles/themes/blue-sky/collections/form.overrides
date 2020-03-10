@@ -47,6 +47,10 @@
     }
 }
 
+html.mobile .overflowed-cell .flexberry-simpledatetime {
+    width:100%;
+}
+
 input[type="checkbox"]:after {
     content: "";
     display: inline-block;
@@ -123,4 +127,12 @@ option {
 
 .ui.form .field .ui.input .block-action-input input {
     width: 100%;
+}
+
+.flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-content {
+    text-align: center;
+}
+
+.flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
+    padding-top: 20px;
 }

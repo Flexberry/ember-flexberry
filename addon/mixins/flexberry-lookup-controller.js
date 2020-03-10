@@ -57,7 +57,36 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @property loaderTemplate
       @type String
     */
-    loaderTemplate: undefined
+    loaderTemplate: undefined,
+
+    /**
+      Object with settings for modal window.
+
+      @property modalDialogSettings
+      @type Object
+    */
+    modalDialogSettings: {
+
+      /**
+        Modal detachable param.
+        If set to false will prevent the modal from being moved to inside the dimmer.
+
+        @property detachable
+        @type Boolean
+        @default false
+      */
+      detachable: false,
+
+      /**
+        Modal context param.
+        Selector or jquery object specifying the area to dim.
+
+        @property context
+        @type String
+        @default '.ember-application > .ember-view'
+      */
+      context: '.ember-application > .ember-view'
+    }
   },
 
   /**
@@ -102,7 +131,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
         title: undefined,
         predicate: undefined,
         modelToLookup: undefined,
-        sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
         folvComponentName: undefined,
@@ -130,11 +158,11 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let title = options.title;
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
-      let sizeClass = options.sizeClass;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -170,9 +198,9 @@ export default Ember.Mixin.create(ReloadListMixin, {
         filter: undefined,
         predicate: limitPredicate,
         hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
 
         title: title,
-        sizeClass: sizeClass,
         saveTo: {
           model: model,
           propName: relationName
@@ -182,6 +210,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         componentName: componentName,
         folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
       };
 
       this._reloadModalData(this, reloadData);
@@ -216,6 +245,83 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
+    },
+
+    /**
+      Handlers action from FlexberryLookup preview action.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInSeparateRoute, projection, modelName, controller }.
+    */
+    previewLookupValue(previewData) {
+      let options = Ember.$.extend(true, {
+        recordId: undefined,
+        transitionRoute: undefined,
+        transitionOptions: undefined,
+        showInSeparateRoute: undefined,
+        modelName: undefined,
+        controller: undefined,
+        projection: undefined
+      }, previewData);
+      let recordId = options.recordId;
+      let transitionRoute = options.transitionRoute;
+
+      if (options.showInSeparateRoute) {
+        let transitionOptions = options.transitionOptions || {};
+        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+      } else {
+        let routeName = options.controller || transitionRoute;
+        let modelName = options.modelName;
+
+        let controller = Ember.getOwner(this).lookup(`controller:${routeName}`);
+        if (Ember.isNone(controller)) {
+          throw new Error(`Controller with '${routeName}' name does not exist.`);
+        }
+
+        let route = Ember.getOwner(this).lookup(`route:${transitionRoute}`);
+        let projectionName = options.projection || (route ? route.get('modelProjection') : undefined);
+        if (Ember.isNone(projectionName)) {
+          throw new Error('\`previewFormProjection\` is undefined.');
+        }
+
+        let modelConstructor = this.store.modelFor(modelName);
+        let projection = Ember.get(modelConstructor, `projections.${projectionName}`);
+        if (!projection) {
+          throw new Error(
+            `No projection with '${projectionName}' name defined in '${modelName}' model.`);
+        }
+
+        controller.setProperties({
+          readonly: true,
+          routeName: routeName,
+          modelProjection: projection
+        });
+
+        const modalDialogSettings = Ember.merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
+        const lookupController = this.get('lookupController');
+        lookupController.setProperties({
+          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          modalDialogSettings: modalDialogSettings,
+        });
+
+        let lookupSettings = this.get('lookupSettings');
+        this.send('showModalDialog', lookupSettings.template);
+
+        let loadingParams = {
+          view: lookupSettings.template,
+          outlet: 'modal-content'
+        };
+
+        this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+        this.store.findRecord(modelName, recordId).then(data => {
+          this.send('removeModalDialog', loadingParams);
+          this.send('showModalDialog', transitionRoute, {
+            controller: controller,
+            model: data
+          }, loadingParams);
+        });
+      }
     },
 
     /**
@@ -266,7 +372,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
-    @param {String} [options.sizeClass] Size of modal lookup window.
     @param {String} [options.saveTo] Options to save selected lookup value.
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
@@ -293,9 +398,9 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: undefined,
       predicate: undefined,
       hierarchicalAttribute: undefined,
+      hierarchyPaging: false,
 
       title: undefined,
-      sizeClass: undefined,
       saveTo: undefined,
       currentLookupRow: undefined,
       customPropertiesData: undefined,
@@ -311,7 +416,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       reloadData.saveTo);
 
     let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
-    let projection = Ember.get(modelConstructor, 'projections')[reloadData.projectionName];
+    let projection = Ember.get(modelConstructor, `projections.${reloadData.projectionName}`);
     if (!projection) {
       throw new Error(
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);
@@ -324,6 +429,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
     let controller = currentContext.get('lookupController');
     let queryParameters = {
+      componentName: reloadData.componentName,
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
@@ -333,14 +439,16 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
-      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging
     };
+
+    const modalDialogSettings = Ember.merge(Ember.merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
 
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
       title: reloadData.title,
-      sizeClass: reloadData.sizeClass,
       saveTo: reloadData.saveTo,
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
@@ -355,11 +463,13 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       reloadContext: currentContext,
-      reloadDataHandler: currentContext._reloadModalData
+      reloadDataHandler: currentContext._reloadModalData,
+      modalDialogSettings: modalDialogSettings,
     });
 
     if (reloadData.initialLoad) {

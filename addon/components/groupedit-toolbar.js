@@ -22,15 +22,28 @@ export default FlexberryBaseComponent.extend({
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
-    Boolean flag to indicate enabled state of delete rows button.
-
-    If rows at {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} are selected this flag is enabled.
-
-    @property _isDeleteRowsEnabled
-    @type Boolean
     @private
+    @property _hasSelectedRows
+    @type Boolean
+    @default false
   */
-  _isDeleteRowsEnabled: undefined,
+  _hasSelectedRows: false,
+
+  /**
+    @private
+    @property _disableMoveUpButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveUpButton: false,
+
+  /**
+    @private
+    @property _disableMoveDownButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveDownButton: false,
 
   /**
     Default class for component wrapper.
@@ -52,6 +65,31 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Name of action to send out, action triggered by click on user button.
+    @property customButtonAction
+    @type String
+    @default 'customButtonAction'
+  */
+  customButtonAction: 'customButtonAction',
+
+  /**
+     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+        iconClasses: '' // Css classes for icon.
+      }
+      ```
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Boolean property to show or hide delete button in toolbar.
     Delete record button will not display if set to false.
 
@@ -69,6 +107,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   defaultSettingsButton: true,
+
+  /**
+    Boolean property to show or hide arrows button in toolbar.
+
+    @property arrowsButtons
+  */
+  arrowsButtons: Ember.computed('orderedProperty', function() {
+    return !Ember.isNone(this.get('orderedProperty'));
+  }),
 
   actions: {
     /**
@@ -133,7 +180,38 @@ export default FlexberryBaseComponent.extend({
         this.set('sorting', currentUserSetting.sorting);
         _this.get('_groupEditEventsService').updateWidthTrigger(componentName);
       });
-    }
+    },
+
+    /**
+      Action for custom button.
+      @method actions.customButtonAction
+      @public
+      @param {Function|String} action The action or name of action.
+    */
+    customButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action();
+      } else if (actionType === 'string') {
+        this.sendAction('customButtonAction', action);
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
+    },
+
+    /**
+      Handles arrow buttons click.
+
+      @method actions.moveRow
+    */
+    moveRow(shift) {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      let componentName = this.get('componentName');
+      this.get('_groupEditEventsService').moveRowTrigger(componentName, shift);
+    },
   },
 
   /**
@@ -181,8 +259,14 @@ export default FlexberryBaseComponent.extend({
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', count > 0);
+    if (componentName === this.get('componentName') && !this.get('isDestroying')) {
+      this.set('_hasSelectedRows', count > 0);
+
+      const $tbody = this.$().parent().find('tbody');
+      const $tr = $tbody.find('tr.active');
+
+      this.set('_disableMoveUpButton', $tr.first().get(0) === $tbody.get(0).firstElementChild);
+      this.set('_disableMoveDownButton', $tr.last().get(0) === $tbody.get(0).lastElementChild);
     }
   },
 
@@ -197,7 +281,7 @@ export default FlexberryBaseComponent.extend({
   */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', false);
+      this.set('_hasSelectedRows', false);
     }
   }
 });

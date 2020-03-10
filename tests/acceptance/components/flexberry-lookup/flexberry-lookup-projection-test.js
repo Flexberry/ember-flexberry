@@ -29,7 +29,7 @@ executeTest('flexberry-lookup projection test', (store, assert, app) => {
         assert.strictEqual($lookupHeaders.length === 3, true, 'Component has SuggestionTypeE projection');
 
         done();
-      }, 1000);
+      }, 5000);
     });
   });
 });

@@ -82,9 +82,10 @@ module.exports = {
       '      },\n\n' +
       '      // Flag: indicates whether to use user settings service or not.\n' +
       '      useUserSettingsService: true,\n\n' +
+      '      // Flag: indicates whether to use adv limit service or not.\n' +
+      '      useAdvLimitService: true,\n\n' +
       '      // Custom property with offline mode settings.\n' +
       '      offline: {\n' +
-      '        dbName: \'ember-app\',\n\n' +
       '        // Flag that indicates whether offline mode in application is enabled or not.\n' +
       '        offlineEnabled: true,\n\n' +
       '        // Flag that indicates whether to switch to offline mode when got online connection errors or not.\n' +
@@ -240,7 +241,7 @@ module.exports = {
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
-        { name: 'jquery-minicolors', target: '2.2.6' },
+        { name: 'jquery-minicolors', target: '2.3.4' },
         { name: 'js-beautify', target: '1.6.4' }
       ]);
     }).then(function() {

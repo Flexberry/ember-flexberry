@@ -93,6 +93,62 @@ Ember.$.extend(true, translations, {
             }
           }
         },
+        SuggestionEWithComputedField: {
+          address: {
+            __caption__: 'address'
+          },
+          text: {
+            __caption__: 'text'
+          },
+          date: {
+            __caption__: 'date'
+          },
+          votes: {
+            __caption__: 'votes'
+          },
+          moderated: {
+            __caption__: 'moderated'
+          },
+          author: {
+            __caption__: 'author',
+            name: {
+              __caption__: 'name'
+            }
+          },
+          type: {
+            __caption__: 'type',
+            name: {
+              __caption__: 'name'
+            },
+            moderated: {
+              __caption__: 'moderated'
+            },
+            computedField: {
+              __caption__: 'computedField'
+            },
+            creator: {
+              __caption__: 'creator'
+            }
+          },
+          editor1: {
+            __caption__: 'editor1',
+            name: {
+              __caption__: 'name'
+            }
+          },
+          createTime: {
+            __caption__: 'createTime'
+          },
+          creator: {
+            __caption__: 'creator'
+          },
+          editTime: {
+            __caption__: 'editTime'
+          },
+          editor: {
+            __caption__: 'editor'
+          }
+        },
         'SuggestionMainModelProjectionTest': {
           'userVotes': {
             'voteType': {
@@ -163,7 +219,45 @@ Ember.$.extend(true, translations, {
               }
             }
           },
-        }
+        },
+        SuggestionTypeEWithComputedField: {
+          name: {
+            __caption__: 'name'
+          },
+          moderated: {
+            __caption__: 'moderated'
+          },
+          computedField: {
+            __caption__: 'computedField'
+          },
+          parent: {
+            __caption__: 'parent',
+            name: {
+              __caption__: 'name'
+            },
+            moderated: {
+              __caption__: 'moderated'
+            },
+            computedField: {
+              __caption__: 'computedField'
+            },
+            creator: {
+              __caption__: 'creator'
+            }
+          },
+          createTime: {
+            __caption__: 'createTime'
+          },
+          creator: {
+            __caption__: 'creator'
+          },
+          editTime: {
+            __caption__: 'editTime'
+          },
+          editor: {
+            __caption__: 'editor'
+          }
+        },
       }
     },
   },
@@ -197,6 +291,10 @@ Ember.$.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {
@@ -249,6 +347,10 @@ Ember.$.extend(true, translations, {
           },
           'suggestions': {
             'caption': 'Suggestions',
+            'title': ''
+          },
+          'multi': {
+            'caption': 'Multi list',
             'title': ''
           }
         },
@@ -341,7 +443,11 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
-            }
+            },
+            'flexberry-file-in-modal': {
+              'caption': 'Flexberry file in modal window',
+              'title': ''
+            },
           },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
@@ -352,6 +458,10 @@ Ember.$.extend(true, translations, {
             },
             'model-update-example': {
               'caption': 'Model update example',
+              'title': ''
+            },
+            'custom-buttons-example': {
+              'caption': 'Custom user buttons example',
               'title': ''
             },
             'configurate-row-example': {
@@ -378,12 +488,24 @@ Ember.$.extend(true, translations, {
               'caption': 'Window customization',
               'title': ''
             },
+            'compute-autocomplete': {
+              'caption': 'Example lookup with compute autocomplete',
+              'title': ''
+            },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
             'hierarchy-olv-in-lookup-example': {
               'caption': 'Example hierarchical OLV in lookup',
               'title': ''
             },
             'limit-function-example': {
               'caption': 'Limit function example',
+              'title': ''
+            },
+            'autofill-by-limit-example': {
+              'caption': 'Example autofillByLimit',
               'title': ''
             },
             'limit-function-through-dynamic-properties-example': {
@@ -458,6 +580,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Hierarchy example',
               'title': ''
             },
+            'hierarchy-paging-example': {
+              'caption': 'Hierarchy with paginig example',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
@@ -481,10 +607,22 @@ Ember.$.extend(true, translations, {
             'lock-services-editor-view-list': {
               'caption': 'Example displaying username which the object was locked',
               'title': ''
-            }
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -650,6 +788,17 @@ Ember.$.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Master',
       'toggler-example-master-property-caption': 'Master property',
@@ -679,6 +828,11 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Suggestion types'
+    },
+
+    'ember-flexberry-dummy-multi-list': {
+      'caption': 'Multi list form',
+      'multi-edit-form': 'Multi list edit form'
     },
 
     'log-service-examples': {
@@ -771,6 +925,13 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Settings example'
         },
+        'custom-buttons-example': {
+          'caption': 'Flexberry-groupedit. Custom buttons example',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello',
+          'disable-button-name': 'Disable adjacent button',
+          'enable-button-name': 'Enable adjacent button',
+        },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Configurate rows'
         },
@@ -788,6 +949,14 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Window customization',
           'titleLookup': 'Master'
         },
+        'compute-autocomplete': {
+          'caption': 'Example lookup with compute autocomplete',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'title': ''
+        },
         'hierarchy-olv-in-lookup-example': {
           'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
@@ -802,6 +971,10 @@ Ember.$.extend(true, translations, {
           'captionFirstLimitFunction': 'Limit function №1',
           'captionSecondLimitFunction': 'Limit function №2',
           'captionClearLimitFunction': 'Clear limit function'
+        },
+        'autofill-by-limit-example': {
+          'caption': 'Flexberry-lookup. Example autofillByLimit in lookup',
+          'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Lookup block form example',
@@ -867,6 +1040,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
+        'limited-text-size-example': {
+          'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
@@ -887,6 +1063,9 @@ Ember.$.extend(true, translations, {
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
+        },
+        'hierarchy-paging-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy paging example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'
@@ -937,6 +1116,11 @@ Ember.$.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-text-cell': {
+        'settings-example': {
+          'caption': 'Flexberry-text-cell. Settings example'
         }
       },
       'flexberry-textarea': {

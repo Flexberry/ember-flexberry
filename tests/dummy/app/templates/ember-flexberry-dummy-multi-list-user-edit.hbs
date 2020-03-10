@@ -1,0 +1,301 @@
+{{flexberry-error error=error}}
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field">
+    {{#if model.errors.name}}
+      <span style ="color:red">{{model.errors.name}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.name
+      class=(if model.errors.name "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.eMail}}
+      <span style ="color:red">{{model.errors.eMail}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.eMail
+      class=(if model.errors.eMail "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone1}}
+      <span style ="color:red">{{model.errors.phone1}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.phone1
+      class=(if model.errors.phone1 "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone2}}
+      <span style ="color:red">{{model.errors.phone2}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.phone2
+      class=(if model.errors.phone2 "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone3}}
+      <span style ="color:red">{{model.errors.phone3}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.phone3
+      class=(if model.errors.phone3 "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
+    {{#if model.errors.activated}}
+      <span style="color:red">{{model.errors.activated}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.activated}}
+  </div>
+  <div class="field">
+    {{#if model.errors.vK}}
+      <span style ="color:red">{{model.errors.vK}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.vK
+      class=(if model.errors.vK "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.facebook}}
+      <span style ="color:red">{{model.errors.facebook}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.facebook
+      class=(if model.errors.facebook "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.twitter}}
+      <span style ="color:red">{{model.errors.twitter}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.twitter
+      class=(if model.errors.twitter "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
+    {{#if model.errors.birthday}}
+      <span style="color:red">{{model.errors.birthday}}</span>
+    {{/if}}
+    {{flexberry-datepicker
+      readonly=readonly
+      value=model.birthday
+      class=(if model.errors.birthday "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
+    {{#if model.errors.gender}}
+      <span style="color:red">{{model.errors.gender}}</span>
+    {{/if}}
+    {{flexberry-dropdown items=(flexberry-enum "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
+    {{#if model.errors.vip}}
+      <span style="color:red">{{model.errors.vip}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.vip}}
+  </div>
+  <div class="field">
+    {{#if model.errors.karma}}
+      <span style ="color:red">{{model.errors.karma}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.karma
+      class=(if model.errors.karma "error" "")
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
+    }}
+  </div>
+  <hr/>
+    <h3>{{t 'forms.ember-flexberry-dummy-multi-list.caption'}}</h3>
+    <div class="row">
+      {{#with multiListSettings.MultiUserListOnEdit as |settings|}}
+        {{flexberry-objectlistview
+          modelName=settings.modelName
+          modelProjection=settings.modelProjection
+          editFormRoute=settings.editFormRoute
+          content=settings.model
+          createNewButton=true
+          refreshButton=true
+          sorting=settings.computedSorting
+          orderable=true
+          sortByColumn=(action "sortByColumn")
+          addColumnToSorting=(action "addColumnToSorting")
+          beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+          pages=settings.pages
+          perPageValue=settings.perPageValue
+          perPageValues=settings.perPageValues
+          recordsTotalCount=settings.recordsTotalCount
+          hasPreviousPage=settings.hasPreviousPage
+          hasNextPage=settings.hasNextPage
+          previousPage=(action "previousPage")
+          gotoPage=(action "gotoPage")
+          nextPage=(action "nextPage")
+          componentName=settings.componentName
+        }}
+      {{/with}}
+    </div>
+    <div class="row">
+      {{#with multiListSettings.MultiUserList2OnEdit as |settings|}}
+        {{flexberry-objectlistview
+          modelName=settings.modelName
+          modelProjection=settings.modelProjection
+          editFormRoute=settings.editFormRoute
+          content=settings.model
+          createNewButton=true
+          refreshButton=true
+          sorting=settings.computedSorting
+          orderable=true
+          sortByColumn=(action "sortByColumn")
+          addColumnToSorting=(action "addColumnToSorting")
+          beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+          pages=settings.pages
+          perPageValue=settings.perPageValue
+          perPageValues=settings.perPageValues
+          recordsTotalCount=settings.recordsTotalCount
+          hasPreviousPage=settings.hasPreviousPage
+          hasNextPage=settings.hasNextPage
+          previousPage=(action "previousPage")
+          gotoPage=(action "gotoPage")
+          nextPage=(action "nextPage")
+          componentName=settings.componentName
+        }}
+      {{/with}}
+    </div>
+    <div class="row">
+      {{#with multiListSettings.MultiSuggestionListOnEdit as |settings|}}
+        {{flexberry-objectlistview
+          editFormRoute=settings.editFormRoute
+          showCheckBoxInRow=true
+          modelName=settings.modelName
+          modelProjection=settings.modelProjection
+          content=settings.model
+          createNewButton=true
+          enableFilters=true
+          filters=settings.filters
+          filterButton=true
+          filterByAnyMatch=(action 'filterByAnyMatch')
+          filterText=settings.filter
+          refreshButton=true
+          exportExcelButton=true
+          sorting=settings.computedSorting
+          orderable=true
+          sortByColumn=(action "sortByColumn")
+          addColumnToSorting=(action "addColumnToSorting")
+          beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+          applyFilters=(action "applyFilters")
+          resetFilters=(action "resetFilters")
+          pages=settings.pages
+          perPageValue=settings.perPageValue
+          perPageValues=settings.perPageValues
+          recordsTotalCount=settings.recordsTotalCount
+          hasPreviousPage=settings.hasPreviousPage
+          hasNextPage=settings.hasNextPage
+          previousPage=(action "previousPage")
+          gotoPage=(action "gotoPage")
+          nextPage=(action "nextPage")
+          componentName=settings.componentName
+          showDeleteMenuItemInRow=true
+          deleteButton=true
+        }}
+      {{/with}}
+    </div>
+    <div class="row">
+      {{#with multiListSettings.MultiHierarchyListOnEdit as |settings|}}
+        {{flexberry-objectlistview
+          content=settings.model
+          modelName=settings.modelName
+          modelProjection=settings.modelProjection
+          editFormRoute=settings.editFormRoute
+          orderable=false
+          componentName=settings.componentName
+          beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+          colsConfigButton=false
+          disableHierarchicalMode=false
+          showCheckBoxInRow=true
+          pages=settings.pages
+          perPageValue=settings.perPageValue
+          perPageValues=settings.perPageValues
+          recordsTotalCount=settings.recordsTotalCount
+          hasPreviousPage=settings.hasPreviousPage
+          hasNextPage=settings.hasNextPage
+          previousPage=(action "previousPage")
+          gotoPage=(action "gotoPage")
+          nextPage=(action "nextPage")
+          availableCollExpandMode=true
+          inHierarchicalMode=settings.inHierarchicalMode
+          hierarchicalAttribute=settings.hierarchicalAttribute
+          inExpandMode=settings.inExpandMode
+        }}
+      {{/with}}
+    </div>
+</form>

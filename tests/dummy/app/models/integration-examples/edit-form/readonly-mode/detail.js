@@ -13,6 +13,7 @@ let Model = Projection.Model.extend({
   text: DS.attr('string'),
   longText: DS.attr('string'),
   date: DS.attr('date'),
+  time: DS.attr('date'),
   enumeration: DS.attr('integration-examples/edit-form/readonly-mode/enumeration'),
   file: DS.attr('file'),
 

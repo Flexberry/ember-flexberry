@@ -20,7 +20,11 @@ ember init --skip-npm
 cp app/index.html .
 rm -r app/*
 mv index.html app
-yarn install
+npm install
+
+# With version 1.11.1 addon installing fails on ember-cli@2.4.3
+npm install resolve@1.11.0
+
 ember install "${ADDON_DIR}"
 #npm install dexie@1.3.6
 rm -f ./.jscsrc
@@ -55,7 +59,11 @@ cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
 pushd "$TMP_DIR"
 pushd new-addon-for-tests
 
-yarn install
+npm install
+
+# With version 1.11.1 addon installing fails on ember-cli@2.4.3
+npm install resolve@1.11.0
+
 ember install "${ADDON_DIR}"
 
 # EmberCLI asks whether it needs to overwrite existing files,

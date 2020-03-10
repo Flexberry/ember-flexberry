@@ -22,10 +22,10 @@
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
-  availableCollExpandMode=_availableCollExpandMode
+  availableCollExpandMode=availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
@@ -79,8 +79,8 @@
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
@@ -88,10 +88,12 @@
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
+  defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
 }}
-{{#unless _inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
@@ -121,4 +123,4 @@
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

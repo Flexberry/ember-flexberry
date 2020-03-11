@@ -529,10 +529,11 @@ export default FlexberryBaseComponent.extend(
       if (isNone(this.get('orderedProperty'))) {
         for (let i = 0; i < userSettings.sorting.length; i++) {
           let sorting = userSettings.sorting[i];
-          let propName = sorting.propName;
-          namedCols[propName].sorted = true;
-          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-          namedCols[propName].sortNumber = i + 1;
+          if (namedCols[sorting.propName]) {
+            namedCols[sorting.propName].sorted = true;
+            namedCols[sorting.propName].sortAscending = sorting.direction === 'asc' ? true : false;
+            namedCols[sorting.propName].sortNumber = i + 1;
+          }
         }
       }
 
@@ -540,10 +541,8 @@ export default FlexberryBaseComponent.extend(
         ret = [];
         for (let i = 0; i < userSettings.colsOrder.length; i++) {
           let userSetting = userSettings.colsOrder[i];
-          if (!userSetting.hide) {
-            let propName = userSetting.propName;
-            let col = namedCols[propName];
-            ret[ret.length] = col;
+          if (!userSetting.hide && namedCols[userSetting.propName]) {
+            ret[ret.length] = namedCols[userSetting.propName];
           }
         }
       } else {

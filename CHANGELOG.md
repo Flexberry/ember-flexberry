@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.3.0-beta.0] - 2020-03-11
 ### Fixed
-* Fix `flexberry-core-offline` blueprint.
+* Old import style in `flexberry-core-offline` blueprint.
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.3.0-beta.0`.

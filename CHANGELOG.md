@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix `flexberry-core-offline` blueprint.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.3.0-beta.0`.
+
 ## [2.3.0] - 2020-03-10
 ### Added
 * The `fixedHeader` property for the `flexberry-groupedit` component.

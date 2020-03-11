@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix `flexberry-core-offline` blueprint.
 
 ## [2.3.0-beta.2] - 2020-02-12
 ### Added

@@ -23,6 +23,10 @@ const messageCategory = {
   promise: { name: 'PROMISE', priority: 7 }
 };
 
+const skippedErrorsMessages = A([
+  { name: 'PROMISE', message: "TransitionAborted" }
+]);
+
 const joinArguments = function() {
   let result = '';
   for (let i = 0, len = arguments.length; i < len; i++) {
@@ -471,7 +475,15 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    if (!this.get('enabled') ||
+    let isSkippedMessage = false;
+
+    skippedErrorsMessages.forEach(skippedMessage => {
+      if (category.name === skippedMessage.name && message.includes(skippedMessage.message)) {
+        isSkippedMessage = true;
+      }
+    });
+
+    if (!this.get('enabled') || isSkippedMessage ||
       category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
       category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||

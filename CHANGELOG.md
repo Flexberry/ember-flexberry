@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* `log` service:
+    * Disable transition aborted errors save.
 
 ## [3.3.0-beta.0] - 2020-03-11
 ### Fixed

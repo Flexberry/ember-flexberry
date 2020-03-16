@@ -329,7 +329,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.warn logic.
@@ -345,9 +345,9 @@ export default Ember.Service.extend(Ember.Evented, {
 
       let message = joinArguments(...arguments);
       if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecate, message, '');
+        return _this._storeToApplicationLog(messageCategory.deprecate, message, '');
       } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
+        return _this._storeToApplicationLog(messageCategory.warn, message, '');
       }
     };
 
@@ -362,7 +362,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.info logic.
@@ -376,7 +376,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.debug logic.
@@ -390,7 +390,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
     };
 
     this.set('_originalMethodsCache', originalMethodsCache);

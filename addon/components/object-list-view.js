@@ -1262,6 +1262,9 @@ export default FlexberryBaseComponent.extend(
           if (renderedRowIndex >= contentLength) {
             this._restoreSelectedRecords();
 
+            // The last menu needs will be up.
+            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
 
@@ -1309,13 +1312,13 @@ export default FlexberryBaseComponent.extend(
         $table.colResizable({ disable: true });
       }
 
+      // The last menu needs will be up.
+      Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-    // The last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
 

@@ -81,6 +81,32 @@ export default Ember.Service.extend(Ember.Evented, {
   enabled: false,
 
   /**
+    The name of a model that represents log entity.
+
+    @property applicationLogModelName
+    @type String
+    @default 'i-i-s-caseberry-logging-objects-application-log'
+    @example
+    ```
+    // Log service 'applicationLogModelName' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            applicationLogModelName: 'custom-application-log'
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+ applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
+
+  /**
     Flag: indicates whether log service will store error messages to application log or not.
 
     @property storeErrorMessages
@@ -298,6 +324,8 @@ export default Ember.Service.extend(Ember.Evented, {
     let _this = this;
     let originalMethodsCache = Ember.A();
 
+    this.initProperties();
+
     let originalEmberLoggerError = Ember.Logger.error;
     originalMethodsCache.pushObject({
       methodOwner: Ember.Logger,
@@ -397,6 +425,24 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+   * Initializes properties of a log service.
+   */
+  initProperties() {
+    let config = getOwner(this).resolveRegistration('config:environment');
+    let logConfiguration = config.APP.log;
+
+    this.set('enabled', Ember.typeOf(logConfiguration.enabled) === 'boolean' && logConfiguration.enabled);
+    this.set('storeErrorMessages', Ember.typeOf(logConfiguration.storeErrorMessages) === 'boolean' && logConfiguration.storeErrorMessages);
+    this.set('storeWarnMessages', Ember.typeOf(logConfiguration.storeWarnMessages) === 'boolean' && logConfiguration.storeWarnMessages);
+    this.set('storeLogMessages', Ember.typeOf(logConfiguration.storeLogMessages) === 'boolean' && logConfiguration.storeLogMessages);
+    this.set('storeInfoMessages', Ember.typeOf(logConfiguration.storeInfoMessages) === 'boolean' && logConfiguration.storeInfoMessages);
+    this.set('storeDebugMessages', Ember.typeOf(logConfiguration.storeDebugMessages) === 'boolean' && logConfiguration.storeDebugMessages);
+    this.set('storeDeprecationMessages', Ember.typeOf(logConfiguration.storeDeprecationMessages) === 'boolean' && logConfiguration.storeDeprecationMessages);
+    this.set('storePromiseErrors', Ember.typeOf(logConfiguration.storePromiseErrors) === 'boolean' && logConfiguration.storePromiseErrors);
+    this.set('showPromiseErrors', Ember.typeOf(logConfiguration.showPromiseErrors) === 'boolean' && logConfiguration.showPromiseErrors);
+  },
+
+  /**
     Destroys log service.
   */
   willDestroy() {
@@ -457,7 +503,7 @@ export default Ember.Service.extend(Ember.Evented, {
       formattedMessage: formattedMessage
     };
 
-    let applicationLogModelName = 'i-i-s-caseberry-logging-objects-application-log';
+    let applicationLogModelName = this.get('applicationLogModelName');
     let store = this.get('store');
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).

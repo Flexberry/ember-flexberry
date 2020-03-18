@@ -440,6 +440,10 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set('storeDeprecationMessages', Ember.typeOf(logConfiguration.storeDeprecationMessages) === 'boolean' && logConfiguration.storeDeprecationMessages);
     this.set('storePromiseErrors', Ember.typeOf(logConfiguration.storePromiseErrors) === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', Ember.typeOf(logConfiguration.showPromiseErrors) === 'boolean' && logConfiguration.showPromiseErrors);
+  
+    if (Ember.typeOf(logConfiguration.applicationLogModelName === 'string')) {
+      this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
   },
 
   /**

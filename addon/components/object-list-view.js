@@ -1318,8 +1318,6 @@ export default FlexberryBaseComponent.extend(
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
 
-    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
     this._setCurrentColumnsWidth();
 
     if (this.get('fixedHeader')) {

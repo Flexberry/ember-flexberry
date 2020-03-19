@@ -428,20 +428,20 @@ export default Ember.Service.extend(Ember.Evented, {
    * Initializes properties of a log service.
    */
   initProperties() {
-    let config = getOwner(this).resolveRegistration('config:environment');
-    let logConfiguration = config.APP.log;
+    const config = getOwner(this).resolveRegistration('config:environment');
+    const logConfiguration = config.APP.log;
 
-    this.set('enabled', Ember.typeOf(logConfiguration.enabled) === 'boolean' && logConfiguration.enabled);
-    this.set('storeErrorMessages', Ember.typeOf(logConfiguration.storeErrorMessages) === 'boolean' && logConfiguration.storeErrorMessages);
-    this.set('storeWarnMessages', Ember.typeOf(logConfiguration.storeWarnMessages) === 'boolean' && logConfiguration.storeWarnMessages);
-    this.set('storeLogMessages', Ember.typeOf(logConfiguration.storeLogMessages) === 'boolean' && logConfiguration.storeLogMessages);
-    this.set('storeInfoMessages', Ember.typeOf(logConfiguration.storeInfoMessages) === 'boolean' && logConfiguration.storeInfoMessages);
-    this.set('storeDebugMessages', Ember.typeOf(logConfiguration.storeDebugMessages) === 'boolean' && logConfiguration.storeDebugMessages);
-    this.set('storeDeprecationMessages', Ember.typeOf(logConfiguration.storeDeprecationMessages) === 'boolean' && logConfiguration.storeDeprecationMessages);
-    this.set('storePromiseErrors', Ember.typeOf(logConfiguration.storePromiseErrors) === 'boolean' && logConfiguration.storePromiseErrors);
-    this.set('showPromiseErrors', Ember.typeOf(logConfiguration.showPromiseErrors) === 'boolean' && logConfiguration.showPromiseErrors);
+    this.set('enabled', typeof(logConfiguration.enabled) === 'boolean' && logConfiguration.enabled);
+    this.set('storeErrorMessages', typeof(logConfiguration.storeErrorMessages) === 'boolean' && logConfiguration.storeErrorMessages);
+    this.set('storeWarnMessages', typeof(logConfiguration.storeWarnMessages) === 'boolean' && logConfiguration.storeWarnMessages);
+    this.set('storeLogMessages', typeof(logConfiguration.storeLogMessages) === 'boolean' && logConfiguration.storeLogMessages);
+    this.set('storeInfoMessages', typeof(logConfiguration.storeInfoMessages) === 'boolean' && logConfiguration.storeInfoMessages);
+    this.set('storeDebugMessages', typeof(logConfiguration.storeDebugMessages) === 'boolean' && logConfiguration.storeDebugMessages);
+    this.set('storeDeprecationMessages', typeof(logConfiguration.storeDeprecationMessages) === 'boolean' && logConfiguration.storeDeprecationMessages);
+    this.set('storePromiseErrors', typeof(logConfiguration.storePromiseErrors) === 'boolean' && logConfiguration.storePromiseErrors);
+    this.set('showPromiseErrors', typeof(logConfiguration.showPromiseErrors) === 'boolean' && logConfiguration.showPromiseErrors);
 
-    if (Ember.typeOf(logConfiguration.applicationLogModelName === 'string')) {
+    if (typeof(logConfiguration.applicationLogModelName) === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
     }
   },
@@ -529,7 +529,7 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    Ember.assert('Logger Error: event name should be a string', Ember.typeOf(eventName) === 'string');
+    Ember.assert('Logger Error: event name should be a string', typeof(eventName) === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },
@@ -539,7 +539,7 @@ export default Ember.Service.extend(Ember.Evented, {
       return;
     }
 
-    if (Ember.typeOf(error) === 'string') {
+    if (typeof(error) === 'string') {
       error = new Error(error);
     }
 

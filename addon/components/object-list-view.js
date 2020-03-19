@@ -1314,8 +1314,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       // The last menu needs will be up.
-      Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
-
+      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
 

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
+
 ### Fixed
 * `flexberry-objectlistview` component:
     * Fix menu opening direction in line.

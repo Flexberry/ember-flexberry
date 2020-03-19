@@ -1263,7 +1263,8 @@ export default FlexberryBaseComponent.extend(
             this._restoreSelectedRecords();
 
             // The last menu needs will be up.
-            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);

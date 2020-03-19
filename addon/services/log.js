@@ -104,7 +104,7 @@ export default Ember.Service.extend(Ember.Evented, {
     };
     ```
   */
- applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
+  applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
 
   /**
     Flag: indicates whether log service will store error messages to application log or not.
@@ -440,7 +440,7 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set('storeDeprecationMessages', Ember.typeOf(logConfiguration.storeDeprecationMessages) === 'boolean' && logConfiguration.storeDeprecationMessages);
     this.set('storePromiseErrors', Ember.typeOf(logConfiguration.storePromiseErrors) === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', Ember.typeOf(logConfiguration.showPromiseErrors) === 'boolean' && logConfiguration.showPromiseErrors);
-  
+
     if (Ember.typeOf(logConfiguration.applicationLogModelName === 'string')) {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
     }

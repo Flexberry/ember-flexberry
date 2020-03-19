@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `applicationLogModelName` property for the `log` service.
+
+### Changed
+* Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
 
 ## [2.3.0] - 2020-03-10
 ### Added

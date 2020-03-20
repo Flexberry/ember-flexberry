@@ -54,6 +54,7 @@ module.exports = function(environment) {
         storeDebugMessages: true,
         storeDeprecationMessages: true,
         storePromiseErrors: true,
+        errorMessageFilterActive: true,
         showPromiseErrors: true,
       },
 

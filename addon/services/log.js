@@ -23,7 +23,7 @@ const messageCategory = {
   promise: { name: 'PROMISE', priority: 7 }
 };
 
-const skippedErrorsMessages = A([
+const errorMessageFilters = A([
   { name: 'PROMISE', message: "TransitionAborted" }
 ]);
 
@@ -279,6 +279,32 @@ export default Service.extend(Evented, {
   storePromiseErrors: false,
 
   /**
+    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
+
+    @property errorMessageFilterActive
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            errorMessageFilterActive: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  errorMessageFilterActive: false,
+
+  /**
     Flag: indicates whether log service will display promise errors in console.
 
     @property showPromiseErrors
@@ -477,13 +503,14 @@ export default Service.extend(Evented, {
   _storeToApplicationLog(category, message, formattedMessage) {
     let isSkippedMessage = false;
 
-    skippedErrorsMessages.forEach(skippedMessage => {
-      if (category.name === skippedMessage.name && message.includes(skippedMessage.message)) {
+    errorMessageFilters.forEach(errorMessageFilter => {
+      if (category.name === errorMessageFilter.name && message.indexOf(errorMessageFilter.message) !== -1) {
         isSkippedMessage = true;
       }
     });
 
-    if (!this.get('enabled') || isSkippedMessage ||
+    if (!this.get('enabled') || 
+      isSkippedMessage && this.get('errorMessageFilterActive') || 
       category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
       category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||

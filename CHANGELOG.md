@@ -9,6 +9,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
 
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix menu opening direction in line.
+
+## [2.4.0-beta.0] - 2020-03-18
+### Fixed
+* Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.0`.
+
 ## [2.3.0] - 2020-03-10
 ### Added
 * The `fixedHeader` property for the `flexberry-groupedit` component.

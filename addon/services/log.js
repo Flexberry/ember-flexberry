@@ -539,7 +539,7 @@ export default Ember.Service.extend(Ember.Evented, {
       return;
     }
 
-    if (typeof(error) === 'string') {
+    if (typeof error === 'string') {
       error = new Error(error);
     }
 

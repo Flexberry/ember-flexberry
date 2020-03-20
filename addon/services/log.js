@@ -507,7 +507,7 @@ export default Ember.Service.extend(Ember.Evented, {
       formattedMessage: formattedMessage
     };
 
-    let applicationLogModelName = this.get('applicationLogModelName');
+    const applicationLogModelName = this.get('applicationLogModelName');
     let store = this.get('store');
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).

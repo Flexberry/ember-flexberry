@@ -529,7 +529,7 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    Ember.assert('Logger Error: event name should be a string', typeof(eventName) === 'string');
+    Ember.assert('Logger Error: event name should be a string', typeof eventName === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },

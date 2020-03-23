@@ -3,12 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+* `flexberry-objectlistview` component:
+    * Add row button at mobile version.
 
 ## [2.4.0-beta.0] - 2020-03-18
 ### Fixed
 * Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
-* `flexberry-objectlistview` component:
-    * Row button add at mobile version.
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.4.0-beta.0`.

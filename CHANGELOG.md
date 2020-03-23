@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
 * The `applicationLogModelName` property for the `log` service.
 
 ### Changed

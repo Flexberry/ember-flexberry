@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * An error occurs when changing the model property using the `flexberry-lookup` component in dropdown mode and customize it using the `dropdownSettings` property.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.3.0`.
+
 ## [3.3.0-beta.0] - 2020-03-11
 ### Fixed
 * Old import style in `flexberry-core-offline` blueprint.

@@ -1262,6 +1262,10 @@ export default FlexberryBaseComponent.extend(
           if (renderedRowIndex >= contentLength) {
             this._restoreSelectedRecords();
 
+            // The last menu needs will be up.
+            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
 
@@ -1309,13 +1313,10 @@ export default FlexberryBaseComponent.extend(
         $table.colResizable({ disable: true });
       }
 
+      // The last menu needs will be up.
+      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
-
-    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-    // The last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
 
@@ -1780,14 +1781,14 @@ export default FlexberryBaseComponent.extend(
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
+      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
       Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
-      conditions = conditionsByType(attribute.type);
+      conditions = conditionsByType(attribute.type, attribute);
     } else {
       conditions = this._conditionsByType(attribute.type);
     }

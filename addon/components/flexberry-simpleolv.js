@@ -1865,14 +1865,14 @@ export default folv.extend(
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
+      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
       Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
-      conditions = conditionsByType(attribute.type);
+      conditions = conditionsByType(attribute.type, attribute);
     } else {
       conditions = this._conditionsByType(attribute.type);
     }

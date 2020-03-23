@@ -30,7 +30,7 @@ const joinArguments = function() {
 };
 
 const errorMessageFilters = A([
-  { name: 'PROMISE', message: "TransitionAborted" }
+  { name: 'PROMISE', message: 'TransitionAborted' }
 ]);
 
 /**

@@ -29,7 +29,7 @@ const joinArguments = function() {
   return result;
 };
 
-const errorMessageFilters = A([
+const errorMessageFilters = Ember.A([
   { name: 'PROMISE', message: 'TransitionAborted' }
 ]);
 

@@ -1351,7 +1351,7 @@ export default FlexberryBaseComponent.extend({
       }
     };
 
-    this.set('dropdownSettings', merge(defaultDropdownSettings, this.get('dropdownSettings') || {}));
+    this.set('_dropdownSettings', merge(defaultDropdownSettings, this.get('dropdownSettings') || {}));
   },
 
   /**

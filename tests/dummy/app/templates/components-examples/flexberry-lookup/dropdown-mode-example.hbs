@@ -1,7 +1,7 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.dropdown-mode-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-  <label>dropdownIsSearch=true, direction="downward"</label>
+  <label>dropdownIsSearch=true, minCharacters=0, dropdownSettings=(hash direction="downward")</label>
     {{flexberry-lookup
       value=model.type
       projection="DropDownLookupExampleView"
@@ -15,11 +15,11 @@
       dropdown=true
       dropdownIsSearch=true
       sorting="desc"
-      direction="downward"
+      minCharacters=0
     }}
   </div>
   <div class="field">
-  <label>dropdownIsSearch=false, direction="upward"</label>
+  <label>dropdownIsSearch=false, dropdownSettings=(hash direction="upward")</label>
     {{flexberry-lookup
       value=model.type
       projection="DropDownLookupExampleView"
@@ -32,7 +32,7 @@
       lookupLimitPredicate=lookupCustomLimitPredicate
       dropdown=true
       sorting="desc"
-      direction="upward"
+      dropdownSettings=(hash direction="upward")
     }}
   </div>
 </form>

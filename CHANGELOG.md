@@ -3,16 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.4.0-beta.1] - 2020-03-23
 ### Added
 * In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
-* The `applicationLogModelName` property for the `log` service.
+* The `applicationLogModelName` property for the `log` service, to specify the model for storing logs.
+
+### Fixed
+* Displaying menu in rows in the `flexberry-objectlistview` component.
 
 ### Changed
 * Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
-
-### Fixed
-* `flexberry-objectlistview` component:
-    * Fix menu opening direction in line.
 
 ## [2.4.0-beta.0] - 2020-03-18
 ### Fixed

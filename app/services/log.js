@@ -59,6 +59,13 @@ if (typeOf(storePromiseErrors) === 'boolean') {
   });
 }
 
+let errorMessageFilterActive = get(config, 'APP.log.errorMessageFilterActive');
+if (typeOf(errorMessageFilterActive) === 'boolean') {
+  LogService.reopen({
+    errorMessageFilterActive: errorMessageFilterActive
+  });
+}
+
 let showPromiseErrors = get(config, 'APP.log.showPromiseErrors');
 if (typeOf(showPromiseErrors) === 'boolean') {
   LogService.reopen({

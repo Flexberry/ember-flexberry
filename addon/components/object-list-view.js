@@ -190,6 +190,24 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
+    Flag indicates whether visible selected menu for mobile.
+
+    @property selectedMobileMenu
+    @type Boolean
+    @default false
+  */
+  selectedMobileMenu: false,
+
+  /**
+    Default count selected row for mobile menu.
+
+    @property selectedCountMobileMenu
+    @type Number
+    @default 0
+  */
+  selectedCountMobileMenu: 0,
+
+  /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
     If flag is enabled component compares current detail array with used on component,
@@ -870,7 +888,7 @@ export default FlexberryBaseComponent.extend(
           isAllSelectAtPage = false;
         }
       }
-  
+
       this.set('allSelectAtPage', isAllSelectAtPage);
     }
 
@@ -1033,6 +1051,62 @@ export default FlexberryBaseComponent.extend(
     },
 
     /**
+      Clear selected rows.
+
+      @method actions.clearSelectedRecordsMobile
+      @public
+    */
+    clearSelectedRecordsMobile() {
+      let componentName = this.get('componentName');
+      let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
+      let selectedRows = contentWithKeys.filterBy('selected', true);
+      for (let i = 0; i < selectedRows.length; i++) {
+        let recordWithKey = selectedRows[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+        recordWithKey.set('selected', false);
+
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
+      }
+    },
+
+    /**
+      Delete selected rows.
+
+      @method actions.deleteSelectedRowMobile
+      @public
+    */
+    deleteSelectedRowMobile() {
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows()) {
+          return;
+        }
+      }
+
+      let componentName = this.get('componentName');
+
+      if (!this.get('allSelect'))
+      {
+        this._deleteRows(componentName, true);
+      } else {
+        let filterQuery = {
+          predicate: this.get('currentController.filtersPredicate'),
+          modelName: this.get('modelProjection.modelName')
+        };
+
+        this._deleteAllRows(componentName, filterQuery);
+      }
+    },
+
+    /**
       This action is called when user click on menu in row.
 
       @method actions.deleteRow
@@ -1188,7 +1262,7 @@ export default FlexberryBaseComponent.extend(
 
       let isUncheckAll = this.get('allSelect');
       let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
-     
+
       switch (namedSetting) {
         case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
@@ -2246,7 +2320,11 @@ export default FlexberryBaseComponent.extend(
     // Mark previously selected records.
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+    let selectedRecordsToRestoreCondition = selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0;
+    this.set('selectedMobileMenu', selectedRecordsToRestoreCondition);
+
+    if (selectedRecordsToRestoreCondition) {
+      this.set('selectedCountMobileMenu', selectedRecordsToRestore.size);
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {
@@ -2654,7 +2732,11 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
 
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+    let selectedRecordsToRestoreCondition = selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0;
+    this.set('selectedMobileMenu', selectedRecordsToRestoreCondition);
+
+    if (selectedRecordsToRestoreCondition) {
+      this.set('selectedCountMobileMenu', selectedRecordsToRestore.size);
       let e = {
         checked: true
       };

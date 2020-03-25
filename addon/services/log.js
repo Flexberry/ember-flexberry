@@ -29,10 +29,6 @@ const joinArguments = function() {
   return result;
 };
 
-const errorMessageFilters = Ember.A([
-  { name: 'PROMISE', message: 'TransitionAborted' }
-]);
-
 /**
   Log service (stores client-side logs, warns, errors, ... into application log).
 
@@ -351,7 +347,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @type Array
     @default [{ group: 'PROMISE', message: "TransitionAborted" }]
   */
-  errorMessageFilters = A([
+  errorMessageFilters: Ember.A([
     { group: 'PROMISE', message: "TransitionAborted" }
   ]),
 

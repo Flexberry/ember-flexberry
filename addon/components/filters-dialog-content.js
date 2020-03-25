@@ -28,7 +28,7 @@ export default FlexberryBaseComponent.extend({
      Apply filters for current list.
 
      @method actions.applyFilters
-    */    
+    */
     applyFilters() {
       this.get('objectlistviewEvents').refreshListTrigger(this.get('model.componentName'));
       this.sendAction('close');
@@ -38,7 +38,7 @@ export default FlexberryBaseComponent.extend({
      Clear filters form.
 
      @method actions.clearFiltersFields
-    */  
+    */
     clearFiltersFields() {
       let columns = this.get('model.columns');
 

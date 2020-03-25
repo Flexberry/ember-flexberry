@@ -411,10 +411,10 @@ export default FlexberryBaseComponent.extend(
 
     @property showFiltersInModal
     @type Boolean
-    @default true
+    @default false
     @private
   */
-  showFiltersInModal: true,
+  showFiltersInModal: false,
 
   /**
     Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.

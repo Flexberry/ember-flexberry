@@ -417,10 +417,10 @@ export default FlexberryBaseComponent.extend({
 
     @property showFiltersInModal
     @type Boolean
-    @default true
+    @default false
     @private
   */
-  showFiltersInModal: true,
+  showFiltersInModal: false,
 
   /**
     Stores the text from "Filter by any match" input field.

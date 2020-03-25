@@ -20,8 +20,8 @@
     {{/if}}
   </td>
   <td
-  {{action "onRowClick" record (hash column=columns)}}
-  style="padding-left:{{hierarchicalIndent}}px;">
+    {{action "onRowClick" record (hash column=columns)}}
+    style="padding-left:{{hierarchicalIndent}}px;">
     {{component singleColumnCellComponent.componentName
       model=record.data
       columns=columns

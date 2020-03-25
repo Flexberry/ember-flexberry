@@ -345,6 +345,17 @@ export default Ember.Service.extend(Ember.Evented, {
   errorMessageFilterActive: false,
 
   /**
+    Error messages which must be skipped when flag errorMessageFilterActive is true.
+
+    @property errorMessageFilters
+    @type Array
+    @default [{ group: 'PROMISE', message: "TransitionAborted" }]
+  */
+  errorMessageFilters = A([
+    { group: 'PROMISE', message: "TransitionAborted" }
+  ]),
+
+  /**
     Initializes log service.
     Ember services are singletons, so this code will be executed only once since application initialization.
   */
@@ -507,10 +518,12 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   _storeToApplicationLog(category, message, formattedMessage) {
     let isSkippedMessage = false;
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
 
-    if (this.get('errorMessageFilterActive')) {
+    if (errorMessageFilterActive) {
       errorMessageFilters.forEach(errorMessageFilter => {
-        if (category.name === errorMessageFilter.name && message.indexOf(errorMessageFilter.message) !== -1) {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
           isSkippedMessage = true;
         }
       });

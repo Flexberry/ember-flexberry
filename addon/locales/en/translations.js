@@ -115,7 +115,9 @@ export default {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {

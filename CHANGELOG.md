@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * The `applicationLogModelName` property for the `log` service.
+* Show filters tool in modal window.
 
 ### Changed
 * Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).

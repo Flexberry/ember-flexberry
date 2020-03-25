@@ -407,6 +407,16 @@ export default FlexberryBaseComponent.extend(
   showEditMenuItemInRow: false,
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default true
+    @private
+  */
+  showFiltersInModal: true,
+
+  /**
     Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
 
     @property showPrototypeMenuItemInRow
@@ -557,6 +567,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
+    this.get('objectlistviewEventsService').setRelatedColums(ret);
     return ret;
   }),
 

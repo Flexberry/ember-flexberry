@@ -33,6 +33,16 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: Ember.inject.service(),
 
   /**
+    Flag used to display filters in modal.
+
+    @property _showFiltersInModal
+    @type Boolean
+    @default true
+    @private
+  */
+  _showFiltersInModal: true,
+
+  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords

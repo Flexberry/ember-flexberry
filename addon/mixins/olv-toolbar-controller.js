@@ -14,6 +14,15 @@ export default Ember.Mixin.create({
   advLimitController: Ember.inject.controller('advlimit-dialog'),
 
   /**
+    Controller to show filters modal window.
+
+    @property filtersDialogController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('filters-dialog')
+  */
+  filtersDialogController: Ember.inject.controller('filters-dialog'),
+
+  /**
     Service for managing advLimits for lists.
 
     @property advLimit
@@ -52,6 +61,31 @@ export default Ember.Mixin.create({
     */
     showConfigDialog(componentName, settingName, isExportExcel = false, immediateExport = false) {
       this._showConfigDialog(componentName, settingName, this, isExportExcel, immediateExport);
+    },
+
+    /**
+      Show filters dialog.
+
+      @method actions.showFiltersDialog
+      @param componentName Component name.
+      @param columns Filters columns.
+    */
+    showFiltersDialog(componentName, columns) {
+      let controller = this.get('filtersDialogController');
+      controller.set('mainControler', this);
+
+      let loadingParams = {
+        view: 'application',
+        outlet: 'modal'
+      };
+      this.send('showModalDialog', 'filters-dialog');
+
+      loadingParams = {
+        view: 'filters-dialog',
+        outlet: 'modal-content'
+      };
+      this.send('showModalDialog', 'filters-dialog-content',
+        { controller: controller, model: { columns: columns, componentName: componentName } }, loadingParams);
     },
 
     /**

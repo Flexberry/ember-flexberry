@@ -231,6 +231,15 @@ export default {
       'check': 'Check'
     },
 
+    'filters-dialog-content': {
+      'title': 'Сolumns filtering',
+      'column-name': 'Filter column',
+      'column-condition': 'Condition',
+      'column-value': 'Value',
+      'clear': 'Clear filters',
+      'apply': 'Apply filters'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Load time',
       'render-time': 'Render time',

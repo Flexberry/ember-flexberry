@@ -25,6 +25,15 @@ export default Ember.Service.extend(Ember.Evented, {
   _selectedRecords: undefined,
 
   /**
+    Table columns related to current model projection.
+
+    @property columns
+    @type Object[]
+    @private
+  */
+  _columns: undefined,
+
+  /**
     Init service.
 
     @method init
@@ -327,6 +336,26 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   getLimitFunction(componentName) {
     return this.get(`currentLimitFunctions.${componentName}`);
+  },
+
+  /**
+    Sets table columns related to current model projection.
+
+    @method setLimitFunction
+    @param Object[] Current columns.
+  */
+  setRelatedColums(columns) {
+    this.set('_columns', columns);
+  },
+
+  /**
+    Gets table columns related to current model projection.
+
+    @method getRelatedColums
+    @param Object[] Current columns.
+  */
+  getRelatedColums() {
+    return this.get('_columns');
   },
 
   /**

@@ -311,9 +311,9 @@ export default FlexberryBaseComponent.extend({
     onRowClick(record, params, e) {
       if (!Ember.isBlank(e)) {
         Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
-      } else {
-        this.sendAction('rowClick', record, params);
       }
+
+      this.sendAction('rowClick', record, params);
     }
   },
 

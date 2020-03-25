@@ -348,7 +348,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @default [{ group: 'PROMISE', message: "TransitionAborted" }]
   */
   errorMessageFilters: Ember.A([
-    { group: 'PROMISE', message: "TransitionAborted" }
+    { group: 'PROMISE', message: 'TransitionAborted' }
   ]),
 
   /**

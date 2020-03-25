@@ -20,7 +20,7 @@
     {{/if}}
   </td>
     <td
-    {{action "onRowClick" record (hash column=columns) preventDefault=false}}
+    {{action "onRowClick" record (hash column=columns)}}
     style="padding-left:{{hierarchicalIndent}}px;">
       {{component singleColumnCellComponent.componentName
         model=record.data
@@ -51,7 +51,7 @@
           <i class="copy icon"></i>
         </button>
       {{/if}}
-      {{#if showDeleteButtonInRow}}
+      {{#if (and showDeleteButtonInRow record.rowConfig.canBeDeleted)}}
         <button
           class="ui ui-edit object-list-view-row-delete-button mobile {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
           disabled={{readonly}}

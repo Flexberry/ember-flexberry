@@ -37,7 +37,7 @@ export default EditFormController.extend({
     if (Ember.isNone(detailsProjections)) {
       return [];
     }
-    
+
     let detailsProjectionNames = Object.keys(detailsProjections);
     detailsProjectionNames.splice(detailsProjectionNames.indexOf('modelName'), 1);
     return detailsProjectionNames;

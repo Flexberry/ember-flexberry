@@ -1260,8 +1260,6 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
-            this._restoreSelectedRecords();
-
             // The last menu needs will be up.
             this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
             this.$('.object-list-view-menu > .ui.dropdown').dropdown();
@@ -1304,8 +1302,6 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
-      this._restoreSelectedRecords();
-
       if (this.get('allowColumnResize')) {
         this._reinitResizablePlugin();
       } else {
@@ -1326,6 +1322,17 @@ export default FlexberryBaseComponent.extend(
 
       this._fixedTableHead($currentTable);
     }
+  },
+
+  /**
+    Restores the state of selected rows after updating the list.
+
+    See [EmberJS API](https://api.emberjs.com/).
+
+    @method didUpdateAttrs
+  */
+  didUpdateAttrs() {
+    Ember.run.scheduleOnce('afterRender', this, this._restoreSelectedRecords);
   },
 
   /**

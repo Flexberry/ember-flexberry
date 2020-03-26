@@ -88,7 +88,7 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
+        {{action "onRowClick" record (hash column=column columnIndex=index)}}
         class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}

@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
+* `flexberry-objectlistview` component:
+    * Add row button at mobile version.
+    
 ## [2.4.0-beta.1] - 2020-03-23
 ### Added
 * In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.

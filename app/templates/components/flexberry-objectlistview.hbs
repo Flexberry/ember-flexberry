@@ -130,7 +130,7 @@
         </button>
       {{/if}}
       <div class="ui action input search-field">
-        <div class="block-action-input {{if (and searchPageValue (not searchPageButtonReadonly)) 'red' 'blue' }}">
+        <div class="block-action-input {{if (and searchPageValue searchPageButtonReadonly) 'red' 'blue' }}">
           {{input
             type="number"
             placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
@@ -138,20 +138,14 @@
           }}
         </div>
         {{#if searchPageValue}}
-          {{#if searchPageButtonReadonly}}
-            <button
-              class="ui {{buttonClass}} icon button next-page-button blue"
-              title={{t "components.flexberry-objectlistview.search-button-text"}}
-              {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
-            </button>
-          {{else}}
-            <button
-              class="ui {{buttonClass}} icon button disabled next-page-button red"
-              title={{t "components.flexberry-objectlistview.search-button-text"}}
-              disabled="disabled"
-              {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
-            </button>
-          {{/if}}
+
+          <button
+            class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'blue'}} next-page-button"
+            title={{t "components.flexberry-objectlistview.search-button-text"}}
+            disabled={{searchPageButtonReadonly}}
+            {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
+          </button>
+
         {{/if}}
       </div>
     </div>

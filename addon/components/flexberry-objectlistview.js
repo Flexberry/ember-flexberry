@@ -181,13 +181,13 @@ export default FlexberryBaseComponent.extend({
     let searchPageValue = this.get('searchPageValue');
     let searchPageNumber = parseInt(searchPageValue, 10);
     if (isNaN(searchPageNumber)) {
-      return false;
+      return true;
     }
 
     let pages = A(this.get('pages'));
     let pagesCount = pages.get('lastObject.number');
 
-    return pagesCount >= searchPageNumber;
+    return pagesCount < searchPageNumber;
   }),
 
   /**

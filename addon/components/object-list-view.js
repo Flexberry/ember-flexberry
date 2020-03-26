@@ -48,8 +48,7 @@ export default FlexberryBaseComponent.extend(
   _contentObserver: observer('content', function() {
     this._setContent(this.get('componentName'));
 
-    if (this.get('allSelect'))
-    {
+    if (this.get('allSelect')) {
       let contentWithKeys = this.get('contentWithKeys');
       let checked = this.get('allSelect');
 
@@ -1048,62 +1047,6 @@ export default FlexberryBaseComponent.extend(
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.get(action)(column, this.get('componentName'));
-    },
-
-    /**
-      Clear selected rows.
-
-      @method actions.clearSelectedRecordsMobile
-      @public
-    */
-    clearSelectedRecordsMobile() {
-      let componentName = this.get('componentName');
-      let contentWithKeys = this.get('contentWithKeys');
-      let selectedRecords = this.get('selectedRecords');
-      let selectedRows = contentWithKeys.filterBy('selected', true);
-      for (let i = 0; i < selectedRows.length; i++) {
-        let recordWithKey = selectedRows[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
-
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', false);
-
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
-      }
-    },
-
-    /**
-      Delete selected rows.
-
-      @method actions.deleteSelectedRowMobile
-      @public
-    */
-    deleteSelectedRowMobile() {
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      if (confirmDeleteRows) {
-        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
-          return;
-        }
-      }
-
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this._deleteRows(componentName, true);
-      } else {
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: this.get('modelProjection.modelName')
-        };
-
-        this._deleteAllRows(componentName, filterQuery);
-      }
     },
 
     /**

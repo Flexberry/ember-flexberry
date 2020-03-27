@@ -103,9 +103,9 @@
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
           preview=(action "previewLookupValue")
+          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
           readonly=readonly
           componentName="SuggestionEditAuthor"
-          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
         }}
         {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
       </div>

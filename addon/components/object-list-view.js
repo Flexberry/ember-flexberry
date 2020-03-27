@@ -11,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { once, schedule } from '@ember/runloop';
+import { once, schedule, scheduleOnce } from '@ember/runloop';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
@@ -538,10 +538,11 @@ export default FlexberryBaseComponent.extend(
       if (isNone(this.get('orderedProperty'))) {
         for (let i = 0; i < userSettings.sorting.length; i++) {
           let sorting = userSettings.sorting[i];
-          let propName = sorting.propName;
-          namedCols[propName].sorted = true;
-          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-          namedCols[propName].sortNumber = i + 1;
+          if (namedCols[sorting.propName]) {
+            namedCols[sorting.propName].sorted = true;
+            namedCols[sorting.propName].sortAscending = sorting.direction === 'asc' ? true : false;
+            namedCols[sorting.propName].sortNumber = i + 1;
+          }
         }
       }
 
@@ -549,10 +550,8 @@ export default FlexberryBaseComponent.extend(
         ret = [];
         for (let i = 0; i < userSettings.colsOrder.length; i++) {
           let userSetting = userSettings.colsOrder[i];
-          if (!userSetting.hide) {
-            let propName = userSetting.propName;
-            let col = namedCols[propName];
-            ret[ret.length] = col;
+          if (!userSetting.hide && namedCols[userSetting.propName]) {
+            ret[ret.length] = namedCols[userSetting.propName];
           }
         }
       } else {
@@ -1376,7 +1375,9 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
-            this._restoreSelectedRecords();
+            // The last menu needs will be up.
+            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1416,8 +1417,6 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
-      this._restoreSelectedRecords();
-
       if (this.get('needReinitResizablePlugin')) {
         if (this.get('allowColumnResize')) {
           this._reinitResizablePlugin();
@@ -1428,13 +1427,10 @@ export default FlexberryBaseComponent.extend(
       }
       this.set('needReinitResizablePlugin', true);
 
+      // The last menu needs will be up.
+      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
-
-    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-    // The last menu needs will be up.
-    $('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
 
@@ -1444,6 +1440,17 @@ export default FlexberryBaseComponent.extend(
 
       this._fixedTableHead($currentTable);
     }
+  },
+
+  /**
+    Restores the state of selected rows after updating the list.
+
+    See [EmberJS API](https://api.emberjs.com/).
+
+    @method didUpdateAttrs
+  */
+  didUpdateAttrs() {
+    scheduleOnce('afterRender', this, this._restoreSelectedRecords);
   },
 
   /**
@@ -1901,14 +1908,14 @@ export default FlexberryBaseComponent.extend(
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      $.extend(true, component, componentForFilter(attribute.type, relation));
+      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
-      conditions = conditionsByType(attribute.type);
+      conditions = conditionsByType(attribute.type, attribute);
     } else {
       conditions = this._conditionsByType(attribute.type);
     }

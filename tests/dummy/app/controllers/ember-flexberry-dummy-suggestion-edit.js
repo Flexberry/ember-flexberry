@@ -101,7 +101,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         return {
           refreshButton:true,
           enableFilters: true,
-          filterButton: true
+          filterButton: true,
+          colsConfigButton: true
         };
       }
     },

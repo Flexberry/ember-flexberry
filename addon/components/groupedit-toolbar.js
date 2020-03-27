@@ -265,7 +265,7 @@ export default FlexberryBaseComponent.extend({
   */
   /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
+    if (componentName === this.get('componentName') && !this.get('isDestroying')) {
       this.set('_hasSelectedRows', count > 0);
 
       const $tbody = this.$().parent().find('tbody');

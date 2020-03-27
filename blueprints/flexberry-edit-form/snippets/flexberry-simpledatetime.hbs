@@ -3,6 +3,7 @@
     {{
       flexberry-simpledatetime
       type="date"
+      placeholder=(t 'components.flexberry-datepicker.placeholder')
       readonly=<%= readonly %>
       value=model.<%= name %>
       class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")

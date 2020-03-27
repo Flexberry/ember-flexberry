@@ -93,6 +93,32 @@ export default Service.extend(Evented, {
   enabled: false,
 
   /**
+    The name of a model that represents log entity.
+
+    @property applicationLogModelName
+    @type String
+    @default 'i-i-s-caseberry-logging-objects-application-log'
+    @example
+    ```
+    // Log service 'applicationLogModelName' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            applicationLogModelName: 'custom-application-log'
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
+
+  /**
     Flag: indicates whether log service will store error messages to application log or not.
 
     @property storeErrorMessages
@@ -310,6 +336,8 @@ export default Service.extend(Evented, {
     let _this = this;
     let originalMethodsCache = A();
 
+    this.initProperties();
+
     let originalEmberLoggerError = Ember.Logger.error;
     originalMethodsCache.pushObject({
       methodOwner: Ember.Logger,
@@ -341,7 +369,7 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      _this._queue.attach((resolve, reject) => {
+      return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
           resolve(result);
         }).catch((reason) => {
@@ -361,7 +389,7 @@ export default Service.extend(Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
-      _this._queue.attach((resolve, reject) => {
+      return _this._queue.attach((resolve, reject) => {
         let message = joinArguments(...arguments);
         if (message.indexOf('DEPRECATION') === 0) {
           return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
@@ -390,7 +418,7 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._queue.attach((resolve, reject) => {
+      return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
           resolve(result);
         }).catch((reason) => {
@@ -410,7 +438,7 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._queue.attach((resolve, reject) => {
+      return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
           resolve(result);
         }).catch((reason) => {
@@ -430,7 +458,7 @@ export default Service.extend(Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._queue.attach((resolve, reject) => {
+      return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
           resolve(result);
         }).catch((reason) => {
@@ -440,6 +468,28 @@ export default Service.extend(Evented, {
     };
 
     this.set('_originalMethodsCache', originalMethodsCache);
+  },
+
+  /**
+   * Initializes properties of a log service.
+   */
+  initProperties() {
+    const config = getOwner(this).resolveRegistration('config:environment');
+    const logConfiguration = config.APP.log;
+
+    this.set('enabled', typeof logConfiguration.enabled === 'boolean' && logConfiguration.enabled);
+    this.set('storeErrorMessages', typeof logConfiguration.storeErrorMessages === 'boolean' && logConfiguration.storeErrorMessages);
+    this.set('storeWarnMessages', typeof logConfiguration.storeWarnMessages === 'boolean' && logConfiguration.storeWarnMessages);
+    this.set('storeLogMessages', typeof logConfiguration.storeLogMessages === 'boolean' && logConfiguration.storeLogMessages);
+    this.set('storeInfoMessages', typeof logConfiguration.storeInfoMessages === 'boolean' && logConfiguration.storeInfoMessages);
+    this.set('storeDebugMessages', typeof logConfiguration.storeDebugMessages === 'boolean' && logConfiguration.storeDebugMessages);
+    this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
+    this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
+    this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
+
+    if (typeof logConfiguration.applicationLogModelName === 'string') {
+      this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
   },
 
   /**
@@ -503,7 +553,7 @@ export default Service.extend(Evented, {
       formattedMessage: formattedMessage
     };
 
-    let applicationLogModelName = 'i-i-s-caseberry-logging-objects-application-log';
+    const applicationLogModelName = this.get('applicationLogModelName');
     let store = this.get('store');
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
@@ -532,7 +582,7 @@ export default Service.extend(Evented, {
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    assert('Logger Error: event name should be a string', typeOf(eventName) === 'string');
+    assert('Logger Error: event name should be a string', typeof eventName === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },
@@ -544,7 +594,7 @@ export default Service.extend(Evented, {
         resolve();
       }
 
-      if (typeOf(error) === 'string') {
+      if (typeof error === 'string') {
         error = new Error(error);
       }
 

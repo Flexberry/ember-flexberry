@@ -710,13 +710,6 @@ export default FlexberryBaseComponent.extend({
       developerUserSettings = developerUserSettings.DEFAULT || {};
       this.set('sorting', developerUserSettings.sorting || []);
     }
-
-    if (this.get('fixedHeader')) {
-      let $currentTable = this.$('table.object-list-view');
-      $currentTable.parent().addClass('fixed-header');
-
-      this._fixedTableHead($currentTable);
-    }
   },
 
   /**

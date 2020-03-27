@@ -4,6 +4,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0-beta.2] - 2020-03-26
+### Fixed
+* Using the `flexberry-groupedit` component with the `fixedHeader` property.
+* Buttons for editing and prototyping in a row for the mobile template of the `flexberry-objectlistview` component that were once lost are added to the data column.
+
+### Changed
+* The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the checkbox column to the data column.
+
+## [2.4.0-beta.1] - 2020-03-23
+### Added
+* In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
+* The `applicationLogModelName` property for the `log` service, to specify the model for storing logs.
+
+### Fixed
+* Displaying menu in rows in the `flexberry-objectlistview` component.
+
+### Changed
+* Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
+
 ## [3.3.0] - 2020-03-23
 ### Added
 * Changes from [`2.3.0`](#230---2020-03-10) version.
@@ -14,6 +33,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.3.0`.
+
+## [2.4.0-beta.0] - 2020-03-18
+### Fixed
+* Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.0`.
 
 ## [2.3.0] - 2020-03-10
 ### Added

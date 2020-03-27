@@ -56,17 +56,11 @@ export default Controller.extend({
       @method actions.toggleSidebarMobile
     */
     toggleSidebarMobile() {
-      $('.ui.sidebar.main.menu').sidebar('toggle');
+      let sidebar = $('.ui.sidebar.main.menu');
+      sidebar.sidebar('attach events', '.ui.sidebar.main.menu .item a').sidebar('toggle');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-      }
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**

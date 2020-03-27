@@ -9,13 +9,16 @@
     onHidden=(action "updateWidth")
   )
 }}
-  <a class="item"
-    href={{addonVersionHref}}
-    target="_blank"
-    title={{t "forms.application.sitemap.application-version.title"}}>
-    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-  </a>
-  {{flexberry-sitemap sitemap=sitemap}}
+  {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+  <div class="sitebar-footer">
+    <a class="item"
+      href={{addonVersionHref}}
+      target="_blank"
+      title={{t "forms.application.sitemap.application-version.title"}}>
+      {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+    </a>
+    <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
+  </div>
 {{/flexberry-sidebar}}
 <div class="bgw-fix mobile">
   <div class="background-logo mobile">
@@ -27,7 +30,7 @@
           <i class="sidebar icon text-menu-show"></i>
           <i class="sidebar icon hidden text-menu-hide hidden-text"></i>
         </a>
-        <div class="right item">
+        {{!-- <div class="right item">
           <label style="margin-right: 5px;">
             {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
           </label>
@@ -35,8 +38,8 @@
             class="toggle"
             value=userSettingsService.isUserSettingsServiceEnabled
           }}
-        </div>
-        <div class="right item lang">
+        </div> --}}
+        {{!-- <div class="right item lang">
           <label style="margin-right: 5px;">
             {{t "forms.application.header.menu.language-dropdown.caption"}}
           </label>
@@ -47,7 +50,7 @@
             placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
             settings=(hash direction="downward")
           }}
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>

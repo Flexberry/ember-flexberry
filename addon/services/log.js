@@ -7,7 +7,7 @@ import Service, { inject as service } from '@ember/service';
 import Evented from '@ember/object/evented';
 import { getOwner } from '@ember/application';
 import RSVP from 'rsvp';
-import { typeOf, isNone } from '@ember/utils';
+import { isNone } from '@ember/utils';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { set } from '@ember/object';

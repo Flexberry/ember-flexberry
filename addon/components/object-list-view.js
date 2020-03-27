@@ -11,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { once, schedule } from '@ember/runloop';
+import { once, schedule, scheduleOnce } from '@ember/runloop';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
@@ -1332,7 +1332,7 @@ export default FlexberryBaseComponent.extend(
     @method didUpdateAttrs
   */
   didUpdateAttrs() {
-    Ember.run.scheduleOnce('afterRender', this, this._restoreSelectedRecords);
+    scheduleOnce('afterRender', this, this._restoreSelectedRecords);
   },
 
   /**

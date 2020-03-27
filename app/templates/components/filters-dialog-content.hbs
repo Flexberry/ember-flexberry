@@ -1,22 +1,22 @@
-<div class="ui form {{appState.state}}">
+<div class="ui form">
   <div class="flexberry-colsconfig content">
       <table class="ui unstackable fixed selectable celled table">
 
         <thead class="full-width">
           <tr>
-            <th style="cursor:default">{{t "components.filters-dialog-content.column-name"}}</th>
+            <th>{{t "components.filters-dialog-content.column-name"}}</th>
             <th class="filter-dropdown">{{t "components.filters-dialog-content.column-condition"}}</th>
-            <th class="filter-input" style="cursor:default">{{t "components.filters-dialog-content.column-value"}}</th>
+            <th class="filter-input">{{t "components.filters-dialog-content.column-value"}}</th>
           </tr>
         </thead>
 
         <tbody class="full-width">
-          {{#each model.columns as |column|}}
+          {{#each _filterColumnsWithoutEnter as |column|}}
             <tr class="object-list-view-filters">
-              <th style="cursor:default" class="full-width">
+              <th class="full-width">
                   {{column.header}}
               </th>
-              <th style="cursor:default">
+              <th>
                 <td class="overflowed-cell">
                   {{#if column.filter.conditions}}
                     {{component "flexberry-dropdown"
@@ -28,7 +28,7 @@
                   {{/if}}
                 </td>
               </th>
-              <th style="cursor:default">
+              <th>
                 <td class="overflowed-cell">
                   {{#if column.filter.component.name}}
                     {{component column.filter.component.name

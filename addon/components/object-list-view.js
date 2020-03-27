@@ -412,7 +412,6 @@ export default FlexberryBaseComponent.extend(
     @property showFiltersInModal
     @type Boolean
     @default false
-    @private
   */
   showFiltersInModal: false,
 
@@ -567,7 +566,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
-    this.get('objectlistviewEventsService').setRelatedColums(ret);
+    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(ret);
     return ret;
   }),
 

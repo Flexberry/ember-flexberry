@@ -35,12 +35,11 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag used to display filters in modal.
 
-    @property _showFiltersInModal
+    @property showFiltersInModal
     @type Boolean
     @default false
-    @private
   */
-  _showFiltersInModal: false,
+  showFiltersInModal: true,
 
   /**
     Store the action name at controller for loading records.

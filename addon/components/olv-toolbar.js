@@ -648,14 +648,7 @@ export default FlexberryBaseComponent.extend({
 
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
-        const columns = this.get('objectlistviewEventsService').getRelatedColums();
-
-        // Disable key-down action, which was set in object-list-view.
-        columns.forEach((column) => {
-          if (!Ember.isNone(column.filter.component.properties.keyDown)) {
-            column.filter.component.properties.keyDown = undefined;
-          }
-        });
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray();
 
         this.get('modelController').send('showFiltersDialog', componentName, columns);
       } else {

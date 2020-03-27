@@ -25,13 +25,13 @@ export default Ember.Service.extend(Ember.Evented, {
   _selectedRecords: undefined,
 
   /**
-    Table columns related to current model projection.
+    Current model projection columns with available filters.
 
-    @property columns
+    @property _olvFilterColumnsArray
     @type Object[]
     @private
   */
-  _columns: undefined,
+  _olvFilterColumnsArray: undefined,
 
   /**
     Init service.
@@ -339,23 +339,23 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Sets table columns related to current model projection.
+    Sets olv columns with available filters.
 
-    @method setLimitFunction
-    @param Object[] Current columns.
+    @method setOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
   */
-  setRelatedColums(columns) {
-    this.set('_columns', columns);
+  setOlvFilterColumnsArray(columns) {
+    this.set('_olvFilterColumnsArray', columns);
   },
 
   /**
-    Gets table columns related to current model projection.
+    Gets olv columns with available filters.
 
-    @method getRelatedColums
-    @param Object[] Current columns.
+    @method getOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
   */
-  getRelatedColums() {
-    return this.get('_columns');
+  getOlvFilterColumnsArray() {
+    return this.get('_olvFilterColumnsArray');
   },
 
   /**

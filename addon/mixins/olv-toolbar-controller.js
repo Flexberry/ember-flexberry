@@ -68,9 +68,9 @@ export default Ember.Mixin.create({
 
       @method actions.showFiltersDialog
       @param componentName Component name.
-      @param columns Filters columns.
+      @param filterColumns columns with available filters.
     */
-    showFiltersDialog(componentName, columns) {
+    showFiltersDialog(componentName, filterColumns) {
       let controller = this.get('filtersDialogController');
       controller.set('mainControler', this);
 
@@ -85,7 +85,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'filters-dialog-content',
-        { controller: controller, model: { columns: columns, componentName: componentName } }, loadingParams);
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName } }, loadingParams);
     },
 
     /**

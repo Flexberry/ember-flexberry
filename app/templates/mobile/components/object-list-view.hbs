@@ -112,7 +112,7 @@
   </tbody>
 </table>
 
-{{#if (and selectedMobileMenu showCheckBoxInRow)}}
+{{#if (and _selectedMobileMenu showCheckBoxInRow)}}
   {{#if (not-eq class "groupedit-container")}}
     <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
       <i class="check-square-o icon"></i>
@@ -130,7 +130,7 @@
     </button>
   {{/if}}
 
-  <label>{{selectedCountMobileMenu}}</label>
+  <label>{{_selectedCountMobileMenu}}</label>
 
   <button
     class="ui delete-button {{buttonClass}} {{if readonly 'disabled' ''}} button"

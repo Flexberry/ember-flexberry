@@ -14,6 +14,32 @@ import ObjectListViewComponent from '../object-list-view';
 */
 export default ObjectListViewComponent.extend({
   /**
+    Flag indicates whether visible selected menu for mobile.
+
+    @property _selectedMobileMenu
+    @type Boolean
+    @readOnly
+  */
+  _selectedMobileMenu: computed('selectedRecords.@each', 'allSelect', 'allSelectAtPage', function() {
+    return this.get('selectedRecords.length') > 0 || this.get('allSelect') || this.get('allSelectAtPage');
+  }),
+
+  /**
+    Count selected row for mobile menu.
+
+    @property _selectedCountMobileMenu
+    @type Number
+    @readOnly
+  */
+  _selectedCountMobileMenu: computed('selectedRecords.@each', 'allSelect', function() {
+    if (this.get('allSelect')) {
+      return this.get('recordsTotalCount');
+    }
+
+    return this.get('selectedRecords.length');
+  }),
+
+  /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
 
     @property allowColumnResize

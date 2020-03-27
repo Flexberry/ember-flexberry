@@ -189,24 +189,6 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
-    Flag indicates whether visible selected menu for mobile.
-
-    @property selectedMobileMenu
-    @type Boolean
-    @default false
-  */
-  selectedMobileMenu: false,
-
-  /**
-    Default count selected row for mobile menu.
-
-    @property selectedCountMobileMenu
-    @type Number
-    @default 0
-  */
-  selectedCountMobileMenu: 0,
-
-  /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
     If flag is enabled component compares current detail array with used on component,
@@ -2270,11 +2252,8 @@ export default FlexberryBaseComponent.extend(
     // Mark previously selected records.
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-    let selectedRecordsToRestoreCondition = selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0;
-    this.set('selectedMobileMenu', selectedRecordsToRestoreCondition);
 
-    if (selectedRecordsToRestoreCondition) {
-      this.set('selectedCountMobileMenu', selectedRecordsToRestore.size);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {
@@ -2682,11 +2661,8 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
 
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-    let selectedRecordsToRestoreCondition = selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0;
-    this.set('selectedMobileMenu', selectedRecordsToRestoreCondition);
 
-    if (selectedRecordsToRestoreCondition) {
-      this.set('selectedCountMobileMenu', selectedRecordsToRestore.size);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       let e = {
         checked: true
       };

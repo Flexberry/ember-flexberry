@@ -48,7 +48,7 @@ export default FlexberryBaseComponent.extend({
     let columnsWithoutEvent = Ember.A();
     let originFilterColumns = this.get('filterColumns');
 
-    Ember.$.extend(true, columnsWithoutEvent, originFilterColumns);        
+    Ember.$.extend(true, columnsWithoutEvent, originFilterColumns);
 
     // Disable key-down action, which was set in object-list-view.
     columnsWithoutEvent.forEach((column) => {
@@ -75,7 +75,7 @@ export default FlexberryBaseComponent.extend({
 
         if (!Ember.isNone(filterColumnOrigin)) {
           Ember.set(filterColumnOrigin.filter, 'pattern', column.filter.pattern);
-          Ember.set(filterColumnOrigin.filter, 'condition', column.filter.condition); 
+          Ember.set(filterColumnOrigin.filter, 'condition', column.filter.condition);
         }
       });
 

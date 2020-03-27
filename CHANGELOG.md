@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Show filters tool in modal window.
 
+## [2.4.0-beta.2] - 2020-03-26
+### Fixed
+* Using the `flexberry-groupedit` component with the `fixedHeader` property.
+* Buttons for editing and prototyping in a row for the mobile template of the `flexberry-objectlistview` component that were once lost are added to the data column.
+
+### Changed
+* The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the checkbox column to the data column.
+
 ## [2.4.0-beta.1] - 2020-03-23
 ### Added
 * In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.

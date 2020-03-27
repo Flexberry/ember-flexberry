@@ -68,11 +68,20 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   /**
     Controller to show colsconfig modal window.
 
-    @property lookupController
+    @property colsconfigController
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('colsconfig-dialog')
   */
   colsconfigController: injectController('colsconfig-dialog'),
+
+  /**
+    Controller to show flexberryMenuitemDialog modal window.
+
+    @property flexberryMenuitemDialogController
+    @type <a href="https://www.emberjs.com/api/ember/release/functions/@ember%2Fcontroller/inject">Ember.InjectedProperty</a>
+    @default controller('flexberry-menuitem-dialog')
+  */
+  flexberryMenuitemDialogController: injectController('flexberry-menuitem-dialog'),
 
   /**
     Flag to enable return to agregator's path if possible.

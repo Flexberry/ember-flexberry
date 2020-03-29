@@ -58,9 +58,6 @@ export default Controller.extend({
     toggleSidebarMobile() {
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('attach events', '.ui.sidebar.main.menu .item a').sidebar('toggle');
-
-      // For reinit overflowed tabs.
-      $(window).trigger('resize');
     },
 
     /**

@@ -263,6 +263,10 @@ export default {
 
     'flexberry-tree': {
       'placeholder': 'Tree nodes are not defined'
+    },
+
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Main menu'
     }
 
   },

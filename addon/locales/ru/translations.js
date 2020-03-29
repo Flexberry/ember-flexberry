@@ -267,6 +267,9 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Главное меню'
+    }
   },
 
   'models': {

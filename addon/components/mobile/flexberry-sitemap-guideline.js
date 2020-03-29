@@ -4,7 +4,8 @@
 
 import Component from '@ember/component';
 import $ from 'jquery';
-
+import { run } from '@ember/runloop';
+import { computed  } from '@ember/object';
 /**
   Component for sitemap render from the object with links.
 
@@ -51,7 +52,11 @@ export default Component.extend({
     @type Object
   */
   sitemap: undefined,
-  parent: 'Главное меню',
+
+  parent: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    return i18n.t('components.flexberry-sitemap-guideline.main-menu-caption');
+  }),
 
   /**
     Stores node state.
@@ -73,20 +78,20 @@ export default Component.extend({
         maxSelections: 1,
         transition: 'slide left',
         onChange: () => {
-          let selectedItem = this.targetObject.$('.active.selected');
-          if (selectedItem.length > 0) {
-            // selectedItem.removeClass('active selected');
-          }
-          this.send('menuToggle');
+          run.next(() => {
+            let selectedItem = this.targetObject.$('.active.selected');
+            if (selectedItem.length > 0) {
+              selectedItem.removeClass('active selected');
+            }
+
+            this.send('menuToggle');
+          })
         }
       });
     }
   },
 
   actions: {
-    click() {
-      this.element.classList.add('active');
-    },
 
     /**
       Show or hide menu.
@@ -99,7 +104,11 @@ export default Component.extend({
     },
 
     menuBack() {
-      $(this.element).dropdown('hide');
+      if (this.get('isDropDown')) {
+        $(this.element).dropdown('hide');
+      } else {
+        $('> .menu.visible', this.element).transition('slide left');
+      }
     }
   },
 });

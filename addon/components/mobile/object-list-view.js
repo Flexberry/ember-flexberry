@@ -131,7 +131,7 @@ export default ObjectListViewComponent.extend({
     */
     clearSelectedRecords() {
       if (this.get('allSelect')) {
-        return;
+        this.send('checkAll');
       }
 
       let componentName = this.get('componentName');

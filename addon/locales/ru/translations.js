@@ -234,6 +234,15 @@ export default {
       'check': 'Проверить'
     },
 
+    'filters-dialog-content': {
+      'title': 'Фильтрация по столбцам',
+      'column-name': 'Столбец для фильтрации',
+      'column-condition': 'Условие',
+      'column-value': 'Значение',
+      'clear': 'Очистить фильты',
+      'apply': 'Применить фильтры'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Время загрузки',
       'render-time': 'Время отрисовки',

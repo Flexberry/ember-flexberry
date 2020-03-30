@@ -9,6 +9,7 @@
   enableFilters=enableFilters
   exportExcelButton=exportExcelButton
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
   resetFilters=(action "resetFilters" this.attrs.resetFilters)
@@ -66,6 +67,7 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   enableFilters=enableFilters
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter

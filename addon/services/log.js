@@ -327,6 +327,43 @@ export default Service.extend(Evented, {
   showPromiseErrors: false,
 
   /**
+    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
+
+    @property errorMessageFilterActive
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            errorMessageFilterActive: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  errorMessageFilterActive: false,
+
+  /**
+    Error messages which must be skipped when flag errorMessageFilterActive is true.
+
+    @property errorMessageFilters
+    @type Array
+    @default [{ category: 'PROMISE', message: "TransitionAborted" }]
+  */
+  errorMessageFilters: Ember.A([
+    { category: 'PROMISE', message: 'TransitionAborted' }
+  ]),
+
+  /**
     Initializes log service.
     Ember services are singletons, so this code will be executed only once since application initialization.
   */
@@ -486,6 +523,7 @@ export default Service.extend(Evented, {
     this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
     this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
+    this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
 
     if (typeof logConfiguration.applicationLogModelName === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
@@ -521,7 +559,19 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    if (!this.get('enabled') ||
+    let isSkippedMessage = false;
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
+
+    if (errorMessageFilterActive) {
+      errorMessageFilters.forEach(errorMessageFilter => {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
+          isSkippedMessage = true;
+        }
+      });
+    }
+
+    if (!this.get('enabled') || isSkippedMessage ||
       category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
       category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||

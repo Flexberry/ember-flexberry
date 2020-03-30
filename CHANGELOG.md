@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Show filters tool in modal window.
+
 ### Changed
 * `log` service:
     * Disable save to log transition aborted errors.

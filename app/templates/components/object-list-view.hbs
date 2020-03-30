@@ -81,7 +81,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#if showFilters}}
+    {{#if (and (not showFiltersInModal) showFilters)}}
       <tr class="object-list-view-filters">
         {{#if showHelperColumn}}
           <td rowspan="1"></td>

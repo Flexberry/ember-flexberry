@@ -413,6 +413,16 @@ export default FlexberryBaseComponent.extend({
   isDeleteButtonEnabled: false,
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  showFiltersInModal: false,
+
+  /**
     Stores the text from "Filter by any match" input field.
 
     @property filterByAnyMatchText
@@ -625,6 +635,25 @@ export default FlexberryBaseComponent.extend({
     showAdvLimitDialog(settingName) {
       Ember.assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
       this.get('modelController').send('showAdvLimitDialog', this.componentName, settingName);
+    },
+
+    /**
+      Action to show filters tool.
+
+      @method actions.showFiltersTool
+      @public
+    */
+    showFiltersTool() {
+      const showFiltersInModal = this.get('showFiltersInModal');
+
+      if (showFiltersInModal) {
+        const componentName = this.get('componentName');
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray();
+
+        this.get('modelController').send('showFiltersDialog', componentName, columns);
+      } else {
+        this.sendAction('toggleStateFilters');
+      }
     },
 
     /**

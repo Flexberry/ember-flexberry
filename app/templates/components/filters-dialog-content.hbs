@@ -1,0 +1,55 @@
+<div class="ui form">
+  <div class="flexberry-colsconfig content">
+      <table class="ui unstackable fixed selectable celled table">
+
+        <thead class="full-width">
+          <tr>
+            <th>{{t "components.filters-dialog-content.column-name"}}</th>
+            <th class="filter-dropdown">{{t "components.filters-dialog-content.column-condition"}}</th>
+            <th class="filter-input">{{t "components.filters-dialog-content.column-value"}}</th>
+          </tr>
+        </thead>
+
+        <tbody class="full-width">
+          {{#each _filterColumnsWithoutEnter as |column|}}
+            <tr class="object-list-view-filters">
+              <th class="full-width">
+                  {{column.header}}
+              </th>
+              <th>
+                <td class="overflowed-cell">
+                  {{#if column.filter.conditions}}
+                    {{component "flexberry-dropdown"
+                      value=column.filter.condition
+                      items=column.filter.conditions
+                      placeholder=""
+                      needChecksOnValue=false
+                    }}
+                  {{/if}}
+                </td>
+              </th>
+              <th>
+                <td class="overflowed-cell">
+                  {{#if column.filter.component.name}}
+                    {{component column.filter.component.name
+                      value=column.filter.pattern
+                      dynamicProperties=column.filter.component.properties
+                    }}
+                  {{/if}}
+                </td>
+              </th>
+            </tr>
+          {{/each}}
+        </tbody>
+        
+        <tfoot class="full-width">
+          <tr>
+            <th colspan='2'>
+              <div class="ui right floated button cols-config-apply" {{action "applyFilters"}}>{{t "components.filters-dialog-content.apply"}}</div>
+              <div class="ui right floated button cols-config-apply" {{action "clearFiltersFields"}}>{{t "components.filters-dialog-content.clear"}}</div>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+  </div>
+</div>

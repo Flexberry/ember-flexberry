@@ -31,7 +31,7 @@ export default ObjectListViewComponent.extend({
     @type Number
     @readOnly
   */
-  _selectedCountMobileMenu: computed('selectedRecords.@each', 'allSelect', function() {
+  _selectedCountMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
     if (this.get('allSelect')) {
       return this.get('recordsTotalCount');
     }

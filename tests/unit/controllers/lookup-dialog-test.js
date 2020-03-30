@@ -6,6 +6,7 @@ moduleFor('controller:lookup-dialog', 'Unit | Controller | lookup dialog', {
   needs: [
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
+    'controller:filters-dialog',
     'service:lookup-events',
     'service:objectlistview-events',
     'service:user-settings',

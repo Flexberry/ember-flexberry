@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { isNone } from '@ember/utils';
+import { set } from '@ember/object';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -15,7 +19,7 @@ export default FlexberryBaseComponent.extend({
    @type {Class}
    @default Ember.inject.service()
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Filter columns without Enter key press event.
@@ -24,7 +28,7 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @private
   */
-  _filterColumnsWithoutEnter: Ember.A(),
+  _filterColumnsWithoutEnter: A(),
 
   /**
     Columns with available filters.
@@ -45,14 +49,14 @@ export default FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super(...arguments);
 
-    let columnsWithoutEvent = Ember.A();
+    let columnsWithoutEvent = A();
     let originFilterColumns = this.get('filterColumns');
 
-    Ember.$.extend(true, columnsWithoutEvent, originFilterColumns);
+    $.extend(true, columnsWithoutEvent, originFilterColumns);
 
     // Disable key-down action, which was set in object-list-view.
     columnsWithoutEvent.forEach((column) => {
-      if (!Ember.isNone(column.filter.component.properties.keyDown)) {
+      if (!isNone(column.filter.component.properties.keyDown)) {
         column.filter.component.properties.keyDown = undefined;
       }
     });
@@ -73,15 +77,15 @@ export default FlexberryBaseComponent.extend({
       filterColumnsWithoutEnter.forEach((column) => {
         let filterColumnOrigin = filterColumnsOrigin.find(obj => obj.filter.name === column.filter.name);
 
-        if (!Ember.isNone(filterColumnOrigin)) {
-          Ember.set(filterColumnOrigin.filter, 'pattern', column.filter.pattern);
-          Ember.set(filterColumnOrigin.filter, 'condition', column.filter.condition);
+        if (!isNone(filterColumnOrigin)) {
+          set(filterColumnOrigin.filter, 'pattern', column.filter.pattern);
+          set(filterColumnOrigin.filter, 'condition', column.filter.condition);
         }
       });
 
       this.set('filterColumns', filterColumnsOrigin);
       this.get('objectlistviewEvents').refreshListTrigger(this.get('componentName'));
-      this.sendAction('close');
+      this.get('close')();
     },
 
     /**
@@ -94,8 +98,8 @@ export default FlexberryBaseComponent.extend({
 
       columns.forEach(column => {
         const emptyPatternValue = (typeof column.filter.pattern === 'string') ? '' : undefined;
-        Ember.set(column.filter, 'pattern', emptyPatternValue);
-        Ember.set(column.filter, 'condition', undefined);
+        set(column.filter, 'pattern', emptyPatternValue);
+        set(column.filter, 'condition', undefined);
       });
     },
   }

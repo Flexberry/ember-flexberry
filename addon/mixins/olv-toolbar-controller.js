@@ -29,7 +29,7 @@ export default Mixin.create({
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('filters-dialog')
   */
-  filtersDialogController: Ember.inject.controller('filters-dialog'),
+  filtersDialogController: controller('filters-dialog'),
 
   /**
     Service for managing advLimits for lists.

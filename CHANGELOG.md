@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Show filters tool in modal window.
 
+### Changed
+* `log` service:
+    * Disable save to log transition aborted errors.
+
 ## [2.4.0-beta.2] - 2020-03-26
 ### Fixed
 * Using the `flexberry-groupedit` component with the `fixedHeader` property.

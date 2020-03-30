@@ -48,8 +48,7 @@ export default FlexberryBaseComponent.extend(
   _contentObserver: observer('content', function() {
     this._setContent(this.get('componentName'));
 
-    if (this.get('allSelect'))
-    {
+    if (this.get('allSelect')) {
       let contentWithKeys = this.get('contentWithKeys');
       let checked = this.get('allSelect');
 
@@ -869,7 +868,7 @@ export default FlexberryBaseComponent.extend(
           isAllSelectAtPage = false;
         }
       }
-  
+
       this.set('allSelectAtPage', isAllSelectAtPage);
     }
 
@@ -1187,7 +1186,7 @@ export default FlexberryBaseComponent.extend(
 
       let isUncheckAll = this.get('allSelect');
       let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
-     
+
       switch (namedSetting) {
         case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
@@ -2253,6 +2252,7 @@ export default FlexberryBaseComponent.extend(
     // Mark previously selected records.
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
@@ -2661,6 +2661,7 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
 
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       let e = {
         checked: true

@@ -39,7 +39,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  showFiltersInModal: true,
+  showFiltersInModal: false,
 
   /**
     Store the action name at controller for loading records.

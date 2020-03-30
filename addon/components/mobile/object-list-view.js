@@ -20,8 +20,8 @@ export default ObjectListViewComponent.extend({
     @type Boolean
     @readOnly
   */
-  _selectedMobileMenu: computed('selectedRecords.@each', 'allSelect', 'allSelectAtPage', function() {
-    return this.get('selectedRecords.length') > 0 || this.get('allSelect') || this.get('allSelectAtPage');
+  _selectedMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
+    return this.get('selectedRecords.length') > 0 || this.get('allSelect');
   }),
 
   /**

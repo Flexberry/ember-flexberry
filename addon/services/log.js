@@ -345,7 +345,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     @property errorMessageFilters
     @type Array
-    @default [{ group: 'PROMISE', message: "TransitionAborted" }]
+    @default [{ category: 'PROMISE', message: "TransitionAborted" }]
   */
   errorMessageFilters: Ember.A([
     { category: 'PROMISE', message: 'TransitionAborted' }

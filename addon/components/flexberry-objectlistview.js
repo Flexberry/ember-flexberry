@@ -25,7 +25,7 @@ import runAfter from '../utils/run-after';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  
+
   classNames: ['flexberry-objectlistview'],
 
   /**
@@ -162,6 +162,33 @@ export default FlexberryBaseComponent.extend({
     @default 10
   */
   defaultLeftPadding: 10,
+
+  /**
+    Number page for search.
+
+    @property searchPageValue
+    @type Number
+  */
+  searchPageValue: undefined,
+
+  /**
+    Flag used for disable searchPageButton.
+
+    @property searchPageButtonReadonly
+    @type Boolean
+  */
+  searchPageButtonReadonly: computed('searchPageValue', function() {
+    let searchPageValue = this.get('searchPageValue');
+    let searchPageNumber = parseInt(searchPageValue, 10);
+    if (isNaN(searchPageNumber)) {
+      return true;
+    }
+
+    let pages = A(this.get('pages'));
+    let pagesCount = pages.get('lastObject.number');
+
+    return pagesCount < searchPageNumber;
+  }),
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -1114,6 +1141,21 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.get(actionName)(record);
     },
+
+    /**
+      Action search and open page.
+
+      @method actions.searchPageButtonAction
+      @public
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
+    */
+    searchPageButtonAction(action, componentName) {
+      let searchPageValue = this.get('searchPageValue');
+      let searchPageNumber = parseInt(searchPageValue, 10);
+
+      this.send('gotoPage', action, searchPageNumber, componentName);
+    }
   },
 
   /**

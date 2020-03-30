@@ -438,6 +438,15 @@ export default FlexberryBaseComponent.extend({
   */
   overflowedComponents: A(['flexberry-dropdown', 'flexberry-lookup']),
 
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.

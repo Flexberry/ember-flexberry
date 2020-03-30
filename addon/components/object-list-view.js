@@ -11,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { once, schedule } from '@ember/runloop';
+import { once, schedule, scheduleOnce } from '@ember/runloop';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
@@ -427,6 +427,15 @@ export default FlexberryBaseComponent.extend(
   showPrototypeMenuItemInRow: false,
 
   /**
+    Flag indicates that on page selected all records.
+
+    @property allSelectAtPage
+    @type Boolean
+    @default false
+  */
+  allSelectAtPage: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @property menuInRowAdditionalItems
@@ -529,10 +538,11 @@ export default FlexberryBaseComponent.extend(
       if (isNone(this.get('orderedProperty'))) {
         for (let i = 0; i < userSettings.sorting.length; i++) {
           let sorting = userSettings.sorting[i];
-          let propName = sorting.propName;
-          namedCols[propName].sorted = true;
-          namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-          namedCols[propName].sortNumber = i + 1;
+          if (namedCols[sorting.propName]) {
+            namedCols[sorting.propName].sorted = true;
+            namedCols[sorting.propName].sortAscending = sorting.direction === 'asc' ? true : false;
+            namedCols[sorting.propName].sortNumber = i + 1;
+          }
         }
       }
 
@@ -540,10 +550,8 @@ export default FlexberryBaseComponent.extend(
         ret = [];
         for (let i = 0; i < userSettings.colsOrder.length; i++) {
           let userSetting = userSettings.colsOrder[i];
-          if (!userSetting.hide) {
-            let propName = userSetting.propName;
-            let col = namedCols[propName];
-            ret[ret.length] = col;
+          if (!userSetting.hide && namedCols[userSetting.propName]) {
+            ret[ret.length] = namedCols[userSetting.propName];
           }
         }
       } else {
@@ -583,36 +591,50 @@ export default FlexberryBaseComponent.extend(
     @property checkRowsSettingsItems
     @readOnly
   */
-  checkRowsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', 'readonly', 'allSelect', function() {
-    let i18n = this.get('i18n');
-    let readonly = this.get('readonly');
-    let allSelect = this.get('allSelect');
+  checkRowsSettingsItems: computed(
+    'i18n.locale',
+    'userSettingsService.isUserSettingsServiceEnabled',
+    'readonly',
+    'allSelect',
+    'allSelectAtPage',
+    function() {
+      let i18n = this.get('i18n');
+      let readonly = this.get('readonly');
+      let allSelect = this.get('allSelect');
 
-    let rootItem = {
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [],
-      localeKey: ''
-    };
+      let rootItem = {
+        icon: 'icon-guideline-check-menu icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
 
-    if (!readonly) {
-      if (!allSelect)
-        rootItem.items.push({
-          title: i18n.t('components.olv-toolbar.check-all-at-page-button-text'),
-          localeKey: 'components.olv-toolbar.check-all-at-page-button-text'
-        });
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitleKey = isUncheckAllAtPage ? 'components.olv-toolbar.uncheck-all-at-page-button-text' : 'components.olv-toolbar.check-all-at-page-button-text';
 
-      let classNames = this.get('classNames');
-      if (classNames != null && !classNames.includes('groupedit-container'))
-        rootItem.items.push({
-          title: i18n.t('components.olv-toolbar.check-all-button-text'),
-          localeKey: 'components.olv-toolbar.check-all-button-text'
-        });
+      let checkAllTitle = allSelect ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitleKey = allSelect ? 'components.olv-toolbar.uncheck-all-button-text' : 'components.olv-toolbar.check-all-button-text';
+
+      if (!readonly) {
+        if (!allSelect)
+          rootItem.items.push({
+            title: checkAllAtPageTitle,
+            localeKey: checkAllAtPageTitleKey
+          });
+
+        let classNames = this.get('classNames');
+        if (classNames != null && !classNames.includes('groupedit-container'))
+          rootItem.items.push({
+            title: checkAllTitle,
+            localeKey: checkAllTitleKey
+          });
+      }
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
-
-    return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
-  }),
+  ),
 
   /**
     Flag indicates whether some column contains editable component instead of default cellComponent.
@@ -837,6 +859,21 @@ export default FlexberryBaseComponent.extend(
       assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
+
+    // Set title flag of select all at page button.
+    const contentWithKeys = this.get('contentWithKeys');
+    if (contentWithKeys) {
+      let isAllSelectAtPage = true;
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get('selected')) {
+          isAllSelectAtPage = false;
+        }
+      }
+  
+      this.set('allSelectAtPage', isAllSelectAtPage);
+    }
+
+
   }),
 
   /**
@@ -1022,6 +1059,8 @@ export default FlexberryBaseComponent.extend(
     },
     /* eslint-enable no-unused-vars */
 
+    needReinitResizablePlugin: true,
+
     /**
       This action is called when user select the row.
 
@@ -1031,6 +1070,11 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
+      this.set('needReinitResizablePlugin', false);
+      this.send('_selectRow', recordWithKey, e);
+    },
+
+    _selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
       let selectedRow = this._getRowByKey(recordWithKey.key);
 
@@ -1138,12 +1182,18 @@ export default FlexberryBaseComponent.extend(
       let i18n = this.get('i18n');
       let namedSetting = namedItemSpans.get(0).innerText;
 
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+
+      let isUncheckAll = this.get('allSelect');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+     
       switch (namedSetting) {
-        case i18n.t('components.olv-toolbar.check-all-at-page-button-text').toString(): {
+        case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
           break;
         }
-        case i18n.t('components.olv-toolbar.check-all-button-text').toString(): {
+        case checkAllTitle.toString(): {
           this.send('checkAll');
           break;
         }
@@ -1325,7 +1375,9 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
-            this._restoreSelectedRecords();
+            // The last menu needs will be up.
+            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1365,22 +1417,20 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
-      this._restoreSelectedRecords();
-
-      if (this.get('allowColumnResize')) {
-        this._reinitResizablePlugin();
-      } else {
-        let $table = this.$('table.object-list-view');
-        $table.colResizable({ disable: true });
+      if (this.get('needReinitResizablePlugin')) {
+        if (this.get('allowColumnResize')) {
+          this._reinitResizablePlugin();
+        } else {
+          let $table = this.$('table.object-list-view');
+          $table.colResizable({ disable: true });
+        }
       }
+      this.set('needReinitResizablePlugin', true);
 
+      // The last menu needs will be up.
+      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
-
-    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-    // The last menu needs will be up.
-    $('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
 
@@ -1390,6 +1440,17 @@ export default FlexberryBaseComponent.extend(
 
       this._fixedTableHead($currentTable);
     }
+  },
+
+  /**
+    Restores the state of selected rows after updating the list.
+
+    See [EmberJS API](https://api.emberjs.com/).
+
+    @method didUpdateAttrs
+  */
+  didUpdateAttrs() {
+    scheduleOnce('afterRender', this, this._restoreSelectedRecords);
   },
 
   /**
@@ -1847,14 +1908,14 @@ export default FlexberryBaseComponent.extend(
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      $.extend(true, component, componentForFilter(attribute.type, relation));
+      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
-      conditions = conditionsByType(attribute.type);
+      conditions = conditionsByType(attribute.type, attribute);
     } else {
       conditions = this._conditionsByType(attribute.type);
     }
@@ -2343,13 +2404,11 @@ export default FlexberryBaseComponent.extend(
     if (componentName === this.get('componentName')) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
-      /* eslint-disable no-unused-vars */
-      selectedRecords.forEach((item, index, enumerable) => {
+      selectedRecords.forEach((item) => {
         once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
-      /* eslint-enable no-unused-vars */
 
       selectedRecords.clear();
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);
@@ -2612,7 +2671,7 @@ export default FlexberryBaseComponent.extend(
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
-          this.send('selectRow', recordWithData, e);
+          this.send('_selectRow', recordWithData, e);
         }
       });
       /* eslint-enable no-unused-vars */
@@ -2773,7 +2832,9 @@ export default FlexberryBaseComponent.extend(
     */
     let ua = navigator.userAgent;
 
-    if (ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) {
+    if ((ua.search(/Firefox/) !== -1 && ua.split('Firefox/')[1].substr(0, 2) > 58) ||
+        (ua.search(/iPhone|iPad/) !== -1 && ua.split('Version/')[1].substr(0, 2) >= 8) ||
+        (ua.search(/Android/) !== -1 && ua.split('Chrome/')[1].substr(0, 2) >= 78)) {
       $currentTable
             .find('thead tr > *')
             .css({ 'position':'sticky', 'top':'0' });

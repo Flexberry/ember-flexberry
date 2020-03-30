@@ -20,6 +20,7 @@
         title={{t "forms.application.sitemap.application-version.title"}}>
         {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
       </a>
+      <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
     </div>
 
   {{/flexberry-sidebar}}
@@ -42,27 +43,41 @@
         href="https://github.com/flexberry"
         target="_blank"
         title={{t "forms.application.sitemap.application-name.title"}}>
-        <img class="ui centered image" src="assets/images/flexberry-logo.png" />
+        <img class="ui centered image" src="/assets/images/flexberry-logo.png" />
       </a>
       <a class="page-header-caption" href="https://github.com/flexberry">
         <span class="page-header-caption-app-name">{{t "application-name"}}</span>
         <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
       </a>
-      <div class="page-header-actions">
-        some actions
-        {{!-- {{flexberry-dropdown
-          class="compact"
-          items=locales
-          value=i18n.locale
-          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-        }} --}}
+      <div class="page-header-actions ui text menu">
+        {{!-- <div class="item">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+          </label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=userSettingsService.isUserSettingsServiceEnabled
+          }}
+        </div> --}}
+        <div class="item lang">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.language-dropdown.caption"}}
+          </label>
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
+        </div>
       </div>
+
       <div class="page-header-userbar">
-        <span id="fio">
-            Имя Фамилия
-        </span>
-        <i class="dropdown icon"></i>
-        <a id="ExitButton" class="exit-btn" href="javascript:void(0)" {{action "logout" on="click"}}>{{t "forms.application.header.logout.caption"}}</a>
+        <img src="assets/images/user-foto.jpg"/>
+        {{flexberry-menu
+          items=itemsUserMenu
+          onItemClick=(action "onMenuItemClick")
+        }}
       </div>
     </div>
   </div>

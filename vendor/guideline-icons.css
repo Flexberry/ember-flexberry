@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guideline-check-menu:before {
+  content: "\e932";
+}
 .icon-guideline-flask:before {
   content: "\e930";
 }

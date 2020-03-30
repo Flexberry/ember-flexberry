@@ -60,7 +60,36 @@ export default Mixin.create(ReloadListMixin, {
       @property loaderTemplate
       @type String
     */
-    loaderTemplate: undefined
+    loaderTemplate: undefined,
+
+    /**
+      Object with settings for modal window.
+
+      @property modalDialogSettings
+      @type Object
+    */
+    modalDialogSettings: {
+
+      /**
+        Modal detachable param.
+        If set to false will prevent the modal from being moved to inside the dimmer.
+
+        @property detachable
+        @type Boolean
+        @default false
+      */
+      detachable: false,
+
+      /**
+        Modal context param.
+        Selector or jquery object specifying the area to dim.
+
+        @property context
+        @type String
+        @default '.ember-application > .ember-view'
+      */
+      context: '.ember-application > .ember-view'
+    }
   },
 
   /**
@@ -106,7 +135,6 @@ export default Mixin.create(ReloadListMixin, {
         title: undefined,
         predicate: undefined,
         modelToLookup: undefined,
-        sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
         folvComponentName: undefined,
@@ -135,7 +163,6 @@ export default Mixin.create(ReloadListMixin, {
       let title = options.title;
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
-      let sizeClass = options.sizeClass;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
       let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
@@ -179,7 +206,6 @@ export default Mixin.create(ReloadListMixin, {
         hierarchyPaging: hierarchyPaging,
 
         title: title,
-        sizeClass: sizeClass,
         saveTo: {
           model: model,
           propName: relationName
@@ -189,6 +215,7 @@ export default Mixin.create(ReloadListMixin, {
         componentName: componentName,
         folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
       };
 
       this._reloadModalData(this, reloadData);
@@ -275,10 +302,11 @@ export default Mixin.create(ReloadListMixin, {
           modelProjection: projection
         });
 
-        let lookupController = this.get('lookupController');
+        const modalDialogSettings = merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
+        const lookupController = this.get('lookupController');
         lookupController.setProperties({
           title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
-          sizeClass: 'small preview-model',
+          modalDialogSettings: modalDialogSettings,
         });
 
         let lookupSettings = this.get('lookupSettings');
@@ -349,7 +377,6 @@ export default Mixin.create(ReloadListMixin, {
     @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
-    @param {String} [options.sizeClass] Size of modal lookup window.
     @param {String} [options.saveTo] Options to save selected lookup value.
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
@@ -379,7 +406,6 @@ export default Mixin.create(ReloadListMixin, {
       hierarchyPaging: false,
 
       title: undefined,
-      sizeClass: undefined,
       saveTo: undefined,
       currentLookupRow: undefined,
       customPropertiesData: undefined,
@@ -422,11 +448,12 @@ export default Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
+    const modalDialogSettings = merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
+
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
       title: reloadData.title,
-      sizeClass: reloadData.sizeClass,
       saveTo: reloadData.saveTo,
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
@@ -446,7 +473,8 @@ export default Mixin.create(ReloadListMixin, {
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       reloadContext: currentContext,
-      reloadDataHandler: currentContext._reloadModalData
+      reloadDataHandler: currentContext._reloadModalData,
+      modalDialogSettings: modalDialogSettings,
     });
 
     if (reloadData.initialLoad) {

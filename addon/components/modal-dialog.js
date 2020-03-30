@@ -136,7 +136,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let transitionMode = "slide top";
+    let transitionMode = "scale";
 
     if (this.get('useSidePageMode')) {
       this.element.classList.add('flexberry-sidepage');
@@ -149,6 +149,7 @@ export default Component.extend({
       allowMultiple: true,
       context: '.ember-application > .ember-view',
       transition: transitionMode,
+      autofocus: false,
       onApprove: () => {
         // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so run function is necessary.
         run(() => {

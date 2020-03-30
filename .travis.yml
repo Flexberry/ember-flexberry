@@ -2,7 +2,7 @@
 language: node_js
 
 node_js:
-  - "8"
+  - "10"
 
 sudo: required
 dist: trusty
@@ -13,11 +13,7 @@ services:
 addons:
   chrome: stable
 
-cache:
-  yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
+cache: false
 
 env:
   global:
@@ -27,12 +23,9 @@ env:
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
     - EMBER_TRY_SCENARIO=ember-default
-    - EMBER_TRY_SCENARIO=ember-release
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-release
 
 notifications:
   webhooks:

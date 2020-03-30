@@ -32,6 +32,10 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-edit', { path: 'ember-flexberry-dummy-suggestion-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-edit.new', { path: 'ember-flexberry-dummy-suggestion-edit/new' });
 
+  this.route('ember-flexberry-dummy-suggestion-file-list');
+  this.route('ember-flexberry-dummy-suggestion-file-edit', { path: 'ember-flexberry-dummy-suggestion-file-edit/:id' });
+  this.route('ember-flexberry-dummy-suggestion-file-edit.new', { path: 'ember-flexberry-dummy-suggestion-file-edit/new' });
+
   this.route('ember-flexberry-dummy-suggestion-type-list');
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
@@ -78,6 +82,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list');
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
+  this.route('components-examples/flexberry-lookup/numeric-autocomplete');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -131,14 +136,19 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
+  this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
+  this.route('components-examples/modal-dialog', function () {
+    this.route('index', { path: '/' });
+  });
   this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.

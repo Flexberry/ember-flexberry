@@ -4,30 +4,86 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.2.0-beta.3] - 2019-08-26
+## [2.4.0-beta.2] - 2020-03-26
+### Fixed
+* Using the `flexberry-groupedit` component with the `fixedHeader` property.
+* Buttons for editing and prototyping in a row for the mobile template of the `flexberry-objectlistview` component that were once lost are added to the data column.
+
+### Changed
+* The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the checkbox column to the data column.
+
+## [2.4.0-beta.1] - 2020-03-23
 ### Added
-* Changes from 2.2.0-beta.10.
+* In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
+* The `applicationLogModelName` property for the `log` service, to specify the model for storing logs.
+
+### Fixed
+* Displaying menu in rows in the `flexberry-objectlistview` component.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.4`.
+* Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
 
-## [3.2.0-beta.2] - 2019-08-21
+## [3.3.0] - 2020-03-23
 ### Added
-* Changes from 2.2.0-beta.7 - 2.2.0-beta.9.
+* Changes from [`2.3.0`](#230---2020-03-10) version.
+
+### Fixed
+* An error occurs when changing the model property using the `flexberry-lookup` component in dropdown mode and customize it using the `dropdownSettings` property.
+* Old import style in `flexberry-core-offline` blueprint.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.3`.
+* Update dependency on `ember-flexberry-data` to version `3.3.0`.
 
-## [3.2.0-beta.1] - 2019-08-08
+* `object-list-view` component:
+    * Toggle title of checkAll buttons.
+
+## [2.4.0-beta.0] - 2020-03-18
+### Fixed
+* Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
+
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.2.0-beta.2`.
+* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.0`.
 
-## [3.2.0-beta.0] - 2019-08-08
+## [2.3.0] - 2020-03-10
 ### Added
-* Changes from 2.2.0-beta.0 - 2.2.0-beta.6.
+* The `fixedHeader` property for the `flexberry-groupedit` component.
+* `flexberry-lookup` component:
+    * The `modalDialogSettings` property for configuring the modal window in the component.
+    * The `usePaginationForAutocomplete` property to enable pagination in the results for autocomplete.
+
+### Fixed
+* An error occurs when applying the saved user settings to the list, if attributes were removed from the projection of this list.
+* Displaying fixed header in the `flexberry-objectlistview` component for some browsers (#982).
+* Some errors in the `perf` service.
+* The state of the move buttons in the `flexberry-groupedit` now depends on the selected rows.
+* `flexberry-lookup` component:
+    * Loading an extra record in the results for autocomplete.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * The load icon on the choose button applied to all components built into the `flexberry-groupedit` component.
+    * After closing the columns settings window for the `flexberry-objectlistview` component with the close button (`X`), buttons of the component remained disabled.
 
 ### Changed
+* Blueprints:
+    * In list form templates, the model name is generated as a property of the controller.
+    * In templates of edit forms for the dates the `flexberry-simpledatetime` component is generated instead of `flexberry-datepicker`.
+* Now the `flexberry-simpledatetime` component hides the calendar when scrolling the window.
+* Update dependency on `ember-flexberry-data` to version `2.3.0`.
+
+## [3.2.1] - 2020-01-28
+### Added
+* Changes from 2.2.1.
+
+## [3.2.0] - 2019-12-26
+### Added
+* Changes from 2.2.0.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.2.0`.
 * Update dependency on `flatpickr` to version `4.6.1`.
+
+### Fixed
+* Blueprints:
+    * Fix require promise in offline-blueprints;
 
 ## [3.1.0] - 2019-04-30
 ### Added
@@ -127,91 +183,84 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-dropdown` component:
     * Instead of many properties one `settings` property for manage `Semantic UI` settings.
 
-## [2.2.0-beta.10] - 2019-08-26
-### Fixed
-* `flexberry-lookup` component:
-    * Fix `autocomplite` results after toogle readonly mode.
-* `flexberry-objectlistview` component:
-    * Fix columns header text format.
-    * Fix filter input cursor when `fixedHeader` is true.
-    * Fix filters applying by `Enter` click.
-
-### Changed
-* `flexberry-lookup` component:
-    * In `readonly` mode now has disabled class.
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.8`.
-
-## [2.2.0-beta.9] - 2019-08-21
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.7`.
-
-## [2.2.0-beta.8] - 2019-08-16
-### Fixed
-* Creating a prototype record when a prototype is not loaded into store.
-
-## [2.2.0-beta.7] - 2019-08-08
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.6`.
-
-## [2.2.0-beta.6] - 2019-08-06
-### Fixed
-* `flexberry-objectlistview` component:
-    * Fix hierarchy paging mode.
-
-## [2.2.0-beta.5] - 2019-08-05
+## [2.2.1] - 2020-01-15
 ### Added
+* `flexberry-lookup` controller:
+    * Add ability to specify modal dialog settings.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix styles when inside OLV filters in mobile mode.
+* `flexberry-lookup` controller:
+    * Fix lookup olv reload.
+
+## [2.2.0] - 2019-12-26
+### Added
+* `flexberry-lookup` component:
+    * Add preview button in mobile mode.
+    * Add `autocompleteOrder` in dropdown mode.
+    * Add select first autocomplete result by enter click.
+    * Add dropdown class to `flexberry-lookup` at drodpdown mode.
+    * Add limitFunction in groupedit row to lookup limit by other component.
+* `flexberry-text-cell` component:
+    * Add `flexberry-text-cell` for displaying limited text in olv component.
 * `flexberry-objectlistview` component:
     * Add hierarchy paging option.
-
-## [2.2.0-beta.4] - 2019-07-19
-### Added
-* `flexberry-objectlistview` component:
     * Add advlimit config dialog for editing and applying limits.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.5`.
-
-### Fixed
-* `flexberry-lookup` component:
-    * Fix select autocomplete result by enter click.
-
-## [2.2.0-beta.3] - 2019-07-19
-### Fixed
-* `user-settings` service:
-    * Fix of replacing perPage form developerUserSettings on reloading.
-* `flexberry-objectlistview` component:
-    * Fix multi lists on edit form with `flexberry-groupedit` components.
-
-## [2.2.0-beta.2] - 2019-07-12
-### Added
-* Add creating record by prototype for `flexberry-objectlistview`.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.3`.
-
-## [2.2.0-beta.1] - 2019-07-05
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.1`.
-
-### Breaking changes
-* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
-* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
-
-## [2.2.0-beta.0] - 2019-06-28
-### Added
-* `flexberry-lookup` component:
-    * Add select first autocomplete result by enter click.
-    * Add dropdown class to flexberry-lookup at drodpdown mode.
-    * Add limitFunction in groupedit row to lookup limit by other component.
+    * Add creating record by prototype.
+* Blueprints:
+    * Add setting offline database name.
+    * Add check for file exist in `model-offline`.
+    * Add offline option.
+    * Add skip-confirmation option.
+* Add `cut-string-by-length` util for cutting string by specified length.
+* `offline-globals`:
+  * Add `getOfflineSchema` method for get offline schema.
 * `flexberry-file` component:
-    * Added the ability correct settings to file preview modal dialog.
+    * Add ability to change file preview's modal dialog settings.
 * Add mixins for multi list mode.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.2.0-beta.0`.
+* `object-list-view-cell` component:
+    * Component template was changed. If it's redefined in your project, you need to change it to support new features.
+* `flexberry-lookup` component:
+    * In `readonly` mode now has disabled class.
+* Update dependency on the `jquery-minicolors` bower package to version `2.3.4`.
+* Update dependency on `ember-flexberry-data` to version `2.2.0`.
+
+### Fixed
+* Blueprints:
+    * Fix call generate method for `model-offline` in `flexberry-group`.
+    * Fix offline schema setting in store service.
+* `errorable-route` mixin:
+    * Add `_super` call to `resetController` method.
+* `flexberry-simpleolv` component:
+    * Fix `fixedHeader` mode in mobile.
+* `flexberry-lookup` component:
+    * Fix ellipsis in lookup `autocomplete` results.
+    * Fix `autocomplete` for numeric properties.
+    * Fix `autocomplete` results after toogle readonly mode.
+    * Fix select `autocomplete` result by enter click.
+* `olv-toolbar` component:
+    * Fix styles of `export excel` and `cols config` buttons.
+* `colsconfig-dialog-content` component:
+    * Fix set sorting method.
+* `flexberry-objectlistview` component:
+    * Fix paging and expand in hierarchical mode at mobile.
+    * Fix columns header text format.
+    * Fix filter input cursor when `fixedHeader` is true.
+    * Fix filters applying by `Enter` click.
+* `offline-globals`:
+    * Fix `getOfflineSchema` method.
+* `user-settings` service:
+    * Fix perPage from developerUserSettings on reloading.
+* Creating a prototype record when a prototype is not loaded into store.
 
 ### Breaking changes
-* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins or include old mixin in yours forms with olv on edit form.
+* Backend needs NewPlatform.Flexberry.UserSettingsService 3.1.0-beta01 or higher.
+* Creating models on new forms and in the `{{flexberry-groupedit}}` component is performed with `id`.
+* If possible, saving changes to the edit form is done using the `batchUpdate` method from `store`.
+* Removed `flexberry-objectlistview-on-edit-form-controller` mixin from `edit-form` route. Use new mixins for multilists or include old mixin in yours forms with olv on edit form.
 
 ## [2.1.0] - 2019-04-30
 ### Added

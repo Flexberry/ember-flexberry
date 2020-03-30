@@ -88,7 +88,7 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
+        {{action "onRowClick" record (hash column=column columnIndex=index)}}
         class="field {{if (and showValidationMessages (v-get record.data column.propName "isInvalid")) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
@@ -144,7 +144,7 @@
       <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
         <div class="right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
-          <div class="left menu">
+          <div class="right menu">
             {{#if showEditMenuItemInRow}}
               {{#if readonly}}
                 <div class="item disabled edit-menu">
@@ -214,7 +214,7 @@
         showPrototypeButtonInRow=showPrototypeButtonInRow
         showDeleteButtonInRow=showDeleteButtonInRow
         inHierarchicalMode=inHierarchicalMode
-        inExpandMode=(unbound inExpandMode)
+        inExpandMode=inExpandMode
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick

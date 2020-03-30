@@ -1,12 +1,13 @@
 {{#modal-dialog
   title=title
-  sizeClass=sizeClass
+  sizeClass=modalDialogSettings.sizeClass
   close="removeModalDialog"
   created="createdModalDialog"
-  useOkButton=false
-  useCloseButton=false
+  useOkButton=modalDialogSettings.useOkButton
+  useCloseButton=modalDialogSettings.useCloseButton
   componentName=componentName
   useSidePageMode=true
+  settings=modalDialogSettings.settings
 }}
   {{outlet "modal-content"}}
 {{/modal-dialog}}

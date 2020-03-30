@@ -44,6 +44,10 @@ export default {
       placeholder: '(no value)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(no value)'
+    },
+
     'flexberry-textarea': {
       placeholder: '(no value)'
     },
@@ -148,7 +152,8 @@ export default {
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
-      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'coll-expand-button-text':'Expand all hierarchies',
+      'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -173,7 +178,9 @@ export default {
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy',
       'check-all-at-page-button-text': 'Check all entries on the current page',
+      'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
+      'uncheck-all-button-text': 'Uncheck all on all pages',
       'clear-sorting-button-text': 'Set the default sorting'
     },
 

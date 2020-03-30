@@ -12,7 +12,7 @@ import ListParameters from '../objects/list-parameters';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { Condition } from 'ember-flexberry-data/query/condition';
+import Condition from 'ember-flexberry-data/query/condition';
 
 export default Mixin.create({
   /**

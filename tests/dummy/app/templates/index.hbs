@@ -1,69 +1,89 @@
 <div class="flexberry-container">
-  <div class="ui cards">
-    <div class="ui card">
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Некоторые компоненты</div>
-        <div class="description">
-          <ul>
-            <li>{{#link-to 'components-examples/flexberry-field/settings-example'}}Flexberry-field{{/link-to}}</li>
-            <li>{{#link-to 'components-examples/flexberry-checkbox/settings-example'}}Flexberry-checkbox{{/link-to}}</li>
-            <li>{{#link-to 'components-examples/flexberry-button/settings-example'}}Flexberry-button{{/link-to}}</li>
-            <li>{{#link-to 'components-examples/flexberry-dropdown/settings-example'}}Flexberry-dropdown{{/link-to}}</li>
-          </ul>
+  <div class="ui stackable doubling grid">
+    <div class="row">
+      <div class="eight wide middle computer four wide large screen four wide widescreen column need-pd-computer">
+        <div class="ui card">
+          <div class="content">
+            <i class="edit outline icon card-icon" ></i>
+            <div class="header">Некоторые компоненты</div>
+            <div class="description">
+              <ul>
+                <li>{{#link-to 'components-examples/flexberry-field/settings-example'}}Flexberry-field{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-checkbox/settings-example'}}Flexberry-checkbox{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-button/settings-example'}}Flexberry-button{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-dropdown/settings-example'}}Flexberry-dropdown{{/link-to}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eight wide middle computer four wide large screen four wide widescreen column need-pd-computer">
+        <div class="ui card">
+          <div class="content">
+            <i class="icon lock card-icon" ></i>
+            <div class="header">Сервис логирования</div>
+            <div class="description">
+              <ul>
+                <li>{{#link-to 'i-i-s-caseberry-logging-objects-application-log-l'}}Лог приложения{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/settings-example'}}Пример работы с настройками{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/clear-log-form'}}Очистка лога{{/link-to}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sixteen wide middle computer eight wide large screen eight wide widescreen column">
+        <div class="ui two column grid">
+          <div class="column">
+            {{#link-to 'ember-flexberry-dummy-application-user-list' class='ui card'}}
+              <div class="content">
+                <i class="icon user outline card-icon" ></i>
+                <div class="header">Пользователи приложения</div>
+              </div>
+            {{/link-to}}
+          </div>
+          <div class="column">
+            {{#link-to 'ember-flexberry-dummy-localization-list' class='ui card'}}
+              <div class="content">
+                <i class="icon comment outline card-icon" ></i>
+                <div class="header">Локализация</div>
+              </div>
+            {{/link-to}}
+          </div>
+
+          <div class="column">
+            {{#link-to 'i-i-s-caseberry-logging-objects-application-log-l' class='ui card'}}
+              <div class="content">
+                <i class="icon clock outline card-icon" ></i>
+                <div class="header">Лог приложения</div>
+              </div>
+            {{/link-to}}
+          </div>
+          <div class="column">
+            {{#link-to 'new-platform-flexberry-services-lock-list' class='ui card'}}
+              <div class="content">
+                <i class="icon lock card-icon" ></i>
+                <div class="header">Список блокировок</div>
+              </div>
+            {{/link-to}}
+          </div>
         </div>
       </div>
     </div>
-    <div class="ui card">
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Сервис логирования</div>
-        <div class="description">
-          <ul>
-            <li>{{#link-to 'i-i-s-caseberry-logging-objects-application-log-l'}}Лог приложения{{/link-to}}</li>
-            <li>{{#link-to 'log-service-examples/settings-example'}}Пример работы с настройками{{/link-to}}</li>
-            <li>{{#link-to 'log-service-examples/clear-log-form'}}Очистка лога{{/link-to}}</li>
-          </ul>
+    <div class="row">
+      <div class="sixteen wide computer eight wide large screen eight wide widescreen column">
+        <div class="ui card">
+          <div class="content">
+            <div class="header">Поиск</div>
+            <form class="ui form">
+              {{flexberry-field label="Название поля" placeholder="Фамилия, имя и отчество"}}
+              {{flexberry-field label="Название поля" placeholder="ДД.ММ.ГГГГ или выберите в календаре"}}
+              {{flexberry-button class="primary large" caption="Поиск"}}
+              {{flexberry-checkbox label="По всем ОСЗ"}}
+            </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="ui cards">
-    {{#link-to 'ember-flexberry-dummy-application-user-list' class='ui card'}}
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Пользователи приложения</div>
-      </div>
-    {{/link-to}}
-    {{#link-to 'ember-flexberry-dummy-localization-list' class='ui card'}}
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Локализация</div>
-      </div>
-    {{/link-to}}
-    {{#link-to 'i-i-s-caseberry-logging-objects-application-log-l' class='ui card'}}
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Лог приложения</div>
-      </div>
-    {{/link-to}}
-    {{#link-to 'new-platform-flexberry-services-lock-list' class='ui card'}}
-      <div class="content">
-        <i class="right floated edit outline icon" ></i>
-        <div class="header">Список блокировок</div>
-      </div>
-    {{/link-to}}
-  </div>
-  <div class="ui cards">
-    <div class="ui card big">
-      <div class="content">
-        <div class="header">Поиск</div>
-        <form class="ui form">
-          {{flexberry-field label="Название поля" placeholder="Фамилия, имя и отчество"}}
-          {{flexberry-field label="Название поля" placeholder="ДД.ММ.ГГГГ или выберите в календаре"}}
-          {{flexberry-button class="primary large" caption="Поиск"}}
-          {{flexberry-checkbox label="По всем ОСЗ"}}
-        </form>
       </div>
     </div>
   </div>

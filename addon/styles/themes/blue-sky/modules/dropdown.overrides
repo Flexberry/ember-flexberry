@@ -24,10 +24,6 @@
     cursor: pointer;
 }
 
-.ui.dropdown.icon.button > .dropdown.icon {
-    margin-left: -20px;
-    margin-top: -4px;
-}
 
 .ui.icon.dropdown > .icon.dropdown:before {
     font-size:20px;
@@ -54,9 +50,14 @@
 }
 
 .ui.buttons.cols-config > .ui.dropdown:last-child .menu,
-.ui.buttons.export-config > .ui.dropdown:last-child .menu {
-    left: auto;
-    right: -5em;
+.ui.buttons.export-config > .ui.dropdown:last-child .menu,
+.ui.buttons.adv-limit-config > .ui.dropdown:last-child .menu{
+    left: -2em;
+    right: auto;
+    .menu {
+        left: 100%;
+        right: auto;
+    }
 }
 
 .flexberry-dropdown {

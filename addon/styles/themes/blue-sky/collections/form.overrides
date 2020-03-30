@@ -42,9 +42,13 @@
     border-bottom: 1px solid @inputBorderColor;
     border-radius: 0px;
     outline: none;
-    input.flatpickr-input {
+    input.custom-flatpickr {
         border-bottom: none;
     }
+}
+
+html.mobile .overflowed-cell .flexberry-simpledatetime {
+    width:100%;
 }
 
 input[type="checkbox"]:after {

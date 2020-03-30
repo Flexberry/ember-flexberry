@@ -1,6 +1,6 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
-<form class="ui form flexberry-vertical-form" role="form">
+<form class="row" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -50,7 +50,8 @@
     componentName="SuggestionObjectListView"
     showDeleteMenuItemInRow=true
     deleteButton=true
-    advLimitButton=true
+    advLimitButton=false
+    beforeDeleteRecord=(action 'beforeDeleteRecord')
   }}
 </div>
 </form>

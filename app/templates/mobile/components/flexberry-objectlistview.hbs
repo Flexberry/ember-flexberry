@@ -46,11 +46,13 @@
   showCheckBoxInRow=showCheckBoxInRow
   showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
+  createNewByPrototype=(action "createNewByPrototype")
   orderable=orderable
   sorting=sorting
   immediateDelete=true
@@ -91,8 +93,9 @@
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
 }}
-{{#unless inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
@@ -122,4 +125,4 @@
       {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

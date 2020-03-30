@@ -233,6 +233,22 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-simpledatetime'],
 
   /**
+    Array CSS class names for scroll.
+
+    @property scrollClassNames
+    @type Array
+  */
+  scrollSelectors: computed(() => (['.full.height'])),
+
+  /**
+    Namespase for page event.
+
+    @property eventNamespace
+    @type String
+  */
+  eventNamespace: undefined,
+
+  /**
     If true, then onClick calling flatpickr.open().
 
     @property canClick
@@ -284,6 +300,10 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
+
+    let namespace = this.get('eventNamespace');
+    $(this.get('scrollSelectors').join()).off(`scroll.${namespace}`);
+    $(document).off(`mousedown.${namespace}`);
   },
 
   /**
@@ -359,6 +379,7 @@ export default FlexberryBaseComponent.extend({
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
       locale: locale,
+      appendTo: $('body > .ember-view').get(0),
       onChange: (dates) => {
         if (dates.length) {
           if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
@@ -401,6 +422,16 @@ export default FlexberryBaseComponent.extend({
       this._validationDateTime();
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
+
+    let namespace = this.elementId;
+    this.set('eventNamespace', namespace);
+    $(document).on(`mousedown.${namespace}`, (e) => {
+      let clicky = $(e.target);
+      if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
+        this.get('_flatpickr').close();
+      }
+    });
+    $(this.get('scrollSelectors').join()).on(`scroll.${namespace}`, () => this.get('_flatpickr').close());
   },
 
   /**
@@ -413,7 +444,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', 'min', 'max', function () {
     this._flatpickrDestroy();
     scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),

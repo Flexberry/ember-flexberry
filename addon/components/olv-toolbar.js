@@ -676,7 +676,7 @@ export default FlexberryBaseComponent.extend({
                 userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
               } else {
                 let sort = serializeSortingParam(colsConfig.sorting);
-                router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+                router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
               }
             });
           /* eslint-disable no-unused-vars */
@@ -715,7 +715,7 @@ export default FlexberryBaseComponent.extend({
               userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
             } else {
               let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+              router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
             }
           });
           /* eslint-enable no-unused-vars */

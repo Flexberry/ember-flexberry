@@ -3,7 +3,7 @@
 */
 
 import $ from 'jquery';
-import EmberObject, { get, set, computed, observer } from '@ember/object';
+import EmberObject, { set, computed, observer } from '@ember/object';
 import { guidFor, copy } from '@ember/object/internals'
 import { A } from '@ember/array';
 import { isBlank } from '@ember/utils';
@@ -269,9 +269,6 @@ export default FlexberryBaseComponent.extend({
     */
     expand() {
       this.toggleProperty('_expanded');
-      if (!this.get('_expanded')) {
-        this.set('inExpandMode', false);
-      }
     },
 
     /**
@@ -296,7 +293,6 @@ export default FlexberryBaseComponent.extend({
 
     /**
       Redirect action from FlexberryLookupComponent in the controller.
-
       @method actions.previewLookupValue
       @param {Object} previewData
     */
@@ -319,12 +315,7 @@ export default FlexberryBaseComponent.extend({
         set(params, 'originalEvent', $.event.fix(e));
       }
 
-      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
-      let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (isBlank(e) || !$(get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
-      {
-        this.get('rowClick')(record, params);
-      }
+      this.get('rowClick')(record, params);
     }
   },
 

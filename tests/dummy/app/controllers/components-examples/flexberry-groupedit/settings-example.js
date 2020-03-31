@@ -42,7 +42,9 @@ export default EditFormController.extend({
       return [];
     }
 
-    return Object.keys(detailsProjections);
+    let detailsProjectionNames = Object.keys(detailsProjections);
+    detailsProjectionNames.splice(detailsProjectionNames.indexOf('modelName'), 1);
+    return detailsProjectionNames;
   }),
 
   /**

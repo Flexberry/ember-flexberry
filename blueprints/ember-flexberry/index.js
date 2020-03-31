@@ -59,6 +59,7 @@ module.exports = {
       '        storeDeprecationMessages: false,\n' +
       '        storePromiseErrors: true,\n' +
       '        showPromiseErrors: true,\n' +
+      '        errorMessageFilterActive: false,\n' +
       '      },\n\n' +
       '      // Options for Perforator service that can be used to calculate performance of components rendering.\n' +
       '      perf: {\n' +

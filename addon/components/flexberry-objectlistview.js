@@ -48,6 +48,35 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: service(),
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: false,
+
+  /**
+    Store the action name at controller for loading records.
+
+    @property _loadRecords
+    @type String
+    @default 'loadRecords'
+    @private
+  */
+  _loadRecords: 'loadRecords',
+
+  /**
+    Store the action name at controller for switch to the hierarchical mode.
+
+    @property _switchHierarchicalMode
+    @type String
+    @default 'switchHierarchicalMode'
+    @private
+  */
+  _switchHierarchicalMode: 'switchHierarchicalMode',
+
+  /**
     Store the action name at controller for switch to the collapse/expand mode.
 
     @property _switchExpandMode

@@ -55,6 +55,7 @@ module.exports = function(environment) {
         storeDeprecationMessages: true,
         storePromiseErrors: true,
         showPromiseErrors: true,
+        errorMessageFilterActive: true,
       },
 
       perf: {

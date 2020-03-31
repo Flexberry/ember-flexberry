@@ -4,6 +4,7 @@ moduleFor('controller:list-form', 'Unit | Controller | list form', {
   needs: [
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
+    'controller:filters-dialog',
     'service:objectlistview-events',
     'service:user-settings',
     'service:adv-limit',

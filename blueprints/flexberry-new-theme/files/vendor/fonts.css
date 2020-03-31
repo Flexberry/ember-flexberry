@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'GOSTUI2';
+  src: url("fonts/GOSTUI2-w170-regular_g_temp.eot");
+  src: url("fonts/GOSTUI2-w170-regular_g_temp.woff2") format('woff2'),
+    url("fonts/GOSTUI2-w170-regular_g_temp.woff") format('woff'),
+    url("fonts/GOSTUI2-w170-regular_g_temp.ttf") format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'GOSTUI2';
+  src: url("fonts/GOSTUI2-w450-medium_g_temp.eot");
+  src: url("fonts/GOSTUI2-w450-medium_g_temp.woff2") format('woff2'),
+    url("fonts/GOSTUI2-w450-medium_g_temp.woff") format('woff'),
+    url("fonts/GOSTUI2-w450-medium_g_temp.ttf") format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'GOSTUI2';
+  src: url("fonts/GOSTUI2-w706-bold_g_temp.eot");
+  src: url("fonts/GOSTUI2-w706-bold_g_temp.woff2") format('woff2'),
+    url("fonts/GOSTUI2-w706-bold_g_temp.woff") format('woff'),
+    url("fonts/GOSTUI2-w706-bold_g_temp.ttf") format('truetype');
+  font-weight: bold;
+}

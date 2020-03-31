@@ -4,11 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* Show filters tool in modal window.
-
-### Changed
-* `log` service:
-    * Disable save to log transition aborted errors.
+* The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
+* The `errorMessageFilterActive` and `errorMessageFilters` properties for manage the filtering of errors in the `log` service.
 
 ## [2.4.0-beta.2] - 2020-03-26
 ### Fixed

@@ -4,7 +4,6 @@
 
 import FlexberrySitemapGuidelineComponent from '../flexberry-sitemap-guideline';
 import $ from 'jquery';
-import { run } from '@ember/runloop';
 import { translationMacro as t } from 'ember-i18n';
 
 /**

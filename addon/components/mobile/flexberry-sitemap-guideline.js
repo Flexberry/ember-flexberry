@@ -2,10 +2,11 @@
   @module ember-flexberry
 */
 
-import Component from '@ember/component';
+import FlexberrySitemapGuidelineComponent from '../flexberry-sitemap-guideline';
 import $ from 'jquery';
 import { run } from '@ember/runloop';
-import { computed  } from '@ember/object';
+import { translationMacro as t } from 'ember-i18n';
+
 /**
   Component for sitemap render from the object with links.
 
@@ -15,99 +16,53 @@ import { computed  } from '@ember/object';
     {{flexberry-sitemap-guideline sitemap=sitemap}}
     ```
 
-  @class FlexberrySitemapComponent
+  @class FlexberrySitemapGuidelineComponent
   @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
-export default Component.extend({
-  /**
-    Object with links description.
-
-    @example
-      ```javascript
-      {
-        nodes: [
-          {
-            link: 'index',
-            caption: 'Home',
-            title: 'Go to homepage!',
-          },
-          {
-            caption: 'Superheroes',
-            children: [
-              {
-                link: 'superman',
-                caption: 'Superman',
-              },
-              {
-                link: 'ironman',
-                caption: 'Ironman',
-              },
-            ],
-          },
-        ],
-      }
-      ```
-
-    @property sitemap
-    @type Object
-  */
-  sitemap: undefined,
-
-  parent: computed('i18n.locale', function() {
-    let i18n = this.get('i18n');
-    return i18n.t('components.flexberry-sitemap-guideline.main-menu-caption');
-  }),
+export default FlexberrySitemapGuidelineComponent.extend({
 
   /**
-    Stores node state.
+    Component's parent menu caption.
 
-    @property nodeIsOpen
-    @type Boolean
-    @default false
+    @property parent
+    @type String
+    @default t('components.flexberry-sitemap-guideline.main-menu-caption')
   */
-  nodeIsOpen: false,
+  parent: t('components.flexberry-sitemap-guideline.main-menu-caption'),
 
-  isDropDown: false,
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement).
 
+    @method didInsertElement
+  */
   didInsertElement() {
     this._super(...arguments);
     if (this.isDropDown) {
-      this.element.classList.add('item', 'ui', 'dropdown', 'link');
-
       $(this.element).dropdown({
         maxSelections: 1,
         transition: 'slide left',
         onChange: () => {
-          run.next(() => {
-            let selectedItem = this.targetObject.$('.active.selected');
-            if (selectedItem.length > 0) {
-              selectedItem.removeClass('active selected');
-            }
-
-            this.send('menuToggle');
-          })
+          let selectedItem = $(this.element).closest('.main.menu').find('.active.selected');
+          if (selectedItem.length > 0) {
+            selectedItem.removeClass('active selected');
+          }
         }
       });
     }
   },
 
   actions: {
-
     /**
-      Show or hide menu.
+      Back in menu.
 
-      @method actions.menuToggle
+      @method actions.menuBack
     */
-    menuToggle() {
-      this.$('.subMenu:first').toggleClass('hidden');
-      this.set('nodeIsOpen', !this.get('nodeIsOpen'));
-    },
-
     menuBack() {
       if (this.get('isDropDown')) {
         $(this.element).dropdown('hide');
       } else {
-        $('> .menu.visible', this.element).transition('slide left');
+        this.$('> .menu.visible', this.element).transition('slide left');
       }
     }
   },

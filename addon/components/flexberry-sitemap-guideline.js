@@ -14,7 +14,7 @@ import $ from 'jquery';
     {{flexberry-sitemap-guideline sitemap=sitemap}}
     ```
 
-  @class FlexberrySitemapComponent
+  @class FlexberrySitemapGuidelineComponent
   @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
@@ -53,6 +53,15 @@ export default Component.extend({
   sitemap: undefined,
 
   /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default ['isDropDown:item', 'isDropDown:ui', 'isDropDown:dropdown', 'isDropDown:link']
+  */
+  classNameBindings: ['isDropDown:item', 'isDropDown:ui', 'isDropDown:dropdown', 'isDropDown:link'],
+
+  /**
     Stores node state.
 
     @property nodeIsOpen
@@ -61,19 +70,30 @@ export default Component.extend({
   */
   nodeIsOpen: false,
 
+  /**
+    Flag: indicates whether item is dropdown.
+
+    @property isDropDown
+    @type Boolean
+    @default false
+  */
   isDropDown: false,
 
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement).
+
+    @method didInsertElement
+  */
   didInsertElement() {
     this._super(...arguments);
     if (this.isDropDown) {
-      this.element.classList.add('item', 'ui', 'dropdown', 'link');
-
       $(this.element).dropdown({
         on: 'hover',
         transition: 'slide right',
         maxSelections: 1,
         onChange: () => {
-          let selectedItem = this.targetObject.$('.active.selected');
+          let selectedItem = $(this.element).closest('.main.menu').find('.active.selected');
           if (selectedItem.length > 0) {
             selectedItem.removeClass('active selected');
           }

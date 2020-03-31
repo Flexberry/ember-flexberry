@@ -1535,6 +1535,7 @@ export default FlexberryBaseComponent.extend(
     $currentTable.colResizable({
       minWidth: 50,
       disabledColumns: disabledColumns,
+      resizeMode: this.get('columnsResizeMode'),
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1626,7 +1627,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
-      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      $table.css('cssText', `width: ${columnsWidthAutoresize ? containerWidth : tableWidth}px !important` );
       if (this.get('eventsBus')) {
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }

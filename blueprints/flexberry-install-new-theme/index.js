@@ -1,4 +1,4 @@
-/* globals module */
+const fs = require('fs-extra')
 module.exports = {
 	afterInstall: function() {
 		var _this = this;
@@ -42,11 +42,6 @@ module.exports = {
 		  );
 		}).then(function() {
 		  return _this.insertIntoFile(
-				'app\styles\app.less',
-				'@import \'src/flexberry-imports\';\n'
-		  );
-		}).then(function() {
-		  return _this.insertIntoFile(
 				'ember-cli-build.js',
 				fontsImports,
 				{
@@ -55,6 +50,8 @@ module.exports = {
 		  );
 		}).then(function() {
 			return _this.addPackageToProject('ember-flexberry-themes', '0.1.0-alpha.1');
+		}).then(function() {
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts/', 'vendor/fonts');
 		});
 	}
 };

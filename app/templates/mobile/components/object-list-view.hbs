@@ -113,38 +113,39 @@
 </table>
 
 {{#if (and _selectedMobileMenu showCheckBoxInRow)}}
-  {{#if (not-eq class "groupedit-container")}}
-    <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
-      <i class="check-square-o icon"></i>
-      {{flexberry-menu
-        items=checkRowsSettingsItems
-        onItemClick=(action "onCheckRowMenuItemClick")
-      }}
-    </div>
-  {{else}}
-    <button
-      class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
-      title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-      {{action "checkAllAtPage"}}>
+  <div class="check-rows-container">
+    {{#if (not-eq class "groupedit-container")}}
+      <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
         <i class="check-square-o icon"></i>
+        {{flexberry-menu
+          items=checkRowsSettingsItems
+          settings=(hash direction="upward")
+          onItemClick=(action "onCheckRowMenuItemClick")
+        }}
+      </div>
+    {{else}}
+      <button
+        class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
+        title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+        {{action "checkAllAtPage"}}>
+          <i class="check-square-o icon"></i>
+      </button>
+    {{/if}}
+
+    <label class="count-selected-rows">{{_selectedCountMobileMenu}}</label>
+
+    <button
+      class="ui delete-button {{buttonClass}} {{if readonly 'disabled' ''}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled={{readonly}}
+      {{action "deleteSelectedRow"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
     </button>
-  {{/if}}
 
-  <label>{{_selectedCountMobileMenu}}</label>
-
-  <button
-    class="ui delete-button {{buttonClass}} {{if readonly 'disabled' ''}} button"
-    title={{t "components.olv-toolbar.delete-button-text"}}
-    disabled={{readonly}}
-    {{action "deleteSelectedRow"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
-      <i class="delete icon"></i>
-  </button>
-
-  <button class="ui clear-select-button {{buttonClass}} circular icon button"
-    title={{t "components.olv-toolbar.clear-select-button-text"}}
-    {{action "clearSelectedRecords"}}>
-    <i class="x icon"></i>
-  </button>
-
+    <button class="ui clear-select-button {{buttonClass}} circular icon button"
+      title={{t "components.olv-toolbar.clear-select-button-text"}}
+      {{action "clearSelectedRecords"}}>
+      <i class="remove icon"></i>
+    </button>
+  </div>
 {{/if}}

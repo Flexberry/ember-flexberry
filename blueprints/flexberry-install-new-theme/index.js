@@ -42,6 +42,11 @@ module.exports = {
 		  );
 		}).then(function() {
 		  return _this.insertIntoFile(
+				'app\styles\app.less',
+				'@import \'src/flexberry-imports\';\n'
+		  );
+		}).then(function() {
+		  return _this.insertIntoFile(
 				'ember-cli-build.js',
 				fontsImports,
 				{

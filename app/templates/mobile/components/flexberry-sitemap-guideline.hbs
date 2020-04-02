@@ -26,6 +26,10 @@
   {{/if}}
 {{else if sitemap.nodes}}
   {{#each sitemap.nodes as |node|}}
-    {{flexberry-sitemap-guideline sitemap=node isDropDown=true}}
+    {{#if node.children.length}}
+      {{flexberry-sitemap-guideline sitemap=node isDropDown=true}}
+    {{else}}
+      {{flexberry-sitemap-guideline sitemap=node classNames="item" isDropDown=false}}
+    {{/if}}
   {{/each}}
 {{/if}}

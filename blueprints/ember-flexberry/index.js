@@ -290,6 +290,7 @@ module.exports = {
       return _this.addAddonsToProject({
         packages: [
           { name: 'ember-data', target: '~3.1.1' },
+          { name: 'ember-flexberry-data', target: '~3.1.1' },
           { name: 'ember-block-slots', target: '1.1.11' }
         ]
       });

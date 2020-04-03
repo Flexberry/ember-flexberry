@@ -3,7 +3,7 @@ module.exports = {
 	afterInstall: function() {
 		var _this = this;
 
-		var lessOption = '		\'bower_components/ember-flexberry-themes\''
+		var lessOption = '		\'bower_components/ember-flexberry-themes\','
 
 		var themeConfig = '\n' + '/* Path to semantic ui theme packages */\n' +
 		' @semanticUiThemesFolder : \'src/themes\';\n' +

@@ -1208,6 +1208,9 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
             _this.$('input').focus();
           }, 500);
 
+          // In the used version of `Semantic UI`, 2.2.14 now, is no longer needed.
+          // return false;
+        } else {
           return false;
         }
       },

@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.4.0-beta.0] - 2020-04-06
+### Added
+* Changes from [`2.4.0-beta.0`](#240-beta0---2020-03-18), [`2.4.0-beta.1`](#240-beta1---2020-03-23) and [`2.4.0-beta.4`](#240-beta4---2020-04-06) versions.
+
 ### Fixed
 * `flexberry-lookup` component:
     * Clicking on `...` in the results for autocomplete inserts `...` into the component.

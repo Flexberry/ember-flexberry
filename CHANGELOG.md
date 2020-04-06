@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix `flexberry-file` modal dialog, when in `object-list-view-row` component.
 
 ## [2.4.0-beta.3] - 2020-04-06
 ### Added

@@ -255,6 +255,22 @@ export default FlexberryBaseComponent.extend({
   componentMode: 'listform',
 
   /**
+    The name of the component. Initially, it was used to store user settings for the component. Now used for different purposes.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
+    The name of the `flexberry-lookup` component for which the `flexberry-objectlistview` component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
+
+  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent

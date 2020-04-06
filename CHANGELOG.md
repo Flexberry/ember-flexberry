@@ -3,17 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.4.0-beta.4] - 2020-04-06
 ### Added
 * The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
 * The `errorMessageFilterActive` and `errorMessageFilters` properties for manage the filtering of errors in the `log` service.
 
-## [2.4.0-beta.2] - 2020-03-26
 ### Fixed
+* The error with button blocking after closing the columns settings window for the `flexberry-objectlistview` component was repeated if the `folvComponentName` property was specified for the `flexberry-lookup` component.
 * Using the `flexberry-groupedit` component with the `fixedHeader` property.
 * Buttons for editing and prototyping in a row for the mobile template of the `flexberry-objectlistview` component that were once lost are added to the data column.
 
 ### Changed
 * The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the checkbox column to the data column.
+* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.1`.
 
 ## [2.4.0-beta.1] - 2020-03-23
 ### Added

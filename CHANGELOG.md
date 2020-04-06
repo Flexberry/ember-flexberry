@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.4.0-beta.0`.
+
 ## [2.4.0-beta.4] - 2020-04-06
 ### Added
 * The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.

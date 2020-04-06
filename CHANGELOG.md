@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* `flexberry-lookup` component:
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * Switch pages in the results for autocomplete.
+
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.4.0-beta.0`.
 

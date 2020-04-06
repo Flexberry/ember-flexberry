@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
 * The `errorMessageFilterActive` and `errorMessageFilters` properties for manage the filtering of errors in the `log` service.
 
+### Fixed
+* The error with button blocking after closing the columns settings window for the `flexberry-objectlistview` component was repeated if the `folvComponentName` property was specified for the `flexberry-lookup` component.
+
 ## [2.4.0-beta.2] - 2020-03-26
 ### Fixed
 * Using the `flexberry-groupedit` component with the `fixedHeader` property.

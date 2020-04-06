@@ -486,7 +486,7 @@ export default FlexberryBaseComponent.extend({
     @property _componentNameForModalWindow
     @type String
   */
-  _componentNameForModalWindow: Ember.computed('inLookup', 'componentName', 'lookupComponentName', function () {
+  _componentNameForModalWindow: computed('inLookup', 'componentName', 'lookupComponentName', function () {
     return this.get('inLookup') ? this.get('lookupComponentName') : this.get('componentName');
   }),
 

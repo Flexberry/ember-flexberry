@@ -86,8 +86,8 @@ export default Mixin.create({
 
     const elementClass = this.get('fixedElementClass');
     const elements = component.getElementsByClassName(elementClass);
-    const olv = component.closest(this.get('olvClasses'));
-    const modal = component.closest(this.get('modalClasses'));
+    const olv = $(component).closest(this.get('olvClasses')).get(0);
+    const modal = $(component).closest(this.get('modalClasses')).get(0);
 
     if (isEmpty(olv) && isEmpty(modal)) return Logger.warn(`Компонент находится вне спискового компонента или модального окна`);
     if (isEmpty(elements)) return Logger.warn(`Элемент с классом '${elementClass}' не найден`);

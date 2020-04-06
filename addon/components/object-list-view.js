@@ -627,18 +627,20 @@ export default FlexberryBaseComponent.extend(
       let checkAllTitleKey = allSelect ? 'components.olv-toolbar.uncheck-all-button-text' : 'components.olv-toolbar.check-all-button-text';
 
       if (!readonly) {
-        if (!allSelect)
+        if (!allSelect) {
           rootItem.items.push({
             title: checkAllAtPageTitle,
             localeKey: checkAllAtPageTitleKey
           });
+        }
 
         let classNames = this.get('classNames');
-        if (classNames != null && !classNames.includes('groupedit-container'))
+        if (classNames && classNames.indexOf('groupedit-container') === -1) {
           rootItem.items.push({
             title: checkAllTitle,
             localeKey: checkAllTitleKey
           });
+        }
       }
 
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];

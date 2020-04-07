@@ -24,11 +24,11 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, M
   modelName: 'ember-flexberry-dummy-application-user',
 
   /**
-  @property developerUserSettings
-  @type Object
-  @default {}
+    @property developerUserSettings
+    @type Object
+    @default {}
   */
- developerUserSettings: { FOLVOnEditFormObjectListView: { } },
+  developerUserSettings: { FOLVOnEditFormObjectListView: { } },
 
   /**
     Name of template to be rendered.

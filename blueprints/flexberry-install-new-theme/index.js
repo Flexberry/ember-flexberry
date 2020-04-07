@@ -3,7 +3,7 @@ module.exports = {
 	afterInstall: function() {
 		var _this = this;
 
-		var lessOption = '		\'node_modules/ember-flexberry-themes\','
+		var lessOption = '        \'node_modules/ember-flexberry-themes\','
 
 		var fontsImports = '\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
@@ -42,7 +42,9 @@ module.exports = {
 		}).then(function() {
 			return _this.addPackageToProject('ember-flexberry-themes', '0.1.0-alpha.1');
 		}).then(function() {
-			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets', 'vendor');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/guideline-icons.css', 'vendor/guideline-icons.css');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.less', 'app/styles/theme.less');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'theme.config');
 		});

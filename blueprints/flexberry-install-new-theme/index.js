@@ -44,6 +44,7 @@ module.exports = {
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets', 'vendor');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.less', 'app/styles/theme.less');
+			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'app/theme.config');
 		});
 	}
 };

@@ -5,7 +5,7 @@ module.exports = {
 
 		var lessOption = '        \'node_modules/ember-flexberry-themes\','
 
-		var fontsImports = '\n  app.import(\'vendor/font.css\');\n' +
+		var fontsImports = '\n  app.import(\'vendor/fonts.css\');\n' +
 		'\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf\', { destDir: \'assets/fonts\' });\n' +

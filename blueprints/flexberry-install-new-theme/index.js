@@ -29,7 +29,10 @@ module.exports = {
 		).then(function() {
 		  return _this.insertIntoFile(
 				'app\styles\app.less',
-				'@import \'src/flexberry-imports\';\n'
+				'@import \'src/flexberry-imports\';\n',
+				{
+					before: '@import'
+				}
 		  );
 		}).then(function() {
 		  return _this.insertIntoFile(
@@ -44,7 +47,7 @@ module.exports = {
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets', 'vendor');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.less', 'app/styles/theme.less');
-			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'app/theme.config');
+			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'theme.config');
 		});
 	}
 };

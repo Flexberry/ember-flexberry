@@ -7,6 +7,7 @@ moduleFor('controller:<%= entityName %>', 'Unit | Controller | <%= entityName %>
     'controller:colsconfig-dialog',
     'controller:flexberry-file-view-dialog',
     'controller:lookup-dialog',
+    'controller:filters-dialog',
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',

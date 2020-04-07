@@ -1,29 +1,6 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
   {{flexberry-error error=error}}
-  <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
-    </div>
-  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -40,38 +17,51 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
-    {{flexberry-field
-      value=model.name
-      label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
   </div>
-  <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.moderated
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+  <div class="ui one column grid stackable">
+    <div class="column">
+      <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+        {{flexberry-field
+          value=model.name
+          label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+      </div>
+      <div class="two fields">
+        <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
+          <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
+          {{flexberry-lookup
+            value=model.parent
+            relatedModel=model
+            relationName="parent"
+            projection="SuggestionTypeL"
+            displayAttributeName="name"
+            title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
+            choose=(action "showLookupDialog")
+            remove=(action "removeLookupValue")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
+        </div>
+
+        <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
+          <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.moderated
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
-    {{flexberry-lookup
-      value=model.parent
-      relatedModel=model
-      relationName="parent"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
-  </div>
-  <div class="field {{if (v-get validationObject "localizedTypes" "isInvalid") "error"}}">
+
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionTypeLocalizedTypesGroupEdit"

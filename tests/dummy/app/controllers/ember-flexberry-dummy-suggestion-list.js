@@ -1,5 +1,7 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
+import { translationMacro as t } from 'ember-i18n';
+import RSVP from 'rsvp';
 
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**
@@ -13,6 +15,8 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
   exportExcelProjection: 'SuggestionL',
 
+  title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
+
   actions: {
     /**
       Hook that executes before deleting all records on all pages.
@@ -20,6 +24,30 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     */
     beforeDeleteAllRecords(modelName, data) {
       data.cancel = false;
-    }
-  }
+    },
+
+    /**
+      Show delete modal dialog before deleting.
+    */
+    beforeDeleteRecord: function() {
+      return new RSVP.Promise((resolve, reject) => {
+        this.set('approveDeleting', resolve);
+        this.set('denyDeleting', reject);
+
+        this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
+          controller: 'ember-flexberry-dummy-suggestion-list'
+        });
+      });
+    },
+
+    /**
+      Close modal dialog and clear actions.
+    */
+    closeModalDialog() {
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
+
+      this.send('removeModalDialog');
+    },
+  },
 });

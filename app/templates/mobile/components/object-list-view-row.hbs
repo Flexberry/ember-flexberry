@@ -13,6 +13,7 @@
             {{flexberry-checkbox
               readonly=(or readonly (not record.rowConfig.canBeSelected))
               onChange=(action selectRow record)
+              value=record.selected
             }}
           </div>
         {{/if}}
@@ -20,7 +21,7 @@
     {{/if}}
   </td>
   <td
-    {{action "onRowClick" record (hash column=columns)}}
+    {{action "onRowClick" record (hash column=columns) preventDefault=false}}
     style="padding-left:{{hierarchicalIndent}}px;">
     {{component singleColumnCellComponent.componentName
       model=record.data

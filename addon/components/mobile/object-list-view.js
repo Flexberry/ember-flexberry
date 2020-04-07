@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import { assert } from '@ember/debug';
 import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
 
@@ -12,6 +13,32 @@ import ObjectListViewComponent from '../object-list-view';
   @extends ObjectListViewComponent
 */
 export default ObjectListViewComponent.extend({
+  /**
+    Flag indicates whether visible selected menu for mobile.
+
+    @property _selectedMobileMenu
+    @type Boolean
+    @readOnly
+  */
+  _selectedMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
+    return this.get('selectedRecords.length') > 0 || this.get('allSelect');
+  }),
+
+  /**
+    Count selected row for mobile menu.
+
+    @property _selectedCountMobileMenu
+    @type Number
+    @readOnly
+  */
+  _selectedCountMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
+    if (this.get('allSelect')) {
+      return this.get('recordsTotalCount');
+    }
+
+    return this.get('selectedRecords.length');
+  }),
+
   /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
 
@@ -64,5 +91,66 @@ export default ObjectListViewComponent.extend({
       componentName: 'object-list-view-single-column-cell',
       componentProperties: null
     });
+  },
+
+  actions: {
+    /**
+      Delete selected rows.
+
+      @method actions.deleteSelectedRow
+      @public
+    */
+    deleteSelectedRow() {
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows()) {
+          return;
+        }
+      }
+
+      let componentName = this.get('componentName');
+
+      if (!this.get('allSelect')) {
+        this._deleteRows(componentName, true);
+      } else {
+        let filterQuery = {
+          predicate: this.get('currentController.filtersPredicate'),
+          modelName: this.get('modelProjection.modelName')
+        };
+
+        this._deleteAllRows(componentName, filterQuery);
+      }
+    },
+
+    /**
+      Clear selected rows.
+
+      @method actions.clearSelectedRecords
+      @public
+    */
+    clearSelectedRecords() {
+      if (this.get('allSelect')) {
+        this.send('checkAll');
+      }
+
+      let componentName = this.get('componentName');
+      let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
+      let selectedRows = contentWithKeys.filterBy('selected', true);
+      for (let i = 0; i < selectedRows.length; i++) {
+        let recordWithKey = selectedRows[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+        recordWithKey.set('selected', false);
+
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
+      }
+    },
   }
 });

@@ -1,0 +1,51 @@
+{{#modal-dialog
+  title=(t "forms.support-form.caption")
+  sizeClass="tiny"
+  close="removeModalDialog"
+  useOkButton=false
+  useCloseButton=false
+  classNames="modal-support"
+  settings=(hash autofocus=false)
+}}
+  <div class="ui header">
+    <div style="color: #848E99; line-height: 20px; font-size:14px;">{{t "forms.support-form.contacts-caption"}}</div>
+  </div>
+  <div class="content">
+    <div class="ui form">
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            class="labeled-inside large"
+            label=(t "forms.support-form.enter-name-caption")
+            placeholder=(t "forms.support-form.enter-name-caption")
+            required=true
+          }}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            class="labeled-inside large"
+            label=(t "forms.support-form.enter-email-caption")
+            placeholder=(t "forms.support-form.enter-email-caption")
+            required=true
+          }}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-textarea
+          class="large"
+          rows="5"
+          placeholder=(t "forms.support-form.enter-message-placeholder")
+        }}
+      </div>
+      <div class="two fields">
+        <div class="field" style="padding: 18px 24px 18px 11px">
+          <i class="icon-guideline-file" style="font-size: 16px; line-height: 24px; color: #0C49CD"></i>
+          <a style="font-size: 16px; line-height: 24px; color: #0C49CD">{{t "forms.support-form.attach-file-caption"}}</a>
+        </div>
+        <div class="field">
+          <button class="ui button primary huge fluid" {{action 'hideModalSupport'}}>{{t "forms.support-form.send-button-caption"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/modal-dialog}}

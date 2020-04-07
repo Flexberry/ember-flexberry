@@ -218,9 +218,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-simpledatetime.placeholder')'
+    @default 't('components.flexberry-datepicker.placeholder')'
   */
-  placeholder: t('components.flexberry-simpledatetime.placeholder'),
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   /**
     Array CSS class names.
@@ -239,6 +239,14 @@ export default FlexberryBaseComponent.extend({
     @type Array
   */
   scrollSelectors: computed(() => (['.full.height'])),
+
+  /**
+    Namespase for page event.
+
+    @property eventNamespace
+    @type String
+  */
+  eventNamespace: undefined,
 
   /**
     If true, then onClick calling flatpickr.open().
@@ -266,13 +274,20 @@ export default FlexberryBaseComponent.extend({
   removeButton: true,
 
   /**
+    If true, then flatpickr has open button.
+
+    @property openButton
+    @type Bool
+  */
+  openButton: true,
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
-      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -285,7 +300,10 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
-    $(this.get('scrollSelectors').join()).unbind('scroll');
+
+    let namespace = this.get('eventNamespace');
+    $(this.get('scrollSelectors').join()).off(`scroll.${namespace}`);
+    $(document).off(`mousedown.${namespace}`);
   },
 
   /**
@@ -361,6 +379,7 @@ export default FlexberryBaseComponent.extend({
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
       locale: locale,
+      appendTo: $('body > .ember-view').get(0),
       onChange: (dates) => {
         if (dates.length) {
           if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
@@ -403,6 +422,16 @@ export default FlexberryBaseComponent.extend({
       this._validationDateTime();
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
+
+    let namespace = this.elementId;
+    this.set('eventNamespace', namespace);
+    $(document).on(`mousedown.${namespace}`, (e) => {
+      let clicky = $(e.target);
+      if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
+        this.get('_flatpickr').close();
+      }
+    });
+    $(this.get('scrollSelectors').join()).on(`scroll.${namespace}`, () => this.get('_flatpickr').close());
   },
 
   /**
@@ -518,6 +547,15 @@ export default FlexberryBaseComponent.extend({
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
+    },
+
+    /**
+      Open flatpickr.
+
+      @method actions.open
+    */
+    open() {
+      this.click();
     }
   }
 });

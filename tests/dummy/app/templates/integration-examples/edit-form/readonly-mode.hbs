@@ -1,109 +1,111 @@
 <h3 class="ui header">{{t "forms.integration-examples.edit-form.readonly-mode.caption"}}</h3>
-<div class="ui horizontal segments">
-  <div class="ui segment">
-      <h4 class="ui header">
-        {{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-management-segment-caption"}}
-      </h4>
-      <label>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-caption"}}</label>
-      {{input type="checkbox" checked=(mut readonly)}}
-  </div>
-  <div class="ui segment">
-      <h4 class="ui header">
-        {{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-value-segment-caption"}}
-      </h4>
-      readonly={{to-string readonly}}
-  </div>
-</div>
+
 <form class="ui form flexberry-vertical-form" role="form">
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.flag-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.flag
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.number-caption"}}</label>
-    {{flexberry-textbox
-      value=model.number
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.text-caption"}}</label>
-    {{flexberry-textbox
-      value=model.text
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-  <label>{{t "forms.integration-examples.edit-form.readonly-mode.long-text-caption"}}</label>
-    {{flexberry-textarea
-      value=model.longText
-      readonly=readonly
-    }}
-  </div>
-  <div class="two fields">
-    <div class="field">
-      <label>{{t "forms.integration-examples.edit-form.readonly-mode.date-caption"}}</label>
-      {{flexberry-simpledatetime
-        type="date"
-        value=model.date
-        readonly=readonly
-      }}
+  <div class="ui two column grid stackable">
+    <div class="column">
+      <h4>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-management-segment-caption"}}</h4>
+      <div class="ui checkbox">
+        {{input type="checkbox" checked=(mut readonly)}}
+        <label>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-caption"}}</label>
+      </div>
+      <h4>Элементы в режиме "Только для чтения"</h4>
+      <div class="field">
+        {{flexberry-checkbox
+          value=model.flag
+          readonly=readonly
+          label=(t "forms.integration-examples.edit-form.readonly-mode.flag-caption")
+        }}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.readonly-mode.text-caption"}}</label>
+        {{flexberry-textbox
+          value=model.text
+          readonly=readonly
+        }}
+      </div>
+      <div class="field">
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.long-text-caption"}}</label>
+        {{flexberry-textarea
+          value=model.longText
+          readonly=readonly
+        }}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.readonly-mode.date-caption"}}</label>
+          {{flexberry-simpledatetime
+            type="date"
+            value=model.date
+            readonly=readonly
+          }}
+        </div>
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.readonly-mode.time-caption"}}</label>
+          {{flexberry-simpledatetime
+            readonly=readonly
+            type="datetime"
+            value=model.time
+          }}
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.readonly-mode.enumeration-caption"}}</label>
+          {{flexberry-dropdown
+            items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
+            value=model.enumeration
+            readonly=readonly
+          }}
+        </div>
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.readonly-mode.number-caption"}}</label>
+          {{flexberry-textbox
+            value=model.number
+            readonly=readonly
+          }}
+        </div>
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.readonly-mode.file-caption"}}</label>
+        {{flexberry-file
+          value=model.file
+          readonly=readonly
+        }}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-caption"}}</label>
+        {{flexberry-lookup
+          value=model.master
+          relatedModel=model
+          relationName="master"
+          projection="MasterL"
+          displayAttributeName="text"
+          title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
+          choose=(action "showLookupDialog")
+          remove=(action "removeLookupValue")
+          readonly=readonly
+        }}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption"}}</label>
+        {{flexberry-lookup
+          value=model.masterDropdown
+          relatedModel=model
+          relationName="masterDropdown"
+          projection="MasterDropdownL"
+          displayAttributeName="text"
+          title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
+          choose=(action "showLookupDialog")
+          remove=(action "removeLookupValue")
+          dropdown=true
+          readonly=readonly
+        }}
+      </div>
     </div>
-    <div class="field">
-      <label>{{t "forms.integration-examples.edit-form.readonly-mode.time-caption"}}</label>
-      {{flexberry-simpledatetime
-        readonly=readonly
-        type="datetime"
-        value=model.time
-      }}
+    <div class="column">
+      <h4>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-value-segment-caption"}}</h4>
+      readonly={{to-string readonly}}
     </div>
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.enumeration-caption"}}</label>
-    {{flexberry-dropdown
-      items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
-      value=model.enumeration
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.file-caption"}}</label>
-    {{flexberry-file
-      value=model.file
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-caption"}}</label>
-    {{flexberry-lookup
-      value=model.master
-      relatedModel=model
-      relationName="master"
-      projection="MasterL"
-      displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption"}}</label>
-    {{flexberry-lookup
-      value=model.masterDropdown
-      relatedModel=model
-      relationName="masterDropdown"
-      projection="MasterDropdownL"
-      displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      dropdown=true
-      readonly=readonly
-    }}
   </div>
   <div class="field">
     {{flexberry-groupedit

@@ -3,7 +3,7 @@
   {{outlet "modal"}}
 {{else}}
   {{#flexberry-sidebar
-    class="inverted vertical main menu"
+    class="inverted vertical main menu visible"
     settings=(hash
       closable=false
       dimPage=false
@@ -11,13 +11,18 @@
       onHidden=(action "updateWidth")
     )
   }}
-    <a class="item"
-      href={{addonVersionHref}}
-      target="_blank"
-      title={{t "forms.application.sitemap.application-version.title"}}>
-      {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-    </a>
-    {{flexberry-sitemap sitemap=sitemap}}
+
+    {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+    <div class="sitebar-footer">
+      <a class="item"
+        href={{addonVersionHref}}
+        target="_blank"
+        title={{t "forms.application.sitemap.application-version.title"}}>
+        {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+      </a>
+      <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
+    </div>
+
   {{/flexberry-sidebar}}
   <div class="bgw-fix">
     <div class="background-logo">
@@ -40,7 +45,40 @@
         title={{t "forms.application.sitemap.application-name.title"}}>
         <img class="ui centered image" src="/assets/images/flexberry-logo.png" />
       </a>
-      <div class="page-header-caption"><a href="https://github.com/flexberry">{{t "application-name"}}</a></div>
+      <a class="page-header-caption" href="https://github.com/flexberry">
+        <span class="page-header-caption-app-name">{{t "application-name"}}</span>
+        <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
+      </a>
+      <div class="page-header-actions ui text menu">
+        {{!-- <div class="item">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+          </label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=userSettingsService.isUserSettingsServiceEnabled
+          }}
+        </div> --}}
+        <div class="item lang">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.language-dropdown.caption"}}
+          </label>
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
+        </div>
+      </div>
+
+      <div class="page-header-userbar">
+        <img src="assets/images/user-foto.jpg"/>
+        {{flexberry-menu
+          items=itemsUserMenu
+          onItemClick=(action "onMenuItemClick")
+        }}
+      </div>
     </div>
   </div>
   <div id="example" class="pusher">
@@ -60,7 +98,7 @@
   <div class="ui main container">
     {{outlet "modal"}}
   </div>
-  <div class="ui vertical footer segment">
+  {{!-- <div class="ui vertical footer segment">
     <div class="ui container flex-container">
       <div class="ui text menu">
         <a class="brand item" href="#">
@@ -97,5 +135,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 {{/if}}

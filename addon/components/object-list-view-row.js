@@ -33,10 +33,10 @@ export default FlexberryBaseComponent.extend({
 
     @property _hierarchicalIndent
     @type Number
-    @default 10
+    @default 20
     @private
   */
-  _hierarchicalIndent: 10,
+  _hierarchicalIndent: 20,
 
   /**
     Level nesting by default.

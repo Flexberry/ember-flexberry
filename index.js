@@ -43,10 +43,6 @@ module.exports = {
       production:  'bower_components/semantic-ui/dist/semantic.min.js'
     });
 
-    app.import({
-      development: 'bower_components/semantic-ui/dist/semantic.css',
-      production: 'bower_components/semantic-ui/dist/semantic.min.css'
-    });
 
     app.import('node_modules/flatpickr/dist/flatpickr.min.css');
     app.import('node_modules/flatpickr/dist/l10n/ru.js');

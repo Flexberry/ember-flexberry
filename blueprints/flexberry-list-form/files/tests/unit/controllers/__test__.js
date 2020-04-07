@@ -5,6 +5,7 @@ moduleFor('controller:<%= entityName %>', 'Unit | Controller | <%= entityName %>
   needs: [
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
+    'controller:filters-dialog',
     'service:objectlistview-events',
     'service:user-settings',
     'service:app-state',

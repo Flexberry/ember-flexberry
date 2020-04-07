@@ -1,56 +1,56 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.log-service-examples.settings-example.caption"}}</h3>
-<table class="ui celled table flexberry-word-break">
-  <thead>
-    <tr>
-      <th>{{t "forms.log-service-examples.settings-example.setting-column-header-caption"}}</th>
-      <th>{{t "forms.log-service-examples.settings-example.settings-value-column-header-caption"}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>logService.enabled={{input type="checkbox" checked=logService.enabled}}</td>
-      <td>logService.enabled={{to-string logService.enabled}}</td>
-    </tr>
-    <tr  style='background-color:#db2828'>
-    <td>logService.storeErrorMessages={{input type="checkbox" checked=logService.storeErrorMessages}}</td>
-      <td>logService.storeErrorMessages={{to-string logService.storeErrorMessages}}</td>
-    </tr>
-    <tr style='background-color: #f2711c;'>
-      <td>logService.storeWarnMessages={{input type="checkbox" checked=logService.storeWarnMessages}}</td>
-      <td>logService.storeWarnMessages={{to-string logService.storeWarnMessages}}</td>
-    </tr>
-    <tr style='background-color: #fbbd08;'>
-    <td>logService.storeDeprecationMessages={{input type="checkbox" checked=logService.storeDeprecationMessages}}</td>
-    <td>logService.storeDeprecationMessages={{to-string logService.storeDeprecationMessages}}</td>
-    </tr>
-    <tr style='background-color: #21ba45;'>
-      <td>logService.storeLogMessages={{input type="checkbox" checked=logService.storeLogMessages}}</td>
-      <td>logService.storeLogMessages={{to-string logService.storeLogMessages}}</td>
-    </tr>
-    <tr style='background-color: #00b5ad;'>
-      <td>logService.storeInfoMessages={{input type="checkbox" checked=logService.storeInfoMessages}}</td>
-      <td>logService.storeInfoMessages={{to-string logService.storeInfoMessages}}</td>
-    </tr>
-    <tr style='background-color: #2185d0;'>
-      <td>logService.storeDebugMessages={{input type="checkbox" checked=logService.storeDebugMessages}}</td>
-      <td>logService.storeDebugMessages={{to-string logService.storeDebugMessages}}</td>
-    </tr>
-    <tr  style='background-color:#db2828'>
-    <td>logService.storePromiseErrors={{input type="checkbox" checked=logService.storePromiseErrors}}</td>
-      <td>logService.storePromiseErrors={{to-string logService.storePromiseErrors}}</td>
-    </tr>
-    <tr  style='background-color:#db2828'>
-    <td>logService.showPromiseErrors={{input type="checkbox" checked=logService.showPromiseErrors}}</td>
-      <td>logService.showPromiseErrors={{to-string logService.showPromiseErrors}}</td>
-    </tr>
-    <tr  style='background-color:#db2828'>
-    <td>logService.errorMessageFilterActive={{input type="checkbox" checked=logService.errorMessageFilterActive}}</td>
-      <td>logService.errorMessageFilterActive={{to-string logService.errorMessageFilterActive}}</td>
-    </tr>
-  </tbody>
-</table>
 <div class="row">
+  <table class="ui celled table flexberry-word-break">
+    <thead>
+      <tr>
+        <th>{{t "forms.log-service-examples.settings-example.setting-column-header-caption"}}</th>
+        <th>{{t "forms.log-service-examples.settings-example.settings-value-column-header-caption"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>logService.enabled={{input type="checkbox" checked=logService.enabled}}</td>
+        <td>logService.enabled={{to-string logService.enabled}}</td>
+      </tr>
+      <tr  style='background-color:#db2828'>
+      <td>logService.storeErrorMessages={{input type="checkbox" checked=logService.storeErrorMessages}}</td>
+        <td>logService.storeErrorMessages={{to-string logService.storeErrorMessages}}</td>
+      </tr>
+      <tr style='background-color: #f2711c;'>
+        <td>logService.storeWarnMessages={{input type="checkbox" checked=logService.storeWarnMessages}}</td>
+        <td>logService.storeWarnMessages={{to-string logService.storeWarnMessages}}</td>
+      </tr>
+      <tr style='background-color: #fbbd08;'>
+      <td>logService.storeDeprecationMessages={{input type="checkbox" checked=logService.storeDeprecationMessages}}</td>
+      <td>logService.storeDeprecationMessages={{to-string logService.storeDeprecationMessages}}</td>
+      </tr>
+      <tr style='background-color: #21ba45;'>
+        <td>logService.storeLogMessages={{input type="checkbox" checked=logService.storeLogMessages}}</td>
+        <td>logService.storeLogMessages={{to-string logService.storeLogMessages}}</td>
+      </tr>
+      <tr style='background-color: #00b5ad;'>
+        <td>logService.storeInfoMessages={{input type="checkbox" checked=logService.storeInfoMessages}}</td>
+        <td>logService.storeInfoMessages={{to-string logService.storeInfoMessages}}</td>
+      </tr>
+      <tr style='background-color: #2185d0;'>
+        <td>logService.storeDebugMessages={{input type="checkbox" checked=logService.storeDebugMessages}}</td>
+        <td>logService.storeDebugMessages={{to-string logService.storeDebugMessages}}</td>
+      </tr>
+      <tr  style='background-color:#db2828'>
+      <td>logService.storePromiseErrors={{input type="checkbox" checked=logService.storePromiseErrors}}</td>
+        <td>logService.storePromiseErrors={{to-string logService.storePromiseErrors}}</td>
+      </tr>
+      <tr  style='background-color:#db2828'>
+      <td>logService.showPromiseErrors={{input type="checkbox" checked=logService.showPromiseErrors}}</td>
+        <td>logService.showPromiseErrors={{to-string logService.showPromiseErrors}}</td>
+      </tr>
+      <tr  style='background-color:#db2828'>
+      <td>logService.errorMessageFilterActive={{input type="checkbox" checked=logService.errorMessageFilterActive}}</td>
+        <td>logService.errorMessageFilterActive={{to-string logService.errorMessageFilterActive}}</td>
+      </tr>
+    </tbody>
+  </table>
   {{flexberry-objectlistview
     content=model
     modelName="i-i-s-caseberry-logging-objects-application-log"

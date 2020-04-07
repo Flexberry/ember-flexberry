@@ -25,6 +25,9 @@ import runAfter from '../utils/run-after';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  classNames: ['flexberry-objectlistview'],
+
   /**
     Flag used to display filters.
 
@@ -190,6 +193,33 @@ export default FlexberryBaseComponent.extend({
   defaultLeftPadding: 10,
 
   /**
+    Number page for search.
+
+    @property searchPageValue
+    @type Number
+  */
+  searchPageValue: undefined,
+
+  /**
+    Flag used for disable searchPageButton.
+
+    @property searchPageButtonReadonly
+    @type Boolean
+  */
+  searchPageButtonReadonly: computed('searchPageValue', function() {
+    let searchPageValue = this.get('searchPageValue');
+    let searchPageNumber = parseInt(searchPageValue, 10);
+    if (isNaN(searchPageNumber)) {
+      return true;
+    }
+
+    let pages = A(this.get('pages'));
+    let pagesCount = pages.get('lastObject.number');
+
+    return pagesCount < searchPageNumber;
+  }),
+
+  /**
     Text to be displayed in table body, if content is not defined or empty.
 
     @property placeholder
@@ -253,6 +283,22 @@ export default FlexberryBaseComponent.extend({
     @default 'listform'
   */
   componentMode: 'listform',
+
+  /**
+    The name of the component. Initially, it was used to store user settings for the component. Now used for different purposes.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
+    The name of the `flexberry-lookup` component for which the `flexberry-objectlistview` component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
 
   /**
     Default cell component that will be used to display values in columns cells.
@@ -624,6 +670,16 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   columnsWidthAutoresize: false,
+
+  /**
+    It is used to set how the resize method works.
+    Values: 'fit', 'flex', 'overflow'
+
+    @property columnsResizeMode
+    @type String
+    @default 'overflow'
+  */
+  columnsResizeMode: 'overflow',
 
   /**
     List of component names, which can overflow table cell.
@@ -1140,6 +1196,21 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.get(actionName)(record);
     },
+
+    /**
+      Action search and open page.
+
+      @method actions.searchPageButtonAction
+      @public
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
+    */
+    searchPageButtonAction(action, componentName) {
+      let searchPageValue = this.get('searchPageValue');
+      let searchPageNumber = parseInt(searchPageValue, 10);
+
+      this.send('gotoPage', action, searchPageNumber, componentName);
+    }
   },
 
   /**

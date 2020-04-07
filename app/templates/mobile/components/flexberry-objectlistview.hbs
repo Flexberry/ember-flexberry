@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -81,6 +81,7 @@
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
+  confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
@@ -94,6 +95,7 @@
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
+  recordsTotalCount=recordsTotalCount
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">

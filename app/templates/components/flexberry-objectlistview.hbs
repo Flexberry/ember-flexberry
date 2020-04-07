@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -17,7 +17,9 @@
   filterText=filterText
   buttonClass=buttonClass
   enableDeleteButton=(not readonly)
+  inLookup=(eq componentMode "lookupform")
   componentName=componentName
+  lookupComponentName=lookupComponentName
   modelController=currentController
   customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
@@ -37,6 +39,7 @@
   placeholder=placeholder
   readonly=readonly
   columnsWidthAutoresize=columnsWidthAutoresize
+  columnsResizeMode=columnsResizeMode
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -131,6 +134,25 @@
         <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}} disabled="disabled">
         </button>
       {{/if}}
+      <div class="ui action input search-field">
+        <div class="block-action-input {{if (and searchPageValue searchPageButtonReadonly) 'red' 'blue' }}">
+          {{input
+            type="number"
+            placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+            value=searchPageValue
+          }}
+        </div>
+        {{#if searchPageValue}}
+
+          <button
+            class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'blue'}} next-page-button"
+            title={{t "components.flexberry-objectlistview.search-button-text"}}
+            disabled={{searchPageButtonReadonly}}
+            {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
+          </button>
+
+        {{/if}}
+      </div>
     </div>
     <div class="right menu">
       {{#if (and showShowingEntries recordsTotalCount)}}

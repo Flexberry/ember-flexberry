@@ -559,7 +559,17 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Logout'
+        },
+        'profile': {
+          'caption': 'Profile'
         }
+      },
+
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-at-listform-question-caption': 'Are you sure you want to delete the selected entries?',
+        'delete-at-editform-question-caption': 'Are you sure you want to delete entries?',
       },
 
       'footer': {
@@ -917,6 +927,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -955,6 +969,25 @@ $.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Sign in',
+      'sign-up-caption': 'Or register',
+      'enter-login-caption': 'Enter login',
+      'enter-password-caption': 'Enter password',
+      'reset-password-caption': 'Forgot your password?',
+      'login-button-caption': 'Login'
+    },
+
+    'support-form' : {
+      'caption': 'Write to tech support',
+      'contacts-caption': 'Technical support contacts: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Enter your name',
+      'enter-email-caption': 'Enter your mail',
+      'enter-message-placeholder': 'If you encounter a problem, describe in detail: how it manifests itself, what actions and in what order you performed. If possible, attach a screenshot',
+      'send-button-caption': 'Submit',
+      'attach-file-caption':'Attach file'
     },
 
     'edit-form': {
@@ -1370,6 +1403,19 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
+      },
+      'modal-dialog': {
+        'caption': 'Examples of using the {{component}} component',
+        'in-current-context': 'In the context of the current template',
+        'application-context': 'In the context of the application template',
+        'open-lightbox': 'Open modal window',
+        'open-second-lightbox': 'Open second modal window',
+        'lightbox-title': 'Modal window',
+        'second-lightbox-title': 'Second modal window',
+        'open-sidepage': 'Open modal window in «sidepage» mode',
+        'open-second-sidepage': 'Open second modal window in «sidepage» mode',
+        'sidepage-title': 'Modal window in «sidepage» mode',
+        'second-sidepage-title': 'Second modal window in «sidepage» mode',
       },
       'ui-message': {
         'settings-example': {

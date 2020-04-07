@@ -1,29 +1,6 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-comment-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
   {{flexberry-error error=error}}
-  <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
-    </div>
-  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -38,6 +15,11 @@
         {{/unless}}
       {{/unless}}
       <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field {{if (v-get validationObject "text" "isInvalid") "error"}}">
@@ -79,7 +61,7 @@
     }}
     {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
   </div>
-  <div class="field {{if (v-get validationObject "userVotes" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="commentUserVotesGroupEdit"

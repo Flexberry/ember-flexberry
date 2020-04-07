@@ -34,7 +34,7 @@ export default Helper.extend({
       }
 
       case 'boolean': {
-        return htmlSafe(`<div class='ui checkbox disabled'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
+        return htmlSafe(`<div class='ui checkbox read-only'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
       }
 
       default: {

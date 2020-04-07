@@ -1,115 +1,33 @@
-@import 'addon/styles/addon';
-@import "src/semantic";
+@import 'src/flexberry-imports';
 
-.spinner {
-  background: url('images/cat.gif') no-repeat;
-  background-size: contain;
-  height: 140px;
-  width: 175px;
-  margin: 0 auto;
+// Поправить генератор и перенести в тему
+.ui.main.container > .stackable.grid.container > .row,
+.ui.form.flexberry-vertical-form {
+  padding-top: 1em;
 }
 
-.loading-message {
-  text-align: center;
-  color: #aaa;
+.ui.form .field.flexberry-validationsummary-container {
+  margin: 0;
 }
 
-// Examples application template
-#example-with-submenu {
-  padding-top: 40px;
+.flexberry-validationsummary.ui.red.message {
+  margin-bottom: 1rem;
+}
 
-  .flexberry-submenu .item {
-    padding-right: 0;
-    > .menu {
-      margin-right: -2px;
-    }
-  }
-
-  .flexberry-content {
-    position: relative;
-    padding: 0;
-
-    &.segment {
-      box-shadow: none;
-      border: none;
-    }
+// Перенести
+.ui.table.object-list-view thead tr th.object-list-view-operations .check-rows-button i.icon.icon-guideline-check-menu {
+  font-size: 1.3em;
+  color: #848E99;
+  width: auto;
+  &:hover {
+    color: #3B4256;
   }
 }
-
-.ui.form .field > .field {
-  margin-bottom: 0;
+// Убрать в теме!
+.ui.table.object-list-view thead tr th.object-list-view-operations {
+  padding-left: 0.9em;
+}
+.check-rows-button .check-square-o {
+  display: none;
 }
 
-#example {
-  .flexberry-content {
-    padding: 1em 0;
-    height: 100%;
-  }
-
-  .full.height {
-    width: 100%;
-    transition: width 0.3s ease-in-out 0s;
-  }
-}
-
-#example-mobile {
-  .flexberry-content {
-    padding: 0px 10px 2em 10px;
-    border-bottom: none;
-    height: 100%;
-  }
-}
-
-.flexberry-dropdown.search.selection.ember-view.ui.dropdown.blue {
-  background: blue;
-}
-
-.flexberry-word-break {
-  word-break: break-all !important;
-}
-
-.ui.menu.mobile:not(.inverted) .item, .ui.menu.mobile .ui.selection.dropdown, .ui.menu.mobile .ui.selection.visible.dropdown > .text:not(.default) {
-    color: rgba(255, 255, 255, 0.9)!important;
-}
-
-
-/* Dummy example buttons styles */
-.ui.button.add-deteil:hover {
-    border: 1px solid #7dd4b4;
-    background-color: #7dd4b4;
-}
-
-.ui.button.delete-deteil:hover {
-    border: 1px solid #ff6400;
-    background-color: #ff6400;
-}
-
-.ui.button.clear-all-log {
-    border: 1px solid #7ba7d9;
-}
-
-.ui.button.clear-all-log:hover {
-    background-color: #ff6400;
-    border: 1px solid #ff6400;
-}
-
-.ui.button.clear-all-log:focus {
-    background-color: #ff6400;
-    border: 1px solid #ff6400;
-}
-
-
-/* Dummy buttons styles for lock service test buttons*/
-.ui.right.floated.tiny.compact.lockServiseButtonBlue.button {
-    color:white;
-    background-color: #7ba7d9;
-    background: #7ba7d9;
-    border: #7ba7d9;
-}
-
-.ui.right.floated.tiny.compact.lockServiseButtonBlack.button {
-    color:white;
-    background-color: black;
-    background: black;
-    border: black;
-}

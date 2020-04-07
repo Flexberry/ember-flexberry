@@ -5,7 +5,8 @@ module.exports = {
 
 		var lessOption = '        \'node_modules/ember-flexberry-themes\','
 
-		var fontsImports = '\n  // GOSTUI2\n' +
+		var fontsImports = '\n  app.import(\'vendor/font.css\');\n' +
+		'\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf\', { destDir: \'assets/fonts\' });\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff\', { destDir: \'assets/fonts\' });\n' +
@@ -18,6 +19,15 @@ module.exports = {
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.ttf\', { destDir: \'assets/fonts\' });\n' +
     '  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff\', { destDir: \'assets/fonts\' });\n' +
     '  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2\', { destDir: \'assets/fonts\' });\n' +
+		'\n'
+
+		var stylesImports = '\n  // guideline-icons\n' +
+		'  app.import(\'vendor/guideline-icons.css\');\n' +
+		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.eot\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
+		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.ttf\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
+		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.woff\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
+		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.woff2\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
+		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.svg\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
 		'\n'
 
 		return this.insertIntoFile(
@@ -35,6 +45,14 @@ module.exports = {
 		  return _this.insertIntoFile(
 				'ember-cli-build.js',
 				fontsImports,
+				{
+					before: '\n  return app.toTree();\n'
+				}
+		  );
+		}).then(function() {
+		  return _this.insertIntoFile(
+				'ember-cli-build.js',
+				stylesImports,
 				{
 					before: '\n  return app.toTree();\n'
 				}

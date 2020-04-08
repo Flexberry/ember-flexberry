@@ -79,7 +79,6 @@ export default FlexberryBaseComponent.extend({
           this.send('setSortOrder', colDesc, element, value);
         }
       });
-      //$(element).dropdown('set selected', 0);
       $(element).dropdown('set selected', get(colDesc, 'sortOrder'));
     });
   },

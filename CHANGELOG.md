@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-objectlistview` component:
+    * Use ',' and '/' in Excel export column name.
 
 ## [2.4.0-beta.4] - 2020-04-06
 ### Added

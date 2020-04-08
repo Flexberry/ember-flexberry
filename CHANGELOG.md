@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* The hook `configurateRow` is not called for nested rows in hierarchical mode in the `flexberry-objectlistview` component.
 * `flexberry-objectlistview` component:
     * Use ',' and '/' in Excel export column name.
 

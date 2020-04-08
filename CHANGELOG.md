@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0-beta.5] - 2020-04-08
+### Fixed
+* The hook `configurateRow` is not called for nested rows in hierarchical mode in the `flexberry-objectlistview` component.
+
+### Breaking changes
+* When building a query for export to Excel, the encoding for columns names is used, which allows you to use special characters in them. For compatibility, use the package `NewPlatform.Flexberry.ORM.ODataService` version [`5.1.0-beta16`](https://www.nuget.org/packages/NewPlatform.Flexberry.ORM.ODataService/5.1.0-beta16) or higher.
+
 ## [3.4.0-beta.0] - 2020-04-06
 ### Added
 * Changes from [`2.4.0-beta.0`](#240-beta0---2020-03-18), [`2.4.0-beta.1`](#240-beta1---2020-03-23) and [`2.4.0-beta.4`](#240-beta4---2020-04-06) versions.

@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0-beta.6] - 2020-04-09
+### Fixed
+* `edit-form` controller:
+    * Fix record saving, when only one detail was changed.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.2`.
+
 ## [2.4.0-beta.5] - 2020-04-08
 ### Fixed
 * The hook `configurateRow` is not called for nested rows in hierarchical mode in the `flexberry-objectlistview` component.

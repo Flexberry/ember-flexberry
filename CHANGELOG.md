@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `edit-form` controller:
+    * Fix record saving, when only one detail was changed.
 
 ## [2.4.0-beta.5] - 2020-04-08
 ### Fixed

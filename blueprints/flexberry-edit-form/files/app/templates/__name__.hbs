@@ -3,11 +3,6 @@
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
   <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
-    </div>
-  </div>
-  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         <button class="ui button save-button" {{action "save"}}>
@@ -22,6 +17,11 @@
       <button class="ui button close-button" {{action "close"}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
+    </div>
+  </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
 <%=flexberryComponents%>

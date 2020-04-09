@@ -144,9 +144,6 @@ export default FlexberryBaseComponent.extend({
   value: computed('_value', 'items', {
     get() {
       let valueKey = this.get('_value');
-      if (valueKey && this.get('_initialized')) {
-        this.$().dropdown('set selected', valueKey);
-      }
 
       return valueKey ? this.get(`items.${valueKey}`) : undefined;
     },
@@ -161,10 +158,6 @@ export default FlexberryBaseComponent.extend({
         }
 
         if (valueKey) {
-          if (this.get('_initialized')) {
-            this.$().dropdown('set selected', valueKey);
-          }
-
           return this.get(`items.${this.set('_value', valueKey)}`);
         } else if (this.get('needChecksOnValue')) {
           throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
@@ -212,11 +205,6 @@ export default FlexberryBaseComponent.extend({
 
     this.$().dropdown(settings);
     this.set('_initialized', true);
-
-    let _value = this.get('_value');
-    if (_value) {
-      this.$().dropdown('set selected', _value);
-    }
   },
 
   /**

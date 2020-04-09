@@ -1,6 +1,6 @@
 import { Projection, Offline } from 'ember-flexberry-data';
 import config from '../config/environment';
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
 
 export default Offline.Store.reopen(Projection.StoreMixin, {
   /**
@@ -10,7 +10,7 @@ export default Offline.Store.reopen(Projection.StoreMixin, {
    @type {Class}
    @default OfflineGlobalsService
   */
-  offlineGlobals: Ember.inject.service('offline-globals'),
+  offlineGlobals: service('offline-globals'),
 
   init() {
     this.set('offlineSchema', {

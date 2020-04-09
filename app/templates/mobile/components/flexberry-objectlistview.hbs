@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -30,6 +30,24 @@
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
 }}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <div class="right menu">
+      <div class="ui basic buttons">
+        {{#each pages as |page|}}
+          {{#if page.isEllipsis}}
+            <div class="ui button">...</div>
+          {{else if page.isCurrent}}
+              <button class="ui active button">{{page.number}}</button>
+          {{else}}
+            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
+          {{/if}}
+        {{/each}}
+        <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
+      </div>
+   </div>
+  </div>
+{{/if}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
@@ -46,11 +64,13 @@
   showCheckBoxInRow=showCheckBoxInRow
   showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
+  createNewByPrototype=(action "createNewByPrototype")
   orderable=orderable
   sorting=sorting
   immediateDelete=true
@@ -79,6 +99,7 @@
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
+  confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
@@ -92,35 +113,6 @@
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
+  recordsTotalCount=recordsTotalCount
 }}
-{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
-  <div class="ui secondary menu no-margin nav-bar">
-    <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
-      {{#each pages as |page|}}
-        {{#if page.isEllipsis}}
-          <div class="ui button">...</div>
-        {{else}}
-          {{#if page.isCurrent}}
-            <button class="ui active button">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
-          {{/if}}
-        {{/if}}
-      {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
-    </div>
-    <div class="right menu">
-      {{#if (and showShowingEntries recordsTotalCount)}}
-        <div class="showing-entries">
-          {{#if (and currentIntervalRecords recordsTotalCount) }}
-            {{concat
-              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-            }}
-          {{/if}}
-        </div>
-      {{/if}}
-      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
-    </div>
-  </div>
-{{/if}}
+

@@ -23,12 +23,10 @@ export default EditFormRoute.extend({
     Returns model related to current route.
 
     @method model
-   */
-  /* eslint-disable no-unused-vars */
-  model(params) {
+  */
+  model() {
     let store = this.get('store');
     let base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;
   }
-  /* eslint-enable no-unused-vars */
 });

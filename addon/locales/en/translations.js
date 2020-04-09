@@ -115,7 +115,9 @@ export default {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {
@@ -181,7 +183,8 @@ export default {
       'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
       'uncheck-all-button-text': 'Uncheck all on all pages',
-      'clear-sorting-button-text': 'Set the default sorting'
+      'clear-sorting-button-text': 'Set the default sorting',
+      'clear-select-button-text': 'Deselect'
     },
 
     'groupedit-toolbar': {
@@ -240,6 +243,15 @@ export default {
       'check': 'Check'
     },
 
+    'filters-dialog-content': {
+      'title': 'Сolumns filtering',
+      'column-name': 'Filter column',
+      'column-condition': 'Condition',
+      'column-value': 'Value',
+      'clear': 'Clear filters',
+      'apply': 'Apply filters'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Load time',
       'render-time': 'Render time',
@@ -263,6 +275,10 @@ export default {
 
     'flexberry-tree': {
       'placeholder': 'Tree nodes are not defined'
+    },
+
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Main menu'
     }
 
   },

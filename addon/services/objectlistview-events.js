@@ -32,6 +32,15 @@ export default Service.extend(Evented, {
   _selectedRecords: undefined,
 
   /**
+    Current model projection columns with available filters.
+
+    @property _olvFilterColumnsArray
+    @type Object[]
+    @private
+  */
+  _olvFilterColumnsArray: undefined,
+
+  /**
     Init service.
 
     @method init
@@ -334,6 +343,26 @@ export default Service.extend(Evented, {
   */
   getLimitFunction(componentName) {
     return this.get(`currentLimitFunctions.${componentName}`);
+  },
+
+  /**
+    Sets olv columns with available filters.
+
+    @method setOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
+  */
+  setOlvFilterColumnsArray(columns) {
+    this.set('_olvFilterColumnsArray', columns);
+  },
+
+  /**
+    Gets olv columns with available filters.
+
+    @method getOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
+  */
+  getOlvFilterColumnsArray() {
+    return this.get('_olvFilterColumnsArray');
   },
 
   /**

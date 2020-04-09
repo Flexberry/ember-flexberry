@@ -115,7 +115,9 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {
@@ -182,7 +184,8 @@ export default {
       'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
       'check-all-button-text': 'Выбрать все на всех страницах',
       'uncheck-all-button-text': 'Отменить выбор на всех страницах',
-      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию',
+      'clear-select-button-text': 'Отмена выделения'
     },
 
     'groupedit-toolbar': {
@@ -242,6 +245,15 @@ export default {
       'check': 'Проверить'
     },
 
+    'filters-dialog-content': {
+      'title': 'Фильтрация по столбцам',
+      'column-name': 'Столбец для фильтрации',
+      'column-condition': 'Условие',
+      'column-value': 'Значение',
+      'clear': 'Очистить фильты',
+      'apply': 'Применить фильтры'
+    },
+
     'form-load-time-tracker': {
       'load-time': 'Время загрузки',
       'render-time': 'Время отрисовки',
@@ -267,6 +279,9 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Главное меню'
+    }
   },
 
   'models': {

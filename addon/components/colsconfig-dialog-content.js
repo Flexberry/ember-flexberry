@@ -300,7 +300,11 @@ export default FlexberryBaseComponent.extend({
     let exportParams = this.get('model.exportParams') || {};
     builder.selectByProjection(exportParams.projectionName, true);
     let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
-      .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
+      .map(column => {
+        let attributeName = adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.');
+        let propName = column.name || column.propName;
+        return encodeURIComponent(attributeName) + '/' + encodeURIComponent(propName);
+      })
       .join();
     if (sortString) {
       builder.orderBy(sortString);

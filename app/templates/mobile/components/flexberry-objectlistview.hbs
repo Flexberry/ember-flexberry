@@ -17,15 +17,15 @@
   enableDeleteButton=(not readonly)
   componentName=componentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
-  availableCollExpandMode=_availableCollExpandMode
+  availableCollExpandMode=availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
@@ -46,11 +46,13 @@
   showCheckBoxInRow=showCheckBoxInRow
   showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
+  createNewByPrototype=(action "createNewByPrototype")
   orderable=orderable
   sorting=sorting
   immediateDelete=true
@@ -72,15 +74,15 @@
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
@@ -88,10 +90,12 @@
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
+  defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
 }}
-{{#unless _inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
       <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
@@ -109,7 +113,7 @@
       <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat
@@ -118,7 +122,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

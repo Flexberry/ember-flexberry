@@ -2,15 +2,15 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
-  Mixin for [Ember.Controller](http://emberjs.com/api/classes/Ember.Controller.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+  Mixin for [Controller](https://emberjs.com/api/ember/release/classes/Controller) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
 
   @class FlexberryObjectlistviewHierarchicalControllerMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Flag indicate whether component is in hierarchical mode.
 
@@ -19,6 +19,16 @@ export default Ember.Mixin.create({
     @default false
   */
   inHierarchicalMode: false,
+
+  /**
+    Flag used for disable the hierarchical paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+    @private
+  */
+  hierarchyPaging: false,
 
   /**
     Flag indicate whether component is in collapse/expand mode.

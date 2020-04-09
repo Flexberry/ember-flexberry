@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
+import $ from 'jquery';
+import { isNone } from '@ember/utils';
 import { executeTest, addDataForDestroy } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
@@ -11,15 +14,15 @@ executeTest('check empty filter', (store, assert, app) => {
   let user;
   let type;
   let suggestion;
-  Ember.run(() => {
-    let newRecords = Ember.A();
+  run(() => {
+    let newRecords = A();
     user = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-application-user', { name: 'Random name fot empty filther test',
-    eMail: 'Random eMail fot empty filther test' }));
+      eMail: 'Random eMail fot empty filther test' }));
     type = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: 'Random name fot empty filther test' }));
 
     type.save().then(() => {
       user.save().then(() => {
-        Ember.run(() => {
+        run(() => {
           suggestion = newRecords.pushObject(store.createRecord(modelName, { type: type, author: user, editor1: user }));
           suggestion.save();
           addDataForDestroy(suggestion);
@@ -32,17 +35,19 @@ executeTest('check empty filter', (store, assert, app) => {
     visit(path + '?perPage=500');
     andThen(function() {
       assert.equal(currentPath(), path);
-      let $filterButtonDiv = Ember.$('.buttons.filter-active');
+      let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
-      let $objectListView = Ember.$('.object-list-view');
+      let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
-      $filterButton.click();
+      run(() => {
+        $filterButton.click();
+      });
 
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter function.
         let refreshFunction =  function() {
-          let refreshButton = Ember.$('.refresh-button')[0];
+          let refreshButton = $('.refresh-button')[0];
           refreshButton.click();
         };
 
@@ -54,16 +59,16 @@ executeTest('check empty filter', (store, assert, app) => {
           let successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let address = filtherResult[i]._data.address;
-            if (address === undefined) {
+            if (!isNone(address)) {
               successful = false;
             }
           }
 
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal(successful, true, 'Filter successfully worked');
+          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
+          assert.equal(successful, true, 'Filter not successfully worked');
         }).finally(() => {
           newRecords[2].destroyRecord().then(() => {
-            Ember.run(() => {
+            run(() => {
               newRecords[0].destroyRecord();
               newRecords[1].destroyRecord();
               done1();

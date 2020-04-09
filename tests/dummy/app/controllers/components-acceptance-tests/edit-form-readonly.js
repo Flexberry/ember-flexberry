@@ -20,8 +20,8 @@ export default EditFormController.extend({
     @param {DS.Model} modelClass Model class of data record related to current table row.
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
-   */
-  getCellComponent: function(attr, bindingPath, model) {
+  */
+  getCellComponent: function(attr, bindingPath) {
     var cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {
@@ -43,10 +43,11 @@ export default EditFormController.extend({
       };
     }
 
-    if (bindingPath === 'time') {
+    if (bindingPath === 'date') {
       return {
         componentName: 'flexberry-simpledatetime',
         componentProperties: {
+          type: 'date'
         }
       };
     }

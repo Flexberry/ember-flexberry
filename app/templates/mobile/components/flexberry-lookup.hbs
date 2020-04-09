@@ -7,6 +7,7 @@
     needChecksOnValue=false
     isSearch=true
     isSearchReadOnly=dropdownIsSearch
+    settings=dropdownSettings
   }}
 {{else}}
   <div class="ui action input">
@@ -28,6 +29,17 @@
         <i class="chevron right icon"></i>
       {{/unless}}
     </div>
+    {{#if showPreviewButton }}
+      {{#if (and previewFormRoute value)}}
+        <button
+          class="ui ui-preview {{if isBlocked " disabled"}} {{previewButtonClass}} button"
+          title={{t "components.flexberry-lookup.preview-button-text"}}
+          type={{if autocomplete "button" ""}}
+          {{action "preview"}}>
+          {{{previewText}}}
+        </button>
+      {{/if}}
+    {{/if}}
     {{#unless readonly}}
       <button
         class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"

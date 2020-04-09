@@ -1,14 +1,18 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   actions: {
     onMenuItemClick(e) {
-      let clickedMenu = Ember.$(e.delegateTarget);
-      let clickedMenuItem = Ember.$(e.currentTarget);
+      let clickedMenu = $(e.delegateTarget);
+      let clickedMenuItem = $(e.currentTarget);
       if (e.currentTarget) {
         this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
       } else {
-        let selectMenu = Ember.$.trim(e.delegateTarget.innerText);
+        let selectMenu = $.trim(e.delegateTarget.innerText);
         let selectValue;
         if (selectMenu === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
           selectValue = 'itemsLeft';
@@ -38,7 +42,7 @@ export default Ember.Controller.extend({
         },
         on: 'manual',
         onHidden(e) {
-          let owner = Ember.$(e);
+          let owner = $(e);
           owner.popup('destroy');
         }
       });
@@ -87,14 +91,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-menu<br>' +
-    '  placeholder=placeholder<br>' +
-    '  class="compact"<br>' +
-    '  items=items<br>' +
-    '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
-    '  onItemClick=(action "onMenuItemClick")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
 
   /**
     Initializes controller.
@@ -103,6 +100,14 @@ export default Ember.Controller.extend({
   */
   init() {
     this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-menu<br>' +
+      '  placeholder=placeholder<br>' +
+      '  class="compact"<br>' +
+      '  items=items<br>' +
+      '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
+      '  onItemClick=(action "onMenuItemClick")<br>' +
+      '}}'));
 
     let i18n = this.get('i18n');
     let itemsLeft = [{
@@ -168,7 +173,7 @@ export default Ember.Controller.extend({
     @method _menuTitle
     @private
    */
-  _menuTitle: Ember.observer('i18n.locale', function() {
+  _menuTitle: observer('i18n.locale', function() {
     let i18n = this.get('i18n');
     if (typeof this.get('itemsLeft.0.title') === 'object') {
       this.set('itemsLeft.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
@@ -217,7 +222,7 @@ export default Ember.Controller.extend({
     @method _titleChanged
     @private
    */
-  _titleChanged: Ember.observer('currentItem.title', function() {
+  _titleChanged: observer('currentItem.title', function() {
     let i18n = this.get('i18n');
     if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
       this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
@@ -232,7 +237,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  menuPosition: Ember.computed('isVertical', function() {
+  menuPosition: computed('isVertical', function() {
     let isVertical = this.get('isVertical');
     if (isVertical === true) {
       return 'ui basic vertical buttons';
@@ -247,8 +252,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
   */
-  componentSettingsMetadata: Ember.computed(function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed(function() {
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'icon',
       settingType: 'enumeration',

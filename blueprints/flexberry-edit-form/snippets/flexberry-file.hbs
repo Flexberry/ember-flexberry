@@ -1,12 +1,10 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-file
-    placeholder=(t 'components.flexberry-file.placeholder')
-    readonly=<%= readonly %>
-    value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
-    label=(<%= caption %>)
-  }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-file
+      readonly=<%= readonly %>
+      value=model.<%= name %>
+      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+      label=(<%= caption %>)
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

@@ -2,8 +2,15 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { isBlank, isNone } from '@ember/utils';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
 import ProjectedModelFormRoute from './projected-model-form';
+import ReloadListMixin from '../mixins/reload-list-mixin';
+import LimitedRouteMixin from '../mixins/limited-route';
+import SortableRouteMixin from '../mixins/sortable-route';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
@@ -39,13 +46,16 @@ export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
 FlexberryGroupeditRouteMixin,
 FlexberryObjectlistviewHierarchicalRouteMixin,
-ErrorableRouteMixin, {
+ErrorableRouteMixin,
+LimitedRouteMixin,
+SortableRouteMixin,
+ReloadListMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
 
       The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
-      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition).
 
       @method actions.willTransition
       @param {Object} transition
@@ -57,7 +67,7 @@ ErrorableRouteMixin, {
   },
 
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object
@@ -100,11 +110,17 @@ ErrorableRouteMixin, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: service(),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/beforeModel?anchor=beforeModel).
 
     @method beforeModel
     @param {Transition} transition
@@ -113,10 +129,10 @@ ErrorableRouteMixin, {
   beforeModel(transition) {
     this._super(...arguments);
 
-    if (!Ember.isNone(transition.queryParams.parentParameters)) {
-      let thisRouteName = transition.queryParams.parentParameters.parentRoute;
-      let thisRecordId = transition.queryParams.parentParameters.parentRouteRecordId;
-      if (!Ember.isNone(thisRouteName) || !Ember.isNone(thisRecordId)) {
+    if (!isNone(transition.queryParams.parentRoute)) {
+      let thisRouteName = transition.queryParams.parentRoute;
+      let thisRecordId = transition.queryParams.parentRouteRecordId;
+      if (!isNone(thisRouteName)) {
         this.set('parentRoute', thisRouteName);
         this.set('parentRouteRecordId', thisRecordId);
       }
@@ -124,7 +140,7 @@ ErrorableRouteMixin, {
 
     let webPage = transition.targetName;
     let newSuffix = this.get('newSuffix');
-    if (!Ember.isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
+    if (!isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
       webPage = webPage.substr(0, webPage.length - newSuffix.length);
     }
 
@@ -132,7 +148,6 @@ ErrorableRouteMixin, {
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings') || {};
 
-    let nComponents = 0;
     let componentName;
     for (componentName in developerUserSettings) {
       let componentDesc = developerUserSettings[componentName];
@@ -143,10 +158,9 @@ ErrorableRouteMixin, {
         case 'object':
           break;
         default:
-          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+          assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
-      nComponents += 1;
     }
 
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
@@ -155,12 +169,13 @@ ErrorableRouteMixin, {
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   model(params, transition) {
     this._super.apply(this, arguments);
 
@@ -181,22 +196,24 @@ ErrorableRouteMixin, {
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, findRecordParameters);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to reset controller values either when the model changes or the route is exiting.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_resetController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/resetController?anchor=resetController).
 
     @method resetController
-    @param {Ember.Controller} controller
+    @param {Controller} controller
     @param {Boolean} isExisting
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     controller.set('readonly', false);
     controller.set('parentRouteRecordId', undefined);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
-    let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
+    let keptAgregators = modelCurrentAgregators && isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
@@ -226,13 +243,14 @@ ErrorableRouteMixin, {
       }
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController).
 
     @method setupController
-    @param {Ember.Controller} controller
+    @param {Controller} controller
     @param {Object} model
    */
   setupController(controller, model) {
@@ -245,17 +263,16 @@ ErrorableRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
 
     this.get('appState').reset();
 
     let parentRoute = this.get('parentRoute');
-    let parentRouteRecordId = this.get('parentRouteRecordId');
-    if (!Ember.isNone(parentRoute) || !Ember.isNone(parentRouteRecordId)) {
+    if (!isNone(parentRoute)) {
       controller.set('parentRoute', parentRoute);
-      controller.set('parentRouteRecordId', parentRouteRecordId);
+      controller.set('parentRouteRecordId', this.get('parentRouteRecordId'));
     }
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');

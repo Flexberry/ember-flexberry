@@ -2,18 +2,21 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-
-const { Builder } = Query;
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import $ from 'jquery';
+import { isNone } from '@ember/utils';
+import { set } from '@ember/object';
+import { A } from '@ember/array';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /**
-  Mixin for [Ember.Route](http://emberjs.com/api/classes/Ember.Route.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+  Mixin for [Route](https://www.emberjs.com/api/ember/release/classes/Route) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
 
   @class FlexberryObjectlistviewHierarchicalRouteMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   actions: {
     /**
@@ -32,37 +35,39 @@ export default Ember.Mixin.create({
       let modelName = params.modelName || this.get('modelName');
 
       if (firstRunMode) {
-        let projectionName = params.modelProjection || this.get('modelProjection');
+        let projectionName = params.projectionName || this.get('modelProjection');
         let builder = new Builder(this.store)
           .from(modelName)
           .selectByProjection(projectionName)
           .where(hierarchicalAttribute, 'eq', id);
 
-        Ember.set(target, property, this.store.query(modelName, builder.build()));
+        set(target, property, this.store.query(modelName, builder.build()));
       } else {
         let store = this.get('store');
         let records = store.peekAll(modelName);
         let recordsArray = records.content;
-        let sortRecordsArray = Ember.A();
+        let sortRecordsArray = A();
         for (let i = 0; i < recordsArray.length; i++) {
           let record = store.peekRecord(modelName, recordsArray[i].id);
 
-          if (record && (!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
+          if (record && (!isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
             sortRecordsArray.push(record);
           }
         }
 
-        let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+        /* eslint-disable no-unused-vars */
+        let recordsArrayinPromise = new RSVP.Promise((resolve, reject) => {
           resolve(sortRecordsArray);
         });
+        /* eslint-enable no-unused-vars */
 
-        Ember.set(target, property, recordsArrayinPromise);
+        set(target, property, recordsArrayinPromise);
       }
     },
 
     objectListViewRowClick(record, params) {
       // Prevent transition to edit form if click target is hierarchy expand button.
-      if (params && params.originalEvent && Ember.$(params.originalEvent.target).hasClass('hierarchy-expand')) {
+      if (params && params.originalEvent && $(params.originalEvent.target).hasClass('hierarchy-expand')) {
         params.goToEditForm = false;
       }
 

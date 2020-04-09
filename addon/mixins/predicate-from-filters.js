@@ -2,19 +2,23 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-
-const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
+import Mixin from '@ember/object/mixin';
+import { set } from '@ember/object';
+import Condition from 'ember-flexberry-data/query/condition';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { isNone } from '@ember/utils';
 
 /**
   Mixin contains functions for predicate build from filters object.
 
   @class PredicateFromFiltersMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Return predicate to filter through.
 
@@ -40,28 +44,33 @@ export default Ember.Mixin.create({
     if (filter.condition) {
       switch (filter.type) {
         case 'string':
-          return filter.condition === 'like' && filter.pattern ?
-            new StringPredicate(filter.name).contains(filter.pattern) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          if (filter.condition === 'like') {
+            return (!isNone(filter.pattern)) ?
+              new StringPredicate(filter.name).contains(filter.pattern) :
+              new StringPredicate(filter.name).contains('');
+          } else {
+            return (!isNone(filter.pattern)) ?
+              new SimplePredicate(filter.name, filter.condition, filter.pattern) :
+              new SimplePredicate(filter.name, filter.condition, null);
+          }
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
         case 'date':
           return filter.pattern ?
             new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
-
+            new SimplePredicate(filter.name, filter.condition, null);
         default:
           return null;
       }
     } else if (filter.pattern) {
       switch (filter.type) {
         case 'string':
-          Ember.set(filter, 'condition', 'like');
+          set(filter, 'condition', 'like');
           return new StringPredicate(filter.name).contains(filter.pattern);
         case 'date':
-          Ember.set(filter, 'condition', 'eq');
+          set(filter, 'condition', 'eq');
           return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
         default:
           return null;

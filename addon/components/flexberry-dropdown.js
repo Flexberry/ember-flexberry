@@ -1,85 +1,77 @@
 /**
   @module ember-flexberry
 */
-import Ember from 'ember';
+import $ from 'jquery';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
-  @class FlexberryDropDown
+  Dropdown component based on Semantic UI Dropdown module.
+
+  @example
+    templates/my-form.hbs
+    ```handlebars
+    {{flexberry-dropdown
+      items=items
+      value=value
+      settings=(hash
+        duration=500
+        direction="upward"
+      )
+    }}
+    ```
+
+  @class FlexberryDropdownComponent
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _items: Ember.computed('items.[]', function() {
-    let items = this.get('items');
-    let obj = null;
-
-    if (Ember.isArray(items)) {
-      obj = {};
-      let hasNullValues = false;
-      items.forEach(item => {
-        if (Ember.isNone(item)) {
-          hasNullValues = true;
-        } else {
-          obj[item] = item.toString();
-        }
-      });
-
-      if (hasNullValues) {
-        let componentName = this.get('componentName');
-        Ember.warn(`Flexberry-dropdown component ${componentName ? '"' + componentName + '" ' : ''}has null value in items array.`);
-      }
-    }
-
-    return obj || items;
-  }),
-
   /**
-    Semantic-ui settings.
-    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
-  */
-  on: 'click',
-  allowReselection: false,
-  allowAdditions: false,
-  hideAdditions: true,
-  minCharacters: 1,
-  match: 'both',
-  selectOnKeydown: true,
-  forceSelection: true,
-  allowCategorySelection: false,
-  direction: 'auto',
-  keepOnScreen: true,
-  context: 'windows',
-  fullTextSearch: false,
-  preserveHTML: true,
-  sortSelect: false,
-  showOnFocus: true,
-  allowTab: true,
-  transition: 'auto',
-  duration: 200,
-  action: 'select',
-
-  /**
-    Flag indicates whether to make checks on selected value or not.
-
-    It has `false` value when component loads data by request by semantic processes.
-    It is not recommended to change its value out of addon.
-
-    @property needChecksOnValue
+    @private
+    @property _initialized
     @type Boolean
-    @default true
+    @default false
   */
-  needChecksOnValue: true,
+  _initialized: false,
 
   /**
-    Overload wrapper tag name for disabling wrapper.
+    @private
+    @property _items
+    @type Object
   */
-  tagName: '',
+  _items: undefined,
 
   /**
-    Default classes for component wrapper.
+    @private
+    @property _value
+    @type String
   */
-  class: '',
+  _value: undefined,
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+  */
+  classNameBindings: ['readonly:disabled'],
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['ui', 'dropdown', 'flexberry-dropdown', 'selection'],
+
+  /**
+    See [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings).
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -100,109 +92,16 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-dropdown.placeholder'),
 
   /**
-    Selected item.
+    Flag indicates whether to make checks on selected value or not.
 
-    @property value
-    @type String
-    @default null
-  */
-  value: null,
+    It has `false` value when component loads data by request by semantic processes.
+    It is not recommended to change its value out of addon.
 
-  /**
-    Available items.
-
-    @property items
-    @type Array|Object
-    @default {}
-  */
-  items: {},
-
-  /**
-    DOM-element representing semantic ui-dropdown component.
-
-    @property dropdownDomElement
-    @type Object
-    @default null
-  */
-  dropdownDomElement: null,
-
-  /**
-    Flag indicates whether `willDestroyElement` hook has been already called.
-
-    @property destroyHasBeenCalled
+    @property needChecksOnValue
     @type Boolean
-    @default false
+    @default true
   */
-  destroyHasBeenCalled: false,
-
-  /**
-    Flag indicates whether to show placeholder or not.
-
-    @property showDefaultText
-    @type Boolean
-    @default false
-    @readOnly
-  */
-  showPlaceholder: Ember.computed('placeholder', 'value', function() {
-    return Ember.isBlank(this.get('value')) && !Ember.isBlank(this.get('placeholder'));
-  }),
-
-  /**
-    Selected text (if some item is selected).
-
-    @property text
-    @type String
-    @default ''
-    @readOnly
-  */
-  text: Ember.computed('value', function() {
-    let value = this.get('value');
-    value = value === '<!---->' ? '' : value;
-    return !Ember.isBlank(value) ? value : '';
-  }),
-
-  /**
-    Handles changes in available items & selected item (including changes on component initialization).
-  */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items', 'value', function() {
-    let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
-    if (destroyHasBeenCalled) {
-      return;
-    }
-
-    // Convert 'value' and 'items' into strings because flexberry-dropdown interpret selected value as string commonly.
-    let value = this.get('value');
-    let stringValue = !Ember.isNone(value) ? value.toString() : null;
-
-    if (this.get('needChecksOnValue')) {
-      let items = this.get('_items') || {};
-      let itemsArray = Ember.A();
-      for (let key in items) {
-        if (items.hasOwnProperty(key)) {
-          itemsArray.pushObject(items[key]);
-        }
-      }
-
-      if (!Ember.isBlank(stringValue) && !itemsArray.contains(stringValue)) {
-        throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
-      }
-    }
-
-    let dropdownDomElement = this.get('dropdownDomElement');
-    if (Ember.isNone(dropdownDomElement)) {
-      return;
-    }
-
-    // If binded value has been changed somewhere out of this component, semanic ui-dropdown logic
-    // will not be called automatically, so we need to call some methods manually,
-    // to be sure that sates of semanic ui-dropdown plugin & related DOM-elements
-    // are fully corresponds to currently selected item.
-    if (Ember.isNone(value)) {
-      dropdownDomElement.dropdown('clear');
-    } else {
-      dropdownDomElement.dropdown('set selected', value);
-    }
-  })),
+  needChecksOnValue: true,
 
   /**
     Flag indicates whether to show input with search class.
@@ -213,93 +112,112 @@ export default FlexberryBaseComponent.extend({
   */
   isSearch: false,
 
-  actions: {
-    /**
-      This callback is called after a dropdown value changes.
-      For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings).
+  /**
+    Available items.
 
-      @method actions.onChange
-      @public
-    */
-    onChange(component, id, newValue) {
-      let oldValue = !Ember.isNone(this.get('value')) ? this.get('value') : null;
-      newValue = !Ember.isNone(newValue) ? newValue : null;
-      newValue = newValue === '<!---->' ? '' : newValue;
-
-      if (newValue === oldValue) {
-        return;
+    @property items
+    @type Object
+  */
+  items: computed('_items', {
+    get() {
+      return this.get('_items');
+    },
+    set(key, value) {
+      let items = value;
+      if (isArray(value)) {
+        items = {};
+        for (let i = 0; i < value.length; i++) {
+          items[i] = value[i];
+        }
       }
 
-      // Semantic ui-dropdown component has only one way binding,
-      // so we have to set selected value manually.
-      this.set('value', newValue);
-      this.sendAction('onChange', newValue);
+      return this.set('_items', items);
     },
-
-    /**
-      This callback is called before a dropdown is shown/hidden.
-      If false is returned, dropdown will not be shown/hidden.
-
-      Its is necessary in situations when route's template changes on model change.
-      @example
-        ```handlebars
-        ...
-        {{#if model.enum}}
-          <span>{{model.enum}}<span>
-        {{else}}
-          {{flexberry-dropdown items=enumAvailableValues value=model.enum}}
-        {{/if}}
-        ...
-        ```
-      In such situation, without this callback, semantic-ui will throw an error:
-      'Transition: Element is no longer attached to DOM. Unable to animate'.
-
-      @method actions.onShowHide
-      @public
-    */
-    onShowHide() {
-      return !this.get('destroyHasBeenCalled');
-    }
-  },
+  }),
 
   /**
-    An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    Selected item.
+
+    @property value
+    @type Any
   */
-  init() {
-    this._super(...arguments);
-  },
+  value: computed('_value', 'items', {
+    get() {
+      let valueKey = this.get('_value');
+
+      return valueKey ? this.get(`items.${valueKey}`) : undefined;
+    },
+    set(key, value, oldValue) {
+      let items = this.get('items');
+      if (items && value && value !== oldValue) {
+        let valueKey;
+        for (let key in items) {
+          if (items.hasOwnProperty(key) && items[key] === value) {
+            valueKey = key;
+          }
+        }
+
+        if (valueKey) {
+          return this.get(`items.${this.set('_value', valueKey)}`);
+        } else if (this.get('needChecksOnValue')) {
+          throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
+        }
+      }
+
+      if (!value && this.get('_initialized')) {
+        this.$().dropdown('clear');
+      }
+
+      return value;
+    },
+  }),
 
   /**
-    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
-    For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    Selected item or placeholder.
+
+    @property text
+    @type Any
+    @readOnly
+  */
+  text: computed.or('value', 'placeholder').readOnly(),
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method didInsertElement
   */
   didInsertElement() {
     this._super(...arguments);
 
-    // We need to select and remember DOM-element representing ui-dropdown component,
-    // but we can't just call to this.$('.flexberry-dropdown'), because ember will throw an error
-    // "You cannot access this.$() on a component with tagName: ''.".
-    // So we have to search our element in 'childViews' collection.
-    let dropdownView = this.get('childViews').find(view => {
-      let tagName = view.get('tagName');
-      if (Ember.typeOf(tagName) === 'string') {
-        tagName = tagName.trim();
-      }
+    let settings = $.extend({
+      action: 'select',
+      onChange: (value) => {
+        run(() => {
+          if (this.get('_value') !== value) {
+            this.set('_value', value);
+            if (!isEmpty(this.get('onChange'))) {
+              this.get('onChange')(this.get('value'));
+            }
+          }
+        });
+      },
+    }, this.get('settings'));
 
-      return tagName !== '' && view.$().hasClass('flexberry-dropdown');
-    });
-
-    let dropdownDomElement = !Ember.isNone(dropdownView) ? dropdownView.$() : null;
-    this.set('dropdownDomElement', dropdownDomElement);
+    this.$().dropdown(settings);
+    this.set('_initialized', true);
   },
 
   /**
-    Called when the element of the view is going to be destroyed.
-    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method willDestroyElement
   */
   willDestroyElement() {
     this._super(...arguments);
-    this.set('destroyHasBeenCalled', true);
-  }
+
+    if (this.get('_initialized')) {
+      this.set('_initialized', false);
+      this.$().dropdown('destroy');
+    }
+  },
 });

@@ -5,6 +5,7 @@
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
+      componentBlockOverflow="visible"
     }}
       {{flexberry-lookup
         placeholder=placeholder
@@ -15,15 +16,25 @@
         title=title
         relatedModel=model
         relationName="type"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
         autocomplete=autocomplete
+        autocompletePersistValue=autocompletePersistValue
+        usePaginationForAutocomplete=usePaginationForAutocomplete
+        maxResults=maxResults
+        displayValue=model.lookupDisplayValue
         dropdown=dropdown
+        dropdownIsSearch=dropdownIsSearch
         chooseText=chooseText
         removeText=removeText
+        dropdownClass=dropdownClass
         chooseButtonClass=chooseButtonClass
         removeButtonClass=removeButtonClass
         multiselect=true
+        showPreviewButton=showPreviewButton
+        previewOnSeparateRoute=previewOnSeparateRoute
+        previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"
+        preview=(action "previewLookupValue")
       }}
     {{/settings-example}}
   </div>

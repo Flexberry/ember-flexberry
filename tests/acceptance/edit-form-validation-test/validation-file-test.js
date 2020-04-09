@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import {executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation file', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -9,17 +11,19 @@ executeTest('check operation file', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldFile = Ember.$(Ember.$('.field.error')[6]);
+    let $validationFieldFile = $($('.field.error')[6]);
     let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
 
     // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), 'File is required', 'Flexberry file have default value');
 
-    let $validationFlexberryLookupButtons = Ember.$('.ui.button');
-    let $validationFlexberryLookupButton = Ember.$($validationFlexberryLookupButtons[2]);
+    let $validationFlexberryLookup = $('.flexberry-lookup');
+    let $validationFlexberryLookupInput = $validationFlexberryLookup.children('.input');
+    let $validationFlexberryLookupButton = $validationFlexberryLookupInput.children('.ui-change.button');
+
 
     // Click lookup button.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryLookupButton.click();
     });
 
@@ -32,3 +36,4 @@ executeTest('check operation file', (store, assert, app) => {
     }, 2000);
   });
 });
+/* eslint-enable no-unused-vars */

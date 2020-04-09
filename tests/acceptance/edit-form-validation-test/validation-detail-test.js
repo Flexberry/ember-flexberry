@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check detail\'s components', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -11,27 +13,27 @@ executeTest('check detail\'s components', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     // Сounting the number of validationmessage.
-    let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
+    let $validationLablesContainer = $('.ember-view.ui.basic.label');
     assert.equal($validationLablesContainer.length, 11, 'All components have default value');
 
-    let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
-    let $validationFlexberryOLVCheckbox = Ember.$($validationFlexberryCheckboxs[2]);
+    let $validationFlexberryCheckboxs = $('.flexberry-checkbox');
+    let $validationFlexberryOLVCheckbox = $($validationFlexberryCheckboxs[2]);
 
-    let $validationFlexberryTextboxs = Ember.$('.flexberry-textbox');
-    let $validationFlexberryOLVTextbox1 = Ember.$($validationFlexberryTextboxs[2]);
-    let $validationFlexberryOLVTextbox2 = Ember.$($validationFlexberryTextboxs[3]);
+    let $validationFlexberryTextboxs = $('.flexberry-textbox');
+    let $validationFlexberryOLVTextbox1 = $($validationFlexberryTextboxs[2]);
+    let $validationFlexberryOLVTextbox2 = $($validationFlexberryTextboxs[3]);
 
     // Selct textbox inner.
     let $validationFlexberryTextboxInner1 = $validationFlexberryOLVTextbox1.children('input');
     let $validationFlexberryTextboxInner2 = $validationFlexberryOLVTextbox2.children('input');
 
     // Select deteil's validationmessages.
-    let $validationField1 = Ember.$($validationLablesContainer[8]);
-    let $validationField2 = Ember.$($validationLablesContainer[9]);
-    let $validationField3 = Ember.$($validationLablesContainer[10]);
+    let $validationField1 = $($validationLablesContainer[8]);
+    let $validationField2 = $($validationLablesContainer[9]);
+    let $validationField3 = $($validationLablesContainer[10]);
 
     // Data insertion.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryOLVCheckbox.click();
       $validationFlexberryTextboxInner1[0].value = '1';
       $validationFlexberryTextboxInner1.change();
@@ -47,3 +49,4 @@ executeTest('check detail\'s components', (store, assert, app) => {
       'All components have default value');
   });
 });
+/* eslint-enable no-unused-vars */

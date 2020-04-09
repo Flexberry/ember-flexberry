@@ -44,6 +44,10 @@ export default {
       placeholder: '(нет значения)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(нет значения)'
+    },
+
     'flexberry-textarea': {
       placeholder: '(нет значения)'
     },
@@ -96,6 +100,7 @@ export default {
       'placeholder': '(нет значения)',
       'choose-button-text': 'Выбрать',
       'remove-button-text': 'Очистить',
+      'preview-button-text': 'Просмотр',
       'dropdown': {
         'messages': {
           'noResultsHeader': 'Нет данных',
@@ -130,8 +135,9 @@ export default {
       'sort-ascending': 'По возрастанию',
       'sort-descending': 'По убыванию',
       'menu-in-row': {
-        'edit-menu-item-title': 'Редактировать запись',
         'add-menu-item-title': 'Добавить запись',
+        'edit-menu-item-title': 'Редактировать запись',
+        'prototype-menu-item-title': 'Создать запись на основе',
         'delete-menu-item-title': 'Удалить запись'
       },
       'hierarchy-buttons': {
@@ -146,7 +152,8 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'hierarchy-button-text': 'Вкл/выкл иерархии',
-      'coll-expand-button-text':'Свернуть/развернуть все иерархии',
+      'coll-expand-button-text':'Развернуть все иерархии',
+      'coll-comspres-button-text':'Свернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
       'search-button-text': 'Поиск',
@@ -162,6 +169,11 @@ export default {
       'show-default-setting-title': 'Показать установки',
       'show-setting-caption':
         'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
+      'create-limit-title': 'Новое ограничение',
+      'use-limit-title': 'Применить',
+      'edit-limit-title': 'Редактировать',
+      'remove-limit-title': 'Удалить',
+      'set-default-limit-title': 'Сбросить ограничение',
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
@@ -174,7 +186,10 @@ export default {
     'groupedit-toolbar': {
       'add-button-text': 'Добавить',
       'delete-button-text': 'Удалить',
-      'clear-settings-button-text': 'Восстановить настройки по умолчанию'
+      'clear-settings-button-text': 'Восстановить настройки по умолчанию',
+      'custom-button-text': 'Пользовательская кнопка',
+      'move-up-button-text': 'Передвинуть вверх',
+      'move-down-button-text': 'Передвинуть вниз',
     },
 
     'colsconfig-dialog-content': {
@@ -202,6 +217,30 @@ export default {
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
       'unresizable': 'Фиксированная ширина'
+    },
+
+    'advlimit-dialog-content': {
+      'title': 'Настройка ограничений',
+      'limit-name': 'Название ограничения',
+      'enter-limit-name': 'Введите название ограничения',
+      'use': 'Применить',
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении ограничения возникли ошибки: ',
+      'cant-parse': 'Текущая строка ограничения не является предикатом',
+      'limit': 'Ограничение ',
+      'is-saved': ' сохранено',
+      'is-deleted': ' удалено',
+      'is-correct': 'Текущая строка ограничения корректна',
+      'check': 'Проверить'
+    },
+
+    'filters-dialog-content': {
+      'title': 'Фильтрация по столбцам',
+      'column-name': 'Столбец для фильтрации',
+      'column-condition': 'Условие',
+      'column-value': 'Значение',
+      'clear': 'Очистить фильты',
+      'apply': 'Применить фильтры'
     },
 
     'form-load-time-tracker': {
@@ -289,5 +328,44 @@ export default {
         },
       },
     },
-  }
+  },
+
+  errors: {
+    description: 'Это поле',
+    accepted: '{{description}} должно быть принято',
+    after: '{{description}} должно быть после {{after}}',
+    before: '{{description}} должно быть до {{before}}',
+    blank: '{{description}} не может быть пустым',
+    collection: '{{description}} должно быть коллекцией',
+    confirmation: '{{description}} не соответствует {{on}}',
+    date: '{{description}} должно быть действительной датой',
+    email: '{{description}} должно быть действительным адресом электронной почты',
+    empty: '{{description}} не может быть пустым',
+    equalTo: '{{description}} должно быть равно {{is}}',
+    even: '{{description}} должно быть четным',
+    exclusion: '{{description}} зарезервировано',
+    greaterThan: '{{description}} должно быть больше {{gt}}',
+    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
+    inclusion: '{{description}} не входит в список',
+    invalid: '{{description}} недействительно',
+    lessThan: '{{description}} должно быть меньше {{lt}}',
+    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
+    notAnInteger: '{{description}} должно быть целым числом',
+    notANumber: '{{description}} должно быть числом',
+    odd: '{{description}} должно быть не четным',
+    onOrAfter: '{{description}} должно быть равно или после {{onOrAfter}}',
+    onOrBefore: '{{description}} должно быть равно или до {{onOrBefore}}',
+    otherThan: '{{description}} должно отличаться от {{value}}',
+    phone: '{{description}} должно быть действительным номером телефона',
+    positive: '{{description}} должно быть положительным',
+    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
+    present: '{{description}} должно быть пустым',
+    singular: '{{description}} не может быть коллекцией',
+    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
+    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
+    between: '{{description}} должно быть от {{min}} до {{max}} символов',
+    url: '{{description}} должно быть действительным URL адресом',
+    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
+    wrongLength: '{{description}} неправильной длины (должно быть {{is}} сомвол(ов))'
+  },
 };

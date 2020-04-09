@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import { executeTest } from './execute-flexberry-lookup-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('visiting flexberry-lookup dropdown', (store, assert, app) => {
+/* eslint-enable no-unused-vars */
   assert.expect(13);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
@@ -11,16 +13,16 @@ executeTest('visiting flexberry-lookup dropdown', (store, assert, app) => {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 
     // Retrieve component, it's inner <input>.
-    let $lookupSearch = Ember.$('.lookup-field');
-    let $lookupButtonChoose = Ember.$('.ui-change');
-    let $lookupButtonClear = Ember.$('.lookup-remove-button');
+    let $lookupSearch = $('.lookup-field');
+    let $lookupButtonChoose = $('.ui-change');
+    let $lookupButtonClear = $('.lookup-remove-button');
 
     assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
     assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
     assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
 
     // Retrieve component, it's inner <input>.
-    let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+    let $dropdown = $('.flexberry-dropdown.search.selection');
     let $dropdownSearch = $dropdown.children('.search');
     let $dropdownIcon = $dropdown.children('.dropdown.icon');
     let $dropdownMenu = $dropdown.children('.menu');

@@ -2,18 +2,25 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import EmberMap from '@ember/map';
+import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { deprecatingAlias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
 
   @class ObjectlistviewEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
  */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   /**
     Current set of selected records for all list components.
@@ -23,6 +30,15 @@ export default Ember.Service.extend(Ember.Evented, {
     @private
   */
   _selectedRecords: undefined,
+
+  /**
+    Current model projection columns with available filters.
+
+    @property _olvFilterColumnsArray
+    @type Object[]
+    @private
+  */
+  _olvFilterColumnsArray: undefined,
 
   /**
     Init service.
@@ -96,6 +112,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "refresh list" event in OLV component by name.
+
+    @method refreshListOnlyTrigger
+    @param {String} componentName The name of OLV component.
+  */
+  refreshListOnlyTrigger(componentName) {
+    this.trigger('refreshListOnly', componentName);
+  },
+
+  /**
     Trigger for "filter by any match" event in objectlistview.
 
     @method filterByAnyMatchTrigger
@@ -161,9 +187,9 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
-    if (count > 0 || !Ember.isNone(recordWithKey)) {
+    if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
-        this.get('_selectedRecords')[componentName] = Ember.Map.create();
+        this.get('_selectedRecords')[componentName] = EmberMap.create();
       }
 
       if (checked) {
@@ -199,6 +225,19 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   resetFiltersTrigger(componentName) {
     this.trigger('resetFilters', componentName);
+  },
+
+  /**
+    Trigger for "setSorting" event in route.
+    Event name: setSorting.
+
+    @method setSortingTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  setSortingTrigger(componentName, sorting = []) {
+    this.trigger('setSorting', componentName, sorting);
   },
 
   /**
@@ -246,13 +285,26 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Current limit function for OLV.
+    Trigger for "moveRowTrigger" event in objectlistview.
+    Event name: moveRow.
 
-    @property currentLimitFunction
-    @type BasePredicate
-    @default undefined
+    @method moveRowTrigger
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} shift Shift for rows
   */
-  currentLimitFunction: undefined,
+  moveRowTrigger(componentName, shift) {
+    this.trigger('moveRow', componentName, shift);
+  },
+
+  /**
+    Current limit functions for OLV by componentNames.
+
+    @property currentLimitFunctions
+    @type Object
+    @default {}
+  */
+  currentLimitFunctions: computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -260,7 +312,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property loadingState
     @type string
   */
-  loadingState: Ember.computed.deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
 
   /**
     Service for managing the state of the application.
@@ -268,7 +320,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Sets current limit function for OLV.
@@ -276,19 +328,41 @@ export default Ember.Service.extend(Ember.Evented, {
     @method setLimitFunction
 
     @param {BasePredicate} limitFunction Current limit function.
+    @param {String} componentName Component name.
   */
-  setLimitFunction(limitFunction) {
-    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  setLimitFunction(limitFunction, componentName) {
+    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
   },
 
   /**
     Gets current limit function for OLV.
 
     @method getLimitFunction
+    @param {String} componentName Component name.
     @return {BasePredicate} Current limit function.
   */
-  getLimitFunction() {
-    return this.get('currentLimitFunction');
+  getLimitFunction(componentName) {
+    return this.get(`currentLimitFunctions.${componentName}`);
+  },
+
+  /**
+    Sets olv columns with available filters.
+
+    @method setOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
+  */
+  setOlvFilterColumnsArray(columns) {
+    this.set('_olvFilterColumnsArray', columns);
+  },
+
+  /**
+    Gets olv columns with available filters.
+
+    @method getOlvFilterColumnsArray
+    @param Object[] Olv columns with available filters.
+  */
+  getOlvFilterColumnsArray() {
+    return this.get('_olvFilterColumnsArray');
   },
 
   /**
@@ -299,7 +373,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    Ember.deprecate('This method is deprecated, use app state service.', false, {
+    deprecate('This method is deprecated, use app state service.', false, {
       id: 'service.app-state',
       until: '1.0.0',
     });

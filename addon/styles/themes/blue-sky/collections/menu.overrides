@@ -58,3 +58,13 @@ div.ui.secondary.menu.no-margin.nav-bar {
         justify-content: flex-end;
     }
 }
+
+.ui.buttons .ui.dropdown .menu .item .left.menu {
+    left: auto;
+    right: 100%;
+}
+
+div.ui.secondary.menu.no-margin.nav-bar .right.menu {
+    flex-basis: 0px;
+    flex-grow: 1;
+}

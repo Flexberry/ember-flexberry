@@ -1,25 +1,38 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'files',
     async: false
   }),
-  order: DS.attr('number'),
+  order: DS.attr('number', { ordered: true }),
   file: DS.attr('file'),
+});
 
-  // Model validation rules.
-  validations: {
-  }
+// List form projection.
+Model.defineProjection('SuggestionFileL', 'ember-flexberry-dummy-suggestion-file', {
+  order: attr('Order'),
+  suggestion: belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: attr('Address', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'address'
+  }),
+  file: attr('File')
 });
 
 // Edit form projection.
 Model.defineProjection('SuggestionFileE', 'ember-flexberry-dummy-suggestion-file', {
-  order: Projection.attr('Order'),
-  file: Projection.attr('File')
+  order: attr('Order'),
+  suggestion: belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: attr('Address')
+  }),
+  file: attr('File')
 });
 
 export default Model;

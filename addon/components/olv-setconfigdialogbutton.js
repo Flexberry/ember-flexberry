@@ -9,7 +9,7 @@ export default FlexberryBaseComponent.extend({
   actions: {
     choose: function() {
       alert('choosed');
-      this.sendAction('choose');
+      this.get('choose')();
     }
   }
 });

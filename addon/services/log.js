@@ -2,8 +2,17 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-const { getOwner } = Ember;
+import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger, Ember.onerror.
+import Service, { inject as service } from '@ember/service';
+import Evented from '@ember/object/evented';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import { isNone } from '@ember/utils';
+import { A, isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { set } from '@ember/object';
+import Queue from 'ember-flexberry-data/utils/queue';
+
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
   warn: { name: 'WARN', priority: 2 },
@@ -33,9 +42,9 @@ const joinArguments = function() {
   Log service (stores client-side logs, warns, errors, ... into application log).
 
   @class LogService
-  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Service">Service</a>
 */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   /**
     Cache containing references to original Logger methods.
     Cache is needed to restore original methods on service destroy.
@@ -47,13 +56,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   _originalMethodsCache: null,
 
+  /* Queue for storing to log operation calls */
+  _queue: Queue.create(),
+
   /**
     Ember data store.
 
     @property store
     @type <a href="http://emberjs.com/api/data/classes/DS.Store.html">DS.Store</a>
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   /**
     Flag: indicates whether log service is enabled or not (if not, nothing will be stored to application log).
@@ -79,6 +91,32 @@ export default Ember.Service.extend(Ember.Evented, {
     ```
   */
   enabled: false,
+
+  /**
+    The name of a model that represents log entity.
+
+    @property applicationLogModelName
+    @type String
+    @default 'i-i-s-caseberry-logging-objects-application-log'
+    @example
+    ```
+    // Log service 'applicationLogModelName' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            applicationLogModelName: 'custom-application-log'
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
 
   /**
     Flag: indicates whether log service will store error messages to application log or not.
@@ -289,6 +327,43 @@ export default Ember.Service.extend(Ember.Evented, {
   showPromiseErrors: false,
 
   /**
+    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
+
+    @property errorMessageFilterActive
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            errorMessageFilterActive: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  errorMessageFilterActive: false,
+
+  /**
+    Error messages which must be skipped when flag errorMessageFilterActive is true.
+
+    @property errorMessageFilters
+    @type Array
+    @default [{ category: 'PROMISE', message: "TransitionAborted" }]
+  */
+  errorMessageFilters: A([
+    { category: 'PROMISE', message: 'TransitionAborted' }
+  ]),
+
+  /**
     Initializes log service.
     Ember services are singletons, so this code will be executed only once since application initialization.
   */
@@ -296,7 +371,9 @@ export default Ember.Service.extend(Ember.Evented, {
     this._super(...arguments);
 
     let _this = this;
-    let originalMethodsCache = Ember.A();
+    let originalMethodsCache = A();
+
+    this.initProperties();
 
     let originalEmberLoggerError = Ember.Logger.error;
     originalMethodsCache.pushObject({
@@ -307,7 +384,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     let onError = function(error) {
       // If `this` is not undefined then assuming this function was called as promise error handler. So we not performing it.
-      if (!this) {
+      if (!this || error instanceof Error) {
         originalEmberLoggerError(error);
         _this._onError(error, false);
       }
@@ -321,15 +398,21 @@ export default Ember.Service.extend(Ember.Evented, {
       _this._onError(reason, true);
     };
 
-    // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+    // Assign Ember.onerror & RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = onError;
-    Ember.RSVP.on('error', onPromiseError);
+    RSVP.on('error', onPromiseError);
 
     // Extend Ember.Logger.error logic.
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
+      return _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     // Extend Ember.Logger.warn logic.
@@ -343,12 +426,22 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
-      let message = joinArguments(...arguments);
-      if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecate, message, '');
-      } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
-      }
+      return _this._queue.attach((resolve, reject) => {
+        let message = joinArguments(...arguments);
+        if (message.indexOf('DEPRECATION') === 0) {
+          return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
+            resolve(result);
+          }).catch((reason) => {
+            reject(reason);
+          });
+        } else {
+          return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
+            resolve(result);
+          }).catch((reason) => {
+            reject(reason);
+          });
+        }
+      });
     };
 
     // Extend Ember.Logger.log logic.
@@ -362,8 +455,14 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
-    };
+      return _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
+   };
 
     // Extend Ember.Logger.info logic.
     let originalEmberLoggerInfo = Ember.Logger.info;
@@ -376,7 +475,13 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      return _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     // Extend Ember.Logger.debug logic.
@@ -390,10 +495,39 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      return _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     this.set('_originalMethodsCache', originalMethodsCache);
+  },
+
+  /**
+   * Initializes properties of a log service.
+   */
+  initProperties() {
+    const config = getOwner(this).resolveRegistration('config:environment');
+    const logConfiguration = config.APP.log;
+
+    this.set('enabled', typeof logConfiguration.enabled === 'boolean' && logConfiguration.enabled);
+    this.set('storeErrorMessages', typeof logConfiguration.storeErrorMessages === 'boolean' && logConfiguration.storeErrorMessages);
+    this.set('storeWarnMessages', typeof logConfiguration.storeWarnMessages === 'boolean' && logConfiguration.storeWarnMessages);
+    this.set('storeLogMessages', typeof logConfiguration.storeLogMessages === 'boolean' && logConfiguration.storeLogMessages);
+    this.set('storeInfoMessages', typeof logConfiguration.storeInfoMessages === 'boolean' && logConfiguration.storeInfoMessages);
+    this.set('storeDebugMessages', typeof logConfiguration.storeDebugMessages === 'boolean' && logConfiguration.storeDebugMessages);
+    this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
+    this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
+    this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
+    this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
+
+    if (typeof logConfiguration.applicationLogModelName === 'string') {
+      this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
   },
 
   /**
@@ -404,15 +538,15 @@ export default Ember.Service.extend(Ember.Evented, {
 
     // Restore original Ember.Logger methods.
     let originalMethodsCache = this.get('_originalMethodsCache');
-    if (Ember.isArray(originalMethodsCache)) {
+    if (isArray(originalMethodsCache)) {
       originalMethodsCache.forEach((cacheEntry) => {
-        Ember.set(cacheEntry.methodOwner, cacheEntry.methodName, cacheEntry.methodReference);
+        set(cacheEntry.methodOwner, cacheEntry.methodName, cacheEntry.methodReference);
       });
     }
 
-    // Cleanup Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+    // Cleanup Ember.onerror & RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = null;
-    Ember.RSVP.off('error');
+    RSVP.off('error');
   },
 
   /**
@@ -425,7 +559,19 @@ export default Ember.Service.extend(Ember.Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    if (!this.get('enabled') ||
+    let isSkippedMessage = false;
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
+
+    if (errorMessageFilterActive) {
+      errorMessageFilters.forEach(errorMessageFilter => {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
+          isSkippedMessage = true;
+        }
+      });
+    }
+
+    if (!this.get('enabled') || isSkippedMessage ||
       category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
       category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
@@ -433,13 +579,13 @@ export default Ember.Service.extend(Ember.Evented, {
       category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
       category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
       category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
-      return new Ember.RSVP.Promise((resolve) => {
+      return new RSVP.Promise((resolve) => {
         this._triggerEvent(category.name);
         resolve();
       });
     }
 
-    let appConfig = getOwner(this)._lookupFactory('config:environment');
+    let appConfig = getOwner(this).factoryFor('config:environment').class;
     let applicationLogProperties = {
       category: category.name,
       eventId: 0,
@@ -457,55 +603,69 @@ export default Ember.Service.extend(Ember.Evented, {
       formattedMessage: formattedMessage
     };
 
-    let applicationLogModelName = 'i-i-s-caseberry-logging-objects-application-log';
+    const applicationLogModelName = this.get('applicationLogModelName');
     let store = this.get('store');
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
     let applicationLogModel = store.peekAll(applicationLogModelName).findBy('message', message);
     if (applicationLogModel !== undefined) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      /* eslint-disable no-unused-vars */
+      return new RSVP.Promise((resolve, reject) => {
         this._triggerEvent(category.name, applicationLogModel);
         resolve();
       });
+      /* eslint-enable no-unused-vars */
     }
 
-    return store.createRecord(applicationLogModelName, applicationLogProperties).save().then((applicationLogModel) => {
-      this._triggerEvent(category.name, applicationLogModel);
-      return applicationLogModel;
-    }).catch((reason) => {
-      // Switch off remote logging on rejection to avoid infinite loop.
-      this.set('enabled', false);
+    /* eslint-disable no-unused-vars */
+    return new RSVP.Promise((resolve, reject) => {
+      store.createRecord(applicationLogModelName, applicationLogProperties).save().then((applicationLogModel) => {
+        this._triggerEvent(category.name, applicationLogModel);
+        resolve(applicationLogModel);
+      }).catch((reason) => {
+        // Switch off remote logging on rejection to avoid infinite loop.
+        this.set('enabled', false);
+        reject(reason);
+      });
     });
+    /* eslint-enable no-unused-vars */
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    Ember.assert('Logger Error: event name should be a string', Ember.typeOf(eventName) === 'string');
+    assert('Logger Error: event name should be a string', typeof eventName === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },
 
   _onError(error, isPromiseError) {
-    if (Ember.isNone(error)) {
-      return;
-    }
+    let _this = this;
+    _this._queue.attach((resolve, reject) => {
+      if (isNone(error)) {
+        resolve();
+      }
 
-    if (Ember.typeOf(error) === 'string') {
-      error = new Error(error);
-    }
+      if (typeof error === 'string') {
+        error = new Error(error);
+      }
 
-    let message = error.message || error.toString();
+      let message = error.message || error.toString();
 
-    let formattedMessageBlank = {
-      name: error && error.name ? error.name : null,
-      message: error && error.message ? error.message : null,
-      fileName: error && error.fileName ? error.fileName : null,
-      lineNumber: error && error.lineNumber ? error.lineNumber : null,
-      columnNumber: error && error.columnNumber ? error.columnNumber : null,
-      stack: error && error.stack ? error.stack : null
-    };
+      let formattedMessageBlank = {
+        name: error && error.name ? error.name : null,
+        message: error && error.message ? error.message : null,
+        fileName: error && error.fileName ? error.fileName : null,
+        lineNumber: error && error.lineNumber ? error.lineNumber : null,
+        columnNumber: error && error.columnNumber ? error.columnNumber : null,
+        stack: error && error.stack ? error.stack : null
+      };
 
-    let formattedMessage = JSON.stringify(formattedMessageBlank);
+      let formattedMessage = JSON.stringify(formattedMessageBlank);
 
-    this._storeToApplicationLog(isPromiseError ? messageCategory.promise : messageCategory.error, message, formattedMessage);
+      return _this._storeToApplicationLog(isPromiseError ? messageCategory.promise : messageCategory.error, message, formattedMessage).then((result) => {
+        resolve(result);
+      }).catch((reason) => {
+        reject(reason);
+      });
+    });
   }
 });

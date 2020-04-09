@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import { isBlank, isNone } from '@ember/utils';
+import { get, computed, observer } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
+import { getOwner } from '@ember/application';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
-const { getOwner } = Ember;
 
 export default EditFormController.extend({
   /**
@@ -19,11 +23,11 @@ export default EditFormController.extend({
     @property _detailsProjections
     @type Object[]
    */
-  _detailsProjections: Ember.computed('model.details.relationship.belongsToType', function() {
+  _detailsProjections: computed('model.details.relationship.belongsToType', function() {
     let detailsModelName = this.get('model.details.relationship.belongsToType');
-    let detailsClass = getOwner(this)._lookupFactory('model:' + detailsModelName);
+    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
 
-    return Ember.get(detailsClass, 'projections');
+    return get(detailsClass, 'projections');
   }),
 
   /**
@@ -32,13 +36,15 @@ export default EditFormController.extend({
     @property _detailsProjectionsNames
     @type String[]
    */
-  _detailsProjectionsNames: Ember.computed('_detailsProjections.[]', function() {
+  _detailsProjectionsNames: computed('_detailsProjections.[]', function() {
     let detailsProjections = this.get('_detailsProjections');
-    if (Ember.isNone(detailsProjections)) {
+    if (isNone(detailsProjections)) {
       return [];
     }
 
-    return Object.keys(detailsProjections);
+    let detailsProjectionNames = Object.keys(detailsProjections);
+    detailsProjectionNames.splice(detailsProjectionNames.indexOf('modelName'), 1);
+    return detailsProjectionNames;
   }),
 
   /**
@@ -47,16 +53,16 @@ export default EditFormController.extend({
     @property detailsProjection
     @type Object
    */
-  detailsProjection: Ember.computed('_detailsProjections.[]', '_detailsProjectionName', function() {
+  detailsProjection: computed('_detailsProjections.[]', '_detailsProjectionName', function() {
     let detailsProjectionName = this.get('_detailsProjectionName');
-    if (Ember.isBlank(detailsProjectionName)) {
+    if (isBlank(detailsProjectionName)) {
       return null;
     }
 
     let detailsModelName = this.get('model.details.relationship.belongsToType');
-    let detailsClass = getOwner(this)._lookupFactory('model:' + detailsModelName);
-    let detailsClassProjections = Ember.get(detailsClass, 'projections');
-    if (Ember.isNone(detailsClassProjections)) {
+    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
+    let detailsClassProjections = get(detailsClass, 'projections');
+    if (isNone(detailsClassProjections)) {
       return null;
     }
 
@@ -76,7 +82,7 @@ export default EditFormController.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-groupedit.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-groupedit.placeholder'));
     }
@@ -88,6 +94,15 @@ export default EditFormController.extend({
     @type Boolean
    */
   readonly: false,
+
+  /**
+    Flag: indicates whether to show default settings button at toolbar.
+
+    @property defaultSettingsButton
+    @type Boolean
+    @default false
+   */
+  defaultSettingsButton: false,
 
   /**
     Flag for 'flexberry-groupedit' component 'tableStriped' property.
@@ -112,6 +127,24 @@ export default EditFormController.extend({
     @type Boolean
    */
   deleteButton: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'defaultSortingButton' mode or not
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
 
   /**
     Flag for 'flexberry-groupedit' component 'allowColumnResize' property.
@@ -191,26 +224,34 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-groupedit<br>' +
-    '  componentName=\"aggregatorDetailsGroupedit\"<br>' +
-    '  content=model.details<br>' +
-    '  modelProjection=detailsProjection<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  tableStriped=tableStriped<br>' +
-    '  createNewButton=createNewButton<br>' +
-    '  deleteButton=deleteButton<br>' +
-    '  allowColumnResize=allowColumnResize<br>' +
-    '  showAsteriskInRow=showAsteriskInRow<br>' +
-    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
-    '  rowClickable=rowClickable<br>' +
-    '  immediateDelete=immediateDelete<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-groupedit<br>' +
+      '  componentName="aggregatorDetailsGroupedit"<br>' +
+      '  content=model.details<br>' +
+      '  modelProjection=detailsProjection<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  tableStriped=tableStriped<br>' +
+      '  createNewButton=createNewButton<br>' +
+      '  deleteButton=deleteButton<br>' +
+      '  defaultSortingButton=defaultSortingButton<br>' +
+      '  allowColumnResize=allowColumnResize<br>' +
+      '  showAsteriskInRow=showAsteriskInRow<br>' +
+      '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+      '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+      '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
+      '  rowClickable=rowClickable<br>' +
+      '  immediateDelete=immediateDelete<br>' +
+      '  defaultSettingsButton=defaultSettingsButton<br>' +
+      '  fixedHeader=fixedHeader<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -218,8 +259,8 @@ export default EditFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -299,6 +340,12 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'showDeleteButtonInRow'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'defaultSortingButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'defaultSortingButton'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showEditMenuItemInRow',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -327,6 +374,18 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'immediateDelete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'defaultSettingsButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'defaultSettingsButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;
@@ -364,7 +423,7 @@ export default EditFormController.extend({
   /**
     Lookup events service.
   */
-  lookupEvents: Ember.inject.service('lookup-events'),
+  lookupEvents: service('lookup-events'),
 
   actions: {
     /**

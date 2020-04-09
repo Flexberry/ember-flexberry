@@ -12,16 +12,11 @@
       value=model.longText
       readonly=readonly
     }}
-      {{flexberry-datepicker
-        value=model.date
-        readonly=readonly
-      }}
-      {{flexberry-simpledatetime
-        readonly=readonly
-        type="time"
-        value=model.time
-        readonly=readonly
-      }}
+    {{flexberry-simpledatetime
+      type="datetime-local"
+      value=model.time
+      readonly=readonly
+    }}
     {{flexberry-dropdown
       items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
       value=model.enumeration

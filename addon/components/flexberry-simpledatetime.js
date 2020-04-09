@@ -2,9 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { isBlank, isNone } from '@ember/utils';
+import $ from 'jquery';
+import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
-import moment from 'moment';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -36,7 +38,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _valueAsDate: Ember.computed(() => null),
+  _valueAsDate: computed(() => null),
 
   /**
     Convert date in `value` to appropriate input datatype.
@@ -47,7 +49,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _valueAsString: Ember.computed(() => null),
+  _valueAsString: computed(() => null),
 
   /**
     Convert date in `min` to appropriate input datatype.
@@ -58,7 +60,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _minAsString: Ember.computed(() => null),
+  _minAsString: computed(() => null),
 
   /**
     Convert date in `max` to appropriate input datatype.
@@ -69,7 +71,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _maxAsString: Ember.computed(() => null),
+  _maxAsString: computed(() => null),
 
   /**
     Checks whether the browser supports the date field.
@@ -78,7 +80,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readOnly
   */
-  currentTypeSupported: Ember.computed('type', {
+  currentTypeSupported: computed('type', {
     get() {
       let type = this.get('type');
       let input = document.createElement('input');
@@ -95,7 +97,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @type String
   */
-  type: Ember.computed(() => null),
+  type: computed(() => null),
 
   /**
     Flag indicates only flatpickr using for this component.
@@ -112,7 +114,7 @@ export default FlexberryBaseComponent.extend({
     @property value
     @type Date
   */
-  value: Ember.computed('_valueAsString', '_valueAsDate', 'useBrowserInput', 'currentTypeSupported', {
+  value: computed('_valueAsString', '_valueAsDate', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         if (this.get('type') === 'date') {
@@ -149,12 +151,12 @@ export default FlexberryBaseComponent.extend({
     @property min
     @type Date
   */
-  min: Ember.computed('_minAsString', 'useBrowserInput', 'currentTypeSupported', {
+  min: computed('_minAsString', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       return this.get('_minAsString');
     },
     set(key, value) {
-      let minValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      let minValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_minAsString', this._convertDateToString(minValue));
       } else {
@@ -174,12 +176,12 @@ export default FlexberryBaseComponent.extend({
     @property max
     @type Date
   */
-  max: Ember.computed('_maxAsString', 'useBrowserInput', 'currentTypeSupported', {
+  max: computed('_maxAsString', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       return this.get('_maxAsString');
     },
     set(key, value) {
-      let maxValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      let maxValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_maxAsString', this._convertDateToString(maxValue));
       } else {
@@ -216,19 +218,27 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-datepicker.placeholder')'
+    @default 't('components.flexberry-simpledatetime.placeholder')'
   */
-  placeholder: t('components.flexberry-datepicker.placeholder'),
+  placeholder: t('components.flexberry-simpledatetime.placeholder'),
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array
     @readOnly
   */
   classNames: ['flexberry-simpledatetime'],
+
+  /**
+    Array CSS class names for scroll.
+
+    @property scrollClassNames
+    @type Array
+  */
+  scrollSelectors: computed(() => (['.full.height'])),
 
   /**
     If true, then onClick calling flatpickr.open().
@@ -262,18 +272,20 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
+      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
   /**
     Called when the element of the view is going to be destroyed. Override this function to do any teardown that requires an element, like removing event listeners.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement).
 
     @method willDestroyElement
   */
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
+    $(this.get('scrollSelectors').join()).unbind('scroll');
   },
 
   /**
@@ -298,7 +310,7 @@ export default FlexberryBaseComponent.extend({
   _validationDateTime() {
     let dateIsValid = true;
     let inputValue = this.$('.custom-flatpickr')[0].value;
-    let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
+    let date = this.get('type') === 'date' ? this.get('moment').moment(inputValue, 'DD.MM.YYYY') : this.get('moment').moment(inputValue, 'DD.MM.YYYY HH:mm');
     if (date.isValid()) {
       let dateArray = inputValue.match(/(\d+)/g) || [];
       if (dateArray.length > 0) {
@@ -311,12 +323,12 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
-      if (!moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
+      if (!this.get('moment').moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
         this.get('_flatpickr').setDate(date.toDate());
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
     } else {
-      if (!Ember.isNone(inputValue)) {
+      if (!isNone(inputValue)) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
@@ -332,7 +344,7 @@ export default FlexberryBaseComponent.extend({
   _flatpickrCreate() {
     let i18n = this.get('i18n');
     let locale = this.get('locale');
-    if (i18n && Ember.isBlank(locale)) {
+    if (i18n && isBlank(locale)) {
       locale = i18n.locale;
     }
 
@@ -351,7 +363,7 @@ export default FlexberryBaseComponent.extend({
       locale: locale,
       onChange: (dates) => {
         if (dates.length) {
-          if (this.get('_flatpickr.config.enableTime') && Ember.isNone(this.get('_valueAsDate'))) {
+          if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
             dates[0].setHours(this.get('defaultHour'));
             dates[0].setMinutes(this.get('defaultMinute'));
             this.get('_flatpickr').setDate(dates[0], false);
@@ -376,17 +388,18 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
-    this.$('.custom-flatpickr').keydown(Ember.$.proxy(function (e) {
+    this.$('.custom-flatpickr').keydown($.proxy(function(e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._validationDateTime();
         return false;
       }
     }, this));
-    this.$('.custom-flatpickr').change(Ember.$.proxy(function (e) {
+
+    this.$('.custom-flatpickr').change($.proxy(function () {
       this._validationDateTime();
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
@@ -395,16 +408,16 @@ export default FlexberryBaseComponent.extend({
   /**
     Sets readonly attr for flatpickr.
   */
-  readonlyObserver: Ember.observer('readonly', function () {
+  readonlyObserver: observer('readonly', function() {
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   }),
 
   /**
     Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
   */
-  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', 'min', 'max', function () {
     this._flatpickrDestroy();
-    Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
+    scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),
 
   /**
@@ -435,7 +448,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (value instanceof Date) {
-      let date = moment(value);
+      let date = this.get('moment').moment(value);
       switch (this.get('type')) {
         case 'datetime-local':
         case 'datetime':
@@ -469,7 +482,7 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Expected type the string.');
     }
 
-    return moment(value).toDate();
+    return this.get('moment').moment(value).toDate();
   },
 
   /**
@@ -482,7 +495,7 @@ export default FlexberryBaseComponent.extend({
   */
   _convertDateToLocal(value) {
     let dateToSet = value;
-    if (!Ember.isBlank(dateToSet)) {
+    if (!isBlank(dateToSet)) {
       dateToSet.setHours(13);
       dateToSet.setUTCHours(11);
       dateToSet.setUTCMinutes(0);
@@ -501,7 +514,7 @@ export default FlexberryBaseComponent.extend({
     */
     remove() {
       let value = this.get('value');
-      if (!Ember.isNone(value) && !this.get('readonly')) {
+      if (!isNone(value) && !this.get('readonly')) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }

@@ -1,8 +1,14 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:list-form', 'Unit | Controller | list form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:advlimit-dialog',
+    'controller:colsconfig-dialog',
+    'controller:filters-dialog',
+    'service:objectlistview-events',
+    'service:user-settings',
+    'service:adv-limit',
+  ],
 });
 
 // Replace this with your real tests.

@@ -2,20 +2,23 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { assert, warn, debug } from '@ember/debug';
+import { inject as service } from '@ember/service';
+import { computed, observer, get } from '@ember/object';
+import { deprecatingAlias } from '@ember/object/computed';
+import { later, run, once } from '@ember/runloop';
+import { merge } from '@ember/polyfills';
+import { isNone } from '@ember/utils';
+import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
-import { Query } from 'ember-flexberry-data';
-
-const {
-  Builder,
-  Condition,
-  BasePredicate,
-  StringPredicate,
-  ComplexPredicate
-} = Query;
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import { BasePredicate, SimplePredicate, ComplexPredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
+import Information from 'ember-flexberry-data/utils/information';
 
 /**
   Lookup component for Semantic UI.
@@ -34,8 +37,8 @@ const {
     ...
     {{flexberry-lookup
       componentName="AuthorLookup"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       value=model.author
       projection="UserL"
       relationName="author"
@@ -89,6 +92,28 @@ export default FlexberryBaseComponent.extend({
   _cachedDropdownValue: undefined,
 
   /**
+    @private
+    @property _pageInResultsForAutocomplete
+    @type Number
+    @default 1
+  */
+  _pageInResultsForAutocomplete: 1,
+
+  /**
+    Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: computed('modalDialogSettings', function () {
+    return merge({
+      sizeClass: this.get('_sizeClass'),
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get('modalDialogSettings'));
+  }),
+
+  /**
     Text to be displayed in field, if value not selected.
 
     @property placeholder
@@ -96,6 +121,15 @@ export default FlexberryBaseComponent.extend({
     @default t('components.flexberry-lookup.placeholder')
   */
   placeholder: t('components.flexberry-lookup.placeholder'),
+
+  /**
+    Text on button preview value.
+
+    @property previewText
+    @type String
+    @default '<i class="eye icon"></i>'
+  */
+  previewText: '<i class="eye icon"></i>',
 
   /**
     Text on button opening a modal window.
@@ -116,6 +150,22 @@ export default FlexberryBaseComponent.extend({
     @default '<i class="remove icon"></i>'
   */
   removeText: '<i class="remove icon"></i>',
+
+  /**
+    CSS classes for preview button.
+
+    @property previewButtonClass
+    @type String
+  */
+  previewButtonClass: undefined,
+
+  /**
+    CSS classes for flexberry-lookup at dropdown mode.
+
+    @property dropdownClass
+    @type String
+  */
+  dropdownClass: undefined,
 
   /**
     CSS classes for choose button.
@@ -169,6 +219,15 @@ export default FlexberryBaseComponent.extend({
   autocomplete: false,
 
   /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
     Flag to show that lookup is in dropdown mode.
 
     @property dropdown
@@ -176,6 +235,65 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   dropdown: false,
+
+  /* eslint-disable  ember/no-on-calls-in-components */
+  /**
+    Handles changes in dropdown.
+
+    @method _dropdownObserver
+    @private
+  */
+  _dropdownObserver: on('init', observer('dropdown', function() {
+    if (this.get('dropdown')) {
+      this._onDropdown();
+    }
+  })),
+  /* eslint-enable  ember/no-on-calls-in-components */
+
+  /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    The URL that will be used for viewing the selected object.
+
+    @property previewFormRoute
+    @type String
+    @default undefined
+  */
+  previewFormRoute: undefined,
+
+  /**
+    Projection name preview form.
+
+    @property previewFormProjection
+    @type String
+    @default undefined
+  */
+  previewFormProjection: undefined,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    The controller for viewing the selected object.
+
+    @property controllerForPreview
+    @type String
+    @default undefined
+  */
+  controllerForPreview: undefined,
 
   /**
     Flag to show that lookup has search or autocomplete in dropdown mode.
@@ -198,13 +316,43 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
+    Flag to fill value by limitPredicate.
+
+    @property autofillByLimit
+    @type Boolean
+    @default false
+  */
+  autofillByLimit: false,
+
+  /* eslint-disable  ember/no-on-calls-in-components */
+  /**
+    Observer on 'autofillByLimit'.
+
+    @property _autofillByLimitObserver
+  */
+  _autofillByLimitObserver: on('init', observer('autofillByLimit', function() {
+    if (this.get('autofillByLimit')) {
+      this.addObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.addObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.addObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    } else {
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    }
+  })),
+  /* eslint-enable  ember/no-on-calls-in-components */
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
     @type String
     @readOnly
   */
-  autocompleteClass: Ember.computed('autocomplete', function() {
+  autocompleteClass: computed('autocomplete', function() {
     if (this.get('autocomplete')) {
       return 'ui search';
     }
@@ -217,7 +365,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  folvComponentName: Ember.computed('componentName', function() {
+  folvComponentName: computed('componentName', function() {
     let componentName = this.get('componentName') || 'undefined';
     return `${componentName}`;
   }),
@@ -241,6 +389,24 @@ export default FlexberryBaseComponent.extend({
   maxResults: 10,
 
   /**
+    Flag for remove autocomplete value if it's not in the results (remove when false).
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
+    Stores autocomplete value, when autocompletePersistValue=true and lookup value clearing.
+
+    @property autocompletePersistValueCache
+    @type String
+    @default undefined
+  */
+  autocompletePersistValueCache: undefined,
+
+  /**
     Limit function on lookup.
     It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
 
@@ -249,6 +415,67 @@ export default FlexberryBaseComponent.extend({
     @default undefined
   */
   lookupLimitPredicate: undefined,
+
+  /**
+    Indicates wheter lookup dilog's table in hierarchical mode.
+
+    @property inHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  inHierarchicalMode: false,
+
+  /**
+    Hierarchical attribute.
+
+    @property hierarchicalAttribute
+    @type String
+    @default undefined
+  */
+  hierarchicalAttribute: undefined,
+
+  /**
+    Function of limit function for lookup in GroupEdit.
+    It should not be function return BasePredicate.
+
+    @example
+      ```javascript
+        lookupAdditionalLimitFunction = function (relationModel) {
+        return new StringPredicate('LookUpField').contains(relationModel.get('GroupEditField'));
+      };
+      ```
+
+    @property lookupAdditionalLimitFunction
+    @type Function
+    @default undefined
+  */
+  lookupAdditionalLimitFunction: undefined,
+
+  /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}}, not set by default.
+      - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use `modalDialogSettings.sizeClass`.
+  */
+  sizeClass: deprecatingAlias('_sizeClass', {
+    id: 'flexberry-lookup.modal-dialog-size-class',
+    until: '3.0',
+  }),
 
   /**
     This computed property forms a set of properties to send to lookup window.
@@ -280,8 +507,8 @@ export default FlexberryBaseComponent.extend({
       <!-- app/templates/post.hbs -->
       {{flexberry-lookup
         componentName="AuthorLookup"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
         value=model.author
         projection="UserL"
         relationName="author"
@@ -298,7 +525,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @private
   */
-  _lookupWindowCustomPropertiesData: Ember.computed(
+  _lookupWindowCustomPropertiesData: computed(
     'projection',
     'relationName',
     'lookupWindowCustomProperties',
@@ -324,29 +551,32 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  chooseData: Ember.computed(
+  chooseData: computed(
     'projection',
     'relationName',
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
+    'inHierarchicalMode',
+    'hierarchicalAttribute',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
         title: this.get('title'),
-        predicate: this.get('lookupLimitPredicate'),
+        predicate: this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction')),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
-
-        //TODO: move to modal settings.
-        sizeClass: this.get('sizeClass')
+        inHierarchicalMode: this.get('inHierarchicalMode'),
+        hierarchicalAttribute: this.get('hierarchicalAttribute'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
     }),
 
@@ -357,7 +587,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  removeData: Ember.computed('relationName', 'relatedModel', function() {
+  removeData: computed('relationName', 'relatedModel', function() {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')
@@ -371,7 +601,7 @@ export default FlexberryBaseComponent.extend({
     @type DS.Store
     @readOnly
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   /**
     The user settings service.
@@ -379,7 +609,7 @@ export default FlexberryBaseComponent.extend({
     @property userSettings
     @type UserSettingsService
   */
-  userSettings: Ember.inject.service('user-settings'),
+  userSettings: service('user-settings'),
 
   /**
     Name of the attribute of the model to display for the user.
@@ -392,6 +622,19 @@ export default FlexberryBaseComponent.extend({
   displayAttributeName: null,
 
   /**
+    Type of the attribute of the model to display for the user.
+
+    @property displayAttributeType
+    @type String
+  */
+  displayAttributeType: computed('displayAttributeName', function() {
+    let information = new Information(this.get('store'));
+    let relationModelName = getRelationType(this.get('relatedModel'), this.get('relationName'));
+    let attrType = information.getType(relationModelName, this.get('displayAttributeName'));
+    return attrType;
+  }),
+
+  /**
     Name of the attribute of the model to display for the user
     for hidden attribute by master.
     Is required for autocomplete and dropdown modes.
@@ -401,6 +644,15 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   autocompleteOrder: null,
+
+  /**
+    Projection name for autocomplete query.
+
+    @property autocompleteProjection
+    @type String
+    @default undefined
+  */
+  autocompleteProjection: undefined,
 
   /**
     Current selected instance of the model.
@@ -444,7 +696,7 @@ export default FlexberryBaseComponent.extend({
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   /**
     Text that displayed for the user as representation of currently selected value.
@@ -452,15 +704,12 @@ export default FlexberryBaseComponent.extend({
 
     @property displayValue
     @type String
-    @readOnly
   */
-  displayValue: Ember.computed('value', function() {
-    return this._buildDisplayValue();
-  }),
+  displayValue: undefined,
 
   /**
     Standard CSS class names to apply to the view's outer element.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
     @property classNames
     @type Array
@@ -470,7 +719,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     A list of properties of the view to apply as class names.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNameBindings).
 
     @property classNameBindings
     @type Array
@@ -495,7 +744,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readOnly
   */
-  isBlocked: Ember.computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
+  isBlocked: computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
     return this.get('modalIsBeforeToShow') || this.get('modalIsStartToShow') || this.get('modalIsShow');
   }),
 
@@ -508,27 +757,15 @@ export default FlexberryBaseComponent.extend({
   componentName: undefined,
 
   /**
+    Autocomplete settings.
+  */
+  minCharacters: 1,
+
+  /**
     Semantic-ui settings for dropdown.
     For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
   */
-  on: 'click',
-  allowReselection: false,
-  allowAdditions: false,
-  hideAdditions: true,
-  minCharacters: 1,
-  match: 'both',
-  selectOnKeydown: true,
-  forceSelection: true,
-  allowCategorySelection: false,
-  direction: 'auto',
-  keepOnScreen: true,
-  fullTextSearch: false,
-  preserveHTML: true,
-  sortSelect: false,
-  showOnFocus: true,
-  allowTab: true,
-  transition: 'auto',
-  duration: 200,
+  dropdownSettings: undefined,
 
   actions: {
     /**
@@ -544,10 +781,15 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
       if (!componentName) {
-        Ember.warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
+        warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
       } else {
         // Show choose button spinner.
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
+      }
+
+      // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
+      if (this.get('lookupAdditionalLimitFunction')) {
+        chooseData.predicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
       }
 
       // Set state to active to add 'active' css-class.
@@ -557,8 +799,14 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsBeforeToShow', true);
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
-      Ember.run.later(() => {
-        this.sendAction('choose', chooseData);
+      later(() => {
+        let choose = this.get('choose');
+        if (choose instanceof Function) {
+          choose(chooseData);
+        } else {
+          this.get('currentController').send(choose, chooseData);
+        }
+
         this.set('isActive', false);
       }, 300);
     },
@@ -574,27 +822,96 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      this.sendAction('remove', removeData);
+      if (this.get('autocompletePersistValue')) {
+        this.set('autocompletePersistValueCache', undefined);
+        this.set('displayValue', undefined);
+      }
+
+      let remove = this.get('remove');
+      if (remove instanceof Function) {
+        remove(removeData);
+      } else {
+        this.get('currentController').send(remove, removeData);
+      }
+    },
+
+    /**
+      Show window for select value.
+
+      @method actions.preview
+    */
+    preview() {
+      let previewFormRoute = this.get('previewFormRoute');
+      if (isNone(previewFormRoute)) {
+        throw new Error('`previewFormRoute` is undefined.');
+      }
+
+      let relatedModel = this.get('relatedModel');
+      let relationName = this.get('relationName');
+      let relationModelName = getRelationType(relatedModel, relationName);
+
+      let thisRouteName = this.get('currentController.routeName');
+      let thisRecordId = this.get('relatedModel.id');
+      let transitionOptions = {
+        queryParams: {
+          readonly: true,
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
+        }
+      };
+
+      let previewData = {
+        recordId: this.get('value.id'),
+        transitionRoute: previewFormRoute,
+        transitionOptions: transitionOptions,
+        showInSeparateRoute: this.get('previewOnSeparateRoute'),
+        modelName: relationModelName,
+        controller: this.get('controllerForPreview'),
+        projection: this.get('previewFormProjection'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
+      };
+
+      /* eslint-disable ember/closure-actions */
+      this.sendAction('preview', previewData);
+      /* eslint-enable ember/closure-actions */
     }
   },
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
-
     this._super(...arguments);
 
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
 
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.addObserver('value', this, this._valueObserver);
-    this.addObserver('displayAttributeName', this, this._valueObserver);
-    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autocompletePersistValue') && isNone(this.get('value'))) {
+      this.set('autocompletePersistValueCache', this.get('displayValue'));
+    }
+
+    this._valueObserver();
+
+    if (this.get('autofillByLimit')) {
+      this._onAutofillByLimit();
+    }
   },
+
+  /**
+    Observe lookup value changes.
+  */
+  valueObserver: observer('value', 'displayAttributeName', function() { once(this, '_valueObserver'); }),
+
+  /**
+    Observe lookup autocomplete max results changes.
+  */
+  maxResultsObserver: observer('maxResults', function() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    }
+  }),
 
   /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
@@ -609,7 +926,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement).
 
     @method didInsertElement
   */
@@ -620,7 +937,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */
@@ -633,13 +950,9 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
     }
 
-    let cachedDropdownValue = this.get('_cachedDropdownValue');
     let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
-
     if (isAutocomplete && !cachedAutocompleteValue) {
       this._onAutocomplete();
-    } else if (isDropdown && !cachedDropdownValue) {
-      this._onDropdown();
     }
 
     this.set('_cachedDropdownValue', isDropdown);
@@ -648,18 +961,19 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
     this._super(...arguments);
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
-
-    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
-    this.removeObserver('value', this, this._valueObserver);
-    this.removeObserver('displayAttributeName', this, this._valueObserver);
-    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+    if (this.get('autofillByLimit')) {
+      this.removeObserver('relatedModel', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('relationName', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._autofillByLimitObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._autofillByLimitObserverFunction);
+    }
   },
 
   /**
@@ -679,7 +993,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setModalIsStartToShow(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.get('componentName') === componentName && this.get('modalIsShow')) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }
@@ -691,6 +1005,7 @@ export default FlexberryBaseComponent.extend({
     @method _setModalIsVisible
     @private
   */
+  /* eslint-disable no-unused-vars */
   _setModalIsVisible(componentName, lookupDialog) {
     if (this.get('componentName') === componentName) {
       this.set('modalIsBeforeToShow', false);
@@ -698,6 +1013,7 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsStartToShow', false);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Set the value for the property `modalIsShow`.
@@ -732,9 +1048,8 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = this.get('displayAttributeName');
-    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
-      throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
+      throw new Error('`displayAttributeName` is required property for autocomplete mode in `flexberry-lookup`.');
     }
 
     let minCharacters = this.get('minCharacters');
@@ -747,13 +1062,28 @@ export default FlexberryBaseComponent.extend({
       throw new Error('maxResults has wrong value.');
     }
 
+    // Add select first autocomplete result by enter click.
+    this.$('input').keyup(function(event) {
+      if (event.keyCode === 13) {
+        let result = _this.$('div.results.transition.visible');
+        let activeField = result.children('a.result.active');
+        let resultField = result.children('a.result')[0];
+        if (resultField && activeField.length === 0) {
+          resultField.click();
+        }
+      }
+    });
+
     let state;
     let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults + 1,
+
+      // +2 for page switch buttons.
+      maxResults: maxResults + 2,
       cache: false,
       templates: {
+        /* eslint-disable no-unused-vars */
         message: function(message, type) {
           return '<div class="message empty"><div class="header">' +
           i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
@@ -761,6 +1091,7 @@ export default FlexberryBaseComponent.extend({
           i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
           '</div></div>';
         }
+        /* eslint-enable no-unused-vars */
       },
       apiSettings: {
         /**
@@ -776,48 +1107,36 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder;
-          if (autocompleteOrder) {
-            builder = new Builder(store, relationModelName)
-            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
-          } else {
-            builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
-          }
+          let autocompleteProjection = _this.get('autocompleteProjection');
+          let autocompleteOrder = _this.get('autocompleteOrder');
 
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
 
-          let maxRes = _this.get('maxResults');
-          let iCount = 1;
-          builder.top(maxRes + 1);
+          const usePagination = _this.get('usePaginationForAutocomplete');
+          const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
+          builder.skip(skip);
+          builder.top(maxResults);
           builder.count();
 
-          Ember.run(() => {
+          run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
-              callback({
-                success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...'
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
-              });
+              const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
+
+              if (usePagination && skip > 0) {
+                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
+              }
+
+              if (skip + records.get('length') < records.get('meta.count')) {
+                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
+                results.push({ title: title, nextPage: usePagination });
+              }
+
+              callback({ success: true, results: results });
             }, () => {
               callback({ success: false });
             });
@@ -832,8 +1151,8 @@ export default FlexberryBaseComponent.extend({
       onResultsOpen() {
         state = 'opened';
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
       },
 
@@ -844,19 +1163,43 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        state = 'selected';
+        if (result.instance) {
+          state = 'selected';
+          _this.set('_pageInResultsForAutocomplete', 1);
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+          run(() => {
+            debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
-          _this.set('value', result.instance);
-          _this.get('currentController').send(_this.get('updateLookupAction'),
-            {
-              relationName: relationName,
-              modelToLookup: relatedModel,
-              newRelationValue: result.instance
-            });
-        });
+            _this.set('value', result.instance);
+            _this.get('currentController').send(_this.get('updateLookupAction'),
+              {
+                relationName: relationName,
+                modelToLookup: relatedModel,
+                newRelationValue: result.instance
+              });
+          });
+        } else if (_this.get('usePaginationForAutocomplete')) {
+          state = 'loading';
+          if (result.nextPage) {
+            _this.incrementProperty('_pageInResultsForAutocomplete');
+          }
+
+          if (result.prevPage) {
+            _this.decrementProperty('_pageInResultsForAutocomplete');
+          }
+
+          // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
+          // This function allows us to start the search again, thanks to the `searchOnFocus` option.
+          later(() => {
+            _this.$().search('add results', '');
+            _this.$('input').focus();
+          }, 500);
+
+          // In the used version of `Semantic UI`, 2.2.14 now, is no longer needed.
+          // return false;
+        } else {
+          return false;
+        }
       },
 
       /**
@@ -867,9 +1210,42 @@ export default FlexberryBaseComponent.extend({
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
 
-        if (state !== 'selected') {
-          if (_this.get('displayValue')) {
-            _this.set('displayValue', _this._buildDisplayValue());
+        if (state !== 'selected' && state !== 'loading') {
+          _this.set('_pageInResultsForAutocomplete', 1);
+          let displayValue = _this.get('displayValue');
+          if (displayValue) {
+            if (_this.get('autocompletePersistValue')) {
+              let builder = new Builder(store, relationModelName).select(displayAttributeName);
+
+              let autocompletePredicate = new SimplePredicate(displayAttributeName, 'eq', displayValue);
+              let resultPredicate = _this._conjuctPredicates(
+                _this.get('lookupLimitPredicate'),
+                _this.get('lookupAdditionalLimitFunction'),
+                autocompletePredicate);
+              if (resultPredicate) {
+                builder.where(resultPredicate);
+              }
+
+              run(() => {
+                store.query(relationModelName, builder.build()).then((records) => {
+                  let record = records.objectAt(0);
+                  if (isNone(record)) {
+                    _this.set('autocompletePersistValueCache', displayValue);
+                    _this.sendAction('remove', _this.get('removeData'));
+                  } else {
+                    _this.set('value', record);
+                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                      {
+                        relationName: relationName,
+                        modelToLookup: relatedModel,
+                        newRelationValue: record
+                      });
+                  }
+                });
+              });
+            } else {
+              _this.set('displayValue', _this._buildDisplayValue());
+            }
           } else {
             _this.sendAction('remove', _this.get('removeData'));
           }
@@ -877,8 +1253,8 @@ export default FlexberryBaseComponent.extend({
 
         state = 'closed';
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
       }
     });
@@ -906,52 +1282,32 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      throw new Error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
+      throw new Error('`displayAttributeName` is required property for dropdown mode in `flexberry-lookup`.');
     }
 
     let i18n = _this.get('i18n');
-    this.$('.flexberry-dropdown').dropdown({
+    let defaultDropdownSettings = {
       minCharacters: dropdownIsSearch ? minCharacters : 0,
       cache: false,
-      on: this.get('on'),
-      allowReselection: this.get('allowReselection'),
-      allowAdditions: this.get('allowAdditions'),
-      hideAdditions: this.get('hideAdditions'),
-      match: this.get('match'),
-      selectOnKeydown: this.get('selectOnKeydown'),
-      forceSelection: this.get('forceSelection'),
-      allowCategorySelection: this.get('allowCategorySelection'),
-      direction: this.get('direction'),
-      keepOnScreen: this.get('keepOnScreen'),
-      fullTextSearch: this.get('fullTextSearch'),
-      preserveHTML: this.get('preserveHTML'),
-      sortSelect: this.get('sortSelect'),
-      showOnFocus: this.get('showOnFocus'),
-      allowTab: this.get('allowTab'),
-      transition: this.get('transition'),
-      duration: this.get('duration'),
+      forceSelection: false,
       message: {
         noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
       },
       apiSettings: {
         responseAsync(settings, callback) {
-          console.log('load');
-          let builder = new Builder(store, relationModelName)
-            .select(displayAttributeName)
-            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
-
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
-          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          let projectionName = _this.get('projection');
+          let autocompleteOrder = _this.get('autocompleteOrder');
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
 
-          Ember.run(() => {
+          run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               // We have to cache data because dropdown component sets text as value and we lose object value.
-              let resultArray = [];
+              let resultArray = {};
               let results = records.map((i) => {
                 let attributeName = i.get(displayAttributeName);
                 resultArray[i.id] = i;
@@ -979,20 +1335,50 @@ export default FlexberryBaseComponent.extend({
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
           let cachedValuesContainsVlue = cachedValues && (cachedValues[value] === null || cachedValues[value]);
-          Ember.assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
+          assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
           if (cachedValuesContainsVlue) {
             newValue = cachedValues[value];
           }
         }
 
         _this.get('currentController').send(_this.get('updateLookupAction'),
-          {
-            relationName: relationName,
-            modelToLookup: relatedModel,
-            newRelationValue: newValue
-          });
+        {
+          relationName: relationName,
+          modelToLookup: relatedModel,
+          newRelationValue: newValue
+        });
+      },
+      onHide() {
+        _this.$('.flexberry-dropdown input.search').val('');
+        _this.$('.flexberry-dropdown .text.filtered').removeClass('filtered');
       }
-    });
+    };
+
+    this.set('_dropdownSettings', merge(defaultDropdownSettings, this.get('dropdownSettings') || {}));
+  },
+
+  /**
+    Build predicate with settingsUrlDataQuery.
+
+    @method _getAutocomplitePredicate
+    @param {String} settingsUrlDataQuery
+    @returns {Predicate}
+    @private
+  */
+  _getAutocomplitePredicate(settingsUrlDataQuery) {
+    if (settingsUrlDataQuery) {
+      let displayAttributeType = this.get('displayAttributeType');
+      let displayAttributeName = this.get('displayAttributeName');
+      switch (displayAttributeType) {
+        case 'decimal':
+        case 'int':
+        case 'long':
+          return new SimplePredicate(displayAttributeName, 'eq', settingsUrlDataQuery);
+
+        default:
+          return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);
+      }
+    }
   },
 
   /**
@@ -1003,18 +1389,50 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _buildDisplayValue() {
+    let autocompletePersistValueCache = this.get('autocompletePersistValueCache');
+    if (autocompletePersistValueCache) {
+      this.set('autocompletePersistValueCache', undefined);
+    }
+
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      return '';
+      return autocompletePersistValueCache ? autocompletePersistValueCache : '';
     }
 
     if (!displayAttributeName) {
-      Ember.warn('\`displayAttributeName\` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
+      warn('`displayAttributeName` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
       return '';
     }
 
     return selectedModel.get(displayAttributeName);
+  },
+
+  /**
+    Creates an instance of the Builder class with selection and sorting specified in the component parameters.
+
+    @method _createQueryBuilder
+    @param {DS.Store} store
+    @param {String} modelName
+    @param {String} projection
+    @param {String} order
+    @return {Builder}
+  */
+  _createQueryBuilder(store, modelName, projection, order) {
+    let sorting = this.get('sorting');
+    let displayAttributeName = this.get('displayAttributeName');
+
+    let builder = new Builder(store, modelName);
+
+    if (projection) {
+      builder.selectByProjection(projection);
+    } else {
+      builder.select(displayAttributeName);
+    }
+
+    builder.orderBy(`${order ? order : `${displayAttributeName} ${sorting}`}`);
+
+    return builder;
   },
 
   /**
@@ -1023,26 +1441,49 @@ export default FlexberryBaseComponent.extend({
     @method _conjuctPredicates
     @param {BasePredicate} limitPredicate The first predicate to concatenate.
     @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+    @param {Function} lookupAdditionalLimitFunction Function return BasePredicate to concatenate.
     @return {BasePredicate} Concatenation of two predicates.
     @throws {Error} Throws error if any of parameter predicates has wrong type.
   */
-  _conjuctPredicates(limitPredicate, autocompletePredicate) {
-    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
-      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+  _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
+    let limitArray = A();
+
+    if (limitPredicate) {
+      if (limitPredicate instanceof BasePredicate) {
+        limitArray.pushObject(limitPredicate);
+      } else {
+        throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    if (autocompletePredicate && !(autocompletePredicate instanceof BasePredicate)) {
-      throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+    if (autocompletePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
+        limitArray.pushObject(autocompletePredicate);
+      } else {
+        throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+      }
     }
 
-    let resultPredicate = (limitPredicate && autocompletePredicate) ?
-                          new ComplexPredicate(Condition.And, limitPredicate, autocompletePredicate) :
-                          (limitPredicate ?
-                            limitPredicate :
-                            (autocompletePredicate ?
-                              autocompletePredicate :
-                              undefined));
-    return resultPredicate;
+    if (lookupAdditionalLimitFunction) {
+      if ((lookupAdditionalLimitFunction instanceof Function)) {
+        let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
+          }
+        }
+      } else {
+        throw new Error('lookupAdditionalLimitFunction must to be function.');
+      }
+    }
+
+    if (limitArray.length > 1) {
+      return new ComplexPredicate(Condition.And, ...limitArray);
+    } else {
+      return limitArray[0];
+    }
   },
 
   /**
@@ -1058,5 +1499,58 @@ export default FlexberryBaseComponent.extend({
     } else if (this.get('dropdown')) {
       this._onDropdown();
     }
+  },
+
+  /**
+    Function for autofillByLimit observer.
+
+    @method _autofillByLimitObserverFunction
+    @private
+  */
+  _autofillByLimitObserverFunction() {
+    once(this, '_onAutofillByLimit');
+  },
+
+  /**
+    Handles changing properties affecting the sample.
+
+    @method _onAutofillByLimit
+    @private
+  */
+  _onAutofillByLimit() {
+    if (this.get('readonly')) {
+      return;
+    }
+
+    let _this = this;
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let store = this.get('store');
+    let relatedModel = this.get('relatedModel');
+    let relationModelName = getRelationType(relatedModel, relationName);
+
+    let builder = new Builder(store, relationModelName).selectByProjection(this.get('projection'));
+
+    let lookupLimitPredicate = this._conjuctPredicates(this.get('lookupLimitPredicate'), this.get('lookupAdditionalLimitFunction'));
+    if (lookupLimitPredicate) {
+      builder.where(lookupLimitPredicate);
+    }
+
+    builder.top(2);
+    store.query(relationModelName, builder.build()).then((records) => {
+      if (get(records, 'length') === 1) {
+        let record = records.objectAt(0);
+        _this.set('value', record);
+        _this.get('currentController').send(_this.get('updateLookupAction'),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: record
+          });
+      }
+    });
   }
 });

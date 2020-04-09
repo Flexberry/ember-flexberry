@@ -1,8 +1,10 @@
 /**
   @module ember-flexberry
  */
-
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { computed, observer } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import Component from '@ember/component';
 
 /**
   Component for expand / collapse content.
@@ -19,9 +21,9 @@ import Ember from 'ember';
     ```
 
   @class FlexberryToggler
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Current visibility state.
 
@@ -69,7 +71,7 @@ export default Ember.Component.extend({
     @type String
     @readOnly
   */
-  currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
+  currentCaption: computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
     let defaultCaption = this.get('caption');
     let caption = this.get('expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
 
@@ -78,7 +80,7 @@ export default Ember.Component.extend({
 
   /**
     Array CSS class names.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
     @property classNames
     @type Array
@@ -122,7 +124,7 @@ export default Ember.Component.extend({
   */
   settingName: 'togglerStatus',
 
-  expandedChanged: Ember.observer('expanded', function() {
+  expandedChanged: observer('expanded', function() {
     this.saveStatus();
   }),
   /**
@@ -141,8 +143,8 @@ export default Ember.Component.extend({
       selector: { trigger: '> .title' },
       duration: this.get('duration'),
       onOpen: () => {
-        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        // Change of 'expanded' state may cause asynchronous animation, so we need run function here.
+        run(() => {
           this.set('expanded', true);
           if (this.get('hasResizableOLV')) {
             this.$('table.object-list-view').colResizable({ disable: true });
@@ -151,8 +153,8 @@ export default Ember.Component.extend({
         });
       },
       onClose: () => {
-        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        // Change of 'expanded' state may cause asynchronous animation, so we need run function here.
+        run(() => {
           this.set('expanded', false);
         });
       },
@@ -174,7 +176,7 @@ export default Ember.Component.extend({
   */
   saveStatus() {
     let componentName = this.get('componentName');
-    if (!Ember.isPresent(componentName)) {
+    if (!isPresent(componentName)) {
       return;
     }
 
@@ -193,7 +195,7 @@ export default Ember.Component.extend({
   */
   loadStatus() {
     let componentName = this.get('componentName');
-    if (!Ember.isPresent(componentName)) {
+    if (!isPresent(componentName)) {
       return;
     }
 

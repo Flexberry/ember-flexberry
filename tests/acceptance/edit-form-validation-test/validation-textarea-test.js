@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation textarea', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -11,8 +13,8 @@ executeTest('check operation textarea', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[3]);
-    let $validationFlexberryTextarea = Ember.$('.flexberry-textarea');
+    let $validationField = $($('.field.error')[3]);
+    let $validationFlexberryTextarea = $('.flexberry-textarea');
     let $validationFlexberryTextboxInner = $validationFlexberryTextarea.children('textarea');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
@@ -20,7 +22,7 @@ executeTest('check operation textarea', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Long text is required', 'Textarea have default value');
 
     // Insert text in textarea.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryTextboxInner.val('1');
       $validationFlexberryTextboxInner.change();
     });
@@ -29,3 +31,4 @@ executeTest('check operation textarea', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Textarea have default value');
   });
 });
+/* eslint-enable no-unused-vars */

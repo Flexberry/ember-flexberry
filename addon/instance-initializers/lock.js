@@ -4,11 +4,12 @@ import LockRouteMixin from '../mixins/lock-route';
 export function initialize(appInstance) {
   let config = appInstance.application;
   if (config.lock && config.lock.enabled) {
+    let defaultBehaviorLockObject = {
+      openReadOnly: !!config.lock.openReadOnly,
+      unlockObject: !!config.lock.unlockObject,
+    };
     LockRouteMixin.reopen({
-      defaultBehaviorLock: {
-        openReadOnly: !!config.lock.openReadOnly,
-        unlockObject: !!config.lock.unlockObject,
-      },
+      defaultBehaviorLock: defaultBehaviorLockObject,
     });
     EditFormRoute.reopen(LockRouteMixin);
   }

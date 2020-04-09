@@ -54,10 +54,10 @@
   </button>
   {{#if availableCollExpandMode}}
     <button
-      class="ui button icon hierarchical-button {{buttonClass}}"
-      title={{t "components.olv-toolbar.coll-expand-button-text"}}
+      class="ui button icon hierarchical-button {{buttonClass}} active"
+      title={{if inExpandMode (t "components.olv-toolbar.coll-comspres-button-text") (t "components.olv-toolbar.coll-expand-button-text")}}
       {{action switchExpandMode}}>
-        <i class="expand icon"></i>
+        <i class="{{if inExpandMode "compress" "expand"}} icon"></i>
     </button>
   {{/if}}
 {{/if}}
@@ -66,7 +66,7 @@
     <button
       class="ui button {{buttonClass}} {{if showFilters "active"}}"
       title={{t "components.olv-toolbar.filter-button-text"}}
-      {{action toggleStateFilters}}>
+      {{action "showFiltersTool"}}>
         <i class="filter icon"></i>
     </button>
     {{#if filters}}
@@ -118,7 +118,7 @@
 {{#if colsConfigButton}}
   <div class="ui buttons cols-config">
     <button
-      class="ui icon button config-button"
+      class="ui icon button config-button{{if colsSettingsItems " settings-enabled" ""}}"
       title={{t "components.colsconfig-dialog-content.title"}}
       {{action "showConfigDialog"}}>
         <i class="large table icon"></i>
@@ -127,6 +127,22 @@
       {{flexberry-menu
         items=colsSettingsItems
         onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}
+{{#if advLimitButton}}
+  <div class="ui buttons adv-limit-config">
+    <button
+      class="ui icon button adv-limit-button"
+      title={{t "components.advlimit-dialog-content.title"}}
+      {{action "showAdvLimitDialog"}}>
+        <i class="large flask icon"></i>
+    </button>
+    {{#if advLimitItems}}
+      {{flexberry-menu
+        items=advLimitItems
+        onItemClick=(action "onLimitMenuItemClick")
       }}
     {{/if}}
   </div>

@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
+import { click } from '@ember/test-helpers';
 
+/* eslint-disable no-unused-vars */
 executeTest('check complete all tests', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -11,55 +14,57 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationDataField = Ember.$('.calendar.link.icon');
+    let $validationDataField = $('.flexberry-simpledatetime');
+    let $validationDataDiv = $validationDataField.children('.input');
+    let $validationDataInput = $validationDataDiv.children('.flatpickr-input');
 
-    Ember.run(() => {
+    run(() => {
       // Open datepicker calendar.
-      $validationDataField.click();
-      let $validationDateButton = Ember.$('.available');
+      $($validationDataInput[0]).click();
+      let $validationDateButton = $('.flatpickr-day')[16];
 
       // Select date.
-      Ember.$($validationDateButton[15]).click();
-      Ember.$($validationDateButton[16]).click();
+      click($validationDateButton);
     });
 
-    let $validationFlexberryLookupButtons = Ember.$('.ui.button');
-    let $validationFlexberryLookupButton = Ember.$($validationFlexberryLookupButtons[2]);
+    let $validationFlexberryLookup = $('.flexberry-lookup');
+    let $validationFlexberryLookupInput = $validationFlexberryLookup.children('.input');
+    let $validationFlexberryLookupButton = $validationFlexberryLookupInput.children('.ui-change.button');
 
     // Click lookup button.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryLookupButton.click();
     });
 
-    let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
-    let $validationFlexberryCheckbox = Ember.$($validationFlexberryCheckboxs[0]);
-    let $validationFlexberryOLVCheckbox = Ember.$($validationFlexberryCheckboxs[2]);
+    let $validationFlexberryCheckboxs = $('.flexberry-checkbox');
+    let $validationFlexberryCheckbox = $($validationFlexberryCheckboxs[0]);
+    let $validationFlexberryOLVCheckbox = $($validationFlexberryCheckboxs[2]);
 
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryCheckbox.click();
       $validationFlexberryOLVCheckbox.click();
     });
 
-    let $validationFlexberryDropdown = Ember.$('.flexberry-dropdown');
+    let $validationFlexberryDropdown = $('.flexberry-dropdown');
 
-    Ember.run(() => {
+    run(() => {
 
       // Open dropdown.
       $validationFlexberryDropdown.click();
       let $validationFlexberryDropdownMenu = $validationFlexberryDropdown.children('.menu');
       let $validationFlexberryDropdownItems = $validationFlexberryDropdownMenu.children('.item');
-      let $validationFlexberryDropdownItem = Ember.$($validationFlexberryDropdownItems[0]);
+      let $validationFlexberryDropdownItem = $($validationFlexberryDropdownItems[0]);
 
       // Select item
       $validationFlexberryDropdownItem.click();
     });
 
-    let $validationFlexberryTextboxs = Ember.$('.flexberry-textbox');
-    let $validationFlexberryTextbox1 = Ember.$($validationFlexberryTextboxs[0]);
-    let $validationFlexberryTextbox2 = Ember.$($validationFlexberryTextboxs[1]);
-    let $validationFlexberryOLVTextbox1 = Ember.$($validationFlexberryTextboxs[2]);
-    let $validationFlexberryOLVTextbox2 = Ember.$($validationFlexberryTextboxs[3]);
-    let $validationFlexberryTextarea = Ember.$('.flexberry-textarea');
+    let $validationFlexberryTextboxs = $('.flexberry-textbox');
+    let $validationFlexberryTextbox1 = $($validationFlexberryTextboxs[0]);
+    let $validationFlexberryTextbox2 = $($validationFlexberryTextboxs[1]);
+    let $validationFlexberryOLVTextbox1 = $($validationFlexberryTextboxs[2]);
+    let $validationFlexberryOLVTextbox2 = $($validationFlexberryTextboxs[3]);
+    let $validationFlexberryTextarea = $('.flexberry-textarea');
 
     let $validationFlexberryTextboxInner1 = $validationFlexberryTextbox1.children('input');
     let $validationFlexberryTextboxInner2 = $validationFlexberryTextbox2.children('input');
@@ -68,7 +73,7 @@ executeTest('check complete all tests', (store, assert, app) => {
     let $validationFlexberryTextAreaInner = $validationFlexberryTextarea.children('textarea');
 
     // Insert text in textbox and textarea.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryTextboxInner1[0].value = '1';
       $validationFlexberryTextboxInner1.change();
       $validationFlexberryTextboxInner2[0].value = '12345';
@@ -81,9 +86,9 @@ executeTest('check complete all tests', (store, assert, app) => {
       $validationFlexberryOLVTextboxInner2.change();
     });
 
-    let $validationFlexberryFileAddButton = Ember.$('.add.outline');
+    let $validationFlexberryFileAddButton = $('.add.outline');
 
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryFileAddButton.click();
     });
 
@@ -91,7 +96,7 @@ executeTest('check complete all tests', (store, assert, app) => {
 
     // Сounting the number of validationmessage.
     setTimeout(function() {
-      let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
+      let $validationLablesContainer = $('.ember-view.ui.basic.label');
       let $validationMessage = true;
 
       for (let i = 0; i < 10; i++) {
@@ -101,7 +106,7 @@ executeTest('check complete all tests', (store, assert, app) => {
         }
       }
 
-      let $validationSixteenWide = Ember.$('.list');
+      let $validationSixteenWide = $('.list');
       let $validationLi = $validationSixteenWide.children('li');
 
       // Сounting the number of validationmessage.
@@ -112,3 +117,4 @@ executeTest('check complete all tests', (store, assert, app) => {
     }, 5000);
   });
 });
+/* eslint-enable no-unused-vars */

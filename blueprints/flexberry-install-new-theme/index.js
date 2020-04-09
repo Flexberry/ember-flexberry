@@ -58,7 +58,7 @@ module.exports = {
 				}
 		  );
 		}).then(function() {
-			return _this.addPackageToProject('ember-flexberry-themes', '0.1.0-alpha.1');
+			return _this.addPackageToProject('ember-flexberry-themes');
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');

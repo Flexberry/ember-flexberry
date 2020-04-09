@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-objectlistview` component:
     * Use ',' and '/' in Excel export column name.
+* `edit-form` controller:
+    * Fix record saving, when only one detail was changed.
 
 ## [2.4.0-beta.4] - 2020-04-06
 ### Added

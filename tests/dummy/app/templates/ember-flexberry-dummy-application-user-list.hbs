@@ -26,4 +26,13 @@
     deleteButton=true
     showCheckBoxInRow=true
   }}
+  <div class="item">
+    <label style="margin-right: 5px;">
+      {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+    </label>
+    {{flexberry-checkbox
+      class="toggle"
+      value=userSettingsService.isUserSettingsServiceEnabled
+    }}
+  </div>
 </div>

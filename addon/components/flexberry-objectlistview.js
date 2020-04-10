@@ -209,14 +209,15 @@ export default FlexberryBaseComponent.extend({
   searchPageButtonReadonly: computed('searchPageValue', function() {
     let searchPageValue = this.get('searchPageValue');
     let searchPageNumber = parseInt(searchPageValue, 10);
-    if (isNaN(searchPageNumber)) {
+    if (isNaN(searchPageNumber) || searchPageValue[0] === '-') {
       return true;
     }
 
     let pages = A(this.get('pages'));
     let pagesCount = pages.get('lastObject.number');
+    let currentPage = pages.findBy('isCurrent', true);
 
-    return pagesCount < searchPageNumber;
+    return pagesCount < searchPageNumber || currentPage.number === searchPageNumber;
   }),
 
   /**

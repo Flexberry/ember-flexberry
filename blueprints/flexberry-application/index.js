@@ -8,7 +8,8 @@ module.exports = {
     description: 'Generates all entities for flexberry.',
     availableOptions: [
         { name: 'metadata-dir', type: String },
-        { name: 'skip-confirmation', type: Boolean }
+        { name: 'skip-confirmation', type: Boolean },
+        { name: 'new-theme', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -93,6 +94,10 @@ var ApplicationBlueprint = (function () {
         }
         this.promise = this.emberGenerate("flexberry-common", "app");
         this.promise = this.emberGenerate("flexberry-core", "app");
+        if (options.newTheme) {
+            this.promise = this.emberGenerate("flexberry-install-new-theme", "app");
+        }
+
         this.promise = this.promise
             .then(function () {
             ElapsedTime.print();

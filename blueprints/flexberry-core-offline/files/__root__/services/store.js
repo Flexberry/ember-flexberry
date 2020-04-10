@@ -1,8 +1,9 @@
-import { Projection, Offline } from 'ember-flexberry-data';
+import BaseStore from 'ember-flexberry-data/stores/base-store';
+import StoreMixin from 'ember-flexberry-data/mixins/store';
 import config from '../config/environment';
 import { inject as service } from '@ember/service';
 
-export default Offline.Store.reopen(Projection.StoreMixin, {
+export default BaseStore.reopen(StoreMixin, {
   /**
    Service that return offline schemas.
 

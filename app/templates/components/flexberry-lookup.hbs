@@ -30,18 +30,18 @@
       {{/if}}
     {{/if}}
     <button
-      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-      title={{t "components.flexberry-lookup.choose-button-text"}}
-      type={{if autocomplete "button" ""}}
-      {{action "choose" chooseData}}>
-      {{{chooseText}}}
-    </button>
-    <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
       type={{if autocomplete "button" ""}}
       {{action "remove" removeData}}>
       {{{removeText}}}
+    </button>
+    <button
+      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+      title={{t "components.flexberry-lookup.choose-button-text"}}
+      type={{if autocomplete "button" ""}}
+      {{action "choose" chooseData}}>
+      {{{chooseText}}}
     </button>
   </div>
 {{/if}}

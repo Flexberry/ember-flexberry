@@ -87,6 +87,14 @@ export default FlexberryBaseComponent.extend({
   items: null,
 
   /**
+    See [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings).
+
+    @property settings
+    @type Object
+  */
+ settings: undefined,
+
+  /**
     Array CSS class names.
     [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
@@ -157,7 +165,7 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on(this.get('onlyClickHandler') ? 'click' : 'click touchstart', onClickHandler);
-    this.$().dropdown();
+    this.$().dropdown(this.get('settings'));
     this._getActionForMenu(this.get('collapseMenuOnItemClick'));
   },
 

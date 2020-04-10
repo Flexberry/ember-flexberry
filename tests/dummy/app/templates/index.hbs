@@ -5,7 +5,7 @@
         <div class="ui card">
           <div class="content">
             <i class="edit outline icon card-icon" ></i>
-            <div class="header">Некоторые компоненты</div>
+            <div class="header">{{t "forms.index.components"}}</div>
             <div class="description">
               <ul>
                 <li>{{#link-to 'components-examples/flexberry-field/settings-example'}}Flexberry-field{{/link-to}}</li>
@@ -21,12 +21,12 @@
         <div class="ui card">
           <div class="content">
             <i class="icon lock card-icon" ></i>
-            <div class="header">Сервис логирования</div>
+            <div class="header">{{t "forms.index.log-service.title"}}</div>
             <div class="description">
               <ul>
-                <li>{{#link-to 'i-i-s-caseberry-logging-objects-application-log-l'}}Лог приложения{{/link-to}}</li>
-                <li>{{#link-to 'log-service-examples/settings-example'}}Пример работы с настройками{{/link-to}}</li>
-                <li>{{#link-to 'log-service-examples/clear-log-form'}}Очистка лога{{/link-to}}</li>
+                <li>{{#link-to 'i-i-s-caseberry-logging-objects-application-log-l'}}{{t "forms.index.log-service.app-log"}}{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/settings-example'}}{{t "forms.index.log-service.settings-example"}}{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/clear-log-form'}}{{t "forms.index.log-service.log-cleaning"}}{{/link-to}}</li>
               </ul>
             </div>
           </div>
@@ -39,7 +39,7 @@
             {{#link-to 'ember-flexberry-dummy-application-user-list' class='ui card'}}
               <div class="content">
                 <i class="icon user outline card-icon" ></i>
-                <div class="header">Пользователи приложения</div>
+                <div class="header">{{t "forms.index.users"}}</div>
               </div>
             {{/link-to}}
           </div>
@@ -47,7 +47,7 @@
             {{#link-to 'ember-flexberry-dummy-localization-list' class='ui card'}}
               <div class="content">
                 <i class="icon comment outline card-icon" ></i>
-                <div class="header">Локализация</div>
+                <div class="header">{{t "forms.index.localization"}}</div>
               </div>
             {{/link-to}}
           </div>
@@ -56,7 +56,7 @@
             {{#link-to 'i-i-s-caseberry-logging-objects-application-log-l' class='ui card'}}
               <div class="content">
                 <i class="icon clock outline card-icon" ></i>
-                <div class="header">Лог приложения</div>
+                <div class="header">{{t "forms.index.log"}}</div>
               </div>
             {{/link-to}}
           </div>
@@ -64,7 +64,7 @@
             {{#link-to 'new-platform-flexberry-services-lock-list' class='ui card'}}
               <div class="content">
                 <i class="icon lock card-icon" ></i>
-                <div class="header">Список блокировок</div>
+                <div class="header">{{t "forms.index.blocking"}}</div>
               </div>
             {{/link-to}}
           </div>
@@ -75,12 +75,12 @@
       <div class="sixteen wide computer eight wide large screen eight wide widescreen column">
         <div class="ui card">
           <div class="content">
-            <div class="header">Поиск</div>
+            <div class="header">{{t "forms.index.search.title"}}</div>
             <form class="ui form">
-              {{flexberry-field label="Название поля" placeholder="Фамилия, имя и отчество"}}
-              {{flexberry-field label="Название поля" placeholder="ДД.ММ.ГГГГ или выберите в календаре"}}
-              {{flexberry-button class="primary large" caption="Поиск"}}
-              {{flexberry-checkbox label="По всем ОСЗ"}}
+              {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.field-placeholder")}}
+              {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.date-field-placeholder")}}
+              {{flexberry-button class="primary large" caption=(t "forms.index.search.button-caption")}}
+              {{flexberry-checkbox label=(t "forms.index.search.checkbox-label")}}
             </form>
           </div>
         </div>

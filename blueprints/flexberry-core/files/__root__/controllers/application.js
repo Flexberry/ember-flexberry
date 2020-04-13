@@ -15,6 +15,7 @@ export default Controller.extend({
       nodes: [
         {
           link: 'index',
+          icon: 'home',
           caption: i18n.t('forms.application.sitemap.index.caption'),
           title: i18n.t('forms.application.sitemap.index.title'),
           children: null
@@ -103,18 +104,20 @@ export default Controller.extend({
     toggleSidebar() {
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
+      $('.full.height').toggleClass('content-opened');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-        $('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-        $('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      $('.full.height').css({
+        transition: 'width 0.3s ease-in-out 0s',
+        width: 'calc(100% - ' + sidebar.width() + 'px)',
+      });
+
+      $('.sidebar.icon.text-menu-show').toggleClass('hidden');
+      $('.sidebar.icon.text-menu-hide').toggleClass('hidden');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**

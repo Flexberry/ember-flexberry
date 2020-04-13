@@ -58,7 +58,37 @@ module.exports = {
 				}
 		  );
 		}).then(function() {
-			return _this.addPackageToProject('ember-flexberry-themes');
+      return _this.insertIntoFile('ember-cli-build.js', '\nconst autoprefixer = require(\'autoprefixer\');\n\n', { before: 'module.exports = function' });
+    }).then(function() {
+      var afterPostcssOptions = 'semantic-ui\'\n      ]\n    }';
+      var postcssOptions = ',\n    postcssOptions: {\n' +
+        '      compile: {\n' +
+        '        enabled: false,\n' +
+        '        browsers: [\'last 3 versions\'],\n' +
+        '      },\n' +
+        '      filter: {\n' +
+        '        enabled: true,\n' +
+        '        plugins: [\n' +
+        '          {\n' +
+        '            module: autoprefixer,\n' +
+        '            options: {\n' +
+        '              browsers: [\'last 2 versions\']\n' +
+        '            }\n' +
+        '          }\n' +
+        '        ]\n' +
+        '      }\n' +
+        '    }\n';
+
+      return _this.insertIntoFile('ember-cli-build.js', postcssOptions, { after: afterPostcssOptions });
+    }).then(function() {
+      return _this.insertIntoFile('app/templates/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
+    }).then(function() {
+      return _this.insertIntoFile('app/templates/mobile/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
+    }).then(function() {
+      return _this.addPackagesToProject([
+        { name: 'autoprefixer', target: '^6' },
+        { name: 'ember-flexberry-themes' }
+      ]);
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');

@@ -836,6 +836,17 @@ export default FlexberryBaseComponent.extend({
       };
 
       this.sendAction('preview', previewData);
+    },
+
+    /**
+     * Input focused out (during autocomplete)
+     *
+     * @method actions.onInputFocusOut
+     */
+    onInputFocusOut() {
+      if (Ember.isNone(this.get('value'))) {
+        this.set('displayValue', null);
+      }
     }
   },
 

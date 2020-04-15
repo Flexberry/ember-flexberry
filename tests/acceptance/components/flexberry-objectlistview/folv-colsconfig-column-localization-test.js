@@ -20,10 +20,10 @@ executeTest('check colsconfig column localization test', (store, assert, app) =>
           $.each($columns, function(i, column) {
             let cellText = column.cells[2].innerText;
             let propname = column.attributes.propname.value;
-            let assertionMessage = locale + ' locale '+ propname + ' ok';
+            let assertionMessage = locale + ' locale ' + propname + ' ok';
             if (propname.contains('.')) {
               if (propname.contains('.name')) {
-                propname = propname.split('.',1);
+                propname = propname.split('.', 1);
                 let caption = columnsLocalization[propname].__caption__;
                 assert.equal(caption, cellText, assertionMessage);
               } else {

@@ -1,47 +1,54 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
 import { loadingLocales } from './folv-tests-functions';
+import RuLocale from 'dummy/locales/ru/translations';
+import EnLocale from 'dummy/locales/en/translations';
 
 executeTest('check colsconfig column localization test', (store, assert, app) => {
-  assert.expect(3);
   let path = 'ember-flexberry-dummy-suggestion-list';
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);
     loadingLocales('en', app).then(() => {
-      let $configButton = Ember.$('button.config-button')[0].nextElementSibling;
+      let $configButton = Ember.$('button.config-button')[0];
       click($configButton);
-      click($configButton.children[2].children[0]);
       andThen(() => {
-        let $innerText = Ember.$('div.flexberry-colsconfig.content')[0].innerText;
-        assert.ok($innerText.contains('Address'),
-                  $innerText.contains('Text'),
-                  $innerText.contains('Date'),
-                  $innerText.contains('Votes'),
-                  $innerText.contains('Moderated'),
-                  $innerText.contains('Type'),
-                  $innerText.contains('Author'),
-                  $innerText.contains('Email'),
-                  $innerText.contains('Editor'),
-                  $innerText.contains('Comments count'));
+        let columnsLocalization = Ember.get(EnLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
+
+        function checkLocalization(columnsLocalization, locale) {
+          let $columns = Ember.$('div.flexberry-colsconfig.content tbody tr');
+          $.each($columns, function(i, column) {
+            let cellText = column.cells[2].innerText;
+            let propname = column.attributes.propname.value;
+            let assertionMessage = locale + ' locale '+ propname + ' ok';
+            if (propname.contains('.')) {
+              if (propname.contains('.name')) {
+                propname = propname.split('.',1);
+                let caption = columnsLocalization[propname].__caption__;
+                assert.equal(caption, cellText, assertionMessage);
+              } else {
+                propname = propname.split('.');
+                let propname2 = propname[1];
+                propname = propname[0];
+                let caption = columnsLocalization[propname][propname2].__caption__;
+                assert.equal(caption, cellText, assertionMessage);
+              }
+            } else {
+              let caption = columnsLocalization[propname].__caption__;
+              assert.equal(caption, cellText, assertionMessage);
+            }
+          });
+        }
+
+        checkLocalization(columnsLocalization, 'En');
         let $closeModal = Ember.$('.flexberry-modal').children('.close');
-        click ($closeModal);
+        click($closeModal);
         andThen(() => {
           loadingLocales('ru', app).then(() => {
             click($configButton);
-            click($configButton.children[2].children[0]);
             andThen(() => {
-              let $innerText = Ember.$('div.flexberry-colsconfig.content')[0].innerText;
-              assert.ok($innerText.contains('Адрес'),
-                        $innerText.contains('Текст'),
-                        $innerText.contains('Дата'),
-                        $innerText.contains('Голоса'),
-                        $innerText.contains('Одобрено'),
-                        $innerText.contains('Тип предложения'),
-                        $innerText.contains('Автор'),
-                        $innerText.contains('Почта'),
-                        $innerText.contains('Редактор'),
-                        $innerText.contains('Количество комментариев'));
+              let columnsLocalization = Ember.get(RuLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
+              checkLocalization(columnsLocalization, 'Ru');
             });
           });
         });
@@ -49,5 +56,3 @@ executeTest('check colsconfig column localization test', (store, assert, app) =>
     });
   });
 });
-
-

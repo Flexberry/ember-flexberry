@@ -207,17 +207,18 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
   */
   searchPageButtonReadonly: computed('searchPageValue', function() {
-    let searchPageValue = this.get('searchPageValue');
-    let searchPageNumber = parseInt(searchPageValue, 10);
-    if (isNaN(searchPageNumber) || searchPageValue[0] === '-') {
+    const searchPageValue = this.get('searchPageValue');
+    const searchPage = parseInt(searchPageValue, 10);
+    if (isNaN(searchPage)) {
       return true;
     }
 
-    let pages = A(this.get('pages'));
-    let pagesCount = pages.get('lastObject.number');
-    let currentPage = pages.findBy('isCurrent', true);
+    const pages = A(this.get('pages'));
+    const firstPage = pages.get('firstObject.number');
+    const lastPage = pages.get('lastObject.number');
+    const currentPage = pages.findBy('isCurrent').number;
 
-    return pagesCount < searchPageNumber || currentPage.number === searchPageNumber;
+    return searchPage < firstPage || searchPage > lastPage || searchPage === currentPage;
   }),
 
   /**

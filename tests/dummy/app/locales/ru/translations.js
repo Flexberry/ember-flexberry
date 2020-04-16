@@ -561,7 +561,26 @@ $.extend(true, translations, {
       'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
     },
     'index': {
-      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
+      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!',
+      'components': 'Некоторые компоненты',
+      'log-service': {
+        'title': 'Сервис логирования',
+        'app-log': 'Лог приложения',
+        'settings-example': 'Пример работы с настройками',
+        'log-cleaning': 'Очистка лога'
+      },
+      'users': 'Пользователи приложения',
+      'localization': 'Локализация',
+      'log': 'Лог приложения',
+      'blocking': 'Список блокировок',
+      'search': {
+        'title': 'Поиск',
+        'field-label': 'Название поля',
+        'field-placeholder': 'Фамилия, имя и отчество',
+        'date-field-placeholder': 'ДД.ММ.ГГГГ или выберите в календаре',
+        'button-caption': 'Поиск',
+        'checkbox-label': 'По всем ОСЗ'
+      }
     },
 
     'application': {

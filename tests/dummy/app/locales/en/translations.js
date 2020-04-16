@@ -537,7 +537,8 @@ $.extend(true, translations, {
             'title': 'Menu'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Use service to save user settings'
+            'caption': 'Save settings',
+            'title': 'Use service to save user settings'
           },
           'show-menu': {
             'caption': 'Show menu'

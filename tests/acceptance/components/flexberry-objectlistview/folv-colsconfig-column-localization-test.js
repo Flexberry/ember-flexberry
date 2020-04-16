@@ -21,22 +21,9 @@ executeTest('check colsconfig column localization test', (store, assert, app) =>
             let cellText = column.cells[2].innerText;
             let propname = column.attributes.propname.value;
             let assertionMessage = locale + ' locale ' + propname + ' ok';
-            if (propname.contains('.')) {
-              if (propname.contains('.name')) {
-                propname = propname.split('.', 1);
-                let caption = columnsLocalization[propname].__caption__;
-                assert.equal(caption, cellText, assertionMessage);
-              } else {
-                propname = propname.split('.');
-                let propname2 = propname[1];
-                propname = propname[0];
-                let caption = columnsLocalization[propname][propname2].__caption__;
-                assert.equal(caption, cellText, assertionMessage);
-              }
-            } else {
-              let caption = columnsLocalization[propname].__caption__;
-              assert.equal(caption, cellText, assertionMessage);
-            }
+            propname = propname.split('.name', 1);
+            let caption = Ember.get(columnsLocalization, `${propname}.__caption__`);
+            assert.equal(caption, cellText, assertionMessage);
           });
         }
 

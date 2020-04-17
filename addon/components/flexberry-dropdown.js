@@ -49,7 +49,7 @@ export default FlexberryBaseComponent.extend({
   allowCategorySelection: false,
   direction: 'auto',
   keepOnScreen: true,
-  context: 'windows',
+  context: 'window',
   fullTextSearch: false,
   preserveHTML: true,
   sortSelect: false,

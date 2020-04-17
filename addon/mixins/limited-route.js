@@ -5,7 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 
-const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
+const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate, NotPredicate } = Query;
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -114,21 +114,59 @@ export default Ember.Mixin.create({
     if (filter.condition) {
       switch (filter.type) {
         case 'string':
-          if (filter.condition === 'like') {
-            return (!Ember.isNone(filter.pattern)) ?
-              new StringPredicate(filter.name).contains(filter.pattern) :
-              new StringPredicate(filter.name).contains('');
-          } else {
-            return (!Ember.isNone(filter.pattern)) ?
-              new SimplePredicate(filter.name, filter.condition, filter.pattern) :
-              new SimplePredicate(filter.name, filter.condition, null);
+          switch (filter.condition) {
+            case 'like':
+              return (!Ember.isNone(filter.pattern)) ?
+                new StringPredicate(filter.name).contains(filter.pattern) :
+                new StringPredicate(filter.name).contains('');
+            case 'nlike':
+              return (!Ember.isNone(filter.pattern)) ?
+                new NotPredicate(
+                  new StringPredicate(filter.name).contains(filter.pattern)
+                ) :
+                new NotPredicate(
+                  new StringPredicate(filter.name).contains('')
+                );
+            default:
+              return (!Ember.isNone(filter.pattern)) ?
+                new SimplePredicate(filter.name, filter.condition, filter.pattern) :
+                new SimplePredicate(filter.name, filter.condition, null);
           }
 
           break;
         case 'boolean':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          switch (filter.condition) {
+            case 'empty':
+              return new SimplePredicate(filter.name, 'eq', null);
+            case 'nempty':
+              return new SimplePredicate(filter.name, 'neq', null);
+            default:
+              return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+          }
+
+          break;
         case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
+          if (filter.condition === 'between') {
+            if (!filter.pattern) {
+              return new SimplePredicate(filter.name, filter.condition, null);
+            } else {
+              let from = filter.pattern.split('|')[0];
+              let to = filter.pattern.split('|')[1];
+              if (Ember.isPresent(from) && Ember.isPresent(to)) {
+                return new SimplePredicate(filter.name, 'geq', Number(from)).and(
+                  new SimplePredicate(filter.name, 'leq', Number(to))
+                );
+              } else if (!Ember.isPresent(from)) {
+                return new SimplePredicate(filter.name, 'leq', Number(to));
+              } else if (!Ember.isPresent(to)) {
+                return new SimplePredicate(filter.name, 'geq', Number(from));
+              }
+            }
+          } else {
+            return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
+          }
+
+          break;
         case 'date':
           return filter.pattern ?
             new DatePredicate(filter.name, filter.condition, filter.pattern, true) :

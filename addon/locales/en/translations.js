@@ -145,11 +145,15 @@ export default {
         'minus-button-title': 'Collapse',
       },
       'filters': {
-        'eq': 'Equal',
+        'eq': 'Equals',
         'neq': 'Not equal',
         'le': 'Less than',
         'ge': 'Greater than',
-        'like': 'Contains'
+        'like': 'Contains',
+        'nlike': 'Not contain',
+        'empty': 'Empty',
+        'nempty': 'Not empty',
+        'between': 'Is between',
       },
       'filters-placeholder': 'Condition'
     },

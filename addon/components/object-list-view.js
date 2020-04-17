@@ -1864,25 +1864,34 @@ export default FlexberryBaseComponent.extend(
         return null;
 
       case 'date':
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+        };
       case 'number':
         return {
           'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
           'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
           'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge')
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+          'between': this.get('i18n').t('components.object-list-view.filters.between'),
         };
-
       case 'string':
         return {
           'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
           'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'like': this.get('i18n').t('components.object-list-view.filters.like')
+          'like': this.get('i18n').t('components.object-list-view.filters.like'),
+          'nlike': this.get('i18n').t('components.object-list-view.filters.nlike')
         };
 
       case 'boolean':
         return {
           'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'nempty': this.get('i18n').t('components.object-list-view.filters.nempty'),
+          'empty': this.get('i18n').t('components.object-list-view.filters.empty'),
         };
 
       default:

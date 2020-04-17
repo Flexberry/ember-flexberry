@@ -113,6 +113,10 @@
             {{#if column.filter.component.name}}
               {{component column.filter.component.name
                 value=column.filter.pattern
+                readonly=(or
+                  (eq column.filter.condition 'empty')
+                  (eq column.filter.condition 'nempty')
+                )
                 dynamicProperties=column.filter.component.properties
                 key-down=(action "keyDownFilterAction")
               }}

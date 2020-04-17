@@ -21,15 +21,6 @@ export default EditFormController.extend(MultiListController, EditFormController
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
-  actions: {
-
-    getLookupFolvProperties: function() {
-      return {
-        colsConfigButton: true
-      };
-    }
-  },
-
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.

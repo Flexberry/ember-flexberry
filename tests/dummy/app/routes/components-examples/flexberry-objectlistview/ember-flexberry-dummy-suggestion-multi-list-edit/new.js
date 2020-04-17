@@ -27,5 +27,5 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
   */
-  templateName: 'ember-flexberry-dummy-suggestion-edit'
+  templateName: 'ember-flexberry-dummy-suggestion-multi-list-edit'
 });

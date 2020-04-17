@@ -844,7 +844,7 @@ export default FlexberryBaseComponent.extend({
      * @method actions.onInputFocusOut
      */
     onInputFocusOut() {
-      if (Ember.isNone(this.get('value'))) {
+      if (!this.get('value')) {
         this.set('displayValue', null);
       }
     }

@@ -1932,16 +1932,31 @@ export default folv.extend(
 
       case 'date':
       case 'number':
-        return ['eq', 'neq', 'le', 'ge'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge')
+        };
 
       case 'string':
-        return ['eq', 'neq', 'like'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'like': this.get('i18n').t('components.object-list-view.filters.like')
+        };
 
       case 'boolean':
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
+        };
 
       default:
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
+        };
     }
   },
 

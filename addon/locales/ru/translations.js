@@ -144,6 +144,14 @@ export default {
         'plus-button-title': 'Раскрыть',
         'minus-button-title': 'Свернуть',
       },
+      'filters': {
+        'eq': 'Равно',
+        'neq': 'Не равно',
+        'le': 'Меньше',
+        'ge': 'Больше',
+        'like': 'Содержит'
+      },
+      'filters-placeholder': 'Условие'
     },
 
     'olv-toolbar': {

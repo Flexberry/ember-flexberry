@@ -260,8 +260,9 @@
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
                     items=column.filter.conditions
+                    displayCaptions=true
                     class="compact fluid"
-                    placeholder=""
+                    placeholder=(t "components.object-list-view.filters-placeholder")
                     needChecksOnValue=false
                   }}
                 {{/if}}

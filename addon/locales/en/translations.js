@@ -150,12 +150,17 @@ export default {
         'le': 'Less than',
         'ge': 'Greater than',
         'like': 'Contains',
-        'nlike': 'Not contain',
+        'nlike': 'Does not contain',
         'empty': 'Empty',
         'nempty': 'Not empty',
-        'between': 'Is between',
+        'between': 'Between',
       },
-      'filters-placeholder': 'Condition'
+      'filter-condition': 'Condition'
+    },
+
+    'olv-filter-interval': {
+      'from': '(from)',
+      'to': '(to)'
     },
 
     'olv-toolbar': {

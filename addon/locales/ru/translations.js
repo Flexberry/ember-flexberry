@@ -155,7 +155,12 @@ export default {
         'empty': 'Не заполнен',
         'between': 'В интервале',
       },
-      'filters-placeholder': 'Условие'
+      'filter-condition': 'Условие'
+    },
+
+    'olv-filter-interval': {
+      'from': '(от)',
+      'to': '(до)'
     },
 
     'olv-toolbar': {

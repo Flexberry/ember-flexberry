@@ -262,8 +262,9 @@
                     items=column.filter.conditions
                     displayCaptions=true
                     class="compact fluid"
-                    placeholder=(t "components.object-list-view.filters-placeholder")
+                    placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false
+                    onChange=(action "filterConditionChanged" column.filter)
                   }}
                 {{/if}}
               </td>
@@ -281,10 +282,18 @@
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
-                  {{component column.filter.component.name
-                    value=column.filter.pattern
-                    dynamicProperties=column.filter.component.properties
-                  }}
+                  {{#if (eq column.filter.condition "between")}}
+                    {{olv-filter-interval
+                      componentName=column.filter.component.name
+                      value=column.filter.pattern
+                      dynamicProperties=column.filter.component.properties
+                    }}
+                    {{else}}
+                    {{component column.filter.component.name
+                      value=column.filter.pattern
+                      dynamicProperties=column.filter.component.properties
+                    }}
+                  {{/if}}
                 {{/if}}
               </td>
             {{/unless}}

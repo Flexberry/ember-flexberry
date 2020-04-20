@@ -1144,6 +1144,23 @@ export default FlexberryBaseComponent.extend(
         return false;
       }
     },
+
+    /**
+     * Called when filter condition in any column was changed by user
+     * @method actions.filterConditionChanged
+     * @param {Object} filter
+     * @param {string} newCondition
+     * @param {string} oldCondition
+     */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      if (oldCondition === 'between') {
+        Ember.set(filter, 'pattern', null);
+      }
+
+      if (newCondition === 'empty' || newCondition === 'nempty') {
+        Ember.set(filter, 'pattern', null);
+      }
+    }
   },
 
   /**
@@ -1911,16 +1928,8 @@ export default FlexberryBaseComponent.extend(
     @return {Object} Object with parameters for component.
   */
   _getFilterComponent(type, relation) {
-    let _this = this;
-    let enterClick = function(e) {
-      if (e.which === 13) {
-        _this._refreshList(_this.get('componentName'));
-      }
-    };
-
     let component = {
       name: undefined,
-      properties: { keyDown: enterClick },
     };
 
     switch (type) {

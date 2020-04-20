@@ -254,7 +254,8 @@ module.exports = {
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
           { name: 'broccoli-jscs', target: '1.2.2' },
-          { name: 'ember-browserify', target: '1.1.9' }
+          { name: 'ember-browserify', target: '1.1.9' },
+          { name: 'ember-test-selectors', target: '2.1.0' }
         ]
       });
     }).then(function () {

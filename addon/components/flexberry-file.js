@@ -496,12 +496,31 @@ export default FlexberryBaseComponent.extend({
   previewSettings: null,
 
   /**
-   * External Base64 string
-   * @property base64Value
-   * @type String
-   * @default null
-   */
+    External Base64 string
+    
+    @property base64Value
+    @type String
+    @default null
+  */
   base64Value: null,
+
+  /**
+    Name for base64 file. {base64FileName}.{base64FileExtension}
+    
+    @property base64FileName
+    @type String
+    @default null
+  */
+  base64FileName: null,
+
+  /**
+    Extension for base64 file. {base64FileName}.{base64FileExtension}
+    
+    @property base64FileExtension
+    @type String
+    @default null
+  */
+  base64FileExtension: null,
 
   actions: {
     /**
@@ -586,7 +605,6 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
     this.initProperty({ propertyName: 'openFileInNewWindowInsteadOfLoading', defaultValue: false });
-    this.initProperty({ propertyName: 'base64FileValue', defaultValue: null });
     this.initProperty({ propertyName: 'base64FileName', defaultValue: null });
     this.initProperty({ propertyName: 'base64FileExtension', defaultValue: null });
 
@@ -596,16 +614,14 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Метод срабатывает, когда в компонент попал новый base64 файл
-   * так как он передан аттрибутом компонента. Запускает
-   * событие change файлового контрола
-   * @method didReceiveAttrs
-   */
+    Hook for base64Value update. 
+    It runs "change" event on file-input to update file from base64Value if base64FileName and base64FileExtension set.
+  */
   didReceiveAttrs() {
     this._super(...arguments);
     if (this.get('base64Value')) {
       Ember.assert(`If you use base64 files, properties "base64FileName" and "base64FileExtension" can't be null or undefined`,
-      (!Ember.isEmpty(this.get('base64FileName')) && !Ember.isEmpty(this.get('base64FileExtension'))));
+      (this.get('base64FileName') && this.get('base64FileExtension')));
       this.$('.flexberry-file-file-input').change();
     }
   },
@@ -649,7 +665,7 @@ export default FlexberryBaseComponent.extend({
       this.set('_canLoadPreview', true);
       let fileName = `${this.get('base64FileName')}.${this.get('base64FileExtension')}`;
       if (this.get('base64Value')) {
-        uploadData.files = [this.dataURLtoFile(this.get('base64Value'), fileName)];
+        uploadData.files = [this._dataURLtoFile(this.get('base64Value'), fileName)];
         this.set('base64Value', null);
         onFileAdd(e, uploadData);
       }
@@ -699,12 +715,14 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Method converts base64 string to File
-   * @method dataURLtoFile
-   * @param {String} dataUrl Base64 string
-   * @param {String} fileName Filename for saving
+    Method converts base64 string to File
+
+    @method _dataURLtoFile
+    @param {String} dataUrl Base64 string
+    @param {String} fileName Filename for saving
+    @private
    */
-  dataURLtoFile(dataUrl, fileName) {
+  _dataURLtoFile(dataUrl, fileName) {
     try {
       let arr = dataUrl.split(',');
       let mime = arr[0].match(/:(.*?);/)[1];
@@ -718,10 +736,9 @@ export default FlexberryBaseComponent.extend({
       return new File([u8arr], fileName, { type: mime });
     }
     catch (error) {
-      console.error(`Error while preparing base64 file to BLOB `, error);
+      this.showUploadErrorModalDialog(fileName, error.message);
       return null;
     }
-
   },
 
   /**

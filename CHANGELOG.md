@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * `flexberry-dropdown` value doesn't change on first selection.
+* `flexberry-model` blueprint doesn't import enums.
 
 ## [2.4.0-beta.6] - 2020-04-09
 ### Fixed

@@ -25,8 +25,26 @@ module.exports = {
       '  app.import(\'vendor/serviceImages/bgw-head-calendar.png\', { destDir: \'assets/themes/orange/assets/images\' });\n';
     var options = '    lessOptions: {\n' +
       '      paths: [\n' +
-      '        \'bower_components/semantic-ui\'\n' +
+      '        \'bower_components/semantic-ui\',\n' +
+      '        \'bower_components/ember-flexberry-themes\'\n' +
       '      ]\n' +
+      '    },\n' +
+      '    postcssOptions: {\n' +
+      '      compile: {\n' +
+      '        enabled: false,\n' +
+      '        browsers: [\'last 3 versions\'],\n' +
+      '      },\n' +
+      '      filter: {\n' +
+      '        enabled: true,\n' +
+      '        plugins: [\n' +
+      '          {\n' +
+      '            module: autoprefixer,\n' +
+      '            options: {\n' +
+      '              browsers: [\'last 2 versions\']\n' +
+      '            }\n' +
+      '          }\n' +
+      '        ]\n' +
+      '      }\n' +
       '    }\n';
 
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
@@ -138,6 +156,8 @@ module.exports = {
         before: '\n  return app.toTree();\n'
       }
     ).then(function() {
+      return _this.insertIntoFile('ember-cli-build.js', '\nconst autoprefixer = require(\'autoprefixer\');\n\n', { before: 'module.exports = function' });
+    }).then(function() {
       return _this.insertIntoFile(
         'ember-cli-build.js',
         options,
@@ -282,7 +302,9 @@ module.exports = {
         { name: 'dexie', target: '^2.0.2' },
         { name: 'inflection', target: '^1.12.0' },
         { name: 'node-uuid', target: '^1.4.7' },
-        { name: 'flatpickr', target: '4.6.1' }
+        { name: 'flatpickr', target: '4.6.1' },
+        { name: 'autoprefixer', target: '^6' },
+        { name: 'ember-flexberry-themes' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

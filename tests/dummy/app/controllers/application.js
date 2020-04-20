@@ -46,6 +46,15 @@ export default Controller.extend({
       sidebar.toggleClass('sidebar-mini');
       $('.full.height').toggleClass('content-opened');
 
+      $('.full.height').css({
+        transition: 'width 0.3s ease-in-out 0s',
+        width: 'calc(100% - ' + sidebar.width() + 'px)',
+      });
+
+      $('.sidebar.icon.text-menu-show').toggleClass('hidden');
+      $('.sidebar.icon.text-menu-hide').toggleClass('hidden');
+      $('.bgw-opacity').toggleClass('hidden');
+
       // For reinit overflowed tabs.
       $(window).trigger('resize');
     },

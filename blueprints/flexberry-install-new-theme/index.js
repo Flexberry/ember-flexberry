@@ -3,8 +3,6 @@ module.exports = {
 	afterInstall: function() {
 		var _this = this;
 
-		var lessOption = '        \'node_modules/ember-flexberry-themes\','
-
 		var fontsImports = '\n  app.import(\'vendor/fonts.css\');\n' +
 		'\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
@@ -30,26 +28,13 @@ module.exports = {
 		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.svg\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
 		'\n'
 
-		return this.insertIntoFile(
-		  'ember-cli-build.js',
-		  lessOption,
-		  {
-				after: '    lessOptions: {\n' + '      paths: [\n'
-		  }
+		return _this.insertIntoFile(
+			'ember-cli-build.js',
+			fontsImports,
+			{
+				before: '\n  return app.toTree();\n'
+			}
 		).then(function() {
-		  return _this.insertIntoFile(
-				'app/styles/app.less',
-				'@import \'src/flexberry-imports\';\n'
-		  );
-		}).then(function() {
-		  return _this.insertIntoFile(
-				'ember-cli-build.js',
-				fontsImports,
-				{
-					before: '\n  return app.toTree();\n'
-				}
-		  );
-		}).then(function() {
 		  return _this.insertIntoFile(
 				'ember-cli-build.js',
 				stylesImports,
@@ -58,12 +43,13 @@ module.exports = {
 				}
 		  );
 		}).then(function() {
-			return _this.addPackageToProject('ember-flexberry-themes');
+      return _this.insertIntoFile('app/templates/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
+    }).then(function() {
+      return _this.insertIntoFile('app/templates/mobile/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/guideline-icons.css', 'vendor/guideline-icons.css');
-			fs.copySync('node_modules/ember-flexberry-themes/src/theme.less', 'app/styles/theme.less');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'theme.config');
 		});
 	}

@@ -526,7 +526,26 @@ $.extend(true, translations, {
       'spinner-caption': 'Loading stuff, please have a cold beer...'
     },
     'index': {
-      'greeting': 'Welcome to ember-flexberry test stand!'
+      'greeting': 'Welcome to ember-flexberry test stand!',
+      'components': 'Some of the components',
+      'log-service': {
+        'title': 'Log service',
+        'app-log': 'Application log',
+        'settings-example': 'Settings example',
+        'log-cleaning': 'Log cleaning'
+      },
+      'users': 'Application users',
+      'localization': 'Localization',
+      'log': 'Application log',
+      'blocking': 'Block list',
+      'search': {
+        'title': 'Search',
+        'field-label': 'Field name',
+        'field-placeholder': 'Last name, first name and middle name',
+        'date-field-placeholder': 'DD.MM.YYYY or choose from the calendar',
+        'button-caption': 'Search',
+        'checkbox-label': 'Search all pages'
+      }
     },
 
     'application': {
@@ -537,7 +556,8 @@ $.extend(true, translations, {
             'title': 'Menu'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Use service to save user settings'
+            'caption': 'Save settings',
+            'title': 'Use service to save user settings'
           },
           'show-menu': {
             'caption': 'Show menu'

@@ -9,27 +9,29 @@
    Site Variables
 ---------------------*/
 
-/* Default site.variables */
-@import "@{DefaultThemeFolder}/default/globals/site.variables";
+/* Default */
+@import "@{semanticUiThemesFolder}/default/globals/site.variables";
 
-/* Packaged site.variables */
-@import (optional) "@{themesFolder}/@{site}/globals/site.variables";
+/* Packaged Theme */
+@import (optional) "@{semanticUiThemesFolder}/@{site}/globals/site.variables";
 
-/* Site theme site.variables */
+
+@import (optional) "@{emberFlexberryThemesFolder}/@{theme}/globals/site.variables";
+
 @import (optional) "@{siteFolder}/globals/site.variables";
-
 
 /*-------------------
  Component Variables
 ---------------------*/
 
 /* Default */
-@import "@{DefaultThemeFolder}/default/@{type}s/@{element}.variables";
+@import (optional) "@{semanticUiThemesFolder}/default/@{type}s/@{element}.variables";
 
-/* Packaged Theme */
-@import (optional) "@{themesFolder}/@{theme}/@{type}s/@{element}.variables";
+@import (optional) "@{emberFlexberryThemesFolder}/@{theme}/components/flexberry-@{element}.variables";
 
 /* Site Theme */
+@import (optional) "@{emberFlexberryThemesFolder}/@{theme}/@{type}s/@{element}.variables";
+
 @import (optional) "@{siteFolder}/@{type}s/@{element}.variables";
 
 
@@ -50,7 +52,7 @@
 -------------------*/
 
 .loadUIOverrides() {
-  @import (optional) "@{DefaultThemeFolder}/default/@{type}s/@{element}.overrides";
-  @import (optional) "@{themesFolder}/@{theme}/@{type}s/@{element}.overrides";
+  @import (optional) "@{semanticUiThemesFolder}/default/@{type}s/@{element}.overrides";
+  @import (optional) "@{emberFlexberryThemesFolder}/@{theme}/@{type}s/@{element}.overrides";
   @import (optional) "@{siteFolder}/@{type}s/@{element}.overrides";
 }

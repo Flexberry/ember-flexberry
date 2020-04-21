@@ -497,7 +497,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     External Base64 string
-    
     @property base64Value
     @type String
     @default null
@@ -506,7 +505,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Name for base64 file. {base64FileName}.{base64FileExtension}
-    
     @property base64FileName
     @type String
     @default null
@@ -515,7 +513,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Extension for base64 file. {base64FileName}.{base64FileExtension}
-    
     @property base64FileExtension
     @type String
     @default null
@@ -614,7 +611,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Hook for base64Value update. 
+    Hook for base64Value update.
     It runs "change" event on file-input to update file from base64Value if base64FileName and base64FileExtension set.
   */
   didReceiveAttrs() {

@@ -1,11 +1,9 @@
 import Ember from 'ember';
-import layout from '../templates/components/olv-filter-interval';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 const { observer } = Ember;
 
 export default FlexberryBaseComponent.extend({
-  layout,
 
   /**
    * Start of interval

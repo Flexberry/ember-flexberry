@@ -126,7 +126,7 @@ export default FlexberryBaseComponent.extend({
     }
     For example, user will see 'caption for item1', but on choose, item1 is set to 'value' property.
 
-    @property needChecksOnValue
+    @property displayCaptions
     @type Boolean
     @default false
   */
@@ -246,7 +246,7 @@ export default FlexberryBaseComponent.extend({
     */
     onChange(component, id, newValue) {
       let oldValue = !Ember.isNone(this.get('value')) ? this.get('value') : null;
-      newValue = this.get('displayCaptions') ? id : newValue; //take key instead of value if displayCaptions mode is active
+      newValue = this.get('displayCaptions') ? id : newValue;
       newValue = !Ember.isNone(newValue) ? newValue : null;
       newValue = newValue === '<!---->' ? '' : newValue;
 

@@ -914,7 +914,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action previous page.
     */
-    previousPage(action, componentName) {
+    previousPage(action) {
       if (!action) {
         throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
@@ -923,7 +923,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(componentName);
+      action(this.get('componentName'));
     },
 
     /**
@@ -933,7 +933,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action next page.
     */
-    nextPage(action, componentName) {
+    nextPage(action) {
       if (!action) {
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
@@ -942,7 +942,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(componentName);
+      action(this.get('componentName'));
     },
 
     /**
@@ -953,7 +953,7 @@ export default FlexberryBaseComponent.extend({
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */
-    gotoPage(action, pageNumber, componentName) {
+    gotoPage(action, pageNumber) {
       if (!action) {
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
@@ -962,7 +962,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(pageNumber, componentName);
+      action(pageNumber, this.get('componentName'));
     },
 
     /**

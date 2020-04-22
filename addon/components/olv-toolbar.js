@@ -651,7 +651,7 @@ export default FlexberryBaseComponent.extend({
     */
     showConfigDialog(settingName) {
       assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName, this.get('useSidePageMode'));
     },
 
     /**
@@ -693,7 +693,7 @@ export default FlexberryBaseComponent.extend({
     showExportDialog(settingName, immediateExport) {
       let settName = settingName ? 'ExportExcel/' + settingName : settingName;
       assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, true, immediateExport);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, this.get('useSidePageMode'), true, immediateExport);
     },
 
     /**

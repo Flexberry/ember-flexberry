@@ -112,24 +112,15 @@
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
-              {{#if (eq column.filter.condition "between")}}
-                {{olv-filter-interval
-                  componentName=column.filter.component.name
-                  value=column.filter.pattern
-                  dynamicProperties=column.filter.component.properties
-                  key-down=(action "keyDownFilterAction")
-                }}
-                {{else}}
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  readonly=(or
-                    (eq column.filter.condition 'empty')
-                    (eq column.filter.condition 'nempty')
-                  )
-                  dynamicProperties=column.filter.component.properties
-                  key-down=(action "keyDownFilterAction")
-                }}
-              {{/if}}
+              {{component column.filter.component.name
+                value=column.filter.pattern
+                readonly=(or
+                  (eq column.filter.condition 'empty')
+                  (eq column.filter.condition 'nempty')
+                )
+                dynamicProperties=column.filter.component.properties
+                key-down=(action "keyDownFilterAction")
+              }}
             {{/if}}
           </td>
         {{/each}}

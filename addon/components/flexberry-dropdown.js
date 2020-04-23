@@ -192,7 +192,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let value = this.get('value');
-    if (this.get('needChecksOnValue') && !Ember.isNone(value)) {
+    if (this.get('needChecksOnValue') && value) {
       let items = this.get('_items') || {};
       if (this.get('displayCaptions')) {
         let itemsArray = Ember.A(Object.keys(items));

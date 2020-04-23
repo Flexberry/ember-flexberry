@@ -770,6 +770,7 @@ export default FlexberryBaseComponent.extend({
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
         buttonTitle: '...', // Button title.
+        iconClasses: '', // Css classes for icon. Remember to add the `icon` class here, and for the `button` tag, through the `buttonClasses` property, if necessary.
         disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```

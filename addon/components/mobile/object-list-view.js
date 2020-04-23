@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
@@ -13,6 +14,15 @@ import ObjectListViewComponent from '../object-list-view';
   @extends ObjectListViewComponent
 */
 export default ObjectListViewComponent.extend({
+  /**
+    Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
+
+    @property _groupEditEventsService
+    @type Service
+    @private
+  */
+  _groupEditEventsService: service('objectlistview-events'),
+
   /**
     Flag indicates whether visible selected menu for mobile.
 
@@ -152,5 +162,18 @@ export default ObjectListViewComponent.extend({
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
       }
     },
+    /**
+      Handles arrow buttons click.
+
+      @method actions.moveRow
+    */
+    moveRow(shift) {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      let componentName = this.get('componentName');
+      this.get('_groupEditEventsService').moveRowTrigger(componentName, shift);
+    }
   }
 });

@@ -423,7 +423,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         return agragatorModel.save();
       });
     } else {
-      const unsavedModels = this._getModelWithHasMany(model).filter(x => x.get('hasDirtyAttributes') || x.hasChangedBelongsTo());
+      const unsavedModels = this._getUnsavedModels(model);
       if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
         savePromise = this.get('store').batchUpdate(unsavedModels);
       } else {
@@ -776,10 +776,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        const hasMany = model.get(name);
-        let dirty = hasMany.filterBy('hasDirtyAttributes');
-        let anotherAgregator = hasMany.get('canonicalState').filter(x => x.record.hasChangedBelongsTo()).map(x => x.record);
-        [...dirty, ...anotherAgregator].forEach((record) => {
+        model.get(name).filterBy('hasDirtyAttributes').forEach((record) => {
           let promise = record.save().then((record) => {
             return this._saveHasManyRelationships(record).then((result) => {
               if (result && Ember.isArray(result) && result.length > 0) {
@@ -802,6 +799,18 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   },
 
   /**
+   * Returns an array of models that need to be saved
+   *
+   * @param {DS.Model} model
+   * @return {Ember.NativeArray}
+   */
+  _getUnsavedModels(model) {
+    return this._getModelWithHasMany(model).filter(x =>
+      x.get('hasDirtyAttributes') || x.hasChangedBelongsTo()
+    );
+  },
+
+  /**
     Returns an array with the model and all its `hasMany` relationships, obtained recursively, for each model.
 
     @method _getModelWithHasMany
@@ -815,10 +824,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       if (desc.kind === 'hasMany') {
         const hasMany = model.get(name);
         models.addObjects(hasMany);
-
-        //Details whose agregator was changed (they are present only in 'canonicalState'):
-        let anotherAgregator = hasMany.get('canonicalState').filter(x => x.record.hasChangedBelongsTo()).map(x => x.record);
-        models.addObjects(anotherAgregator);
 
         hasMany.map(this._getModelWithHasMany, this).forEach((hasMany) => {
           models.addObjects(hasMany);

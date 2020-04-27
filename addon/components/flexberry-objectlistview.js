@@ -552,6 +552,52 @@ export default FlexberryBaseComponent.extend({
   enableFilters: false,
 
   /**
+    The function (action) for setting the available filtering conditions, will be called when the component is initialized.
+
+    The function must return a set of valid values for the `flexberry-dropdown` component and is called with two parameters:
+    - `type` - string with the attribute type.
+    - `attribute` - object with the attribute description.
+
+    @property conditionsByType
+    @type Function
+  */
+  conditionsByType: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized.
+
+    The function must return an object with the following properties:
+    - `name` - string with the component name.
+    - `properties` object with the properties of the component, passed to the component via `dynamicProperties`.
+
+    The function is called with three parameters:
+    - `type` - string with the attribute type.
+    - `relation` - indicates that the attribute is a relation.
+    - `attribute` - object with the attribute description.
+
+    @property componentForFilter
+    @type Function
+  */
+  componentForFilter: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized and each time the condition is changed.
+
+    The function must return an object with the following properties:
+    - `name` - string with the component name.
+    - `properties` object with the properties of the component, passed to the component via `dynamicProperties`.
+
+    The function is called with three parameters:
+    - `newCondition` - string with the new condition.
+    - `oldCondition` - string with the old condition.
+    - `type` - string with the attribute type.
+
+    @property componentForFilterByCondition
+    @type Function
+  */
+  componentForFilterByCondition: undefined,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton

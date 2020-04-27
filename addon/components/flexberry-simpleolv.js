@@ -2073,11 +2073,11 @@ export default folv.extend(
   /**
     Alter filter component depending on condition chosen by user.
 
-    @method _getFilterComponent
-    @param {String} component you need to change and return it
-    @param {String} type
+    @private
+    @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
+    @param {String} type
     @return {Object} Object with parameters for component.
   */
   _getFilterComponentByCondition(newCondition, oldCondition, type) {

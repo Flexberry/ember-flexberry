@@ -2009,7 +2009,8 @@ export default FlexberryBaseComponent.extend(
   /**
     Alter filter component depending on condition chosen by user.
 
-    @method _getFilterComponent
+    @private
+    @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
     @param {String} type

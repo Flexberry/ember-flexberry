@@ -10,7 +10,7 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _items: Ember.computed('items.[]', function() {
+  _items: Ember.computed('items.[]', function () {
     let items = this.get('items');
     let obj = null;
 
@@ -118,6 +118,21 @@ export default FlexberryBaseComponent.extend({
   items: {},
 
   /**
+    Flag indicates whether to display captions for dropdown items.
+    To make it work, "items" property should have following structure:
+    {
+      item1: 'caption for item1',
+      item2: 'caption for item2'
+    }
+    For example, user will see 'caption for item1', but on choose, item1 is set to 'value' property.
+
+    @property displayCaptions
+    @type Boolean
+    @default false
+  */
+  displayCaptions: false,
+
+  /**
     DOM-element representing semantic ui-dropdown component.
 
     @property dropdownDomElement
@@ -157,8 +172,14 @@ export default FlexberryBaseComponent.extend({
   */
   text: Ember.computed('value', function() {
     let value = this.get('value');
-    value = value === '<!---->' ? '' : value;
-    return !Ember.isBlank(value) ? value : '';
+    let valueIsEmpty = Ember.isBlank(value) || value === '<!---->';
+
+    if (this.get('displayCaptions')) {
+      let captionForValue = this.get('_items')[value];
+      return captionForValue || '';
+    }
+
+    return valueIsEmpty ? '' : value;
   }),
 
   /**
@@ -170,21 +191,23 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    // Convert 'value' and 'items' into strings because flexberry-dropdown interpret selected value as string commonly.
     let value = this.get('value');
-    let stringValue = !Ember.isNone(value) ? value.toString() : null;
-
-    if (this.get('needChecksOnValue')) {
+    if (this.get('needChecksOnValue') && value) {
       let items = this.get('_items') || {};
-      let itemsArray = Ember.A();
-      for (let key in items) {
-        if (items.hasOwnProperty(key)) {
-          itemsArray.pushObject(items[key]);
+      if (this.get('displayCaptions')) {
+        let itemsArray = Ember.A(Object.keys(items));
+        if (!itemsArray.contains(value)) {
+          throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${value.toString()}\`.` +
+            `Allowed values are: [\`${itemsArray.map(x => x.toString()).join(`\`, \``)}\`].`);
         }
-      }
+      } else {
+        let itemsArray = Ember.A(Object.values(items));
 
-      if (!Ember.isBlank(stringValue) && !itemsArray.contains(stringValue)) {
-        throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
+        // Convert 'value' into string because 'items' values are strings also
+        let stringValue = value.toString();
+        if (!itemsArray.contains(stringValue)) {
+          throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
+        }
       }
     }
 
@@ -223,6 +246,7 @@ export default FlexberryBaseComponent.extend({
     */
     onChange(component, id, newValue) {
       let oldValue = !Ember.isNone(this.get('value')) ? this.get('value') : null;
+      newValue = this.get('displayCaptions') ? id : newValue;
       newValue = !Ember.isNone(newValue) ? newValue : null;
       newValue = newValue === '<!---->' ? '' : newValue;
 
@@ -233,7 +257,7 @@ export default FlexberryBaseComponent.extend({
       // Semantic ui-dropdown component has only one way binding,
       // so we have to set selected value manually.
       this.set('value', newValue);
-      this.sendAction('onChange', newValue);
+      this.sendAction('onChange', newValue, oldValue);
     },
 
     /**

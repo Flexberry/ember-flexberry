@@ -144,6 +144,23 @@ export default {
         'plus-button-title': 'Expand',
         'minus-button-title': 'Collapse',
       },
+      'filters': {
+        'eq': 'Equals',
+        'neq': 'Not equal',
+        'le': 'Less than',
+        'ge': 'Greater than',
+        'like': 'Contains',
+        'nlike': 'Does not contain',
+        'empty': 'Empty',
+        'nempty': 'Not empty',
+        'between': 'Between',
+      },
+      'filter-condition': 'Condition'
+    },
+
+    'olv-filter-interval': {
+      'from': '(from)',
+      'to': '(to)'
     },
 
     'olv-toolbar': {

@@ -4,11 +4,27 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0-beta.8] - 2020-04-27
+### Added
+* Support for `base64` values in the `flexberry-file` component.
+* Attributes with selectors for testing in the generated application.
+* The `displayCaptions` mode for the `flexberry-dropdown` component.
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * Ability to set an icon (`iconClasses` property) for a button using the `customButtons` property in components of lists.
+    * Localization of filter conditions.
+    * Additional conditions for filters (empty, not empty, not contains, between).
+    * The `componentForFilterByCondition` action to customize filter component.
+
 ### Fixed
 * The `flexberry-lookup` component in `autocomplete` mode does not clear the input field when the value is not selected.
+* The `flexberry-dropdown` component incorrectly determines the direction after the first opening.
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.4.0-beta.5`.
+
+### Breaking changes
+* Removed `!important` rule for the `display` property from the `hidden` class in addon styles.
+* Changed markup and action for the sidebar toggler in the generated app.
 
 ## [2.4.0-beta.7] - 2020-04-13
 ### Changed

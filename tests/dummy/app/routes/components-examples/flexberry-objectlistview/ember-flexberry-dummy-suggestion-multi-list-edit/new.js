@@ -25,7 +25,7 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
     @property templateName
     @type String
-    @default 'ember-flexberry-dummy-suggestion-edit'
+    @default 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit'
   */
-  templateName: 'ember-flexberry-dummy-suggestion-multi-list-edit'
+  templateName: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit'
 });

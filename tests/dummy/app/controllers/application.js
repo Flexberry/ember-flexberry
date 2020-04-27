@@ -39,17 +39,15 @@ export default Ember.Controller.extend({
       let sidebar = Ember.$('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      Ember.$('.full.height').css({
+        transition: 'width 0.35s ease-in-out 0s',
+        width: sidebar.sidebar('is visible') ? '100%' : `calc(100% - ${sidebar.width()}px)`,
+      });
+
+      Ember.$('.sidebar.icon .text_menu').toggleClass('hidden');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     },
 
     /**
@@ -60,15 +58,10 @@ export default Ember.Controller.extend({
     toggleSidebarMobile() {
       Ember.$('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-      }
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.sidebar.icon').toggleClass('hidden-text');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     }
   },
 

@@ -106,6 +106,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
     @example
       ```
       {
@@ -113,10 +114,12 @@ export default FlexberryBaseComponent.extend({
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
         buttonTitle: '...', // Button title.
-		    iconClasses: '' // Css classes for icon.
+        iconClasses: '' // Css classes for icon.
+        disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```
-    @property customButtonsArray
+
+    @property customButtons
     @type Array
   */
   customButtons: undefined,

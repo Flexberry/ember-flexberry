@@ -181,19 +181,9 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    See {{#crossLink "FlexberryObjectlistviewComponent/customButtons:property"}}{{/crossLink}}.
 
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsArray
+    @property customButtons
     @type Array
   */
   customButtons: undefined,

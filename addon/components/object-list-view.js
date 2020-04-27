@@ -1144,6 +1144,29 @@ export default FlexberryBaseComponent.extend(
         return false;
       }
     },
+
+    /**
+      Called when filter condition in any column was changed by user.
+
+      @method actions.filterConditionChanged
+      @param {Object} filter
+      @param {String} newCondition
+      @param {String} oldCondition
+    */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
+        Ember.set(filter, 'pattern', null);
+      }
+
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
+      let componentForFilterByCondition = this.get('componentForFilterByCondition');
+      if (componentForFilterByCondition) {
+        Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+        Ember.$.extend(true, options, componentForFilterByCondition(newCondition, oldCondition, filter.type));
+      }
+
+      Ember.setProperties(filter.component, options);
+    }
   },
 
   /**
@@ -1794,12 +1817,6 @@ export default FlexberryBaseComponent.extend(
   _addFilterForColumn(column, attr, bindingPath) {
     let relation = attr.kind !== 'attr';
     let attribute = this._getAttribute(attr, bindingPath);
-    let component = this._getFilterComponent(attribute.type, relation);
-    let componentForFilter = this.get('componentForFilter');
-    if (componentForFilter) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
-    }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
@@ -1820,6 +1837,22 @@ export default FlexberryBaseComponent.extend(
       pattern = filters[name].pattern;
       condition = filters[name].condition;
     }
+
+    let component = this._getFilterComponent(type, relation, condition);
+    let componentForFilter = this.get('componentForFilter');
+    if (componentForFilter) {
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
+      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+    }
+
+    let options = this._getFilterComponentByCondition(condition, null, type);
+    let componentForFilterByCondition = this.get('componentForFilterByCondition');
+    if (componentForFilterByCondition) {
+      Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+      Ember.$.extend(true, options, componentForFilterByCondition(condition, null, type));
+    }
+
+    Ember.$.extend(true, component, options);
 
     column.filter = { name, type, pattern, condition, conditions, component };
   },
@@ -1864,17 +1897,41 @@ export default FlexberryBaseComponent.extend(
         return null;
 
       case 'date':
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+        };
       case 'number':
-        return ['eq', 'neq', 'le', 'ge'];
-
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+          'between': this.get('i18n').t('components.object-list-view.filters.between'),
+        };
       case 'string':
-        return ['eq', 'neq', 'like'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'like': this.get('i18n').t('components.object-list-view.filters.like'),
+          'nlike': this.get('i18n').t('components.object-list-view.filters.nlike')
+        };
 
       case 'boolean':
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'nempty': this.get('i18n').t('components.object-list-view.filters.nempty'),
+          'empty': this.get('i18n').t('components.object-list-view.filters.empty'),
+        };
 
       default:
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
+        };
     }
   },
 
@@ -1888,7 +1945,7 @@ export default FlexberryBaseComponent.extend(
   */
   _getFilterComponent(type, relation) {
     let _this = this;
-    let enterClick = function(e) {
+    let enterClick = function (e) {
       if (e.which === 13) {
         _this._refreshList(_this.get('componentName'));
       }
@@ -1947,6 +2004,27 @@ export default FlexberryBaseComponent.extend(
     }
 
     return component;
+  },
+
+  /**
+    Alter filter component depending on condition chosen by user.
+
+    @method _getFilterComponent
+    @param {String} newCondtition
+    @param {String} oldCondition
+    @param {String} type
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponentByCondition(newCondition, oldCondition, type) {
+    if (newCondition === 'between') {
+      return { name: 'olv-filter-interval' };
+    }
+
+    if (oldCondition === 'between') {
+      return { name: 'flexberry-textbox' };
+    }
+
+    return {};
   },
 
   /**

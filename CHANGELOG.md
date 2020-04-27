@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* The `flexberry-lookup` component in `autocomplete` mode does not clear the input field when the value is not selected.
+
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.4.0-beta.5`.
 

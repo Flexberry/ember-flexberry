@@ -839,12 +839,12 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Input focused out (during autocomplete)
-     *
-     * @method actions.onInputFocusOut
-     */
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
     onInputFocusOut() {
-      if (!this.get('value')) {
+      if (!this.get('value') && !this.get('autocompletePersistValue')) {
         this.set('displayValue', null);
       }
     }

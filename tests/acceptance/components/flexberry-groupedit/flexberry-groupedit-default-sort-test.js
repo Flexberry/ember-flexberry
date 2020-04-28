@@ -34,7 +34,7 @@ test(testName, (assert) => {
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     assert.equal(controller.model.id, '2e98a54d-7146-4e61-bb2d-a278796c861e');
-    
+
     let currentSorting = controller.get('sorting')[0];
     let defaultSorting = controller.developerUserSettings.suggestionUserVotesGroupEdit.DEFAULT.sorting;
 
@@ -61,39 +61,43 @@ test(testName, (assert) => {
           click($clearSettingsButton);
           andThen(() => {
             currentSorting = controller.get('sorting')[0];
-            assert.ok(currentSorting.propName === defaultSorting[0].propName, currentSorting.direction === defaultSorting[0].direction, 'default sorting');
+            assert.ok(currentSorting.propName === defaultSorting[0].propName, currentSorting.direction === defaultSorting[0].direction);
 
-            var press = $.Event("click");
+            var press = $.Event('click');
             press.ctrlKey = true;
             press.which = 17;
-            $("body").trigger(press);
+            $('body').trigger(press);
 
             andThen(() => {
-              $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);        
+              $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);
               let done1 = assert.async();
               let timeout = 100;
               Ember.run.later((() => {
                 currentSorting = controller.get('sorting');
-                assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc', currentSorting[1].propName === 'voteType', currentSorting.direction === 'asc', 'sorting changed');
+                assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc',
+                          currentSorting[1].propName === 'voteType', currentSorting.direction === 'asc');
 
                 click($defaultSortingButton);
                 andThen(() => {
                   currentSorting = controller.get('sorting')[0];
-                  assert.ok(currentSorting.propName === defaultSorting[0].propName, currentSorting.direction === defaultSorting[0].direction, 'default sorting');
+                  assert.ok(currentSorting.propName === defaultSorting[0].propName,
+                            currentSorting.direction === defaultSorting[0].direction);
 
                   $("body").trigger(press);
                   andThen(() => {
-                    $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);                  
+                    $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);
                     let done2 = assert.async();
                     let timeout = 100;
                     Ember.run.later((() => {
                       currentSorting = controller.get('sorting');
-                      assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc', currentSorting[1].propName === 'voteType', currentSorting.direction === 'asc', 'sorting changed');
+                      assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc',
+                                currentSorting[1].propName === 'voteType', currentSorting.direction === 'asc');
 
                       click($clearSettingsButton);
                       andThen(() => {
                         currentSorting = controller.get('sorting')[0];
-                        assert.ok(currentSorting.propName === defaultSorting[0].propName, currentSorting.direction === defaultSorting[0].direction, 'default sorting');
+                        assert.ok(currentSorting.propName === defaultSorting[0].propName,
+                                  currentSorting.direction === defaultSorting[0].direction);
                       });
                       done2();
                     }), timeout);

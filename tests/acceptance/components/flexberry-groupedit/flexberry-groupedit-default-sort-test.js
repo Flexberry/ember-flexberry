@@ -83,7 +83,7 @@ test(testName, (assert) => {
                   assert.ok(currentSorting.propName === defaultSorting[0].propName,
                             currentSorting.direction === defaultSorting[0].direction);
 
-                  $("body").trigger(press);
+                  $('body').trigger(press);
                   andThen(() => {
                     $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);
                     let done2 = assert.async();

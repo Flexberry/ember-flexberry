@@ -134,30 +134,62 @@
         {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
       </div>
       <div class="field">
-      {{flexberry-button
-        iconClass="icon-guideline-list"
-        caption=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
-        tooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
-        click=(action "openSidepageFiles")
-        class="sidepage-open"
+      {{flexberry-groupedit
+        componentName="filesGroupEdit"
+        content=model.files
+        mainModelProjection=modelProjection
+        modelProjection=modelProjection.attributes.files
+        orderable=true
+        readonly=readonly
+        flexberryButtonIconClass="icon-guideline-list"
+        flexberryButtonCaption=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
+        flexberryButtonTooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
+        flexberryButtonClass="sidepage-open"
+        modalDialogTitle=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
+        modalDialogUseSidePageMode=true
+        modalDialogUseOkButton=false
+        modalDialogUseCloseButton=false
       }}
       </div>
       <div class="field">
-      {{flexberry-button
-        iconClass="icon-guideline-list"
-        caption=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
-        tooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
-        click=(action "openSidepageUserVotes")
-        class="sidepage-open"
+      {{flexberry-groupedit
+        componentName="suggestionCommentsGroupEdit"
+        content=model.comments
+        mainModelProjection=modelProjection
+        modelProjection=modelProjection.attributes.comments
+        rowClickable=true
+        rowClick="rowClick"
+        editOnSeparateRoute=true
+        editFormRoute=commentsEditRoute
+        saveBeforeRouteLeave=true
+        orderable=true
+        readonly=readonly
+        flexberryButtonIconClass="icon-guideline-list"
+        flexberryButtonCaption=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
+        flexberryButtonTooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
+        flexberryButtonClass="sidepage-open"
+        modalDialogTitle=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
+        modalDialogUseSidePageMode=true
+        modalDialogUseOkButton=false
+        modalDialogUseCloseButton=false
       }}
       </div>
       <div class="field">
-      {{flexberry-button
-        iconClass="icon-guideline-list"
-        caption=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
-        tooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
-        click=(action "openSidepageComments")
-        class="sidepage-open"
+      {{flexberry-groupedit
+        componentName="suggestionUserVotesGroupEdit"
+        content=model.userVotes
+        mainModelProjection=modelProjection
+        modelProjection=modelProjection.attributes.userVotes
+        orderable=true
+        readonly=readonly
+        flexberryButtonIconClass="icon-guideline-list"
+        flexberryButtonCaption=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
+        flexberryButtonTooltip=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
+        flexberryButtonClass="sidepage-open"
+        modalDialogTitle=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
+        modalDialogUseSidePageMode=true
+        modalDialogUseOkButton=false
+        modalDialogUseCloseButton=false
       }}
       </div>
     </div>

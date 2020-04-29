@@ -1,3 +1,18 @@
+{{flexberry-button
+  iconClass=flexberryButtonIconClass
+  caption=flexberryButtonCaption
+  tooltip=flexberryButtonTooltip
+  click=(action set "groupeditSidepageOpen" true)
+  class=flexberryButtonClass
+}}
+{{#if groupeditSidepageOpen}}
+{{#modal-dialog
+  title=modalDialogTitle
+  useSidePageMode=modalDialogUseSidePageMode
+  useOkButton=modalDialogUseOkButton
+  useCloseButton=modalDialogUseCloseButton
+  close=(action set "groupeditSidepageOpen" false)
+}}
 {{groupedit-toolbar
   componentName=componentName
   readonly=readonly
@@ -57,3 +72,5 @@
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
 }}
+{{/modal-dialog}}
+{{/if}}

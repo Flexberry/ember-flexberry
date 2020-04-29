@@ -447,6 +447,16 @@ export default FlexberryBaseComponent.extend({
   */
   fixedHeader: false,
 
+  flexberryButtonIconClass: '',
+  flexberryButtonCaption: '',
+  flexberryButtonTooltip: '',
+  flexberryButtonClass: '',
+
+  modalDialogTitle: '',
+  modalDialogUseSidePageMode: true,
+  modalDialogUseOkButton: false,
+  modalDialogUseCloseButton: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.

@@ -127,33 +127,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       this.set('denyDeleting', null);
 
       this.send('removeModalDialog');
-    },
-
-    openSidepageComments() {
-      this.set('sidepageCommentsIsOpen', true);
-      this.send('showModalDialog', 'modal/ember-flexberry-dummy-suggestion-edit-comments-sidepage', { controller: 'ember-flexberry-dummy-suggestion-edit' });
-    },
-
-    closeSidepageComments() {
-      this.set('sidepageCommentsIsOpen', false);
-    },
-
-    openSidepageFiles() {
-      this.set('sidepageFilesIsOpen', true);
-      this.send('showModalDialog', 'modal/ember-flexberry-dummy-suggestion-edit-files-sidepage', { controller: 'ember-flexberry-dummy-suggestion-edit' });
-    },
-
-    closeSidepageFiles() {
-      this.set('sidepageFilesIsOpen', false);
-    },
-
-    openSidepageUserVotes() {
-      this.set('sidepageUserVotesIsOpen', true);
-      this.send('showModalDialog', 'modal/ember-flexberry-dummy-suggestion-edit-uservotes-sidepage', { controller: 'ember-flexberry-dummy-suggestion-edit' });
-    },
-
-    closeSidepageUserVotes() {
-      this.set('sidepageUserVotesIsOpen', false);
     }
   }
 });

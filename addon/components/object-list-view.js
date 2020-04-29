@@ -1087,21 +1087,12 @@ export default FlexberryBaseComponent.extend(
 
     _selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
-
+      recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
-
         if (selectedRecords.indexOf(recordWithKey.data) === -1) {
           selectedRecords.pushObject(recordWithKey.data);
         }
       } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
         selectedRecords.removeObject(recordWithKey.data);
       }
 

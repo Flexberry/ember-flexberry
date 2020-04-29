@@ -1,5 +1,5 @@
 {{#if doRenderData}}
-  <tr class="{{if record.selected "active"}}{{record.rowConfig.customClass}} {{if (and showAsteriskInRow record.data.hasDirtyAttributes) "flexberry-new-row"}}">
+  <tr class="{{if record.selected "active"}} {{record.rowConfig.customClass}} {{if (and showAsteriskInRow record.data.hasDirtyAttributes) "flexberry-new-row"}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
       {{#each customButtonsInRow as |customButtonInRow|}}

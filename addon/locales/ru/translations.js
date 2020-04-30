@@ -117,7 +117,8 @@ export default {
         'entries': ' записей'
       },
       'search-page-placeholder': '№ страницы',
-      'search-button-text': 'Переход на страницу'
+      'search-button-text': 'Переход на страницу',
+      'pages': ' страниц'
     },
 
     'flexberry-groupedit': {

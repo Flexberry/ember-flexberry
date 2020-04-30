@@ -899,6 +899,24 @@ export default FlexberryBaseComponent.extend({
   */
   customButtonsInRow: undefined,
 
+  /**
+    Show total count pages.
+
+    @property showPagesTotalCount
+    @type Boolean
+    @default false
+  */
+  showPagesTotalCount: false,
+
+  /**
+    Total count pages.
+
+    @property pagesTotalCount
+    @type Number
+    @default null
+  */
+  pagesTotalCount: null,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.

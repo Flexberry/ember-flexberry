@@ -236,6 +236,10 @@ export default Mixin.create({
   */
   queryParams: ['page', 'perPage'],
 
+  pagesTotalCount: computed('perPage', 'recordsTotalCount', function() {
+    return this._getLastPage();
+  }),
+
   actions: {
     /**
       Transition to page with number.

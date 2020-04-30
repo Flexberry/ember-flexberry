@@ -108,6 +108,11 @@
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
+    {{#if (and showPagesTotalCount pagesTotalCount)}}
+    <div class="pages-total-count">
+      {{concat pagesTotalCount (t "components.flexberry-objectlistview.pages")}}
+    </div>
+    {{/if}}
     <div class="ui basic buttons">
       {{#if hasPreviousPage}}
         <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}}>
@@ -134,25 +139,23 @@
         <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}} disabled="disabled">
         </button>
       {{/if}}
-      <div class="ui action input search-field">
-        <div class="block-action-input {{if (and searchPageValue searchPageButtonReadonly) 'red' 'blue' }}">
-          {{input
-            type="number"
-            placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
-            value=searchPageValue
-          }}
-        </div>
-        {{#if searchPageValue}}
-
-          <button
-            class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'blue'}} next-page-button"
-            title={{t "components.flexberry-objectlistview.search-button-text"}}
-            disabled={{searchPageButtonReadonly}}
-            {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
-          </button>
-
-        {{/if}}
+    </div>
+    <div class="ui action input search-field {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      <div class="block-action-input">
+        {{input
+          type="number"
+          placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+          value=searchPageValue
+        }}
       </div>
+      {{#if searchPageValue}}
+        {{flexberry-button
+        iconClass="icon-guideline-arrow-short-right-l"
+        tooltip=(t "components.flexberry-objectlistview.search-button-text")
+        click=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+        class=(concat buttonClass (if searchPageButtonReadonly " disabled red" " primary") " next-page-button")
+        }}
+      {{/if}}
     </div>
     <div class="right menu">
       {{#if (and showShowingEntries recordsTotalCount)}}

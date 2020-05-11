@@ -1194,7 +1194,7 @@ export default FlexberryBaseComponent.extend(
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
+      this.addObserver('content.[]', this, this._contentDidChangeProxy);
     }
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
@@ -1373,7 +1373,7 @@ export default FlexberryBaseComponent.extend(
     For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   willDestroy() {
-    this.removeObserver('content.[]', this, this._contentDidChange);
+    this.removeObserver('content.[]', this, this._contentDidChangeProxy);
 
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
@@ -2527,11 +2527,21 @@ export default FlexberryBaseComponent.extend(
   _searchForContentChange: Ember.observer('searchForContentChange', function() {
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
+      this.addObserver('content.[]', this, this._contentDidChangeProxy);
     } else {
-      this.removeObserver('content.[]', this, this._contentDidChange);
+      this.removeObserver('content.[]', this, this._contentDidChangeProxy);
     }
   }),
+
+  /**
+    Schedules the `_contentDidChange` function to run once in the `render` queue.
+
+    @private
+    @method _contentDidChangeProxy
+  */
+  _contentDidChangeProxy() {
+    Ember.run.scheduleOnce('render', this, this._contentDidChange);
+  },
 
   /**
     It observes changes of model's data that are displayed on component

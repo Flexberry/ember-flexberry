@@ -1182,6 +1182,17 @@ export default folv.extend(
     },
 
     /**
+      Applies filters if the `Enter` key has been pressed.
+
+      @method actions.applyFiltersByEnter
+    */
+    applyFiltersByEnter(e) {
+      if (e.keyCode === 13) {
+        this._refreshList(this.get('componentName'));
+      }
+    },
+
+    /**
       Called when filter condition in any column was changed by user.
 
       @method actions.filterConditionChanged
@@ -2010,46 +2021,29 @@ export default folv.extend(
     @return {Object} Object with parameters for component.
   */
   _getFilterComponent(type) {
-    let _this = this;
-    let enterClick = function (e) {
-      if (e.which === 13) {
-        _this._refreshList(_this.get('componentName'));
-      }
-    };
-
-    let component = {
-      name: undefined,
-      properties: { keyDown: enterClick },
-    };
+    const component = { name: undefined };
 
     switch (type) {
       case 'file':
         break;
 
       case 'string':
-        component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
-        break;
-
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
+        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
-        component.properties = Ember.$.extend(true, component.properties, {
+        component.properties = {
           items: ['true', 'false'],
           class: 'compact fluid',
-        });
+        };
         break;
 
       case 'date':
-        component.name = 'flexberry-textbox';
+        component.name = 'flexberry-simpledatetime';
+        component.properties = { type: 'date' };
         break;
 
       default:
@@ -2057,10 +2051,10 @@ export default folv.extend(
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = Ember.$.extend(true, component.properties, {
+          component.properties = {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
-          });
+          };
         }
 
         break;

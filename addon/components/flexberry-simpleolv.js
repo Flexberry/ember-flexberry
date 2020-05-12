@@ -1194,7 +1194,7 @@ export default folv.extend(
         Ember.set(filter, 'pattern', null);
       }
 
-      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition);
       let componentForFilterByCondition = this.get('componentForFilterByCondition');
       if (componentForFilterByCondition) {
         Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -1905,14 +1905,14 @@ export default folv.extend(
       condition = filters[name].condition;
     }
 
-    let component = this._getFilterComponent(type, relation, condition);
+    let component = this._getFilterComponent(type);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
-    let options = this._getFilterComponentByCondition(condition, null, type);
+    let options = this._getFilterComponentByCondition(condition, null);
     let componentForFilterByCondition = this.get('componentForFilterByCondition');
     if (componentForFilterByCondition) {
       Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -2007,10 +2007,9 @@ export default folv.extend(
 
     @method _getFilterComponent
     @param {String} type
-    @param {Boolean} relation
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponent(type, relation) {
+  _getFilterComponent(type) {
     let _this = this;
     let enterClick = function (e) {
       if (e.which === 13) {
@@ -2077,10 +2076,9 @@ export default folv.extend(
     @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
-    @param {String} type
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponentByCondition(newCondition, oldCondition, type) {
+  _getFilterComponentByCondition(newCondition, oldCondition) {
     if (newCondition === 'between') {
       return { name: 'olv-filter-interval' };
     }

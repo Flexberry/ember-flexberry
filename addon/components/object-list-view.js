@@ -1230,7 +1230,7 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+    Ember.$(window).on(`resize.${this.get('elementId')}`, () => {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
       } else {
@@ -1238,7 +1238,7 @@ export default FlexberryBaseComponent.extend(
           this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
         }
       }
-    }, this));
+    });
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1396,7 +1396,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    Ember.$(window).unbind(`resize.${this.get('componentName')}`);
+    Ember.$(window).off(`resize.${this.get('elementId')}`);
   },
 
   /**

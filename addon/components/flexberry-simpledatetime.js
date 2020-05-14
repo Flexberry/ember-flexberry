@@ -330,25 +330,26 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _flatpickrCreate() {
-    let i18n = this.get('i18n');
-    let locale = this.get('locale');
-    if (i18n && Ember.isBlank(locale)) {
-      locale = i18n.locale;
-    }
+    const timeless = this.get('type') === 'date';
+    const min = this.get('min');
+    const max = this.get('max');
 
-    let options = {
+    const options = {
       altInput: true,
       time_24hr: true,
+      enableTime: !timeless,
       allowInput: true,
       clickOpens: false,
       disableMobile: true,
       altInputClass: 'custom-flatpickr',
-      minDate: this.get('min'),
-      maxDate: this.get('max'),
+      minDate: timeless && min ? moment(min).startOf('day').toDate() : min,
+      maxDate: timeless && max ? moment(max).endOf('day').toDate() : max,
       defaultDate: this.get('value'),
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
-      locale: locale,
+      locale: this.get('locale') || this.get('i18n.locale'),
+      altFormat: timeless ? 'd.m.Y' : 'd.m.Y H:i',
+      dateFormat: timeless ? 'Y-m-d' : 'Y-m-dTH:i',
       onChange: (dates) => {
         this.set('_valueAsDate', dates[0]);
       },
@@ -357,20 +358,10 @@ export default FlexberryBaseComponent.extend({
       },
     };
 
-    let type = this.get('type');
-    if (type === 'datetime-local' || type === 'datetime') {
-      options.enableTime = true;
-      options.altFormat = 'd.m.Y H:i';
-      options.dateFormat = 'Y-m-dTH:i';
-    } else {
-      options.altFormat = 'd.m.Y';
-      options.dateFormat = 'Y-m-d';
-    }
-
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
     Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
-    this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
+    this.$('.custom-flatpickr').mask(timeless ? '99.99.9999' : '99.99.9999 99:99');
     this.$('.custom-flatpickr').keydown(Ember.$.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();

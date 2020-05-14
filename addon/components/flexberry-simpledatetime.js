@@ -350,15 +350,7 @@ export default FlexberryBaseComponent.extend({
       defaultMinute: this.get('defaultMinute'),
       locale: locale,
       onChange: (dates) => {
-        if (dates.length) {
-          if (this.get('_flatpickr.config.enableTime') && Ember.isNone(this.get('_valueAsDate'))) {
-            dates[0].setHours(this.get('defaultHour'));
-            dates[0].setMinutes(this.get('defaultMinute'));
-            this.get('_flatpickr').setDate(dates[0], false);
-          }
-
-          this.set('_valueAsDate', dates[0]);
-        }
+        this.set('_valueAsDate', dates[0]);
       },
       onClose: () => {
         this.set('canClick', true);
@@ -507,10 +499,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.remove
     */
     remove() {
-      let value = this.get('value');
-      if (!Ember.isNone(value) && !this.get('readonly')) {
-        this.get('_flatpickr').clear();
-        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      if (!this.get('readonly')) {
+        const flatpickr = this.get('_flatpickr');
+        const value = this.get('value') || new Date();
+
+        value.setHours(this.get('defaultHour'), this.get('defaultMinute'));
+
+        flatpickr.setDate(value, false);
+        flatpickr.clear();
       }
     }
   }

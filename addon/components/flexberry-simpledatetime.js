@@ -157,11 +157,6 @@ export default FlexberryBaseComponent.extend({
       let minValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_minAsString', this._convertDateToString(minValue));
-      } else {
-        let flatpickr = this.get('_flatpickr');
-        if (flatpickr) {
-          flatpickr.set('minDate', minValue);
-        }
       }
 
       return value;
@@ -182,11 +177,6 @@ export default FlexberryBaseComponent.extend({
       let maxValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_maxAsString', this._convertDateToString(maxValue));
-      } else {
-        let flatpickr = this.get('_flatpickr');
-        if (flatpickr) {
-          flatpickr.set('maxDate', maxValue);
-        }
       }
 
       return value;
@@ -413,11 +403,15 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
+    Observer for reinit flatpickr (defaultHour, defaultMinute, and others, for dynamically updating because set() for this options doesn't update view).
+
+    @method reinitFlatpickrObserver
   */
-  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
-    this._flatpickrDestroy();
-    Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
+  reinitFlatpickrObserver: Ember.observer('type', 'min', 'max', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+    if (!this.get('useBrowserInput') || !this.get('currentTypeSupported')) {
+      this._flatpickrDestroy();
+      Ember.run.scheduleOnce('afterRender', this, this._flatpickrCreate);
+    }
   }),
 
   /**

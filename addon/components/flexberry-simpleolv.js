@@ -1182,6 +1182,17 @@ export default folv.extend(
     },
 
     /**
+      Applies filters if the `Enter` key has been pressed.
+
+      @method actions.applyFiltersByEnter
+    */
+    applyFiltersByEnter(e) {
+      if (e.keyCode === 13) {
+        this._refreshList(this.get('componentName'));
+      }
+    },
+
+    /**
       Called when filter condition in any column was changed by user.
 
       @method actions.filterConditionChanged
@@ -1194,7 +1205,7 @@ export default folv.extend(
         Ember.set(filter, 'pattern', null);
       }
 
-      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition);
       let componentForFilterByCondition = this.get('componentForFilterByCondition');
       if (componentForFilterByCondition) {
         Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -1269,16 +1280,18 @@ export default folv.extend(
   */
   didInsertElement() {
     this._super(...arguments);
+
     let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
     infoModalDialog.modal('setting', 'closable', true);
     this.set('_infoModalDialog', infoModalDialog);
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+
+    Ember.$(window).on(`resize.${this.get('elementId')}`, () => {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
       } else {
         this._setMenuWidth();
       }
-    }, this));
+    });
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1380,7 +1393,7 @@ export default folv.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    Ember.$(window).unbind(`resize.${this.get('componentName')}`);
+    Ember.$(window).off(`resize.${this.get('elementId')}`);
   },
 
   /**
@@ -1905,14 +1918,14 @@ export default folv.extend(
       condition = filters[name].condition;
     }
 
-    let component = this._getFilterComponent(type, relation, condition);
+    let component = this._getFilterComponent(type);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
-    let options = this._getFilterComponentByCondition(condition, null, type);
+    let options = this._getFilterComponentByCondition(condition, null);
     let componentForFilterByCondition = this.get('componentForFilterByCondition');
     if (componentForFilterByCondition) {
       Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -2007,50 +2020,32 @@ export default folv.extend(
 
     @method _getFilterComponent
     @param {String} type
-    @param {Boolean} relation
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponent(type, relation) {
-    let _this = this;
-    let enterClick = function (e) {
-      if (e.which === 13) {
-        _this._refreshList(_this.get('componentName'));
-      }
-    };
-
-    let component = {
-      name: undefined,
-      properties: { keyDown: enterClick },
-    };
+  _getFilterComponent(type) {
+    const component = { name: undefined };
 
     switch (type) {
       case 'file':
         break;
 
       case 'string':
-        component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
-        break;
-
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
+        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
-        component.properties = Ember.$.extend(true, component.properties, {
+        component.properties = {
           items: ['true', 'false'],
           class: 'compact fluid',
-        });
+        };
         break;
 
       case 'date':
-        component.name = 'flexberry-textbox';
+        component.name = 'flexberry-simpledatetime';
+        component.properties = { type: 'date' };
         break;
 
       default:
@@ -2058,10 +2053,10 @@ export default folv.extend(
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = Ember.$.extend(true, component.properties, {
+          component.properties = {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
-          });
+          };
         }
 
         break;
@@ -2077,10 +2072,9 @@ export default folv.extend(
     @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
-    @param {String} type
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponentByCondition(newCondition, oldCondition, type) {
+  _getFilterComponentByCondition(newCondition, oldCondition) {
     if (newCondition === 'between') {
       return { name: 'olv-filter-interval' };
     }

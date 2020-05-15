@@ -1342,6 +1342,9 @@ export default FlexberryBaseComponent.extend(
         $table.colResizable({ disable: true });
       }
 
+      // Remove previous up menu.
+      this.$('.object-list-view-menu .ui.dropdown.bottom').removeClass('bottom');
+
       // The last menu needs will be up.
       this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();

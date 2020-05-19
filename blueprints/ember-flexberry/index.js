@@ -275,6 +275,7 @@ module.exports = {
           { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
           { name: 'ember-moment', target: '7.7.0' },
+          { name: 'ember-test-selectors', target: '2.1.0' }
         ]
       });
     }).then(function () {

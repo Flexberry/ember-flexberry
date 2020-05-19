@@ -144,6 +144,23 @@ export default {
         'plus-button-title': 'Раскрыть',
         'minus-button-title': 'Свернуть',
       },
+      'filters': {
+        'eq': 'Равно',
+        'neq': 'Не равно',
+        'le': 'Меньше',
+        'ge': 'Больше',
+        'like': 'Содержит',
+        'nlike': 'Не содержит',
+        'nempty': 'Заполнен',
+        'empty': 'Не заполнен',
+        'between': 'В интервале',
+      },
+      'filter-condition': 'Условие'
+    },
+
+    'olv-filter-interval': {
+      'from': '(от)',
+      'to': '(до)'
     },
 
     'olv-toolbar': {

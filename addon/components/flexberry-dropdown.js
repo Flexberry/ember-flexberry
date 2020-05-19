@@ -92,8 +92,22 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-dropdown.placeholder'),
 
   /**
-    Flag indicates whether to make checks on selected value or not.
+    Flag indicates whether to display captions for dropdown items.
+    To make it work, "items" property should have following structure:
+    {
+      item1: 'caption for item1',
+      item2: 'caption for item2'
+    }
+    For example, user will see 'caption for item1', but on choose, item1 is set to 'value' property.
 
+    @property displayCaptions
+    @type Boolean
+    @default false
+  */
+  displayCaptions: false,
+
+  /**
+    Flag indicates whether to make checks on selected value or not.
     It has `false` value when component loads data by request by semantic processes.
     It is not recommended to change its value out of addon.
 

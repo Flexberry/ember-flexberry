@@ -104,17 +104,15 @@ export default Controller.extend({
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-        $('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-        $('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      Ember.$('.full.height').css({
+        transition: 'width 0.35s ease-in-out 0s',
+        width: sidebar.sidebar('is visible') ? '100%' : `calc(100% - ${sidebar.width()}px)`,
+      });
+
+      Ember.$('.sidebar.icon .text_menu').toggleClass('hidden');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     },
 
     /**
@@ -125,15 +123,10 @@ export default Controller.extend({
     toggleSidebarMobile() {
       $('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-      }
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.sidebar.icon').toggleClass('hidden-text');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     }
   }
 });

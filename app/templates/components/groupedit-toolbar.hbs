@@ -43,7 +43,7 @@
 
 {{#each customButtons as |customButton|}}
   <button
-    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} {{if customButton.iconClasses " icon" ""}} custom button"
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses}} {{if customButton.iconClasses "icon"}} custom button"
     title={{if customButton.buttonTitle customButton.buttonTitle}}
     disabled={{customButton.disabled}}
     {{action "customButtonAction" customButton.buttonAction}}>

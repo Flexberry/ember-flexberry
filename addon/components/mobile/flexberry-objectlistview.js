@@ -133,5 +133,14 @@ export default FlexberryObjectlistview.extend({
       componentName: 'object-list-view-single-column-cell',
       componentProperties: null
     });
-  }
+  },
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default true
+  */
+  columnsWidthAutoresize: true,
 });

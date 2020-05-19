@@ -13,6 +13,7 @@ if (lookupValueField) { %>
       title=(<%= caption %>)
       readonly=<%= readonly %>
       componentName="<%= name %>Lookup"
+      data-test-<%= entityName %>-<%= dashedName %>=true
     }}
     {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
   </div>

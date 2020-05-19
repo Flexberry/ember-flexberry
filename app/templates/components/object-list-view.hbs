@@ -89,12 +89,14 @@
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}} class="overflowed-cell">
             {{#if column.filter.conditions}}
-              {{component "flexberry-dropdown"
+              {{flexberry-dropdown
                 value=column.filter.condition
                 items=column.filter.conditions
+                displayCaptions=true
                 class="compact fluid"
-                placeholder=""
+                placeholder=(t "components.object-list-view.filter-condition")
                 needChecksOnValue=false
+                onChange=(action "filterConditionChanged" column.filter)
               }}
             {{/if}}
           </td>
@@ -103,7 +105,7 @@
           <td rowspan="1"></td>
         {{/if}}
       </tr>
-      <tr class="object-list-view-filters">
+      <tr class="object-list-view-filters" onkeydown={{action "applyFiltersByEnter"}}>
         {{#if showHelperColumn}}
           <td rowspan="1"></td>
         {{/if}}
@@ -112,8 +114,11 @@
             {{#if column.filter.component.name}}
               {{component column.filter.component.name
                 value=column.filter.pattern
+                readonly=(or
+                  (eq column.filter.condition "empty")
+                  (eq column.filter.condition "nempty")
+                )
                 dynamicProperties=column.filter.component.properties
-                key-down=(action "keyDownFilterAction")
               }}
             {{/if}}
           </td>

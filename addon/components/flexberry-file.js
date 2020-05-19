@@ -628,7 +628,7 @@ export default FlexberryBaseComponent.extend({
   didReceiveAttrs() {
     this._super(...arguments);
     if (this.get('base64Value')) {
-      Ember.assert(`If you use base64 files, properties "base64FileName" and "base64FileExtension" can't be null or undefined`,
+      assert(`If you use base64 files, properties "base64FileName" and "base64FileExtension" can't be null or undefined`,
       (this.get('base64FileName') && this.get('base64FileExtension')));
       this.$('.flexberry-file-file-input').change();
     }

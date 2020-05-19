@@ -3,16 +3,11 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import { set } from '@ember/object';
-import Condition from 'ember-flexberry-data/query/condition';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { DatePredicate } from 'ember-flexberry-data/query/predicate';
-import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
-import { isNone } from '@ember/utils';
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+
 import { predicateForFilter } from 'ember-flexberry/utils/filter';
+
+import Condition from 'ember-flexberry-data/query/condition';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Mixin for route, that restrictions on the list form.

@@ -3,7 +3,7 @@
 */
 import $ from 'jquery';
 import RSVP from 'rsvp';
-import EmberObject, { get, set, computed, observer } from '@ember/object';
+import EmberObject, { get, set, setProperties, computed, observer } from '@ember/object';
 import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { A, isArray } from '@ember/array';
@@ -1151,17 +1151,17 @@ export default FlexberryBaseComponent.extend(
     */
     filterConditionChanged(filter, newCondition, oldCondition) {
       if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
-        Ember.set(filter, 'pattern', null);
+        set(filter, 'pattern', null);
       }
 
       let options = this._getFilterComponentByCondition(newCondition, oldCondition);
       let componentForFilterByCondition = this.get('componentForFilterByCondition');
       if (componentForFilterByCondition) {
-        Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
-        Ember.$.extend(true, options, componentForFilterByCondition(newCondition, oldCondition, filter.type));
+        assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+        $.extend(true, options, componentForFilterByCondition(newCondition, oldCondition, filter.type));
       }
 
-      Ember.setProperties(filter.component, options);
+      setProperties(filter.component, options);
     }
   },
 
@@ -1230,7 +1230,7 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    Ember.$(window).on(`resize.${this.get('elementId')}`, () => {
+    $(window).on(`resize.${this.get('elementId')}`, () => {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
       } else {
@@ -1396,7 +1396,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    Ember.$(window).off(`resize.${this.get('elementId')}`);
+    $(window).off(`resize.${this.get('elementId')}`);
   },
 
   /**
@@ -1842,18 +1842,18 @@ export default FlexberryBaseComponent.extend(
     let component = this._getFilterComponent(type);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+      assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
+      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
     }
 
     let options = this._getFilterComponentByCondition(condition, null);
     let componentForFilterByCondition = this.get('componentForFilterByCondition');
     if (componentForFilterByCondition) {
-      Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
-      Ember.$.extend(true, options, componentForFilterByCondition(condition, null, type));
+      assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+      $.extend(true, options, componentForFilterByCondition(condition, null, type));
     }
 
-    Ember.$.extend(true, component, options);
+    $.extend(true, component, options);
 
     column.filter = { name, type, pattern, condition, conditions, component };
   },
@@ -1957,7 +1957,6 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'boolean': {
-        let itemsArray = ['true', 'false'];
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
@@ -2528,7 +2527,7 @@ export default FlexberryBaseComponent.extend(
     @method _contentDidChangeProxy
   */
   _contentDidChangeProxy() {
-    Ember.run.scheduleOnce('render', this, this._contentDidChange);
+    scheduleOnce('render', this, this._contentDidChange);
   },
 
   /**

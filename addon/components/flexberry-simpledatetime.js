@@ -5,6 +5,7 @@
 import { computed, observer } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
 import $ from 'jquery';
+import moment from 'moment';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
@@ -361,10 +362,10 @@ export default FlexberryBaseComponent.extend({
     };
 
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(timeless ? '99.99.9999' : '99.99.9999 99:99');
-    this.$('.custom-flatpickr').keydown(Ember.$.proxy(function (e) {
+    this.$('.custom-flatpickr').keydown($.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._validationDateTime();
@@ -390,10 +391,10 @@ export default FlexberryBaseComponent.extend({
 
     @method reinitFlatpickrObserver
   */
-  reinitFlatpickrObserver: Ember.observer('type', 'min', 'max', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpickrObserver: observer('type', 'min', 'max', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
     if (!this.get('useBrowserInput') || !this.get('currentTypeSupported')) {
       this._flatpickrDestroy();
-      Ember.run.scheduleOnce('afterRender', this, this._flatpickrCreate);
+      scheduleOnce('afterRender', this, this._flatpickrCreate);
     }
   }),
 

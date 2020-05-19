@@ -4,7 +4,6 @@
 import $ from 'jquery';
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
-import { isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
@@ -157,13 +156,25 @@ export default FlexberryBaseComponent.extend({
   */
   value: computed('_value', 'items', {
     get() {
-      let valueKey = this.get('_value');
+      const valueKey = this.get('_value');
+
+      if (this.get('displayCaptions')) {
+        return valueKey;
+      }
 
       return valueKey ? this.get(`items.${valueKey}`) : undefined;
     },
     set(key, value, oldValue) {
-      let items = this.get('items');
+      const items = this.get('items');
       if (items && value && value !== oldValue) {
+        if (this.get('displayCaptions')) {
+          if (this.get('needChecksOnValue') && !items.hasOwnProperty(value)) {
+            throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
+          }
+
+          return this.set('_value', value);
+        }
+
         let valueKey;
         for (let key in items) {
           if (items.hasOwnProperty(key) && items[key] === value) {
@@ -182,7 +193,8 @@ export default FlexberryBaseComponent.extend({
         this.$().dropdown('clear');
       }
 
-      return value;
+      // Save value for use with displayCaptions specified later.
+      return this.set('_value', value);
     },
   }),
 
@@ -193,7 +205,11 @@ export default FlexberryBaseComponent.extend({
     @type Any
     @readOnly
   */
-  text: computed.or('value', 'placeholder').readOnly(),
+  text: computed('_value', 'items', 'placeholder',function () {
+    const value = this.get('_value');
+
+    return value ? this.get(`items.${value}`) : this.get('placeholder');
+  }).readOnly(),
 
   /**
     See [EmberJS API](https://emberjs.com/api/).
@@ -205,12 +221,17 @@ export default FlexberryBaseComponent.extend({
 
     let settings = $.extend({
       action: 'select',
-      onChange: (value) => {
+      onChange: (newValue) => {
         run(() => {
-          if (this.get('_value') !== value) {
-            this.set('_value', value);
-            if (!isEmpty(this.get('onChange'))) {
-              this.get('onChange')(this.get('value'));
+          const currentValue = this.get('_value');
+          if (currentValue !== newValue) {
+            const oldValue = this.get('displayCaptions') ? currentValue : this.get('value');
+
+            this.set('_value', newValue);
+
+            const onChange = this.get('onChange');
+            if (typeof onChange === 'function') {
+              onChange(this.get('value'), oldValue);
             }
           }
         });

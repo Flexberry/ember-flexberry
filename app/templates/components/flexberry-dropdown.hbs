@@ -11,6 +11,6 @@
 <div class="menu">
   {{yield}}
   {{#each-in items as |key itemValue|}}
-    <div class="item {{if (eq value itemValue) "active selected"}}" data-value="{{key}}">{{itemValue}}</div>
+    <div class="item {{if (eq value (if displayCaptions key itemValue)) "active selected"}}" data-value="{{key}}">{{itemValue}}</div>
   {{/each-in}}
 </div>

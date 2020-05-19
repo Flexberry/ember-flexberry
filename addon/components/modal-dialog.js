@@ -163,8 +163,17 @@ export default Component.extend({
           /* eslint-enable ember/closure-actions */
         });
       },
+      onDeny: () => {
+        run(() => {
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('close'); //TODO
+          /* eslint-enable ember/closure-actions */
+          $(this).remove();
+        });
+      }
     }, this.get('settings'));
 
+    this.$().modal(settings).modal('attach events', '.cancel.button');
     this.$().modal(settings).modal('show');
   },
 });

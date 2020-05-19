@@ -417,6 +417,12 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
+    const model = this.get('model');
+    if (!model.get('validations.isValid')) {
+      this.send('error', new Error(model.get('validations.message')));
+      return;
+    } 
+
     this.onSaveActionStarted();
     this.get('appState').loading();
 
@@ -448,7 +454,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     };
 
     let savePromise;
-    const model = this.get('model');
 
     // This is possible when using offline mode.
     const agragatorModel = getCurrentAgregator.call(this);

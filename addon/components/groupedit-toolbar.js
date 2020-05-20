@@ -137,15 +137,31 @@ export default FlexberryBaseComponent.extend({
       }
 
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+      let data = {
+        cancelDelete: false
+      };
+
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+  
+        possiblePromise = confirmDeleteRows(data);
+  
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
           return;
         }
       }
 
       let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          if (!data.cancelDelete) {
+            this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+          }
+        });
+      } else {
+        this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      }
     },
 
     /**

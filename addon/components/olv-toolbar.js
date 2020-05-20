@@ -551,27 +551,29 @@ export default FlexberryBaseComponent.extend({
     */
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+      let data = {
+        cancelDelete: false
+      };
+
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+  
+        possiblePromise = confirmDeleteRows(data);
+  
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          if (!data.cancelDelete) {
+            this._confirmDeleteRows();
+          }
+        });
       } else {
-        let modelName = this.get('modelController.modelProjection.modelName');
-
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: modelName
-        };
-
-        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -1062,5 +1064,29 @@ export default FlexberryBaseComponent.extend({
 
     const itemsNames = Ember.A(Object.keys(itemsNameList)).sortBy('name');
     return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect'))
+    {
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get('modelController.modelProjection.modelName');
+
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: modelName
+      };
+
+      this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+    }
   }
 });

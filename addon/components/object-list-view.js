@@ -992,14 +992,30 @@ export default FlexberryBaseComponent.extend(
       }
 
       let confirmDeleteRow = this.get('confirmDeleteRow');
+      let possiblePromise = null;
+      let data = {
+        cancelDelete: false
+      };
+
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow()) {
+  
+        possiblePromise = confirmDeleteRow(data);
+  
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
           return;
         }
       }
 
-      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          if (!data.cancelDelete) {
+            this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+          }
+        });
+      } else {
+        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      }
     },
 
     /**

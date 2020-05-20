@@ -34,6 +34,16 @@ export default EditFormController.extend({
         Ember.set(rowConfig, 'canBeDeleted', false);
       }
     },
+
+    /**
+      Confirm delete rows.
+    */
+    confirmDeleteRows(data) {
+      return new Ember.RSVP.Promise((resolve) => {
+        data.cancelDelete=true;
+        resolve();
+      });
+    }
   },
 
 });

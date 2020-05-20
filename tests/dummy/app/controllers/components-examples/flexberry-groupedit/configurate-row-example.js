@@ -40,7 +40,7 @@ export default EditFormController.extend({
     */
     confirmDeleteRows(data) {
       return new Ember.RSVP.Promise((resolve) => {
-        data.cancelDelete=true;
+        data.cancelDelete = true;
         resolve();
       });
     }

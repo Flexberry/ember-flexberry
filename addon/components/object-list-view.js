@@ -999,9 +999,9 @@ export default FlexberryBaseComponent.extend(
 
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-  
+
         possiblePromise = confirmDeleteRow(data);
-  
+
         if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
           return;
         }

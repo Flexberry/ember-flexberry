@@ -238,7 +238,7 @@ module.exports = {
     }).then(function() {
       return _this.addBowerPackagesToProject([
         { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
+        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.6.3' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
@@ -248,9 +248,14 @@ module.exports = {
     }).then(function() {
       return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
+      return _this.addAddonToProject({ name: 'ember-moment', target: '6.0.0' }).catch(function () {
+        return _this.removePackageFromProject('ember-cli-moment-shim').then(function () {
+          return _this.addAddonToProject({ name: 'ember-cli-moment-shim', target: '2.2.1' });
+        });
+      });
+    }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
           { name: 'broccoli-jscs', target: '1.2.2' },

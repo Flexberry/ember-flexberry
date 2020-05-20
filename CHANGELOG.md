@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-dropdown` value doesn't change on first selection.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.4.0-beta.1`.
+
 ## [2.4.0] - 2020-05-18
 ### Added
 * Attributes with selectors for testing in the generated application.

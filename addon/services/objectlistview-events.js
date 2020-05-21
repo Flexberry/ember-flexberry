@@ -331,7 +331,7 @@ export default Service.extend(Evented, {
     @param {String} componentName Component name.
   */
   setLimitFunction(limitFunction, componentName) {
-    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
+    this.get('currentLimitFunctions')[componentName] = limitFunction instanceof BasePredicate ? limitFunction : undefined;
   },
 
   /**
@@ -342,7 +342,7 @@ export default Service.extend(Evented, {
     @return {BasePredicate} Current limit function.
   */
   getLimitFunction(componentName) {
-    return this.get(`currentLimitFunctions.${componentName}`);
+    return this.get('currentLimitFunctions')[componentName];
   },
 
   /**

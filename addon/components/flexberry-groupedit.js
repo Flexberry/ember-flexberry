@@ -718,6 +718,7 @@ export default FlexberryBaseComponent.extend({
       ```
 
     @method confirmDeleteRow
+    @param {Object} data selected row data.
     @return {Boolean} If `true` then delete row, else cancel.
   */
   confirmDeleteRow: undefined,
@@ -749,6 +750,7 @@ export default FlexberryBaseComponent.extend({
       ```
 
     @method confirmDeleteRows
+    @param {Object} data selected rows data.
     @return {Boolean} If `true` then delete selected rows, else cancel.
   */
   confirmDeleteRows: undefined,

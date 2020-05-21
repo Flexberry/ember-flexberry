@@ -325,6 +325,13 @@ Ember.$.extend(true, translations, {
         }
       },
 
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
+      },
+
       'footer': {
         'application-name': 'Тестовый стенд ember-flexberry',
         'application-version': {

@@ -1213,6 +1213,7 @@ export default FlexberryBaseComponent.extend({
       ```
 
     @method confirmDeleteRow
+    @param {Object} data selected row data.
     @return {Boolean} If `true` then delete row, else cancel.
   */
   confirmDeleteRow: undefined,

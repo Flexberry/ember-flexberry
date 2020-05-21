@@ -881,7 +881,6 @@ export default folv.extend(
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
 
-        let modelName = this.get('modelProjection.modelName');
         possiblePromise = confirmDeleteRows();
 
         if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {

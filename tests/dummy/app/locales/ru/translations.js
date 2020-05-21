@@ -1031,6 +1031,7 @@ $.extend(true, translations, {
       'sign-up-caption': 'Или зарегистрироваться',
       'enter-login-caption': 'Введите логин',
       'enter-password-caption': 'Введите пароль',
+      'login-using-caption': 'Войти в систему с помощью',
       'reset-password-caption': 'Забыли пароль?',
       'login-button-caption': 'Войти'
     },

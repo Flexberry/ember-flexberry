@@ -996,6 +996,7 @@ $.extend(true, translations, {
       'sign-up-caption': 'Or register',
       'enter-login-caption': 'Enter login',
       'enter-password-caption': 'Enter password',
+      'login-using-caption': 'login using',
       'reset-password-caption': 'Forgot your password?',
       'login-button-caption': 'Login'
     },

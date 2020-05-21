@@ -417,7 +417,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
-    this.validate().then(() => {
+    return this.validate().then(() => {
       this.onSaveActionStarted();
       this.get('appState').loading();
 

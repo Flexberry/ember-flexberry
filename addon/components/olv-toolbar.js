@@ -552,25 +552,20 @@ export default FlexberryBaseComponent.extend({
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
       let possiblePromise = null;
-      let data = {
-        cancelDelete: false
-      };
 
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
 
-        possiblePromise = confirmDeleteRows(data);
+        possiblePromise = confirmDeleteRows();
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
       if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
         possiblePromise.then(() => {
-          if (!data.cancelDelete) {
-            this._confirmDeleteRows();
-          }
+          this._confirmDeleteRows();
         });
       } else {
         this._confirmDeleteRows();

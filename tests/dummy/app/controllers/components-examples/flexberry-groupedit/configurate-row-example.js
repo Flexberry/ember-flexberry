@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import { translationMacro as t } from 'ember-i18n';
 
 export default EditFormController.extend({
 
@@ -37,11 +38,18 @@ export default EditFormController.extend({
 
     /**
       Confirm delete rows.
+
+      @param {Object} data Row data.
     */
     confirmDeleteRows(data) {
-      return new Ember.RSVP.Promise((resolve) => {
-        data.cancelDelete = true;
-        resolve();
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        const message = this.get('i18n').t('forms.components-examples.flexberry-groupedit.configurate-row-example.confirm');
+
+        if (confirm(message)) {
+          resolve();
+        } else {
+          reject();
+        }
       });
     }
   },

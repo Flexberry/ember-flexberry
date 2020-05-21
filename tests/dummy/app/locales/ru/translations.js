@@ -958,7 +958,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

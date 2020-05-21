@@ -789,14 +789,25 @@ export default folv.extend(
       }
 
       let confirmDeleteRow = this.get('confirmDeleteRow');
+      let possiblePromise = null;
+
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow()) {
+
+        possiblePromise = confirmDeleteRow(recordWithKey.data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
-      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+        });
+      } else {
+        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      }
     },
 
     /**
@@ -866,25 +877,21 @@ export default folv.extend(
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
       let possiblePromise = null;
-      let data = {
-        cancelDelete: false
-      };
 
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
 
-        possiblePromise = confirmDeleteRows(data);
+        let modelName = this.get('modelProjection.modelName');
+        possiblePromise = confirmDeleteRows();
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancelDelete) {
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
       if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
         possiblePromise.then(() => {
-          if (!data.cancelDelete) {
-            this._confirmDeleteRows();
-          }
+          this._confirmDeleteRows();
         });
       } else {
         this._confirmDeleteRows();
@@ -3218,11 +3225,10 @@ export default folv.extend(
   _confirmDeleteRows() {
     let componentName = this.get('componentName');
 
-    if (!this.get('allSelect'))
-    {
+    if (!this.get('allSelect')) {
       this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
     } else {
-      let modelName = this.get('modelController.modelProjection.modelName');
+      let modelName = this.get('modelProjection.modelName');
 
       let filterQuery = {
         predicate: this.get('currentController.filtersPredicate'),

@@ -932,7 +932,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Configurate rows'
+          'caption': 'Flexberry-groupedit. Configurate rows',
+          'confirm': 'Are you sure ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',

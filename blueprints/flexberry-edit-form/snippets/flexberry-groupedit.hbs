@@ -9,5 +9,5 @@
       orderable=false
       class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "message")}}
   </div>

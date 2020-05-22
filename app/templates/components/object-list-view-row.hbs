@@ -89,7 +89,7 @@
     {{#each columns as |column index|}}
       <td
         {{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
-        class="field {{if (and showValidationMessages (v-get record.data column.propName "isInvalid")) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+        class="field {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
@@ -97,6 +97,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
+              class=(if (and showValidationMessages (v-get record.data.column propName "isInvalid")) "error")
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
@@ -112,6 +113,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
+              class=(if (and showValidationMessages (v-get record.data.column propName "isInvalid")) "error")
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")

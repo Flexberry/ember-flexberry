@@ -1204,7 +1204,7 @@ export default FlexberryBaseComponent.extend({
       ...
       actions: {
         ...
-        confirmDeleteRow() {
+        confirmDeleteRow(data) {
           return confirm('You sure?');
         }
         ...
@@ -1213,6 +1213,7 @@ export default FlexberryBaseComponent.extend({
       ```
 
     @method confirmDeleteRow
+    @param {Object} data selected row data.
     @return {Boolean} If `true` then delete row, else cancel.
   */
   confirmDeleteRow: undefined,
@@ -1235,7 +1236,7 @@ export default FlexberryBaseComponent.extend({
       ...
       actions: {
         ...
-        confirmDeleteRows() {
+        confirmDeleteRows(data) {
           return confirm('You sure?');
         }
         ...

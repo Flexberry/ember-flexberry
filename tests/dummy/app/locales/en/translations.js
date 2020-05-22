@@ -304,6 +304,13 @@ Ember.$.extend(true, translations, {
         }
       },
 
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-row-caption': 'Delete row ?',
+        'delete-rows-caption': 'Delete selected rows ?',
+      },
+
       'footer': {
         'application-name': 'Test stand for ember-flexberry',
         'application-version': {
@@ -932,7 +939,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Configurate rows'
+          'caption': 'Flexberry-groupedit. Configurate rows',
+          'confirm': 'Are you sure ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',

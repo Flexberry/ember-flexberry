@@ -325,6 +325,13 @@ Ember.$.extend(true, translations, {
         }
       },
 
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
+      },
+
       'footer': {
         'application-name': 'Тестовый стенд ember-flexberry',
         'application-version': {
@@ -958,7 +965,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

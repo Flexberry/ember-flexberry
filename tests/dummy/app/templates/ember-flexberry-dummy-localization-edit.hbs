@@ -24,13 +24,14 @@
   </div>
   <div class="ui one column grid stackable">
     <div class="column">
-      <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.name
+          class=(if (v-get validationObject "name" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
       </div>
     </div>
   </div>

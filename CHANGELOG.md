@@ -3,8 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-* Change confirm delete rows actions on async.
+
+## [2.5.0-beta.0] - 2020-05-22
+### Added
+* In all components of lists:
+    * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
+    * The `confirmDeleteRow` action gets the record to be deleted as the first parameter.
+
+### Fixed
+* The modal window settings for the `flexberry-lookup` component specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
 
 ## [2.4.0] - 2020-05-18
 ### Added

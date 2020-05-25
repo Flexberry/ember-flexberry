@@ -34,21 +34,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   title: undefined,
 
   /**
-    Size of Semantic-UI modal.
-    [More info](http://semantic-ui.com/modules/modal.html#size).
-
-    Possible variants:
-    - **small**
-    - **large**
-    - **fullscreen**
-
-    @property sizeClass
-    @type String
-    @default 'small'
-  */
-  sizeClass: 'small',
-
-  /**
     Current lookup selected record.
     It is used to highlight selected record.
 
@@ -213,7 +198,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         hierarchyPaging: this.get('hierarchyPaging'),
 
         title: this.get('title'),
-        sizeClass: this.get('sizeClass'),
         saveTo: this.get('saveTo'),
         currentLookupRow: this.get('currentLookupRow'),
         customPropertiesData: this.get('customPropertiesData'),

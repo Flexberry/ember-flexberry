@@ -128,15 +128,10 @@ export default Controller.extend({
     toggleSidebarMobile() {
       $('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
-        $('.sidebar.icon.text-menu-show').removeClass('hidden');
-        $('.sidebar.icon.text-menu-hide').addClass('hidden');
-        $('.bgw-opacity').addClass('hidden');
-      } else {
-        $('.sidebar.icon.text-menu-show').addClass('hidden');
-        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        $('.bgw-opacity').removeClass('hidden');
-      }
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.sidebar.icon').toggleClass('hidden-text');
+      $('.bgw-opacity').toggleClass('hidden');
     }
   }
 });

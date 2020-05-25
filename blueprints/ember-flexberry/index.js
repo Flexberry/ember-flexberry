@@ -281,7 +281,7 @@ module.exports = {
       return _this.addBowerPackagesToProject([
         { name: 'devicejs', target: '0.2.7' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
-        { name: 'semantic-ui', target: '2.2.14' },
+        { name: 'semantic-ui', target: '2.4.1' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.3.4' },
         { name: 'js-beautify', target: '1.6.4' },
@@ -295,6 +295,7 @@ module.exports = {
           { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
           { name: 'ember-moment', target: '7.7.0' },
+          { name: 'ember-test-selectors', target: '2.1.0' }
         ]
       });
     }).then(function () {

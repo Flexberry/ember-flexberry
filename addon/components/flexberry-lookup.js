@@ -893,6 +893,17 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       /* eslint-disable ember/closure-actions */
       this.sendAction('preview', previewData);
       /* eslint-enable ember/closure-actions */
+    },
+
+    /**
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
+    onInputFocusOut() {
+      if (!this.get('value') && !this.get('autocompletePersistValue')) {
+        this.set('displayValue', null);
+      }
     }
   },
 

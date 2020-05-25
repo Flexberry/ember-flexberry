@@ -1,4 +1,4 @@
-<tr class="{{record.rowConfig.customClass}}">
+<tr class="{{if record.selected "active"}} {{record.rowConfig.customClass}}">
   <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
     <div class="hidden">{{record.key}}</div>
     {{#if showHelperColumn}}

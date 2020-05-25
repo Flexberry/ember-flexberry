@@ -96,6 +96,19 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
+        },
+
+        // For guideline theme
+        // Settings for flexberry-objectlistview component.
+        flexberryObjectlistview: {
+          // Flag indicates whether to side page or usually mode.
+          useSidePageMode: true,
+        },
+
+        // Settings for flexberry-lookup component.
+        flexberryLookup: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
         }
       },
     }

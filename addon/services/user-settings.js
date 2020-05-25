@@ -12,7 +12,6 @@ import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { isNone } from '@ember/utils';
-import { set } from '@ember/object';
 import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -341,19 +340,19 @@ export default Service.extend({
     @method createDefaultUserSetting
     @param {String} componentName
    */
-  createDefaultUserSetting(componentName) {
-    if (!(this.exists())) {
-      set(this, `currentUserSettings.${this.currentAppPage}`, {});
-    }
+   createDefaultUserSetting(componentName) {
+     if (!(this.exists())) {
+       this.currentUserSettings[this.currentAppPage] = {};
+     }
 
-    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
-    }
+     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+       this.currentUserSettings[this.currentAppPage][componentName] = {};
+     }
 
-    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-      set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
-    }
-  },
+     if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+       this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
+     }
+   },
 
   /**
    *   Returns current list of userSetting.

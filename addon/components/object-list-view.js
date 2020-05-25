@@ -1070,8 +1070,6 @@ export default FlexberryBaseComponent.extend(
     },
     /* eslint-enable no-unused-vars */
 
-    needReinitResizablePlugin: true,
-
     /**
       This action is called when user select the row.
 
@@ -1081,27 +1079,13 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
-      this.set('needReinitResizablePlugin', false);
-      this.send('_selectRow', recordWithKey, e);
-    },
-
-    _selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
-
+      recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
-
         if (selectedRecords.indexOf(recordWithKey.data) === -1) {
           selectedRecords.pushObject(recordWithKey.data);
         }
       } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
         selectedRecords.removeObject(recordWithKey.data);
       }
 
@@ -1428,15 +1412,13 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
-      if (this.get('needReinitResizablePlugin')) {
-        if (this.get('allowColumnResize')) {
-          this._reinitResizablePlugin();
-        } else {
-          let $table = this.$('table.object-list-view');
-          $table.colResizable({ disable: true });
-        }
+
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$('table.object-list-view');
+        $table.colResizable({ disable: true });
       }
-      this.set('needReinitResizablePlugin', true);
 
       // The last menu needs will be up.
       this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
@@ -2685,7 +2667,7 @@ export default FlexberryBaseComponent.extend(
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
-          this.send('_selectRow', recordWithData, e);
+          this.send('selectRow', recordWithData, e);
         }
       });
       /* eslint-enable no-unused-vars */

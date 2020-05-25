@@ -68,8 +68,8 @@ export default Mixin.create({
       @param isExportExcel Indicates if it's export excel dialog.
       @param immediateExport Indicate if auto export is needed.
     */
-    showConfigDialog(componentName, settingName, isExportExcel = false, immediateExport = false) {
-      this._showConfigDialog(componentName, settingName, this, isExportExcel, immediateExport);
+    showConfigDialog(componentName, settingName, useSidePgeMode=false, isExportExcel = false, immediateExport = false) {
+      this._showConfigDialog(componentName, settingName, useSidePgeMode, this, isExportExcel, immediateExport);
     },
 
     /**
@@ -138,7 +138,7 @@ export default Mixin.create({
     @param immediateExport
     @private
   */
-  _showConfigDialog(componentName, settingName, settingsSource, isExportExcel = false, immediateExport = false) {
+  _showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel = false, immediateExport = false) {
     let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
     let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
     let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
@@ -294,7 +294,7 @@ export default Mixin.create({
     this.send('showModalDialog', 'colsconfig-dialog-content',
       { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
       settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
-      exportParams: exportParams, store: store } }, loadingParams);
+      exportParams: exportParams, store: store, useSidePageMode: useSidePageMode } }, loadingParams);
   },
 
   /**

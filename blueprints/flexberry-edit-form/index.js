@@ -158,12 +158,15 @@ var EditFormBlueprint = /** @class */ (function () {
             if (projAttr.hidden || projAttr.index === -1) {
                 continue;
             }
+
             var snippet = this.loadSnippet(model, projAttr.name);
             var attr = this.findAttr(model, projAttr.name);
             projAttr.readonly = "readonly";
             projAttr.type = attr.type;
+            this.calculateValidatePropertyNames(projAttr);
             this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
         }
+
         this.fillBelongsToAttrs(proj.belongsTo, []);
         var belongsTo, hasMany;
         for (var _b = 0, _c = proj.belongsTo; _b < _c.length; _b++) {
@@ -176,6 +179,7 @@ var EditFormBlueprint = /** @class */ (function () {
             if (propertyLookup) {
                 belongsTo.projection = propertyLookup.projection;
                 belongsTo.readonly = "readonly";
+                this.calculateValidatePropertyNames(belongsTo);
                 this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
             }
         }
@@ -185,6 +189,7 @@ var EditFormBlueprint = /** @class */ (function () {
             hasMany = _e[_d];
             hasMany.readonly = "readonly";
             this.locales.setupEditFormAttribute(hasMany);
+            this.calculateValidatePropertyNames(hasMany);
             this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
         }
     };
@@ -205,6 +210,7 @@ var EditFormBlueprint = /** @class */ (function () {
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
                 this.locales.setupEditFormAttribute(belongsToAttr);
+                this.calculateValidatePropertyNames(belongsToAttr);
                 this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
             }
             this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -234,6 +240,14 @@ var EditFormBlueprint = /** @class */ (function () {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
+    EditFormBlueprint.prototype.calculateValidatePropertyNames = function (attrs) {
+        const name = attrs.name;
+        const lastDotIndex = name.lastIndexOf(".");
+        const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length -1);
+
+        attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
+        attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length -1) : name; 
     };
     return EditFormBlueprint;
 }());

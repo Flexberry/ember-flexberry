@@ -5,7 +5,7 @@
       remove="removeLookupValue"
       value=model.<%= name %><%
 if (lookupValueField) { %>
-      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+      class=(if (v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
       displayAttributeName="<%= lookupValueField %>"
       autocomplete=true<%
 } %>
@@ -14,7 +14,7 @@ if (lookupValueField) { %>
       title=(<%= caption %>)
       readonly=<%= readonly %>
       componentName="<%= name %>Lookup"
-      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+      class=(if (v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "message")}}
   </div>

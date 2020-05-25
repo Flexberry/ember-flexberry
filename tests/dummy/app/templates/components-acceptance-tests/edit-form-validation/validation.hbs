@@ -11,7 +11,7 @@
       value=model.flag
       class=(if (v-get validationObject "flag" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "flag" "message") pointing="left pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "flag" "messages") pointing="left pointing"}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.number-caption"}}</label>
@@ -19,7 +19,7 @@
       value=model.number
       class=(if (v-get validationObject "number" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "number" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "number" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.text-caption"}}</label>
@@ -27,7 +27,7 @@
       value=model.text
       class=(if (v-get validationObject "text" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "text" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
   </div>
   <div class="field">
   <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
@@ -35,12 +35,12 @@
       value=model.longText
       class=(if (v-get validationObject "longText" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "longText" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "longText" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
     <div class="inline fields">
-    {{flexberry-validationmessage error=(v-get validationObject "date" "message") pointing="right pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "date" "messages") pointing="right pointing"}}
     {{flexberry-simpledatetime
       type="date"
       value=model.date
@@ -55,7 +55,7 @@
       value=model.enumeration
       class=(if (v-get validationObject "enumeration" "isInvalid") "error")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "enumeration" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "enumeration" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.file-caption"}}</label>
@@ -65,7 +65,7 @@
       showUploadButton=false
       showDownloadButton=false
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "file" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "file" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
@@ -81,7 +81,7 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "master" "message")}}
+    {{flexberry-validationmessage error=(v-get validationObject "master" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>

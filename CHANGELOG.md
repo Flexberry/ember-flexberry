@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.5.0-beta.0] - 2020-05-22
+## [2.5.0-beta.1] - 2020-05-25
 ### Added
 * In all components of lists:
     * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * The modal window settings for the `flexberry-lookup` component specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
+* The modal window settings for the `flexberry-lookup` component specified through the `modalDialogSettings` property are lost when switching pages.
 
 ## [2.4.0] - 2020-05-18
 ### Added

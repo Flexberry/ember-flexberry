@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-dropdown` value doesn't change on first selection.
 * Methods with componentName in services.
+### Changed
+* Validation check in `flexberry-edit-form` blueprint.
 
 ## [2.4.0-beta.6] - 2020-04-09
 ### Fixed

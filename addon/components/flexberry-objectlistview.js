@@ -57,6 +57,15 @@ export default FlexberryBaseComponent.extend({
   showFiltersInModal: false,
 
   /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryLookup'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
+
+  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -1388,6 +1397,9 @@ export default FlexberryBaseComponent.extend({
       componentName: undefined,
       componentProperties: null,
     });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
   },
 
   /**

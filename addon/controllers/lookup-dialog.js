@@ -291,6 +291,8 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       this.set('filter', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);
+
+      this.set('modalDialogSettings', undefined);
     }
 
     this.set('saveTo', undefined);

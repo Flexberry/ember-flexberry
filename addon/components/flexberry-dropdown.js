@@ -4,7 +4,6 @@
 import $ from 'jquery';
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
-import { isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
@@ -93,8 +92,22 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   placeholder: t('components.flexberry-dropdown.placeholder'),
 
   /**
-    Flag indicates whether to make checks on selected value or not.
+    Flag indicates whether to display captions for dropdown items.
+    To make it work, "items" property should have following structure:
+    {
+      item1: 'caption for item1',
+      item2: 'caption for item2'
+    }
+    For example, user will see 'caption for item1', but on choose, item1 is set to 'value' property.
 
+    @property displayCaptions
+    @type Boolean
+    @default false
+  */
+  displayCaptions: false,
+
+  /**
+    Flag indicates whether to make checks on selected value or not.
     It has `false` value when component loads data by request by semantic processes.
     It is not recommended to change its value out of addon.
 
@@ -144,13 +157,25 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   */
   value: computed('_value', 'items', {
     get() {
-      let valueKey = this.get('_value');
+      const valueKey = this.get('_value');
+
+      if (this.get('displayCaptions')) {
+        return valueKey;
+      }
 
       return valueKey ? this.get(`items.${valueKey}`) : undefined;
     },
     set(key, value, oldValue) {
-      let items = this.get('items');
+      const items = this.get('items');
       if (items && value && value !== oldValue) {
+        if (this.get('displayCaptions')) {
+          if (this.get('needChecksOnValue') && !items.hasOwnProperty(value)) {
+            throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
+          }
+
+          return this.set('_value', value);
+        }
+
         let valueKey;
         for (let key in items) {
           if (items.hasOwnProperty(key) && items[key] === value) {
@@ -169,7 +194,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         this.$().dropdown('clear');
       }
 
-      return value;
+      // Save value for use with displayCaptions specified later.
+      return this.set('_value', value);
     },
   }),
 
@@ -180,7 +206,11 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @type Any
     @readOnly
   */
-  text: computed.or('value', 'placeholder').readOnly(),
+  text: computed('_value', 'items', 'placeholder',function () {
+    const value = this.get('_value');
+
+    return value ? this.get(`items.${value}`) : this.get('placeholder');
+  }).readOnly(),
 
   /**
     @method onShowHide
@@ -199,12 +229,17 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
 
     let settings = $.extend({
       action: 'select',
-      onChange: (value) => {
+      onChange: (newValue) => {
         run(() => {
-          if (this.get('_value') !== value) {
-            this.set('_value', value);
-            if (!isEmpty(this.get('onChange'))) {
-              this.get('onChange')(this.get('value'));
+          const currentValue = this.get('_value');
+          if (currentValue !== newValue) {
+            const oldValue = this.get('displayCaptions') ? currentValue : this.get('value');
+
+            this.set('_value', newValue);
+
+            const onChange = this.get('onChange');
+            if (typeof onChange === 'function') {
+              onChange(this.get('value'), oldValue);
             }
           }
         });

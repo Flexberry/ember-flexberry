@@ -6,22 +6,57 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-dropdown` value doesn't change on first selection.
 * Methods with componentName in services.
+* `flexberry-model` blueprint doesn't import enums.
+
 ### Changed
 * Validation check in `flexberry-edit-form` blueprint.
 
-## [2.4.0-beta.6] - 2020-04-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.4.0-beta.1`.
+
+## [2.4.0] - 2020-05-18
+### Added
+* Attributes with selectors for testing in the generated application.
+* Support for `base64` values in the `flexberry-file` component ([leran more](https://flexberry.github.io/en/ef_file.html#working-with-files-in-the-base64-format)).
+* The `displayCaptions` mode for the `flexberry-dropdown` component.
+* The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
+* The `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * Ability to set an icon (`iconClasses` property) for a button using the `customButtons` property in components of lists.
+    * Localization of filter conditions.
+    * Additional conditions for filters (empty, not empty, not contains, between).
+    * The `componentForFilterByCondition` action to customize filter component.
+    * A parameter that describes the attribute in the `componentForFilter` and `conditionsByType` actions for which it is called.
+* The `LogService` service:
+    * The `errorMessageFilterActive` and `errorMessageFilters` properties for manage the filtering of errors.
+    * The `applicationLogModelName` property, to specify the model for storing logs.
+
 ### Fixed
-* `edit-form` controller:
-    * Fix record saving, when only one detail was changed.
+* Saving on the edit form when only one detail was changed.
+* The `flexberry-dropdown` component incorrectly determines the direction after the first opening.
+* When using limits in the `flexberry-simpledatetime` component with the type of `date`, it is impossible to enter a value equal to the `min` or `max` limits.
+* Window resize event handlers added by the `flexberry-objectlistview` and `flexberry-simpleolv` components are not deleted.
+* The `flexberry-lookup` component:
+    * In `autocomplete` mode does not clear the input field when the value is not selected.
+    * The error with button blocking after closing the columns settings window for the `flexberry-objectlistview` component was repeated if the `folvComponentName` property was specified.
+* The `flexberry-groupedit` component:
+    * Displaying menu in rows.
+    * When using the `fixedHeader` property, the component does not work.
+    * If the `searchForContentChange` property is set to `true`, an error occurs when deleting the aggregator.
+* The `flexberry-objectlistview` component:
+    * Displaying menu in rows.
+    * Switching pages when several components are placed on the form and the mobile version is used.
+    * The `configurateRow` action is not called for nested rows in hierarchical mode.
+    * Buttons for editing and prototyping in the row for the mobile template that were once lost are added to the data column.
+* Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.2`.
-
-## [2.4.0-beta.5] - 2020-04-08
-### Fixed
-* The hook `configurateRow` is not called for nested rows in hierarchical mode in the `flexberry-objectlistview` component.
+* The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the first column to the data column.
+* Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
+* Update dependency on `ember-flexberry-data` to version `2.4.0`.
 
 ### Breaking changes
+* Changed markup and action for the sidebar toggler in the generated app.
+* Removed `!important` rule for the `display` property from the `hidden` class in addon styles.
 * When building a query for export to Excel, the encoding for columns names is used, which allows you to use special characters in them. For compatibility, use the package `NewPlatform.Flexberry.ORM.ODataService` version [`5.1.0-beta16`](https://www.nuget.org/packages/NewPlatform.Flexberry.ORM.ODataService/5.1.0-beta16) or higher.
 
 ## [3.4.0-beta.0] - 2020-04-06
@@ -36,31 +71,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.4.0-beta.0`.
 
-## [2.4.0-beta.4] - 2020-04-06
-### Added
-* The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
-* The `errorMessageFilterActive` and `errorMessageFilters` properties for manage the filtering of errors in the `log` service.
-
-### Fixed
-* The error with button blocking after closing the columns settings window for the `flexberry-objectlistview` component was repeated if the `folvComponentName` property was specified for the `flexberry-lookup` component.
-* Using the `flexberry-groupedit` component with the `fixedHeader` property.
-* Buttons for editing and prototyping in a row for the mobile template of the `flexberry-objectlistview` component that were once lost are added to the data column.
-
-### Changed
-* The delete button in row for the mobile template of the `flexberry-objectlistview` component has been moved from the checkbox column to the data column.
-* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.1`.
-
-## [2.4.0-beta.1] - 2020-03-23
-### Added
-* In actions for customize filters for components of lists, a parameter has been added with a description of the attribute for which the action is called.
-* The `applicationLogModelName` property for the `log` service, to specify the model for storing logs.
-
-### Fixed
-* Displaying menu in rows in the `flexberry-objectlistview` component.
-
-### Changed
-* Properties initialization of `log` service moved to the service's init hook (instead of reopening service in app).
-
 ## [3.3.0] - 2020-03-23
 ### Added
 * Changes from [`2.3.0`](#230---2020-03-10) version.
@@ -71,16 +81,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.3.0`.
-
-* `object-list-view` component:
-    * Toggle title of checkAll buttons.
-
-## [2.4.0-beta.0] - 2020-03-18
-### Fixed
-* Overridden methods in the `LogService` now return promises, as described in the [documentation](https://flexberry.github.io/en/ef_log-service.html).
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.4.0-beta.0`.
 
 ## [2.3.0] - 2020-03-10
 ### Added

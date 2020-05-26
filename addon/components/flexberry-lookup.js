@@ -102,6 +102,15 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   _pageInResultsForAutocomplete: 1,
 
   /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryLookup'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryLookup',
+
+  /**
     Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
 
     @private
@@ -112,6 +121,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       sizeClass: this.get('_sizeClass'),
       useOkButton: false,
       useCloseButton: false,
+      useSidePageMode: this.get('useSidePageMode'),
     }, this.get('modalDialogSettings'));
   }),
 
@@ -883,6 +893,17 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       /* eslint-disable ember/closure-actions */
       this.sendAction('preview', previewData);
       /* eslint-enable ember/closure-actions */
+    },
+
+    /**
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
+    onInputFocusOut() {
+      if (!this.get('value') && !this.get('autocompletePersistValue')) {
+        this.set('displayValue', null);
+      }
     }
   },
 
@@ -906,6 +927,9 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     if (this.get('autofillByLimit')) {
       this._onAutofillByLimit();
     }
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
   },
 
   /**

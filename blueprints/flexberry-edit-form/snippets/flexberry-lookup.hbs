@@ -15,6 +15,7 @@ if (lookupValueField) { %>
       readonly=<%= readonly %>
       componentName="<%= name %>Lookup"
       class=(if (v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
+      data-test-<%= entityName %>-<%= dashedName %>=true
     }}
     {{flexberry-validationmessage error=(v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "message")}}
   </div>

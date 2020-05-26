@@ -34,6 +34,7 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
 }}
 {{object-list-view
   placeholder=placeholder
@@ -74,6 +75,7 @@
   filters=filters
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
+  componentForFilterByCondition=componentForFilterByCondition
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
@@ -98,7 +100,7 @@
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
-  customButtonInRowAction='customButtonInRowAction'
+  customButtonInRowAction="customButtonInRowAction"
   customButtonsInRow=customButtonsInRow
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
@@ -109,50 +111,44 @@
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
-      {{#if hasPreviousPage}}
-        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}}>
-        </button>
-      {{else}}
-        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage componentName}} disabled="disabled">
-        </button>
-      {{/if}}
+      <button
+        type="button"
+        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
+        disabled={{not hasPreviousPage}}
+        {{action "previousPage" this.attrs.previousPage}}>
+      </button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
+        {{else if page.isCurrent}}
+          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
         {{else}}
-          {{#if page.isCurrent}}
-            <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number componentName}}>{{page.number}}</button>
-          {{/if}}
+          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
         {{/if}}
       {{/each}}
-      {{#if hasNextPage}}
-        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}}>
-        </button>
-      {{else}}
-        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage componentName}} disabled="disabled">
+      <button
+        type="button"
+        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
+        disabled={{not hasNextPage}}
+        {{action "nextPage" this.attrs.nextPage}}>
+      </button>
+    </div>
+    <div class="ui action input search-field {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      <div class="block-action-input">
+        {{input
+          type="number"
+          placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+          value=searchPageValue
+        }}
+      </div>
+      {{#if searchPageValue}}
+        <button
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'primary'}} next-page-button"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
         </button>
       {{/if}}
-      <div class="ui action input search-field">
-        <div class="block-action-input {{if (and searchPageValue searchPageButtonReadonly) 'red' 'blue' }}">
-          {{input
-            type="number"
-            placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
-            value=searchPageValue
-          }}
-        </div>
-        {{#if searchPageValue}}
-
-          <button
-            class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'blue'}} next-page-button"
-            title={{t "components.flexberry-objectlistview.search-button-text"}}
-            disabled={{searchPageButtonReadonly}}
-            {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
-          </button>
-
-        {{/if}}
-      </div>
     </div>
     <div class="right menu">
       {{#if (and showShowingEntries recordsTotalCount)}}

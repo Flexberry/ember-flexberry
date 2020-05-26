@@ -15,7 +15,7 @@ var CommonUtils = (function () {
                 ui: undefined,
                 analytics: undefined,
                 project: undefined,
-                paths: ["blueprints"]
+                paths: ["node_modules/ember-flexberry/blueprints"]
             });
             flexberryAddon["install"](addonBlueprintOptions);
         }
@@ -29,7 +29,7 @@ var CommonUtils = (function () {
                 ui: undefined,
                 analytics: undefined,
                 project: undefined,
-                paths: ["blueprints"]
+                paths: ["node_modules/ember-flexberry/blueprints"]
             });
             flexberryAddon["install"](addonBlueprintOptions);
         }

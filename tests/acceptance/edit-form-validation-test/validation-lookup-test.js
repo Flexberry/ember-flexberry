@@ -13,7 +13,7 @@ executeTest('check operation lookup', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = $($('.field.error')[7]);
+    let $validationField = $($('.field')[8]);
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.

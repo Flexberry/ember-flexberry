@@ -84,6 +84,8 @@ export default {
       'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
         'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
 
+      'file-extension-error-message': 'Selected file \'{{fileName}}\' has unavailable extension.',
+
       'upload-file-error-caption': 'File upload error',
       'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
 

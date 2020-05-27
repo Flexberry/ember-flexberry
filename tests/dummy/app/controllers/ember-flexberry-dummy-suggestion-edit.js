@@ -12,6 +12,15 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   parentRoute: 'ember-flexberry-dummy-suggestion-list',
 
   /**
+    Available file extensions for upload. In MIME type format.
+
+    @property availableMimeTypes
+    @type String
+    @default 'text/plain'
+  */
+  availableMimeTypes: 'text/plain',
+
+  /**
     Name of model.comments edit route.
 
     @property commentsEditRoute
@@ -78,6 +87,13 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           cellComponent.componentProperties = {
             readonly: true,
           };
+          break;
+
+        case 'ember-flexberry-dummy-suggestion-file+file':
+          cellComponent.componentProperties = {
+            availableMimeTypes: this.get('availableMimeTypes')
+          };
+          break;
       }
     }
 

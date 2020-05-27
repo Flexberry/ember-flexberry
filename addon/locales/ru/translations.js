@@ -84,6 +84,8 @@ export default {
       'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
         'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} байт.',
 
+      'file-extension-error-message': 'Выбранный файл \'{{fileName}}\' имеет недопустимое расширение.',
+
       'upload-file-error-caption': 'Ошибка отправки файла',
       'upload-file-error-message': 'Отправка файла \'{{fileName}}\' не удалась. {{errorMessage}}',
 

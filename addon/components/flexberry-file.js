@@ -496,6 +496,15 @@ export default FlexberryBaseComponent.extend({
   previewSettings: null,
 
   /**
+    Available file extensions for upload. In MIME type format.
+
+    @property availableMimeTypes
+    @type String
+    @default ''
+  */
+  availableMimeTypes: '',
+
+  /**
     External Base64 string
     @property base64Value
     @type String
@@ -638,6 +647,13 @@ export default FlexberryBaseComponent.extend({
     // jQuery fileupload 'add' callback.
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
+
+      if (!this.availableMimeTypes.includes(selectedFile.type) || selectedFile.type==='') {
+        const fileName = selectedFile.name;
+        this.showFileExtensionErrorModalDialog(fileName);
+        return;
+      }
+
       let maxUploadFileSize = this.get('maxUploadFileSize');
 
       if (!Ember.isNone(maxUploadFileSize)) {
@@ -885,6 +901,25 @@ export default FlexberryBaseComponent.extend({
       fileName: fileName,
       actualFileSize: actualFileSize,
       maxFileSize: maxFileSize,
+    });
+
+    this.showErrorModalDialog(errorCaption, errorContent);
+
+    return errorContent;
+  },
+
+  /**
+    Shows file extension errors if there were some.
+
+    @method showFileExtensionErrorModalDialog
+    @param {String} fileName Added file name.
+    @returns {String} Error content.
+  */
+  showFileExtensionErrorModalDialog(fileName) {
+    let i18n = this.get('i18n');
+    let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
+    let errorContent = i18n.t('components.flexberry-file.file-extension-error-message', {
+      fileName: fileName,
     });
 
     this.showErrorModalDialog(errorCaption, errorContent);

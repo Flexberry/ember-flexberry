@@ -3,40 +3,23 @@
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
-          {{#if showCheckBoxInRow }}
-            {{#if (or readonly allSelect)}}
-              <button
-                class="ui check-all-at-page-button {{buttonClass}} disabled button"
-                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                disabled="disabled"
-                {{action "checkAllAtPage"}}>
-                  <i class="check-square-o icon"></i>
-              </button>
+          {{#if showCheckBoxInRow}}
+            {{#if (not-eq class "groupedit-container")}}
+              <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
+                {{#if checkRowsSettingsItems}}
+                  {{flexberry-menu
+                    items=checkRowsSettingsItems
+                    onItemClick=(action "onCheckRowMenuItemClick")
+                  }}
+                {{/if}}
+              </div>
             {{else}}
               <button
-                class="ui check-all-at-page-button {{buttonClass}} button"
+                class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>
               </button>
-            {{/if}}
-            {{#if (not-eq class "groupedit-container") }}
-              {{#if readonly}}
-                <button
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{/if}}
             {{/if}}
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
@@ -60,14 +43,14 @@
             {{/if}}
             </span>
             {{#if column.sorted}}
-              <div class="object-list-view-order-icon" style="float:right;">
+              <div class="object-list-view-order-icon">
                 {{#if column.sortAscending}}
                   <div title="{{t 'components.object-list-view.sort-ascending'}}">
-                  ▲{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="ascending icon"></i>
                   </div>
                 {{else}}
                   <div title="{{t 'components.object-list-view.sort-descending'}}">
-                  ▼{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="descending icon"></i>
                   </div>
                 {{/if}}
               </div>

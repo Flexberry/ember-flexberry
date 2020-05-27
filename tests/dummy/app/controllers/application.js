@@ -1,10 +1,10 @@
-import $ from 'jquery';
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import { isNone } from '@ember/utils';
 import { computed, observer } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import config from '../config/environment';
+import { isNone } from '@ember/utils';
+import $ from 'jquery';
 
 const version = config.APP.version;
 
@@ -43,16 +43,21 @@ export default Controller.extend({
     toggleSidebar() {
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
 
+      $('.full.height').toggleClass('content-opened');
       $('.full.height').css({
         transition: 'width 0.35s ease-in-out 0s',
-        width: sidebar.sidebar('is visible') ? '100%' : `calc(100% - ${sidebar.width()}px)`,
+        width: `calc(100% - ${sidebar.width()}px)`,
       });
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
+
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**
@@ -67,7 +72,39 @@ export default Controller.extend({
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.sidebar.icon').toggleClass('hidden-text');
       $('.bgw-opacity').toggleClass('hidden');
-    }
+
+      if (!this.get('_hideEventIsAttached')) {
+        $('.ui.sidebar.main.menu').sidebar('attach events', '.ui.sidebar.main.menu .item a', 'hide');
+        this.set('_hideEventIsAttached', true);
+      }
+    },
+
+    /**
+      Осуществляет выход текущего пользователя из приложения и переход к логин-форме.
+
+      @method actions.logout
+    */
+    logout() {
+      this.transitionToRoute('login');
+    },
+
+    onMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case i18n.t('forms.application.header.logout.caption').toString(): {
+          this.send('logout');
+          break;
+        }
+      }
+      return null;
+    },
   },
 
   /**
@@ -174,11 +211,13 @@ export default Controller.extend({
         link: 'index',
         caption: i18n.t('forms.application.sitemap.index.caption'),
         title: i18n.t('forms.application.sitemap.index.title'),
+        icon: 'home',
         children: null
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.application.caption'),
         title: i18n.t('forms.application.sitemap.application.title'),
+        icon: 'clock outline',
         children: [{
           link: 'ember-flexberry-dummy-application-user-list',
           caption: i18n.t('forms.application.sitemap.application.application-users.caption'),
@@ -214,26 +253,31 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),
         title: i18n.t('forms.application.sitemap.log-service-examples.title'),
+        icon: 'thumbs up',
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
-          children: null
+          children: null,
+          icon: 'clock outline'
         }, {
           link: 'log-service-examples/settings-example',
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
-          children: null
+          children: null,
+          icon: 'lock'
         }, {
           link: 'log-service-examples/clear-log-form',
           caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
-          children: null
+          children: null,
+          icon: 'comment outline'
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.lock.caption'),
         title: i18n.t('forms.application.sitemap.lock.caption'),
+        icon: 'lock',
         children: [{
           link: 'new-platform-flexberry-services-lock-list',
           caption: i18n.t('forms.application.sitemap.lock.title'),
@@ -244,6 +288,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
+        icon: 'comment outline',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.caption'),
@@ -598,6 +643,11 @@ export default Controller.extend({
             children: null
           }]
         }, {
+          link: 'components-examples/modal-dialog',
+          caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.modal-dialog.title'),
+          children: null
+        }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
@@ -612,6 +662,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
         title: i18n.t('forms.application.sitemap.integration-examples.title'),
+        icon: 'linkify',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
@@ -632,6 +683,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
         title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
+        icon: 'desktop',
         children: [{
           link: 'user-setting-forms/user-setting-delete',
           caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),
@@ -640,5 +692,25 @@ export default Controller.extend({
         }]
       }]
     };
-  })
+  }),
+
+  /**
+    Application usermenu.
+
+    @property itemsUserMenu
+    @type Object
+  */
+  itemsUserMenu: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let itemsUserMenu = [{
+      icon: 'dropdown icon',
+      title: i18n.t('forms.application.header.profile.caption'),
+      iconAlignment: 'right',
+      items: [{
+        title: i18n.t('forms.application.header.logout.caption'),
+        items: null
+      }]
+    }];
+    return itemsUserMenu
+  }),
 });

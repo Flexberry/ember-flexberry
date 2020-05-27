@@ -209,9 +209,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-simpledatetime.placeholder')'
+    @default 't('components.flexberry-datepicker.placeholder')'
   */
-  placeholder: t('components.flexberry-simpledatetime.placeholder'),
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   /**
     Array CSS class names.
@@ -230,6 +230,14 @@ export default FlexberryBaseComponent.extend({
     @type Array
   */
   scrollSelectors: computed(() => (['.full.height'])),
+
+  /**
+    Namespase for page event.
+
+    @property eventNamespace
+    @type String
+  */
+  eventNamespace: undefined,
 
   /**
     If true, then onClick calling flatpickr.open().
@@ -257,13 +265,20 @@ export default FlexberryBaseComponent.extend({
   removeButton: true,
 
   /**
+    If true, then flatpickr has open button.
+
+    @property openButton
+    @type Bool
+  */
+  openButton: true,
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
     this._super(...arguments);
     if (!(this.get('useBrowserInput') && this.get('currentTypeSupported'))) {
       this._flatpickrCreate();
-      $(this.get('scrollSelectors').join()).scroll(() => this.get('_flatpickr').close());
     }
   },
 
@@ -276,7 +291,10 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     this._flatpickrDestroy();
-    $(this.get('scrollSelectors').join()).unbind('scroll');
+
+    let namespace = this.get('eventNamespace');
+    $(this.get('scrollSelectors').join()).off(`scroll.${namespace}`);
+    $(document).off(`mousedown.${namespace}`);
   },
 
   /**
@@ -350,6 +368,7 @@ export default FlexberryBaseComponent.extend({
       defaultDate: this.get('value'),
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
+      appendTo: $('body > .ember-view').get(0),
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? 'd.m.Y' : 'd.m.Y H:i',
       dateFormat: timeless ? 'Y-m-d' : 'Y-m-dTH:i',
@@ -377,6 +396,16 @@ export default FlexberryBaseComponent.extend({
       this._validationDateTime();
     }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
+
+    let namespace = this.elementId;
+    this.set('eventNamespace', namespace);
+    $(document).on(`mousedown.${namespace}`, (e) => {
+      let clicky = $(e.target);
+      if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
+        this.get('_flatpickr').close();
+      }
+    });
+    $(this.get('scrollSelectors').join()).on(`scroll.${namespace}`, () => this.get('_flatpickr').close());
   },
 
   /**
@@ -500,6 +529,15 @@ export default FlexberryBaseComponent.extend({
         flatpickr.setDate(value, false);
         flatpickr.clear();
       }
+    },
+
+    /**
+      Open flatpickr.
+
+      @method actions.open
+    */
+    open() {
+      this.click();
     }
   }
 });

@@ -8,7 +8,7 @@ $.extend(true, translations, EmberFlexberryTranslations);
 
 $.extend(true, translations, {
   models: {
-<%= modelsImportedProperties %>,
+<%= modelsImportedProperties %>
   },
 
   'application-name': '<%= applicationCaption %>',
@@ -74,7 +74,7 @@ $.extend(true, translations, {
           caption: 'Главная',
           title: ''
         },
-<%= ruApplicationMenu %>,
+<%= ruApplicationMenu %>
       }
     },
 
@@ -86,7 +86,7 @@ $.extend(true, translations, {
       'delete-success-message': 'Объект удален',
       'delete-error-message-caption': 'Ошибка удаления'
     },
-<%= formsImportedProperties %>,
+<%= formsImportedProperties %>
   },
 
 });

@@ -561,7 +561,26 @@ $.extend(true, translations, {
       'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
     },
     'index': {
-      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
+      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!',
+      'components': 'Некоторые компоненты',
+      'log-service': {
+        'title': 'Сервис логирования',
+        'app-log': 'Лог приложения',
+        'settings-example': 'Пример работы с настройками',
+        'log-cleaning': 'Очистка лога'
+      },
+      'users': 'Пользователи приложения',
+      'localization': 'Локализация',
+      'log': 'Лог приложения',
+      'blocking': 'Список блокировок',
+      'search': {
+        'title': 'Поиск',
+        'field-label': 'Название поля',
+        'field-placeholder': 'Фамилия, имя и отчество',
+        'date-field-placeholder': 'ДД.ММ.ГГГГ или выберите в календаре',
+        'button-caption': 'Поиск',
+        'checkbox-label': 'По всем ОСЗ'
+      }
     },
 
     'application': {
@@ -571,7 +590,8 @@ $.extend(true, translations, {
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Использовать сервис сохранения пользовательских настроек'
+            'caption': 'Сохранение настроек',
+            'title': 'Использовать сервис сохранения пользовательских настроек'
           },
           'show-menu': {
             'caption': 'Показать меню'
@@ -589,7 +609,17 @@ $.extend(true, translations, {
         },
         'logout': {
           'caption': 'Выход'
+        },
+        'profile': {
+          'caption': 'Личный кабинет'
         }
+      },
+
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-at-listform-question-caption': 'Вы уверены, что хотите удалить выбранные записи?',
+        'delete-at-editform-question-caption': 'Вы уверены, что хотите удалить запись?',
       },
 
       'footer': {
@@ -951,6 +981,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -989,6 +1023,25 @@ $.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Войти в систему',
+      'sign-up-caption': 'Или зарегистрироваться',
+      'enter-login-caption': 'Введите логин',
+      'enter-password-caption': 'Введите пароль',
+      'reset-password-caption': 'Забыли пароль?',
+      'login-button-caption': 'Войти'
+    },
+
+    'support-form' : {
+      'caption': 'Написать в техподдержку',
+      'contacts-caption': 'Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Введите Ваше имя',
+      'enter-email-caption': 'Введите Вашу почту',
+      'enter-message-placeholder': 'Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот',
+      'send-button-caption': 'Отправить',
+      'attach-file-caption':'Прикрепить файл'
     },
 
     'edit-form': {
@@ -1405,6 +1458,19 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
           'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
+      },
+      'modal-dialog': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'in-current-context': 'В контексте текущего шаблона',
+        'application-context': 'В контексте шаблона приложения',
+        'open-lightbox': 'Открыть модальное окно',
+        'open-second-lightbox': 'Открыть второе модальное окно',
+        'lightbox-title': 'Модальное окно',
+        'second-lightbox-title': 'Второе модальное окно',
+        'open-sidepage': 'Открыть модальное окно в режиме «sidepage»',
+        'open-second-sidepage': 'Открыть второе модальное окно в режиме «sidepage»',
+        'sidepage-title': 'Модальное окно в режиме «sidepage»',
+        'second-sidepage-title': 'Второе модальное окно в режиме «sidepage»',
       },
       'ui-message': {
         'settings-example': {

@@ -15,6 +15,7 @@ export default Controller.extend({
       nodes: [
         {
           link: 'index',
+          icon: 'home',
           caption: i18n.t('forms.application.sitemap.index.caption'),
           title: i18n.t('forms.application.sitemap.index.title'),
           children: null
@@ -103,16 +104,21 @@ export default Controller.extend({
     toggleSidebar() {
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
 
+      $('.full.height').toggleClass('content-opened');
       $('.full.height').css({
         transition: 'width 0.35s ease-in-out 0s',
-        width: sidebar.sidebar('is visible') ? '100%' : `calc(100% - ${sidebar.width()}px)`,
+        width: `calc(100% - ${sidebar.width()}px)`,
       });
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
+
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**
@@ -127,6 +133,11 @@ export default Controller.extend({
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.sidebar.icon').toggleClass('hidden-text');
       $('.bgw-opacity').toggleClass('hidden');
+
+      if (!this.get('_hideEventIsAttached')) {
+        $('.ui.sidebar.main.menu').sidebar('attach events', '.ui.sidebar.main.menu .item a', 'hide');
+        this.set('_hideEventIsAttached', true);
+      }
     }
   }
 });

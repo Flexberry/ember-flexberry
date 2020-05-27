@@ -113,6 +113,14 @@ export default Component.extend({
   useCloseButton: true,
 
   /**
+    Flag indicates whether to side page or usually mode.
+    @property useSidePageMode
+    @type Boolean
+    @default false
+   */
+  useSidePageMode: false,
+
+  /**
     Used to identify lookup on the page.
 
     @property componentName
@@ -128,11 +136,20 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    let transitionMode = "scale";
+
+    if (this.get('useSidePageMode')) {
+      this.element.classList.add('flexberry-sidepage');
+      transitionMode = "slide left";
+    }
+
     let settings = $.extend({
       observeChanges: true,
       detachable: false,
       allowMultiple: true,
       context: '.ember-application > .ember-view',
+      transition: transitionMode,
+      autofocus: false,
       onApprove: () => {
         // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so run function is necessary.
         run(() => {

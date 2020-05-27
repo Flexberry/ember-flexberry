@@ -6,9 +6,9 @@
           ><th class="show-columns" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}' style="cursor:default"><i class='large hide icon' ></i></th
           ><th class="columns-order" style="cursor:default"><i class='large sort icon' title='{{t "components.colsconfig-dialog-content.columns-order"}}' ></i></th
           ><th title='{{t "components.colsconfig-dialog-content.column-name"}}' style="cursor:default">{{t "components.colsconfig-dialog-content.column-name"}}</th
-          ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}' style="cursor:default"><nobr><i class="large sort content ascending icon"></i><i class="large sort content descending icon"></i></nobr></th
-          ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}" style="cursor:default"><i class='large ordered list icon'></i></th
-          ><th class="column-width" title="{{t "components.colsconfig-dialog-content.column-width"}}" style="cursor:default"><i class='large text width icon'></i></th
+          ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}' style="cursor:default">{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</th
+          ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}" style="cursor:default">{{t "components.colsconfig-dialog-content.sort-priority-caption"}}</th
+          ><th class="column-width" title="{{t "components.colsconfig-dialog-content.column-width"}}" style="cursor:default">{{t "components.colsconfig-dialog-content.column-width-caption"}}</th
           ></tr
         ></thead
         ><tbody>
@@ -29,11 +29,11 @@
             <td class="sort-direction-cell">
               <div class="{{concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled' '') (if colDesc.isHasMany ' hidden' '')}}">
                 <i class="dropdown icon"></i>
-                <div class="text">{{parse-cols-config-sorting colDescs.sortOrder}}</div>
+                <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
                 <div class="menu">
-                  <div class="item" data-value="0">-</div>
-                  <div class="item" data-value="1">▲</div>
-                  <div class="item" data-value="-1">▼</div>
+                  <div class="item" data-value="0">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                  <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
+                  <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
                 </div>
               </div>
             </td><td class="{{if colDesc.hide 'disabled' ''}}">

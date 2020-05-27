@@ -7,6 +7,7 @@ import { isArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import FixableComponent from '../mixins/fixable-component';
 
 /**
   Dropdown component based on Semantic UI Dropdown module.
@@ -27,7 +28,7 @@ import { translationMacro as t } from 'ember-i18n';
   @class FlexberryDropdownComponent
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     @private
     @property _initialized
@@ -212,6 +213,13 @@ export default FlexberryBaseComponent.extend({
   }).readOnly(),
 
   /**
+    @method onShowHide
+   */
+  onShowHide() {
+    this.showFixedElement({ top: -2, left: 1 });
+  },
+
+  /**
     See [EmberJS API](https://emberjs.com/api/).
 
     @method didInsertElement
@@ -234,6 +242,16 @@ export default FlexberryBaseComponent.extend({
               onChange(this.get('value'), oldValue);
             }
           }
+        });
+      },
+      onShow: () => {
+        run.next(() => {
+          this.onShowHide();
+        });
+      },
+      onHide: () => {
+        run.next(() => {
+          this.onShowHide();
         });
       },
     }, this.get('settings'));

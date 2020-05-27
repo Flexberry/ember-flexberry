@@ -115,7 +115,9 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {
@@ -195,9 +197,12 @@ export default {
       'copy': 'Копировать',
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования',
-      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
-      'check-all-button-text': 'Отметить все на всех страницах',
-      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
+      'check-all-at-page-button-text': 'Выбрать все на странице',
+      'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
+      'check-all-button-text': 'Выбрать все на всех страницах',
+      'uncheck-all-button-text': 'Отменить выбор на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию',
+      'clear-select-button-text': 'Отмена выделения'
     },
 
     'groupedit-toolbar': {
@@ -217,8 +222,11 @@ export default {
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
+      'sort-direction-caption': 'Сортировка',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'sort-priority-caption': 'Приоритет',
       'column-width': 'Ширина столбца',
+      'column-width-caption': 'Ширина',
       'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
@@ -233,7 +241,10 @@ export default {
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
-      'unresizable': 'Фиксированная ширина'
+      'unresizable': 'Фиксированная ширина',
+      'sort-direction-none': 'Нет',
+      'sort-direction-asc': 'По возрастанию',
+      'sort-direction-desc': 'По убыванию',
     },
 
     'advlimit-dialog-content': {
@@ -285,6 +296,9 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Главное меню'
+    }
   },
 
   'models': {

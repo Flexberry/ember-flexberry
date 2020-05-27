@@ -27,7 +27,7 @@ export default FlexberryObjectlistview.extend({
     @type Boolean
     @default false
   */
-  showCheckBoxInRow: true,
+  showCheckBoxInRow: false,
 
   /**
     Flag indicates whether to show delete button in first column of every row.
@@ -126,6 +126,15 @@ export default FlexberryObjectlistview.extend({
     @type String
   */
   singleColumnHeaderTitle: undefined,
+
+  /**
+    Flag indicates whether table are striped.
+
+    @property tableStriped
+    @type Boolean
+    @default false
+  */
+  tableStriped: false,
 
   init() {
     this._super(...arguments);

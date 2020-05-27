@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -34,11 +34,13 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
 }}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
   columnsWidthAutoresize=columnsWidthAutoresize
+  columnsResizeMode=columnsResizeMode
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -130,6 +132,23 @@
         disabled={{not hasNextPage}}
         {{action "nextPage" this.attrs.nextPage}}>
       </button>
+    </div>
+    <div class="ui action input search-field {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      <div class="block-action-input">
+        {{input
+          type="number"
+          placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+          value=searchPageValue
+        }}
+      </div>
+      {{#if searchPageValue}}
+        <button
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'primary'}} next-page-button"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
+        </button>
+      {{/if}}
     </div>
     <div class="right menu">
       {{#if (and showShowingEntries recordsTotalCount)}}

@@ -1,5 +1,5 @@
 {{#if doRenderData}}
-  <tr class="{{record.rowConfig.customClass}}">
+  <tr class="{{if record.selected "active"}} {{record.rowConfig.customClass}} {{if (and showAsteriskInRow record.data.hasDirtyAttributes) "flexberry-new-row"}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
       {{#each customButtonsInRow as |customButtonInRow|}}
@@ -14,7 +14,7 @@
         <div class="object-list-view-helper-column-cell">
           {{#if showAsteriskInRow}}
             <div class="cell asterisk-cell">
-              <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "transparent"}}"></i>
+              <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "hidden"}}"></i>
             </div>
           {{/if}}
           {{#if showCheckBoxInRow}}
@@ -115,6 +115,7 @@
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+              canFixElement=(or (eq column.cellComponent.componentName 'flexberry-dropdown') (eq column.cellComponent.componentName 'flexberry-lookup'))
             }}
             {{#if showValidationMessages}}
               {{flexberry-validationmessage error=(v-get record.data column.propName "messages")}}
@@ -143,7 +144,7 @@
       <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
         <div class="right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
-          <div class="left menu">
+          <div class="right menu">
             {{#if showEditMenuItemInRow}}
               {{#if readonly}}
                 <div class="item disabled edit-menu">

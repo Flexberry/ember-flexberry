@@ -20,6 +20,8 @@ import Condition from 'ember-flexberry-data/query/condition';
 import { BasePredicate, SimplePredicate, ComplexPredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
 import Information from 'ember-flexberry-data/utils/information';
 
+import FixableComponent from '../mixins/fixable-component';
+
 /**
   Lookup component for Semantic UI.
 
@@ -55,7 +57,7 @@ import Information from 'ember-flexberry-data/utils/information';
   @class FlexberryLookup
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     This property is used in order to cache loaded for dropdown mode values.
     Values are kept as array with master id as key and master object as value.
@@ -100,6 +102,15 @@ export default FlexberryBaseComponent.extend({
   _pageInResultsForAutocomplete: 1,
 
   /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryLookup'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryLookup',
+
+  /**
     Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
 
     @private
@@ -110,6 +121,7 @@ export default FlexberryBaseComponent.extend({
       sizeClass: this.get('_sizeClass'),
       useOkButton: false,
       useCloseButton: false,
+      useSidePageMode: this.get('useSidePageMode'),
     }, this.get('modalDialogSettings'));
   }),
 
@@ -767,6 +779,13 @@ export default FlexberryBaseComponent.extend({
   */
   dropdownSettings: undefined,
 
+  /**
+    @method onShowHide
+  */
+  onShowHide(fixedOnVisible = false) {
+    this.showFixedElement({ top: -1, fixedOnVisible: fixedOnVisible });
+  },
+
   actions: {
     /**
       Open window for select value.
@@ -908,6 +927,9 @@ export default FlexberryBaseComponent.extend({
     if (this.get('autofillByLimit')) {
       this._onAutofillByLimit();
     }
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
   },
 
   /**
@@ -1165,6 +1187,10 @@ export default FlexberryBaseComponent.extend({
         run(() => {
           debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
+
+        run.next(() => {
+          _this.onShowHide();
+        });
       },
 
       /**
@@ -1266,6 +1292,10 @@ export default FlexberryBaseComponent.extend({
 
         run(() => {
           debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
+
+        run.next(() => {
+          _this.onShowHide();
         });
       }
     });

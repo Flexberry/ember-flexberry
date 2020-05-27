@@ -1,13 +1,32 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const autoprefixer = require('autoprefixer');
 
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
     lessOptions: {
       paths: [
-        'bower_components/semantic-ui'
+          'bower_components/semantic-ui',
+          'bower_components/ember-flexberry-themes',
       ]
+    },
+    postcssOptions: {
+      compile: {
+        enabled: false,
+        browsers: ['last 3 versions'],
+      },
+      filter: {
+        enabled: true,
+        plugins: [
+          {
+            module: autoprefixer,
+            options: {
+              browsers: ['last 2 versions']
+            }
+          }
+        ]
+      }
     }
   });
 
@@ -28,6 +47,37 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/outline-icons.ttf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/outline-icons.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/outline-icons.woff2', { destDir: 'assets/fonts' });
+
+  // GOSTUI2
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff2', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff2', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2', { destDir: 'assets/fonts' });
+
+  // material-design-icons
+  app.import('vendor/material-design-icons.css');
+  app.import('vendor/fonts/material-design-icons/material-design-icons.eot', { destDir: 'assets/fonts/material-design-icons' });
+  app.import('vendor/fonts/material-design-icons/material-design-icons.ttf', { destDir: 'assets/fonts/material-design-icons' });
+  app.import('vendor/fonts/material-design-icons/material-design-icons.woff', { destDir: 'assets/fonts/material-design-icons' });
+  app.import('vendor/fonts/material-design-icons/material-design-icons.woff2', { destDir: 'assets/fonts/material-design-icons' });
+  app.import('vendor/fonts/material-design-icons/material-design-icons.svg', { destDir: 'assets/fonts/material-design-icons' });
+
+  // guideline-icons
+  app.import('vendor/guideline-icons.css');
+  app.import('vendor/fonts/guideline-icons/guideline-icons.eot', { destDir: 'assets/fonts/guideline-icons' });
+  app.import('vendor/fonts/guideline-icons/guideline-icons.ttf', { destDir: 'assets/fonts/guideline-icons' });
+  app.import('vendor/fonts/guideline-icons/guideline-icons.woff', { destDir: 'assets/fonts/guideline-icons' });
+  app.import('vendor/fonts/guideline-icons/guideline-icons.woff2', { destDir: 'assets/fonts/guideline-icons' });
+  app.import('vendor/fonts/guideline-icons/guideline-icons.svg', { destDir: 'assets/fonts/guideline-icons' });
+
   app.import('vendor/serviceImages/close.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });

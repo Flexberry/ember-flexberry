@@ -48,8 +48,7 @@ export default FlexberryBaseComponent.extend(
   _contentObserver: observer('content', function() {
     this._setContent(this.get('componentName'));
 
-    if (this.get('allSelect'))
-    {
+    if (this.get('allSelect')) {
       let contentWithKeys = this.get('contentWithKeys');
       let checked = this.get('allSelect');
 
@@ -436,6 +435,15 @@ export default FlexberryBaseComponent.extend(
   showPrototypeMenuItemInRow: false,
 
   /**
+    Flag indicates that on page selected all records.
+
+    @property allSelectAtPage
+    @type Boolean
+    @default false
+  */
+  allSelectAtPage: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @property menuInRowAdditionalItems
@@ -587,6 +595,57 @@ export default FlexberryBaseComponent.extend(
 
     return columnsCount;
   }),
+
+  /**
+    @property checkRowsSettingsItems
+    @readOnly
+  */
+  checkRowsSettingsItems: computed(
+    'i18n.locale',
+    'userSettingsService.isUserSettingsServiceEnabled',
+    'readonly',
+    'allSelect',
+    'allSelectAtPage',
+    function() {
+      let i18n = this.get('i18n');
+      let readonly = this.get('readonly');
+      let allSelect = this.get('allSelect');
+
+      let rootItem = {
+        icon: 'icon-guideline-check-menu icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
+
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitleKey = isUncheckAllAtPage ? 'components.olv-toolbar.uncheck-all-at-page-button-text' : 'components.olv-toolbar.check-all-at-page-button-text';
+
+      let checkAllTitle = allSelect ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitleKey = allSelect ? 'components.olv-toolbar.uncheck-all-button-text' : 'components.olv-toolbar.check-all-button-text';
+
+      if (!readonly) {
+        if (!allSelect) {
+          rootItem.items.push({
+            title: checkAllAtPageTitle,
+            localeKey: checkAllAtPageTitleKey
+          });
+        }
+
+        let classNames = this.get('classNames');
+        if (classNames && classNames.indexOf('groupedit-container') === -1) {
+          rootItem.items.push({
+            title: checkAllTitle,
+            localeKey: checkAllTitleKey
+          });
+        }
+      }
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
+    }
+  ),
 
   /**
     Flag indicates whether some column contains editable component instead of default cellComponent.
@@ -811,6 +870,21 @@ export default FlexberryBaseComponent.extend(
       assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
+
+    // Set title flag of select all at page button.
+    const contentWithKeys = this.get('contentWithKeys');
+    if (contentWithKeys) {
+      let isAllSelectAtPage = true;
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get('selected')) {
+          isAllSelectAtPage = false;
+        }
+      }
+
+      this.set('allSelectAtPage', isAllSelectAtPage);
+    }
+
+
   }),
 
   /**
@@ -1006,21 +1080,12 @@ export default FlexberryBaseComponent.extend(
     */
     selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
-
+      recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
-
         if (selectedRecords.indexOf(recordWithKey.data) === -1) {
           selectedRecords.pushObject(recordWithKey.data);
         }
       } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
         selectedRecords.removeObject(recordWithKey.data);
       }
 
@@ -1095,6 +1160,41 @@ export default FlexberryBaseComponent.extend(
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
       this.selectedRowsChanged();
     },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onCheckRowMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onCheckRowMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+
+      let isUncheckAll = this.get('allSelect');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+
+      switch (namedSetting) {
+        case checkAllAtPageTitle.toString(): {
+          this.send('checkAllAtPage');
+          break;
+        }
+        case checkAllTitle.toString(): {
+          this.send('checkAll');
+          break;
+        }
+      }
+    },
+
     /* eslint-enable no-unused-vars */
 
     /**
@@ -1333,6 +1433,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
+
       if (this.get('allowColumnResize')) {
         this._reinitResizablePlugin();
       } else {
@@ -1450,6 +1551,7 @@ export default FlexberryBaseComponent.extend(
     $currentTable.colResizable({
       minWidth: 50,
       disabledColumns: disabledColumns,
+      resizeMode: this.get('columnsResizeMode'),
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1541,7 +1643,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
-      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      $table.css('cssText', `width: ${columnsWidthAutoresize ? containerWidth : tableWidth}px !important` );
       if (this.get('eventsBus')) {
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }
@@ -2197,6 +2299,7 @@ export default FlexberryBaseComponent.extend(
     // Mark previously selected records.
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
@@ -2348,13 +2451,11 @@ export default FlexberryBaseComponent.extend(
     if (componentName === this.get('componentName')) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
-      /* eslint-disable no-unused-vars */
-      selectedRecords.forEach((item, index, enumerable) => {
+      selectedRecords.forEach((item) => {
         once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
-      /* eslint-enable no-unused-vars */
 
       selectedRecords.clear();
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);
@@ -2617,6 +2718,7 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
 
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       let e = {
         checked: true

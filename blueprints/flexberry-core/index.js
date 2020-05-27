@@ -293,6 +293,7 @@ var SitemapItemExt = /** @class */ (function () {
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
         this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
+            (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
             ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
             ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
             ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");

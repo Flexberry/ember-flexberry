@@ -410,9 +410,9 @@ export default FlexberryBaseComponent.extend({
 
     @property tableStriped
     @type Boolean
-    @default true
+    @default false
   */
-  tableStriped: true,
+  tableStriped: false,
 
   /**
     Minimum column width, if width isn't defined in userSettings.

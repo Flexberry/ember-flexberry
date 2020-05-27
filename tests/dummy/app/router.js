@@ -148,6 +148,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
+  this.route('components-examples/modal-dialog', function () {
+    this.route('index', { path: '/' });
+  });
   this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.
@@ -194,6 +197,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox.new',
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 
+  this.route('login');
 });
 
 export default Router;

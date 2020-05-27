@@ -25,7 +25,7 @@
 
 {{#if arrowsButtons}}
   <button
-    class="ui ui-move-up {{buttonClass}} button"
+    class="ui ui-move-up {{buttonClass}} {{if (or (not _hasSelectedRows) _disableMoveUpButton readonly) "disabled"}} button"
     title={{t "components.groupedit-toolbar.move-up-button-text"}}
     disabled={{or (not _hasSelectedRows) _disableMoveUpButton readonly}}
     {{action 'moveRow' -1}}>
@@ -33,7 +33,7 @@
   </button>
 
   <button
-    class="ui ui-move-down {{buttonClass}} button"
+    class="ui ui-move-down {{buttonClass}} {{if (or (not _hasSelectedRows) _disableMoveDownButton readonly) "disabled"}} button"
     title={{t "components.groupedit-toolbar.move-down-button-text"}}
     disabled={{or (not _hasSelectedRows) _disableMoveDownButton readonly}}
     {{action 'moveRow' 1}}>

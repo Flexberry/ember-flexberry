@@ -648,7 +648,7 @@ export default FlexberryBaseComponent.extend({
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
-      if (!this.availableMimeTypes.includes(selectedFile.type) || selectedFile.type==='') {
+      if (!this.availableMimeTypes.includes(selectedFile.type) || selectedFile.type === '') {
         const fileName = selectedFile.name;
         this.showFileExtensionErrorModalDialog(fileName);
         return;

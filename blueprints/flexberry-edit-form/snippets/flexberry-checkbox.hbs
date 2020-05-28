@@ -3,6 +3,7 @@
     {{flexberry-checkbox
       readonly=<%= readonly %>
       value=model.<%= name %>
+      data-test-<%= entityName %>-<%= dashedName %>=true
     }}
     {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
   </div>

@@ -587,7 +587,6 @@ $.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {

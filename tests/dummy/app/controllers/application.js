@@ -44,15 +44,16 @@ export default Controller.extend({
       let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
       sidebar.toggleClass('sidebar-mini');
-      $('.full.height').toggleClass('content-opened');
 
+      $('.full.height').toggleClass('content-opened');
       $('.full.height').css({
-        transition: 'width 0.3s ease-in-out 0s',
-        width: 'calc(100% - ' + sidebar.width() + 'px)',
+        transition: 'width 0.35s ease-in-out 0s',
+        width: `calc(100% - ${sidebar.width()}px)`,
       });
 
-      $('.sidebar.icon.text-menu-show').toggleClass('hidden');
-      $('.sidebar.icon.text-menu-hide').toggleClass('hidden');
+      $('.sidebar.icon .text_menu').toggleClass('hidden');
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
 
       // For reinit overflowed tabs.
@@ -65,8 +66,17 @@ export default Controller.extend({
       @method actions.toggleSidebarMobile
     */
     toggleSidebarMobile() {
-      let sidebar = $('.ui.sidebar.main.menu');
-      sidebar.sidebar('attach events', '.ui.sidebar.main.menu .item a').sidebar('toggle');
+      $('.ui.sidebar.main.menu').sidebar('toggle');
+
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.sidebar.icon').toggleClass('hidden-text');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      if (!this.get('_hideEventIsAttached')) {
+        $('.ui.sidebar.main.menu').sidebar('attach events', '.ui.sidebar.main.menu .item a', 'hide');
+        this.set('_hideEventIsAttached', true);
+      }
     },
 
     /**

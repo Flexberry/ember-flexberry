@@ -16,9 +16,26 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
     @property availableMimeTypes
     @type String
-    @default 'text/plain'
   */
-  availableMimeTypes: 'text/plain',
+  availableMimeTypes: 'text/plain,video/mp4',
+
+  /**
+    Maximum file size in bytes for uploading files.
+    It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
+    If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
+
+    @property maxUploadFileSize
+    @type Number
+  */
+  maxUploadFileSize: 10,
+
+  /**
+    Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.
+
+    @property maxUploadFileSizeUnit
+    @type String
+  */
+  maxUploadFileSizeUnit: 'Mb',
 
   /**
     Name of model.comments edit route.
@@ -91,7 +108,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
         case 'ember-flexberry-dummy-suggestion-file+file':
           cellComponent.componentProperties = {
-            availableMimeTypes: this.get('availableMimeTypes')
+            availableMimeTypes: this.get('availableMimeTypes'),
+            maxUploadFileSize: this.get('maxUploadFileSize'),
+            maxUploadFileSizeUnit: this.get('maxUploadFileSizeUnit')
           };
           break;
       }

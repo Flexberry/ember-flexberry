@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { getSizeInUnits } from '../utils/file-size-units-converter';
 
 /**
   Flexberry file component.
@@ -18,6 +19,20 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Available file size units with its captions.
+
+    @property _fileSizeUnits
+    @type Object
+    @private
+  */
+  _fileSizeUnits: {
+    Bt: t('components.flexberry-file.error-dialog-size-unit-bt'),
+    Kb: t('components.flexberry-file.error-dialog-size-unit-kb'),
+    Mb: t('components.flexberry-file.error-dialog-size-unit-mb'),
+    Gb: t('components.flexberry-file.error-dialog-size-unit-gb')
+  },
+
   /**
     Selected file content. It can be used as source for image tag in order to view preview.
 
@@ -442,6 +457,15 @@ export default FlexberryBaseComponent.extend({
   maxUploadFileSize: undefined,
 
   /**
+    Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.
+
+    @property maxUploadFileSizeUnit
+    @type String
+    @default 'Bt'
+  */
+  maxUploadFileSizeUnit: 'Bt',
+
+  /**
     Text to be displayed instead of file name, if file has not been selected.
 
     @property placeholder
@@ -648,7 +672,11 @@ export default FlexberryBaseComponent.extend({
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
-      if (!this.availableMimeTypes.includes(selectedFile.type) || selectedFile.type === '') {
+      const isAvailableTypesSet = Object.keys(this.availableMimeTypes).length > 0;
+      const isFileTypeAvailable= this.availableMimeTypes.includes(selectedFile.type);
+      const isFileTypeUndefined = selectedFile.type === '';
+
+      if (isAvailableTypesSet && (isFileTypeUndefined || !isFileTypeAvailable)) {
         const fileName = selectedFile.name;
         this.showFileExtensionErrorModalDialog(fileName);
         return;
@@ -661,9 +689,17 @@ export default FlexberryBaseComponent.extend({
           `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
           ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
 
+        let sizeUnit = this.get('maxUploadFileSizeUnit');
+        if (!(sizeUnit in this.get('_fileSizeUnits'))) {
+          console.log('Flexberry-file error, file max size wrong units assigned');
+          sizeUnit = Object.keys(this.get('_fileSizeUnits'))[0];
+        }
+
+        let fileSizeInUnits = getSizeInUnits(selectedFile.size, sizeUnit);
+
         // Prevent files greater then maxUploadFileSize.
-        if (selectedFile.size > maxUploadFileSize) {
-          this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+        if (fileSizeInUnits > maxUploadFileSize) {
+          this.showFileSizeErrorModalDialog(selectedFile.name, fileSizeInUnits, maxUploadFileSize, sizeUnit);
 
           // Break file upload.
           return;
@@ -892,15 +928,18 @@ export default FlexberryBaseComponent.extend({
     @param {String} fileName Added file name.
     @param {String} actualFileSize Actual size of added file.
     @param {String} maxFileSize Max file size allowed.
+    @param {String} sizeUnit Max file size unit.
     @returns {String} Error content.
   */
-  showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize) {
+  showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize, sizeUnit) {
     let i18n = this.get('i18n');
+    let actualFileSizeRoundedString = actualFileSize.toFixed(1);
     let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
     let errorContent = i18n.t('components.flexberry-file.file-too-big-error-message', {
       fileName: fileName,
-      actualFileSize: actualFileSize,
+      actualFileSize: actualFileSizeRoundedString,
       maxFileSize: maxFileSize,
+      sizeUnit: sizeUnit
     });
 
     this.showErrorModalDialog(errorCaption, errorContent);

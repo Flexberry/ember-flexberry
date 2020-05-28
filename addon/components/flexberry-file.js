@@ -673,7 +673,7 @@ export default FlexberryBaseComponent.extend({
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
       const isAvailableTypesSet = Object.keys(this.availableMimeTypes).length > 0;
-      const isFileTypeAvailable= this.availableMimeTypes.includes(selectedFile.type);
+      const isFileTypeAvailable = this.availableMimeTypes.includes(selectedFile.type);
       const isFileTypeUndefined = selectedFile.type === '';
 
       if (isAvailableTypesSet && (isFileTypeUndefined || !isFileTypeAvailable)) {
@@ -1071,9 +1071,14 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _valueDidChange: Ember.observer('value', function() {
+    const value = this.get('value');
+    if (Ember.isNone(value)) {
+      this.removeFile();
+    }
+
     this.sendAction('fileChange', {
       uploadData: this.get('_uploadData'),
-      value: this.get('value')
+      value: value
     });
   }),
 

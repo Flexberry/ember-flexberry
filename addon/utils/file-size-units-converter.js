@@ -2,8 +2,6 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
 /**
   Used for convert file size value depending on units.
 
@@ -24,7 +22,7 @@ import Ember from 'ember';
 let getSizeInUnits = function (fileSize, fileSizeUnits) {
   let fileSizeInUnits = fileSize;
 
-  switch(fileSizeUnits) {
+  switch (fileSizeUnits) {
     case 'Kb':
       fileSizeInUnits *= 1e-3;
       break;

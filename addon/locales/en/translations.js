@@ -79,10 +79,10 @@ export default {
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Preview can not be loaded',
-      'error-dialog-size-unit-bt' : 'Bytes',
-      'error-dialog-size-unit-kb' : 'Kilobytes',
-      'error-dialog-size-unit-mb' : 'Magabytes',
-      'error-dialog-size-unit-gb' : 'Gigabytes',
+      'error-dialog-size-unit-bt': 'Bytes',
+      'error-dialog-size-unit-kb': 'Kilobytes',
+      'error-dialog-size-unit-mb': 'Magabytes',
+      'error-dialog-size-unit-gb': 'Gigabytes',
 
       'add-file-error-caption': 'Add file error',
       'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} {{sizeUnit}}. ' +

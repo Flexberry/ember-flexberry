@@ -97,7 +97,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              class=(if (and showValidationMessages (v-get record.data.column propName "isInvalid")) "error")
+              class=(if (and showValidationMessages (get-validation-check record.data column.propName)) "error")
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
@@ -113,7 +113,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              class=(if (and showValidationMessages (v-get record.data.column propName "isInvalid")) "error")
+              class=(if (and showValidationMessages (get-validation-check record.data column.propName)) "error")
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")

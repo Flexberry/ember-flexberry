@@ -9,5 +9,5 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-suggestion-file-list'
   */
-  parentRoute: 'ember-flexberry-dummy-suggestion-file-list',
+  parentRoute: 'ember-flexberry-dummy-suggestion-file-list'
 });

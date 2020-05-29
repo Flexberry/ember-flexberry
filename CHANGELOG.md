@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Available mime types check in `flexberry-file` component.
+* Set units of uploaded file max size in `flexberry-file` component.
 
 ## [2.4.0] - 2020-05-18
 ### Added

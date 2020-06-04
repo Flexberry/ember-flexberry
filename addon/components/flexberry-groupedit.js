@@ -671,7 +671,7 @@ export default FlexberryBaseComponent.extend({
     for (let i = start + 1; i <= end; i++) {
       for (let j = i; j > start && condition(j); j--) {
         let record = recordsSort.objectAt(j);
-        recordsSort.replace(j, 1, [recordsSort.objectAt(j - 1)]);
+        recordsSort.removeAt(j);
         recordsSort.insertAt(j - 1, record);
       }
     }

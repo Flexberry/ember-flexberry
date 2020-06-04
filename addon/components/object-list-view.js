@@ -399,6 +399,15 @@ export default FlexberryBaseComponent.extend(
   ).readOnly(),
 
   /**
+    Boolean property to show or hide arrows button in toolbar.
+
+    @property arrowsButtons
+  */
+  arrowsButtons: computed('orderedProperty', function() {
+    return !isNone(this.get('orderedProperty'));
+  }),
+
+  /**
     Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
 
     @property showDeleteMenuItemInRow

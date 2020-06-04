@@ -109,6 +109,14 @@ module.exports = function(environment) {
         flexberryLookup: {
           // Flag: indicates whether to side page or usually mode.
           useSidePageMode: true,
+        },
+
+        flexberryGroupedit: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
+
+          // Flag: indicates whether to show asterisk icon in first column of every changed row.
+          showAsteriskInRow: false,
         }
       },
     }

@@ -131,51 +131,42 @@
       </div>
     </div>
   </div>
-  {{#flexberry-toggler
-    caption=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
-    expanded=true}}
-    <div class="field">
-      {{flexberry-groupedit
-        componentName="filesGroupEdit"
-        content=model.files
-        mainModelProjection=modelProjection
-        modelProjection=modelProjection.attributes.files
-        orderable=true
-        readonly=readonly
-      }}
-    </div>
-  {{/flexberry-toggler}}
-  {{#flexberry-toggler
-    caption=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
-    expanded=true}}
-    <div class="field">
-      {{flexberry-groupedit
-        componentName="suggestionUserVotesGroupEdit"
-        content=model.userVotes
-        mainModelProjection=modelProjection
-        modelProjection=modelProjection.attributes.userVotes
-        orderable=true
-        readonly=readonly
-      }}
-    </div>
-  {{/flexberry-toggler}}
-  {{#flexberry-toggler
-    caption=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
-    expanded=true}}
-    <div class="field">
-      {{flexberry-groupedit
-        componentName="suggestionCommentsGroupEdit"
-        content=model.comments
-        mainModelProjection=modelProjection
-        modelProjection=modelProjection.attributes.comments
-        rowClickable=true
-        rowClick="rowClick"
-        editOnSeparateRoute=true
-        editFormRoute=commentsEditRoute
-        saveBeforeRouteLeave=true
-        orderable=true
-        readonly=readonly
-      }}
-    </div>
-  {{/flexberry-toggler}}
+  <div class="field">
+    {{flexberry-groupedit
+      componentName="filesGroupEdit"
+      content=model.files
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.files
+      orderable=true
+      readonly=readonly
+      caption=(t "forms.ember-flexberry-dummy-suggestion-edit.files-caption")
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-groupedit
+      componentName="suggestionUserVotesGroupEdit"
+      content=model.userVotes
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.userVotes
+      orderable=true
+      readonly=readonly
+      caption=(t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption")
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-groupedit
+      componentName="suggestionCommentsGroupEdit"
+      content=model.comments
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.comments
+      rowClickable=true
+      rowClick="rowClick"
+      editOnSeparateRoute=true
+      editFormRoute=commentsEditRoute
+      saveBeforeRouteLeave=true
+      orderable=true
+      readonly=readonly
+      caption=(t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption")
+    }}
+  </div>
 </form>

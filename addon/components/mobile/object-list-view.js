@@ -152,5 +152,9 @@ export default ObjectListViewComponent.extend({
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
       }
     },
+
+    _moveRow() {
+      this._super(...arguments);
+    }
   }
 });

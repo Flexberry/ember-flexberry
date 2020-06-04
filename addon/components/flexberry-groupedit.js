@@ -91,6 +91,13 @@ export default FlexberryBaseComponent.extend({
   cellComponent: undefined,
 
   /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['flexberry-groupedit'],
+
+  /**
     Content to be displayed (models collection).
 
     @property content
@@ -348,7 +355,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -449,6 +456,14 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   fixedHeader: false,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryGroupedit'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryGroupedit',
 
   actions: {
     /**
@@ -701,6 +716,10 @@ export default FlexberryBaseComponent.extend({
       componentName: undefined,
       componentProperties: null
     });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showAsteriskInRow', defaultValue: true });
   },
 
   didInsertElement() {

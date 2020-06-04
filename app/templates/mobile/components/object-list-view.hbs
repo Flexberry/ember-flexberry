@@ -132,12 +132,26 @@
     <label class="count-selected-rows">{{_selectedCountMobileMenu}}</label>
 
     <button
-      class="ui delete-button {{buttonClass}} {{if readonly 'disabled' ''}} button"
+      class="ui delete-button {{buttonClass}}{{if readonly ' disabled'}} button large"
       title={{t "components.olv-toolbar.delete-button-text"}}
       disabled={{readonly}}
       {{action "deleteSelectedRow"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
     </button>
+    {{#if (and (eq class "groupedit-container") arrowsButtons)}}
+      <button
+        class="ui ui-move-up {{buttonClass}} {{if readonly 'disabled'}} button"
+        title={{t "components.groupedit-toolbar.move-up-button-text"}}
+        {{action '_moveRow' componentName -1}}>
+        <i class="arrow up icon"></i>
+      </button>
+      <button
+        class="ui ui-move-down {{buttonClass}} {{if readonly 'disabled'}} button"
+        title={{t "components.groupedit-toolbar.move-down-button-text"}}
+        {{action '_moveRow' componentName 1}}>
+        <i class="arrow down icon"></i>
+      </button>
+    {{/if}}
 
     <button class="ui clear-select-button {{buttonClass}} circular icon button"
       title={{t "components.olv-toolbar.clear-select-button-text"}}

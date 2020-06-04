@@ -1,7 +1,7 @@
 /**
   @module ember-flexberry
 */
-
+import $ from 'jquery';
 import FlexberryGroupeditComponent from './../flexberry-groupedit';
 
 /**
@@ -62,7 +62,7 @@ export default FlexberryGroupeditComponent.extend({
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -86,9 +86,9 @@ export default FlexberryGroupeditComponent.extend({
 
     @property showDeleteButtonInRow
     @type Boolean
-    @default true
+    @default false
   */
-  showDeleteButtonInRow: true,
+  showDeleteButtonInRow: false,
 
   /**
     Flag: indicates whether to show dropdown menu with delete menu item, in last column of every row.
@@ -139,5 +139,22 @@ export default FlexberryGroupeditComponent.extend({
       componentName: 'object-list-view-single-column-cell',
       componentProperties: null
     });
+  },
+
+  willDestroy() {
+    $(`.ui.modal.${this.get('componentName')}`).remove();
+  },
+
+  actions: {
+    groupeditModalShow() {
+      let transition = 'scale';
+      if (this.get('useSidePageMode')) {
+        transition = 'slide left';
+      }
+      $(`.ui.modal.${this.get('componentName')}`)
+        .modal({transition: transition})
+        .modal('attach events', '.close.icon', 'hide')
+        .modal('show');
+    }
   }
 });

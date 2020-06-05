@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.4.0-beta.1] - 2020-05-27
 ### Fixed
 * `flexberry-dropdown` value doesn't change on first selection.
 * Methods with componentName in services.

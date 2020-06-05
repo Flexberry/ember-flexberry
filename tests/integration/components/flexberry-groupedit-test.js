@@ -61,6 +61,7 @@ test('ember-grupedit element by default test', function(assert) {
           componentName=componentName
           modelProjection=proj.attributes.details
           searchForContentChange=searchForContentChange
+          showAsteriskInRow=true
         }}`);
 
     // Add record.
@@ -191,6 +192,7 @@ test('it properly rerenders by default', function(assert) {
           componentName=componentName
           modelProjection=proj.attributes.details
           searchForContentChange=searchForContentChange
+          showAsteriskInRow = true
         }}`);
 
     assert.equal(this.$('.object-list-view').find('tr').length, 2);

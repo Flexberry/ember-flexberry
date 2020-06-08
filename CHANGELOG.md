@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Saving on the edit form is not performed in offline mode.
 
 ## [2.5.0-beta.2] - 2020-05-29
 ### Changed

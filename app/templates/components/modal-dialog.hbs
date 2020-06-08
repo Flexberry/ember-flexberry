@@ -1,10 +1,10 @@
 <i class="close icon"></i>
 <div class="header">{{title}}</div>
-<div class="{{if viewImageContent "image"}} content">
+<div class="{{if viewImageContent "image"}} scrolling content">
   {{#if viewImageContent}}
     <div class="ui centered image">{{yield}}</div>
   {{else}}
-    <div class="description">{{yield}}</div>
+    {{yield}}
   {{/if}}
 </div>
 {{#if _toolbarVisible}}

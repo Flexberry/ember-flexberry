@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Saving on the edit form is not performed in offline mode.
+* In the flexberry-groupedit component, the menu in the first row was displayed as in the last.
 
 ## [2.5.0-beta.2] - 2020-05-29
 ### Changed

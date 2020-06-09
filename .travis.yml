@@ -60,7 +60,7 @@ script:
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-  # - if [ "$EMBER_TRY_SCENARIO" == "ember-default" ]; then bash ./scripts/test-generator.sh; fi
+  - if [ "$EMBER_TRY_SCENARIO" == "ember-default" ]; then bash ./scripts/test-generator.sh; fi
 
 after_success:
   - test $EMBER_TRY_SCENARIO == "ember-default"
@@ -72,6 +72,6 @@ after_success:
 after_script:
   - test $EMBER_TRY_SCENARIO == "ember-default"
     && test $TRAVIS_PULL_REQUEST == "false"
-    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3" || test $TRAVIS_BRANCH == "feature-new-theme")
+    && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
     && bash scripts/deploy-to-gh-pages.sh no-doc

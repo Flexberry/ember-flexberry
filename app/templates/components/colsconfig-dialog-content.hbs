@@ -19,7 +19,7 @@
               <i class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}} style="cursor:pointer"></i>
             </td>
             <td>
-              <button {{action 'rowUp' n}} type="button" class="ui icon tiny button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button           ><button {{action 'rowDown' n}} class="ui icon tiny button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}">
+              <button {{action 'rowUp' n}} type="button" class="ui icon tiny button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button           ><button {{action 'rowDown' n}} type="button" class="ui icon tiny button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}">
                 <i class="chevron down icon"></i>
               </button>
             </td>

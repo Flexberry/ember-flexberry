@@ -109,7 +109,7 @@
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
               {{#if (and (not index) inHierarchicalMode hasRecords)}}
-                <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
+                <button type="button" class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
                   <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                 </button>
               {{/if}}

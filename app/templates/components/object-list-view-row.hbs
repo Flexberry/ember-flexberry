@@ -1,5 +1,5 @@
 {{#if doRenderData}}
-  <tr class="{{if record.selected "active"}} {{record.rowConfig.customClass}} {{if (and showAsteriskInRow record.data.hasDirtyAttributes) "flexberry-new-row"}}">
+  <tr class="{{record.rowConfig.customClass}}{{if record.selected " active"}}{{if record.data.hasDirtyAttributes " groupedit-new-row"}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
       {{#each customButtonsInRow as |customButtonInRow|}}
@@ -12,9 +12,9 @@
       {{/each}}
       {{#if showHelperColumn}}
         <div class="object-list-view-helper-column-cell">
-          {{#if showAsteriskInRow}}
+          {{#if (and showAsteriskInRow record.data.hasDirtyAttributes)}}
             <div class="cell asterisk-cell">
-              <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "hidden"}}"></i>
+              <i class="asterisk small red icon"></i>
             </div>
           {{/if}}
           {{#if showCheckBoxInRow}}

@@ -102,21 +102,21 @@ module.exports = function(environment) {
         // Settings for flexberry-objectlistview component.
         flexberryObjectlistview: {
           // Flag indicates whether to side page or usually mode.
-          useSidePageMode: true,
+          useSidePageMode: false,
         },
 
         // Settings for flexberry-lookup component.
         flexberryLookup: {
           // Flag: indicates whether to side page or usually mode.
-          useSidePageMode: true,
+          useSidePageMode: false,
         },
 
         flexberryGroupedit: {
           // Flag: indicates whether to side page or usually mode.
-          useSidePageMode: true,
+          useSidePageMode: false,
 
           // Flag: indicates whether to show asterisk icon in first column of every changed row.
-          showAsteriskInRow: false,
+          showAsteriskInRow: true,
         }
       },
     }

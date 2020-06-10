@@ -168,14 +168,6 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     set(key, value, oldValue) {
       const items = this.get('items');
       if (items && value && value !== oldValue) {
-        if (this.get('displayCaptions')) {
-          if (this.get('needChecksOnValue') && !items.hasOwnProperty(value)) {
-            throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
-          }
-
-          return this.set('_value', value);
-        }
-
         let valueKey;
         for (let key in items) {
           if (items.hasOwnProperty(key) && items[key] === value) {
@@ -194,8 +186,11 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         this.$().dropdown('clear');
       }
 
-      // Save value for use with displayCaptions specified later.
-      return this.set('_value', value);
+      if (this.get('displayCaptions')) {
+        this.set('_value', value);
+      }
+
+      return value;
     },
   }),
 

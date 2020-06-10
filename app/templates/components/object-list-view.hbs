@@ -73,9 +73,9 @@
           <td style={{defaultPaddingStyle}} class="overflowed-cell">
             {{#if column.filter.conditions}}
               {{flexberry-dropdown
+                displayCaptions=(not (is-array column.filter.conditions))
                 value=column.filter.condition
                 items=column.filter.conditions
-                displayCaptions=(not (is-array column.filter.conditions))
                 class="compact fluid"
                 placeholder=(t "components.object-list-view.filter-condition")
                 needChecksOnValue=false

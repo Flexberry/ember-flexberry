@@ -219,7 +219,7 @@ export default {
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
       'is-saved': ' is saved',
-      'col-width-on': 'Enable setting column widths',
+      'col-width-on': 'Setting column widths',
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
       'det-separate-cols': 'List\'s properties in separate columns',

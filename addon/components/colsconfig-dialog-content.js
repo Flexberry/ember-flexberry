@@ -8,6 +8,8 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
+import { computed } from '@ember/object';
+import ColsconfigMenuItems from '../mixins/colsconfig-menu-items';
 
 /**
  * Columns configuration dialog Content component.
@@ -15,7 +17,7 @@ import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
  * @class ColsconfigDialogContentComponent
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
   /**
    Columns configiration menu.
 
@@ -81,6 +83,7 @@ export default FlexberryBaseComponent.extend({
       });
       $(element).dropdown('set selected', get(colDesc, 'sortOrder'));
     });
+    this._updateListNamedUserSettings(this.get('model.componentName'));
   },
 
   actions: {
@@ -236,7 +239,7 @@ export default FlexberryBaseComponent.extend({
 
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
-      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'), this.get('model.exportParams.isExportExcel'));
 
       savePromise.then(
         () => {

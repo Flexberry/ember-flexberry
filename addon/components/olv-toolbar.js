@@ -13,12 +13,13 @@ import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import ColsconfigMenuItems from '../mixins/colsconfig-menu-items';
 
 /**
   @class OlvToolbar
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
   /**
     Controller for model.
 
@@ -205,36 +206,11 @@ export default FlexberryBaseComponent.extend({
   */
   customButtons: undefined,
 
-  /**
-    @property listNamedUserSettings
-  */
-  listNamedUserSettings: undefined,
 
-  _listNamedUserSettings: observer('listNamedUserSettings', function() {
-    let listNamedUserSettings = this.get('listNamedUserSettings');
-    for (let namedSetting in listNamedUserSettings) {
-      this._addNamedSetting(namedSetting, this.get('componentName'));
-    }
 
-    this._sortNamedSetting();
-  }),
 
-  /**
-    @property listNamedExportSettings
-  */
-  listNamedExportSettings: undefined,
 
-  _listNamedExportSettings: observer('listNamedExportSettings', function() {
-    let listNamedExportSettings = this.get('listNamedExportSettings');
-    for (let namedSetting in listNamedExportSettings) {
-      let settName = namedSetting.split('/');
-      settName.shift();
-      settName = settName.join('/');
-      this._addNamedSetting(settName, this.get('componentName'), true);
-    }
 
-    this._sortNamedSetting(true);
-  }),
 
   /**
     Current adv limits.
@@ -244,81 +220,10 @@ export default FlexberryBaseComponent.extend({
   */
   namedAdvLimits: undefined,
 
-  /**
-    @property colsConfigMenu
-    @type Service
-  */
-  colsConfigMenu: service(),
 
-  /**
-    @property menus
-    @readOnly
-  */
-  menus: computed(() => A([
-    { name: 'use', icon: 'checkmark box' },
-    { name: 'edit', icon: 'setting' },
-    { name: 'remove', icon: 'remove' }
-  ])).readOnly(),
 
-  /**
-    @property colsSettingsItems
-    @readOnly
-  */
-  colsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
-      let i18n = this.get('i18n');
-      let menus = [
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.use-setting-title',
-          items: []
-        },
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.edit-setting-title',
-          items: []
-        },
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.remove-setting-title',
-          items: []
-        }
-      ];
-      let rootItem = {
-        icon: 'dropdown icon',
-        iconAlignment: 'right',
-        title: '',
-        items: [],
-        localeKey: ''
-      };
-      let createSettitingItem = {
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
-        localeKey: 'components.olv-toolbar.create-setting-title'
-      };
-      rootItem.items[rootItem.items.length] = createSettitingItem;
-      rootItem.items.push(...menus);
 
-      let setDefaultItem = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
-        localeKey: 'components.olv-toolbar.set-default-setting-title'
-      };
-      rootItem.items[rootItem.items.length] = setDefaultItem;
-      if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
-        let showDefaultItem = {
-          icon: 'unhide icon',
-          iconAlignment: 'left',
-          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
-          localeKey: 'components.olv-toolbar.show-default-setting-title'
-        };
-        rootItem.items[rootItem.items.length] = showDefaultItem;
-      }
 
-      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
-    }
-  ),
 
   /**
     @property advLimitItems
@@ -371,52 +276,8 @@ export default FlexberryBaseComponent.extend({
     return this.get('advLimit.isAdvLimitServiceEnabled') ? A([rootItem]) : A();
   }),
 
-  _colsSettingsItems: observer('colsSettingsItems', function() {
-    this._updateListNamedUserSettings(this.get('componentName'));
-  }),
 
-  /**
-    @property exportExcelItems
-    @readOnly
-  */
-  exportExcelItems: computed(function() {
-      let i18n = this.get('i18n');
-      let menus = [
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.export-title',
-          items: []
-        },
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.edit-setting-title',
-          items: []
-        },
-        { icon: 'angle right icon',
-          iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.remove-setting-title',
-          items: []
-        }
-      ];
-      let rootItem = {
-        icon: 'dropdown icon',
-        iconAlignment: 'right',
-        title: '',
-        items: [],
-        localeKey: ''
-      };
-      let createSettitingItem = {
-        icon: 'file excel outline icon',
-        iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
-        localeKey: 'components.olv-toolbar.create-setting-title'
-      };
-      rootItem.items[rootItem.items.length] = createSettitingItem;
-      rootItem.items.push(...menus);
 
-      return [rootItem];
-    }
-  ),
 
   /**
     Flag shows enable-state of delete button.
@@ -643,16 +504,7 @@ export default FlexberryBaseComponent.extend({
       }
     },
 
-    /**
-      Action to show confis dialog.
 
-      @method actions.showConfigDialog
-      @public
-    */
-    showConfigDialog(settingName) {
-      assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName);
-    },
 
     /**
       Action to show confis dialog.
@@ -684,110 +536,17 @@ export default FlexberryBaseComponent.extend({
       }
     },
 
-    /**
-      Action to show export dialog.
 
-      @method actions.showExportDialog
-      @public
-    */
-    showExportDialog(settingName, immediateExport) {
-      let settName = settingName ? 'ExportExcel/' + settingName : settingName;
-      assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, true, immediateExport);
-    },
 
-    /**
-      Handler click on flexberry-menu.
 
-      @method actions.onMenuItemClick
-      @public
-      @param {jQuery.Event} e jQuery.Event by click on menu item
-    */
-    onMenuItemClick(e) {
-      let iTags = $(e.currentTarget).find('i');
-      let namedSettingSpans = $(e.currentTarget).find('span');
-      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
-        return;
-      }
 
-      let router = getOwner(this).lookup('router:main');
-      let className = iTags.get(0).className;
-      let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName = this.get('componentName');
-      let userSettingsService = this.get('userSettingsService');
 
-      switch (className) {
-        case 'table icon': {
-          this.send('showConfigDialog');
-          break;
-        }
 
-        case 'checkmark box icon': {
 
-          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
-          /* eslint-disable no-unused-vars */
-          let colsConfig = this.listNamedUserSettings[namedSetting];
-          userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
-            then(record => {
-              let currentController = this.get('currentController');
-              let userSettingsApplyFunction = currentController.get('userSettingsApply');
-              if (userSettingsApplyFunction instanceof Function) {
-                userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
-              } else {
-                let sort = serializeSortingParam(colsConfig.sorting);
-                router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
-              }
-            });
-          /* eslint-disable no-unused-vars */
-          break;
-        }
 
-        case 'setting icon': {
-          this.send('showConfigDialog', namedSetting);
-          break;
-        }
 
-        case 'remove icon': {
-          /* eslint-disable no-unused-vars */
-          userSettingsService.deleteUserSetting(componentName, namedSetting)
-          .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
-            alert('Настройка ' + namedSetting + ' удалена');
-          });
-          /* eslint-enable no-unused-vars */
-          break;
-        }
 
-        case 'remove circle icon': {
-          if (!userSettingsService.haveDefaultUserSetting(componentName)) {
-            alert('No default usersettings');
-            break;
-          }
 
-          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
-          /* eslint-disable no-unused-vars */
-          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
-          .then(record => {
-            let currentController = this.get('currentController');
-            let userSettingsApplyFunction = currentController.get('userSettingsApply');
-            if (userSettingsApplyFunction instanceof Function) {
-              userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
-            } else {
-              let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-              router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
-            }
-          });
-          /* eslint-enable no-unused-vars */
-          break;
-        }
-        case 'unhide icon': {
-          let currentUserSetting = userSettingsService.getListCurrentUserSetting(componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + router.currentPath + '.js';
-          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
-          break;
-        }
-      }
-    },
 
     /**
       Handler click on flexberry-menu of advLimits.
@@ -843,53 +602,12 @@ export default FlexberryBaseComponent.extend({
       }
     },
 
-    /**
-      Handler click on flexberry-menu.
 
-      @method actions.onExportMenuItemClick
-      @public
-      @param {jQuery.Event} e jQuery.Event by click on menu item
-    */
-    onExportMenuItemClick(e) {
-      let iTags = $(e.currentTarget).find('i');
-      let namedSettingSpans = $(e.currentTarget).find('span');
-      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
-        return;
-      }
 
-      let className = iTags.get(0).className;
-      let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName = this.get('componentName');
-      let userSettingsService = this.get('userSettingsService');
 
-      switch (className) {
-        case 'file excel outline icon': {
-          this.send('showExportDialog');
-          break;
-        }
 
-        case 'checkmark box icon': {
-          this.send('showExportDialog', namedSetting, true);
-          break;
-        }
 
-        case 'setting icon': {
-          this.send('showExportDialog', namedSetting);
-          break;
-        }
 
-        case 'remove icon': {
-          /* eslint-disable no-unused-vars */
-          userSettingsService.deleteUserSetting(componentName, namedSetting, true)
-          .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
-            alert('Настройка ' + namedSetting + ' удалена');
-          });
-          /* eslint-enable no-unused-vars */
-          break;
-        }
-      }
-    },
 
     /* eslint-disable no-unused-vars */
     copyJSONContent(event) {
@@ -919,9 +637,6 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
-    this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
-    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
     this.get('colsConfigMenu').on('updateNamedAdvLimit', this, this._updateNamedAdvLimits);
   },
 
@@ -949,9 +664,6 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
-    this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
-    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this.get('colsConfigMenu').off('updateNamedAdvLimit', this, this._updateNamedAdvLimits);
     this._super(...arguments);
   },
@@ -996,62 +708,14 @@ export default FlexberryBaseComponent.extend({
   },
   /* eslint-enable no-unused-vars */
 
-  _updateListNamedUserSettings(componentName) {
-    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && componentName === this.get('componentName'))) {
-      return;
-    }
 
-    this._resetNamedUserSettings();
-    set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-    set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));
-  },
 
-  _resetNamedUserSettings() {
-    let menus = this.get('menus');
-    for (let i = 0; i < menus.length; i++) {
-      set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
-      set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
-    }
-  },
 
-  _addNamedSetting(namedSetting, componentName, isExportExcel) {
-    if (componentName !== this.get('componentName')) {
-      return;
-    }
 
-    let menus = this.get('menus');
-    for (let i = 0; i < menus.length; i++) {
-      let icon = menus[i].icon + ' icon';
-      let subItems = isExportExcel ? this.get('exportExcelItems')[0].items[i + 1].items :
-        this.get('colsSettingsItems')[0].items[i + 1].items;
-      let newSubItems = [];
-      let exist = false;
-      for (let j = 0; j < subItems.length; j++) {
-        newSubItems[j] = subItems[j];
-        if (subItems[j].title === namedSetting) {
-          exist = true;
-        }
-      }
 
-      if (!exist) {
-        newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
-      }
 
-      if (isExportExcel) {
-        set(this.get('exportExcelItems')[0].items[i + 1], 'items', newSubItems);
-      } else {
-        set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
-      }
-    }
 
-    this._sortNamedSetting(isExportExcel);
-  },
 
-  _deleteNamedSetting(namedSetting, componentName) {
-    if (componentName === this.get('componentName')) {
-      this._updateListNamedUserSettings(componentName);
-    }
-  },
   /* eslint-enable no-unused-vars */
 
   /* eslint-disable no-unused-vars */
@@ -1063,15 +727,6 @@ export default FlexberryBaseComponent.extend({
   },
   /* eslint-enable no-unused-vars */
 
-  _sortNamedSetting(isExportExcel) {
-    for (let i = 0; i < this.menus.length; i++) {
-      if (isExportExcel) {
-        this.get('exportExcelItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
-      } else {
-        this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
-      }
-    }
-  },
 
   /**
     Refresh current adv limits list.

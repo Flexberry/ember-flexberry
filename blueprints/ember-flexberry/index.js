@@ -26,7 +26,7 @@ module.exports = {
     var options = '    lessOptions: {\n' +
       '      paths: [\n' +
       '        \'bower_components/semantic-ui\',\n' +
-      '        \'bower_components/ember-flexberry-themes\'\n' +
+      '        \'node_modules/ember-flexberry-themes\'\n' +
       '      ]\n' +
       '    },\n' +
       '    postcssOptions: {\n' +

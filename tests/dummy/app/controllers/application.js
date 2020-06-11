@@ -702,15 +702,28 @@ export default Controller.extend({
   */
   itemsUserMenu: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
-    let itemsUserMenu = [{
+    let rootItem = {
       icon: 'dropdown icon',
       title: i18n.t('forms.application.header.profile.caption'),
       iconAlignment: 'right',
-      items: [{
-        title: i18n.t('forms.application.header.logout.caption'),
-        items: null
-      }]
-    }];
-    return itemsUserMenu
+      items: []
+    };
+    let device = this.get('device');
+    if (device.type() === 'phone') {
+      rootItem = {
+        icon: '',
+        title: '',
+        iconAlignment: 'right',
+        items: []
+      };
+    }
+
+    let itemsUserMenu = {
+      title: i18n.t('forms.application.header.logout.caption'),
+      items: null
+    };
+
+    rootItem.items[rootItem.items.length] = itemsUserMenu;
+    return [rootItem];
   }),
 });

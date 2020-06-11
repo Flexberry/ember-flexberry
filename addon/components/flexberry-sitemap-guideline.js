@@ -97,6 +97,7 @@ export default Component.extend({
           if (selectedItem.length > 0) {
             selectedItem.removeClass('active selected');
           }
+          $(this.element).dropdown('hide');
         }
       });
     }

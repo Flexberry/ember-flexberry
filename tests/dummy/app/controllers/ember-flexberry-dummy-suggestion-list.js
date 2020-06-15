@@ -3,6 +3,9 @@ import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-con
 import { translationMacro as t } from 'ember-i18n';
 import RSVP from 'rsvp';
 
+import { A } from '@ember/array';
+import { scheduleOnce } from '@ember/runloop';
+
 export default ListFormController.extend(ListFormControllerOperationsIndicationMixin, {
   /**
     Name of related edit form route.
@@ -17,6 +20,25 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
   title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-listform-question-caption'),
 
+  _promises : A(),
+
+  showDeleteModalDialog: function() {
+    this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
+      controller: 'ember-flexberry-dummy-suggestion-list'
+    });
+    
+    this.set('approveDeleting', () => {
+      let promises = this.get('_promises');
+      promises.forEach(p => p.resolve());
+      promises.clear();
+    });
+    this.set('denyDeleting',  () => {
+      let promises = this.get('_promises');
+      promises.forEach(p => p.reject());
+      promises.clear();
+    });
+  },
+
   actions: {
     /**
       Hook that executes before deleting all records on all pages.
@@ -30,13 +52,9 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       Show delete modal dialog before deleting.
     */
     beforeDeleteRecord: function() {
+      scheduleOnce('afterRender', this, this.showDeleteModalDialog);
       return new RSVP.Promise((resolve, reject) => {
-        this.set('approveDeleting', resolve);
-        this.set('denyDeleting', reject);
-
-        this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
-          controller: 'ember-flexberry-dummy-suggestion-list'
-        });
+        this.get('_promises').pushObject({ resolve, reject });
       });
     },
 

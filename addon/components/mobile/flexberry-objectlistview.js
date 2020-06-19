@@ -3,6 +3,8 @@
 */
 
 import FlexberryObjectlistview from './../flexberry-objectlistview';
+import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
 
 /**
   Mobile version of flexberry-objectlistview (with mobile-specific defaults).
@@ -161,5 +163,54 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  classNames: ['mobile']
+  classNames: ['mobile'],
+
+  mobileSortingSettingsIcon: computed('sorting', {
+    get() {
+      let icon = 'icon-guideline-sort-clear';
+      let sorting = this.get('sorting');
+      let firstRow = Object.entries(sorting).map(([ key, val ]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
+      .sort((a, b) => b.sortAscending - a.sortAscending)[0];
+      
+      if (!isNone(firstRow)) {
+        icon = firstRow.sortAscending ? 'icon-guideline-sort-ascend' :'icon-guideline-sort-descend';
+      }
+
+      return icon +' icon';
+    }
+  }),
+  
+  mobileSortingSettingsCaption: computed('sorting', {
+    get() {
+      let i18n = this.get('i18n');
+      let sorting = this.get('sorting');
+      if (Object.keys(sorting).length === 0) {
+        return i18n.t('components.flexberry-objectlistview.without-sorting');
+      }
+
+      let sortingValue; 
+      Object.entries(sorting).map(([ key, val ]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
+      .sort((a, b) => b.sortAscending - a.sortAscending).forEach((row) => {
+        let rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${row.key}.__caption__`).string;
+        if (isNone(rowHeader)) {
+          let key = row.key.split('.')[0];
+          rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${key}.__caption__`).string;
+        }
+
+        if (!isNone(sortingValue)) {
+          sortingValue += ', ' + rowHeader;
+        } else {
+          sortingValue = rowHeader;
+        }
+      });
+  
+      return  sortingValue;
+    }
+  }),
+
+  actions: {
+    showConfigDialog(e) {
+      this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, true);
+    }
+  }
 });

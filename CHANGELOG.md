@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.2`.
+
 ## [2.5.0-beta.4] - 2020-06-08
 ### Changed
 * For all the button elements used in templates, the type attribute with the button value is added.

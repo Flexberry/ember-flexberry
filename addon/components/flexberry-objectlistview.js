@@ -1127,10 +1127,8 @@ export default FlexberryBaseComponent.extend({
       let transitionOptions = {
         queryParams: {
           prototypeId: prototypeId,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
         }
       };
 

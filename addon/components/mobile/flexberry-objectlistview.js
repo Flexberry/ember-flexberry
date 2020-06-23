@@ -163,7 +163,7 @@ export default FlexberryObjectlistview.extend({
         return i18n.t('components.flexberry-objectlistview.without-sorting');
       }
 
-      let sortingValue; 
+      let sortingValue;
       Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
       .sort((a, b) => b.sortAscending - a.sortAscending).forEach((row) => {
         let rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${row.key}.__caption__`).string;
@@ -178,7 +178,7 @@ export default FlexberryObjectlistview.extend({
           sortingValue = rowHeader;
         }
       });
-  
+
       return sortingValue;
     }
   }),

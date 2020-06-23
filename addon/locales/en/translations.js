@@ -114,7 +114,8 @@ export default {
       'showing-entries': {
         'showing': 'Showing ',
         'of': ' of ',
-        'entries': ' entries'
+        'entries': ' entries',
+        'without-sorting': 'Without sorting'
       }
     },
 

@@ -169,14 +169,14 @@ export default FlexberryObjectlistview.extend({
     get() {
       let icon = 'icon-guideline-sort-clear';
       let sorting = this.get('sorting');
-      let firstRow = Object.entries(sorting).map(([ key, val ]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
+      let firstRow = Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
       .sort((a, b) => b.sortAscending - a.sortAscending)[0];
-      
+
       if (!isNone(firstRow)) {
-        icon = firstRow.sortAscending ? 'icon-guideline-sort-ascend' :'icon-guideline-sort-descend';
+        icon = firstRow.sortAscending ? 'icon-guideline-sort-ascend' : 'icon-guideline-sort-descend';
       }
 
-      return icon +' icon';
+      return icon + ' icon';
     }
   }),
   
@@ -188,8 +188,8 @@ export default FlexberryObjectlistview.extend({
         return i18n.t('components.flexberry-objectlistview.without-sorting');
       }
 
-      let sortingValue; 
-      Object.entries(sorting).map(([ key, val ]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
+      let sortingValue;
+      Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
       .sort((a, b) => b.sortAscending - a.sortAscending).forEach((row) => {
         let rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${row.key}.__caption__`).string;
         if (isNone(rowHeader)) {
@@ -204,12 +204,12 @@ export default FlexberryObjectlistview.extend({
         }
       });
   
-      return  sortingValue;
+      return sortingValue;
     }
   }),
 
   actions: {
-    showConfigDialog(e) {
+    showConfigDialog() {
       this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, true);
     }
   }

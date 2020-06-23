@@ -438,11 +438,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
             let transitionQuery = {};
             transitionQuery.queryParams = qpars;
             transitionQuery.queryParams.recordAdded = true;
-            const parentParameters = {
-              parentRoute: this.get('parentRoute'),
-              parentRouteRecordId: this.get('parentRouteRecordId')
-            };
-            transitionQuery.queryParams.parentParameters = parentParameters;
+            transitionQuery.queryParams.parentRoute = this.get('parentRoute');
+            transitionQuery.queryParams.parentRouteRecordId = this.get('parentRouteRecordId');
             this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
           }
         }

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix show selected file name in internet explorer.
 
 ## [3.4.0-beta.2] - 2020-06-10
 ### Fixed

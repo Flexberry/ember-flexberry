@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Incorrect `parentRoute` query parameter.
+### Fixed
+* Fix show selected file name in internet explorer.
 
 ## [3.4.0-beta.2] - 2020-06-10
 ### Fixed

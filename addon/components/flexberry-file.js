@@ -103,7 +103,7 @@ export default FlexberryBaseComponent.extend({
   _fileName: computed('_jsonValue.fileName', function() {
     let fileName = this.get('_jsonValue.fileName');
     if (isNone(fileName)) {
-      return null;
+      return '';
     }
 
     return fileName;

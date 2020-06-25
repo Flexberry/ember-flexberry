@@ -2274,10 +2274,10 @@ ember-factory-for-polyfill@^1.1.0:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
-ember-flexberry-data@~2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-2.4.0.tgz#e05b830aa032575d70a222857c2b4685f34268d3"
-  integrity sha512-lE9KwCtXoprfHECNmP55qWFzNmavv5Awc4C6lg2rPkYkq/TCV/dfjFYxCzLkqOWFjFLAz2VLw4qqIxYWkChb0g==
+ember-flexberry-data@~2.5.0-beta.2:
+  version "2.5.0-beta.2"
+  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-2.5.0-beta.2.tgz#20f3a087fbe49a333696e4523474a5c416393fd9"
+  integrity sha512-0IfzkHmHQ6Vxj+Sp/044wu3cqowMcYXmO9z7iox+YKwnQoZSwiZ9aKmlO4mQy0wsCnpTzh1wDer7d1ICuFdwrQ==
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-cli-htmlbars "^1.0.3"
@@ -6715,8 +6715,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 which-module@^1.0.0:
   version "1.0.0"

@@ -3,8 +3,34 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.5.0-beta.5] - 2020-06-22
 ### Changed
-* Change confirm delete rows actions on async.
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.2`.
+
+## [2.5.0-beta.4] - 2020-06-08
+### Changed
+* For all the button elements used in templates, the type attribute with the button value is added.
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.1`.
+
+## [2.5.0-beta.3] - 2020-06-08
+### Fixed
+* Saving on the edit form is not performed in offline mode.
+* In the flexberry-groupedit component, the menu in the first row was displayed as in the last.
+
+## [2.5.0-beta.2] - 2020-05-29
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.0`.
+
+## [2.5.0-beta.1] - 2020-05-25
+### Added
+* In all components of lists:
+    * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
+    * The `confirmDeleteRow` action gets the record to be deleted as the first parameter.
+
+### Fixed
+* The modal window settings for the `flexberry-lookup` component specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
+* The modal window settings for the `flexberry-lookup` component specified through the `modalDialogSettings` property are lost when switching pages.
 
 ### Added
 * Available mime types check in `flexberry-file` component.

@@ -522,11 +522,11 @@ export default FlexberryBaseComponent.extend({
   /**
     Available file extensions for upload. In MIME type format.
 
-    @property availableMimeTypes
-    @type String
-    @default ''
+    @property accept
+    @type <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept">Input accep</a>
+    @default undefined
   */
-  availableMimeTypes: '',
+  accept: undefined,
 
   /**
     External Base64 string
@@ -672,11 +672,10 @@ export default FlexberryBaseComponent.extend({
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
-      const isAvailableTypesSet = Object.keys(this.availableMimeTypes).length > 0;
-      const isFileTypeAvailable = this.availableMimeTypes.includes(selectedFile.type);
+      const isFileTypeAvailable = (!this.accept) || ((this.accept) && this.accept.includes(selectedFile.type));
       const isFileTypeUndefined = selectedFile.type === '';
 
-      if (isAvailableTypesSet && (isFileTypeUndefined || !isFileTypeAvailable)) {
+      if (isFileTypeUndefined || !isFileTypeAvailable) {
         const fileName = selectedFile.name;
         this.showFileExtensionErrorModalDialog(fileName);
         return;
@@ -1072,7 +1071,7 @@ export default FlexberryBaseComponent.extend({
   */
   _valueDidChange: Ember.observer('value', function() {
     const value = this.get('value');
-    if (Ember.isNone(value)) {
+    if (!value) {
       this.removeFile();
     }
 

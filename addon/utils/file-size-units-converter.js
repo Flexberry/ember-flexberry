@@ -5,7 +5,6 @@
 /**
   Used for convert file size value depending on units.
 
-  @for Utils.Layers
   @method getSizeInUnits
   @param {Number} fileSize file size in bytes.
   @param {String} fileSizeUnits wanted file size units as 'Bt' 'Kb' 'Mb' 'Gb'.
@@ -32,6 +31,8 @@ let getSizeInUnits = function (fileSize, fileSizeUnits) {
     case 'Gb':
       fileSizeInUnits *= 1e-9;
       break;
+    default:
+      throw new Error(`Wrong value of file size units - ${fileSizeUnits}`);
   }
 
   return fileSizeInUnits;

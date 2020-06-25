@@ -108,7 +108,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
         case 'ember-flexberry-dummy-suggestion-file+file':
           cellComponent.componentProperties = {
-            availableMimeTypes: this.get('availableMimeTypes'),
+            accept: this.get('availableMimeTypes'),
             maxUploadFileSize: this.get('maxUploadFileSize'),
             maxUploadFileSizeUnit: this.get('maxUploadFileSizeUnit')
           };

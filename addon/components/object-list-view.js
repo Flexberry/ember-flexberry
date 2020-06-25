@@ -1079,18 +1079,26 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
-      let selectedRecords = this.get('selectedRecords');
+      const selectedRecords = this.get('selectedRecords');
+
+      const record = recordWithKey.data;
+
       recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
+        if (selectedRecords.indexOf(record) === -1) {
+          selectedRecords.pushObject(record);
         }
       } else {
-        selectedRecords.removeObject(recordWithKey.data);
+        selectedRecords.removeObject(record);
       }
 
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
+      const componentName = this.get('componentName');
+      const olvEventsService = this.get('objectlistviewEventsService');
+
+      // With this trigger, the `flexberry-groupedit` component implements the disabling of the rows moving buttons.
+      // The implementation uses the `active` class, since its update was moved to the template, the trigger must be called after updating the template.
+      // TODO: Make it better!
+      schedule('afterRender', olvEventsService, olvEventsService.rowSelectedTrigger, componentName, record, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**

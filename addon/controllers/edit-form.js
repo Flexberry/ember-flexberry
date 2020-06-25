@@ -481,6 +481,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       });
     }, (reason) => {
       this.send('error', new Error(reason.get('message')));
+      return RSVP.reject(reason);
     });
   },
 

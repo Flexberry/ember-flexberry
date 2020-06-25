@@ -1643,7 +1643,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
-      $table.css('cssText', `width: ${columnsWidthAutoresize ? containerWidth : tableWidth}px !important` );
+      $table.css({ width: `${columnsWidthAutoresize ? containerWidth : tableWidth}px` });
       if (this.get('eventsBus')) {
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }

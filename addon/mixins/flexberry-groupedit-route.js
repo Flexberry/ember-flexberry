@@ -129,8 +129,6 @@ export default Mixin.create({
         if (isModelNew || isModelChanged) {
           this.controller.save(false, true).then(() => {
             goToOtherRouteFunction();
-          }).catch(() => {
-            this.get('appState').error();
           });
         } else {
           goToOtherRouteFunction();

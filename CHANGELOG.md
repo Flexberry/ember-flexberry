@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Incorrect `parentRoute` query parameter.
 ### Fixed
 * Fix show selected file name in internet explorer.
+* Fix transition to groupedit record when available critical validations error.
 
 ## [3.4.0-beta.2] - 2020-06-10
 ### Fixed

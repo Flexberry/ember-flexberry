@@ -521,9 +521,10 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Available file extensions for upload. In MIME type format.
+    See [the documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) for more details.
 
     @property accept
-    @type <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept">Input accep</a>
+    @type String
     @default undefined
   */
   accept: undefined,
@@ -672,7 +673,8 @@ export default FlexberryBaseComponent.extend({
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
-      const isFileTypeAvailable = (!this.accept) || ((this.accept) && this.accept.includes(selectedFile.type));
+      const accept = this.get('accept');
+      const isFileTypeAvailable = (!accept) || ((accept) && accept.includes(selectedFile.type));
       const isFileTypeUndefined = selectedFile.type === '';
 
       if (isFileTypeUndefined || !isFileTypeAvailable) {

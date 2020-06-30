@@ -273,6 +273,34 @@ export default FlexberryBaseComponent.extend({
   openButton: true,
 
   /**
+    The selector to get the element (using `jQuery`) for [the 'appendTo` flatpickr option](https://flatpickr.js.org/options/).
+
+    @property calendarContext
+    @type String
+  */
+  calendarContext: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberrySimpledatetime'
+  */
+  appConfigSettingsPath: 'APP.components.flexberrySimpledatetime',
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method init
+  */
+  init() {
+    this._super(...arguments);
+
+    this.initProperty({ propertyName: 'calendarContext', defaultValue: undefined });
+  },
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
@@ -351,6 +379,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _flatpickrCreate() {
+    const calendarContext = this.get('calendarContext');
     const timeless = this.get('type') === 'date';
     const min = this.get('min');
     const max = this.get('max');
@@ -368,7 +397,7 @@ export default FlexberryBaseComponent.extend({
       defaultDate: this.get('value'),
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
-      appendTo: $('body > .ember-view').get(0),
+      appendTo: calendarContext ? $(calendarContext).get(0) : undefined,
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? 'd.m.Y' : 'd.m.Y H:i',
       dateFormat: timeless ? 'Y-m-d' : 'Y-m-dTH:i',

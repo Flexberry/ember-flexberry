@@ -117,6 +117,11 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show asterisk icon in first column of every changed row.
           showAsteriskInRow: false,
+        },
+
+        flexberrySimpledatetime: {
+          // The selector to get the element (using `jQuery`) for [the 'appendTo` flatpickr option](https://flatpickr.js.org/options/).
+          calendarContext: undefined
         }
       },
     }

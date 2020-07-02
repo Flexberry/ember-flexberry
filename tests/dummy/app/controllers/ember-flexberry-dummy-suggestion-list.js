@@ -26,20 +26,23 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
       controller: 'ember-flexberry-dummy-suggestion-list'
     });
-    
-    this.set('approveDeleting', () => {
-      let promises = this.get('_promises');
-      promises.forEach(p => p.resolve());
-      promises.clear();
-    });
-    this.set('denyDeleting',  () => {
-      let promises = this.get('_promises');
-      promises.forEach(p => p.reject());
-      promises.clear();
-    });
   },
 
   actions: {
+    approveDeleting() {
+      let promises = this._promises;
+      promises.forEach(p => p.resolve());
+      promises.clear();
+      return;
+    },
+
+    denyDeleting() {
+      let promises = this._promises;
+      promises.forEach(p => p.reject());
+      promises.clear();
+      return;
+    },
+
     /**
       Hook that executes before deleting all records on all pages.
       Need to be overriden in corresponding application controller.

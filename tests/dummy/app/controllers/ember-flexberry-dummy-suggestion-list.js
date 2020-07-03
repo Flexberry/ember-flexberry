@@ -37,7 +37,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     },
 
     denyDeleting() {
-      let promises = this._promises;
+      const promises = this.get('_promises');
       promises.forEach(p => p.reject());
       promises.clear();
     },

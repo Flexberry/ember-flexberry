@@ -40,7 +40,6 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       let promises = this._promises;
       promises.forEach(p => p.reject());
       promises.clear();
-      return;
     },
 
     /**

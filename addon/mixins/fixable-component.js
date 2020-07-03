@@ -120,8 +120,8 @@ export default Mixin.create({
     let parentComponent = $('body > .pushable > .pusher').get(0);
 
     if (!isVisible || fixedOnVisible) {
-      const { height, width, bottom } = component.getBoundingClientRect();
-      let { top, left } = component.getBoundingClientRect();
+      const { height, left, width, bottom } = component.getBoundingClientRect();
+      let { top } = component.getBoundingClientRect();
       const optionWidth = options.width || 0;
 
       if (this.get('isInsideOlv')) {

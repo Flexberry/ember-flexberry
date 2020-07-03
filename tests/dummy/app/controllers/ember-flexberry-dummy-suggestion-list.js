@@ -30,7 +30,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
   actions: {
     approveDeleting() {
-      let promises = this._promises;
+      const promises = this.get('_promises');
       promises.forEach(p => p.resolve());
       promises.clear();
     },

@@ -33,7 +33,7 @@ test('it renders', function (assert) {
   `);
 
   return wait().then(() => {
-    assert.equal(this.$('.description').text().trim(), 'template block text');
+    assert.equal(this.$('.content').text().trim(), 'template block text');
   });
 });
 

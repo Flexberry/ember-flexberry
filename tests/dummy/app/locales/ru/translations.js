@@ -587,7 +587,6 @@ $.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
@@ -1031,6 +1030,7 @@ $.extend(true, translations, {
       'sign-up-caption': 'Или зарегистрироваться',
       'enter-login-caption': 'Введите логин',
       'enter-password-caption': 'Введите пароль',
+      'login-using-caption': 'Войти в систему с помощью',
       'reset-password-caption': 'Забыли пароль?',
       'login-button-caption': 'Войти'
     },

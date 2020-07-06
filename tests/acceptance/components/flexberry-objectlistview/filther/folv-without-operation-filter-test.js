@@ -6,7 +6,7 @@ import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';
 
 executeTest('check without operation filter', (store, assert, app) => {
-  assert.expect(4);
+  assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = '';
@@ -53,8 +53,6 @@ executeTest('check without operation filter', (store, assert, app) => {
             }
           }
 
-          let dropdown = $('.flexberry-dropdown')[0];
-          assert.equal(dropdown.innerText, 'like', 'Filter select like operation if it is not specified');
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
           assert.equal(successful, true, 'Filter successfully worked');
           done1();

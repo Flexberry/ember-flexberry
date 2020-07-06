@@ -149,11 +149,18 @@
 {{/if}}
 {{#each customButtons as |customButton|}}
   <button
-    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses}} button"
     title={{if customButton.buttonTitle customButton.buttonTitle}}
     disabled={{customButton.disabled}}
     {{action "customButtonAction" customButton.buttonAction}}>
-      {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
+      {{#if customButton.iconClasses}}
+        <i class={{customButton.iconClasses}}></i>
+        {{customButton.buttonName}}
+      {{else if customButton.buttonName}}
+        {{customButton.buttonName}}
+      {{else}}
+        {{t "components.olv-toolbar.custom-button-text"}}
+      {{/if}}
   </button>
 {{/each}}
 <div class="olv-toolbar-info-modal-dialog ui small basic modal">

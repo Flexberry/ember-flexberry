@@ -94,7 +94,6 @@ export default Mixin.create({
     if (elements.length > 1) return Logger.warn(`Найдено больше одного элемента с классом '${elementClass}'`);
 
     const element = elements[0];
-    element.style.position = 'fixed';
     element.style.zIndex = 100;
     element.classList.add('hidden');
     this.setProperties({
@@ -154,6 +153,7 @@ export default Mixin.create({
       if (this.get('isInsideModal')) element.style.left = 0;
 
       element.style.width = `${width + optionWidth}px`;
+      element.style.position = 'fixed';
 
       this.addScrollListeners();
     }
@@ -168,6 +168,7 @@ export default Mixin.create({
     const element = this.get('fixedElementRef');
     element.style.left = '-9999px';
     element.style.maxHeight = 'none';
+    element.style.position = '';
 
     const component = this.get('componentRef');
     $(component).blur();

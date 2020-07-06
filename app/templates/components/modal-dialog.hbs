@@ -1,21 +1,21 @@
 <i class="close icon"></i>
 <div class="header">{{title}}</div>
-<div class="{{if viewImageContent "image"}} content">
+<div class="{{if viewImageContent "image"}} scrolling content">
   {{#if viewImageContent}}
     <div class="ui centered image">{{yield}}</div>
   {{else}}
-    <div class="description">{{yield}}</div>
+    {{yield}}
   {{/if}}
 </div>
 {{#if _toolbarVisible}}
   <div class="actions">
     {{#if useCloseButton}}
-      <button class="ui cancel button" data-dismiss="modal" title={{t "components.modal-dialog.close-button-text"}}>
+      <button class="ui cancel button" type="button" data-dismiss="modal" title={{t "components.modal-dialog.close-button-text"}}>
         {{t "components.modal-dialog.close-button-text"}}
       </button>
     {{/if}}
     {{#if useOkButton}}
-      <button class="ui positive button" title={{t "components.modal-dialog.ok-button-text"}}>
+      <button class="ui positive button" type="button" title={{t "components.modal-dialog.ok-button-text"}}>
         {{t "components.modal-dialog.ok-button-text"}}
       </button>
     {{/if}}

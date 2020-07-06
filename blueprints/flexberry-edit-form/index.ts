@@ -181,6 +181,8 @@ class EditFormBlueprint {
       let attr = this.findAttr(model, projAttr.name);
       projAttr.readonly="readonly";
       projAttr.type = attr.type;
+      projAttr.entityName = this.options.entity.name;
+      projAttr.dashedName = (projAttr.name || '').replace(/./g, '-');
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -194,6 +196,8 @@ class EditFormBlueprint {
       if (propertyLookup) {
         belongsTo.projection = propertyLookup.projection;
         belongsTo.readonly = "readonly";
+        belongsTo.entityName = this.options.entity.name;
+        belongsTo.dashedName = (belongsTo.name || '').replace(/./g, '-');
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }
     }
@@ -201,6 +205,8 @@ class EditFormBlueprint {
     this.snippetsResult = lodash.map(this._tmpSnippetsResult, "snippetResult");
     for (hasMany of proj.hasMany) {
       hasMany.readonly = "readonly";
+      hasMany.entityName = this.options.entity.name;
+      hasMany.dashedName = (hasMany.name || '').replace(/./g, '-');
       this.locales.setupEditFormAttribute(hasMany);
       this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
     }
@@ -220,6 +226,8 @@ class EditFormBlueprint {
         belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
         belongsToAttr.readonly="true";
         belongsToAttr.type=attr.type;
+        belongsToAttr.entityName = this.options.entity.name;
+        belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/./g, '-');
         this.locales.setupEditFormAttribute(belongsToAttr);
         this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
       }

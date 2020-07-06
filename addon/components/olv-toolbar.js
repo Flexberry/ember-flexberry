@@ -189,19 +189,9 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
   customButtonAction: 'customButtonAction',
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    See {{#crossLink "FlexberryObjectlistviewComponent/customButtons:property"}}{{/crossLink}}.
 
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsArray
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -400,10 +390,8 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
       let thisRecordId = modelController.get('model.id');
       let transitionOptions = {
         queryParams: {
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
         }
       };
 
@@ -504,7 +492,14 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
       }
     },
 
-
+    /**
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog(settingName) {
+      assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName, this.get('useSidePageMode'));
+    },
 
     /**
       Action to show confis dialog.
@@ -536,17 +531,15 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
       }
     },
 
-
-
-
-
-
-
-
-
-
-
-
+    /**
+      @method actions.showExportDialog
+      @public
+    */
+    showExportDialog(settingName, immediateExport) {
+      let settName = settingName ? 'ExportExcel/' + settingName : settingName;
+      assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, this.get('useSidePageMode'), true, immediateExport);
+    },
 
     /**
       Handler click on flexberry-menu of advLimits.
@@ -601,13 +594,6 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
           break;
       }
     },
-
-
-
-
-
-
-
 
     /* eslint-disable no-unused-vars */
     copyJSONContent(event) {

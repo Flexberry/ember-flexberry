@@ -7,6 +7,7 @@
       readonly=<%= readonly %>
       value=model.<%= name %>
       class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+      data-test-<%= entityName %>-<%= dashedName %>=true
     }}
     {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
   </div>

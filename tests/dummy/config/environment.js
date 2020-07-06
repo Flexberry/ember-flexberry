@@ -96,6 +96,32 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
+        },
+
+        // For guideline theme
+        // Settings for flexberry-objectlistview component.
+        flexberryObjectlistview: {
+          // Flag indicates whether to side page or usually mode.
+          useSidePageMode: true,
+        },
+
+        // Settings for flexberry-lookup component.
+        flexberryLookup: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
+        },
+
+        flexberryGroupedit: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
+
+          // Flag: indicates whether to show asterisk icon in first column of every changed row.
+          showAsteriskInRow: false,
+        },
+
+        flexberrySimpledatetime: {
+          // The selector to get the element (using `jQuery`) for [the 'appendTo` flatpickr option](https://flatpickr.js.org/options/).
+          calendarContext: undefined
         }
       },
     }

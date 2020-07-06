@@ -110,6 +110,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
     @example
       ```
       {
@@ -117,10 +118,12 @@ export default FlexberryBaseComponent.extend({
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
         buttonTitle: '...', // Button title.
-		    iconClasses: '' // Css classes for icon.
+        iconClasses: '' // Css classes for icon.
+        disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```
-    @property customButtonsArray
+
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -345,7 +348,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -446,6 +449,14 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   fixedHeader: false,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryGroupedit'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryGroupedit',
 
   actions: {
     /**
@@ -698,6 +709,10 @@ export default FlexberryBaseComponent.extend({
       componentName: undefined,
       componentProperties: null
     });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showAsteriskInRow', defaultValue: true });
   },
 
   didInsertElement() {

@@ -3,7 +3,7 @@
 */
 import $ from 'jquery';
 import RSVP from 'rsvp';
-import EmberObject, { get, set, computed, observer } from '@ember/object';
+import EmberObject, { get, set, setProperties, computed, observer } from '@ember/object';
 import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { A, isArray } from '@ember/array';
@@ -1070,8 +1070,6 @@ export default FlexberryBaseComponent.extend(
     },
     /* eslint-enable no-unused-vars */
 
-    needReinitResizablePlugin: true,
-
     /**
       This action is called when user select the row.
 
@@ -1081,32 +1079,26 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
-      this.set('needReinitResizablePlugin', false);
-      this.send('_selectRow', recordWithKey, e);
-    },
+      const selectedRecords = this.get('selectedRecords');
 
-    _selectRow(recordWithKey, e) {
-      let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
+      const record = recordWithKey.data;
 
+      recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
-
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
+        if (selectedRecords.indexOf(record) === -1) {
+          selectedRecords.pushObject(record);
         }
       } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
-        selectedRecords.removeObject(recordWithKey.data);
+        selectedRecords.removeObject(record);
       }
 
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
+      const componentName = this.get('componentName');
+      const olvEventsService = this.get('objectlistviewEventsService');
+
+      // With this trigger, the `flexberry-groupedit` component implements the disabling of the rows moving buttons.
+      // The implementation uses the `active` class, since its update was moved to the template, the trigger must be called after updating the template.
+      // TODO: Make it better!
+      schedule('afterRender', olvEventsService, olvEventsService.rowSelectedTrigger, componentName, record, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**
@@ -1247,18 +1239,38 @@ export default FlexberryBaseComponent.extend(
     },
 
     /**
-      Checks if "Enter" button was pressed.
-      If "Enter" button was pressed then apply filters.
+      Applies filters if the `Enter` key has been pressed.
 
-      @method actions.keyDownFilterAction
+      @method actions.applyFiltersByEnter
     */
-    keyDownFilterAction(e) {
+    applyFiltersByEnter(e) {
       if (e.keyCode === 13) {
-        this.get('currentController').send('refreshList', this.get('componentName'));
-        e.preventDefault();
-        return false;
+        this._refreshList(this.get('componentName'));
       }
     },
+
+    /**
+      Called when filter condition in any column was changed by user.
+
+      @method actions.filterConditionChanged
+      @param {Object} filter
+      @param {String} newCondition
+      @param {String} oldCondition
+    */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
+        set(filter, 'pattern', null);
+      }
+
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition);
+      let componentForFilterByCondition = this.get('componentForFilterByCondition');
+      if (componentForFilterByCondition) {
+        assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+        $.extend(true, options, componentForFilterByCondition(newCondition, oldCondition, filter.type));
+      }
+
+      setProperties(filter.component, options);
+    }
   },
 
   /**
@@ -1285,7 +1297,7 @@ export default FlexberryBaseComponent.extend(
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
+      this.addObserver('content.[]', this, this._contentDidChangeProxy);
     }
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
@@ -1326,7 +1338,7 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    $(window).bind(`resize.${this.get('componentName')}`, $.proxy(function() {
+    $(window).on(`resize.${this.get('elementId')}`, () => {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
       } else {
@@ -1334,7 +1346,7 @@ export default FlexberryBaseComponent.extend(
           this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
         }
       }
-    }, this));
+    });
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1387,6 +1399,7 @@ export default FlexberryBaseComponent.extend(
 
           if (renderedRowIndex >= contentLength) {
             // The last menu needs will be up.
+            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
             this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
             this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
@@ -1428,17 +1441,16 @@ export default FlexberryBaseComponent.extend(
         }
       }
     } else {
-      if (this.get('needReinitResizablePlugin')) {
-        if (this.get('allowColumnResize')) {
-          this._reinitResizablePlugin();
-        } else {
-          let $table = this.$('table.object-list-view');
-          $table.colResizable({ disable: true });
-        }
+
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$('table.object-list-view');
+        $table.colResizable({ disable: true });
       }
-      this.set('needReinitResizablePlugin', true);
 
       // The last menu needs will be up.
+      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
       this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
@@ -1469,7 +1481,7 @@ export default FlexberryBaseComponent.extend(
     For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
-    this.removeObserver('content.[]', this, this._contentDidChange);
+    this.removeObserver('content.[]', this, this._contentDidChangeProxy);
 
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
@@ -1493,7 +1505,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    $(window).unbind(`resize.${this.get('componentName')}`);
+    $(window).off(`resize.${this.get('elementId')}`);
   },
 
   /**
@@ -1639,7 +1651,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
-      $table.css('cssText', `width: ${columnsWidthAutoresize ? containerWidth : tableWidth}px !important` );
+      $table.css({ width: `${columnsWidthAutoresize ? containerWidth : tableWidth}px` });
       if (this.get('eventsBus')) {
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }
@@ -1916,12 +1928,6 @@ export default FlexberryBaseComponent.extend(
   _addFilterForColumn(column, attr, bindingPath) {
     let relation = attr.kind !== 'attr';
     let attribute = this._getAttribute(attr, bindingPath);
-    let component = this._getFilterComponent(attribute.type, relation);
-    let componentForFilter = this.get('componentForFilter');
-    if (componentForFilter) {
-      assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
-    }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
@@ -1942,6 +1948,22 @@ export default FlexberryBaseComponent.extend(
       pattern = filters[name].pattern;
       condition = filters[name].condition;
     }
+
+    let component = this._getFilterComponent(type);
+    let componentForFilter = this.get('componentForFilter');
+    if (componentForFilter) {
+      assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
+      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+    }
+
+    let options = this._getFilterComponentByCondition(condition, null);
+    let componentForFilterByCondition = this.get('componentForFilterByCondition');
+    if (componentForFilterByCondition) {
+      assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
+      $.extend(true, options, componentForFilterByCondition(condition, null, type));
+    }
+
+    $.extend(true, component, options);
 
     column.filter = { name, type, pattern, condition, conditions, component };
   },
@@ -1986,17 +2008,41 @@ export default FlexberryBaseComponent.extend(
         return null;
 
       case 'date':
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+        };
       case 'number':
-        return ['eq', 'neq', 'le', 'ge'];
-
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+          'between': this.get('i18n').t('components.object-list-view.filters.between'),
+        };
       case 'string':
-        return ['eq', 'neq', 'like'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'like': this.get('i18n').t('components.object-list-view.filters.like'),
+          'nlike': this.get('i18n').t('components.object-list-view.filters.nlike')
+        };
 
       case 'boolean':
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'nempty': this.get('i18n').t('components.object-list-view.filters.nempty'),
+          'empty': this.get('i18n').t('components.object-list-view.filters.empty'),
+        };
 
       default:
-        return ['eq', 'neq'];
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
+        };
     }
   },
 
@@ -2005,58 +2051,33 @@ export default FlexberryBaseComponent.extend(
 
     @method _getFilterComponent
     @param {String} type
-    @param {Boolean} relation
     @return {Object} Object with parameters for component.
   */
-  /* eslint-disable no-unused-vars */
-  _getFilterComponent(type, relation) {
-    let _this = this;
-    let enterClick = function(e) {
-      if (e.which === 13) {
-        _this._refreshList(_this.get('componentName'));
-      }
-    };
-
-    let component = {
-      name: undefined,
-      properties: { keyDown: enterClick },
-    };
+  _getFilterComponent(type) {
+    const component = { name: undefined };
 
     switch (type) {
       case 'file':
         break;
 
-      case 'string': {
+      case 'string':
+      case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = $.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
+        component.properties = { class: 'compact fluid' };
         break;
-      }
-
-      case 'number': {
-        component.name = 'flexberry-textbox';
-        component.properties = $.extend(true, component.properties, {
-          class: 'compact fluid',
-        });
-        break;
-      }
 
       case 'boolean': {
-        let itemsArray = ['true', 'false'];
         component.name = 'flexberry-dropdown';
-        component.properties = $.extend(true, component.properties, {
-          items: itemsArray,
+        component.properties = {
+          items: ['true', 'false'],
           class: 'compact fluid',
-        });
+        };
         break;
       }
 
       case 'date': {
         component.name = 'flexberry-simpledatetime';
-        component.properties = $.extend(true, component.properties, {
-          type: 'date',
-        });
+        component.properties = { type: 'date' };
         break;
       }
 
@@ -2065,10 +2086,10 @@ export default FlexberryBaseComponent.extend(
         let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = $.extend(true, component.properties, {
+          component.properties = {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
-          });
+          };
         }
 
         break;
@@ -2078,6 +2099,27 @@ export default FlexberryBaseComponent.extend(
     return component;
   },
   /* eslint-enable no-unused-vars */
+
+  /**
+    Alter filter component depending on condition chosen by user.
+
+    @private
+    @method _getFilterComponentByCondition
+    @param {String} newCondtition
+    @param {String} oldCondition
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponentByCondition(newCondition, oldCondition) {
+    if (newCondition === 'between') {
+      return { name: 'olv-filter-interval' };
+    }
+
+    if (oldCondition === 'between') {
+      return { name: 'flexberry-textbox' };
+    }
+
+    return {};
+  },
 
   /**
     Sets content for component.
@@ -2581,11 +2623,21 @@ export default FlexberryBaseComponent.extend(
   _searchForContentChange: observer('searchForContentChange', function() {
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
+      this.addObserver('content.[]', this, this._contentDidChangeProxy);
     } else {
-      this.removeObserver('content.[]', this, this._contentDidChange);
+      this.removeObserver('content.[]', this, this._contentDidChangeProxy);
     }
   }),
+
+  /**
+    Schedules the `_contentDidChange` function to run once in the `render` queue.
+
+    @private
+    @method _contentDidChangeProxy
+  */
+  _contentDidChangeProxy() {
+    scheduleOnce('render', this, this._contentDidChange);
+  },
 
   /**
     It observes changes of model's data that are displayed on component
@@ -2685,7 +2737,7 @@ export default FlexberryBaseComponent.extend(
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
-          this.send('_selectRow', recordWithData, e);
+          this.send('selectRow', recordWithData, e);
         }
       });
       /* eslint-enable no-unused-vars */

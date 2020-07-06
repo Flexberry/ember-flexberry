@@ -5,6 +5,7 @@
 import { computed, observer } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
 import $ from 'jquery';
+import moment from 'moment';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
@@ -156,14 +157,9 @@ export default FlexberryBaseComponent.extend({
       return this.get('_minAsString');
     },
     set(key, value) {
-      let minValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
+      let minValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_minAsString', this._convertDateToString(minValue));
-      } else {
-        let flatpickr = this.get('_flatpickr');
-        if (flatpickr) {
-          flatpickr.set('minDate', minValue);
-        }
       }
 
       return value;
@@ -181,14 +177,9 @@ export default FlexberryBaseComponent.extend({
       return this.get('_maxAsString');
     },
     set(key, value) {
-      let maxValue = value instanceof Date ? value.setMilliseconds(0) : this.get('moment').moment(value).toDate().setMilliseconds(0);
+      let maxValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_maxAsString', this._convertDateToString(maxValue));
-      } else {
-        let flatpickr = this.get('_flatpickr');
-        if (flatpickr) {
-          flatpickr.set('maxDate', maxValue);
-        }
       }
 
       return value;
@@ -282,6 +273,34 @@ export default FlexberryBaseComponent.extend({
   openButton: true,
 
   /**
+    The selector to get the element (using `jQuery`) for [the 'appendTo` flatpickr option](https://flatpickr.js.org/options/).
+
+    @property calendarContext
+    @type String
+  */
+  calendarContext: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberrySimpledatetime'
+  */
+  appConfigSettingsPath: 'APP.components.flexberrySimpledatetime',
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method init
+  */
+  init() {
+    this._super(...arguments);
+
+    this.initProperty({ propertyName: 'calendarContext', defaultValue: undefined });
+  },
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
@@ -328,7 +347,7 @@ export default FlexberryBaseComponent.extend({
   _validationDateTime() {
     let dateIsValid = true;
     let inputValue = this.$('.custom-flatpickr')[0].value;
-    let date = this.get('type') === 'date' ? this.get('moment').moment(inputValue, 'DD.MM.YYYY') : this.get('moment').moment(inputValue, 'DD.MM.YYYY HH:mm');
+    let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
     if (date.isValid()) {
       let dateArray = inputValue.match(/(\d+)/g) || [];
       if (dateArray.length > 0) {
@@ -341,7 +360,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
-      if (!this.get('moment').moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
+      if (!moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
         this.get('_flatpickr').setDate(date.toDate());
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
@@ -360,57 +379,41 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _flatpickrCreate() {
-    let i18n = this.get('i18n');
-    let locale = this.get('locale');
-    if (i18n && isBlank(locale)) {
-      locale = i18n.locale;
-    }
+    const calendarContext = this.get('calendarContext');
+    const timeless = this.get('type') === 'date';
+    const min = this.get('min');
+    const max = this.get('max');
 
-    let options = {
+    const options = {
       altInput: true,
       time_24hr: true,
+      enableTime: !timeless,
       allowInput: true,
       clickOpens: false,
       disableMobile: true,
       altInputClass: 'custom-flatpickr',
-      minDate: this.get('min'),
-      maxDate: this.get('max'),
+      minDate: timeless && min ? moment(min).startOf('day').toDate() : min,
+      maxDate: timeless && max ? moment(max).endOf('day').toDate() : max,
       defaultDate: this.get('value'),
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
-      locale: locale,
-      appendTo: $('body > .ember-view').get(0),
+      appendTo: calendarContext ? $(calendarContext).get(0) : undefined,
+      locale: this.get('locale') || this.get('i18n.locale'),
+      altFormat: timeless ? 'd.m.Y' : 'd.m.Y H:i',
+      dateFormat: timeless ? 'Y-m-d' : 'Y-m-dTH:i',
       onChange: (dates) => {
-        if (dates.length) {
-          if (this.get('_flatpickr.config.enableTime') && isNone(this.get('_valueAsDate'))) {
-            dates[0].setHours(this.get('defaultHour'));
-            dates[0].setMinutes(this.get('defaultMinute'));
-            this.get('_flatpickr').setDate(dates[0], false);
-          }
-
-          this.set('_valueAsDate', dates[0]);
-        }
+        this.set('_valueAsDate', dates[0]);
       },
       onClose: () => {
         this.set('canClick', true);
       },
     };
 
-    let type = this.get('type');
-    if (type === 'datetime-local' || type === 'datetime') {
-      options.enableTime = true;
-      options.altFormat = 'd.m.Y H:i';
-      options.dateFormat = 'Y-m-dTH:i';
-    } else {
-      options.altFormat = 'd.m.Y';
-      options.dateFormat = 'Y-m-d';
-    }
-
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
     $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
-    this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
-    this.$('.custom-flatpickr').keydown($.proxy(function(e) {
+    this.$('.custom-flatpickr').mask(timeless ? '99.99.9999' : '99.99.9999 99:99');
+    this.$('.custom-flatpickr').keydown($.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._validationDateTime();
@@ -442,11 +445,15 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Reinit flatpickr (defaultHour and defaultMinute for dynamically updating because set() for this options doesn't update view).
+    Observer for reinit flatpickr (defaultHour, defaultMinute, and others, for dynamically updating because set() for this options doesn't update view).
+
+    @method reinitFlatpickrObserver
   */
-  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', 'min', 'max', function () {
-    this._flatpickrDestroy();
-    scheduleOnce('afterRender', this, '_flatpickrCreate');
+  reinitFlatpickrObserver: observer('type', 'min', 'max', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+    if (!this.get('useBrowserInput') || !this.get('currentTypeSupported')) {
+      this._flatpickrDestroy();
+      scheduleOnce('afterRender', this, this._flatpickrCreate);
+    }
   }),
 
   /**
@@ -477,7 +484,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (value instanceof Date) {
-      let date = this.get('moment').moment(value);
+      let date = moment(value);
       switch (this.get('type')) {
         case 'datetime-local':
         case 'datetime':
@@ -511,7 +518,7 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Expected type the string.');
     }
 
-    return this.get('moment').moment(value).toDate();
+    return moment(value).toDate();
   },
 
   /**
@@ -542,10 +549,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.remove
     */
     remove() {
-      let value = this.get('value');
-      if (!isNone(value) && !this.get('readonly')) {
-        this.get('_flatpickr').clear();
-        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      if (!this.get('readonly')) {
+        const flatpickr = this.get('_flatpickr');
+        const value = this.get('value') || new Date();
+
+        value.setHours(this.get('defaultHour'), this.get('defaultMinute'));
+
+        flatpickr.setDate(value, false);
+        flatpickr.clear();
       }
     },
 

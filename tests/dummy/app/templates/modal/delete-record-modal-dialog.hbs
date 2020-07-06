@@ -5,8 +5,8 @@
   close=(action "closeModalDialog")
   settings=(hash
     closable=false
-    onApprove=(action "approveDeleting")
-    onDeny=(action "denyDeleting")
+    onApprove=(action (or approveDeleting "approveDeleting"))
+    onDeny=(action (or denyDeleting "denyDeleting"))
   )
 }}
   <div class="actions">

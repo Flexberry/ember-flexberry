@@ -116,6 +116,7 @@ export default Mixin.create({
     const component = this.get('componentRef');
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
+    let parentComponent = $('body > .pushable > .pusher').get(0);
 
     if (!isVisible || fixedOnVisible) {
       const { height, left, width, bottom } = component.getBoundingClientRect();
@@ -147,7 +148,8 @@ export default Mixin.create({
         }
 
         element.style.top = top;
-        element.style.left = `${left + optionLeft}px`;
+        let offsetLeft = left - parentComponent.getBoundingClientRect().left + optionLeft;
+        $(element).attr('style', function(i, s) { return (s || '') + `left: ${offsetLeft}px !important;` });
       }
 
       if (this.get('isInsideModal')) element.style.left = 0;

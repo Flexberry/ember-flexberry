@@ -273,7 +273,7 @@ export default FlexberryBaseComponent.extend({
   openButton: true,
 
   /**
-    The selector to get the element (using `jQuery`) for [the 'appendTo` flatpickr option](https://flatpickr.js.org/options/).
+    The selector to get the element (using `jQuery`) for [the `appendTo` flatpickr option](https://flatpickr.js.org/options/).
 
     @property calendarContext
     @type String

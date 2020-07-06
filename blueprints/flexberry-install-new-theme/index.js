@@ -3,6 +3,30 @@ module.exports = {
 	afterInstall: function() {
 		var _this = this;
 
+    var configEnvironmentFile = 'config/environment.js';
+    var configEnvironmentAfter = 'showModalDialogOnDownloadError: true,\n        }';
+    var configEnvironmentContent = ',\n\n        // For guideline theme\n' +
+      '        // Settings for flexberry-objectlistview component.\n' +
+      '        flexberryObjectlistview: {\n' +
+      '          // Flag indicates whether to side page or usually mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '        },\n\n' +
+      '        // Settings for flexberry-lookup component.\n' +
+      '        flexberryLookup: {\n' +
+      '          // Flag: indicates whether to side page or usually mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '        },\n\n' +
+      '        flexberryGroupedit: {\n' +
+      '          // Flag: indicates whether to side page or usually mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '          // Flag: indicates whether to show asterisk icon in first column of every changed row.\n' +
+      '          showAsteriskInRow: false,\n' +
+      '        },\n\n' +
+      '        flexberrySimpledatetime: {\n' +
+      '          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.\n' +
+      '          calendarContext: undefined\n' +
+      '        }';
+
 		var fontsImports = '\n  app.import(\'vendor/fonts.css\');\n' +
 		'\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
@@ -46,6 +70,10 @@ module.exports = {
       return _this.insertIntoFile('app/templates/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
     }).then(function() {
       return _this.insertIntoFile('app/templates/mobile/application.hbs', '-guideline ', { after: '{{flexberry-sitemap' });
+    }).then(function() {
+      return _this.insertIntoFile(configEnvironmentFile, configEnvironmentContent, { after: configEnvironmentAfter });
+    }).then(function() {
+      return _this.insertIntoFile('tests/dummy/' + configEnvironmentFile, configEnvironmentContent, { after: configEnvironmentAfter });
 		}).then(function() {
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
 			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');

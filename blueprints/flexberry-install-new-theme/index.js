@@ -75,9 +75,9 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile('tests/dummy/' + configEnvironmentFile, configEnvironmentContent, { after: configEnvironmentAfter });
 		}).then(function() {
-			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts', 'vendor/fonts');
-			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/fonts.css', 'vendor/fonts.css');
-			fs.copySync('node_modules/ember-flexberry-themes/src/themes/gos/assets/guideline-icons.css', 'vendor/guideline-icons.css');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/ghost/assets/fonts', 'vendor/fonts');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/ghost/assets/fonts.css', 'vendor/fonts.css');
+			fs.copySync('node_modules/ember-flexberry-themes/src/themes/ghost/assets/guideline-icons.css', 'vendor/guideline-icons.css');
 			fs.copySync('node_modules/ember-flexberry-themes/src/theme.config.example', 'theme.config');
 		});
 	}

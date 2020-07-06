@@ -102,15 +102,6 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   _pageInResultsForAutocomplete: 1,
 
   /**
-    Path to component's settings in application configuration (JSON from ./config/environment.js).
-
-    @property appConfigSettingsPath
-    @type String
-    @default 'APP.components.flexberryLookup'
-  */
-  appConfigSettingsPath: 'APP.components.flexberryLookup',
-
-  /**
     Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
 
     @private
@@ -124,6 +115,25 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       useSidePageMode: this.get('useSidePageMode'),
     }, this.get('modalDialogSettings'));
   }),
+
+  /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryLookup'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryLookup',
 
   /**
     Text to be displayed in field, if value not selected.

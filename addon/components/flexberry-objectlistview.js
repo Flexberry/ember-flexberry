@@ -57,15 +57,6 @@ export default FlexberryBaseComponent.extend({
   showFiltersInModal: false,
 
   /**
-    Path to component's settings in application configuration (JSON from ./config/environment.js).
-
-    @property appConfigSettingsPath
-    @type String
-    @default 'APP.components.flexberryLookup'
-  */
-  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
-
-  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -182,6 +173,25 @@ export default FlexberryBaseComponent.extend({
     @type Number
   */
   hierarchicalIndent: undefined,
+
+  /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryObjectlistview'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
 
   /**
     Flag used for disable the hierarchical mode.

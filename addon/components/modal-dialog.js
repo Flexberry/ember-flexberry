@@ -114,6 +114,7 @@ export default Component.extend({
 
   /**
     Flag indicates whether to side page or usually mode.
+
     @property useSidePageMode
     @type Boolean
     @default false

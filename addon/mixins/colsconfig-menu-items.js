@@ -52,9 +52,6 @@ export default Mixin.create({
   */
   colsConfigMenu: service(),
 
-  exportExcelItemsRootElement: null,
-  colsSettingsItemsRootElement: null,
-
   /**
     @property colsSettingsItems
     @readOnly
@@ -66,7 +63,8 @@ export default Mixin.create({
       iconAlignment: 'right',
       title: '',
       items: [],
-      localeKey: ''
+      localeKey: '',
+      rootElementsLength: undefined,
     };
     let newSettitingItem = {
       icon: 'table icon',
@@ -106,17 +104,7 @@ export default Mixin.create({
       localeKey: 'components.olv-toolbar.set-default-setting-title'
     };
     rootItem.items[rootItem.items.length] = setDefaultItem;
-    this.set('colsSettingsItemsRootElement', rootItem.items.length);
-
-    // if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
-    //   let showDefaultItem = {
-    //     icon: 'unhide icon',
-    //     iconAlignment: 'left',
-    //     title: i18n.t('components.olv-toolbar.show-default-setting-title'),
-    //     localeKey: 'components.olv-toolbar.show-default-setting-title'
-    //   };
-    //   rootItem.items[rootItem.items.length] = showDefaultItem;
-    // }
+    rootItem.rootElementsLength = rootItem.items.length;
 
     return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
   }),
@@ -229,7 +217,7 @@ export default Mixin.create({
             /* eslint-disable no-unused-vars */
             this.get('userSettingsService').deleteUserSetting(componentName, namedSetting, isExportExcel)
             .then(result => {
-              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
+              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName, isExportExcel);
               alert('Настройка ' + namedSetting + ' удалена');
             });
             /* eslint-enable no-unused-vars */
@@ -290,7 +278,7 @@ export default Mixin.create({
     */
     showConfigDialog(settingName) {
       assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName, this.get('useSidePageMode'));
     },
 
     /**
@@ -302,7 +290,7 @@ export default Mixin.create({
     showExportDialog(settingName, immediateExport) {
       let settName = settingName ? 'ExportExcel/' + settingName : settingName;
       assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, true, immediateExport);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, this.get('useSidePageMode'), true, immediateExport);
     },
 
     /**

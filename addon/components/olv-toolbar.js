@@ -4,7 +4,7 @@
 
 import $ from 'jquery';
 import { assert } from '@ember/debug';
-import { set, computed, observer } from '@ember/object';
+import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
@@ -12,7 +12,6 @@ import { later } from '@ember/runloop';
 import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
-import serializeSortingParam from '../utils/serialize-sorting-param';
 import ColsconfigMenuItems from '../mixins/colsconfig-menu-items';
 
 /**
@@ -493,15 +492,6 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
     },
 
     /**
-      @method actions.showConfigDialog
-      @public
-    */
-    showConfigDialog(settingName) {
-      assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName, this.get('useSidePageMode'));
-    },
-
-    /**
       Action to show confis dialog.
 
       @method actions.showConfigDialog
@@ -529,16 +519,6 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
       } else {
         this.sendAction('toggleStateFilters');
       }
-    },
-
-    /**
-      @method actions.showExportDialog
-      @public
-    */
-    showExportDialog(settingName, immediateExport) {
-      let settName = settingName ? 'ExportExcel/' + settingName : settingName;
-      assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, this.get('useSidePageMode'), true, immediateExport);
     },
 
     /**

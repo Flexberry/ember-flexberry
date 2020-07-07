@@ -8,7 +8,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
-import { computed } from '@ember/object';
 import ColsconfigMenuItems from '../mixins/colsconfig-menu-items';
 
 /**
@@ -24,7 +23,7 @@ export default FlexberryBaseComponent.extend(ColsconfigMenuItems, {
    @property colsConfigMenu
    @type {Class}
    @default service()
-   */
+  */
   colsConfigMenu: service(),
 
   /**

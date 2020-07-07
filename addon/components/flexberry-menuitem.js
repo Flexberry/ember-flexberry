@@ -111,7 +111,7 @@ export default FlexberryBaseComponent.extend({
     if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
       if (item.dividing) {
-        $(this.element).addClass('dividing');
+        this.$().addClass('dividing');
       }
     } else {
       let parentView = this.get('parentView');

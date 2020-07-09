@@ -19,7 +19,8 @@
               <i class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}} style="cursor:pointer"></i>
             </td>
             <td>
-              <button {{action 'rowUp' n}} class="ui icon tiny button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button           ><button {{action 'rowDown' n}} class="ui icon tiny button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}">
+              <button {{action 'rowUp' n}} class="ui icon tiny button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button           >
+              <button {{action 'rowDown' n}} class="ui icon tiny button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}">
                 <i class="chevron down icon"></i>
               </button>
             </td>
@@ -108,7 +109,7 @@
               </div>
             </th>
             <th colspan='2'>
-              <div class="ui right floated button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
+              <button class="ui right floated button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
             </th
           ></tr
         ></tfoot

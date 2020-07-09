@@ -14,6 +14,7 @@
    Selection
 --------------*/
 @selectionBackground: none;
+@selectionVerticalPadding: (@inputVerticalPadding + ((1em - @inputLineHeight) / 2));
 
 /* Border */
 @selectBorder: @borderColor;

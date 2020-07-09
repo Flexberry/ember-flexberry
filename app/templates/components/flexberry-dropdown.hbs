@@ -42,7 +42,7 @@
     {{yield}}
     {{#each-in _items as |key value|}}
       {{#if value}}
-        <div class="item" data-value="{{value}}">{{value}}</div>
+        <div class="item" data-value="{{if displayCaptions key value}}">{{value}}</div>
       {{else}}
         <div class="item" data-value="_">{{value}}</div>
       {{/if}}

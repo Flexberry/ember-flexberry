@@ -836,6 +836,17 @@ export default FlexberryBaseComponent.extend({
       };
 
       this.sendAction('preview', previewData);
+    },
+
+    /**
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
+    onInputFocusOut() {
+      if (!this.get('value') && !this.get('autocompletePersistValue')) {
+        this.set('displayValue', null);
+      }
     }
   },
 

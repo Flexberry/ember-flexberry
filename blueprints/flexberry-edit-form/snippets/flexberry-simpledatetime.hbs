@@ -6,6 +6,7 @@
     readonly=<%= readonly %>
     value=model.<%= name %>
     class=(if model.errors.<%= name %> 'error' '')
+    data-test-<%= entityName %>-<%= dashedName %>=true
   }}
   {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

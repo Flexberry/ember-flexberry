@@ -552,6 +552,52 @@ export default FlexberryBaseComponent.extend({
   enableFilters: false,
 
   /**
+    The function (action) for setting the available filtering conditions, will be called when the component is initialized.
+
+    The function must return a set of valid values for the `flexberry-dropdown` component and is called with two parameters:
+    - `type` - string with the attribute type.
+    - `attribute` - object with the attribute description.
+
+    @property conditionsByType
+    @type Function
+  */
+  conditionsByType: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized.
+
+    The function must return an object with the following properties:
+    - `name` - string with the component name.
+    - `properties` object with the properties of the component, passed to the component via `dynamicProperties`.
+
+    The function is called with three parameters:
+    - `type` - string with the attribute type.
+    - `relation` - indicates that the attribute is a relation.
+    - `attribute` - object with the attribute description.
+
+    @property componentForFilter
+    @type Function
+  */
+  componentForFilter: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized and each time the condition is changed.
+
+    The function must return an object with the following properties:
+    - `name` - string with the component name.
+    - `properties` object with the properties of the component, passed to the component via `dynamicProperties`.
+
+    The function is called with three parameters:
+    - `newCondition` - string with the new condition.
+    - `oldCondition` - string with the old condition.
+    - `type` - string with the attribute type.
+
+    @property componentForFilterByCondition
+    @type Function
+  */
+  componentForFilterByCondition: undefined,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton
@@ -770,6 +816,7 @@ export default FlexberryBaseComponent.extend({
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
         buttonTitle: '...', // Button title.
+        iconClasses: '', // Css classes for icon. Remember to add the `icon` class here, and for the `button` tag, through the `buttonClasses` property, if necessary.
         disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```
@@ -914,7 +961,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action previous page.
     */
-    previousPage(action, componentName) {
+    previousPage(action) {
       if (!action) {
         throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
@@ -923,7 +970,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(componentName);
+      action(this.get('componentName'));
     },
 
     /**
@@ -933,7 +980,7 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Action} action Action next page.
     */
-    nextPage(action, componentName) {
+    nextPage(action) {
       if (!action) {
         throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
@@ -942,7 +989,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(componentName);
+      action(this.get('componentName'));
     },
 
     /**
@@ -953,7 +1000,7 @@ export default FlexberryBaseComponent.extend({
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */
-    gotoPage(action, pageNumber, componentName) {
+    gotoPage(action, pageNumber) {
       if (!action) {
         throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
@@ -962,7 +1009,7 @@ export default FlexberryBaseComponent.extend({
       // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
       this._clearSelectedRecords();
 
-      action(pageNumber, componentName);
+      action(pageNumber, this.get('componentName'));
     },
 
     /**
@@ -1143,30 +1190,37 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete row.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
-        confirmDeleteRow() {
-          return confirm('You sure?');
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: `Delete an object with the ID '${record.get('id')}'?`,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action "confirmDeleteRow")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRow
-    @return {Boolean} If `true` then delete row, else cancel.
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRow: undefined,
 
@@ -1174,30 +1228,36 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete rows.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
         confirmDeleteRows() {
-          return confirm('You sure?');
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: 'Delete all selected records?',
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action "confirmDeleteRows")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRows
-    @return {Boolean} If `true` then delete selected rows, else cancel.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRows: undefined,
 

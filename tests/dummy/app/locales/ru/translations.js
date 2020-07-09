@@ -301,7 +301,6 @@ Ember.$.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
@@ -324,6 +323,13 @@ Ember.$.extend(true, translations, {
         'logout': {
           'caption': 'Выход'
         }
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
       },
 
       'footer': {
@@ -959,7 +965,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

@@ -4,13 +4,13 @@
       {{flexberry-field
         class="setting-name-input fluid"
         value=model.settingName
-        label="Наименованеи настройки"
+        label=(t "components.colsconfig-dialog-content.column-name")
       }}
     </div>
     <div class="field">
       <button class="ui button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
       <button class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
-        Сохранить настройку
+        {{t "components.colsconfig-dialog-content.save"}}
       </button>
     </div>
 
@@ -116,31 +116,4 @@
     }}
     <a class="hidden download-anchor"></a>
   </div>
-  {{!-- {{#if lightboxIsOpen}}
-    {{#modal-dialog
-      title="Сохранение настройки"
-      useOkButton=false
-      useCloseButton=false
-      close=(action set "lightboxIsOpen" false)
-      settings=(hash
-        context=".flexberry-sidepage.modal")
-    }}
-      <div class="field">
-        {{flexberry-field
-          class="setting-name-input fluid"
-          value=model.settingName
-          label="Наименованеи настройки"
-        }}
-      </div>
-
-      <button class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
-        Сохранить настройку
-      </button>
-      <button class="ui button">
-        Отмена
-      </button>
-
-
-    {{/modal-dialog}}
-  {{/if}} --}}
 </div>

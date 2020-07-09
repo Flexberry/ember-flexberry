@@ -91,6 +91,3 @@
 @navbarSortingMobileWhiteSpace: nowrap;
 @navbarSortingMobileOverflow: hidden;
 @navbarSortingMobileTextOverflow: ellipsis;
-@navbarSortingMobileFontSize: 1rem;
-@navbarSortingMobileTextWeight: bold;
-@navbarSortingMobileAlignItems: center;

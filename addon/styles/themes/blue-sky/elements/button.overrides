@@ -576,9 +576,6 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     white-space: @navbarSortingMobileWhiteSpace;
     overflow: @navbarSortingMobileOverflow;
     text-overflow: @navbarSortingMobileTextOverflow;
-    font-size:  @navbarSortingMobileFontSize;
-    font-weight: @navbarSortingMobileTextWeight;
-    align-items: @navbarSortingMobileAlignItems;
 }
 
 

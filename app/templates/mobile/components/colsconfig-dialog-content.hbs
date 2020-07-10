@@ -100,9 +100,9 @@
         </div>
 
         <div class="colsconfig-actions">
-          <button {{action 'invertVisibility' n}} class="ui icon button"><i class='large {{if colDesc.hide 'hide' 'unhide'}} icon'></i></button>
-          <button {{action 'rowUp' n}} class="ui icon button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button>
-          <button {{action 'rowDown' n}} class="ui icon button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}"><i class="chevron down icon"></i></button>
+          <button type="button" {{action 'invertVisibility' n}} class="ui icon button"><i class='large {{if colDesc.hide 'hide' 'unhide'}} icon'></i></button>
+          <button type="button" {{action 'rowUp' n}} class="ui icon button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button>
+          <button type="button" {{action 'rowDown' n}} class="ui icon button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}"><i class="chevron down icon"></i></button>
         </div>
       </div>
     {{/each}}

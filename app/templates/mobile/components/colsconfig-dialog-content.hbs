@@ -4,7 +4,7 @@
       {{flexberry-field
         class="setting-name-input fluid"
         value=model.settingName
-        label=(t "components.colsconfig-dialog-content.column-name")
+        label=(t "components.colsconfig-dialog-content.enter-setting-name")
       }}
     </div>
     <div class="field">
@@ -51,7 +51,7 @@
       <div propName='{{colDesc.propName}}' class="colsconfig-prop">
         <div class="field colsconfig-prop-name {{if colDesc.hide "disabled"}}">
           {{#if model.exportParams.isExportExcel}}
-            <label>Наименование поля</label>
+            <label>{{t "components.colsconfig-dialog-content.column-name"}}</label>
             {{input class=(if colDesc.hide "disabled") value=colDesc.name}}
           {{else}}
             <span>{{colDesc.name}}</span>
@@ -63,13 +63,13 @@
           {{#unless colDesc.isHasMany}}
             <div class="sort-direction-cell field">
               <label>{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</label>
-              {{#ui-dropdown class=(concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled' '') (if colDesc.isHasMany ' hidden' '')) onChange=(action "setSortOrder" colDesc)}}
+              {{#ui-dropdown class=(concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled') (if colDesc.isHasMany ' hidden')) onChange=(action "setSortOrder" colDesc)}}
                 <i class="dropdown icon"></i>
-                <div class="text">{{parse-cols-config-sorting colDescs.sortOrder}}</div>
+                <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
                 <div class="menu">
-                  <div class="item" data-value="0">-</div>
-                  <div class="item" data-value="1">▲</div>
-                  <div class="item" data-value="-1">▼</div>
+                  <div class="item" data-value="0">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                  <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
+                  <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
                 </div>
               {{/ui-dropdown}}
             </div>
@@ -78,7 +78,7 @@
           {{#if colDesc.sortOrder}}
             <div class="field">
               <label>{{t "components.colsconfig-dialog-content.sort-priority-caption"}}</label>
-              <div class="ui input {{if colDesc.hide 'disabled' ''}}">
+              <div class="ui input {{if colDesc.hide 'disabled'}}">
                 {{input
                   class="sort-priority-input"
                   value=colDesc.sortPriority
@@ -91,7 +91,7 @@
         {{!-- Ширина --}}
         <div class="field">
           <label>{{t "components.colsconfig-dialog-content.column-width-caption"}}</label>
-          <div class="ui input {{if (or colDesc.hide (or model.exportParams.isExportExcel (or colDesc.fixed (not model.saveColWidthState)))) 'disabled' ''}}">
+          <div class="ui input {{if (or colDesc.hide (or model.exportParams.isExportExcel (or colDesc.fixed (not model.saveColWidthState)))) 'disabled'}}">
             {{input
               class="column-width-input"
               value=colDesc.columnWidth

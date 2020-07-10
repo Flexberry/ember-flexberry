@@ -223,7 +223,7 @@ export default {
       'column-width-caption': 'Ширина',
       'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
-      'enter-setting-name': 'Введите название настройки',
+      'enter-setting-name': 'Название настройки',
       'use': 'Применить',
       'export': 'Выгрузить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
@@ -235,7 +235,10 @@ export default {
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
-      'unresizable': 'Фиксированная ширина'
+      'unresizable': 'Фиксированная ширина',
+      'sort-direction-none': 'Нет',
+      'sort-direction-asc': 'По возрастанию',
+      'sort-direction-desc': 'По убыванию',
     },
 
     'advlimit-dialog-content': {

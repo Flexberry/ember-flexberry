@@ -233,7 +233,10 @@ export default {
       'col-width-on': 'Enable setting column widths',
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
-      'det-separate-cols': 'List\'s properties in separate columns'
+      'det-separate-cols': 'List\'s properties in separate columns',
+      'sort-direction-none': 'None',
+      'sort-direction-asc': 'Ascending',
+      'sort-direction-desc': 'Descending',
     },
 
     'advlimit-dialog-content': {

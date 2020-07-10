@@ -8,8 +8,8 @@
       }}
     </div>
     <div class="field">
-      <button class="ui button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
-      <button class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
+      <button type="button" class="ui button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
+      <button type="button" class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
         {{t "components.colsconfig-dialog-content.save"}}
       </button>
     </div>

@@ -530,6 +530,15 @@ export default FlexberryBaseComponent.extend({
   accept: undefined,
 
   /**
+    Function with custom check for type of uploaded file.
+
+    @property isValidTypeFileCustom
+    @type Function
+    @default null
+  */
+  isValidTypeFileCustom: null,
+
+  /**
     External Base64 string
     @property base64Value
     @type String
@@ -674,11 +683,10 @@ export default FlexberryBaseComponent.extend({
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 
       const accept = this.get('accept');
-      const isFileTypeAvailable = (!accept) || ((accept) && accept.includes(selectedFile.type));
-      const isFileTypeUndefined = selectedFile.type === '';
+      const fileType = selectedFile.type;
+      const fileName = selectedFile.name;
 
-      if (isFileTypeUndefined || !isFileTypeAvailable) {
-        const fileName = selectedFile.name;
+      if (!this._isValidTypeFile(fileType, accept)) {
         this.showFileExtensionErrorModalDialog(fileName);
         return;
       }
@@ -1057,12 +1065,38 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _unsubscribeFromRelatedModelPresaveEvent() {
+    let uploadOnModelPreSave = this.get('uploadOnModelPreSave');
+    if (!uploadOnModelPreSave) {
+      return;
+    }
+
     let relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
     Ember.assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
       relatedModelOffPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
     relatedModel.off('preSave', this.get('_onRelatedModelPreSave'));
+  },
+
+  /**
+    Defines valid of file type.
+
+    @method _isValidTypeFile
+    @param {String} fileType file type as MIME TYPES.
+    @param {String} accept available MIME TYPES.
+    @private
+  */
+  _isValidTypeFile(fileType, accept) {
+    const isValidTypeFileCustom = this.get('isValidTypeFileCustom');
+
+    if (isValidTypeFileCustom && (typeof isValidTypeFileCustom === 'function')) {
+      return isValidTypeFileCustom();
+    }
+
+    const isFileTypeUndefined = fileType === '';
+    const isFileTypeAvailable = (!accept) || (accept && accept.indexOf(fileType) !== -1);
+
+    return (!isFileTypeUndefined && isFileTypeAvailable);
   },
 
   /**

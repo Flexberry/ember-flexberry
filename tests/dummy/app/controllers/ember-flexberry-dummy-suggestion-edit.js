@@ -46,6 +46,15 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
+  /**
+    Function for check uploaded file type.
+
+    @method checkFileType
+   */
+  checkFileType: function() {
+    return true;
+  },
+
   actions: {
 
     getLookupFolvProperties: function() {
@@ -109,6 +118,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         case 'ember-flexberry-dummy-suggestion-file+file':
           cellComponent.componentProperties = {
             accept: this.get('availableMimeTypes'),
+            isValidTypeFileCustom: this.get('checkFileType'),
             maxUploadFileSize: this.get('maxUploadFileSize'),
             maxUploadFileSizeUnit: this.get('maxUploadFileSizeUnit')
           };

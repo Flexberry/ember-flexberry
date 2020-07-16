@@ -3,25 +3,30 @@
     {{flexberry-checkbox
       value=model.flag
       readonly=readonly
+      data-test-checkbox=true
     }}
     {{flexberry-textbox
       value=model.text
       readonly=readonly
+      data-test-textbox=true
     }}
     {{flexberry-textarea
       value=model.longText
       readonly=readonly
+      data-test-textarea=true
     }}
-      {{flexberry-datepicker
-        value=model.date
-        readonly=readonly
-      }}
-      {{flexberry-simpledatetime
-        readonly=readonly
-        type="time"
-        value=model.time
-        readonly=readonly
-      }}
+    {{flexberry-datepicker
+      value=model.date
+      readonly=readonly
+      data-test-datepicker=true
+    }}
+    {{flexberry-simpledatetime
+      readonly=readonly
+      type="time"
+      value=model.time
+      readonly=readonly
+      data-test-simpledatetime=true
+    }}
     {{flexberry-dropdown
       items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
       value=model.enumeration
@@ -30,6 +35,7 @@
     {{flexberry-file
       value=model.file
       readonly=readonly
+      data-test-file=true
     }}
     {{flexberry-lookup
       value=model.master
@@ -41,6 +47,7 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly
+      data-test-lookup=true
     }}
     {{flexberry-lookup
       value=model.masterDropdown
@@ -53,6 +60,7 @@
       remove=(action "removeLookupValue")
       dropdown=true
       readonly=readonly
+      data-test-lookup-d=true
     }}
   </div>
   <div class="in-groupedit">
@@ -64,5 +72,6 @@
       showDeleteButtonInRow=true
       showEditMenuItemInRow=true
       showDeleteMenuItemInRow=true
+      data-test-groupedit=true
     }}
   </div>

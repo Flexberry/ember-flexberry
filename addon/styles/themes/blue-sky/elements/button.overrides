@@ -715,3 +715,7 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
 .ui.right.floated.tiny.primary.compact.button:hover {
     border: 1px solid @uiBorderColor;
 }
+
+.ui.loading.button i.icon:before {
+  color: transparent !important;
+}

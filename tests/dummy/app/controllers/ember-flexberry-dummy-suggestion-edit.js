@@ -50,8 +50,10 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     Function for check uploaded file type.
 
     @method checkFileType
+    @param {String} fileType file type as MIME TYPES.
+    @param {String} accept available MIME TYPES.
    */
-  checkFileType: function() {
+  checkFileType: function(fileType, accept) {
     return true;
   },
 

@@ -1093,10 +1093,9 @@ export default FlexberryBaseComponent.extend({
       return isValidTypeFileCustom(fileType, accept);
     }
 
-    const isFileTypeUndefined = fileType === '';
     const isFileTypeAvailable = !accept || accept.indexOf(fileType) !== -1;
 
-    return (!isFileTypeUndefined && isFileTypeAvailable);
+    return isFileTypeAvailable;
   },
 
   /**

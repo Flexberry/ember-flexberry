@@ -118,6 +118,16 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    The name of a property in the model that determines whether any record is the parent of other records.
+    If a property value with this name is defined (not `undefined`), the button to display child records will be shown immediately, and the records will be loaded only when the button is clicked.
+
+    @property isParentRecordPropertyName
+    @type String
+    @default 'isParentRecord'
+  */
+  isParentRecordPropertyName: 'isParentRecord',
+
+  /**
     Flag indicate when component is in the hierarchical mode.
 
     @property inHierarchicalMode

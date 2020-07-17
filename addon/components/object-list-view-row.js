@@ -147,6 +147,18 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Indicates whether the record displayed on this row has child records.
+    See {{#crossLink "FlexberryObjectlistviewComponent/isParentRecordPropertyName:property"}}details here{{/crossLink}}.
+
+    @property isParentRecord
+    @type Boolean
+    @readOnly
+  */
+  isParentRecord: Ember.computed('record.data', 'isParentRecordPropertyName', function () {
+    return this.get(`record.data.${this.get('isParentRecordPropertyName')}`);
+  }).readOnly(),
+
+  /**
     Flag indicate whether there nested records.
 
     @property hasRecords
@@ -269,6 +281,29 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Loads and, by default, displays the records that are children of the record displayed on this row.
+
+      @method actions.loadChildRecords
+      @param {Boolean} [expand=true] If `true`, the child records will be displayed by sending the `expand` event.
+    */
+    loadChildRecords(expand = true) {
+      const id = this.get('record.data.id');
+      const currentLevel = this.get('_currentLevel');
+      const hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
+
+      this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
+      this.set('recordsLoaded', true);
+
+      if (currentLevel > hierarchyLoadedLevel) {
+        this.set('hierarchyLoadedLevel', currentLevel);
+      }
+
+      if (expand) {
+        this.send('expand');
+      }
+    },
+
+    /**
       Redirect action from FlexberryLookupComponent in the controller.
 
       @method actions.showLookupDialog
@@ -326,15 +361,9 @@ export default FlexberryBaseComponent.extend({
   didRender() {
     this._super(...arguments);
     if (!this.get('recordsLoaded')) {
-      let id = this.get('record.data.id');
-      if (id && this.get('inHierarchicalMode')) {
-        let currentLevel = this.get('_currentLevel');
-        let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
-        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
-        this.set('recordsLoaded', true);
-        if (currentLevel > hierarchyLoadedLevel) {
-          this.set('hierarchyLoadedLevel', currentLevel);
-        }
+      const id = this.get('record.data.id');
+      if (id && this.get('inHierarchicalMode') && this.get('isParentRecord') === undefined) {
+        this.send('loadChildRecords', false);
       }
     }
   },

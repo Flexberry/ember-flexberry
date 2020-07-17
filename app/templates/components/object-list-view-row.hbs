@@ -111,7 +111,7 @@
               {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
                 <button
                   type="button"
-                  class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
+                  class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
                   title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
                   {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
                 >
@@ -140,7 +140,7 @@
             {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
               <button
                 type="button"
-                class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
+                class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
                 title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
                 {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
               >

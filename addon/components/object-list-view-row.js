@@ -13,6 +13,15 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    Indicates that child records are being loaded.
+
+    @property _recordsIsLoading
+    @type Boolean
+    @default false
+  */
+  _recordsIsLoading: false,
+
+  /**
     Flag used to display embedded records.
 
     @property _expanded
@@ -123,6 +132,7 @@ export default FlexberryBaseComponent.extend({
       return this.get('_records');
     },
     set(key, value) {
+      this.set('_recordsIsLoading', true);
       value.then((records) => {
         records.forEach((record) => {
           let config = Ember.copy(this.get('defaultRowConfig'));
@@ -141,7 +151,10 @@ export default FlexberryBaseComponent.extend({
 
           this.get('_records').pushObject(newRecord);
         });
+      }).finally(() => {
+        this.set('_recordsIsLoading', false);
       });
+
       return this.get('records');
     },
   }),

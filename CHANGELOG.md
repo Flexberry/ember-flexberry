@@ -36,6 +36,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The modal window settings for the `flexberry-lookup` component specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
 * The modal window settings for the `flexberry-lookup` component specified through the `modalDialogSettings` property are lost when switching pages.
 
+### Added
+* Available mime types check in `flexberry-file` component.
+* Set units of uploaded file max size in `flexberry-file` component.
+
 ## [2.4.0] - 2020-05-18
 ### Added
 * Attributes with selectors for testing in the generated application.

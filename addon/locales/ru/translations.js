@@ -79,10 +79,16 @@ export default {
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Предпросмотр не может быть загружен',
+      'error-dialog-size-unit-bt': 'Байт',
+      'error-dialog-size-unit-kb': 'Килобайт',
+      'error-dialog-size-unit-mb': 'Мегабайт',
+      'error-dialog-size-unit-gb': 'Гигабайт',
 
       'add-file-error-caption': 'Ошибка добавления файла',
-      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
-        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} байт.',
+      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} {{sizeUnit}}. ' +
+        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Выбранный файл \'{{fileName}}\' имеет недопустимое расширение.',
 
       'upload-file-error-caption': 'Ошибка отправки файла',
       'upload-file-error-message': 'Отправка файла \'{{fileName}}\' не удалась. {{errorMessage}}',

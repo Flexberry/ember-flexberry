@@ -1,17 +1,28 @@
 <div class="ui form {{appState.state}}">
   <div class="flexberry-colsconfig content">
     <div class="field">
-      {{flexberry-field
-        class="setting-name-input fluid"
-        value=model.settingName
-        label=(t "components.colsconfig-dialog-content.enter-setting-name")
-      }}
-    </div>
-    <div class="field">
       <button type="button" class="ui button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
-      <button type="button" class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
-        {{t "components.colsconfig-dialog-content.save"}}
-      </button>
+    </div>
+    <div class="ui segment">
+      <div class="field">
+        {{flexberry-field
+          class="setting-name-input fluid"
+          value=model.settingName
+          label=(t "components.colsconfig-dialog-content.enter-setting-name")
+        }}
+      </div>
+      <div class="field">
+        <button type="button" class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
+          {{t "components.colsconfig-dialog-content.save"}}
+        </button>
+      </div>
+      {{ui-message
+        type=type
+        closeable=closeable
+        visible=visible
+        caption=caption
+        message=message
+      }}
     </div>
 
     {{#if model.exportParams.isExportExcel}}
@@ -106,14 +117,6 @@
         </div>
       </div>
     {{/each}}
-
-    {{ui-message
-      type=type
-      closeable=closeable
-      visible=visible
-      caption=caption
-      message=message
-    }}
     <a class="hidden download-anchor"></a>
   </div>
 </div>

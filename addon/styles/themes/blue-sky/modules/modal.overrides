@@ -44,4 +44,5 @@
 .mobile .ui.modal .content .flexberry-colsconfig.content {
     padding: 0 1em;
     margin: 0 -1em;
+    max-height: @colsconfigMobileHeight;
 }

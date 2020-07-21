@@ -32,6 +32,14 @@ export default FlexberryBaseComponent.extend({
   item: null,
 
   /**
+    Name of action to send out, action triggered by click on user button.
+    @property itemButtonAction
+    @type String
+    @default 'itemButtonAction'
+  */
+  itemButtonAction: 'itemButtonAction',
+
+  /**
     Flag: indicates whether menu item has some nested subitems or not.
 
     @property hasSubitems
@@ -99,6 +107,9 @@ export default FlexberryBaseComponent.extend({
     let item = this.get('item');
     if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
+      if (item.dividing) {
+        this.$().addClass('dividing');
+      }
     } else {
       let parentView = this.get('parentView');
       parentView.$().data('flexberry-menu', item)
@@ -116,5 +127,24 @@ export default FlexberryBaseComponent.extend({
     if (this.get('tagName') !== '') {
       this.$().removeData('flexberry-menuitem.item');
     }
+  },
+
+  actions: {
+    /**
+      Action for custom button.
+      @method actions.itemButtonAction
+      @public
+      @param {Function|String} action The action or name of action.
+    */
+    itemButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action(this.item.title);
+      } else if (actionType === 'string') {
+        this.sendAction('itemButtonAction', action);
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
+    },
   }
 });

@@ -216,6 +216,11 @@ export default FlexberryBaseComponent.extend({
   _onClickHandler(e) {
     // Find clicked menu item element.
     let itemElement = Ember.$(e.target);
+
+    if (itemElement.parent().is('button') || itemElement.is('button')) {
+      return;
+    }
+
     if (!itemElement.hasClass('flexberry-menuitem')) {
       itemElement = itemElement.parents('.flexberry-menuitem');
     }
@@ -255,5 +260,21 @@ export default FlexberryBaseComponent.extend({
   */
   _getActionForMenu(collapseMenuOnItemClick) {
     return collapseMenuOnItemClick ? 'activate' : 'nothing';
+  },
+
+  actions: {
+    /**
+      Handler to get user button's actions and send action to corresponding controllers's handler.
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    itemButtonAction(actionName, item) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-menu item was found.');
+      }
+
+      this.get(actionName)(item);
+    },
   }
 });

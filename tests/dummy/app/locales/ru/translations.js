@@ -1041,7 +1041,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-menu. Пример работы с настройками',
           'titleIcon1': 'Значок выравнен по левому краю',
           'titleIcon2': 'Значок выравнен по правому краю',
-          'titleIcon3': 'Подменю'
+          'titleIcon3': 'Подменю',
+          'titleIcon4': 'Кнопки в строке'
         }
       },
       'flexberry-objectlistview': {

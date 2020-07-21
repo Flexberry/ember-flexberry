@@ -15,6 +15,18 @@
     <span>{{item.title}}</span>
   {{/if}}
 {{/if}}
+{{#each item.buttons as |button|}}
+  <button
+    class="ui {{button.buttonClasses}} button"
+    title={{button.buttonTitle}}
+    disabled={{button.disabled}}
+    {{action "itemButtonAction" button.buttonAction on="click" bubbles=false}}>
+      {{#if button.iconClass}}
+        <i class="{{button.iconClass}}"></i>
+      {{/if}}
+      {{if button.buttonName button.buttonName ''}}
+  </button>
+{{/each}}
 {{#if hasSubitems}}
   <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">
     {{#each item.items as |item|}}

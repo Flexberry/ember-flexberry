@@ -107,15 +107,14 @@
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
-    {{#if colsConfigButton}}
-      <button
+    <button
+      type="button"
       class="ui button mobile-sorting-setting-button small"        
       title={{mobileSortingSettingsCaption}}
       {{action 'showConfigDialog'}}> 
-        <i class={{mobileSortingSettingsIcon}}></i>
-        {{mobileSortingSettingsCaption}}
-      </button>
-    {{/if}}
+      <i class={{mobileSortingSettingsIcon}}></i>
+      {{mobileSortingSettingsCaption}}
+    </button>
     <div class="ui basic buttons">
       <button
         type="button"

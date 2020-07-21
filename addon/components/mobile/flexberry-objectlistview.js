@@ -3,6 +3,7 @@
 */
 
 import FlexberryObjectlistview from './../flexberry-objectlistview';
+import getAttrLocaleKey from '../../utils/get-attr-locale-key';
 import Ember from 'ember';
 
 /**
@@ -140,40 +141,58 @@ export default FlexberryObjectlistview.extend({
   */
   columnsWidthAutoresize: true,
 
-  mobileSortingSettingsIcon: Ember.computed('sorting', {
+  currecntSortingArray: Ember.computed('sorting', {
     get() {
-      let icon = 'sort content ascending';
       let sorting = this.get('sorting');
-      let firstRow = Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
-      .sort((a, b) => b.sortAscending - a.sortAscending)[0];
+      let rows = [];
+      if (Object.keys(sorting).length !== 0) {
+        for (let variable in sorting) {
+          let row = sorting[variable];
+          rows[rows.length] = {
+            key: variable,
+            sortNumber: row.sortNumber,
+            sortAscending: row.sortAscending
+          };
+        }
 
-      if (!Ember.isNone(firstRow)) {
-        icon = firstRow.sortAscending ? 'sort content ascending' : 'sort content descending';
+        rows = rows.sort((a, b) => b.sortAscending - a.sortAscending);
       }
 
-      return icon + ' icon';
+      return rows;
     }
   }),
 
-  mobileSortingSettingsCaption: Ember.computed('sorting', {
+  mobileSortingSettingsIcon: Ember.computed('sorting', {
+    get() {
+      let icon = 'sort content descending';
+      let firstRow = this.get('currecntSortingArray')[0];
+
+      if (firstRow !== undefined) {
+        icon = firstRow.sortAscending ? 'sort content ascending' : 'sort content descending';
+      }
+
+      return `${icon} icon`;
+    }
+  }),
+
+  mobileSortingSettingsCaption: Ember.computed('sorting', 'i18n.locale', {
     get() {
       let i18n = this.get('i18n');
-      let sorting = this.get('sorting');
-      if (Object.keys(sorting).length === 0) {
+      let sorting = this.get('currecntSortingArray');
+      if (sorting.length === 0) {
         return i18n.t('components.flexberry-objectlistview.without-sorting');
       }
 
       let sortingValue;
-      Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
-      .sort((a, b) => b.sortAscending - a.sortAscending).forEach((row) => {
-        let rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${row.key}.__caption__`).string;
-        if (Ember.isNone(rowHeader)) {
+      sorting.forEach((row) => {
+        let rowHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, row.key)).string;
+        if (rowHeader !== undefined) {
           let key = row.key.split('.')[0];
-          rowHeader = i18n.t(`models.${this.get('modelName')}.projections.${this.get('modelProjection').projectionName}.${key}.__caption__`).string;
+          rowHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, row.key)).string;
         }
 
-        if (!Ember.isNone(sortingValue)) {
-          sortingValue += ', ' + rowHeader;
+        if (sortingValue  !== undefined) {
+          sortingValue += `, ${rowHeader}`;
         } else {
           sortingValue = rowHeader;
         }

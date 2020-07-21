@@ -618,8 +618,6 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
 *******************************************/
 .flexberry-colsconfig.content {
     .cols-config-apply {
-        display: flex;
-        align-items: center;
         background-color: @uiHoveredPositiveBackgroundColor;
         border: 1px solid @uiBorderColor;
         &:hover {
@@ -636,6 +634,10 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
             background-color: @uiHoveredPositiveBackgroundColor;
         }
     }
+}
+
+.colsconfig-actions .ui.button{
+    font-size: @tiny;
 }
 
 .ui.icon.button > .large.table.icon, .large.file.excel {

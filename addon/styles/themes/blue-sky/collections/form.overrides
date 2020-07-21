@@ -136,3 +136,26 @@ option {
 .flexberry-file-error-modal-dialog .flexberry-file-error-modal-dialog-button.ui.grid {
     padding-top: 20px;
 }
+
+.flexberry-colsconfig {
+    .colsconfig-prop {
+        padding: 1em 0;
+    }
+
+    .colsconfig-prop-name span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .ui.form .two.fields.unstackable > .field {
+        width: 50% !important;
+    }
+    .ui.form .fields.unstackable {
+        margin: 0 -0.5em;
+    }
+    .ui.form .fields.unstackable .field {
+        padding: 0 0.5em;
+    }
+}

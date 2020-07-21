@@ -128,7 +128,7 @@
 @selectionVerticalPadding: @inputVerticalPadding;
 @selectionHorizontalPadding: @inputHorizontalPadding;
 @selectionBorderEmWidth:  @relative1px;
-@selectionMinHeight: @inputLineHeight + (@selectionVerticalPadding * 2) - @selectionBorderEmWidth;
+@selectionMinHeight: @inputLineHeight + (@selectionVerticalPadding * 2) - @selectionBorderEmWidth * 2;
 @selectionBackground: @inputBackground;
 @selectionDisplay: inline-block;
 @selectionIconDistance: @inputHorizontalPadding + @glyphWidth + 0.5em;

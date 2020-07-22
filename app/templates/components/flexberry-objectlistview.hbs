@@ -138,6 +138,7 @@
         type="number"
         placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
         value=searchPageValue
+        enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
       }}
       {{#if searchPageValue}}
         <button

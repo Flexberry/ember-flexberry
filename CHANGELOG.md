@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-groupedit` dublicate records, when it's content isn't `DS.ManyArray`.
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.4`.
+
 ## [2.5.0-beta.6] - 2020-07-13
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.5.0-beta.3`.

@@ -11,7 +11,6 @@ test('get key', function(assert) {
   assert.equal(result, `models.${mainModelName}.projections.${projectionName}.${bindingPath}.__caption__`);
 });
 
-
 test('get key with relationship', function(assert) {
   let mainModelName = 'ember-flexberry-dummy-suggestion';
   let projectionName = 'SuggestionE';

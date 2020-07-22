@@ -188,7 +188,7 @@ export default FlexberryObjectlistview.extend({
         let rowHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, row.key)).string;
         if (rowHeader !== undefined) {
           let key = row.key.split('.')[0];
-          rowHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, row.key)).string;
+          rowHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, key)).string;
         }
 
         if (sortingValue  !== undefined) {

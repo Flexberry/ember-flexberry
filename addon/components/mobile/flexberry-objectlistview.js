@@ -168,8 +168,8 @@ export default FlexberryObjectlistview.extend({
       case 3:
         mobilePages.push(pages[1], pages[2], pages[3]);
         break;
-      case  pages[pages.length - 2].number:
-      case  pages[pages.length - 1].number:
+      case pages[pages.length - 2].number:
+      case pages[pages.length - 1].number:
         mobilePages.push(pages[pages.length-3], pages[pages.length-2], pages[pages.length-1]);
         break;
       default:
@@ -204,15 +204,6 @@ export default FlexberryObjectlistview.extend({
 
     return allPages;
   }),
-  
-
-  mobileSortingSettingsIcon: Ember.computed('sorting', {
-    get() {
-      let icon = 'sort content ascending';
-      let sorting = this.get('sorting');
-      let firstRow = Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
-      .sort((a, b) => b.sortAscending - a.sortAscending)[0];
-    }),
 
   /*
     Convert array of object sorting to array.

@@ -140,7 +140,6 @@ export default FlexberryObjectlistview.extend({
     @default true
   */
   columnsWidthAutoresize: true,
-  
   /**
     Array of objects corresponding to list of pages.
 
@@ -170,7 +169,7 @@ export default FlexberryObjectlistview.extend({
         break;
       case pages[pages.length - 2].number:
       case pages[pages.length - 1].number:
-        mobilePages.push(pages[pages.length-3], pages[pages.length-2], pages[pages.length-1]);
+        mobilePages.push(pages[pages.length - 3], pages[pages.length - 2], pages[pages.length - 1]);
         break;
       default:
         mobilePages.push(pages[2], pages[3], pages[4]);
@@ -180,7 +179,6 @@ export default FlexberryObjectlistview.extend({
     return mobilePages;
   }),
 
-  
   /**
     Array of pages without current.
 
@@ -188,12 +186,12 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  _allPages: Ember.computed('pages',function() {
+  _allPages: Ember.computed('pages', function() {
     let allPages = [];
     let mobilePagesNumbers = Ember.A();
     let mobilePages = this.get('mobilePages');
     mobilePages.forEach( (page) => {
-      mobilePagesNumbers.push(page.number)
+      mobilePagesNumbers.push(page.number);
     });
 
     for (let i = 1; i <=  this.get('recordsTotalCount'); i++) {
@@ -279,7 +277,6 @@ export default FlexberryObjectlistview.extend({
     return sortingValue;
   }),
 
-  
   didRender: function() {
     this._super(...arguments);
     let _this = this;

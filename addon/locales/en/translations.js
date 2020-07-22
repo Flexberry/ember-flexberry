@@ -115,7 +115,9 @@ export default {
         'of': ' of ',
         'entries': ' entries'
       },
-      'without-sorting': 'Without sorting'
+      'without-sorting': 'Without sorting',
+      'pages-number': '№ page',
+      'pages': 'pages'
     },
 
     'flexberry-groupedit': {

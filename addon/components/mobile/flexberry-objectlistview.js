@@ -141,9 +141,76 @@ export default FlexberryObjectlistview.extend({
   */
   columnsWidthAutoresize: true,
 
+  pagesCount: 0,
+  
   /**
-    Column number sorting array.
+    Array of objects corresponding to list of pages.
 
+    Each page is presented as object with following properties:
+    - **number** - Number of page.
+    - **isCurrent** - Page is current.
+    - **isEllipsis** - If `true` this page not showing in list.
+
+    @property pages
+    @type Array
+    @readOnly
+  */
+  _pages: Ember.computed('pages', function() {
+    let mobilePages = [];
+    let pages = this.get('pages');
+    let currentPageNumber = pages.find(page => page.isCurrent).number;
+
+    switch (currentPageNumber) {
+      case 1:
+      case 2:
+        mobilePages.push(pages[0], pages[1], pages[2]);
+        break;
+      case 3:
+        mobilePages.push(pages[1], pages[2], pages[3]);
+        break;
+      case  pages[pages.length - 2].number:
+      case  pages[pages.length - 1].number:
+        mobilePages.push(pages[pages.length-3], pages[pages.length-2], pages[pages.length-1]);
+        break;
+      default:
+        mobilePages.push(pages[2], pages[3], pages[4]);
+        break;
+    }
+
+    return mobilePages;
+  }),
+
+  _allPages: Ember.computed('pages',function() {
+    let allPages = [];
+    let pages = this.get('pages');
+    let lastPageNumber = pages.pop().number;
+    this.set('pagesCount', lastPageNumber);
+    let mobilePagesNumbers = Ember.A();
+    let mobilePages = this.get('_pages');
+    mobilePages.forEach( (page) => {
+      mobilePagesNumbers.push(page.number)
+    }
+
+    )
+    for (let i = 1; i <= lastPageNumber; i++) {
+      if (!mobilePagesNumbers.contains(i)) {
+        allPages[i] = i;
+      }
+    }
+
+    return allPages;
+  }),
+  
+
+  mobileSortingSettingsIcon: Ember.computed('sorting', {
+    get() {
+      let icon = 'sort content ascending';
+      let sorting = this.get('sorting');
+      let firstRow = Object.entries(sorting).map(([key, val]) => ({ key: key, sortNumber: val.sortNumber, sortAscending: val.sortAscending }))
+      .sort((a, b) => b.sortAscending - a.sortAscending)[0];
+    }),
+
+  /*
     Convert array of object sorting to array.
 
     @property _currecntSortingArray
@@ -216,6 +283,20 @@ export default FlexberryObjectlistview.extend({
 
     return sortingValue;
   }),
+
+  
+  didRender: function() {
+    this._super(...arguments);
+    let _this = this;
+    let selectPageDropdown = Ember.$('.page-select-drodpown');
+    selectPageDropdown.dropdown({
+      onChange: function (val) {
+        if (val !== undefined) {
+          _this.get('currentController').send('gotoPage', val);
+        }
+      }
+    });
+  },
 
   actions: {
     showConfigDialog() {

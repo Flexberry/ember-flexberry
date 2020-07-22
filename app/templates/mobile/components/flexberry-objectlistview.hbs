@@ -35,6 +35,53 @@
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
 }}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    {{#if colsConfigButton}}
+      <button
+      class="ui button mobile-sorting-setting-button small"        
+      title={{mobileSortingSettingsCaption}}
+      {{action 'showConfigDialog'}}> 
+        <i class={{mobileSortingSettingsIcon}}></i>
+        {{mobileSortingSettingsCaption}}
+      </button>
+    {{/if}}
+    <div class="right menu">
+      <div class="ui basic buttons">
+        {{#if (lte pages.length 4)}}
+          {{#each pages as |page|}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{/if}}
+          {{/each}}
+        {{else}}
+          {{#each _pages as |page|}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{/if}}
+          {{/each}}
+          <div class="ui page-select-drodpown floating search dropdown icon active button">
+            <i class="dropdown icon"></i>
+            <div class="menu visible">
+              <div class="ui icon search input">
+                <i class="search icon"></i>
+                <input type="text" placeholder={{t "components.flexberry-objectlistview.pages-number"}}>
+              </div>
+              <div class="item disabled"  data-value="">{{pagesCount}} {{t "components.flexberry-objectlistview.pages"}}</div>
+              {{#each _allPages as |value|}}
+                  <div class="item" data-value="{{value}}">{{value}}</div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/if}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
@@ -105,50 +152,3 @@
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
 }}
-{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
-  <div class="ui secondary menu no-margin nav-bar">
-    <button
-      type="button"
-      class="ui button mobile-sorting-setting-button small"        
-      title={{mobileSortingSettingsCaption}}
-      {{action 'showConfigDialog'}}> 
-      <i class={{mobileSortingSettingsIcon}}></i>
-      {{mobileSortingSettingsCaption}}
-    </button>
-    <div class="ui basic buttons">
-      <button
-        type="button"
-        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
-        disabled={{not hasPreviousPage}}
-        {{action "previousPage" this.attrs.previousPage}}>
-      </button>
-      {{#each pages as |page|}}
-        {{#if page.isEllipsis}}
-          <div class="ui button">...</div>
-        {{else if page.isCurrent}}
-          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-        {{else}}
-          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
-        {{/if}}
-      {{/each}}
-      <button
-        type="button"
-        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
-        disabled={{not hasNextPage}}
-        {{action "nextPage" this.attrs.nextPage}}>
-      </button>
-    </div>
-    <div class="right menu">
-      {{#if showShowingEntries}}
-        <div class="showing-entries">
-          {{#if (and currentIntervalRecords recordsTotalCount) }}
-            {{concat
-              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-            }}
-          {{/if}}
-        </div>
-      {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
-    </div>
-  </div>
-{{/if}}

@@ -116,7 +116,9 @@ export default {
         'of': ' из ',
         'entries': ' записей'
       },
-      'without-sorting': 'Без сортировки'
+      'without-sorting': 'Без сортировки',
+      'pages-number': '№ страницы',
+      'pages': 'страниц'
     },
 
     'flexberry-groupedit': {

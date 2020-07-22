@@ -57,7 +57,7 @@
             {{/if}}
           {{/each}}
         {{else}}
-          {{#each _pages as |page|}}
+          {{#each mobilePages as |page|}}
             {{#if page.isCurrent}}
               <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
             {{else}}

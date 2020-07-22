@@ -140,18 +140,6 @@ export default FlexberryObjectlistview.extend({
     @default true
   */
   columnsWidthAutoresize: true,
-
-    /**
-    Count of pages.
-
-    @property _pagesCount
-    @type int
-    @readOnly
-    */
-  _pagesCount: Ember.computed('pages', function() {
-    let pages = this.get('pages');
-    return pages.pop().number;
-  }),
   
   /**
     Array of objects corresponding to list of pages.
@@ -165,7 +153,8 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  _pages: Ember.computed('pages', function() {
+
+  mobilePages: Ember.computed('pages', function() {
     let mobilePages = [];
     let pages = this.get('pages');
     let currentPageNumber = pages.find(page => page.isCurrent).number;
@@ -201,14 +190,13 @@ export default FlexberryObjectlistview.extend({
   */
   _allPages: Ember.computed('pages',function() {
     let allPages = [];
-    let pagesCount = this.get('_pagesCount');
     let mobilePagesNumbers = Ember.A();
-    let mobilePages = this.get('_pages');
+    let mobilePages = this.get('mobilePages');
     mobilePages.forEach( (page) => {
       mobilePagesNumbers.push(page.number)
     });
 
-    for (let i = 1; i <= pagesCount; i++) {
+    for (let i = 1; i <=  this.get('recordsTotalCount'); i++) {
       if (!mobilePagesNumbers.contains(i)) {
         allPages[i] = i;
       }

@@ -71,10 +71,12 @@
                 <i class="search icon"></i>
                 <input type="text" placeholder={{t "components.flexberry-objectlistview.pages-number"}}>
               </div>
-              <div class="item disabled"  data-value="">{{pagesCount}} {{t "components.flexberry-objectlistview.pages"}}</div>
-              {{#each _allPages as |value|}}
-                  <div class="item" data-value="{{value}}">{{value}}</div>
-              {{/each}}
+              <div class="scrolling menu">
+                <div class="item disabled"  data-value="">{{pagesCount}} {{t "components.flexberry-objectlistview.pages"}}</div>
+                {{#each _allPages as |value|}}
+                    <div class="item" data-value="{{value}}">{{value}}</div>
+                {{/each}}
+              </div>
             </div>
           </div>
         {{/if}}

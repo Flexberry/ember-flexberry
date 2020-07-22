@@ -141,7 +141,7 @@ export default FlexberryObjectlistview.extend({
   */
   columnsWidthAutoresize: true,
 
-    /**
+  /**
     Column number sorting array.
 
     Convert array of object sorting to array.

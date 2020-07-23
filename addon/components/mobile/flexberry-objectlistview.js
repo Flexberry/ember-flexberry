@@ -190,7 +190,7 @@ export default FlexberryObjectlistview.extend({
     let allPages = [];
     let mobilePagesNumbers = Ember.A();
     let mobilePages = this.get('mobilePages');
-    mobilePages.forEach( (page) => {
+    mobilePages.forEach((page) => {
       mobilePagesNumbers.push(page.number);
     });
 

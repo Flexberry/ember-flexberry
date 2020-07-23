@@ -255,7 +255,7 @@ var EditFormBlueprint = /** @class */ (function () {
         const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length -1);
 
         attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
-        attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length -1) : name; 
+        attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name; 
     };
     return EditFormBlueprint;
 }());

@@ -44,6 +44,10 @@
     </a>
     <div class="page-header-userbar">
       <img src="assets/images/user-foto.jpg"/>
+      {{flexberry-menu
+        items=itemsUserMenu
+        onItemClick=(action "onMenuItemClick")
+      }}
     </div>
   </div>
 </div>

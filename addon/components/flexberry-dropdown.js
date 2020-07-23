@@ -155,7 +155,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @property value
     @type Any
   */
-  value: computed('_value', 'items', {
+  value: computed('_value', 'items', 'displayCaptions', {
     get() {
       const valueKey = this.get('_value');
 
@@ -168,14 +168,6 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     set(key, value, oldValue) {
       const items = this.get('items');
       if (items && value && value !== oldValue) {
-        if (this.get('displayCaptions')) {
-          if (this.get('needChecksOnValue') && !items.hasOwnProperty(value)) {
-            throw new Error(`Wrong value of flexberry-dropdown 'value' property: '${value}'.`);
-          }
-
-          return this.set('_value', value);
-        }
-
         let valueKey;
         for (let key in items) {
           if (items.hasOwnProperty(key) && items[key] === value) {
@@ -194,8 +186,11 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         this.$().dropdown('clear');
       }
 
-      // Save value for use with displayCaptions specified later.
-      return this.set('_value', value);
+      if (this.get('displayCaptions')) {
+        this.set('_value', value);
+      }
+
+      return value;
     },
   }),
 
@@ -206,10 +201,15 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @type Any
     @readOnly
   */
-  text: computed('_value', 'items', 'placeholder',function () {
-    const value = this.get('_value');
+  text: computed('_value', 'value', 'items', 'placeholder', 'displayCaptions', function () {
+    if (this.get('displayCaptions')) {
+      const items = this.get('items');
+      const value = this.get('_value');
 
-    return value ? this.get(`items.${value}`) : this.get('placeholder');
+      return value ? items[value] : this.get('placeholder');
+    }
+
+    return this.get('value') || this.get('placeholder');
   }).readOnly(),
 
   /**

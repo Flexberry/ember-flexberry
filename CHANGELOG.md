@@ -3,16 +3,49 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `flexberry-dropdown` value doesn't change on first selection.
-* Methods with componentName in services.
-* `flexberry-model` blueprint doesn't import enums.
-
-### Changed
 * Validation check in `flexberry-edit-form` blueprint.
 
+## [3.4.0] - 2020-07-10
+### Added
+* A new theme with the name `ghost` and beautiful design, when generating, add the `--new-theme` parameter with the value `true` to get the application with the new theme.
+* The `flexberry-simpledatetime` component:
+    * The `calendarContext` property for the ability to change the root element for a `flatpickr` calendar.
+    * A button inside the value input field to open the calendar.
+* The `flexberry-objectlistview` component:
+    * The `columnsResizeMode` property for passing as the `resizeMode` option to the `colResizable` plugin.
+    * The ability to go to a given page by simply entering its number in the input field.
+* The `modal-dialog` component:
+    * The `scrolling` class for the `DIV` element with nested content.
+    * The `useSidePageMode` property to open the modal window to the right of the screen, instead of the classic mode.
+* The `useSidePageMode` property in the `flexberry-objectlistview`, `flexberry-groupedit`, and `flexberry-lookup` components to configure the modal windows used by the components.
+* The `settings` property in the `flexberry-menu` component for specifying settings from the `SemanticUI`.
+* Setting the `useSidePageMode`, `showAsteriskInRow`, and `calendarContext` properties for the components `flexberry-objectlistview`, `flexberry-groupedit`, `flexberry-lookup`, and `flexberry-simpledatetime` from the application configuration.
+* Dependencies in the generated application on the `npm`-packages `autoprefixer` and `ember-flexberry-themes`.
+
+### Fixed
+* The `flexberry-lookup` component:
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * Switch pages in the results for autocomplete.
+    * In the mobile version of the component, in the `dropdown` mode, the list of values is not loaded.
+* The name of the selected file is not displayed in the `flexberry-file` component when working in the `Internet Explorer` browser.
+* Validation is not performed before saving the model in the `edit-form` controller.
+* The value in the `flexberry-dropdown` component does not change the first time it is selected.
+* Imports are not generated for enumerations in the `flexberry-model` blueprint.
+* Using the `parentParameters` object to pass the `parentRoute` and `parentRouteRecordId` parameters in the `flexberry-objectlistview` component and the `edit-form` controller.
+* Errors when working with property names in some methods in the services `objectlistview-events` and `user-settings`.
+
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.4.0-beta.1`.
+* The nested content of the `modal-dialog` component no longer wraps in an additional `DIV` element with the `description` class.
+* The markup of modal windows in the `flexberry-file` component has been changed, now they look like ordinary modal windows instead of simplified ones.
+* In the generated application, the markup in the `error.hbs` template and in the edit form in the `flexberry-edit-form` blueprint are changed.
+* The value of the `tableStriped` property in the `flexberry-groupedit` component has been changed to `false`.
+* The `flexberry-objectlistview` component:
+    * Buttons for selecting all rows are replaced by a similar menu.
+    * To display the sort order and direction in a column, instead of `unicode` characters, font icons are used.
+    * In the mobile version of the component, the values of the `showCheckBoxInRow` and `tableStriped` properties are changed to `false`.
+* The order of the `choose` and `remove` buttons in the `flexberry-lookup` component has been changed.
+* Update dependency on `SemanticUI` to version `2.4.1`.
+* Update dependency on `ember-flexberry-data` to version `3.4.0`.
 
 ## [2.4.0] - 2020-05-18
 ### Added
@@ -58,18 +91,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Changed markup and action for the sidebar toggler in the generated app.
 * Removed `!important` rule for the `display` property from the `hidden` class in addon styles.
 * When building a query for export to Excel, the encoding for columns names is used, which allows you to use special characters in them. For compatibility, use the package `NewPlatform.Flexberry.ORM.ODataService` version [`5.1.0-beta16`](https://www.nuget.org/packages/NewPlatform.Flexberry.ORM.ODataService/5.1.0-beta16) or higher.
-
-## [3.4.0-beta.0] - 2020-04-06
-### Added
-* Changes from [`2.4.0-beta.0`](#240-beta0---2020-03-18), [`2.4.0-beta.1`](#240-beta1---2020-03-23) and [`2.4.0-beta.4`](#240-beta4---2020-04-06) versions.
-
-### Fixed
-* `flexberry-lookup` component:
-    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
-    * Switch pages in the results for autocomplete.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `3.4.0-beta.0`.
 
 ## [3.3.0] - 2020-03-23
 ### Added

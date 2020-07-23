@@ -62,7 +62,7 @@ export default FlexberryGroupeditComponent.extend({
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.

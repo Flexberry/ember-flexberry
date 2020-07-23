@@ -94,7 +94,6 @@ export default Mixin.create({
     if (elements.length > 1) return Logger.warn(`Найдено больше одного элемента с классом '${elementClass}'`);
 
     const element = elements[0];
-    element.style.position = 'fixed';
     element.style.zIndex = 100;
     element.classList.add('hidden');
     this.setProperties({
@@ -117,6 +116,7 @@ export default Mixin.create({
     const component = this.get('componentRef');
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
+    let parentComponent = $('body > .pushable > .pusher').get(0);
 
     if (!isVisible || fixedOnVisible) {
       const { height, left, width, bottom } = component.getBoundingClientRect();
@@ -148,12 +148,14 @@ export default Mixin.create({
         }
 
         element.style.top = top;
-        element.style.left = `${left + optionLeft}px`;
+        let offsetLeft = left - parentComponent.getBoundingClientRect().left + optionLeft;
+        $(element).attr('style', function(i, s) { return (s || '') + `left: ${offsetLeft}px !important;` });
       }
 
       if (this.get('isInsideModal')) element.style.left = 0;
 
       element.style.width = `${width + optionWidth}px`;
+      element.style.position = 'fixed';
 
       this.addScrollListeners();
     }
@@ -168,6 +170,7 @@ export default Mixin.create({
     const element = this.get('fixedElementRef');
     element.style.left = '-9999px';
     element.style.maxHeight = 'none';
+    element.style.position = '';
 
     const component = this.get('componentRef');
     $(component).blur();

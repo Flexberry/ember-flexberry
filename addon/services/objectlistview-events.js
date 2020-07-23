@@ -291,6 +291,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Method to fire the `filterConditionChanged` event.
+
+    @method filterConditionChangedTrigger
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  filterConditionChangedTrigger(componentName, filter, newValue, oldvalue) {
+    this.trigger('filterConditionChanged', componentName, filter, newValue, oldvalue);
+  },
+
+  /**
     Current limit functions for OLV by componentNames.
 
     @property currentLimitFunctions

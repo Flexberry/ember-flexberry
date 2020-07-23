@@ -98,5 +98,17 @@ export default FlexberryBaseComponent.extend({
         Ember.set(column.filter, 'condition', undefined);
       });
     },
+
+    /**
+      Called when filter condition in any column was changed by user.
+
+      @method actions.filterConditionChanged
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
+    */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      this.get('objectlistviewEvents').filterConditionChangedTrigger(this.get('componentName'), filter, newCondition, oldCondition);
+    },
   }
 });

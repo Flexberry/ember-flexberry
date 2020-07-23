@@ -263,12 +263,9 @@ export default {
     },
 
     'filters-dialog-content': {
-      'title': 'Фильтрация по столбцам',
-      'column-name': 'Столбец для фильтрации',
-      'column-condition': 'Условие',
-      'column-value': 'Значение',
-      'clear': 'Очистить фильты',
-      'apply': 'Применить фильтры'
+      'title': 'Настройка фильтрации записей',
+      'clear': 'Сбросить фильтр',
+      'apply': 'Применить'
     },
 
     'form-load-time-tracker': {

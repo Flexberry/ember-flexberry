@@ -261,12 +261,9 @@ export default {
     },
 
     'filters-dialog-content': {
-      'title': 'Сolumns filtering',
-      'column-name': 'Filter column',
-      'column-condition': 'Condition',
-      'column-value': 'Value',
-      'clear': 'Clear filters',
-      'apply': 'Apply filters'
+      'title': 'Configuring record filtering',
+      'clear': 'Reset filter',
+      'apply': 'Apply'
     },
 
     'form-load-time-tracker': {

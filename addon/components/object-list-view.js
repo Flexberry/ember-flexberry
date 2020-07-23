@@ -566,7 +566,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
-    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(ret);
+    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(this.get('componentName'), ret);
     return ret;
   }),
 

@@ -286,7 +286,7 @@
                   {{flexberry-dropdown
                     value=column.filter.condition
                     items=column.filter.conditions
-                    displayCaptions=true
+                    displayCaptions=(not (is-array column.filter.conditions))
                     class="compact fluid"
                     placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false

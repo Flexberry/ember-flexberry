@@ -451,7 +451,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       // This is possible when using offline mode.
       const agragatorModel = getCurrentAgregator.call(this);
       if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        savePromise = this._saveHasManyRelationships(model).then((result) => {
+        savePromise = model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
           const errors = A(result || []).filterBy('state', 'rejected');
           if (!isEmpty(errors)) {
             return reject(errors);

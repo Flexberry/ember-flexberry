@@ -42,6 +42,7 @@
     {{/if}}
     {{#unless readonly}}
       <button
+        type="button"
         class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
         {{action "remove" removeData}}>
         {{{removeText}}}

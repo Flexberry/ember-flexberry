@@ -124,6 +124,16 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    The name of a property in the model that determines whether any record is the parent of other records.
+    If a property value with this name is defined (not `undefined`), the button to display child records will be shown immediately, and the records will be loaded only when the button is clicked.
+
+    @property isParentRecordPropertyName
+    @type String
+    @default 'isParentRecord'
+  */
+  isParentRecordPropertyName: 'isParentRecord',
+
+  /**
     Flag indicate when component is in the hierarchical mode.
 
     @property inHierarchicalMode
@@ -1283,30 +1293,37 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete row.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
-        confirmDeleteRow() {
-          return confirm('You sure?');
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: `Delete an object with the ID '${record.get('id')}'?`,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action "confirmDeleteRow")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRow
-    @return {Boolean} If `true` then delete row, else cancel.
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRow: undefined,
 
@@ -1314,30 +1331,36 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete rows.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
         confirmDeleteRows() {
-          return confirm('You sure?');
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: 'Delete all selected records?',
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action "confirmDeleteRows")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRows
-    @return {Boolean} If `true` then delete selected rows, else cancel.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRows: undefined,
 

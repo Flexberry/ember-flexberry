@@ -32,12 +32,13 @@
       readonly=readonly
     }}
     {{#if (and inHierarchicalMode hasRecords)}}
-      <button class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
+      <button type="button" class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
         <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
       </button>
     {{/if}}
     {{#if showEditButtonInRow}}
       <button
+        type="button"
         class="ui ui-edit object-list-view-row-edit-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
         disabled={{readonly}}
         {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true) bubbles=false}}>
@@ -46,6 +47,7 @@
     {{/if}}
     {{#if showPrototypeButtonInRow}}
       <button
+        type="button"
         class="ui ui-edit object-list-view-row-prototype-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
         disabled={{readonly}}
         {{action createNewByPrototype (get record "data.id") bubbles=false}}>
@@ -54,6 +56,7 @@
     {{/if}}
     {{#if showDeleteButtonInRow}}
       <button
+        type="button"
         class="ui ui-edit object-list-view-row-delete-button mobile {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
         disabled={{or readonly (not record.rowConfig.canBeDeleted)}}
         {{action deleteRow record bubbles=false}}>
@@ -99,6 +102,7 @@
       showDeleteButtonInRow=showDeleteButtonInRow
       showEditButtonInRow=showEditButtonInRow
       showPrototypeButtonInRow=showPrototypeButtonInRow
+      isParentRecordPropertyName=isParentRecordPropertyName
       inHierarchicalMode=inHierarchicalMode
       inExpandMode=inExpandMode
       singleColumnCellComponent=singleColumnCellComponent

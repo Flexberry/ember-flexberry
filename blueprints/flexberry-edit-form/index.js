@@ -4,13 +4,13 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
+var skipConfirmationFunc = require('../utils/skip-confirmation');
 var fs = require("fs");
 var path = require("path");
 var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
-const skipConfirmationFunc = require('../utils/skip-confirmation');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -48,16 +48,13 @@ module.exports = {
             CommonUtils_1.default.installReexportNew(options, ["controller", "route"]);
         }
     },
-
-  processFiles(intoDir, templateVariables) {
-    let skipConfirmation = this.options.skipConfirmation;
-    if (skipConfirmation) {
-      return skipConfirmationFunc(this, intoDir, templateVariables);
-    }
-
-        return this._super(...arguments);
+    processFiles: function (intoDir, templateVariables) {
+        var skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+        return this._super.apply(this, arguments);
     },
-
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -158,7 +155,6 @@ var EditFormBlueprint = /** @class */ (function () {
             if (projAttr.hidden || projAttr.index === -1) {
                 continue;
             }
-
             var snippet = this.loadSnippet(model, projAttr.name);
             var attr = this.findAttr(model, projAttr.name);
             projAttr.readonly = "readonly";
@@ -168,7 +164,6 @@ var EditFormBlueprint = /** @class */ (function () {
             this.calculateValidatePropertyNames(projAttr);
             this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
         }
-
         this.fillBelongsToAttrs(proj.belongsTo, []);
         var belongsTo, hasMany;
         for (var _b = 0, _c = proj.belongsTo; _b < _c.length; _b++) {
@@ -250,10 +245,9 @@ var EditFormBlueprint = /** @class */ (function () {
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
     };
     EditFormBlueprint.prototype.calculateValidatePropertyNames = function (attrs) {
-        const name = attrs.name;
-        const lastDotIndex = name.lastIndexOf(".");
-        const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length -1);
-
+        var name = attrs.name;
+        var lastDotIndex = name.lastIndexOf(".");
+        var isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
         attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
         attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
     };

@@ -183,6 +183,7 @@ class EditFormBlueprint {
       projAttr.type = attr.type;
       projAttr.entityName = this.options.entity.name;
       projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
+      this.calculateValidatePropertyNames(projAttr);
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -198,6 +199,7 @@ class EditFormBlueprint {
         belongsTo.readonly = "readonly";
         belongsTo.entityName = this.options.entity.name;
         belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }
     }
@@ -208,6 +210,7 @@ class EditFormBlueprint {
       hasMany.entityName = this.options.entity.name;
       hasMany.dashedName = (hasMany.name || '').replace(/\./g, '-');
       this.locales.setupEditFormAttribute(hasMany);
+      this.calculateValidatePropertyNames(hasMany);
       this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
     }
   }
@@ -229,6 +232,7 @@ class EditFormBlueprint {
         belongsToAttr.entityName = this.options.entity.name;
         belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
         this.locales.setupEditFormAttribute(belongsToAttr);
+        this.calculateValidatePropertyNames(belongsToAttr);
         this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
       }
       this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -259,5 +263,14 @@ class EditFormBlueprint {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+  }
+
+  private calculateValidatePropertyNames(attrs) {
+    const name = attrs.name;
+    const lastDotIndex = name.lastIndexOf(".");
+    const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
+
+    attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
+    attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
   }
 }

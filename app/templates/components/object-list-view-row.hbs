@@ -96,42 +96,48 @@
     {{#each columns as |column index|}}
       <td
         {{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
-        class="field {{if (and showValidationMessages (v-get record.data column.propName "isInvalid")) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+        class="field {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
-            {{#component column.cellComponent.componentName
-              dynamicProperties=column.cellComponent.componentProperties
-              relatedModel=record.data
-              value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
-              required=required
-              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
-            }}
-              {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
-                <button
-                  type="button"
-                  class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
-                  title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
-                  {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
-                >
-                  <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
-                </button>
-              {{/if}}
-            {{/component}}
+            {{#with (if column.relationshipPath (get record.data column.relationshipPath) record.data) as |relation|}}
+              {{#component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=record.data
+                value=(mut (get record.data column.propName))
+                class=(if (and showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
+                required=required
+                componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+              }}
+                {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
+                  <button
+                    type="button"
+                    class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
+                    title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
+                    {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
+                  >
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                  </button>
+                {{/if}}
+              {{/component}}
+            {{/with}}
           {{else}}
-            {{component column.cellComponent.componentName
-              dynamicProperties=column.cellComponent.componentProperties
-              relatedModel=record.data
-              value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
-              required=required
-              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
-              canFixElement=(or (eq column.cellComponent.componentName 'flexberry-dropdown') (eq column.cellComponent.componentName 'flexberry-lookup'))
-            }}
-            {{#if showValidationMessages}}
-              {{flexberry-validationmessage error=(v-get record.data column.propName "messages")}}
-            {{/if}}
+            {{#with (if column.relationshipPath (get record.data column.relationshipPath) record.data) as |relation|}}
+              {{component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=record.data
+                value=(mut (get record.data column.propName))
+                class=(if (and showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
+                required=required
+                componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+                canFixElement=(or (eq column.cellComponent.componentName 'flexberry-dropdown') (eq column.cellComponent.componentName 'flexberry-lookup'))
+              }}
+              {{#if showValidationMessages}}
+                {{flexberry-validationmessage error=(v-get relation column.attrName "message")}}
+              {{/if}}
+            {{/with}}
           {{/if}}
         {{else}}
           <div class="oveflow-text">

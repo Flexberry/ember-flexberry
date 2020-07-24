@@ -1768,6 +1768,8 @@ export default FlexberryBaseComponent.extend(
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
+            column.relationshipPath = currentRelationshipPath.slice(0, -1);
+            column.attrName = attrName;
 
             if (column.cellComponent.componentName === undefined) {
               if (attr.options.displayMemberPath) {
@@ -1792,6 +1794,8 @@ export default FlexberryBaseComponent.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
+          column.relationshipPath = currentRelationshipPath.slice(0, -1);
+          column.attrName = attrName;
           columnsBuf.pushObject(column);
           break;
         }

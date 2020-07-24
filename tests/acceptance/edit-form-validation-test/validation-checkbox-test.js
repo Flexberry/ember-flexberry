@@ -13,7 +13,7 @@ executeTest('check operation checkbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = $($('.field.error')[0]);
+    let $validationField = $($('.field')[1]);
     let $validationFlexberryCheckbox = $validationField.children('.flexberry-checkbox');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 

@@ -24,27 +24,30 @@
   </div>
   <div class="ui one column grid stackable">
     <div class="column">
-      <div class="field {{if (v-get validationObject "address" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.address
+          class=(if (v-get validationObject "address" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "address" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "address" "message")}}
       </div>
-      <div class="field {{if (v-get validationObject "text" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.text
+          class=(if (v-get validationObject "text" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "text" "message")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "type" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
           {{flexberry-lookup
             value=model.type
+            class=(if (v-get validationObject "type" "isInvalid") "error")
             relatedModel=model
             relationName="type"
             projection="SuggestionTypeL"
@@ -57,41 +60,45 @@
             direction="upward"
             componentName="SuggestionEditType"
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "type" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "type" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "date" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
           {{flexberry-simpledatetime
             type="date"
             value=model.date
+            class=(if (v-get validationObject "date" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "date" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "date" "message")}}
         </div>
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "votes" "isInvalid") "error"}}">
+        <div class="field">
           {{flexberry-field
             value=model.votes
+            class=(if (v-get validationObject "votes" "isInvalid") "error")
             label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "votes" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "votes" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
+        <div class="field">
           <label>&nbsp;</label>
           {{flexberry-checkbox
             value=model.moderated
+            class=(if (v-get validationObject "moderated" "isInvalid") "error")
             readonly=readonly
             label=(t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption")
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "moderated" "message")}}
         </div>
       </div>
-      <div class="field {{if (v-get validationObject "author" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
         {{flexberry-lookup
           value=model.author
+          class=(if (v-get validationObject "author" "isInvalid") "error")
           relatedModel=model
           relationName="author"
           projection="ApplicationUserL"
@@ -107,12 +114,13 @@
           readonly=readonly
           componentName="SuggestionEditAuthor"
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
       </div>
-      <div class="field {{if (v-get validationObject "editor1" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
         {{flexberry-lookup
           value=model.editor1
+          class=(if (v-get validationObject "editor1" "isInvalid") "error")
           relatedModel=model
           relationName="editor1"
           projection="ApplicationUserL"
@@ -127,7 +135,7 @@
           componentName="SuggestionEditEditor1"
           lookupWindowCustomProperties=(action 'getLookupFolvProperties')
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "editor1" "message")}}
       </div>
     </div>
   </div>

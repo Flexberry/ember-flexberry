@@ -25,126 +25,135 @@
   <div class="ui two column grid stackable">
     <div class="column">
       <h4>Профиль</h4>
-      <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.name
+          class=(if (v-get validationObject "name" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "birthday" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
           {{flexberry-simpledatetime
             type="date"
             value=model.birthday
+            class=(if (v-get validationObject "birthday" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "birthday" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "birthday" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "gender" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
           {{flexberry-dropdown
             items=(flexberry-enum "ember-flexberry-dummy-gender")
             value=model.gender
+            class=(if (v-get validationObject "gender" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "gender" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "gender" "message")}}
         </div>
       </div>
-      <div class="field {{if (v-get validationObject "karma" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.karma
+          class=(if (v-get validationObject "karma" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "karma" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "karma" "message")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "activated" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
           {{flexberry-checkbox
             value=model.activated
+            class=(if (v-get validationObject "activated" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "activated" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "activated" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "vip" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
           {{flexberry-checkbox
             value=model.vip
+            class=(if (v-get validationObject "vip" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "vip" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "vip" "message")}}
         </div>
       </div>
     </div>
 
     <div class="column">
       <h4>Контактная информация</h4>
-      <div class="field {{if (v-get validationObject "phone1" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.phone1
+          class=(if (v-get validationObject "phone1" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "phone1" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "phone1" "message")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "phone2" "isInvalid") "error"}}">
+        <div class="field">
           {{flexberry-field
-
             value=model.phone2
+            class=(if (v-get validationObject "phone2" "isInvalid") "error")
             label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "phone2" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "phone2" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "phone3" "isInvalid") "error"}}">
+        <div class="field">
           {{flexberry-field
-
             value=model.phone3
+            class=(if (v-get validationObject "phone3" "isInvalid") "error")
             label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "phone3" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "phone3" "message")}}
         </div>
       </div>
-      <div class="field {{if (v-get validationObject "eMail" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.eMail
+          class=(if (v-get validationObject "eMail" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "eMail" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "eMail" "message")}}
       </div>
-      <div class="field {{if (v-get validationObject "vK" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.vK
+          class=(if (v-get validationObject "vK" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
           readonly=readonly
         }}
         {{flexberry-validationmessage error=(v-get validationObject "vK" "messages")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "facebook" "isInvalid") "error"}}">
+        <div class="field">
           {{flexberry-field
-
             value=model.facebook
+            class=(if (v-get validationObject "facebook" "isInvalid") "error")
             label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "facebook" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "facebook" "message")}}
         </div>
-        <div class="field {{if (v-get validationObject "twitter" "isInvalid") "error"}}">
+        <div class="field">
           {{flexberry-field
-
             value=model.twitter
+            class=(if (v-get validationObject "twitter" "isInvalid") "error")
             label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "twitter" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "twitter" "message")}}
         </div>
       </div>
     </div>

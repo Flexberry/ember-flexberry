@@ -10,66 +10,74 @@
           }}
         </div>
       </div>
-      <div class="field {{if (v-get validationObject "flag" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.integration-examples.edit-form.validation.flag-caption"}}</label>
         {{flexberry-checkbox
           value=model.flag
+          class=(if (v-get validationObject "flag" "isInvalid") "error")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "flag" "messages") pointing="left pointing"}}
       </div>
-      <div class="field {{if (v-get validationObject "number" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.integration-examples.edit-form.validation.number-caption"}}</label>
         {{flexberry-textbox
           value=model.number
+          class=(if (v-get validationObject "number" "isInvalid") "error")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "number" "messages")}}
       </div>
-      <div class="field {{if (v-get validationObject "text" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.integration-examples.edit-form.validation.text-caption"}}</label>
         {{flexberry-textbox
           value=model.text
+          class=(if (v-get validationObject "text" "isInvalid") "error")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
       </div>
-      <div class="field {{if (v-get validationObject "longText" "isInvalid") "error"}}">
+      <div class="field">
       <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
         {{flexberry-textarea
           value=model.longText
+          class=(if (v-get validationObject "longText" "isInvalid") "error")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "longText" "messages")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "date" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
           {{flexberry-simpledatetime
             type="date"
             value=model.date
+            class=(if (v-get validationObject "date" "isInvalid") "error")
           }}
           {{flexberry-validationmessage error=(v-get validationObject "date" "messages")}}
         </div>
-        <div class="field {{if (v-get validationObject "enumeration" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>
           {{flexberry-dropdown
             items=(flexberry-enum "integration-examples/edit-form/validation/enumeration")
             value=model.enumeration
+            class=(if (v-get validationObject "enumeration" "isInvalid") "error")
           }}
           {{flexberry-validationmessage error=(v-get validationObject "enumeration" "messages")}}
         </div>
       </div>
-      <div class="field {{if (v-get validationObject "file" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.integration-examples.edit-form.validation.file-caption"}}</label>
         {{flexberry-file
           value=model.file
+          class=(if (v-get validationObject "file" "isInvalid") "error")
           showUploadButton=false
           showDownloadButton=false
         }}
         {{flexberry-validationmessage error=(v-get validationObject "file" "messages")}}
       </div>
-      <div class="field {{if (v-get validationObject "master" "isInvalid") "error"}}">
+      <div class="field">
         <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
         {{flexberry-lookup
           componentName="IntegrationExamplesValidationsMaster"
           value=model.master
+          class=(if (v-get validationObject "master" "isInvalid") "error")
           relatedModel=model
           relationName="master"
           projection="MasterL"
@@ -95,7 +103,7 @@
   {{#flexberry-toggler
     caption=(t "forms.integration-examples.edit-form.validation.details-caption")
     expanded=true }}
-    <div class="field {{if (v-get validationObject "details" "isInvalid") "error"}}">
+    <div class="field">
       {{flexberry-groupedit
         componentName="IntegrationExamplesEditFormValidationsDetails"
         content=model.details
@@ -103,6 +111,7 @@
         modelProjection=modelProjection.attributes.details
         orderable=false
         showValidationMessagesInRow=false
+        class=(if (v-get validationObject "details" "isInvalid") "error")
       }}
       {{flexberry-validationmessage error=(v-get validationObject "details" "messages")}}
     </div>

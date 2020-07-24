@@ -263,6 +263,7 @@ export default {
     },
 
     'filters-dialog-content': {
+      'clear-this-filter': 'Сбросить этот фильтр',
       'title': 'Настройка фильтрации записей',
       'clear': 'Сбросить фильтр',
       'apply': 'Применить'

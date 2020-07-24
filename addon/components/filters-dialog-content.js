@@ -51,9 +51,22 @@ export default FlexberryBaseComponent.extend({
     */
     clearFiltersFields() {
       this.get('filterColumns').forEach((column) => {
-        Ember.set(column.filter, 'pattern', undefined);
-        Ember.set(column.filter, 'condition', undefined);
+        this.send('clearFilterField', column.filter);
       });
+
+      this.send('applyFilters');
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterField
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterField(filter) {
+      Ember.set(filter, 'condition', 'between');
+      Ember.set(filter, 'condition', undefined);
+      Ember.set(filter, 'pattern', undefined);
     },
 
     /**

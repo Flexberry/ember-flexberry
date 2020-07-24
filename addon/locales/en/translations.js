@@ -261,6 +261,7 @@ export default {
     },
 
     'filters-dialog-content': {
+      'clear-this-filter': 'Reset this filter',
       'title': 'Configuring record filtering',
       'clear': 'Reset filter',
       'apply': 'Apply'

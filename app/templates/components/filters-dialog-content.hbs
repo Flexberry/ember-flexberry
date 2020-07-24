@@ -29,10 +29,22 @@
               }}
             {{/if}}
           </td>
+          <td>
+            {{#if column.filter.component.name}}
+              <button
+                type="button"
+                class="ui basic small icon button"
+                title={{t "components.filters-dialog-content.clear-this-filter"}}
+                {{action "clearFilterField" column.filter}}
+              >
+                <i class="x icon"></i>
+              </button>
+            {{/if}}
+          </td>
         </tr>
       {{/each}}
       <tr>
-        <td colspan="3">
+        <td colspan="4">
           <button type="button" class="ui right floated primary button" {{action "applyFilters"}}>{{t "components.filters-dialog-content.apply"}}</button>
           <button type="button" class="ui right floated basic button" {{action "clearFiltersFields"}}>{{t "components.filters-dialog-content.clear"}}</button>
         </td>

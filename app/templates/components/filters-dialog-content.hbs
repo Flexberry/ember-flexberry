@@ -1,55 +1,54 @@
 <div class="ui form">
   <div class="flexberry-colsconfig content">
-      <table class="ui unstackable fixed selectable celled table">
-
-        <thead class="full-width">
-          <tr>
-            <th>{{t "components.filters-dialog-content.column-name"}}</th>
-            <th class="filter-dropdown">{{t "components.filters-dialog-content.column-condition"}}</th>
-            <th class="filter-input">{{t "components.filters-dialog-content.column-value"}}</th>
-          </tr>
-        </thead>
-
-        <tbody class="full-width">
-          {{#each _filterColumnsWithoutEnter as |column|}}
-            <tr class="object-list-view-filters">
-              <th class="full-width">
-                  {{column.header}}
-              </th>
-              <th>
-                <td class="overflowed-cell">
-                  {{#if column.filter.conditions}}
-                    {{component "flexberry-dropdown"
-                      value=column.filter.condition
-                      items=column.filter.conditions
-                      placeholder=""
-                      needChecksOnValue=false
-                    }}
-                  {{/if}}
-                </td>
-              </th>
-              <th>
-                <td class="overflowed-cell">
-                  {{#if column.filter.component.name}}
-                    {{component column.filter.component.name
-                      value=column.filter.pattern
-                      dynamicProperties=column.filter.component.properties
-                    }}
-                  {{/if}}
-                </td>
-              </th>
-            </tr>
-          {{/each}}
-        </tbody>
-        
-        <tfoot class="full-width">
-          <tr>
-            <th colspan='2'>
-              <div class="ui right floated button cols-config-apply" {{action "applyFilters"}}>{{t "components.filters-dialog-content.apply"}}</div>
-              <div class="ui right floated button cols-config-apply" {{action "clearFiltersFields"}}>{{t "components.filters-dialog-content.clear"}}</div>
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+    <table class="ui table">
+      {{#each filterColumns as |column|}}
+        <tr class="object-list-view-filters">
+          <td>{{column.header}}</td>
+          <td>
+            {{#if column.filter.conditions}}
+              {{flexberry-dropdown
+                value=column.filter.condition
+                items=column.filter.conditions
+                displayCaptions=(not (is-array column.filter.conditions))
+                class="compact fluid"
+                placeholder=(t "components.object-list-view.filter-condition")
+                needChecksOnValue=false
+                onChange=(action "filterConditionChanged" column.filter)
+              }}
+            {{/if}}
+          </td>
+          <td>
+            {{#if column.filter.component.name}}
+              {{component column.filter.component.name
+                value=column.filter.pattern
+                readonly=(or
+                  (eq column.filter.condition "empty")
+                  (eq column.filter.condition "nempty")
+                )
+                dynamicProperties=column.filter.component.properties
+              }}
+            {{/if}}
+          </td>
+          <td>
+            {{#if column.filter.component.name}}
+              <button
+                type="button"
+                class="ui basic small icon button"
+                title={{t "components.filters-dialog-content.clear-this-filter"}}
+                {{action "clearFilterField" column.filter}}
+              >
+                <i class="x icon"></i>
+              </button>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td colspan="4">
+          <button type="button" class="ui right floated primary button" {{action "applyFilters"}}>{{t "components.filters-dialog-content.apply"}}</button>
+          <button type="button" class="ui right floated basic button" {{action "clearFiltersFields"}}>{{t "components.filters-dialog-content.clear"}}</button>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

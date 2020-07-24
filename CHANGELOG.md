@@ -3,7 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-* Validation check in `flexberry-edit-form` blueprint.
+
+## [3.5.0-beta.0] - 2020-07-24
+### Added
+* Changes from [`2.5.0-beta.7`](#250-beta7---2020-07-22) version.
+
+### Fixed
+* Generating and displaying validations in edit forms.
 
 ## [2.5.0-beta.7] - 2020-07-22
 ### Added
@@ -39,6 +45,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.4.0] - 2020-07-10
 ### Added
+* Changes from [`2.4.0`](#240---2020-05-18) version.
 * A new theme with the name `ghost` and beautiful design, when generating, add the `--new-theme` parameter with the value `true` to get the application with the new theme.
 * The `flexberry-simpledatetime` component:
     * The `calendarContext` property for the ability to change the root element for a `flatpickr` calendar.

@@ -1,4 +1,5 @@
 import { set } from '@ember/object';
+import { Promise } from 'rsvp';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -46,8 +47,8 @@ export default EditFormController.extend({
 
       @param {Object} data Row data.
     */
-    confirmDeleteRows(data) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+    confirmDeleteRows() {
+      return new Promise((resolve, reject) => {
         this.set('approveDeleting', resolve);
         this.set('denyDeleting', reject);
 

@@ -450,8 +450,8 @@ export default Mixin.create(ReloadListMixin, {
 
     controller.clear(reloadData.initialLoad);
 
-    const modalDialogSettings = controller.get('modalDialogSettings') || Ember.merge(Ember.merge({}, reloadData.modalDialogSettings), {
-      settings: Ember.merge(Ember.merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings.settings),
+    const modalDialogSettings = controller.get('modalDialogSettings') || merge(merge({}, reloadData.modalDialogSettings), {
+      settings: merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings.settings),
     });
 
     controller.setProperties({

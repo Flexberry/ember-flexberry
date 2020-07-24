@@ -57,17 +57,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @param {String} fileType file type as MIME TYPES.
     @param {String} accept available MIME TYPES.
    */
-  checkFileType: function(fileType, accept) {
+  checkFileType() {
     return true;
-  },
-
-  actions: {
-
-    getLookupFolvProperties: function() {
-      return {
-        colsConfigButton: true
-      };
-    }
   },
 
   /**

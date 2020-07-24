@@ -34,12 +34,12 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @private
   */
-  _fileSizeUnits: {
+  _fileSizeUnits: computed(() => ({
     Bt: t('components.flexberry-file.error-dialog-size-unit-bt'),
     Kb: t('components.flexberry-file.error-dialog-size-unit-kb'),
     Mb: t('components.flexberry-file.error-dialog-size-unit-mb'),
     Gb: t('components.flexberry-file.error-dialog-size-unit-gb')
-  },
+  })),
 
   /**
     Selected file content. It can be used as source for image tag in order to view preview.
@@ -720,6 +720,7 @@ export default FlexberryBaseComponent.extend({
 
         let sizeUnit = this.get('maxUploadFileSizeUnit');
         if (!(sizeUnit in this.get('_fileSizeUnits'))) {
+          // eslint-disable-next-line no-console
           console.log('Flexberry-file error, file max size wrong units assigned');
           sizeUnit = Object.keys(this.get('_fileSizeUnits'))[0];
         }
@@ -1099,8 +1100,8 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    let relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
-    Ember.assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
+    let relatedModelOffPropertyType = typeOf(this.get('relatedModel.off'));
+    assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
       relatedModelOffPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
@@ -1134,16 +1135,18 @@ export default FlexberryBaseComponent.extend({
     @method _valueDidChange
     @private
   */
-  _valueDidChange: Ember.observer('value', function() {
+  _valueDidChange: observer('value', function() {
     const value = this.get('value');
     if (!value) {
       this.removeFile();
     }
 
-    this.sendAction('fileChange', {
-      uploadData: this.get('_uploadData'),
-      value: value
-    });
+    if(!isNone(this.get('fileChange'))){
+      this.get('fileChange')({
+        uploadData: this.get('_uploadData'),
+        value: value
+      });
+    }
   }),
 
   /**

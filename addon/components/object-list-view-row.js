@@ -173,7 +173,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readOnly
   */
-  isParentRecord: Ember.computed('record.data', 'isParentRecordPropertyName', function () {
+  isParentRecord: computed('record.data', 'isParentRecordPropertyName', function () {
     return this.get(`record.data.${this.get('isParentRecordPropertyName')}`);
   }).readOnly(),
 

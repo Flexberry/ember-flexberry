@@ -3,6 +3,7 @@
 */
 
 import $ from 'jquery';
+import { Promise } from 'rsvp';
 import { assert } from '@ember/debug';
 import { set, computed, observer } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
@@ -550,16 +551,16 @@ export default FlexberryBaseComponent.extend({
       let possiblePromise = null;
 
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
 
         possiblePromise = confirmDeleteRows();
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
+        if ((!possiblePromise || !(possiblePromise instanceof Promise))) {
           return;
         }
       }
 
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      if (possiblePromise || (possiblePromise instanceof Promise)) {
         possiblePromise.then(() => {
           this._confirmDeleteRows();
         });

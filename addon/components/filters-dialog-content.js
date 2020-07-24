@@ -64,7 +64,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} filter Object with the filter description.
     */
     clearFilterField(filter) {
-      Ember.set(filter, 'condition', 'between');
+      Ember.set(filter, 'component.name', 'flexberry-textbox');
       Ember.set(filter, 'condition', undefined);
       Ember.set(filter, 'pattern', undefined);
     },

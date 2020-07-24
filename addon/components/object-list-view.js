@@ -1059,14 +1059,25 @@ export default FlexberryBaseComponent.extend(
       }
 
       let confirmDeleteRow = this.get('confirmDeleteRow');
+      let possiblePromise = null;
+
       if (confirmDeleteRow) {
         assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow()) {
+
+        possiblePromise = confirmDeleteRow(recordWithKey.data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise))) {
           return;
         }
       }
 
-      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+        });
+      } else {
+        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      }
     },
     /* eslint-enable no-unused-vars */
 
@@ -1399,8 +1410,7 @@ export default FlexberryBaseComponent.extend(
 
           if (renderedRowIndex >= contentLength) {
             // The last menu needs will be up.
-            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
-            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
             this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
             // Remove long loading spinners.
@@ -1450,8 +1460,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       // The last menu needs will be up.
-      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
-      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
 

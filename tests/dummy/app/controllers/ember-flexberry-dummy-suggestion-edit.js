@@ -14,6 +14,32 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   parentRoute: 'ember-flexberry-dummy-suggestion-list',
 
   /**
+    Available file extensions for upload. In MIME type format.
+
+    @property availableMimeTypes
+    @type String
+  */
+  availableMimeTypes: 'text/plain,video/mp4',
+
+  /**
+    Maximum file size in bytes for uploading files.
+    It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
+    If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
+
+    @property maxUploadFileSize
+    @type Number
+  */
+  maxUploadFileSize: 10,
+
+  /**
+    Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.
+
+    @property maxUploadFileSizeUnit
+    @type String
+  */
+  maxUploadFileSizeUnit: 'Mb',
+
+  /**
     Name of model.comments edit route.
 
     @property commentsEditRoute
@@ -23,6 +49,17 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
   title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-editform-question-caption'),
+
+  /**
+    Function for check uploaded file type.
+
+    @method checkFileType
+    @param {String} fileType file type as MIME TYPES.
+    @param {String} accept available MIME TYPES.
+   */
+  checkFileType() {
+    return true;
+  },
 
   /**
     Method to get type and attributes of a component,
@@ -75,6 +112,16 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           cellComponent.componentProperties = {
             readonly: true,
           };
+          break;
+
+        case 'ember-flexberry-dummy-suggestion-file+file':
+          cellComponent.componentProperties = {
+            accept: this.get('availableMimeTypes'),
+            isValidTypeFileCustom: this.get('checkFileType'),
+            maxUploadFileSize: this.get('maxUploadFileSize'),
+            maxUploadFileSizeUnit: this.get('maxUploadFileSizeUnit')
+          };
+          break;
       }
     }
 
@@ -110,7 +157,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     /**
       Show delete modal dialog before deleting.
     */
-    delete(skipTransition) {  
+    delete(skipTransition) {
       this.set('approveDeleting', () => {this.delete(skipTransition)});
       this.set('denyDeleting',() => {});
 

@@ -5,6 +5,38 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 * Validation check in `flexberry-edit-form` blueprint.
 
+## [2.5.0-beta.7] - 2020-07-22
+### Added
+* The ability to optimize the loading of the hierarchical list in the `flexberry-objectlistview` component ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).
+* Mobile version of the export to `Excel` and configure list window.
+* The `flexberry-file` component:
+    * Type checking for files selected using the component. Use the `accept` property and the `isValidTypeFileCustom` action to configure.
+    * When limiting the file size, the ability to specify the units of measurement in the `maxUploadFileSizeUnit` property.
+* In all components of lists:
+    * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
+    * The `confirmDeleteRow` action gets the record to be deleted as the first parameter.
+
+### Fixed
+* Attributes with selectors for testing are not generated correctly in the generated application.
+* Saving on the edit form is not performed in offline mode.
+* The `flexberry-groupedit` component:
+    * When component has only one row, the menu for that row is displayed as if it were the last row.
+    * Duplicate rows when an array other than `DS.ManyArray` is used as content.
+* The `flexberry-file` component:
+    * Without the related model, the component cannot be used.
+    * Not displaying correctly when deleting the file in the related model from the controller.
+* The `flexberry-lookup` component:
+    * The modal window settings specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
+    * The modal window settings specified through the `modalDialogSettings` property are lost when switching pages.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.4`.
+* Design of an element for customizing the sorting of columns, in the export to `Excel` and configure list window. Symbols are replaced with a description.
+* For all the `button` elements used in templates, the `type` attribute with the `button` value is added.
+
+### Breaking changes
+* Removed the `parse-cols-config-sorting` helper.
+
 ## [3.4.0] - 2020-07-10
 ### Added
 * A new theme with the name `ghost` and beautiful design, when generating, add the `--new-theme` parameter with the value `true` to get the application with the new theme.
@@ -50,7 +82,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.4.0] - 2020-05-18
 ### Added
 * Attributes with selectors for testing in the generated application.
-* Support for `base64` values in the `flexberry-file` component ([leran more](https://flexberry.github.io/en/ef_file.html#working-with-files-in-the-base64-format)).
+* Support for `base64` values in the `flexberry-file` component ([learn more](https://flexberry.github.io/en/ef_file.html#working-with-files-in-the-base64-format)).
 * The `displayCaptions` mode for the `flexberry-dropdown` component.
 * The `showFiltersInModal` property in the `flexberry-objectlistview` component for displayng filters in a modal window.
 * The `flexberry-objectlistview` and `flexberry-simpleolv` components:

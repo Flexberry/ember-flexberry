@@ -1,5 +1,6 @@
 {{#if refreshButton}}
   <button
+    type="button"
     class="ui refresh-button {{buttonClass}} button"
     title={{t "components.olv-toolbar.refresh-button-text"}}
     {{action "refresh"}}>
@@ -10,6 +11,7 @@
 {{#if createNewButton}}
   {{#if (or readonly (not enableCreateNewButton))}}
     <button
+      type="button"
       class="ui create-button {{buttonClass}} disabled button"
       title={{t "components.olv-toolbar.add-button-text"}}
       disabled="disabled"
@@ -18,6 +20,7 @@
     </button>
   {{else}}
     <button
+    type="button"
       class="ui create-button {{buttonClass}} button"
       title={{t "components.olv-toolbar.add-button-text"}}
       {{action "createNew"}}>
@@ -28,6 +31,7 @@
 {{#if deleteButton}}
   {{#if (or readonly (not isDeleteButtonEnabled))}}
     <button
+      type="button"
       class="ui delete-button {{buttonClass}} disabled button"
       title={{t "components.olv-toolbar.delete-button-text"}}
       disabled="disabled"
@@ -37,6 +41,7 @@
     </button>
   {{else}}
     <button
+      type="button"
       class="ui delete-button {{buttonClass}} button"
       title={{t "components.olv-toolbar.delete-button-text"}}
       {{action "delete"}}>
@@ -47,6 +52,7 @@
 {{/if}}
 {{#if availableHierarchicalMode}}
   <button
+    type="button"
     class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
     title={{t "components.olv-toolbar.hierarchy-button-text"}}
     {{action switchHierarchicalMode}}>
@@ -54,6 +60,7 @@
   </button>
   {{#if availableCollExpandMode}}
     <button
+      type="button"
       class="ui button icon hierarchical-button {{buttonClass}} active"
       title={{if inExpandMode (t "components.olv-toolbar.coll-comspres-button-text") (t "components.olv-toolbar.coll-expand-button-text")}}
       {{action switchExpandMode}}>
@@ -64,6 +71,7 @@
 {{#if enableFilters}}
   <div class="ui icon buttons filter-active {{if filters "show-filter"}}">
     <button
+      type="button"
       class="ui button {{buttonClass}} {{if showFilters "active"}}"
       title={{t "components.olv-toolbar.filter-button-text"}}
       {{action "showFiltersTool"}}>
@@ -72,6 +80,7 @@
     {{#if filters}}
       <div class="or" data-text="&bull;"></div>
       <button
+        type="button"
         class="ui button removeFilter-button {{buttonClass}}"
         title={{t "components.olv-toolbar.remove-filter-button-text"}}
         {{action resetFilters}}>
@@ -88,12 +97,14 @@
       value=filterByAnyMatchText key-down="keyDownFilterAction"
     }}</div>
     <button
+      type="button"
       class="ui {{buttonClass}} icon button search-button"
       title={{t "components.olv-toolbar.search-button-text"}}
       {{action "filterByAnyMatch"}}>
         <i class="search icon"></i>
     </button>
     <button
+      type="button"
       class="ui {{buttonClass}} icon button clear-search-button"
       title={{t "components.olv-toolbar.clear-search-button-text"}}
       {{action "removeFilter"}}>
@@ -104,6 +115,7 @@
 {{#if exportExcelButton}}
   <div class="ui buttons export-config">
     <button
+      type="button"
       class="ui button icon export-button {{buttonClass}}"
       title={{t "components.olv-toolbar.export-excel-button-text"}}
       {{action "showExportDialog"}}>
@@ -118,6 +130,7 @@
 {{#if colsConfigButton}}
   <div class="ui buttons cols-config">
     <button
+      type="button"
       class="ui icon button config-button{{if colsSettingsItems " settings-enabled" ""}}"
       title={{t "components.colsconfig-dialog-content.title"}}
       {{action "showConfigDialog"}}>
@@ -134,6 +147,7 @@
 {{#if advLimitButton}}
   <div class="ui buttons adv-limit-config">
     <button
+      type="button"
       class="ui icon button adv-limit-button"
       title={{t "components.advlimit-dialog-content.title"}}
       {{action "showAdvLimitDialog"}}>
@@ -149,6 +163,7 @@
 {{/if}}
 {{#each customButtons as |customButton|}}
   <button
+    type="button"
     class="ui {{if customButton.buttonClasses customButton.buttonClasses}} button"
     title={{if customButton.buttonTitle customButton.buttonTitle}}
     disabled={{customButton.disabled}}
@@ -170,6 +185,7 @@
   </div>
   <div class="center aligned ui grid">
   <button
+    type="button"
     class="ui button icon olv-toolbar-info-modal-dialog-copy-button"
     title={{t "components.olv-toolbar.copy"}}
     {{action "copyJSONContent"}}>

@@ -695,6 +695,7 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     box-shadow: none;
 }
 
+.ui.icon.basic.button:hover i.icon:before,
 .ui.icon.tiny.button:hover i.icon.chevron.down:before {
     color: @white;
 }

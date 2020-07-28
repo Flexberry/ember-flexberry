@@ -146,19 +146,48 @@ option {
         font-size: 16px;
         font-weight: bold;
     }
-    .mobile & .ui.button:first-child {
+    .mobile & .colsconfig-actions .ui.button:first-child {
         margin-left: 0;
     }
 }
 
-@media only screen and (max-width: 767px){
+.flexberry-colsconfig .fields.object-list-view-filters > .field {
+    &:nth-child(2) {
+        max-width: @filterСonditionWidth;
+    }
+}
+
+.ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters {
+    margin-bottom: 1em;
+
+    > .field {
+        width: @oneWide;
+    }
+    .button {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: @largestMobileScreen) {
+    .ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters > .field {
+        &:nth-child(1){
+            width: @filterMobilePropWidth;
+        }
+        &:nth-child(2),
+        &:nth-child(3) {
+            order: 1;
+        }
+    }
+
     .ui.form .two.fields.unstackable > .field {
         width: 50% !important;
     }
+    .ui.form .flexberry-colsconfig .fields.object-list-view-filters,
     .ui.form .fields.unstackable {
         margin: 0 -0.5em;
-    }
-    .ui.form .fields.unstackable > .field {
-        padding: 0 0.5em;
+        > .field {
+            padding: 0 0.5em;
+        }
     }
 }

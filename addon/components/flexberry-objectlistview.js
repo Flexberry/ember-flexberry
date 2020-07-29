@@ -1275,8 +1275,9 @@ export default FlexberryBaseComponent.extend({
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
-      if (searchPageNumber)
+      if (searchPageNumber) {
         this.send('gotoPage', action, searchPageNumber, componentName);
+      }
     }
   },
 

@@ -140,6 +140,7 @@ export default FlexberryObjectlistview.extend({
     @default true
   */
   columnsWidthAutoresize: true,
+
   /**
     Array of objects corresponding to list of pages.
 

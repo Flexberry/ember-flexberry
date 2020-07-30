@@ -33,6 +33,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Name of action to send out, action triggered by click on user button.
+
     @property itemButtonAction
     @type String
     @default 'itemButtonAction'
@@ -132,16 +133,14 @@ export default FlexberryBaseComponent.extend({
   actions: {
     /**
       Action for custom button.
+
       @method actions.itemButtonAction
-      @public
       @param {Function|String} action The action or name of action.
     */
     itemButtonAction(action) {
       let actionType = typeof action;
       if (actionType === 'function') {
-        action(this.item.title);
-      } else if (actionType === 'string') {
-        this.sendAction('itemButtonAction', action);
+        action(this.get('item'));
       } else {
         throw new Error('Unsupported action type for custom buttons.');
       }

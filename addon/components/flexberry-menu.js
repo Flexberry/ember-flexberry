@@ -29,6 +29,17 @@ import FlexberryBaseComponent from './flexberry-base-component';
         icon: 'trash icon',
         title: 'Delete',
       }],
+    }, {
+      title: 'Item',
+      buttons: [{
+        title: 'edit',
+        buttonClasses: 'icon',
+        iconClass: 'edit icon',
+        disabled: false,
+        buttonAction: () => {
+          window.alert('clicked edit button');
+        }
+      }]
     }],
     ...
     actions: {
@@ -260,21 +271,5 @@ export default FlexberryBaseComponent.extend({
   */
   _getActionForMenu(collapseMenuOnItemClick) {
     return collapseMenuOnItemClick ? 'activate' : 'nothing';
-  },
-
-  actions: {
-    /**
-      Handler to get user button's actions and send action to corresponding controllers's handler.
-      @method actions.customButtonAction
-      @public
-      @param {String} actionName The name of action
-    */
-    itemButtonAction(actionName, item) {
-      if (!actionName) {
-        throw new Error('No handler for custom button of flexberry-menu item was found.');
-      }
-
-      this.get(actionName)(item);
-    },
   }
 });

@@ -224,7 +224,8 @@ export default FlexberryObjectlistview.extend({
         sortAscending: column.sortAscending
       });
     });
-    columns = columns.sort((a, b) => a.sortNumber - b.sortNumber);
+
+    columns.sortBy('sortNumber');
 
     return columns;
   }),

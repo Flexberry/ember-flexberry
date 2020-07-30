@@ -149,11 +149,10 @@ export default FlexberryObjectlistview.extend({
     - **isCurrent** - Page is current.
     - **isEllipsis** - If `true` this page not showing in list.
 
-    @property _pages
+    @property mobilePages
     @type Array
     @readOnly
   */
-
   mobilePages: Ember.computed('pages', function() {
     let mobilePages = [];
     let pages = this.get('pages');

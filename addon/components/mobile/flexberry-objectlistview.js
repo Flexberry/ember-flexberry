@@ -207,6 +207,7 @@ export default FlexberryObjectlistview.extend({
   /*
     Convert array of object sorting to array.
 
+    @private
     @property _currecntSortingArray
     @type Array
     @readOnly

@@ -214,7 +214,7 @@ export default FlexberryObjectlistview.extend({
   */
   _currecntSortingArray: Ember.computed('sorting',  function() {
     let sorting = this.get('sorting');
-    let sortingKeys = Object.keys(this.get('sorting'));
+    let sortingKeys = Object.keys(sorting);
     let columns = Ember.A();
     sortingKeys.forEach(key => {
       let column = sorting[key];

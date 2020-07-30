@@ -187,7 +187,7 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  _allPages: Ember.computed('pages', function() {
+  _allPages: Ember.computed('mobilePages', function() {
     let allPages = [];
     let mobilePagesNumbers = Ember.A();
     let mobilePages = this.get('mobilePages');

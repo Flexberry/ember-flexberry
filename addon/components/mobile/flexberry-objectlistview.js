@@ -182,6 +182,7 @@ export default FlexberryObjectlistview.extend({
   /**
     Array of pages without current.
 
+    @private
     @property _allPages
     @type Array
     @readOnly

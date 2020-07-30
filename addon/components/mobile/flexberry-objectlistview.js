@@ -282,7 +282,7 @@ export default FlexberryObjectlistview.extend({
   didRender: function() {
     this._super(...arguments);
     let _this = this;
-    let selectPageDropdown = Ember.$('.page-select-drodpown');
+    let selectPageDropdown = this.$('.page-select-drodpown');
     selectPageDropdown.dropdown({
       onChange: function (val) {
         if (val !== undefined) {

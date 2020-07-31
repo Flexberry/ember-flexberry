@@ -157,7 +157,7 @@ export default FlexberryObjectlistview.extend({
     let mobilePages = Ember.A();
     let pages = this.get('pages');
     let currentPageNumber = pages.find(page => page.isCurrent).number;
-    let lastPageNumber = pages[pages.length-1].number;
+    let lastPageNumber = pages[pages.length - 1].number;
 
     for (let i = 1; i <= lastPageNumber; i++) {
       let isShow;
@@ -168,7 +168,7 @@ export default FlexberryObjectlistview.extend({
         isShow = currentPageNumber - 1 <= i && i <= currentPageNumber + 1;
       }
 
-      let page = { 
+      let page = {
         isCurrent: i === currentPageNumber,
         isShow: isShow,
         number: i
@@ -258,7 +258,7 @@ export default FlexberryObjectlistview.extend({
 
   didRender: function() {
     this._super(...arguments);
-    let _this = this;
+
     let selectPageDropdown = this.$('.page-select-drodpown');
     selectPageDropdown.dropdown();
   },

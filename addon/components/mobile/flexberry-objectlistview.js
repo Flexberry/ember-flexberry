@@ -146,62 +146,38 @@ export default FlexberryObjectlistview.extend({
 
     Each page is presented as object with following properties:
     - **number** - Number of page.
-    - **isCurrent** - Page is current.
-    - **isEllipsis** - If `true` this page not showing in list.
+    - **isCurrent** - If `true` this page is current.
+    - **isShow** - If `true` this page showing in pages list.
 
     @property mobilePages
     @type Array
     @readOnly
   */
   mobilePages: Ember.computed('pages', function() {
-    let mobilePages = [];
+    let mobilePages = Ember.A();
     let pages = this.get('pages');
     let currentPageNumber = pages.find(page => page.isCurrent).number;
+    let lastPageNumber = pages[pages.length-1].number;
 
-    // Rebuilding pages for mobile version.
-    switch (currentPageNumber) {
-      case 1:
-      case 2:
-        mobilePages.push(pages[0], pages[1], pages[2]);
-        break;
-      case 3:
-        mobilePages.push(pages[1], pages[2], pages[3]);
-        break;
-      case pages[pages.length - 2].number:
-      case pages[pages.length - 1].number:
-        mobilePages.push(pages[pages.length - 3], pages[pages.length - 2], pages[pages.length - 1]);
-        break;
-      default:
-        mobilePages.push(pages[2], pages[3], pages[4]);
-        break;
+    for (let i = 1; i <= lastPageNumber; i++) {
+      let isShow;
+
+      if (currentPageNumber === 1 || currentPageNumber === lastPageNumber) {
+        isShow  = currentPageNumber === 1 ? i <= 3 : i >= lastPageNumber - 2;
+      } else {
+        isShow = currentPageNumber - 1 <= i && i <= currentPageNumber + 1;
+      }
+
+      let page = { 
+        isCurrent: i === currentPageNumber,
+        isShow: isShow,
+        number: i
+      };
+
+      mobilePages.pushObject(page);
     }
 
     return mobilePages;
-  }),
-
-  /**
-    Array of pages without current.
-
-    @private
-    @property _allPages
-    @type Array
-    @readOnly
-  */
-  _allPages: Ember.computed('mobilePages', function() {
-    let allPages = [];
-    let mobilePagesNumbers = Ember.A();
-    let mobilePages = this.get('mobilePages');
-    mobilePages.forEach((page) => {
-      mobilePagesNumbers.push(page.number);
-    });
-
-    for (let i = 1; i <=  this.get('recordsTotalCount'); i++) {
-      if (!mobilePagesNumbers.contains(i)) {
-        allPages[i] = i;
-      }
-    }
-
-    return allPages;
   }),
 
   /*
@@ -284,13 +260,7 @@ export default FlexberryObjectlistview.extend({
     this._super(...arguments);
     let _this = this;
     let selectPageDropdown = this.$('.page-select-drodpown');
-    selectPageDropdown.dropdown({
-      onChange: function (val) {
-        if (val !== undefined) {
-          _this.get('currentController').send('gotoPage', val);
-        }
-      }
-    });
+    selectPageDropdown.dropdown();
   },
 
   actions: {

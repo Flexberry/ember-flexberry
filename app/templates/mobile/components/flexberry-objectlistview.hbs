@@ -59,10 +59,12 @@
           {{/each}}
         {{else}}
           {{#each mobilePages as |page|}}
-            {{#if page.isCurrent}}
-              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-            {{else}}
-              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{#if page.isShow}}
+              {{#if page.isCurrent}}
+                <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+              {{else}}
+                <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+              {{/if}}
             {{/if}}
           {{/each}}
           <div class="ui page-select-drodpown floating search dropdown icon active button">
@@ -73,9 +75,11 @@
                 <input type="text" placeholder={{t "components.flexberry-objectlistview.pages-number"}}>
               </div>
               <div class="scrolling menu">
-                <div class="item disabled"  data-value="">{{recordsTotalCount}} {{t "components.flexberry-objectlistview.pages"}}</div>
-                {{#each _allPages as |value|}}
-                    <div class="item" data-value="{{value}}">{{value}}</div>
+                <div class="item disabled"  data-value="">{{mobilePages.length}} {{t "components.flexberry-objectlistview.pages"}}</div>
+                {{#each mobilePages as |page|}}
+                  {{#if (not page.isShow)}}
+                    <div class="item" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</div>
+                  {{/if}}
                 {{/each}}
               </div>
             </div>

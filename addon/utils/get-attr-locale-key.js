@@ -1,7 +1,8 @@
 export default function getAttrLocaleKey(mainModelName, projectionName, bindingPath, nameRelationship) {
+  let newBindingPath = bindingPath;
   if (nameRelationship) {
-    bindingPath = `${nameRelationship}.${bindingPath}`;
+    newBindingPath = `${nameRelationship}.${bindingPath}`;
   }
 
-  return `models.${mainModelName}.projections.${projectionName}.${bindingPath}.__caption__`;
+  return `models.${mainModelName}.projections.${projectionName}.${newBindingPath}.__caption__`;
 }

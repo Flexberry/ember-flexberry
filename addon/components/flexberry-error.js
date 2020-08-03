@@ -66,6 +66,15 @@ export default Ember.Component.extend({
   */
   modalContext: '.pusher:first',
 
+   /**
+    Flag defining whether or not showing close button.
+
+    @property modalContext
+    @type Boolean
+    @default true
+  */
+  useCloseButton : true,
+
   /**
     Error for displaying.
 

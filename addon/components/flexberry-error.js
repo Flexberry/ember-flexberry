@@ -68,8 +68,9 @@ export default Ember.Component.extend({
 
   /**
     Flag defining whether or not showing close button.
+    Rewrites {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}.
 
-    @property modalContext
+    @property useCloseButton
     @type Boolean
     @default true
   */

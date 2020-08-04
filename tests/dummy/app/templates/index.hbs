@@ -4,7 +4,7 @@
       <div class="eight wide middle computer four wide large screen four wide widescreen column need-pd-computer">
         <div class="ui card">
           <div class="content">
-            <i class="edit outline icon card-icon" ></i>
+            <i class="paperclip icon card-icon" ></i>
             <div class="header">{{t "forms.index.components"}}</div>
             <div class="description">
               <ul>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="sixteen wide middle computer eight wide large screen eight wide widescreen column">
-        <div class="ui two column grid">
+        <div class="ui two column grid stackable">
           <div class="column">
             {{#link-to 'ember-flexberry-dummy-application-user-list' class='ui card'}}
               <div class="content">
@@ -79,7 +79,7 @@
             <form class="ui form">
               {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.field-placeholder")}}
               {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.date-field-placeholder")}}
-              {{flexberry-button class="primary large" caption=(t "forms.index.search.button-caption")}}
+              <button class="ui primary large button">{{t "forms.index.search.button-caption"}}</button>
               {{flexberry-checkbox label=(t "forms.index.search.checkbox-label")}}
             </form>
           </div>

@@ -61,6 +61,7 @@ test('ember-grupedit element by default test', function(assert) {
           componentName=componentName
           modelProjection=proj.attributes.details
           searchForContentChange=searchForContentChange
+          showAsteriskInRow=true
         }}`);
 
     // Add record.

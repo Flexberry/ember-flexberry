@@ -39,29 +39,32 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.name
+      class=(if (v-get validationObject "name" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "eMail" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.eMail
+      class=(if (v-get validationObject "eMail" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.eMail-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "eMail" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "eMail" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "birthday" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.birthday-caption"}}</label>
     {{flexberry-simpledatetime
       type="date"
       value=model.birthday
+      class=(if (v-get validationObject "birthday" "isInvalid") "error")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "birthday" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "birthday" "message")}}
   </div>
 </form>

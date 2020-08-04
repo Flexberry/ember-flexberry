@@ -13,7 +13,7 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = $($('.field.error')[1]);
+    let $validationField = $($('.field')[2]);
     let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
     let $validationFlexberryTextboxInner = $validationFlexberryTextbox.children('input');
     let $validationFlexberryErrorLable = $validationField.children('.label');

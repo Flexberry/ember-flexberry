@@ -114,6 +114,7 @@ export default Component.extend({
 
   /**
     Flag indicates whether to side page or usually mode.
+
     @property useSidePageMode
     @type Boolean
     @default false
@@ -179,7 +180,7 @@ export default Component.extend({
           this.sendAction('created', this.$()); //TODO
           /* eslint-enable ember/closure-actions */
         });
-      },
+      }
     }, this.get('settings'));
 
     this.$().modal(settings).modal('show');

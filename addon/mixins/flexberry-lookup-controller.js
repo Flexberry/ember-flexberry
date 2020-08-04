@@ -448,9 +448,12 @@ export default Mixin.create(ReloadListMixin, {
       hierarchyPaging: reloadData.hierarchyPaging
     };
 
-    const modalDialogSettings = merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings);
-
     controller.clear(reloadData.initialLoad);
+
+    const modalDialogSettings = controller.get('modalDialogSettings') || merge(merge({}, reloadData.modalDialogSettings), {
+      settings: merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings.settings),
+    });
+
     controller.setProperties({
       modelProjection: projection,
       title: reloadData.title,

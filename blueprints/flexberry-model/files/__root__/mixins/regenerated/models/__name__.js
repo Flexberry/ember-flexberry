@@ -10,7 +10,11 @@ import { validator } from 'ember-cp-validations';<%
 
 if (projections) { %>
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';<%
-}%>
+}
+
+for (let enumName in enumImports) { %>
+import <%= enumName %> from '../../../enums/<%= enumImports[enumName] %>';<%
+} %>
 
 export let Model = Mixin.create({<%= model %>});
 

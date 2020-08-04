@@ -1,14 +1,3 @@
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   {{#if singleColumnHeaderTitle}}
     <thead>
@@ -25,7 +14,7 @@
   {{/if}}
   <tbody>
     {{#if showFilters}}
-      <tr>
+      <tr onkeydown={{action "applyFiltersByEnter"}}>
         {{#if showHelperColumn}}
           <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
             <div class="object-list-view-helper-column-cell"></div>
@@ -34,15 +23,17 @@
         <td class="overflowed-cell">
           {{#each columns as |column|}}
             <div class="inline fields filter">
-              <label>{{column.header}}:</label>
+              <label>{{if column.keyLocale (t column.keyLocale) column.header}}:</label>
               {{#if column.filter.conditions}}
                 <div class="filter-operation">
-                  {{component "flexberry-dropdown"
+                  {{flexberry-dropdown
+                    displayCaptions=(not (is-array column.filter.conditions))
                     value=column.filter.condition
                     items=column.filter.conditions
                     class="compact fluid"
-                    placeholder=""
+                    placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false
+                    onChange=(action "filterConditionChanged" column.filter)
                   }}
                 </div>
               {{/if}}
@@ -50,6 +41,10 @@
                 <div class="filter-value">
                   {{component column.filter.component.name
                     value=column.filter.pattern
+                    readonly=(or
+                      (eq column.filter.condition "empty")
+                      (eq column.filter.condition "nempty")
+                    )
                     dynamicProperties=column.filter.component.properties
                   }}
                 </div>
@@ -87,6 +82,7 @@
           showEditButtonInRow=showEditButtonInRow
           showPrototypeButtonInRow=showPrototypeButtonInRow
           inExpandMode=inExpandMode
+          isParentRecordPropertyName=isParentRecordPropertyName
           hierarchicalIndent=hierarchicalIndent
           inHierarchicalMode=inHierarchicalMode
           singleColumnCellComponent=singleColumnCellComponent

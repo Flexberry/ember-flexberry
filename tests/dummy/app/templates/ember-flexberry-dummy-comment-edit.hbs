@@ -22,34 +22,38 @@
       {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
-  <div class="field {{if (v-get validationObject "text" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.text
+      class=(if (v-get validationObject "text" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-comment-edit.text-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "text" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "votes" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.votes
+      class=(if (v-get validationObject "votes" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "votes" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "votes" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
+      class=(if (v-get validationObject "moderated" "isInvalid") "error")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "moderated" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "author" "isInvalid") "error"}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
     {{flexberry-lookup
       value=model.author
+      class=(if (v-get validationObject "author" "isInvalid") "error")
       relatedModel=model
       relationName="author"
       projection="ApplicationUserL"
@@ -59,7 +63,7 @@
       remove=(action "removeLookupValue")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>

@@ -39,36 +39,40 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.name
+      class=(if (v-get validationObject "name" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "vK" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.vK
+      class=(if (v-get validationObject "vK" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.vK-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "vK" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "vK" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "facebook" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.facebook
+      class=(if (v-get validationObject "facebook" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.facebook-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "facebook" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "facebook" "message")}}
   </div>
-  <div class="field {{if (v-get validationObject "twitter" "isInvalid") "error"}}">
+  <div class="field">
     {{flexberry-field
       value=model.twitter
+      class=(if (v-get validationObject "twitter" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.twitter-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "twitter" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject "twitter" "message")}}
   </div>
 </form>

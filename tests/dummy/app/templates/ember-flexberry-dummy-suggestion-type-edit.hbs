@@ -24,19 +24,21 @@
   </div>
   <div class="ui one column grid stackable">
     <div class="column">
-      <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
+      <div class="field">
         {{flexberry-field
           value=model.name
+          class=(if (v-get validationObject "name" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
+        {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
       </div>
       <div class="two fields">
-        <div class="field {{if (v-get validationObject "parent" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
           {{flexberry-lookup
             value=model.parent
+            class=(if (v-get validationObject "parent" "isInvalid") "error")
             relatedModel=model
             relationName="parent"
             projection="SuggestionTypeL"
@@ -46,16 +48,17 @@
             remove=(action "removeLookupValue")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "parent" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "parent" "message")}}
         </div>
 
-        <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
+        <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
           {{flexberry-checkbox
             value=model.moderated
+            class=(if (v-get validationObject "moderated" "isInvalid") "error")
             readonly=readonly
           }}
-          {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
+          {{flexberry-validationmessage error=(v-get validationObject "moderated" "message")}}
         </div>
       </div>
     </div>

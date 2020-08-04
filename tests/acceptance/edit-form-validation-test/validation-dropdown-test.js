@@ -13,7 +13,7 @@ executeTest('check operation dropdown', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = $($('.field.error')[5]);
+    let $validationField = $($('.field')[6]);
     let $validationFlexberryDropdown = $validationField.children('.flexberry-dropdown');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 

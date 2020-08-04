@@ -1,28 +1,58 @@
-<form id="form1">
-  <div class="login-form flexberry-container">
-    <div class="login-form-inner">
-      <div class="ui {{if loginIsInProcess "active"}} inverted dimmer">
-        <div class="ui loader"></div>
-      </div>
-      <h3 class="ui header">{{t "forms.login-form.header"}}</h3>
-      <a class="sign-up" href="#">{{t "forms.login-form.sign-up-caption"}}</a>
-      {{flexberry-field
-        label=(t "forms.login-form.enter-login-caption")
-        placeholder=(t "forms.login-form.enter-login-caption")
-        class="labeled-inside large"
-      }}
-      {{flexberry-field
-        label=(t "forms.login-form.enter-password-caption")
-        placeholder=(t "forms.login-form.enter-password-caption")
-        class="labeled-inside large"
-        type="password"
-      }}
-      {{flexberry-button
-        class="primary huge fluid"
-        caption=(t "forms.login-form.login-button-caption")
-        click=(action "onLoginFormSubmit")
-      }}
-      <a class="reset-password" href="#">{{t "forms.login-form.reset-password-caption"}}</a>
+<div class="ui center aligned grid login-form flexberry-container">
+  <div class="row">
+    <div class="middle aligned column login-form-inner">
+      <form class="ui form segment flexberry-vertical-form">
+        <div class="ui {{if loginIsInProcess "active"}} inverted dimmer">
+          <div class="ui loader"></div>
+        </div>
+        <h3 class="ui header">{{t "forms.login-form.header"}}</h3>
+        <div class="field">
+          <a class="small text" href="#">{{t "forms.login-form.sign-up-caption"}}</a>
+        </div>
+        {{flexberry-field
+          label=(t "forms.login-form.enter-login-caption")
+          placeholder=(t "forms.login-form.enter-login-caption")
+          class="labeled-inside large"
+        }}
+        {{flexberry-field
+          label=(t "forms.login-form.enter-password-caption")
+          placeholder=(t "forms.login-form.enter-password-caption")
+          class="labeled-inside large"
+          type="password"
+        }}
+        <div class="field">
+          {{flexberry-button
+            tagName="button"
+            class="primary large fluid"
+            caption=(t "forms.login-form.login-button-caption")
+            click=(action "onLoginFormSubmit")
+          }}
+        </div>
+        <div class="field small secondary text">
+          {{t "forms.login-form.login-using-caption"}}
+        </div>
+        <div class="field">
+          {{#flexberry-button
+            tagName="button"
+            class="img"
+          }}
+            <img src="assets/images/gu.svg" alt="">
+          {{/flexberry-button}}
+          {{#flexberry-button
+            tagName="button"
+            class="img"
+          }}
+            <img src="assets/images/rsa.svg" alt="">
+          {{/flexberry-button}}
+        </div>
+        <a class="small text" href="#">{{t "forms.login-form.reset-password-caption"}}</a>
+      </form>
     </div>
   </div>
-</form>
+  <div class="row">
+    <div class="bottom aligned column small secondary text">
+      {{t "forms.support-form.contacts-caption"}}<br>
+      <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
+    </div>
+  </div>
+</div>

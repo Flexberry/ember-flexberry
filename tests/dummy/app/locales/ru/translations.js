@@ -587,7 +587,6 @@ $.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
@@ -621,6 +620,13 @@ $.extend(true, translations, {
         'cancel-button-caption': 'Отмена',
         'delete-at-listform-question-caption': 'Вы уверены, что хотите удалить выбранные записи?',
         'delete-at-editform-question-caption': 'Вы уверены, что хотите удалить запись?',
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
       },
 
       'footer': {
@@ -1031,6 +1037,7 @@ $.extend(true, translations, {
       'sign-up-caption': 'Или зарегистрироваться',
       'enter-login-caption': 'Введите логин',
       'enter-password-caption': 'Введите пароль',
+      'login-using-caption': 'Войти в систему с помощью',
       'reset-password-caption': 'Забыли пароль?',
       'login-button-caption': 'Войти'
     },
@@ -1266,7 +1273,8 @@ $.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

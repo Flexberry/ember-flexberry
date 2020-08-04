@@ -1,5 +1,6 @@
 {{#if createNewButton}}
   <button
+    type="button"
     class="ui ui-add {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.add-button-text"}}
     disabled={{if readonly true null}} {{action 'addRow'}}>
@@ -8,6 +9,7 @@
 {{/if}}
 {{#if deleteButton}}
   <button
+    type="button"
     class="ui ui-delete {{unless _hasSelectedRows "disabled"}} {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.delete-button-text"}}
     disabled={{or (not _hasSelectedRows) readonly}} {{action 'deleteRows'}}>
@@ -16,6 +18,7 @@
 {{/if}}
 {{#if (and defaultSettingsButton (not orderedProperty))}}
   <button
+    type="button"
     class="ui ui-clear-settings {{buttonClass}} button"
     title={{t "components.groupedit-toolbar.clear-settings-button-text"}}
     {{action 'setDefaultSettings'}}>
@@ -25,6 +28,7 @@
 
 {{#if arrowsButtons}}
   <button
+    type="button"
     class="ui ui-move-up {{buttonClass}} {{if (or (not _hasSelectedRows) _disableMoveUpButton readonly) "disabled"}} button"
     title={{t "components.groupedit-toolbar.move-up-button-text"}}
     disabled={{or (not _hasSelectedRows) _disableMoveUpButton readonly}}
@@ -33,6 +37,7 @@
   </button>
 
   <button
+    type="button"
     class="ui ui-move-down {{buttonClass}} {{if (or (not _hasSelectedRows) _disableMoveDownButton readonly) "disabled"}} button"
     title={{t "components.groupedit-toolbar.move-down-button-text"}}
     disabled={{or (not _hasSelectedRows) _disableMoveDownButton readonly}}
@@ -43,7 +48,8 @@
 
 {{#each customButtons as |customButton|}}
   <button
-    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} {{if customButton.iconClasses " icon" ""}} custom button"
+    type="button"
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses}} {{if customButton.iconClasses "icon"}} custom button"
     title={{if customButton.buttonTitle customButton.buttonTitle}}
     disabled={{customButton.disabled}}
     {{action "customButtonAction" customButton.buttonAction}}>

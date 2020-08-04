@@ -110,6 +110,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
     @example
       ```
       {
@@ -117,10 +118,12 @@ export default FlexberryBaseComponent.extend({
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
         buttonTitle: '...', // Button title.
-		    iconClasses: '' // Css classes for icon.
+        iconClasses: '' // Css classes for icon.
+        disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
       }
       ```
-    @property customButtonsArray
+
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -339,13 +342,32 @@ export default FlexberryBaseComponent.extend({
   showValidationMessagesInRow: true,
 
   /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
     Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryGroupedit'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryGroupedit',
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -683,7 +705,7 @@ export default FlexberryBaseComponent.extend({
     for (let i = start + 1; i <= end; i++) {
       for (let j = i; j > start && condition(j); j--) {
         let record = recordsSort.objectAt(j);
-        recordsSort.replace(j, 1, [recordsSort.objectAt(j - 1)]);
+        recordsSort.removeAt(j);
         recordsSort.insertAt(j - 1, record);
       }
     }
@@ -698,6 +720,10 @@ export default FlexberryBaseComponent.extend({
       componentName: undefined,
       componentProperties: null
     });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showAsteriskInRow', defaultValue: true });
   },
 
   didInsertElement() {
@@ -716,30 +742,37 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete row.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-groupedit
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
-        confirmDeleteRow() {
-          return confirm('You sure?');
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: `Delete an object with the ID '${record.get('id')}'?`,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action "confirmDeleteRow")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRow
-    @return {Boolean} If `true` then delete row, else cancel.
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRow: undefined,
 
@@ -747,30 +780,36 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete rows.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-groupedit
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
         confirmDeleteRows() {
-          return confirm('You sure?');
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: 'Delete all selected records?',
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action "confirmDeleteRows")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRows
-    @return {Boolean} If `true` then delete selected rows, else cancel.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRows: undefined,
 

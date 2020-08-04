@@ -1,9 +1,9 @@
 {
   "name": "ember-flexberry",
-  "version": "3.4.0-alpha.0",
+  "version": "3.5.0-beta.0",
   "dependencies": {
     "jquery-mockjax": "~2.2.1",
-    "semantic-ui": "2.2.14",
+    "semantic-ui": "2.4.1",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "seiyria-bootstrap-slider": "6.0.6",

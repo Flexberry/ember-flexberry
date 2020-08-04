@@ -3,13 +3,11 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import { set } from '@ember/object';
+
+import { predicateForFilter } from 'ember-flexberry/utils/filter';
+
 import Condition from 'ember-flexberry-data/query/condition';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { DatePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
-import { isNone } from '@ember/utils';
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -94,7 +92,7 @@ export default Mixin.create({
   filterPredicate: null,
 
   /**
-    Return predicate to filter through.
+    Builds predicate for filter.
 
     @example
       ```javascript
@@ -114,45 +112,7 @@ export default Mixin.create({
     @param {Object} filter Object (`{ name, condition, pattern }`) with parameters for filter.
     @return {BasePredicate|null} Predicate to filter through.
   */
-  predicateForFilter(filter) {
-    if (filter.condition) {
-      switch (filter.type) {
-        case 'string':
-          if (filter.condition === 'like') {
-            return (!isNone(filter.pattern)) ?
-              new StringPredicate(filter.name).contains(filter.pattern) :
-              new StringPredicate(filter.name).contains('');
-          } else {
-            return (!isNone(filter.pattern)) ?
-              new SimplePredicate(filter.name, filter.condition, filter.pattern) :
-              new SimplePredicate(filter.name, filter.condition, null);
-          }
-        case 'boolean':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
-        case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
-        case 'date':
-          return filter.pattern ?
-            new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
-            new SimplePredicate(filter.name, filter.condition, null);
-        default:
-          return null;
-      }
-    } else if (filter.pattern) {
-      switch (filter.type) {
-        case 'string':
-          set(filter, 'condition', 'like');
-          return new StringPredicate(filter.name).contains(filter.pattern);
-        case 'date':
-          set(filter, 'condition', 'eq');
-          return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
-        default:
-          return null;
-      }
-    }
-
-    return null;
-  },
+  predicateForFilter: predicateForFilter,
 
   /**
     Return predicate for `QueryBuilder` or `undefined`.

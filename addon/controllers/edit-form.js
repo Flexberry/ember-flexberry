@@ -417,69 +417,72 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
-    this.onSaveActionStarted();
-    this.get('appState').loading();
+    return this.validate().then(() => {
+      this.onSaveActionStarted();
+      this.get('appState').loading();
 
-    const afterSaveModelFunction = () => {
-      this.get('appState').success();
-      this.onSaveActionFulfilled();
-      if (close) {
-        this.get('appState').reset();
-        this.close(skipTransition);
-      } else if (!skipTransition) {
-        const routeName = this.get('routeName');
-        if (routeName.indexOf('.new') > 0) {
-          const qpars = {};
-          const queryParams = this.get('queryParams');
-          queryParams.forEach(function(item) {
-            qpars[item] = this.get(item);
-          }, this);
-          let transitionQuery = {};
-          transitionQuery.queryParams = qpars;
-          transitionQuery.queryParams.recordAdded = true;
-          const parentParameters = {
-            parentRoute: this.get('parentRoute'),
-            parentRouteRecordId: this.get('parentRouteRecordId')
-          };
-          transitionQuery.queryParams.parentParameters = parentParameters;
-          this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+      const afterSaveModelFunction = () => {
+        this.get('appState').success();
+        this.onSaveActionFulfilled();
+        if (close) {
+          this.get('appState').reset();
+          this.close(skipTransition);
+        } else if (!skipTransition) {
+          const routeName = this.get('routeName');
+          if (routeName.indexOf('.new') > 0) {
+            const qpars = {};
+            const queryParams = this.get('queryParams');
+            queryParams.forEach(function(item) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            transitionQuery.queryParams.recordAdded = true;
+            transitionQuery.queryParams.parentRoute = this.get('parentRoute');
+            transitionQuery.queryParams.parentRouteRecordId = this.get('parentRouteRecordId');
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+          }
         }
-      }
-    };
+      };
 
-    let savePromise;
-    const model = this.get('model');
+      let savePromise;
+      const model = this.get('model');
 
-    // This is possible when using offline mode.
-    const agragatorModel = getCurrentAgregator.call(this);
-    if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-      savePromise = this._saveHasManyRelationships(model).then((result) => {
-        const errors = A(result || []).filterBy('state', 'rejected');
-        if (!isEmpty(errors)) {
-          return reject(errors);
-        }
+      // This is possible when using offline mode.
+      const agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        savePromise = model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
+          const errors = A(result || []).filterBy('state', 'rejected');
+          if (!isEmpty(errors)) {
+            return reject(errors);
+          }
 
-        return agragatorModel.save();
-      });
-    } else {
-      const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
-      if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
-        savePromise = this.get('store').batchUpdate(unsavedModels);
+          return agragatorModel.save();
+        });
       } else {
-        savePromise = model.save();
+        const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
+        if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
+          savePromise = this.get('store').batchUpdate(unsavedModels);
+        } else {
+          savePromise = model.save();
+        }
       }
-    }
 
-    return savePromise.then(afterSaveModelFunction).catch((errorData) => {
+      return savePromise.then(afterSaveModelFunction).catch((errorData) => {
+        this.get('appState').error();
+        this.onSaveActionRejected(errorData);
+        return RSVP.reject(errorData);
+      }).finally((data) => {
+        this.onSaveActionAlways(data);
+      }).catch((errorData) => {
+        this.get('appState').error();
+        this.onSaveActionRejected(errorData);
+        return RSVP.reject(errorData);
+      });
+    }, (reason) => {
+      this.send('error', new Error(reason.get('message')));
       this.get('appState').error();
-      this.onSaveActionRejected(errorData);
-      return RSVP.reject(errorData);
-    }).finally((data) => {
-      this.onSaveActionAlways(data);
-    }).catch((errorData) => {
-      this.get('appState').error();
-      this.onSaveActionRejected(errorData);
-      return RSVP.reject(errorData);
+      return RSVP.reject(reason);
     });
   },
 

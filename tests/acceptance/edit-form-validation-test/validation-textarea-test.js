@@ -13,7 +13,7 @@ executeTest('check operation textarea', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = $($('.field.error')[3]);
+    let $validationField = $($('.field')[4]);
     let $validationFlexberryTextarea = $('.flexberry-textarea');
     let $validationFlexberryTextboxInner = $validationFlexberryTextarea.children('textarea');
     let $validationFlexberryErrorLable = $validationField.children('.label');

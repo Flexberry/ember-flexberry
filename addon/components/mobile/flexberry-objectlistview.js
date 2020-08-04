@@ -142,5 +142,24 @@ export default FlexberryObjectlistview.extend({
       componentName: 'object-list-view-single-column-cell',
       componentProperties: null
     });
-  }
+  },
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default true
+  */
+  columnsWidthAutoresize: true,
+
+  /**
+    Array CSS class names.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: ['mobile']
 });

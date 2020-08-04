@@ -4,14 +4,12 @@
   close="removeModalDialog"
   useOkButton=false
   useCloseButton=false
-  classNames="modal-support"
+  classNames="fullhight-mobile-modal support-modal"
   settings=(hash autofocus=false)
 }}
-  <div class="ui header">
-    <div style="color: #848E99; line-height: 20px; font-size:14px;">{{t "forms.support-form.contacts-caption"}}</div>
-  </div>
   <div class="content">
     <div class="ui form">
+      <div class="small secondary text field">{{t "forms.support-form.contacts-caption"}}</div>
       <div class="two fields">
         <div class="field">
           {{flexberry-field
@@ -37,13 +35,15 @@
           placeholder=(t "forms.support-form.enter-message-placeholder")
         }}
       </div>
+      <div class="field">
+        {{flexberry-file
+          uploadOnModelPreSave=false
+          showUploadButton=false
+          showDownloadButton=false}}
+      </div>
       <div class="two fields">
-        <div class="field" style="padding: 18px 24px 18px 11px">
-          <i class="icon-guideline-file" style="font-size: 16px; line-height: 24px; color: #0C49CD"></i>
-          <a style="font-size: 16px; line-height: 24px; color: #0C49CD">{{t "forms.support-form.attach-file-caption"}}</a>
-        </div>
         <div class="field">
-          <button class="ui button primary huge fluid" {{action 'hideModalSupport'}}>{{t "forms.support-form.send-button-caption"}}</button>
+          <button class="ui button primary large fluid" {{action 'hideModalSupport'}}>{{t "forms.support-form.send-button-caption"}}</button>
         </div>
       </div>
     </div>

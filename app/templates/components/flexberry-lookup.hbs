@@ -16,6 +16,7 @@
       class=(concat (concat "lookup-field " (if autocomplete "prompt")) (if (or readonly isBlocked) " disabled"))
       placeholder=placeholder
       value=displayValue
+      focusOut=(action "onInputFocusOut")
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
     {{#if showPreviewButton }}

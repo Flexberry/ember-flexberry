@@ -5,6 +5,7 @@ import { Projection } from 'ember-flexberry-data';
 var Model = Projection.Model.extend({
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
+  isParentRecord: DS.attr('boolean'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   parent: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -76,6 +77,7 @@ Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type
 Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type', {
   name: Projection.attr('Name'),
   moderated: Projection.attr('Moderated'),
+  isParentRecord: Projection.attr('IsParentRecord'),
   parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
     name: Projection.attr('Name', {
       hidden: true

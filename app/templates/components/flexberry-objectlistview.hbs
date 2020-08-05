@@ -130,6 +130,23 @@
         {{action "nextPage" this.attrs.nextPage}}>
       </button>
     </div>
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      {{input
+        type="number"
+        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+        value=searchPageValue
+        enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+      }}
+      {{#if searchPageValue}}
+        <button
+          type="button"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'primary'}} next-page-button small"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
+        </button>
+      {{/if}}
+    </div>
     <div class="right menu">
       {{#if showShowingEntries}}
         <div class="showing-entries">

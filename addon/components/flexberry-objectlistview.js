@@ -187,6 +187,35 @@ export default FlexberryBaseComponent.extend({
   defaultLeftPadding: 10,
 
   /**
+    Number page for search.
+
+    @property searchPageValue
+    @type Number
+  */
+  searchPageValue: undefined,
+
+  /**
+    Flag used for disabling searchPageButton.
+
+    @property searchPageButtonReadonly
+    @type Boolean
+  */
+  searchPageButtonReadonly: Ember.computed('searchPageValue', function() {
+    const searchPageValue = this.get('searchPageValue');
+    const searchPage = parseInt(searchPageValue, 10);
+    if (isNaN(searchPage)) {
+      return true;
+    }
+
+    const pages = Ember.A(this.get('pages'));
+    const firstPage = pages.get('firstObject.number');
+    const lastPage = pages.get('lastObject.number');
+    const currentPage = pages.findBy('isCurrent').number;
+
+    return searchPage < firstPage || searchPage > lastPage || searchPage === currentPage;
+  }),
+
+  /**
     Text to be displayed in table body, if content is not defined or empty.
 
     @property placeholder
@@ -1184,6 +1213,23 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+
+    /**
+      Action search and open page.
+
+      @method actions.searchPageButtonAction
+      @public
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
+    */
+    searchPageButtonAction(action, componentName) {
+      let searchPageValue = this.get('searchPageValue');
+      let searchPageNumber = parseInt(searchPageValue, 10);
+
+      if (searchPageNumber) {
+        this.send('gotoPage', action, searchPageNumber, componentName);
+      }
+    }
   },
 
   /**

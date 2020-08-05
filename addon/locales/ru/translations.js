@@ -117,8 +117,8 @@ export default {
         'entries': ' записей'
       },
       'without-sorting': 'Без сортировки',
-      'pages-number': '№ страницы',
-      'pages': 'страниц'
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {

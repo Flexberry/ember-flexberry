@@ -578,6 +578,9 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     text-overflow: @navbarSortingMobileTextOverflow;
 }
 
+.nav-bar .ui.input.nav-bar-search-page {
+    width: 100px !important;
+}
 
 /******************************************
       Positive/negative buttons section

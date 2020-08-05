@@ -116,8 +116,8 @@ export default {
         'entries': ' entries'
       },
       'without-sorting': 'Without sorting',
-      'pages-number': '№ page',
-      'pages': 'pages'
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {

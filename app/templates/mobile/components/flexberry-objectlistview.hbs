@@ -48,8 +48,8 @@
       {{mobileSortingSettingsCaption}}
     </button>
     <div class="right menu">
-      <div class="ui basic buttons">
-        {{#if (lte pages.length 4)}}
+      {{#if (lte pages.length 4)}}
+        <div class="ui basic buttons">
           {{#each pages as |page|}}
             {{#if page.isCurrent}}
               <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
@@ -57,7 +57,9 @@
               <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
             {{/if}}
           {{/each}}
-        {{else}}
+        </div>
+      {{else}}
+        <div class="ui basic buttons">
           {{#each mobilePages as |page|}}
             {{#if page.isShow}}
               {{#if page.isCurrent}}
@@ -67,24 +69,15 @@
               {{/if}}
             {{/if}}
           {{/each}}
-          <div class="ui page-select-drodpown floating search dropdown icon active button">
-            <i class="dropdown icon"></i>
-            <div class="menu visible">
-              <div class="ui icon search input">
-                <i class="search icon"></i>
-                <input type="text" placeholder={{t "components.flexberry-objectlistview.pages-number"}}>
-              </div>
-              <div class="scrolling menu">
-                <div class="item disabled"  data-value="">{{mobilePages.length}} {{t "components.flexberry-objectlistview.pages"}}</div>
-                {{#each mobilePages as |page|}}
-                  {{#if (not page.isShow)}}
-                    <div class="item" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</div>
-                  {{/if}}
-                {{/each}}
-              </div>
-            </div>
-          </div>
-        {{/if}}
+        </div>
+      {{/if}}
+      <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+        {{input
+          type="number"
+          placeholder=mobilePages.length
+          value=searchPageValue
+          enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+        }}
       </div>
     </div>
   </div>

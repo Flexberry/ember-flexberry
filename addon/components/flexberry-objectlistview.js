@@ -1218,7 +1218,6 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @public
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */

@@ -210,11 +210,12 @@ export default FlexberryObjectlistview.extend({
   /**
     Class icons for sorting.
 
-    @property mobileSortingSettingsIcon
+    @private
+    @property _mobileSortingSettingsIcon
     @type String
     @readOnly
   */
-  mobileSortingSettingsIcon: Ember.computed('sorting',  function() {
+  _mobileSortingSettingsIcon: Ember.computed('_currecntSortingArray',  function() {
     let icon = 'sort content descending';
     let firstColumn = this.get('_currecntSortingArray')[0];
 

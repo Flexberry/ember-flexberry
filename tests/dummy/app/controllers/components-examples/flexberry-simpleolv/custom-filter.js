@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/list-form';
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 export default ListFormController.extend({
   filterByAnyWord: false,
@@ -29,7 +30,8 @@ export default ListFormController.extend({
     return filterCondition;
   }),
 
-  customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
+  customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', 'i18n.locale', function() {
+    let i18n = this.get('i18n');
     return [{
       buttonName: 'filterByAnyWord',
       buttonAction: 'toggleFilterByAnyWord',
@@ -38,6 +40,9 @@ export default ListFormController.extend({
       buttonName: 'filterByAllWords',
       buttonAction: 'toggleFilterByAllWords',
       buttonClasses: this.get('filterByAllWords') ? 'positive' : '',
+    }, {
+      buttonName: i18n.t('forms.components-examples.flexberry-simpleolv.custom-filter.addObjects-button'),
+      buttonAction: 'addObjects'
     }];
   }),
 
@@ -54,6 +59,74 @@ export default ListFormController.extend({
       if (this.get('filterByAllWords')) {
         this.set('filterByAnyWord', false);
       }
+    },
+
+    addObjects() {
+      let store = this.get('store');
+
+      let user1 = store.createRecord('ember-flexberry-dummy-application-user', {
+        name: 'NameForTest',
+        eMail: 'ya@.test',
+        id: generateUniqueId()
+      });
+      user1.save();
+
+      let type1 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
+        name: 'typeForTest',
+        id: generateUniqueId()
+      });
+      type1.save();
+
+      let user2 = store.createRecord('ember-flexberry-dummy-application-user', {
+        name: 'Different NameForTest',
+        eMail: 'ti@.test',
+        id: generateUniqueId()
+      });
+      user2.save();
+
+      let type2 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
+        name: 'Another typeForTest',
+        id: generateUniqueId()
+      });
+      type2.save();
+
+      let newRecord1 = store.createRecord(this.get('modelName'), {
+        address: 'TestingAddress',
+        type: type1,
+        author: user1,
+        editor1: user2,
+        id: generateUniqueId()
+      });
+      newRecord1.save();
+
+      let newRecord2 = store.createRecord(this.get('modelName'), {
+        address: '',
+        type: type1,
+        author: user2,
+        editor1: user2,
+        id: generateUniqueId()
+      });
+      newRecord2.save();
+
+      let newRecord3 = store.createRecord(this.get('modelName'), {
+        address: 'new address',
+        type: type2,
+        author: user1,
+        editor1: user1,
+        id: generateUniqueId()
+      });
+      newRecord3.save();
+
+      let newRecord4 = store.createRecord(this.get('modelName'), {
+        address: 'address with several words for testing',
+        type: type2,
+        author: user2,
+        editor1: user1,
+        id: generateUniqueId()
+      });
+      newRecord4.save();
+
+      this.send('refreshList', this.get('componentName'));
     },
 
     componentForFilter(type, relation) {

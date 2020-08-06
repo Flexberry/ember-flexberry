@@ -149,11 +149,12 @@ export default FlexberryObjectlistview.extend({
     - **isCurrent** - If `true` this page is current.
     - **isShow** - If `true` this page showing in pages list.
 
-    @property mobilePages
+    @private
+    @property _mobilePages
     @type Array
     @readOnly
   */
-  mobilePages: Ember.computed('pages', function() {
+  _mobilePages: Ember.computed('pages', function() {
     let mobilePages = Ember.A();
     let pages = this.get('pages');
     let currentPageNumber = pages.find(page => page.isCurrent).number;

@@ -157,7 +157,7 @@ export default FlexberryObjectlistview.extend({
   _mobilePages: Ember.computed('pages', function() {
     let mobilePages = Ember.A();
     let pages = this.get('pages');
-    let currentPageNumber = pages.find(page => page.isCurrent).number;
+    let currentPageNumber = pages.length === 1 ? 1 : pages.find(page => page.isCurrent).number;
     let lastPageNumber = pages[pages.length - 1].number;
 
     for (let i = 1; i <= lastPageNumber; i++) {

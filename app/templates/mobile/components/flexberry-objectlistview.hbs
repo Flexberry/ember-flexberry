@@ -48,9 +48,9 @@
       {{mobileSortingSettingsCaption}}
     </button>
     <div class="right menu">
-      {{#if (lte pages.length 4)}}
+      {{#if (lte _mobilePages.length 4)}}
         <div class="ui basic buttons">
-          {{#each pages as |page|}}
+          {{#each _mobilePages as |page|}}
             <button
               type="button"
               class="ui {{if page.isCurrent "disabled active"}} button"
@@ -63,7 +63,7 @@
         </div>
       {{else}}
         <div class="ui basic buttons">
-          {{#each mobilePages as |page|}}
+          {{#each _mobilePages as |page|}}
             {{#if page.isShow}}
               {{#if page.isCurrent}}
                 <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
@@ -73,15 +73,15 @@
             {{/if}}
           {{/each}}
         </div>
+        <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+          {{input
+            type="number"
+            placeholder=_mobilePages.length
+            value=searchPageValue
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+          }}
+        </div>
       {{/if}}
-      <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
-        {{input
-          type="number"
-          placeholder=mobilePages.length
-          value=searchPageValue
-          enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
-        }}
-      </div>
     </div>
   </div>
 {{/if}}

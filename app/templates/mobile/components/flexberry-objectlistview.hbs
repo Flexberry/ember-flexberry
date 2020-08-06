@@ -51,11 +51,14 @@
       {{#if (lte pages.length 4)}}
         <div class="ui basic buttons">
           {{#each pages as |page|}}
-            {{#if page.isCurrent}}
-              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-            {{else}}
-              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
-            {{/if}}
+            <button
+              type="button"
+              class="ui {{if page.isCurrent "disabled active"}} button"
+              disabled={{page.isCurrent}}
+              {{action "gotoPage" this.attrs.gotoPage page.number}}
+            >
+              {{page.number}}
+            </button>
           {{/each}}
         </div>
       {{else}}

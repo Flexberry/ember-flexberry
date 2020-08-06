@@ -229,11 +229,12 @@ export default FlexberryObjectlistview.extend({
   /**
     Mobile sort text.
 
-    @property mobileSortingSettingsCaption
+    @private
+    @property _mobileSortingSettingsCaption
     @type String
     @readOnly
   */
-  mobileSortingSettingsCaption: Ember.computed('sorting', 'i18n.locale',  function() {
+  _mobileSortingSettingsCaption: Ember.computed('_currecntSortingArray', 'i18n.locale',  function() {
     let i18n = this.get('i18n');
     let sorting = this.get('_currecntSortingArray');
     if (sorting.length === 0) {

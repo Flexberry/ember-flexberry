@@ -258,14 +258,6 @@ export default FlexberryObjectlistview.extend({
 
     return sortingValue;
   }),
-
-  didRender: function() {
-    this._super(...arguments);
-
-    let selectPageDropdown = this.$('.page-select-drodpown');
-    selectPageDropdown.dropdown();
-  },
-
   actions: {
     showConfigDialog() {
       this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, false, false);

@@ -132,7 +132,8 @@
   <label>{{_selectedCountMobileMenu}}</label>
 
   <button
-    class="ui delete-button {{buttonClass}} {{if readonly 'disabled' ''}} button"
+    type="button"
+    class="ui delete-button {{buttonClass}} {{if readonly "disabled"}} button"
     title={{t "components.olv-toolbar.delete-button-text"}}
     disabled={{readonly}}
     {{action "deleteSelectedRow"}}>

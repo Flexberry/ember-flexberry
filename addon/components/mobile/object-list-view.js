@@ -148,8 +148,8 @@ export default ObjectListViewComponent.extend({
   actions: {
     /**
       Delete selected rows.
+
       @method actions.deleteSelectedRow
-      @public
     */
     deleteSelectedRow() {
       let confirmDeleteRows = this.get('confirmDeleteRows');

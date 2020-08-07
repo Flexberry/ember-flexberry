@@ -182,24 +182,12 @@ export default ObjectListViewComponent.extend({
     clearSelectedRecords() {
       if (this.get('allSelect')) {
         this.send('checkAll');
-      }
-
-      let componentName = this.get('componentName');
-      let contentWithKeys = this.get('contentWithKeys');
-      let selectedRecords = this.get('selectedRecords');
-      let selectedRows = contentWithKeys.filterBy('selected', true);
-      for (let i = 0; i < selectedRows.length; i++) {
-        let recordWithKey = selectedRows[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
-
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', false);
-
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, false, recordWithKey);
+      } else {
+        let selectedRecords = this.get('selectedRecords');
+        for (let i = 0; i < selectedRecords.length; i++) {
+          this.send('selectRow', selectedRecords[i], {
+            checked: false
+          }); }
       }
     },
   }

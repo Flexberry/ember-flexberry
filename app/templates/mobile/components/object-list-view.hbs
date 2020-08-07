@@ -115,7 +115,7 @@
       <i class="check-square-o icon"></i>
       {{flexberry-menu
         onlyClickHandler=true 
-        items=checkRowsSettingsItems
+        items=_checkRowsSettingsItems
         onItemClick=(action "onCheckRowMenuItemClick")
       }}
     </div>
@@ -129,24 +129,25 @@
     </button>
   {{/if}}
 
-  <label>{{_selectedCountMobileMenu}}</label>
+  <div class="check-rows-container">
+    <label>{{_selectedCountMobileMenu}}</label>
 
-  <button
-    type="button"
-    class="ui delete-button {{buttonClass}} {{if readonly "disabled"}} button"
-    title={{t "components.olv-toolbar.delete-button-text"}}
-    disabled={{readonly}}
-    {{action "deleteSelectedRow"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
-      <i class="delete icon"></i>
-  </button>
+    <button
+      type="button"
+      class="ui delete-button {{buttonClass}} {{if readonly "disabled"}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled={{readonly}}
+      {{action "deleteSelectedRow"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
 
-  <button
-    type="button"
-    class="ui clear-select-button {{buttonClass}} circular icon button"
-    title={{t "components.olv-toolbar.clear-select-button-text"}}
-    {{action "clearSelectedRecords"}}>
-    <i class="x icon"></i>
-  </button>
-
+    <button
+      type="button"
+      class="ui clear-select-button {{buttonClass}} circular icon button"
+      title={{t "components.olv-toolbar.clear-select-button-text"}}
+      {{action "clearSelectedRecords"}}>
+      <i class="x icon"></i>
+    </button>
+  </div>
 {{/if}}

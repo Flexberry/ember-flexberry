@@ -147,7 +147,7 @@ export default FlexberryObjectlistview.extend({
     Each page is presented as object with following properties:
     - **number** - Number of page.
     - **isCurrent** - If `true` this page is current.
-    - **isShow** - If `true` this page showing in pages list.
+    - **isEllipsis** - If `true` this page showing in pages list.
 
     @private
     @property _mobilePages
@@ -157,21 +157,26 @@ export default FlexberryObjectlistview.extend({
   _mobilePages: Ember.computed('pages', function() {
     let mobilePages = Ember.A();
     let pages = this.get('pages');
-    let currentPageNumber = pages.length === 1 ? 1 : pages.find(page => page.isCurrent).number;
+
+    if (pages.length <= 4) {
+      return pages;
+    }
+
+    let currentPageNumber = pages.find(page => page.isCurrent).number;
     let lastPageNumber = pages[pages.length - 1].number;
 
     for (let i = 1; i <= lastPageNumber; i++) {
-      let isShow;
+      let isEllipsis;
 
       if (currentPageNumber === 1 || currentPageNumber === lastPageNumber) {
-        isShow  = currentPageNumber === 1 ? i <= 3 : i >= lastPageNumber - 2;
+        isEllipsis  = currentPageNumber === 1 ? i > 3 : i < lastPageNumber - 2;
       } else {
-        isShow = currentPageNumber - 1 <= i && i <= currentPageNumber + 1;
+        isEllipsis = currentPageNumber - 1 > i || i > currentPageNumber + 1;
       }
 
       let page = {
         isCurrent: i === currentPageNumber,
-        isShow: isShow,
+        isEllipsis: isEllipsis,
         number: i
       };
 

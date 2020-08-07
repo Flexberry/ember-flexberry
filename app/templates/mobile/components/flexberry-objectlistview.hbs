@@ -48,37 +48,23 @@
       {{mobileSortingSettingsCaption}}
     </button>
     <div class="right menu">
-      {{#if (lte _mobilePages.length 4)}}
-        <div class="ui basic buttons">
-          {{#each _mobilePages as |page|}}
-            <button
-              type="button"
-              class="ui {{if page.isCurrent "disabled active"}} button"
-              disabled={{page.isCurrent}}
-              {{action "gotoPage" this.attrs.gotoPage page.number}}
-            >
-              {{page.number}}
-            </button>
-          {{/each}}
-        </div>
-      {{else}}
-        <div class="ui basic buttons">
-          {{#each _mobilePages as |page|}}
-            {{#if page.isShow}}
-              {{#if page.isCurrent}}
-                <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-              {{else}}
-                <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
-              {{/if}}
+      <div class="ui basic buttons">
+        {{#each _mobilePages as |page|}}
+          {{#if (not page.isEllipsis)}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
             {{/if}}
-          {{/each}}
-        </div>
+          {{/if}}
+        {{/each}}
+      </div>
+      {{#if (gt _mobilePages.length 4)}}
         <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
           {{input
             type="number"
             placeholder=_mobilePages.length
             value=searchPageValue
-            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
           }}
         </div>
       {{/if}}

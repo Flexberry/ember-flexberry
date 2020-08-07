@@ -1111,8 +1111,8 @@ export default FlexberryBaseComponent.extend(
 
     /**
       Handler click on flexberry-menu.
+
       @method actions.onCheckRowMenuItemClick
-      @public
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onCheckRowMenuItemClick(e) {

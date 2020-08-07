@@ -31,37 +31,44 @@
       dynamicProperties=singleColumnCellComponent.componentProperties
       readonly=readonly
     }}
-    {{#if (and inHierarchicalMode hasRecords)}}
-      <button type="button" class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
-        <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
-      </button>
-    {{/if}}
-    {{#if showEditButtonInRow}}
-      <button
-        type="button"
-        class="ui ui-edit object-list-view-row-edit-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
-        disabled={{readonly}}
-        {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true) bubbles=false}}>
-        <i class="edit icon"></i>
-      </button>
-    {{/if}}
-    {{#if showPrototypeButtonInRow}}
-      <button
-        type="button"
-        class="ui ui-edit object-list-view-row-prototype-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
-        disabled={{readonly}}
-        {{action createNewByPrototype (get record "data.id") bubbles=false}}>
-        <i class="copy icon"></i>
-      </button>
-    {{/if}}
-    {{#if showDeleteButtonInRow}}
-      <button
-        type="button"
-        class="ui ui-edit object-list-view-row-delete-button mobile {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
-        disabled={{or readonly (not record.rowConfig.canBeDeleted)}}
-        {{action deleteRow record bubbles=false}}>
-        <i class="minus icon"></i>
-      </button>
+    {{#if (or (and inHierarchicalMode hasRecords)
+      showEditButtonInRow
+      showPrototypeButtonInRow
+      showDeleteButtonInRow)}}
+      <div class="row-controls">
+        {{#if (and inHierarchicalMode hasRecords)}}
+          <button type="button" class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
+            <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+          </button>
+        {{/if}}
+        {{#if showEditButtonInRow}}
+          <button
+            type="button"
+            class="ui ui-edit object-list-view-row-edit-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
+            disabled={{readonly}}
+            {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true) bubbles=false}}>
+            <i class="edit icon"></i>
+          </button>
+        {{/if}}
+        {{#if showPrototypeButtonInRow}}
+          <button
+            type="button"
+            class="ui ui-edit object-list-view-row-prototype-button mobile {{buttonClass}} {{if readonly "disabled"}} button"
+            disabled={{readonly}}
+            {{action createNewByPrototype (get record "data.id") bubbles=false}}>
+            <i class="copy icon"></i>
+          </button>
+        {{/if}}
+        {{#if showDeleteButtonInRow}}
+          <button
+            type="button"
+            class="ui ui-edit object-list-view-row-delete-button mobile {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
+            disabled={{or readonly (not record.rowConfig.canBeDeleted)}}
+            {{action deleteRow record bubbles=false}}>
+            <i class="minus icon"></i>
+          </button>
+        {{/if}}
+      </div>
     {{/if}}
   </td>
   {{#if showMenuColumn}}

@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.6`.
+
 ## [2.5.0-beta.7] - 2020-07-22
 ### Added
 * The ability to optimize the loading of the hierarchical list in the `flexberry-objectlistview` component ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).

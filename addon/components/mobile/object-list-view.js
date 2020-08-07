@@ -14,6 +14,8 @@ import ObjectListViewComponent from '../object-list-view';
 export default ObjectListViewComponent.extend({
   /**
     Flag indicates whether visible selected menu for mobile.
+
+    @private
     @property _selectedMobileMenu
     @type Boolean
     @readOnly

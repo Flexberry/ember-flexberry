@@ -26,6 +26,8 @@ export default ObjectListViewComponent.extend({
 
   /**
     Count selected row for mobile menu.
+
+    @private
     @property _selectedCountMobileMenu
     @type Number
     @readOnly

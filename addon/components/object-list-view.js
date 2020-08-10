@@ -1210,7 +1210,18 @@ export default FlexberryBaseComponent.extend(
       }
 
       Ember.setProperties(filter.component, options);
-    }
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterForColumn
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterForColumn(filter) {
+      Ember.set(filter, 'condition', null);
+      Ember.set(filter, 'pattern', null);
+    },
   },
 
   /**
@@ -1998,20 +2009,19 @@ export default FlexberryBaseComponent.extend(
       case 'string':
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact fluid',
+          class: 'compact',
         };
         break;
 
       case 'date':
         component.name = 'flexberry-simpledatetime';
-        component.properties = { type: 'date' };
+        component.properties = { type: 'date', removeButton: false };
         break;
 
       default:
@@ -2021,7 +2031,7 @@ export default FlexberryBaseComponent.extend(
           component.name = 'flexberry-dropdown';
           component.properties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid',
+            class: 'compact',
           };
         }
 

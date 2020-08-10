@@ -32,15 +32,6 @@ export default FlexberryBaseComponent.extend({
   item: null,
 
   /**
-    Name of action to send out, action triggered by click on user button.
-
-    @property itemButtonAction
-    @type String
-    @default 'itemButtonAction'
-  */
-  itemButtonAction: 'itemButtonAction',
-
-  /**
     Flag: indicates whether menu item has some nested subitems or not.
 
     @property hasSubitems

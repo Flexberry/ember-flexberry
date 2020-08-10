@@ -126,7 +126,7 @@ export default FlexberryBaseComponent.extend({
       Action for custom button.
 
       @method actions.itemButtonAction
-      @param {Function|String} action The action or name of action.
+      @param {Function} action The action and only action.
     */
     itemButtonAction(action) {
       let actionType = typeof action;

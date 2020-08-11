@@ -1219,6 +1219,7 @@ export default FlexberryBaseComponent.extend(
       @param {Object} filter Object with the filter description.
     */
     clearFilterForColumn(filter) {
+      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
       Ember.set(filter, 'condition', null);
       Ember.set(filter, 'pattern', null);
     },
@@ -1910,6 +1911,9 @@ export default FlexberryBaseComponent.extend(
     }
 
     Ember.$.extend(true, component, options);
+
+    // Hack to restore component when clearing filter for one column.
+    component._defaultComponent = component.name;
 
     column.filter = { name, type, pattern, condition, conditions, component };
   },

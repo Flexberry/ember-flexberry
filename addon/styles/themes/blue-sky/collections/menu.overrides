@@ -99,3 +99,7 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     margin: 0;
   }
 }
+
+.mobile div.ui.secondary.menu.no-margin.nav-bar .right.menu {
+    flex-wrap: nowrap;
+}

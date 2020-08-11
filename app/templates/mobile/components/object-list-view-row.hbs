@@ -13,6 +13,7 @@
             {{flexberry-checkbox
               readonly=(or readonly (not record.rowConfig.canBeSelected))
               onChange=(action selectRow record)
+              value=record.selected
             }}
           </div>
         {{/if}}

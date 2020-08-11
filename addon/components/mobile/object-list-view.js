@@ -176,8 +176,8 @@ export default ObjectListViewComponent.extend({
 
     /**
       Clear selected rows.
+
       @method actions.clearSelectedRecords
-      @public
     */
     clearSelectedRecords() {
       if (this.get('allSelect')) {
@@ -187,7 +187,8 @@ export default ObjectListViewComponent.extend({
         for (let i = 0; i < selectedRecords.length; i++) {
           this.send('selectRow', selectedRecords[i], {
             checked: false
-          }); }
+          });
+        }
       }
     },
   }

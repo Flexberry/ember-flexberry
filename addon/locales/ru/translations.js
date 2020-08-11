@@ -121,7 +121,10 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'without-sorting': 'Без сортировки',
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {

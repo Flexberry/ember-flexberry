@@ -114,14 +114,16 @@ export default {
         }
       }
     },
-
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'without-sorting': 'Without sorting',
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {

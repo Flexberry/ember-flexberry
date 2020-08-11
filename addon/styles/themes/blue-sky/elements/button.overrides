@@ -571,6 +571,16 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     color: @primaryColor;
 }
 
+.ui.button.mobile-sorting-setting-button {
+    width: @navbarSortingMobileWidth;
+    white-space: @navbarSortingMobileWhiteSpace;
+    overflow: @navbarSortingMobileOverflow;
+    text-overflow: @navbarSortingMobileTextOverflow;
+}
+
+.nav-bar .ui.input.nav-bar-search-page {
+    width: 100px !important;
+}
 
 /******************************************
       Positive/negative buttons section

@@ -63,7 +63,8 @@
         <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
           {{input
             type="number"
-            placeholder=_mobilePages.length
+            placeholder=_mobilePages.lastObject.number
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
             value=searchPageValue
           }}
         </div>

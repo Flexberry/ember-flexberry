@@ -156,7 +156,7 @@ export default FlexberryObjectlistview.extend({
   */
   _mobilePages: Ember.computed('pages', function() {
     let mobilePages = Ember.A();
-    let pages = this.get('pages');
+    let pages = Ember.A(this.get('pages'));
 
     if (pages.length <= 4) {
       return pages;

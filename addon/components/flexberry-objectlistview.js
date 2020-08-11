@@ -230,7 +230,7 @@ export default FlexberryBaseComponent.extend({
   searchPageValue: undefined,
 
   /**
-    Flag used for disable searchPageButton.
+    Flag used for disabling searchPageButton.
 
     @property searchPageButtonReadonly
     @type Boolean
@@ -1285,7 +1285,9 @@ export default FlexberryBaseComponent.extend({
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
-      this.send('gotoPage', action, searchPageNumber, componentName);
+      if (searchPageNumber) {
+        this.send('gotoPage', action, searchPageNumber, componentName);
+      }
     }
   },
 

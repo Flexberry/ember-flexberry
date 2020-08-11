@@ -99,6 +99,9 @@ export default FlexberryBaseComponent.extend({
     let item = this.get('item');
     if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
+      if (item.dividing) {
+        this.$().addClass('dividing');
+      }
     } else {
       let parentView = this.get('parentView');
       parentView.$().data('flexberry-menu', item)
@@ -116,5 +119,22 @@ export default FlexberryBaseComponent.extend({
     if (this.get('tagName') !== '') {
       this.$().removeData('flexberry-menuitem.item');
     }
+  },
+
+  actions: {
+    /**
+      Action for custom button.
+
+      @method actions.itemButtonAction
+      @param {Function} action The action and only action.
+    */
+    itemButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action(this.get('item'));
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
+    },
   }
 });

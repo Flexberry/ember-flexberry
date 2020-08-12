@@ -32,6 +32,17 @@ import FlexberryBaseComponent from './flexberry-base-component';
         icon: 'trash icon',
         title: 'Delete',
       }],
+    }, {
+      title: 'Item',
+      buttons: [{
+        title: 'edit',
+        buttonClasses: 'icon',
+        iconClass: 'edit icon',
+        disabled: false,
+        buttonAction: () => {
+          window.alert('clicked edit button');
+        }
+      }]
     }],
     ...
     actions: {
@@ -226,7 +237,12 @@ export default FlexberryBaseComponent.extend({
   */
   _onClickHandler(e) {
     // Find clicked menu item element.
-    let itemElement = $(e.target);
+    let itemElement = Ember.$(e.target);
+
+    if (itemElement.parent().is('button') || itemElement.is('button')) {
+      return;
+    }
+
     if (!itemElement.hasClass('flexberry-menuitem')) {
       itemElement = itemElement.parents('.flexberry-menuitem');
     }

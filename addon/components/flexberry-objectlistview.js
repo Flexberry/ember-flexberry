@@ -48,15 +48,6 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: service(),
 
   /**
-    Flag used to display filters in modal.
-
-    @property showFiltersInModal
-    @type Boolean
-    @default false
-  */
-  showFiltersInModal: false,
-
-  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -193,6 +184,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   useSidePageMode: undefined,
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: undefined,
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -1277,7 +1277,6 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @public
       @param {Action} action Action go to page.
       @param {Number} pageNumber Number of page to go to.
     */
@@ -1480,6 +1479,7 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showFiltersInModal', defaultValue: false });
   },
 
   /**

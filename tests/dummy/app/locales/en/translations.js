@@ -1313,7 +1313,8 @@ $.extend(true, translations, {
           'caption': 'Flexberry-menu. Settings example',
           'titleIcon1': 'Left side aligned icon',
           'titleIcon2': 'Right side aligned icon',
-          'titleIcon3': 'Submenu'
+          'titleIcon3': 'Submenu',
+          'titleIcon4': 'Row buttons'
         }
       },
       'flexberry-objectlistview': {

@@ -16,6 +16,7 @@ import { once, schedule, scheduleOnce } from '@ember/runloop';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
@@ -569,7 +570,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
-    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(ret);
+    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(this.get('componentName'), ret);
     return ret;
   }),
 
@@ -1184,11 +1185,10 @@ export default FlexberryBaseComponent.extend(
       Handler click on flexberry-menu.
 
       @method actions.onCheckRowMenuItemClick
-      @public
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onCheckRowMenuItemClick(e) {
-      let namedItemSpans = $(e.currentTarget).find('span');
+      let namedItemSpans = Ember.$(e.currentTarget).find('span');
       if (namedItemSpans.length <= 0) {
         return;
       }
@@ -1197,16 +1197,19 @@ export default FlexberryBaseComponent.extend(
       let namedSetting = namedItemSpans.get(0).innerText;
 
       let isUncheckAllAtPage = this.get('allSelectAtPage');
-      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') :
+      i18n.t('components.olv-toolbar.check-all-at-page-button-text');
 
       let isUncheckAll = this.get('allSelect');
-      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') :
+      i18n.t('components.olv-toolbar.check-all-button-text');
 
       switch (namedSetting) {
         case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
           break;
         }
+
         case checkAllTitle.toString(): {
           this.send('checkAll');
           break;
@@ -1264,9 +1267,9 @@ export default FlexberryBaseComponent.extend(
       Called when filter condition in any column was changed by user.
 
       @method actions.filterConditionChanged
-      @param {Object} filter
-      @param {String} newCondition
-      @param {String} oldCondition
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
     */
     filterConditionChanged(filter, newCondition, oldCondition) {
       if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
@@ -1320,6 +1323,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').on('filterConditionChanged', this, this._filterConditionChanged);
     this.get('_contentObserver').apply(this);
     this.get('selectedRowsChanged').apply(this);
   },
@@ -1501,6 +1505,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').off('filterConditionChanged', this, this._filterConditionChanged);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1854,9 +1859,9 @@ export default FlexberryBaseComponent.extend(
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;
@@ -2965,6 +2970,22 @@ export default FlexberryBaseComponent.extend(
           contentForRender.replace(newIndex, 0, temp);
         }
       });
+    }
+  },
+
+  /**
+    Calls the `filterConditionChanged` action when filters are displayed in the modal window.
+
+    @private
+    @method _filterConditionChanged
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  _filterConditionChanged(componentName, filter, newValue, oldValue) {
+    if (this.get('componentName') === componentName) {
+      this.send('filterConditionChanged', filter, newValue, oldValue);
     }
   },
 });

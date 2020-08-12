@@ -5,9 +5,11 @@
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  advLimitButton=advLimitButton
   enableFilters=enableFilters
   exportExcelButton=exportExcelButton
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
   resetFilters=(action "resetFilters" this.attrs.resetFilters)
@@ -15,12 +17,15 @@
   filterText=filterText
   buttonClass=buttonClass
   enableDeleteButton=(not readonly)
+  inLookup=(eq componentMode "lookupform")
   componentName=componentName
+  lookupComponentName=lookupComponentName
   modelController=currentController
   customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  showAdvLimitDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
@@ -33,26 +38,45 @@
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
+    <button
+      type="button"
+      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button small"
+      title={{mobileSortingSettingsCaption}}
+      disabled={{not colsConfigButton}}
+      {{action "showConfigDialog"}}
+    >
+      <i class={{mobileSortingSettingsIcon}}></i>
+      {{mobileSortingSettingsCaption}}
+    </button>
     <div class="right menu">
       <div class="ui basic buttons">
-        {{#each pages as |page|}}
-          {{#if page.isEllipsis}}
-            <div class="ui button">...</div>
-          {{else if page.isCurrent}}
-              <button class="ui active button">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
+        {{#each _mobilePages as |page|}}
+          {{#if (not page.isEllipsis)}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{/if}}
           {{/if}}
         {{/each}}
-        <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
       </div>
-   </div>
+      {{#if (gt _mobilePages.length 4)}}
+        <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+          {{input
+            type="number"
+            placeholder=_mobilePages.lastObject.number
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+            value=searchPageValue
+          }}
+        </div>
+      {{/if}}
+    </div>
   </div>
 {{/if}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
-  columnsWidthAutoresize=true
+  columnsWidthAutoresize=columnsWidthAutoresize
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -60,18 +84,19 @@
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  createNewByPrototype=(action "createNewByPrototype")
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
-  showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
   showPrototypeButtonInRow=showPrototypeButtonInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
+  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
-  createNewByPrototype=(action "createNewByPrototype")
   orderable=orderable
   sorting=sorting
   immediateDelete=true
@@ -82,9 +107,11 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   enableFilters=enableFilters
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
+  componentForFilterByCondition=componentForFilterByCondition
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
@@ -110,6 +137,8 @@
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
+  customButtonInRowAction="customButtonInRowAction"
+  customButtonsInRow=customButtonsInRow
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents

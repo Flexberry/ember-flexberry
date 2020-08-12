@@ -64,69 +64,63 @@ export default ListFormController.extend({
     addObjects() {
       let store = this.get('store');
 
-      let user1 = store.createRecord('ember-flexberry-dummy-application-user', {
-        name: 'NameForTest',
-        eMail: 'ya@.test',
-        id: generateUniqueId()
-      });
-      user1.save();
+      const models = [
+        store.createRecord('ember-flexberry-dummy-application-user', {
+          name: 'NameForTest',
+          eMail: 'ya@.test',
+          id: generateUniqueId()
+        }),
+        store.createRecord('ember-flexberry-dummy-suggestion-type', {
+          name: 'typeForTest',
+          id: generateUniqueId()
+        }),
+        store.createRecord('ember-flexberry-dummy-application-user', {
+          name: 'Different NameForTest',
+          eMail: 'ti@.test',
+          id: generateUniqueId()
+        }),
+        store.createRecord('ember-flexberry-dummy-suggestion-type', {
+          name: 'Another typeForTest',
+          id: generateUniqueId()
+        }),
+      ];
 
-      let type1 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
-        name: 'typeForTest',
-        id: generateUniqueId()
+      store.batchUpdate(models).then((models) => {
+        const [user1, type1, user2, type2] = models;
+        const records = [
+          store.createRecord(this.get('modelName'), {
+            address: 'TestingAddress',
+            type: type1,
+            author: user1,
+            editor1: user2,
+            id: generateUniqueId()
+          }),
+          store.createRecord(this.get('modelName'), {
+            address: '',
+            type: type1,
+            author: user2,
+            editor1: user2,
+            id: generateUniqueId()
+          }),
+          store.createRecord(this.get('modelName'), {
+            address: 'new address',
+            type: type2,
+            author: user1,
+            editor1: user1,
+            id: generateUniqueId()
+          }),
+          store.createRecord(this.get('modelName'), {
+            address: 'address with several words for testing',
+            type: type2,
+            author: user2,
+            editor1: user1,
+            id: generateUniqueId()
+          }),
+        ];
+        store.batchUpdate(records).then(() => {
+          this.send('refreshList', this.get('componentName'));
+        });
       });
-      type1.save();
-
-      let user2 = store.createRecord('ember-flexberry-dummy-application-user', {
-        name: 'Different NameForTest',
-        eMail: 'ti@.test',
-        id: generateUniqueId()
-      });
-      user2.save();
-
-      let type2 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
-        name: 'Another typeForTest',
-        id: generateUniqueId()
-      });
-      type2.save();
-
-      let newRecord1 = store.createRecord(this.get('modelName'), {
-        address: 'TestingAddress',
-        type: type1,
-        author: user1,
-        editor1: user2,
-        id: generateUniqueId()
-      });
-      newRecord1.save();
-
-      let newRecord2 = store.createRecord(this.get('modelName'), {
-        address: '',
-        type: type1,
-        author: user2,
-        editor1: user2,
-        id: generateUniqueId()
-      });
-      newRecord2.save();
-
-      let newRecord3 = store.createRecord(this.get('modelName'), {
-        address: 'new address',
-        type: type2,
-        author: user1,
-        editor1: user1,
-        id: generateUniqueId()
-      });
-      newRecord3.save();
-
-      let newRecord4 = store.createRecord(this.get('modelName'), {
-        address: 'address with several words for testing',
-        type: type2,
-        author: user2,
-        editor1: user1,
-        id: generateUniqueId()
-      });
-      newRecord4.save();
-
-      this.send('refreshList', this.get('componentName'));
     },
 
     componentForFilter(type, relation) {

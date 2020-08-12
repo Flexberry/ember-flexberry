@@ -38,7 +38,7 @@ export default Service.extend(Evented, {
     @type Object
     @private
   */
-  _olvFilterColumnsArray: Ember.computed(() => ({})),
+  _olvFilterColumnsArray: computed(() => ({})),
 
   /**
     Init service.

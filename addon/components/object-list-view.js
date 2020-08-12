@@ -1188,7 +1188,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onCheckRowMenuItemClick(e) {
-      let namedItemSpans = Ember.$(e.currentTarget).find('span');
+      let namedItemSpans = $(e.currentTarget).find('span');
       if (namedItemSpans.length <= 0) {
         return;
       }

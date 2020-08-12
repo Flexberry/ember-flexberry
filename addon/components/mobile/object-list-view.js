@@ -100,7 +100,7 @@ export default ObjectListViewComponent.extend({
     @property _checkRowsSettingsItems
     @readOnly
   */
-  _checkRowsSettingsItems: Ember.computed(
+  _checkRowsSettingsItems: computed(
     'i18n.locale',
     'userSettingsService.isUserSettingsServiceEnabled',
     'readonly',

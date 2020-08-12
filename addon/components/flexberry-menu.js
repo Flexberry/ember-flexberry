@@ -237,7 +237,7 @@ export default FlexberryBaseComponent.extend({
   */
   _onClickHandler(e) {
     // Find clicked menu item element.
-    let itemElement = Ember.$(e.target);
+    let itemElement = $(e.target);
 
     if (itemElement.parent().is('button') || itemElement.is('button')) {
       return;

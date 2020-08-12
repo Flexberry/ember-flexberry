@@ -169,6 +169,56 @@ option {
     }
 }
 
+.check-rows-container {
+    background: @background;
+    bottom: @checkRowsContainerBottom;
+    box-shadow: @checkRowsContainerBoxShadow;
+    display: -webkit-@checkRowsContainerDisplay;
+    display: -moz-@checkRowsContainerDisplay;
+    display: -ms-@checkRowsContainerDisplay;
+    display: -o-@checkRowsContainerDisplay;
+    display: @checkRowsContainerDisplay;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    left: @checkRowsContainerLeft;
+    min-height: @checkRowsContainerHeight;
+    position: @checkRowsContainerPosition;
+    right: @checkRowsContainerRight;
+    z-index: @checkRowsContainerZIndex;
+    .flexberry-menu {
+        height: auto;
+        border: none;
+        &::before {
+            content: @checkRowsButtonIcon;
+            font-family: @checkRowsButtonIconFont;
+            font-size: @checkRowsButtonIconFontSize;
+            color: @blue;
+        }
+        &.active {
+            background: @checkRowsButtonActiveBackground;
+            box-shadow: @checkRowsButtonActiveBoxShadow;
+        }
+    }
+    .count-selected-rows {
+        font-size: @countSelectedRowsFontSize;
+    }
+    .clear-select-button {
+        margin-left: auto;
+        border: none;
+    }
+    .flexberry-menu:hover,
+    .clear-select-button:hover {
+        background: none;
+    }
+    .ui.button.check-all-at-page-button {
+        height: auto;
+        width: auto;
+        border: none;
+    }
+}
+
 @media only screen and (max-width: @largestMobileScreen) {
     .ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters > .field {
         &:nth-child(1){

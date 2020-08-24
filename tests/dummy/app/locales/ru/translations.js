@@ -1138,7 +1138,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
         },
         'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Настройка фильтра'
+          'caption': 'Flexberry-simpleolv. Настройка фильтра',
+          'addObjects-button': 'Добавить объекты'
         },
         'configurate-rows': {
           'caption': 'Flexberry-simpleolv. Раскраска строк'

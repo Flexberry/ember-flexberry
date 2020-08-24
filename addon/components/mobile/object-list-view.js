@@ -106,7 +106,7 @@ export default ObjectListViewComponent.extend({
       let allSelect = this.get('allSelect');
 
       let rootItem = {
-        icon: 'icon-guideline-check-menu icon',
+        icon: 'dropdown icon',
         iconAlignment: 'right',
         title: '',
         items: [],

@@ -112,25 +112,22 @@
 {{#if (and _selectedMobileMenu showCheckBoxInRow)}}
   <div class="check-rows-container">
     {{#if (not-eq class "groupedit-container")}}
-      <div class="ui check-rows-button {{buttonClass}} button {{if readonly "disabled"}}">
-        <i class="check-square-o icon"></i>
-        {{flexberry-menu
-          onlyClickHandler=true 
-          items=_checkRowsSettingsItems
-          onItemClick=(action "onCheckRowMenuItemClick")
-        }}
-      </div>
+      {{flexberry-menu
+        onlyClickHandler=true
+        items=_checkRowsSettingsItems
+        onItemClick=(action "onCheckRowMenuItemClick")
+      }}
     {{else}}
       <button
         type="button"
-        class="ui check-all-at-page-button {{buttonClass}} {{if readonly "disabled"}} button"
+        class="ui check-all-at-page-button icon {{buttonClass}} {{if readonly "disabled"}} button"
         title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
         {{action "checkAllAtPage"}}>
           <i class="check-square-o icon"></i>
       </button>
     {{/if}}
 
-    <label>{{_selectedCountMobileMenu}}</label>
+    <label class="count-selected-rows">{{_selectedCountMobileMenu}}</label>
 
     <button
       type="button"
@@ -147,7 +144,7 @@
       class="ui clear-select-button {{buttonClass}} circular icon button"
       title={{t "components.olv-toolbar.clear-select-button-text"}}
       {{action "clearSelectedRecords"}}>
-      <i class="x icon"></i>
+      <i class="remove icon"></i>
     </button>
   </div>
 {{/if}}

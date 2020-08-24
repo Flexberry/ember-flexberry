@@ -81,3 +81,13 @@
 
 /* Attached */
 @attachedBoxShadow: none;
+
+
+/*-------------------
+        Navbar
+--------------------*/
+/*Navbar sorting*/
+@navbarSortingMobileWidth: 180px;
+@navbarSortingMobileWhiteSpace: nowrap;
+@navbarSortingMobileOverflow: hidden;
+@navbarSortingMobileTextOverflow: ellipsis;

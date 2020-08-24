@@ -1248,15 +1248,14 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @param {Action} action Action go to page.
-      @param {Number} pageNumber Number of page to go to.
+      @param {Function} action The `goToPage` action from controller.
     */
-    searchPageButtonAction(action, componentName) {
+    searchPageButtonAction(action) {
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
       if (searchPageNumber) {
-        this.send('gotoPage', action, searchPageNumber, componentName);
+        this.send('gotoPage', action, searchPageNumber);
       }
     }
   },

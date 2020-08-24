@@ -134,6 +134,8 @@
     <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
       {{input
         type="number"
+        min=_pages.firstObject.number
+        max=_pages.lastObject.number
         placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
         value=searchPageValue
         enter=(action 'searchPageButtonAction' this.attrs.gotoPage)

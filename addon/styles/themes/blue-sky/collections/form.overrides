@@ -151,10 +151,8 @@ option {
     }
 }
 
-.flexberry-colsconfig .fields.object-list-view-filters > .field {
-    &:nth-child(2) {
-        max-width: @filterСonditionWidth;
-    }
+.flexberry-colsconfig .fields.object-list-view-filters > .field:nth-child(2) {
+    max-width: @filterMobileConditionWidth;
 }
 
 .ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters {

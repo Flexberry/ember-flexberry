@@ -63,3 +63,39 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     flex-basis: 0px;
     flex-grow: 1;
 }
+
+
+.menu .flexberry-menuitem.item {
+  display: flex;
+  &.dividing:after {
+    content: '';
+    height: 1px;
+    width: calc(~'100% - 2em');
+    position: absolute;
+    left: 1em;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .ui.button.icon {
+    padding: 0;
+    line-height: 1;
+    padding: 0;
+    border: none;
+    height: auto;
+    margin: 0 0 0 0.5em;
+    &:hover {
+      background-color: transparent!important;
+    }
+  }
+}
+
+.flexberry-menu.ui.dropdown .menu > .item {
+  display: flex;
+  align-items: center;
+  span {
+    flex-basis: 100%;
+  }
+  .ui.button.icon > .icon:not(.dropdown) {
+    margin: 0;
+  }
+}

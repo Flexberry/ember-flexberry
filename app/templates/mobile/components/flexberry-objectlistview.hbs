@@ -35,6 +35,43 @@
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
 }}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <button
+      type="button"
+      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button small"        
+      title={{mobileSortingSettingsCaption}}
+      disabled={{not colsConfigButton}}
+      {{action "showConfigDialog"}}
+    > 
+      <i class={{mobileSortingSettingsIcon}}></i>
+      {{mobileSortingSettingsCaption}}
+    </button>
+    <div class="right menu">
+      <div class="ui basic buttons">
+        {{#each _mobilePages as |page|}}
+          {{#if (not page.isEllipsis)}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{/if}}
+          {{/if}}
+        {{/each}}
+      </div>
+      {{#if (gt _mobilePages.length 4)}}
+        <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+          {{input
+            type="number"
+            placeholder=_mobilePages.lastObject.number
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+            value=searchPageValue
+          }}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
@@ -88,7 +125,6 @@
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
-  isParentRecordPropertyName=isParentRecordPropertyName
   hierarchicalIndent=hierarchicalIndent
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
@@ -106,59 +142,3 @@
   overflowedComponents=overflowedComponents
   fixedHeader=fixedHeader
 }}
-{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
-  <div class="ui secondary menu no-margin nav-bar">
-    <div class="ui basic buttons">
-      <button
-        type="button"
-        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
-        disabled={{not hasPreviousPage}}
-        {{action "previousPage" this.attrs.previousPage}}>
-      </button>
-      {{#each pages as |page|}}
-        {{#if page.isEllipsis}}
-          <div class="ui button">...</div>
-        {{else if page.isCurrent}}
-          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-        {{else}}
-          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
-        {{/if}}
-      {{/each}}
-      <button
-        type="button"
-        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
-        disabled={{not hasNextPage}}
-        {{action "nextPage" this.attrs.nextPage}}>
-      </button>
-    </div>
-    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
-      {{input
-        type="number"
-        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
-        value=searchPageValue
-        enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
-      }}
-      {{#if searchPageValue}}
-        <button
-          type="button"
-          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'primary'}} next-page-button small"
-          title={{t "components.flexberry-objectlistview.search-button-text"}}
-          disabled={{searchPageButtonReadonly}}
-          {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>
-        </button>
-      {{/if}}
-    </div>
-    <div class="right menu">
-      {{#if showShowingEntries}}
-        <div class="showing-entries">
-          {{#if (and currentIntervalRecords recordsTotalCount) }}
-            {{concat
-              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-            }}
-          {{/if}}
-        </div>
-      {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
-    </div>
-  </div>
-{{/if}}

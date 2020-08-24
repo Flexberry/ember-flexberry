@@ -64,62 +64,56 @@ export default ListFormController.extend({
     addObjects() {
       let store = this.get('store');
 
-      const models = [
-        store.createRecord('ember-flexberry-dummy-application-user', {
-          name: 'NameForTest',
-          eMail: 'ya@.test',
-          id: generateUniqueId()
-        }),
-        store.createRecord('ember-flexberry-dummy-suggestion-type', {
-          name: 'typeForTest',
-          id: generateUniqueId()
-        }),
-        store.createRecord('ember-flexberry-dummy-application-user', {
-          name: 'Different NameForTest',
-          eMail: 'ti@.test',
-          id: generateUniqueId()
-        }),
-        store.createRecord('ember-flexberry-dummy-suggestion-type', {
-          name: 'Another typeForTest',
-          id: generateUniqueId()
-        }),
-      ];
+      let user1 = store.createRecord('ember-flexberry-dummy-application-user', {
+        name: 'NameForTest',
+        eMail: 'ya@.test',
+        id: generateUniqueId()
+      });
+      let type1 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
+        name: 'typeForTest',
+        id: generateUniqueId()
+      });
+      let user2 = store.createRecord('ember-flexberry-dummy-application-user', {
+        name: 'Different NameForTest',
+        eMail: 'ti@.test',
+        id: generateUniqueId()
+      });
+      let type2 = store.createRecord('ember-flexberry-dummy-suggestion-type', {
+        name: 'Another typeForTest',
+        id: generateUniqueId()
+      });
 
-      store.batchUpdate(models).then((models) => {
-        const [user1, type1, user2, type2] = models;
-        const records = [
-          store.createRecord(this.get('modelName'), {
-            address: 'TestingAddress',
-            type: type1,
-            author: user1,
-            editor1: user2,
-            id: generateUniqueId()
-          }),
-          store.createRecord(this.get('modelName'), {
-            address: '',
-            type: type1,
-            author: user2,
-            editor1: user2,
-            id: generateUniqueId()
-          }),
-          store.createRecord(this.get('modelName'), {
-            address: 'new address',
-            type: type2,
-            author: user1,
-            editor1: user1,
-            id: generateUniqueId()
-          }),
-          store.createRecord(this.get('modelName'), {
-            address: 'address with several words for testing',
-            type: type2,
-            author: user2,
-            editor1: user1,
-            id: generateUniqueId()
-          }),
-        ];
-        store.batchUpdate(records).then(() => {
-          this.send('refreshList', this.get('componentName'));
-        });
+      let record1 = store.createRecord(this.get('modelName'), {
+        address: 'TestingAddress',
+        type: type1,
+        author: user1,
+        editor1: user2,
+        id: generateUniqueId()
+      });
+      let record2 = store.createRecord(this.get('modelName'), {
+        address: '',
+        type: type1,
+        author: user2,
+        editor1: user2,
+        id: generateUniqueId()
+      });
+      let record3 = store.createRecord(this.get('modelName'), {
+        address: 'new address',
+        type: type2,
+        author: user1,
+        editor1: user1,
+        id: generateUniqueId()
+      });
+      let record4 = store.createRecord(this.get('modelName'), {
+        address: 'address with several words for testing',
+        type: type2,
+        author: user2,
+        editor1: user1,
+        id: generateUniqueId()
+      });
+
+      store.batchUpdate([user1, type1, user2, type2, record1, record2, record3, record4]).then(() => {
+        this.send('refreshList', this.get('componentName'));
       });
     },
 

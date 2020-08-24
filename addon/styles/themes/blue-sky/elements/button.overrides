@@ -19,7 +19,7 @@
     }
 }
 
-.ui.small.button {
+.ui.small.button:not(.goto-page-button) {
     border: none;
     font-size: 14px;
     &:hover {
@@ -368,7 +368,7 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     }
 }
 
-.ui.check-all-at-page-button.button {
+.object-list-view-operations .ui.check-all-at-page-button.button {
     padding: 0px;
     height: 25px;
     width: 25px;
@@ -572,16 +572,19 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
 }
 
 .ui.button.mobile-sorting-setting-button {
-    width: @navbarSortingMobileWidth;
     white-space: @navbarSortingMobileWhiteSpace;
     overflow: @navbarSortingMobileOverflow;
     text-overflow: @navbarSortingMobileTextOverflow;
+    padding: @navbarSortingMobilePaddind;
 }
 
-.nav-bar .ui.input.nav-bar-search-page {
-    width: 100px !important;
+.ui.form .field .ui.input.nav-bar-search-page {
+    max-width: @navbarSearchPageInputWidth;
 }
 
+.mobile .ui.form .field .ui.input.nav-bar-search-page {
+    max-width: 50px;
+}
 /******************************************
       Positive/negative buttons section
 *******************************************/

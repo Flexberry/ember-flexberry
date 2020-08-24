@@ -87,7 +87,8 @@
         Navbar
 --------------------*/
 /*Navbar sorting*/
-@navbarSortingMobileWidth: 180px;
 @navbarSortingMobileWhiteSpace: nowrap;
 @navbarSortingMobileOverflow: hidden;
 @navbarSortingMobileTextOverflow: ellipsis;
+@navbarSortingMobilePaddind: 0.5em;
+@navbarSearchPageInputWidth: 100px;

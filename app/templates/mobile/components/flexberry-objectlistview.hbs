@@ -39,13 +39,12 @@
   <div class="ui secondary menu no-margin nav-bar">
     <button
       type="button"
-      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button small"        
+      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button"
       title={{mobileSortingSettingsCaption}}
       disabled={{not colsConfigButton}}
-      {{action "showConfigDialog"}}
-    > 
-      <i class={{mobileSortingSettingsIcon}}></i>
-      {{mobileSortingSettingsCaption}}
+      {{action "showConfigDialog"}} >
+        <i class={{_mobileSortingSettingsIcon}}></i>
+        {{_mobileSortingSettingsCaption}}
     </button>
     <div class="right menu">
       <div class="ui basic buttons">

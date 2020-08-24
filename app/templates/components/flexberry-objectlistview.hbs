@@ -141,7 +141,7 @@
       {{#if searchPageValue}}
         <button
           type="button"
-          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled red' 'primary'}} next-page-button small"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
           title={{t "components.flexberry-objectlistview.search-button-text"}}
           disabled={{searchPageButtonReadonly}}
           {{action 'searchPageButtonAction' this.attrs.gotoPage componentName}}>

@@ -11,6 +11,6 @@ executeTest('check folv config', (store, assert, app) => {
       'showCheckBoxInRow',
       'showDeleteMenuItemInRow'
     ];
-    app.testHelpers.checkOlvConfig('[data-test-olv]', null, config);
+    checkOlvConfig('[data-test-olv]', null, assert, config);
   });
 });

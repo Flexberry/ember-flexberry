@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import goNewFormHelper from 'ember-flexberry/test-helpers/go-to-new-form';
-import checkOlvConfigHelper from 'ember-flexberry/test-helpers/check-olv-config';
+import 'ember-flexberry/test-support';
 
 export default function startApp(attrs) {
   let application;
@@ -13,14 +12,8 @@ export default function startApp(attrs) {
   Ember.run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
-    initTestHelpers();
     application.injectTestHelpers();
   });
 
   return application;
-}
-
-function initTestHelpers() {
-  goNewFormHelper();
-  checkOlvConfigHelper();
 }

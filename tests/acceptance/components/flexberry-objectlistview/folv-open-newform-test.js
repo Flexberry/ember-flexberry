@@ -6,6 +6,6 @@ executeTest('check goto new form', (store, assert, app) => {
   andThen(() => {
     const controller = app.__container__.lookup('controller:' + currentRouteName());
     const newFormRoute = controller.get('editFormRoute') + '.new';
-    app.testHelpers.goToNewForm('[data-test-olv]', null, newFormRoute);
+    goToNewForm('[data-test-olv]', null, assert, newFormRoute);
   });
 });

@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
 ### Added
 * Test helpers for opening new form and check olv config.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.7`.
+* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.8`.
 
 ## [2.5.0-beta.8] - 2020-08-07
 ### Changed

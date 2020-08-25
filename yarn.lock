@@ -2945,10 +2945,10 @@ ember-factory-for-polyfill@^1.1.0:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
-ember-flexberry-data@~2.5.0-beta.7:
-  version "2.5.0-beta.7"
-  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-2.5.0-beta.7.tgz#d008e16cae800f87289e4af7dce04316acd31267"
-  integrity sha512-mYYO0Yy5FJ9gssEeok+UYfRXaPmz5PXB1onlxqi4NqGMeEj4jm5y1+fflagehMzWzmkEyX4PsOHXSjjcAYssHQ==
+ember-flexberry-data@~2.5.0-beta.8:
+  version "2.5.0-beta.8"
+  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-2.5.0-beta.8.tgz#6a1af7e27230c98826d312313b4e82dd05226629"
+  integrity sha512-zKcFHDzk09cnTVLkyS0oZL0xwj1VxNBjhiHi+vqZ7OMn9Eg9S/TZHg5GBBBCoeJQdru0A1WT+rf8EcSm4U7kWQ==
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-cli-htmlbars "^1.0.3"

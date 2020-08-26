@@ -40,13 +40,13 @@
   <div class="ui secondary menu no-margin nav-bar">
     <button
       type="button"
-      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button small"
+      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button"
       title={{mobileSortingSettingsCaption}}
       disabled={{not colsConfigButton}}
       {{action "showConfigDialog"}}
     >
-      <i class={{mobileSortingSettingsIcon}}></i>
-      {{mobileSortingSettingsCaption}}
+        <i class={{_mobileSortingSettingsIcon}}></i>
+        {{_mobileSortingSettingsCaption}}
     </button>
     <div class="right menu">
       <div class="ui basic buttons">
@@ -64,10 +64,14 @@
         <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
           {{input
             type="number"
+            min=_pages.firstObject.number
+            max=_pages.lastObject.number
             placeholder=_mobilePages.lastObject.number
-            enter=(action 'searchPageButtonAction' this.attrs.gotoPage componentName)
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
             value=searchPageValue
           }}
+          {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
+          {{input classNames=(array "hidden")}}
         </div>
       {{/if}}
     </div>

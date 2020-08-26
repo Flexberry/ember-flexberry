@@ -78,6 +78,16 @@ export default FlexberryBaseComponent.extend({
   _switchExpandMode: 'switchExpandMode',
 
   /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default 'saveHierarchicalAttribute'
+    @private
+  */
+  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
+
+  /**
     Flag indicate when available the hierarchical mode.
 
     @property _availableHierarchicalMode
@@ -222,6 +232,16 @@ export default FlexberryBaseComponent.extend({
   defaultLeftPadding: 10,
 
   /**
+    The passed pages as Ember array.
+
+    @property _pages
+    @type Ember.Array
+  */
+  _pages: Ember.computed('pages', function () {
+    return Ember.A(this.get('pages'));
+  }),
+
+  /**
     Number page for search.
 
     @property searchPageValue
@@ -235,14 +255,14 @@ export default FlexberryBaseComponent.extend({
     @property searchPageButtonReadonly
     @type Boolean
   */
-  searchPageButtonReadonly: computed('searchPageValue', function() {
+  searchPageButtonReadonly: Ember.computed('searchPageValue', '_pages.@each.isCurrent', function() {
     const searchPageValue = this.get('searchPageValue');
     const searchPage = parseInt(searchPageValue, 10);
     if (isNaN(searchPage)) {
       return true;
     }
 
-    const pages = A(this.get('pages'));
+    const pages = this.get('_pages');
     const firstPage = pages.get('firstObject.number');
     const lastPage = pages.get('lastObject.number');
     const currentPage = pages.findBy('isCurrent').number;
@@ -1277,15 +1297,14 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @param {Action} action Action go to page.
-      @param {Number} pageNumber Number of page to go to.
+      @param {Function} action The `goToPage` action from controller.
     */
-    searchPageButtonAction(action, componentName) {
+    searchPageButtonAction(action) {
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
       if (searchPageNumber) {
-        this.send('gotoPage', action, searchPageNumber, componentName);
+        this.send('gotoPage', action, searchPageNumber);
       }
     }
   },

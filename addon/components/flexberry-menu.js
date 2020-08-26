@@ -98,12 +98,12 @@ export default FlexberryBaseComponent.extend({
   items: null,
 
   /**
-    See [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings).
+    Settings for the dropdown, see [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings) for more info.
 
     @property settings
     @type Object
   */
- settings: undefined,
+  settings: undefined,
 
   /**
     Array CSS class names.

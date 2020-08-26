@@ -328,9 +328,9 @@ export default FlexberryBaseComponent.extend({
 
     @property searchForContentChange
     @type Boolean
-    @default false
+    @default true
   */
-  searchForContentChange: false,
+  searchForContentChange: true,
 
   /**
     Flag: indicates whether to show validation messages in every row or not.

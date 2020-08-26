@@ -178,7 +178,7 @@ export function checkSortingList(store, projection, $olv, ordr) {
   return new RSVP.Promise((resolve) => {
     run(() => {
       let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
+      let builder = new Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
       builder = !ordr ? builder : builder.orderBy(ordr);
       store.query(modelName, builder.build()).then((records) => {
         let recordsArr = records.toArray();

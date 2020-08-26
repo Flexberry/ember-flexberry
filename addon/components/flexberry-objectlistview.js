@@ -237,8 +237,8 @@ export default FlexberryBaseComponent.extend({
     @property _pages
     @type Ember.Array
   */
-  _pages: Ember.computed('pages', function () {
-    return Ember.A(this.get('pages'));
+  _pages: computed('pages', function () {
+    return A(this.get('pages'));
   }),
 
   /**
@@ -255,7 +255,7 @@ export default FlexberryBaseComponent.extend({
     @property searchPageButtonReadonly
     @type Boolean
   */
-  searchPageButtonReadonly: Ember.computed('searchPageValue', '_pages.@each.isCurrent', function() {
+  searchPageButtonReadonly: computed('searchPageValue', '_pages.@each.isCurrent', function() {
     const searchPageValue = this.get('searchPageValue');
     const searchPage = parseInt(searchPageValue, 10);
     if (isNaN(searchPage)) {

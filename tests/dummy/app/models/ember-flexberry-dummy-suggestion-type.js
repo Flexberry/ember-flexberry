@@ -79,7 +79,7 @@ Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type
 Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type', {
   name: attr('Name'),
   moderated: attr('Moderated'),
-  isParentRecord: Projection.attr('IsParentRecord', {
+  isParentRecord: attr('IsParentRecord', {
     hidden: true
   }),
   parent: belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {

@@ -19,6 +19,8 @@ pushd "$TMP_DIR"
 ember init --skip-npm
 cp app/index.html .
 rm -r app/*
+rm -f ./tests/.jshintrc
+rm -f ./tests/helpers/start-app.js
 mv index.html app
 npm install
 
@@ -68,6 +70,8 @@ ember install "${ADDON_DIR}"
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
+rm -f ./tests/.jshintrc
+rm -f ./tests/helpers/start-app.js
 rm -f ./tests/dummy/app/app.js
 rm -f ./tests/dummy/app/resolver.js
 rm -f ./tests/dummy/app/router.js

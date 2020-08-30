@@ -41,7 +41,7 @@ pushd "$TMP_DIR"
 ember generate flexberry-application app --metadata-dir=${META_DIR}
 
 #ember build
-ember test
+ember test --filter="!JSHint"
 
 # Cleanup.
 popd
@@ -83,7 +83,7 @@ rm -f ./.jscsrc
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application --metadata-dir=${META_DIR}
 
-ember test
+ember test --filter="!JSHint"
 
 # Cleanup.
 popd

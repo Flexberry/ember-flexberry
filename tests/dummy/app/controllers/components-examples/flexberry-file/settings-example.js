@@ -47,6 +47,14 @@ export default EditFormController.extend({
   maxUploadFileSize: null,
 
   /**
+    Max upload file size (in bytes) for 'flexberry-file' component 'maxUploadFileSizeUnit' property.
+
+    @property maxUploadFileSizeUnit
+    @type String
+   */
+  maxUploadFileSizeUnit: 'Bt',
+
+  /**
     Flag for 'flexberry-file' component 'showPreview' property.
 
     @property showPreview
@@ -114,6 +122,7 @@ export default EditFormController.extend({
     '  readonly=readonly<br>' +
     '  uploadUrl=uploadUrl<br>' +
     '  maxUploadFileSize=maxUploadFileSize<br>' +
+    '  maxUploadFileSizeUnit=maxUploadFileSizeUnit<br>' +
     '  showPreview=showPreview<br>' +
     '  showUploadButton=showUploadButton<br>' +
     '  showDownloadButton=showDownloadButton<br>' +
@@ -164,6 +173,19 @@ export default EditFormController.extend({
       settingType: 'number',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'maxUploadFileSize'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxUploadFileSizeUnit',
+      settingType: 'enumeration',
+      settingAvailableItems: [
+        'Bt',
+        'Kb',
+        'Mb',
+        'Gb'
+      ],
+      // settingAvailableItems: this.get('maxUploadFileSizeUnit'),
+      settingDefaultValue: 'Bt',
+      bindedControllerPropertieName: 'maxUploadFileSizeUnit'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showPreview',

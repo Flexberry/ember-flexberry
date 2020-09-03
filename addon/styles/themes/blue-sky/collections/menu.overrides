@@ -82,6 +82,7 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     height: @itemButtonHeight;
     margin: @itemButtonMargin;
     float: @itemButtonFloat;
+    width: auto;
     &:hover {
       background-color: @itemButtonHoverBackground;
     }

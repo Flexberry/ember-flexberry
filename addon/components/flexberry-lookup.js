@@ -83,9 +83,9 @@ export default FlexberryBaseComponent.extend({
     This property is used in order to cache last value
     of autocomplete input.
 
-    @property _lastAutocompleteValue
     @private
-    @type string
+    @property _lastAutocompleteValue
+    @type String
   */
   _lastAutocompleteValue: undefined,
 
@@ -1090,12 +1090,10 @@ export default FlexberryBaseComponent.extend({
           }
 
           // Set default page to value change.
-          if (_this.get('_lastAutocompleteValue') && settings.urlData.query !== _this.get('_lastAutocompleteValue')) {
-            _this.set('_pageInResultsForAutocomplete', 1)
+          if (_this.get('_lastAutocompleteValue') !== settings.urlData.query) {
+            _this.set('_pageInResultsForAutocomplete', 1);
+            _this.set('_lastAutocompleteValue', settings.urlData.query);
           }
-
-          _this.set('_lastAutocompleteValue', settings.urlData.query)
-          
 
           let autocompleteProjection = _this.get('autocompleteProjection');
           let autocompleteOrder = _this.get('autocompleteOrder');
@@ -1168,7 +1166,7 @@ export default FlexberryBaseComponent.extend({
                 newRelationValue: result.instance
               });
           });
-        } else  {
+        } else {
           if (_this.get('usePaginationForAutocomplete')) {
             state = 'loading';
             if (result.nextPage) {

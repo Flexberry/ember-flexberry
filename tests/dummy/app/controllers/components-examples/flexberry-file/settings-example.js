@@ -183,7 +183,6 @@ export default EditFormController.extend({
         'Mb',
         'Gb'
       ],
-      // settingAvailableItems: this.get('maxUploadFileSizeUnit'),
       settingDefaultValue: 'Bt',
       bindedControllerPropertieName: 'maxUploadFileSizeUnit'
     });

@@ -66,38 +66,31 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
 
 
 .menu .flexberry-menuitem.item {
-  display: flex;
   &.dividing:after {
     content: '';
-    height: 1px;
-    width: calc(~'100% - 2em');
-    position: absolute;
-    left: 1em;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    height: @itemDividingHeight;
+    width: @itemDividingWidth;
+    position: @itemDividingPosition;
+    left: @itemDividingLeft;
+    bottom: @itemDividingBottom;
+    background-color: @itemDividingBackground;
   }
   .ui.button.icon {
-    padding: 0;
-    line-height: 1;
-    padding: 0;
-    border: none;
-    height: auto;
-    margin: 0 0 0 0.5em;
+    padding: @itemButtonPadding;
+    line-height: @itemButtonLineHeight;
+    border: @itemButtonBorder;
+    height: @itemButtonHeight;
+    margin: @itemButtonMargin;
+    float: @itemButtonFloat;
+    width: auto;
     &:hover {
-      background-color: transparent!important;
+      background-color: @itemButtonHoverBackground;
     }
   }
 }
 
-.flexberry-menu.ui.dropdown .menu > .item {
-  display: flex;
-  align-items: center;
-  span {
-    flex-basis: 100%;
-  }
-  .ui.button.icon > .icon:not(.dropdown) {
+.flexberry-menu.ui.dropdown .menu > .item .ui.button.icon > .icon:not(.dropdown) {
     margin: 0;
-  }
 }
 
 .mobile div.ui.secondary.menu.no-margin.nav-bar .right.menu {

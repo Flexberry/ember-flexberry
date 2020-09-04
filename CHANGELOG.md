@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.5.0-beta.10] - 2020-09-04
+### Fixed
+* Various errors after testing.
+
 ## [2.5.0-beta.9] - 2020-08-25
 ### Added
 * Test helpers for opening new form and check olv config.

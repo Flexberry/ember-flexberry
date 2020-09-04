@@ -854,7 +854,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.onInputFocusOut
     */
     onInputFocusOut() {
-      if (!this.get('value') && !this.get('autocompletePersistValue')) {
+      if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
         this.set('displayValue', null);
       }
     }

@@ -113,6 +113,7 @@
   <div class="check-rows-container">
     {{#if (not-eq class "groupedit-container")}}
       {{flexberry-menu
+        _skipDropdownInit=true
         onlyClickHandler=true
         items=_checkRowsSettingsItems
         settings=(hash direction="upward")

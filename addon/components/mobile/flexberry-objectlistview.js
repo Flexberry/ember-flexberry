@@ -288,9 +288,10 @@ export default FlexberryObjectlistview.extend({
 
     return sortingValue;
   }),
+
   actions: {
     showConfigDialog() {
-      this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, false, false);
+      this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, this.get('useSidePageMode'), false);
     }
   }
 });

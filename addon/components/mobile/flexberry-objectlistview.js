@@ -252,10 +252,10 @@ export default FlexberryObjectlistview.extend({
 
     let sortingValue;
     sorting.forEach((column) => {
-      let columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, column.key)).string;
+      let columnHeader = i18n.t(getAttrLocaleKey(this.get('content.query.modelName'), this.get('modelProjection').projectionName, column.key)).string;
       if (columnHeader !== undefined) {
         let key = column.key.split('.')[0];
-        columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, key)).string;
+        columnHeader = i18n.t(getAttrLocaleKey(this.get('content.query.modelName'), this.get('modelProjection').projectionName, key)).string;
       }
 
       if (sortingValue  !== undefined) {

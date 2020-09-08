@@ -248,6 +248,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
+        },
       }
     },
     'ember-flexberry-dummy-comment': {

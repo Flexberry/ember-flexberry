@@ -258,6 +258,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'parent': {
+            __caption__: 'Parent'
+          },
+        },
       }
     },
   },

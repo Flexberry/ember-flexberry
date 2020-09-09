@@ -458,6 +458,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       componentName: reloadData.componentName,
       folvComponentName: reloadData.folvComponentName,
       notUseUserSettings: reloadData.notUseUserSettings,
+      modelName: reloadData.relatedToType,
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,

@@ -979,6 +979,10 @@ $.extend(true, translations, {
             'validation': {
               'caption': 'Validation',
               'title': ''
+            },
+            'theming-components': {
+              'caption': 'Theming',
+              'title': ''
             }
           }
         },

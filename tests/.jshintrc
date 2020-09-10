@@ -21,7 +21,9 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "checkOlvSortForEachColumn",
+    "checkOlvSortOnAllColumns"
   ],
   "node": false,
   "browser": false,
@@ -48,5 +50,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": "vars" 
+  "unused": "vars"
 }

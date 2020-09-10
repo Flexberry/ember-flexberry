@@ -48,15 +48,6 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: service(),
 
   /**
-    Flag used to display filters in modal.
-
-    @property showFiltersInModal
-    @type Boolean
-    @default false
-  */
-  showFiltersInModal: false,
-
-  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -85,6 +76,16 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _switchExpandMode: 'switchExpandMode',
+
+  /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default 'saveHierarchicalAttribute'
+    @private
+  */
+  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
 
   /**
     Flag indicate when available the hierarchical mode.
@@ -195,6 +196,15 @@ export default FlexberryBaseComponent.extend({
   useSidePageMode: undefined,
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: undefined,
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath
@@ -222,6 +232,16 @@ export default FlexberryBaseComponent.extend({
   defaultLeftPadding: 10,
 
   /**
+    The passed pages as Ember array.
+
+    @property _pages
+    @type Ember.Array
+  */
+  _pages: computed('pages', function () {
+    return A(this.get('pages'));
+  }),
+
+  /**
     Number page for search.
 
     @property searchPageValue
@@ -230,19 +250,19 @@ export default FlexberryBaseComponent.extend({
   searchPageValue: undefined,
 
   /**
-    Flag used for disable searchPageButton.
+    Flag used for disabling searchPageButton.
 
     @property searchPageButtonReadonly
     @type Boolean
   */
-  searchPageButtonReadonly: computed('searchPageValue', function() {
+  searchPageButtonReadonly: computed('searchPageValue', '_pages.@each.isCurrent', function() {
     const searchPageValue = this.get('searchPageValue');
     const searchPage = parseInt(searchPageValue, 10);
     if (isNaN(searchPage)) {
       return true;
     }
 
-    const pages = A(this.get('pages'));
+    const pages = this.get('_pages');
     const firstPage = pages.get('firstObject.number');
     const lastPage = pages.get('lastObject.number');
     const currentPage = pages.findBy('isCurrent').number;
@@ -1277,15 +1297,15 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @public
-      @param {Action} action Action go to page.
-      @param {Number} pageNumber Number of page to go to.
+      @param {Function} action The `goToPage` action from controller.
     */
-    searchPageButtonAction(action, componentName) {
+    searchPageButtonAction(action) {
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
-      this.send('gotoPage', action, searchPageNumber, componentName);
+      if (searchPageNumber) {
+        this.send('gotoPage', action, searchPageNumber);
+      }
     }
   },
 
@@ -1478,6 +1498,7 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showFiltersInModal', defaultValue: false });
   },
 
   /**

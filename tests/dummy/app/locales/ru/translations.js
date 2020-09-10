@@ -1353,7 +1353,8 @@ $.extend(true, translations, {
           'caption': 'Flexberry-menu. Пример работы с настройками',
           'titleIcon1': 'Значок выравнен по левому краю',
           'titleIcon2': 'Значок выравнен по правому краю',
-          'titleIcon3': 'Подменю'
+          'titleIcon3': 'Подменю',
+          'titleIcon4': 'Кнопки в строке'
         }
       },
       'flexberry-objectlistview': {
@@ -1515,7 +1516,7 @@ $.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration examples. Валидация',
+          'caption': 'Примеры интеграции. Валидация',
           'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',

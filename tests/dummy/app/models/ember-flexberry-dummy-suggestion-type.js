@@ -16,6 +16,7 @@ const Validations = buildValidations({
 let Model = EmberFlexberryDataModel.extend(Validations, {
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
+  isParentRecord: DS.attr('boolean'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   parent: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -78,6 +79,9 @@ Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type
 Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type', {
   name: attr('Name'),
   moderated: attr('Moderated'),
+  isParentRecord: attr('IsParentRecord', {
+    hidden: true
+  }),
   parent: belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
     name: attr('Name', {
       hidden: true

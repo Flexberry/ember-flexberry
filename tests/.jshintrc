@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "checkOlvConfig",
-    "goToNewForm"
+    "goToNewForm",
+    "checkDeleteRecordFromOlv"
   ],
   "node": false,
   "browser": false,

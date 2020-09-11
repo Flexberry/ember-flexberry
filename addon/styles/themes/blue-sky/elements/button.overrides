@@ -19,7 +19,7 @@
     }
 }
 
-.ui.small.button:not(.goto-page-button) {
+.ui.small.button {
     border: none;
     font-size: 14px;
     &:hover {
@@ -27,6 +27,9 @@
     }
 }
 
+.ui.small.button.goto-page-button:hover {
+    background-color: @primaryColorHover;
+}
 .ui.buttons .disabled.button {
     color: #999;
 }
@@ -578,13 +581,13 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     padding: @navbarSortingMobilePaddind;
 }
 
-.ui.form .field .ui.input.nav-bar-search-page {
+.ui.input.nav-bar-search-page {
     max-width: @navbarSearchPageInputWidth;
+    .mobile & {
+        max-width: @navbarSearchPageInputWidthMobile;
+    }
 }
 
-.mobile .ui.form .field .ui.input.nav-bar-search-page {
-    max-width: 50px;
-}
 /******************************************
       Positive/negative buttons section
 *******************************************/

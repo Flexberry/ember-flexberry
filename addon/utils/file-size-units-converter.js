@@ -31,6 +31,8 @@ let getSizeInUnits = function (fileSize, fileSizeUnits) {
     case 'Gb':
       fileSizeInUnits *= 1e-9;
       break;
+    case 'Bt':
+      break;
     default:
       throw new Error(`Wrong value of file size units - ${fileSizeUnits}`);
   }

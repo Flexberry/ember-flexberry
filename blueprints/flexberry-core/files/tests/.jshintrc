@@ -23,9 +23,7 @@
     "currentPath",
     "currentRouteName",
     "checkOlvConfig",
-    "goToNewForm",
-    "checkOlvSortForEachColumn",
-    "checkOlvSortOnAllColumns"
+    "goToNewForm"
   ],
   "node": false,
   "browser": false,
@@ -52,5 +50,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": "vars"
+  "unused": true
 }

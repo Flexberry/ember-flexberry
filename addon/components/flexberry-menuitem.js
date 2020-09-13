@@ -34,6 +34,14 @@ export default FlexberryBaseComponent.extend({
   item: null,
 
   /**
+    Settings for the dropdown, see [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings) for more info.
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
+  /**
     Flag: indicates whether menu item has some nested subitems or not.
 
     @property hasSubitems
@@ -107,7 +115,7 @@ export default FlexberryBaseComponent.extend({
     } else {
       let parentView = this.get('parentView');
       parentView.$().data('flexberry-menu', item)
-                    .dropdown();
+                    .dropdown(this.get('settings'));
     }
   },
 

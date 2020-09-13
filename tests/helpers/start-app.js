@@ -3,6 +3,8 @@ import config from '../../config/environment';
 import { merge } from '@ember/polyfills';
 import { run } from '@ember/runloop';
 
+import 'ember-flexberry/test-support';
+
 export default function startApp(attrs) {
   let attributes = merge({}, config.APP);
   attributes.autoboot = true;

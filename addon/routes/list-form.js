@@ -190,6 +190,10 @@ ErrorableRouteMixin, {
               this.transitionTo(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
             /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
+
+            // When abort transition loses the query parameters for the next transition.
+            // transition.abort();
+            return;
           }
         }
 

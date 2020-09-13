@@ -83,6 +83,7 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
         this.promise = this.emberGenerateFlexberryGroup("transform");
         this.promise = this.emberGenerateFlexberryGroup("transform-test");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-acceptance-test");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");

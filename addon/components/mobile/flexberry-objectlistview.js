@@ -221,8 +221,12 @@ export default FlexberryObjectlistview.extend({
   */
   _currecntSortingArray: computed('sorting',  function() {
     let sorting = this.get('sorting');
-    let sortingKeys = Object.keys(sorting);
     let columns = A();
+    if (sorting === null) {
+      return columns;
+    }
+
+    let sortingKeys = Object.keys(sorting);
     sortingKeys.forEach(key => {
       let column = sorting[key];
       columns.pushObject({

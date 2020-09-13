@@ -38,6 +38,9 @@ var GroupBlueprint = (function () {
             case 'transform-test':
                 this.emberGenerate("objects");
                 break;
+            case 'flexberry-acceptance-test':
+                this.emberGenerate("list-forms");
+                break;
             case 'flexberry-enum':
                 this.emberGenerate("enums");
                 break;

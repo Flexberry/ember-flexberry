@@ -71,6 +71,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    See comment on using this.
+
+    @private
+    @property _skipDropdownInit
+    @type Boolean
+    @default false
+  */
+  _skipDropdownInit: false,
+
+  /**
     Flag: indicates whether to call 'items.[].onClick' callbacks or not.
 
     @property callItemsOnClickCallbacks
@@ -176,8 +186,12 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on(this.get('onlyClickHandler') ? 'click' : 'click touchstart', onClickHandler);
-    this.$().dropdown(this.get('settings'));
-    this._getActionForMenu(this.get('collapseMenuOnItemClick'));
+
+    // The dropdown is also initialized in the root flexberry-menuitem component, which can cause various problems.
+    // I haven't found a way to fix this without breaking anything.
+    if (!this.get('_skipDropdownInit')) {
+      this.$().dropdown(this.get('settings'));
+    }
   },
 
   /**

@@ -159,24 +159,24 @@ export default ObjectListViewComponent.extend({
     */
     deleteSelectedRow() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect')) {
-        this._deleteRows(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: this.get('modelProjection.modelName')
-        };
-
-        this._deleteAllRows(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -196,5 +196,24 @@ export default ObjectListViewComponent.extend({
         });
       }
     },
-  }
+  },
+
+  /**
+    @private
+    @method _confirmDeleteRows
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect')) {
+      this._deleteRows(componentName, true);
+    } else {
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: this.get('modelProjection.modelName')
+      };
+
+      this._deleteAllRows(componentName, filterQuery);
+    }
+  },
 });

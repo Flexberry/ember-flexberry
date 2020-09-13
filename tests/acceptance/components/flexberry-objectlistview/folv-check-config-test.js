@@ -8,7 +8,6 @@ executeTest('check folv config', (store, assert) => {
       'createNewButton',
       'deleteButton',
       'refreshButton',
-      'showCheckBoxInRow',
       'showDeleteMenuItemInRow'
     ];
     checkOlvConfig('[data-test-olv]', null, assert, config);

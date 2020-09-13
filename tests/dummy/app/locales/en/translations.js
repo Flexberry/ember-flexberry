@@ -408,14 +408,6 @@ $.extend(true, translations, {
             __caption__: 'Moderated'
           }
         },
-        'CustomizeLookupWindowExampleView': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          }
-        },
         'LookupWithLimitFunctionExampleView': {
           'name': {
             __caption__: 'Name'

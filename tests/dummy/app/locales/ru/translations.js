@@ -408,14 +408,6 @@ $.extend(true, translations, {
             __caption__: 'Одобрено'
           }
         },
-        'CustomizeLookupWindowExampleView': {
-          'name': {
-            __caption__: 'Наименование'
-          },
-          'moderated': {
-            __caption__: 'Одобрено'
-          }
-        },
         'LookupWithLimitFunctionExampleView': {
           'name': {
             __caption__: 'Наименование'

@@ -237,38 +237,6 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env1,
-        {
-          after: 'module.exports = function(environment) {\n'
-        }
-      );
-    }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env2,
-        {
-          after: 'EmberENV: {\n'
-        }
-      );
-    }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env3,
-        {
-          after: 'APP: {\n'
-        }
-      );
-    }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env4,
-        {
-          before: '\n  if (environment === \'development\') {\n'
-        }
-      );
-    }).then(function() {
       return _this.addBowerPackagesToProject([
         { name: 'devicejs', target: '0.2.7' },
         { name: 'blueimp-file-upload', target: '9.11.2' },

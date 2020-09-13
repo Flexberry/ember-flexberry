@@ -1,6 +1,6 @@
 import { executeTest } from './execute-folv-test';
 
-executeTest('check folv config', (store, assert, app) => {
+executeTest('check folv config', (store, assert) => {
   const path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {

@@ -2,6 +2,8 @@
   @module ember-flexberry
 */
 
+import { Promise } from 'rsvp';
+
 import { assert } from '@ember/debug';
 import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
@@ -166,12 +168,12 @@ export default ObjectListViewComponent.extend({
 
         possiblePromise = confirmDeleteRows();
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
+        if ((!possiblePromise || !(possiblePromise instanceof Promise))) {
           return;
         }
       }
 
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      if (possiblePromise || (possiblePromise instanceof Promise)) {
         possiblePromise.then(() => {
           this._confirmDeleteRows();
         });

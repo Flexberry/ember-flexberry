@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
+import { isBlank } from '@ember/utils';
 
-Ember.Test.registerAsyncHelper('goToNewForm',
+registerAsyncHelper('goToNewForm',
   function(app, olvSelector, context, assert, newRoute) {
-    if (Ember.isBlank(newRoute)) {
+    if (isBlank(newRoute)) {
       throw new Error('newRoute can\'t be undefined');
     }
 

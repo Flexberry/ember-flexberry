@@ -25,8 +25,6 @@ cd ember-app
 # so we need to remove them for non-interactive build.
 cp app/index.html .
 rm -r app/*
-rm -f ./tests/.jshintrc
-rm -f ./tests/helpers/start-app.js
 mv index.html app
 
 ember install "${ADDON_DIR}" --yarn
@@ -43,7 +41,7 @@ rm -f ./.eslintrc.js
 ember generate flexberry-application app --metadata-dir=${META_DIR}
 
 # Run tests.
-ember test --filter="!JSHint"
+ember test
 
 # Cleanup.
 popd
@@ -67,14 +65,12 @@ bower install
 # so we need to remove them for non-interactive build.
 rm -r tests/dummy/app/*[!index.html]
 rm -f ./.eslintrc.js
-rm -f ./tests/.jshintrc
-rm -f ./tests/helpers/start-app.js
 
 # Generate components using Dummy metamodel.
 ember generate flexberry-application --metadata-dir=${META_DIR}
 
 # Run tests.
-ember test --filter="!JSHint"
+ember test
 
 # Cleanup.
 popd

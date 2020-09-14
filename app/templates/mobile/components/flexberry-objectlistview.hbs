@@ -70,6 +70,8 @@
             enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
             value=searchPageValue
           }}
+          {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
+          {{input classNames=(array "hidden")}}
         </div>
       {{/if}}
     </div>

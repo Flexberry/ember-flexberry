@@ -80,7 +80,7 @@ export default Mixin.create({
       @param componentName Component name.
       @param filterColumns columns with available filters.
     */
-    showFiltersDialog(componentName, filterColumns) {
+    showFiltersDialog(componentName, filterColumns, useSidePageMode) {
       let controller = this.get('filtersDialogController');
       controller.set('mainControler', this);
 
@@ -95,7 +95,7 @@ export default Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'filters-dialog-content',
-        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName } }, loadingParams);
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName, useSidePageMode: useSidePageMode } }, loadingParams);
     },
 
     /**

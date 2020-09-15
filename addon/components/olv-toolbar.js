@@ -663,8 +663,9 @@ export default FlexberryBaseComponent.extend({
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
         const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
+        const useSidePageMode = this.get('useSidePageMode');
 
-        this.get('modelController').send('showFiltersDialog', componentName, columns);
+        this.get('modelController').send('showFiltersDialog', componentName, columns, useSidePageMode);
       } else {
         this.sendAction('toggleStateFilters');
       }

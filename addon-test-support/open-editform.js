@@ -11,10 +11,10 @@ Ember.Test.registerAsyncHelper('openEditform',
 
     const rows = helpers.findWithAssert('.object-list-view-container table.object-list-view tbody tr', olv);
     
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
+    const controller = app.__container__.lookup('controller:' + currentRouteName());
     controller.set('rowClickable', true);
   
-    let timeout = 1000;    
+    const timeout = 1000;    
     Ember.run.later((function() {
       helpers.click(rows[1].children[1]);
       Ember.run.later((function() {

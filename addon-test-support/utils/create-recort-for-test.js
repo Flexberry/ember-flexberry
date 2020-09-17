@@ -1,6 +1,6 @@
 // Create record.
-let createRecord = function(store, model, prop, id, data) {
-  let record = store.createRecord(model, {
+const createRecord = function(store, model, prop, id, data) {
+  const record = store.createRecord(model, {
     id: id
   });
 

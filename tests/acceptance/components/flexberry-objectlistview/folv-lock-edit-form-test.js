@@ -7,8 +7,8 @@ executeTest('check lock edit form', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let model = 'ember-flexberry-dummy-suggestion-type';
-    let prop = 'name';
+    const model = 'ember-flexberry-dummy-suggestion-type';
+    const prop = 'name';
     checkLockEditForm('[data-test-olv]', null, assert, store, model, prop, path);
   });
 });

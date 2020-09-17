@@ -2,7 +2,7 @@ import { executeTest } from './execute-folv-test';
 
 executeTest('check sorting for each column', (store, assert, app) => {
   assert.expect(1);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
+  const path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
 

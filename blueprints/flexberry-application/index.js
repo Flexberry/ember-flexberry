@@ -1,5 +1,6 @@
 "use strict";
 var child_process = require('child_process');
+var fs = require("fs");
 var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
@@ -92,7 +93,7 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-        if (!(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon")) {
+        if (!(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" || fs.existsSync("app/routes/index.js"))) {
             this.promise = this.emberGenerate("route", "index");
         }
         this.promise = this.emberGenerate("flexberry-common", "app");

@@ -116,7 +116,7 @@ class ApplicationBlueprint {
     this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-    if( !(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" )) {
+    if( !(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" || fs.existsSync("app/routes/index.js") )) {
       this.promise = this.emberGenerate("route", "index");
     }
     this.promise = this.emberGenerate("flexberry-common", "app");

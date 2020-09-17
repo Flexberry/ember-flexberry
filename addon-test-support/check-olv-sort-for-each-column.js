@@ -18,7 +18,7 @@ Ember.Test.registerAsyncHelper('checkOlvSortForEachColumn',
 );
 
 let checkColumns = function(headCells, index, olv, helpers, assert) {
-  let headCell = headCells[index];
+  const headCell = headCells[index];
 
   click('.ui.clear-sorting-button');
   click(headCell);

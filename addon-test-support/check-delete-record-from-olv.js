@@ -7,11 +7,11 @@ Ember.Test.registerAsyncHelper('checkDeleteRecordFromOlv',
     const helpers = app.testHelpers;
     const olv = helpers.findWithAssert(olvSelector, context);
 
-    let currentData = moment().format('DD.MM.YYYY HH:mm');
-    let deleteUseRowButton = generateUniqueId();
-    let deleteUseRowMeny = generateUniqueId();
-    let deleteUseToolbar1 = generateUniqueId();
-    let deleteUseToolbar2 = generateUniqueId();
+    const currentData = moment().format('DD.MM.YYYY HH:mm');
+    const deleteUseRowButton = generateUniqueId();
+    const deleteUseRowMeny = generateUniqueId();
+    const deleteUseToolbar1 = generateUniqueId();
+    const deleteUseToolbar2 = generateUniqueId();
 
     Ember.RSVP.all([
       createRecord(store, model, prop, deleteUseRowButton, currentData),

@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "checkOlvConfig",
-    "goToNewForm"
+    "goToNewForm",
+    "checkLockEditForm"
   ],
   "node": false,
   "browser": false,

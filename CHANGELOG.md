@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.5.0] - 2020-09-17
+### Added
+* Changes from [`2.5.0`](#250---2020-09-10) version.
+
+### Fixed
+* Generating and displaying validations in edit forms.
+* Some problems with the styles of the `ui-message` component. Add `@flexberry-uimessage: 'YOUR_THEME';` and replace `@message: 'default';` with `@message: 'YOUR_THEME';` in your application's `theme.config` file.
+
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.5.0`.
 
@@ -54,13 +62,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking changes
 * Removed the `parse-cols-config-sorting` helper.
-
-## [3.5.0-beta.0] - 2020-07-24
-### Added
-* Changes from [`2.5.0-beta.7`](#250-beta7---2020-07-22) version.
-
-### Fixed
-* Generating and displaying validations in edit forms.
 
 ## [3.4.0] - 2020-07-10
 ### Added

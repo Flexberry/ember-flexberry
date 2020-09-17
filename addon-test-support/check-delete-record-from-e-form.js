@@ -8,8 +8,8 @@ Ember.Test.registerAsyncHelper('checkDeleteRecordFromEditForm',
     const helpers = app.testHelpers;
     const olv = helpers.findWithAssert(olvSelector, context);
 
-    let currentData = moment().format('DD.MM.YYYY HH:mm');
-    let deleteRecordId = generateUniqueId();
+    const currentData = moment().format('DD.MM.YYYY HH:mm');
+    const deleteRecordId = generateUniqueId();
 
     createRecord(store, model, prop, deleteRecordId, currentData).then(() => {
       assert.expect(assert.expect() + 4);
@@ -18,14 +18,14 @@ Ember.Test.registerAsyncHelper('checkDeleteRecordFromEditForm',
       visit(`${currentPathPage}?filter=${currentData} ${deleteRecordId}`);
       andThen(() => {
         const helperColumn = helpers.find('tbody .object-list-view-helper-column', olv).toArray();
-        let row = helpers.find('tbody tr', olv);
-        let cell = helpers.find('td', row)[1];
+        const row = helpers.find('tbody tr', olv);
+        const cell = helpers.find('td', row)[1];
 
         assert.equal(1, helperColumn.length);
 
-        let controller = app.__container__.lookup(`controller:${currentPath()}`);
-        let editFormRoute = Ember.get(controller, 'editFormRoute');
-        let waiterFunction = () => { return currentPath() === editFormRoute };
+        const controller = app.__container__.lookup(`controller:${currentPath()}`);
+        const editFormRoute = Ember.get(controller, 'editFormRoute');
+        const waiterFunction = () => { return currentPath() === editFormRoute };
 
         Ember.Test.registerWaiter(waiterFunction);
         click(cell);

@@ -23,13 +23,13 @@ let checkColumns = function(headCells, index, olv, helpers, assert) {
   click('.ui.clear-sorting-button');
   click(headCell);
   andThen(() => {
-    let sortValue = getHeaderSort(olv, index, helpers);
+    const sortValue = getHeaderSort(olv, index, helpers);
     assert.equal('▲', sortValue.icon, 'Sorting icon is not correct');
     assert.equal(1, sortValue.index, 'Sorting index is not correct');
 
     click(headCell);
     andThen(() => {
-      let sortValue = getHeaderSort(olv, index, helpers);
+      const sortValue = getHeaderSort(olv, index, helpers);
       assert.equal('▼', sortValue.icon, 'Sorting icon is not correct');
       assert.equal(1, sortValue.index, 'Sorting index is not correct');
 

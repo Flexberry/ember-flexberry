@@ -21,17 +21,17 @@ Ember.Test.registerAsyncHelper('checkOlvSortOnAllColumns',
 );
 
 let checkColumns = function(headCells, index, olv, helpers, assert) {
-  let headCell = headCells[index];
+  const headCell = headCells[index];
 
   triggerEvent(headCell, 'click', { ctrlKey: true });
   andThen(() => {
-    let sortValue = getHeaderSort(olv, index, helpers);
+    const sortValue = getHeaderSort(olv, index, helpers);
     assert.equal('▲', sortValue.icon, 'Sorting icon is not correct');
     assert.equal(index + 1, sortValue.index, 'Sorting index is not correct');
 
     triggerEvent(headCell, 'click', { ctrlKey: true });
     andThen(() => {
-      let sortValue = getHeaderSort(olv, index, helpers);
+      const sortValue = getHeaderSort(olv, index, helpers);
       assert.equal('▼', sortValue.icon, 'Sorting icon is not correct');
       assert.equal(index + 1, sortValue.index, 'Sorting index is not correct');
 

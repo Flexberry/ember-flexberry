@@ -7,9 +7,10 @@
     needChecksOnValue=false
     isSearch=true
     isSearchReadOnly=dropdownIsSearch
+    data-test-lookup-dropdown=true
   }}
 {{else}}
-  <div class="ui fluid action input {{if readonly "disabled"}}">
+  <div data-test-lookup class="ui fluid action input {{if readonly "disabled"}}">
     {{input
       type="text"
       class=(concat "lookup-field " (if autocomplete "prompt"))
@@ -21,6 +22,7 @@
     {{#if showPreviewButton }}
       {{#if (and previewFormRoute value)}}
         <button
+          data-test-lookup-preview
           class="ui ui-preview {{if isBlocked " disabled"}} {{previewButtonClass}} button"
           title={{t "components.flexberry-lookup.preview-button-text"}}
           type={{if autocomplete "button" ""}}
@@ -30,6 +32,7 @@
       {{/if}}
     {{/if}}
     <button
+      data-test-lookup-change
       class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
       title={{t "components.flexberry-lookup.choose-button-text"}}
       type={{if autocomplete "button" ""}}
@@ -37,6 +40,7 @@
       {{{chooseText}}}
     </button>
     <button
+      data-test-lookup-clear
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
       type={{if autocomplete "button" ""}}

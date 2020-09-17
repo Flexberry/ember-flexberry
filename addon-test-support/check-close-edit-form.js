@@ -8,14 +8,14 @@ Ember.Test.registerAsyncHelper('checkCloseEditForm',
     assert.expect(assert.expect() + 3);
 
     const helperColumn = helpers.find('tbody .object-list-view-helper-column', olv).toArray();
-    let row = helpers.find('tbody tr', olv);
-    let cell = helpers.find('td', row)[1];
+    const row = helpers.find('tbody tr', olv);
+    const cell = helpers.find('td', row)[1];
 
     assert.notEqual(0, helperColumn.length);
 
-    let controller = app.__container__.lookup(`controller:${path}`);
-    let editFormRoute = Ember.get(controller, 'editFormRoute');
-    let waiterFunction = () => { return currentPath() === editFormRoute };
+    const controller = app.__container__.lookup(`controller:${path}`);
+    const editFormRoute = Ember.get(controller, 'editFormRoute');
+    const waiterFunction = () => { return currentPath() === editFormRoute };
 
     Ember.Test.registerWaiter(waiterFunction);
     click(cell);

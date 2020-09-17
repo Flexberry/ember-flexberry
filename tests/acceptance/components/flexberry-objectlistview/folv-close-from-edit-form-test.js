@@ -2,7 +2,7 @@ import { executeTest } from './execute-folv-test';
 
 executeTest('check close button from edit form', (store, assert, app) => {
   assert.expect(1);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);
   andThen(() => {
 

@@ -10,14 +10,28 @@
   }}
 {{else}}
   <div class="ui fluid action input {{if readonly "disabled"}}">
-    {{input
-      type="text"
-      class=(concat "lookup-field " (if autocomplete "prompt"))
-      placeholder=placeholder
-      value=displayValue
-      focusOut=(action "onInputFocusOut")
-      readonly=(if (or readonly (not autocomplete)) "readonly")
-    }}
+    {{#if hasBlock}}
+      <div
+        {{action "choose" chooseData}}
+        class="ui transparent {{if (or readonly isBlocked) " disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} icon input ">
+        <span class="lookup-field">
+          {{#if value}}
+            {{yield}}
+          {{else}}
+            {{placeholder}}
+          {{/if}}
+        </span>
+      </div>
+    {{else}}
+      {{input
+        type="text"
+        class=(concat "lookup-field " (if autocomplete "prompt"))
+        placeholder=placeholder
+        value=displayValue
+        focusOut=(action "onInputFocusOut")
+        readonly=(if (or readonly (not autocomplete)) "readonly")
+      }}
+    {{/if}}
     {{#if showPreviewButton }}
       {{#if (and previewFormRoute value)}}
         <button
@@ -29,13 +43,17 @@
         </button>
       {{/if}}
     {{/if}}
-    <button
-      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-      title={{t "components.flexberry-lookup.choose-button-text"}}
-      type={{if autocomplete "button" ""}}
-      {{action "choose" chooseData}}>
-      {{{chooseText}}}
-    </button>
+    {{#unless hasBlock}}
+      {{#if autocomplete}}
+        <button
+          class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+          title={{t "components.flexberry-lookup.choose-button-text"}}
+          type={{if autocomplete "button" ""}}
+          {{action "choose" chooseData}}>
+          {{{chooseText}}}
+        </button>
+      {{/if}}
+    {{/unless}}
     <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
@@ -45,6 +63,8 @@
     </button>
   </div>
 {{/if}}
-{{#if autocomplete}}
-  <div class="results"></div>
-{{/if}}
+{{#unless hasBlock}}
+  {{#if autocomplete}}
+    <div class="results"></div>
+  {{/if}}
+{{/unless}}

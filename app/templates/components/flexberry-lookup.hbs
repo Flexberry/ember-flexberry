@@ -37,7 +37,7 @@
         <button
           class="ui ui-preview {{if isBlocked " disabled"}} {{previewButtonClass}} button"
           title={{t "components.flexberry-lookup.preview-button-text"}}
-          type={{if autocomplete "button" ""}}
+          type="button"
           {{action "preview"}}>
           {{{previewText}}}
         </button>
@@ -48,7 +48,7 @@
         <button
           class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
           title={{t "components.flexberry-lookup.choose-button-text"}}
-          type={{if autocomplete "button" ""}}
+          type="button"
           {{action "choose" chooseData}}>
           {{{chooseText}}}
         </button>
@@ -57,7 +57,7 @@
     <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
-      type={{if autocomplete "button" ""}}
+      type="button"
       {{action "remove" removeData}}>
       {{{removeText}}}
     </button>

@@ -23,7 +23,9 @@
     "currentPath",
     "currentRouteName",
     "checkOlvConfig",
-    "goToNewForm"
+    "goToNewForm",
+    "checkOlvSortForEachColumn",
+    "checkOlvSortOnAllColumns"
   ],
   "node": false,
   "browser": false,

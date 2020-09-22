@@ -24,6 +24,9 @@
     "currentRouteName",
     "checkOlvConfig",
     "goToNewForm",
+    "checkOlvSortForEachColumn",
+    "checkOlvSortOnAllColumns",
+    "checkDeleteRecordFromOlv",
     "openEditform"
   ],
   "node": false,

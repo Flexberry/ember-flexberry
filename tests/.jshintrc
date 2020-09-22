@@ -25,7 +25,8 @@
     "checkOlvConfig",
     "goToNewForm",
     "checkOlvSortForEachColumn",
-    "checkOlvSortOnAllColumns"
+    "checkOlvSortOnAllColumns",
+    "checkDeleteRecordFromOlv"
   ],
   "node": false,
   "browser": false,

@@ -34,9 +34,9 @@ moduleForComponent('flexberry-lookup', 'Integration | Component | flexberry look
 test('component renders properly', function(assert) {
   assert.expect(31);
 
-  this.render(hbs`{{#flexberry-lookup
-  placeholder='(тестовое значение)'}}
-  {{/flexberry-lookup}}`);
+  this.render(hbs`{{flexberry-lookup
+    placeholder='(тестовое значение)'
+  }}`);
 
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();

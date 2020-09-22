@@ -43,17 +43,13 @@
         </button>
       {{/if}}
     {{/if}}
-    {{#unless hasBlock}}
-      {{#if autocomplete}}
-        <button
-          class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-          title={{t "components.flexberry-lookup.choose-button-text"}}
-          type="button"
-          {{action "choose" chooseData}}>
-          {{{chooseText}}}
-        </button>
-      {{/if}}
-    {{/unless}}
+    <button
+      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+      title={{t "components.flexberry-lookup.choose-button-text"}}
+      type="button"
+      {{action "choose" chooseData}}>
+      {{{chooseText}}}
+    </button>
     <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}

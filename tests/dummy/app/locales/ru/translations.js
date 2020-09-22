@@ -1017,6 +1017,10 @@ $.extend(true, translations, {
             'validation': {
               'caption': 'Валидация',
               'title': ''
+            },
+            'theming-components': {
+              'caption': 'Темизация',
+              'title': ''
             }
           }
         },

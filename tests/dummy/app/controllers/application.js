@@ -673,6 +673,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
+          }, {
+            link: 'integration-examples/edit-form/theming-components',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.title'),
+            children: null
           }]
         }]
       }, {

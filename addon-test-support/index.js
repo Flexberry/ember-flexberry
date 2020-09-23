@@ -7,3 +7,4 @@ import './open-editform';
 import './check-delete-record-from-e-form';
 import './check-close-edit-form';
 import './check-lock-edit-form';
+import './check-lookup-dialogs';

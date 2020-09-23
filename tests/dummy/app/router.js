@@ -155,6 +155,7 @@ Router.map(function() {
 
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
+  this.route('integration-examples/edit-form/theming-components');
   this.route('integration-examples/edit-form/validation');
 
   // User-setting forms.

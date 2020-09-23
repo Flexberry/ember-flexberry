@@ -5,3 +5,4 @@ import './check-olv-sort-on-all-columns';
 import './check-delete-record-from-olv';
 import './open-editform';
 import './check-delete-record-from-e-form';
+import './check-close-edit-form';

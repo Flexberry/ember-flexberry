@@ -27,7 +27,8 @@
     "checkOlvSortForEachColumn",
     "checkOlvSortOnAllColumns",
     "checkDeleteRecordFromOlv",
-    "openEditform"
+    "openEditform",
+    "checkDeleteRecordFromEditForm"
   ],
   "node": false,
   "browser": false,

@@ -29,7 +29,8 @@
     "checkDeleteRecordFromOlv",
     "openEditform",
     "checkDeleteRecordFromEditForm",
-    "checkCloseEditForm"
+    "checkCloseEditForm",
+    "checkLockEditForm"
   ],
   "node": false,
   "browser": false,

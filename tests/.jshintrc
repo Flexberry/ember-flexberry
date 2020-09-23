@@ -21,7 +21,16 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "checkOlvConfig",
+    "goToNewForm",
+    "checkOlvSortForEachColumn",
+    "checkOlvSortOnAllColumns",
+    "checkDeleteRecordFromOlv",
+    "openEditform",
+    "checkDeleteRecordFromEditForm",
+    "checkCloseEditForm",
+    "checkLockEditForm"
   ],
   "node": false,
   "browser": false,
@@ -48,5 +57,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": "vars" 
+  "unused": "vars"
 }

@@ -106,7 +106,7 @@ export default ObjectListViewComponent.extend({
       let allSelect = this.get('allSelect');
 
       let rootItem = {
-        icon: 'icon-guideline-check-menu icon',
+        icon: 'dropdown icon',
         iconAlignment: 'right',
         title: '',
         items: [],
@@ -153,24 +153,24 @@ export default ObjectListViewComponent.extend({
     */
     deleteSelectedRow() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect')) {
-        this._deleteRows(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: this.get('modelProjection.modelName')
-        };
-
-        this._deleteAllRows(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -183,13 +183,31 @@ export default ObjectListViewComponent.extend({
       if (this.get('allSelect')) {
         this.send('checkAll');
       } else {
-        let selectedRecords = this.get('selectedRecords');
-        for (let i = 0; i < selectedRecords.length; i++) {
-          this.send('selectRow', selectedRecords[i], {
-            checked: false
-          });
-        }
+        const contentWithKeys = this.get('contentWithKeys');
+        this.get('selectedRecords').map((record) => contentWithKeys.findBy('data', record)).forEach((modelWithKey) => {
+          modelWithKey.set('selected', false);
+          this.send('selectRow', modelWithKey, { checked: false });
+        });
       }
     },
-  }
+  },
+
+  /**
+    @private
+    @method _confirmDeleteRows
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect')) {
+      this._deleteRows(componentName, true);
+    } else {
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: this.get('modelProjection.modelName')
+      };
+
+      this._deleteAllRows(componentName, filterQuery);
+    }
+  },
 });

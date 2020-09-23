@@ -178,6 +178,10 @@ ErrorableRouteMixin, {
             } else {
               this.transitionTo(this.currentRouteName, { queryParams: Ember.$.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
+
+            // When abort transition loses the query parameters for the next transition.
+            // transition.abort();
+            return;
           }
         }
 

@@ -69,7 +69,10 @@ export default Ember.Mixin.create({
     @return {DS.Model}
    */
   includeSorting(model, sorting) {
-    model.set('sorting', sorting);
+    if (model) {
+      model.set('sorting', sorting);
+    }
+
     return model;
   },
 

@@ -248,6 +248,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
+        },
       }
     },
     'ember-flexberry-dummy-comment': {
@@ -1138,7 +1149,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
         },
         'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Настройка фильтра'
+          'caption': 'Flexberry-simpleolv. Настройка фильтра',
+          'addObjects-button': 'Добавить объекты'
         },
         'configurate-rows': {
           'caption': 'Flexberry-simpleolv. Раскраска строк'
@@ -1219,7 +1231,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration examples. Валидация',
+          'caption': 'Примеры интеграции. Валидация',
           'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',

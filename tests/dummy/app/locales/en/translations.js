@@ -258,6 +258,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'parent': {
+            __caption__: 'Parent'
+          },
+        },
       }
     },
   },
@@ -1112,7 +1123,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
         },
         'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Custom filter'
+          'caption': 'Flexberry-simpleolv. Custom filter',
+          'addObjects-button': 'Add objects'
         },
         'configurate-rows': {
           'caption': 'Flexberry-simpleolv. Configurate rows'

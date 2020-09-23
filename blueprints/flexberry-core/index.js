@@ -76,7 +76,7 @@ module.exports = {
             lodash.remove(this._files, function (v) { return v === "public/assets/images/cat.gif" || v === "public/assets/images/favicon.ico" || v === "public/assets/images/flexberry-logo.png"; });
         }
         else {
-            lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
+            lodash.remove(this._files, function (fileName) { return fileName.indexOf("tests/dummy/") === 0; });
         }
         this._excludeIfExists();
         return this._files;
@@ -111,6 +111,7 @@ module.exports = {
         }
         var coreBlueprint = new CoreBlueprint(this, options);
         return lodash.defaults({
+            projectName: this.project.pkg.name,
             children: coreBlueprint.children,
             routes: coreBlueprint.routes,
             importProperties: coreBlueprint.importProperties,

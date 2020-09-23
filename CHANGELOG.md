@@ -5,21 +5,27 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
+* Add test helper for check sorting olv.
 
-## [2.5.0-beta.8] - 2020-08-07
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.6`.
-
-## [2.5.0-beta.7] - 2020-07-22
+## [2.5.0] - 2020-09-10
 ### Added
-* The ability to optimize the loading of the hierarchical list in the `flexberry-objectlistview` component ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).
-* Mobile version of the export to `Excel` and configure list window.
 * The `flexberry-file` component:
     * Type checking for files selected using the component. Use the `accept` property and the `isValidTypeFileCustom` action to configure.
     * When limiting the file size, the ability to specify the units of measurement in the `maxUploadFileSizeUnit` property.
 * In all components of lists:
+    * Mobile version of the export to `Excel` and configure list window.
     * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
     * The `confirmDeleteRow` action gets the record to be deleted as the first parameter.
+* The `useOkButton` and `useCloseButton` properties in the `flexberry-error` component to customize nested the `modal-dialog` component.
+* The `flexberry-menu` component:
+    * The ability to add buttons to menu items.
+    * The `settings` property for the dropdown from `Semantic UI`.
+* The `flexberry-objectlistview` component:
+    * The ability to optimize the loading of the hierarchical list ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).
+    * Page number input field to go to it.
+    * Menu for selecting rows and displaying sorting in the mobile version of the component.
+* The `flexberry-acceptance-test` blueprint for generating tests for your application.
+* Config update on install for dummy app of addon in default blueprint.
 
 ### Fixed
 * Attributes with selectors for testing are not generated correctly in the generated application.
@@ -33,11 +39,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-lookup` component:
     * The modal window settings specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
     * The modal window settings specified through the `modalDialogSettings` property are lost when switching pages.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * Pagination in the results for autocomplete.
+* Double loading of data on the list ([PR#1150](https://github.com/Flexberry/ember-flexberry/pull/1150)).
+* Some filtering issues in modal window in `flexberry-objectlistview` component ([PR#1144](https://github.com/Flexberry/ember-flexberry/pull/1144)).
+* Generation of locales for dummy app of the generated addon.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.4`.
 * Design of an element for customizing the sorting of columns, in the export to `Excel` and configure list window. Symbols are replaced with a description.
 * For all the `button` elements used in templates, the `type` attribute with the `button` value is added.
+* In the mobile version of the `flexberry-objectlistview` component, the pagination block is now above the list and shows fewer pages.
+* Now the default value of the `searchForContentChange` property in the `flexberry-groupedit` component is `true`.
+* Update dependency on `ember-flexberry-data` to version `2.5.0`.
 
 ### Breaking changes
 * Removed the `parse-cols-config-sorting` helper.

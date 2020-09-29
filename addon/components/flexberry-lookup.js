@@ -942,11 +942,11 @@ export default FlexberryBaseComponent.extend({
     let hasBlock = this.get('_hasBlock');
 
     if (isDropdown && hasBlock) {
-      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and a block form definition.');
+      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and the block form definition.');
     }
 
     if (isAutocomplete && hasBlock) {
-      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and a block form definition.');
+      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and the block form definition.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');

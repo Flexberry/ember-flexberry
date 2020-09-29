@@ -9,11 +9,11 @@
     isSearchReadOnly=dropdownIsSearch
   }}
 {{else}}
-  <div class="ui fluid action input {{if readonly "disabled"}}">
+  <div class="ui {{if (not hasBlock) "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
     {{#if hasBlock}}
       <div
         {{action "choose" chooseData}}
-        class="ui transparent {{if (or readonly isBlocked) " disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} icon input ">
+        class="ui transparent {{if (or readonly isBlocked) "disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) "loading"}} icon input">
         <span class="lookup-field">
           {{#if value}}
             {{yield}}
@@ -21,6 +21,9 @@
             {{placeholder}}
           {{/if}}
         </span>
+        {{#unless readonly}}
+          <i class="chevron right icon"></i>
+        {{/unless}}
       </div>
     {{else}}
       {{input
@@ -43,13 +46,15 @@
         </button>
       {{/if}}
     {{/if}}
-    <button
-      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-      title={{t "components.flexberry-lookup.choose-button-text"}}
-      type="button"
-      {{action "choose" chooseData}}>
-      {{{chooseText}}}
-    </button>
+    {{#unless hasBlock}}
+      <button
+        class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+        title={{t "components.flexberry-lookup.choose-button-text"}}
+        type="button"
+        {{action "choose" chooseData}}>
+        {{{chooseText}}}
+      </button>
+    {{/unless}}
     <button
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
@@ -59,8 +64,6 @@
     </button>
   </div>
 {{/if}}
-{{#unless hasBlock}}
-  {{#if autocomplete}}
-    <div class="results"></div>
-  {{/if}}
+{{#unless (or hasBlock (not autocomplete))}}
+  <div class="results"></div>
 {{/unless}}

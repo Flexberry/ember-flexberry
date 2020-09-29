@@ -11,7 +11,6 @@
 {{else}}
   <div data-test-lookup class="ui {{if (not hasBlock) "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
     {{#if hasBlock}}
-      {{_hasBlockSetter}}
       <div
         {{action "choose" chooseData}}
         class="ui transparent {{if (or readonly isBlocked) "disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) "loading"}} icon input">
@@ -68,6 +67,8 @@
     </button>
   </div>
 {{/if}}
-{{#unless (or hasBlock (not autocomplete))}}
+{{#if hasBlock}}
+  {{_hasBlockSetter}}
+{{else if autocomplete}}
   <div class="results"></div>
-{{/unless}}
+{{/if}}

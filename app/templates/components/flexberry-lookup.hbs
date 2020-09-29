@@ -11,6 +11,7 @@
 {{else}}
   <div class="ui {{if (not hasBlock) "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
     {{#if hasBlock}}
+      {{_hasBlockSetter}}
       <div
         {{action "choose" chooseData}}
         class="ui transparent {{if (or readonly isBlocked) "disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) "loading"}} icon input">

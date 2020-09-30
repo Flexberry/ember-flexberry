@@ -23,7 +23,15 @@
     "currentPath",
     "currentRouteName",
     "checkOlvConfig",
-    "goToNewForm"
+    "goToNewForm",
+    "checkOlvSortForEachColumn",
+    "checkOlvSortOnAllColumns",
+    "checkDeleteRecordFromOlv",
+    "openEditform",
+    "checkDeleteRecordFromEditForm",
+    "checkCloseEditForm",
+    "checkLockEditForm",
+    "checkLookupDialogs"
   ],
   "node": false,
   "browser": false,

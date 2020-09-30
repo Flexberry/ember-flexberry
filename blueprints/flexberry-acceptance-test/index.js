@@ -6,7 +6,7 @@ module.exports = {
   description: 'Generates acceptance tests for the edit and list forms.',
 
   availableOptions: [
-      { name: 'skip-confirmation', type: Boolean }
+    { name: 'skip-confirmation', type: Boolean, default: true }
   ],
 
   processFiles(intoDir, templateVariables) {

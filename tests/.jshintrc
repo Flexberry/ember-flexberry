@@ -30,7 +30,8 @@
     "openEditform",
     "checkDeleteRecordFromEditForm",
     "checkCloseEditForm",
-    "checkLockEditForm"
+    "checkLockEditForm",
+    "checkLookupDialogs"
   ],
   "node": false,
   "browser": false,

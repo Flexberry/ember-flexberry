@@ -300,7 +300,23 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       throw new Error('Don\'t know where to save - no saveTo data defined.');
     }
 
-    saveTo.model.set(saveTo.propName, master);
+    const updateLookupAction = saveTo.updateLookupAction;
+    if (!Ember.isBlank(updateLookupAction)) {
+      this.get('reloadContext').send(updateLookupAction,
+        {
+          relationName: saveTo.propName,
+          modelToLookup: saveTo.model,
+          newRelationValue: master,
+          componentName: this.get('componentName')
+        });
+    } else {
+      Ember.deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
+        id: 'ember-flexberry.controllers.lookup-dialog',
+        until: '4.0',
+      });
+
+      saveTo.model.set(saveTo.propName, master);
+    }
 
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     saveTo.model.makeDirty();

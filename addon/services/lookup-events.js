@@ -43,5 +43,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   lookupDialogOnHiddenTrigger(componentName) {
     this.trigger('lookupDialogOnHidden', componentName);
-  }
+  },
+
+  /**
+    Called when lookup value changed.
+
+    @method lookupOnSelectTrigger
+    @param {String} componentName Name of flexberry-lookup component.
+    @param {Model} newValue New lookup value.
+  */
+  lookupOnSelectTrigger(componentName, newValue) {
+    this.trigger('lookupOnSelect', componentName, newValue);
+  },
 });

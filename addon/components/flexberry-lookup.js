@@ -532,6 +532,7 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'updateLookupAction',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
@@ -548,6 +549,7 @@ export default FlexberryBaseComponent.extend({
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
         modalDialogSettings: this.get('_modalDialogSettings'),
+        updateLookupAction: this.get('updateLookupAction'),
       };
     }),
 
@@ -1163,7 +1165,8 @@ export default FlexberryBaseComponent.extend({
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
-                newRelationValue: result.instance
+                newRelationValue: result.instance,
+                componentName: _this.get('componentName')
               });
           });
         } else {
@@ -1225,7 +1228,8 @@ export default FlexberryBaseComponent.extend({
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
-                        newRelationValue: record
+                        newRelationValue: record,
+                        componentName: _this.get('componentName')
                       });
                   }
                 });
@@ -1349,7 +1353,8 @@ export default FlexberryBaseComponent.extend({
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: newValue
+            newRelationValue: newValue,
+            componentName: _this.get('componentName')
           });
       }
     });
@@ -1546,7 +1551,8 @@ export default FlexberryBaseComponent.extend({
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: record
+            newRelationValue: record,
+            componentName: _this.get('componentName')
           });
       }
     });

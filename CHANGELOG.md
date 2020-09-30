@@ -5,7 +5,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
-* Add test helper for check sorting olv.
+* Default test selector for `flexberry-objectlistview` component.
+
+### Fixed
+* In the row click handler, in the `flexberry-objectlistview` component, async operations outside the ember run loop were used. Now you can just do `click(row)` in your tests.
+
+### Changed
+* Now the `flexberry-objectlistview` component is generated with the `showCheckBoxInRow` option set to `true` value on the list form.
+* The `flexberry-acceptance-test` blueprint:
+    * An `[AGAT]` tag is added to the name of each test module, which can be used to run the desired test suite. For example `ember test --filter="AGAT"`.
+    * Tests are now generated in the `acceptance\flexberry` directory and are overwritten by default on every generation.
+    * Now the generated test covers several more scenarios.
+
+### Deprecated
+* The `run.after` method, which is added by the `ember-run-after` initializer.
 
 ## [2.5.0] - 2020-09-10
 ### Added

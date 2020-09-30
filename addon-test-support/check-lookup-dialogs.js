@@ -11,6 +11,12 @@ Ember.Test.registerAsyncHelper('checkLookupDialogs',
 );
 
 const checkLookups = function(lookups, index, helpers) {
+  const modalDialogWaiter = () => {
+    const dimmer = helpers.find('.ui.dimmer');
+    return !dimmer.hasClass('animating') || dimmer.hasClass('hidden');
+  };
+  Ember.Test.registerWaiter(modalDialogWaiter);
+
   const lookup = lookups[index];
   const dialogButton = helpers.find('[data-test-lookup-change]', lookup);
   helpers.click(dialogButton);
@@ -20,10 +26,9 @@ const checkLookups = function(lookups, index, helpers) {
     const closeButton = helpers.findWithAssert('.close', dialog);
     helpers.click(closeButton);
     helpers.andThen(() => {
+      Ember.Test.unregisterWaiter(modalDialogWaiter);
       if (index < lookups.length - 1) {
-        Ember.run.later(this, function() {
-          checkLookups(lookups, index + 1, helpers);
-        }, 500);
+        checkLookups(lookups, index + 1, helpers);
       }
     });
   });

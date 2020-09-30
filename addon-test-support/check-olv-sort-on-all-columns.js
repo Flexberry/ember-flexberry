@@ -8,8 +8,6 @@ Ember.Test.registerAsyncHelper('checkOlvSortOnAllColumns',
     const headCells = helpers.find('thead .dt-head-left', olv).toArray();
 
     if (headCells.length > 0) {
-      assert.expect(assert.expect() + headCells.length * 4);
-
       click('.ui.clear-sorting-button');
       andThen(() => {
         checkColumns(headCells, 0, olv, helpers, assert);

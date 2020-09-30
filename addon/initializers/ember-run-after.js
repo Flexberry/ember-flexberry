@@ -12,7 +12,14 @@ import runAfter from '../utils/run-after';
   @method emberRunAfter.initialize
 */
 export function initialize() {
-  Ember.run.after = runAfter;
+  Ember.run.after = function(context, condition, handler) {
+    Ember.deprecate(`Use "import runAfter from 'ember-flexberry/utils/run-after';" instead of "run.after".`, false, {
+      id: 'ember-flexberry.initializers.ember-run-after',
+      until: '3.0',
+    });
+
+    runAfter(context, condition, handler);
+  };
 }
 
 export default {

@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import runAfter from '../utils/run-after';
 
 /**
   Component to view list of object.
@@ -992,7 +993,7 @@ export default FlexberryBaseComponent.extend({
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
-        Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
             this.sendAction('action', record);
           } else {

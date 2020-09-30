@@ -11,6 +11,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import getProjectionByName from '../utils/get-projection-by-name';
+import runAfter from '../utils/run-after';
 
 /**
   Object list view component.
@@ -946,7 +947,7 @@ export default FlexberryBaseComponent.extend(
           customParameters: this.get('customParameters')
         });
 
-        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.sendAction('action', recordData, params);
         });
 

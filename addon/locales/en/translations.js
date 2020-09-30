@@ -29,7 +29,7 @@ export default {
     },
 
     'loading': {
-      caption: 'Loading ...',
+      caption: 'Loading...',
     }
   },
 

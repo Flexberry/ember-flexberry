@@ -172,6 +172,15 @@ export default FlexberryBaseComponent.extend({
   hierarchicalIndent: undefined,
 
   /**
+    Using `ember-test-selectors`, creates `[data-test-component=flexberry-objectlistview]` selector for this component.
+
+    @property data-test-component
+    @type String
+    @default 'flexberry-objectlistview'
+  */
+  'data-test-component': 'flexberry-objectlistview',
+
+  /**
     Flag used to display filters in modal.
 
     @property showFiltersInModal

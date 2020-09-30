@@ -7,7 +7,7 @@ moduleForAcceptance('[AGAT] <%= friendlyTestName %>');
 test('testing <%= dasherizedModuleName %>', function(assert) {
   visit('/<%= dasherizedModuleName %>');
 
-  checkOlvConfig('[data-test-olv]', null, assert, [
+  checkOlvConfig('[data-test-component=flexberry-objectlistview]', null, assert, [
     'refreshButton',
     'createNewButton',
     'colsConfigButton',
@@ -17,18 +17,18 @@ test('testing <%= dasherizedModuleName %>', function(assert) {
     const listNotEmpty = find('.object-list-view-helper-column').length > 0;
 
     if (listNotEmpty) {
-      checkOlvSortOnAllColumns('[data-test-olv]', null, assert);
+      checkOlvSortOnAllColumns('[data-test-component=flexberry-objectlistview]', null, assert);
     }
 
     const controller = this.application.__container__.lookup('controller:' + currentRouteName());
     const newFormRoute = controller.get('editFormRoute') + '.new';
-    goToNewForm('[data-test-olv]', null, assert, newFormRoute);
+    goToNewForm('[data-test-component=flexberry-objectlistview]', null, assert, newFormRoute);
     checkLookupDialogs();
 
     click('.close-button');
 
     if (listNotEmpty) {
-      click('[data-test-olv] td.field:first');
+      click('[data-test-component=flexberry-objectlistview] td.field:first');
       checkLookupDialogs();
     }
   });

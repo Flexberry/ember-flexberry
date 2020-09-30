@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import runAfter from '../utils/run-after';
 
 /**
   Injects 'after' method into 'Ember.run' namespace.
@@ -11,19 +12,7 @@ import Ember from 'ember';
   @method emberRunAfter.initialize
 */
 export function initialize() {
-  Ember.run.after = function(context, condition, handler) {
-    const checkInterval = 50;
-
-    const checkCondition = () => {
-      if (condition.call(context) === true) {
-        Ember.run(context, handler);
-      } else {
-        Ember.run.later(checkCondition, checkInterval);
-      }
-    };
-
-    Ember.run.later(checkCondition, checkInterval);
-  };
+  Ember.run.after = runAfter;
 }
 
 export default {

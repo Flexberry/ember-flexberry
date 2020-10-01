@@ -317,11 +317,11 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       });
 
       saveTo.model.set(saveTo.propName, master);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      saveTo.model.makeDirty();
       this.get('lookupEventsService').lookupOnChangeTrigger(componentName, master);
     }
-
-    // Manually make record dirty, because ember-data does not do it when relationship changes.
-    saveTo.model.makeDirty();
   },
 
   /**

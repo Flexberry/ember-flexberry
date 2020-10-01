@@ -1,1 +1,29 @@
 <h3> Новая пагинация</h3>
+
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <div class="ui basic buttons">
+      <button
+        type="button"
+        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
+        disabled={{not hasPreviousPage}}
+        {{action "previousPage" this.attrs.previousPage}}>
+      </button>
+      {{#each pages as |page|}}
+        {{#if page.isEllipsis}}
+          <div class="ui button">...</div>
+        {{else if page.isCurrent}}
+          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+        {{else}}
+          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+        {{/if}}
+      {{/each}}
+      <button
+        type="button"
+        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
+        disabled={{not hasNextPage}}
+        {{action "nextPage" this.attrs.nextPage}}>
+      </button>
+    </div>
+  </div>
+{{/if}}

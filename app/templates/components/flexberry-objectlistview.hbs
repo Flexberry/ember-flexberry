@@ -167,4 +167,14 @@
   </div>
 {{/if}}
 
-{{olv-pagination}}
+{{olv-pagination
+  inHierarchicalMode=inHierarchicalMode
+  hierarchyPaging=hierarchyPaging
+  pages=pages
+  hasPreviousPage=hasPreviousPage
+  hasNextPage=hasNextPage
+  gotoPage=(action "gotoPage")
+  nextPage=(action "nextPage")
+  previousPage=(action "previousPage")
+  componentName=componentName
+}}

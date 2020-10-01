@@ -48,11 +48,11 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
     Called when lookup value changed.
 
-    @method lookupOnSelectTrigger
+    @method lookupOnChangeTrigger
     @param {String} componentName Name of flexberry-lookup component.
     @param {Model} newValue New lookup value.
   */
-  lookupOnSelectTrigger(componentName, newValue) {
-    this.trigger('lookupOnSelect', componentName, newValue);
+  lookupOnChangeTrigger(componentName, newValue) {
+    this.trigger('lookupOnChange', componentName, newValue);
   },
 });

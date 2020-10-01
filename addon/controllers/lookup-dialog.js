@@ -301,13 +301,14 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     }
 
     const updateLookupAction = saveTo.updateLookupAction;
+    const componentName = this.get('componentName');
     if (!Ember.isBlank(updateLookupAction)) {
       this.get('reloadContext').send(updateLookupAction,
         {
           relationName: saveTo.propName,
           modelToLookup: saveTo.model,
           newRelationValue: master,
-          componentName: this.get('componentName')
+          componentName: componentName
         });
     } else {
       Ember.deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
@@ -316,6 +317,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       });
 
       saveTo.model.set(saveTo.propName, master);
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName, master);
     }
 
     // Manually make record dirty, because ember-data does not do it when relationship changes.

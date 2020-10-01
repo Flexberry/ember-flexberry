@@ -258,7 +258,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-      this.get('lookupEventsService').lookupOnSelectTrigger(componentName);
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName);
     },
 
     /**
@@ -360,7 +360,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-      this.get('lookupEventsService').lookupOnSelectTrigger(componentName, options.newRelationValue);
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName, options.newRelationValue);
     },
   },
 

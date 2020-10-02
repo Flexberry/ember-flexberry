@@ -918,6 +918,16 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
+  */
+  _hasBlockSetter: Ember.computed(function() {
+    this.set('_hasBlock', true);
+  }),
+
+  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
 
@@ -930,6 +940,16 @@ export default FlexberryBaseComponent.extend({
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
+    }
+
+    let hasBlock = this.get('_hasBlock');
+
+    if (isDropdown && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and the block form definition.');
+    }
+
+    if (isAutocomplete && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and the block form definition.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');

@@ -26,6 +26,10 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 

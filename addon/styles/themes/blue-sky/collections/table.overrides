@@ -59,6 +59,15 @@
   }
 }
 
+.object-list-view-filters {
+  .flexberry-textbox {
+      min-width: 0;
+  }
+  .flexberry-simpledatetime {
+      width: 100%;
+  }
+}
+
 table.object-list-view.selectable tbody,
 table.object-list-view.selectable thead {
   cursor: pointer;

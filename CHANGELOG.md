@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
 * Add test helper for check sorting olv.
 
 ## [2.5.0] - 2020-09-10

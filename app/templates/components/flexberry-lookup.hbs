@@ -9,7 +9,7 @@
     isSearchReadOnly=dropdownIsSearch
   }}
 {{else}}
-  <div data-test-lookup class="ui {{if (not hasBlock) "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
+  <div data-test-lookup class="ui {{unless hasBlock "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
     {{#if hasBlock}}
       <div
         {{action "choose" chooseData}}

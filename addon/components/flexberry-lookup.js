@@ -919,6 +919,9 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
   */
   _hasBlockSetter: Ember.computed(function() {
     this.set('_hasBlock', true);

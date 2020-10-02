@@ -100,6 +100,15 @@ export default ListFormController.extend({
   readonly: false,
 
   /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
+
+  /**
     Flag for 'flexberry-objectlistview' component 'colsConfigButton' property.
 
     @property colsConfigButton
@@ -388,6 +397,7 @@ export default ListFormController.extend({
     '  previousPage=(action \"previousPage\")<br>' +
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
+    '  bottomPagination=bottomPagination' +
     '  fixedHeader=fixedHeader<br>' +
     '  advLimitButton=advLimitButton<br>' +
     '}}'),
@@ -618,6 +628,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'advLimitButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'bottomPagination',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'bottomPagination'
     });
 
     return componentSettingsMetadata;

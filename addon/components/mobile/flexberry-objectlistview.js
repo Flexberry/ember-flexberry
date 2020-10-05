@@ -133,6 +133,15 @@ export default FlexberryObjectlistview.extend({
   singleColumnHeaderTitle: undefined,
 
   /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default false
+  */
+  bottomPagination: false,
+
+  /**
     Indicates whether or not autoresize columns for fit the page width.
 
     @property columnsWidthAutoresize

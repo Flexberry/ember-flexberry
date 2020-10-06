@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * In the row click handler, in the `flexberry-objectlistview` component, async operations outside the ember run loop were used. Now you can just do `click(row)` in your tests.
 
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.0`.
 * Now the `flexberry-objectlistview` component is generated with the `showCheckBoxInRow` option set to `true` value on the list form.
 * The `flexberry-acceptance-test` blueprint:
     * An `[AGAT]` tag is added to the name of each test module, which can be used to run the desired test suite. For example `ember test --filter="AGAT"`.

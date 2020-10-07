@@ -589,6 +589,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'updateLookupAction',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     'inHierarchicalMode',
@@ -609,6 +610,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         inHierarchicalMode: this.get('inHierarchicalMode'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         modalDialogSettings: this.get('_modalDialogSettings'),
+        updateLookupAction: this.get('updateLookupAction'),
       };
     }),
 
@@ -989,6 +991,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   },
 
   /**
+    Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
+  */
+  _hasBlockSetter: Ember.computed(function() {
+    this.set('_hasBlock', true);
+  }),
+
+  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
@@ -1001,6 +1013,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
+    }
+
+    let hasBlock = this.get('_hasBlock');
+
+    if (isDropdown && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and the block form definition.');
+    }
+
+    if (isAutocomplete && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and the block form definition.');
     }
 
     let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
@@ -1238,7 +1260,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
-                newRelationValue: result.instance
+                newRelationValue: result.instance,
+                componentName: _this.get('componentName')
               });
           });
         } else {
@@ -1303,7 +1326,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
-                        newRelationValue: record
+                        newRelationValue: record,
+                        componentName: _this.get('componentName')
                       });
                   }
                 });
@@ -1414,7 +1438,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         {
           relationName: relationName,
           modelToLookup: relatedModel,
-          newRelationValue: newValue
+            newRelationValue: newValue,
+            componentName: _this.get('componentName')
         });
       },
       onHide() {
@@ -1617,7 +1642,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: record
+            newRelationValue: record,
+            componentName: _this.get('componentName')
           });
       }
     });

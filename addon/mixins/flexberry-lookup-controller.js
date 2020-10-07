@@ -109,6 +109,14 @@ export default Mixin.create(ReloadListMixin, {
   */
   lookupModalWindowPerPage: 5,
 
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
   actions: {
     /**
       Handles action from lookup choose action.
@@ -142,6 +150,7 @@ export default Mixin.create(ReloadListMixin, {
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
         hierarchicalAttribute: undefined
+        updateLookupAction: undefined
       }, chooseData);
 
       let lookupController = this.get('lookupController');
@@ -168,6 +177,7 @@ export default Mixin.create(ReloadListMixin, {
       let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
       let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
+      const updateLookupAction = options.updateLookupAction;
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -208,7 +218,8 @@ export default Mixin.create(ReloadListMixin, {
         title: title,
         saveTo: {
           model: model,
-          propName: relationName
+          propName: relationName,
+          updateLookupAction: updateLookupAction
         },
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,
@@ -240,8 +251,10 @@ export default Mixin.create(ReloadListMixin, {
     removeLookupValue(removeData) {
       let options = $.extend(true, {
         relationName: undefined,
-        modelToLookup: undefined
+        modelToLookup: undefined,
+        componentName: undefined
       }, removeData);
+      const componentName = options.componentName;
       let relationName = options.relationName;
       let modelToLookup = options.modelToLookup;
 
@@ -250,6 +263,7 @@ export default Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName);
     },
 
     /**
@@ -339,16 +353,19 @@ export default Mixin.create(ReloadListMixin, {
       let options = $.extend(true, {
         relationName: undefined,
         newRelationValue: undefined,
-        modelToLookup: undefined
+        modelToLookup: undefined,
+        componentName: undefined
       }, updateData);
-      let modelToLookup = options.modelToLookup;
-      let model = modelToLookup ? modelToLookup : this.get('model');
+      const componentName = options.componentName;
+      const modelToLookup = options.modelToLookup;
+      const model = modelToLookup ? modelToLookup : this.get('model');
 
       debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
       model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName, options.newRelationValue);
     },
   },
 

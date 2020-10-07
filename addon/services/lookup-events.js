@@ -44,5 +44,16 @@ export default Service.extend(Evented, {
   */
   lookupDialogOnHiddenTrigger(componentName) {
     this.trigger('lookupDialogOnHidden', componentName);
-  }
+  },
+
+  /**
+    Called when lookup value changed.
+
+    @method lookupOnChangeTrigger
+    @param {String} componentName Name of flexberry-lookup component.
+    @param {Model} newValue New lookup value.
+  */
+  lookupOnChangeTrigger(componentName, newValue) {
+    this.trigger('lookupOnChange', componentName, newValue);
+  },
 });

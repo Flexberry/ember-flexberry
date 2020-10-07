@@ -21,7 +21,7 @@ test('it exists', function (assert) {
 });
 
 test('it shold set selected record to saveTo.propName of saveTo.model', function (assert) {
-  const model = Ember.Object.extend({ makeDirty: function() {} }).create();
+  const model = EmberObject.extend({ makeDirty: function() {} }).create();
   const saveTo =
   {
     model: model,
@@ -33,7 +33,7 @@ test('it shold set selected record to saveTo.propName of saveTo.model', function
 
   sinon.stub(model, 'makeDirty');
   sinon.stub(controller, '_closeModalDialog');
-  const master = Ember.Object.create();
+  const master = EmberObject.create();
 
   controller.send('objectListViewRowClick', master);
 

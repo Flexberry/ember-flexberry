@@ -996,7 +996,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @private
     @property _hasBlockSetter
   */
-  _hasBlockSetter: Ember.computed(function() {
+  _hasBlockSetter: computed(function() {
+    // eslint-disable-next-line ember/no-side-effects
     this.set('_hasBlock', true);
   }),
 

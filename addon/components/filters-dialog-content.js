@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import { set } from '@ember/object';
+import { get, set } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -65,9 +65,9 @@ export default FlexberryBaseComponent.extend({
       @param {Object} filter Object with the filter description.
     */
     clearFilterField(filter) {
-      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
-      Ember.set(filter, 'condition', undefined);
-      Ember.set(filter, 'pattern', undefined);
+      set(filter, 'component.name', get(filter, 'component._defaultComponent'));
+      set(filter, 'condition', undefined);
+      set(filter, 'pattern', undefined);
     },
 
     /**

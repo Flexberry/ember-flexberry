@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
+import { registerWaiter, unregisterWaiter } from '@ember/test';
 
-Ember.Test.registerAsyncHelper('checkLookupDialogs',
+registerAsyncHelper('checkLookupDialogs',
   function(app) {
     const helpers = app.testHelpers;
     const lookups = helpers.find('[data-test-lookup]');
@@ -15,7 +16,7 @@ const checkLookups = function(lookups, index, helpers) {
     const dimmer = helpers.find('.ui.dimmer');
     return !dimmer.hasClass('animating') || dimmer.hasClass('hidden');
   };
-  Ember.Test.registerWaiter(modalDialogWaiter);
+  registerWaiter(modalDialogWaiter);
 
   const lookup = lookups[index];
   const dialogButton = helpers.find('[data-test-lookup-change]', lookup);
@@ -26,7 +27,7 @@ const checkLookups = function(lookups, index, helpers) {
     const closeButton = helpers.findWithAssert('.close', dialog);
     helpers.click(closeButton);
     helpers.andThen(() => {
-      Ember.Test.unregisterWaiter(modalDialogWaiter);
+      unregisterWaiter(modalDialogWaiter);
       if (index < lookups.length - 1) {
         checkLookups(lookups, index + 1, helpers);
       }

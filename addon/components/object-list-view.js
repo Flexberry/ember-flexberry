@@ -1293,9 +1293,9 @@ export default FlexberryBaseComponent.extend(
       @param {Object} filter Object with the filter description.
     */
     clearFilterForColumn(filter) {
-      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
-      Ember.set(filter, 'condition', null);
-      Ember.set(filter, 'pattern', null);
+      set(filter, 'component.name', get(filter, 'component._defaultComponent'));
+      set(filter, 'condition', null);
+      set(filter, 'pattern', null);
     },
   },
 

@@ -13,6 +13,7 @@ moduleFor('controller:<%= entityName %>', 'Unit | Controller | <%= entityName %>
     'service:user-settings',
     'service:app-state',
     'service:adv-limit',
+    'service:lookup-events',
   ],
 });
 

@@ -9,6 +9,7 @@ import { merge } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
 import { isNone } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -115,7 +116,7 @@ export default Mixin.create(ReloadListMixin, {
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   actions: {
     /**
@@ -149,7 +150,7 @@ export default Mixin.create(ReloadListMixin, {
         notUseUserSettings: undefined,
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
-        hierarchicalAttribute: undefined
+        hierarchicalAttribute: undefined,
         updateLookupAction: undefined
       }, chooseData);
 

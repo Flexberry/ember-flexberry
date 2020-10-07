@@ -10,7 +10,7 @@
 ---------------------*/
 
 /* Default */
-@import "@{themesFolder}/default/globals/site.variables";
+@import "@{semanticUiThemesFolder}/default/globals/site.variables";
 
 /* Packaged Theme */
 @import (optional) "@{themesFolder}/@{site}/globals/site.variables";
@@ -24,10 +24,10 @@
 ---------------------*/
 
 /* Default */
-@import "@{themesFolder}/default/@{type}s/@{element}.variables";
+@import "@{semanticUiThemesFolder}/default/@{type}s/@{element}.variables";
 
 /* Packaged Theme */
-@import "@{themesFolder}/@{theme}/@{type}s/@{element}.variables";
+@import (optional) "@{themesFolder}/@{theme}/@{type}s/@{element}.variables";
 
 /* Site Theme */
 @import (optional) "@{siteFolder}/@{type}s/@{element}.variables";
@@ -50,6 +50,7 @@
 -------------------*/
 
 .loadUIOverrides() {
+  @import (optional) "@{semanticUiThemesFolder}/@{theme}/@{type}s/@{element}.overrides";
   @import (optional) "@{themesFolder}/@{theme}/@{type}s/@{element}.overrides";
   @import (optional) "@{siteFolder}/@{type}s/@{element}.overrides";
 }

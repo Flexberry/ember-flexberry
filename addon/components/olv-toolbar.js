@@ -285,6 +285,7 @@ export default FlexberryBaseComponent.extend({
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
       rootItem.rootElementsLength = rootItem.items.length;
+
       // if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
       //   let showDefaultItem = {
       //     icon: 'unhide icon',
@@ -938,10 +939,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   _resetNamedUserSettings(isExportExcel) {
-    let itemsName = isExportExcel ? 'exportExcelItems': 'colsSettingsItems';
+    let itemsName = isExportExcel ? 'exportExcelItems' : 'colsSettingsItems';
     let itemsArray = this.get(itemsName)[0].items;
     let rootElementsCount = this.get(itemsName)[0].rootElementsLength;
-    itemsArray.splice(rootElementsCount, itemsArray.length-rootElementsCount);
+    itemsArray.splice(rootElementsCount, itemsArray.length - rootElementsCount);
 
     Ember.set(this.get(itemsName)[0], 'items', itemsArray);
   },
@@ -951,13 +952,13 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    let itemsName = isExportExcel ? 'exportExcelItems': 'colsSettingsItems';
+    let itemsName = isExportExcel ? 'exportExcelItems' : 'colsSettingsItems';
     let subItems = this.get(itemsName)[0].items;
     let newSubItems = subItems.slice();
 
     let itemExist = subItems.find(item => item.title === namedSetting);
     if (Ember.isEmpty(itemExist)) {
-      newSubItems.push({ 
+      newSubItems.push({
         title: namedSetting,
         buttons: [{
           buttonClasses: 'icon',
@@ -973,7 +974,7 @@ export default FlexberryBaseComponent.extend({
             });
             /* eslint-enable no-unused-vars */
           },
-        },{
+        }, {
           buttonClasses: 'icon',
           iconClass: 'edit icon',
           iconAlignment: 'right floated',
@@ -1008,10 +1009,8 @@ export default FlexberryBaseComponent.extend({
   },
 
   _sortNamedSetting(isExportExcel) {
-    let itemsName = isExportExcel ? 'exportExcelItems': 'colsSettingsItems';
-    this.get(itemsName)[0].items.sort((a, b) => {
-        a.title > b.title;
-    });
+    let itemsName = isExportExcel ? 'exportExcelItems' : 'colsSettingsItems';
+    this.get(itemsName)[0].items.sort((a, b) => a.title > b.title);
   },
 
   /**

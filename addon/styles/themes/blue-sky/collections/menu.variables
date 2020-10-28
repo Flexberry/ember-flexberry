@@ -76,10 +76,11 @@
 @itemDividingWidth: calc(~'100% - 2em');
 @itemDividingPosition: absolute;
 @itemDividingLeft: 1em;
-@itemDividingBottom: 1em;
+@itemDividingBottom: 0;
 @itemDividingBackground: rgba(0, 0, 0, 0.1);
 
 // Menu item buttons
+@itemButtonBackground: none;
 @itemButtonPadding: 0;
 @itemButtonLineHeight: 1;
 @itemButtonBorder: none;

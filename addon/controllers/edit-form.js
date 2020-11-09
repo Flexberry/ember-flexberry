@@ -63,7 +63,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('colsconfig-dialog')
   */
- colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
 
   /**
     Flag to enable return to agregator's path if possible.
@@ -463,7 +463,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @method saveModel
     @return {Promise}
   */
-  saveModel() {  
+  saveModel() {
     const model = this.get('model');
 
     // This is possible when using offline mode.

@@ -25,7 +25,7 @@ fi
 # Remove results of previous deploy (for current branch) & recreate directory.
 echo "Remove results of previous deploy (from ${deployFolder} folder)."
 rm -rf "${deployFolder}"
-mkdir "${deployFolder}"
+mkdir -p "${deployFolder}"
 
 # Copy builded ember application from 'dist' directory into 'repository/dummy/${deployFolder}'.
 echo "Copy builded ember application (into ${deployFolder} folder)."

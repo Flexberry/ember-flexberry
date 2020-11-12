@@ -77,7 +77,7 @@ git config user.email "mail@flexberry.net"
 
 echo "Commit & push changes."
 git add --all
-git commit --amend -m "Update gh-pages branch" -m "Deploy into '${deployFolder}' folder."
+git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deployFolder}' folder."
 
 # Redirect any output to /dev/null to hide any sensitive credential data that might otherwise be exposed.
 git push --force --quiet "https://${GH_TOKEN}@github.com/${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1

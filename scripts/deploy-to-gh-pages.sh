@@ -101,7 +101,7 @@ then
       -H "Accept: application/vnd.github.v3+json" \
       -H "Authorization: token ${GH_TOKEN}" \
       https://api.github.com/repos/${repositoryRelativeGitHubAddress}/deployments \
-      -d "{\"ref\":\"${TRAVIS_PULL_REQUEST_BRANCH}\",\"environment\":\"dummy/pull/${TRAVIS_PULL_REQUEST}\"}")
+      -d "{\"ref\":\"${TRAVIS_PULL_REQUEST_BRANCH}\",\"environment\":\"dummy/pull/${TRAVIS_PULL_REQUEST}\",\"required_contexts\":[]}")
   deploymentId=$(node -pe "JSON.parse(process.argv[1]).id || 'undefined'" "${deployment}")
   if [[ "${deploymentId}" != "undefined" ]]
   then

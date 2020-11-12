@@ -390,11 +390,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {RSVP.Promise}
   */
   validate() {
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      this.get('validationObject').validate().then(({ validations }) => {
-        (validations.get('isValid') ? resolve : reject)(validations);
-      });
-    });
+    return this.get('validationObject').validate();
   },
 
   /**
@@ -763,7 +759,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
 
       case 'date': {
         cellComponent.componentName = 'flexberry-simpledatetime';
-        cellComponent.componentProperties = { type: 'date' };
         break;
       }
 

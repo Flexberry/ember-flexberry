@@ -8,7 +8,8 @@ export default {
       'save-button-text': 'Сохранить',
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
-      'close-button-text': 'Закрыть'
+      'close-button-text': 'Закрыть',
+      'more-button-text': 'Еще'
     },
 
     'error-form': {

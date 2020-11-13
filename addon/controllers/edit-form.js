@@ -141,7 +141,12 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @property lookupSettings
     @type Object
   */
-  lookupSettings: undefined,
+  lookupSettings: {
+    controllerName: 'lookup-dialog',
+    template: 'lookup-dialog',
+    contentTemplate: 'lookup-dialog-content',
+    loaderTemplate: 'loading'
+  },
 
   /**
     If `true`, all details will be deleted along with the main model.
@@ -371,20 +376,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     },
   },
 
-  init() {
-    this._super(...arguments);
-    this.set('lookupSettings', {
-      controllerName: 'lookup-dialog',
-      template: 'lookup-dialog',
-      contentTemplate: 'lookup-dialog-content',
-      loaderTemplate: 'loading'
-    });
-  },
-
   /**
     Runs validation on {{#crossLink "EditFormController/validationObject:property"}}{{/crossLink}} and returns promise.
     Promise resolved if validation successful or rejected if validation failed.
-    Promise always settled with [ResultCollection](http://offirgolan.github.io/ember-cp-validations/docs/classes/ResultCollection.html) object.
 
     @method validate
     @return {RSVP.Promise}
@@ -441,15 +435,11 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         return Ember.RSVP.reject(errorData);
       }).finally((data) => {
         this.onSaveActionAlways(data);
-      }).catch((errorData) => {
-        this.get('appState').error();
-        this.onSaveActionRejected(errorData);
-        return Ember.RSVP.reject(errorData);
       });
-    }, (reason) => {
-      this.send('error', new Error(reason.get('message')));
+    }).catch((errorData) => {
+      this.send('error', new Error(errorData.get('message')));
       this.get('appState').error();
-      return Ember.RSVP.reject(reason);
+      return Ember.RSVP.reject(errorData);
     });
   },
 

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-tab-bar.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-tab-bar.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+import Component from &#x27;@ember/component&#x27;;
+import { get, set, computed } from &#x27;@ember/object&#x27;;
+import { A } from &#x27;@ember/array&#x27;;
+import $ from &quot;jquery&quot;
+
+/**
+  Component&#x27;s CSS-classes names.
+  JSON-object containing string constants with CSS-classes names related to component&#x27;s .hbs markup elements.
+
+  @property {Object} flexberryClassNames
+  @property {String} flexberryClassNames.prefix Component&#x27;s CSS-class names prefix (&#x27;flexberry-tab-bar&#x27;).
+  @property {String} flexberryClassNames.wrapper Component&#x27;s wrapping &lt;div&gt; CSS-class name (&#x27;flexberry-tab-bar&#x27;).
+  @property {String} flexberryClassNames.tab Component&#x27;s inner &lt;input type=&quot;checkbox&quot;&gt; CSS-class name (&#x27;flexberry-tab-bar-tab&#x27;).
+  @property {String} flexberryClassNames.tabIcon Component&#x27;s inner &lt;label&gt; CSS-class name (&#x27;flexberry-tab-bar-tab-icon&#x27;).
+  @readonly
+  @static
+
+  @for FlexberryTabBarComponent
+*/
+const flexberryClassNamesPrefix = &#x27;flexberry-tab-bar&#x27;;
+const flexberryClassNames = {
+  prefix: flexberryClassNamesPrefix,
+  wrapper: flexberryClassNamesPrefix,
+  tab: flexberryClassNamesPrefix + &#x27;-tab&#x27;,
+  tabIcon: flexberryClassNamesPrefix + &#x27;-tab-icon&#x27;
+};
+
+/**
+ * FlexberryTabBarComponent
+ * Component to display semantic ui tabs
+ * @extends Component
+ */
+export default Component.extend({
+  classNames: [&#x27;ui&#x27;, &#x27;tabular&#x27;, &#x27;menu&#x27;, flexberryClassNamesPrefix],
+
+  classNameBindings: [&#x27;isOverflowedTabs:overflowed&#x27;],
+
+  /**
+    Reference to component&#x27;s CSS-classes names.
+    Must be also a component&#x27;s instance property to be available from component&#x27;s .hbs template.
+  */
+  flexberryClassNames,
+
+  /**
+   * Contains items to be displayed in tab bar
+   * @property items
+   * @type {Array}
+   * @default null
+   * @example items: [{selector: &#x27;tab1&#x27;, caption: &#x27;Tab one&#x27;, active: true }, {selector: &#x27;tab2&#x27;, caption: &#x27;Tab two&#x27;}]
+   * @desc the first item with active=true will be set as active, others ignored
+   */
+  items: null,
+
+  /**
+   * Contains items that will be displayed in tab bar
+   * @property tabs
+   * @type {Array}
+   */
+  tabs: computed(&#x27;items.{[],@each.active}&#x27;, function () {
+    let active = false;
+    let items = this.get(&#x27;items&#x27;) || A();
+    let result = A();
+
+    items.forEach((item) =&gt; {
+      let itemIsActive = get(item, &#x27;active&#x27;);
+      if (itemIsActive) {
+        if (!active) {
+          active = true;
+
+          let itemClass = get(item, &#x27;class&#x27;) || &#x27;&#x27;;
+          let regEx = /\sactive(\s|$)/;
+          if (!regEx.test(itemClass)) {
+            itemClass += &#x27; active&#x27;;
+          }
+
+          set(item, &#x27;class&#x27;, itemClass);
+          this.set(&#x27;prevTab&#x27;, item.selector);
+          $.tab(&#x27;change tab&#x27;, item.selector);
+        }
+      }
+
+      set(item, &#x27;active&#x27;, false);
+
+      if (get(item, &#x27;iconClass&#x27;)) {
+        set(item, &#x27;_hasIcon&#x27;, true);
+      } else {
+        set(item, &#x27;_hasIcon&#x27;, false);
+      }
+
+      result.pushObject(item);
+    });
+
+    return result;
+  }),
+
+  /**
+   * Contains name of previous data-tab
+   * @property prevTab
+   */
+  prevTab: undefined,
+
+  /**
+   * String with dropdown selector for working with jQuery
+   * @property dropdownDomString
+   */
+  navDropdownDomString: &#x27;.ui.compact.pointing.top.right.dropdown.link.item&#x27;,
+
+  isOverflowedTabs: false,
+
+  /**
+   * Checks if sum of tabs width is greater than tab container.
+   * If true - dropdown becomes visible.
+   * If false - dropdown dissapears.
+   * @method setDropdownVisibility
+   */
+  setNavDropdownVisibility: function () {
+    const tabContainer = document.querySelector(
+      &#x27;.ui.tabular.menu.flexberry-tab-bar&#x27;
+    );
+    const tab = document.querySelector(&#x27;.flexberry-tab-bar-tab.tab.item&#x27;);
+
+    if (tab != null &amp;&amp; tab.clientWidth * this.items.length &gt; tabContainer.clientWidth) {
+      this.$(this.navDropdownDomString).show();
+    } else {
+      this.$(this.navDropdownDomString).hide();
+    }
+  },
+
+  /**
+   * Enables scroll wheel for dragscroll.
+   * Based on code by @miorel + @pieterv of Facebook.
+	 * github.com/facebook/fixed-data-table/blob/master/src/vendor_upstream/dom/normalizeWheel.js
+   * @method normalizeWheel
+   */
+  normalizeWheel: function (event) {
+    const pixelStep = 10;
+    const lineHeight = 40;
+    const pageHeight = 800;
+    let sX = 0;
+    let sY = 0;
+    let pX = 0;
+    let pY = 0;
+
+    // Legacy.
+    if (&#x27;detail&#x27; in event) {
+      sY = event.detail;
+    } else if (&#x27;wheelDelta&#x27; in event) {
+      sY = event.wheelDelta / -120;
+    } else if (&#x27;wheelDeltaY&#x27; in event) {
+      sY = event.wheelDeltaY / -120;
+    }
+
+    if (&#x27;wheelDeltaX&#x27; in event) {
+      sX = event.wheelDeltaX / -120;
+    }
+
+    // Side scrolling on FF with DOMMouseScroll.
+    if (&#x27;axis&#x27; in event &amp;&amp; event.axis === event.HORIZONTAL_AXIS) {
+      sX = sY;
+      sY = 0;
+    }
+
+    // Calculate.
+    pX = sX * pixelStep;
+    pY = sY * pixelStep;
+
+    if (&#x27;deltaY&#x27; in event) {
+      pY = event.deltaY;
+    }
+
+    if (&#x27;deltaX&#x27; in event) {
+      pX = event.deltaX;
+    }
+
+    if ((pX || pY) &amp;&amp; event.deltaMode) {
+      if (event.deltaMode === 1) {
+        pX *= lineHeight;
+        pY *= lineHeight;
+      } else {
+        pX *= pageHeight;
+        pY *= pageHeight;
+      }
+    }
+
+    // Fallback if spin cannot be determined.
+    if (pX &amp;&amp; !sX) {
+      sX = pX &lt; 1 ? -1 : 1;
+    }
+
+    if (pY &amp;&amp; !sY) {
+      sY = pY &lt; 1 ? -1 : 1;
+    }
+
+    // Return.
+    return {
+      spinX: sX,
+      spinY: sY,
+      pixelX: pX,
+      pixelY: pY,
+    };
+  },
+
+  actions: {
+    /**
+        Handles tab &#x27;click&#x27; action.
+        @method actions.change
+        @param {String} currentTab describes currently clicked tab
+        @param {Object} event [jQuery event object](http://api.jquery.com/category/events/event-object/)
+    */
+    change(currentTab, event) {
+      let prevTab = this.get(&#x27;prevTab&#x27;);
+      let tabName = currentTab;
+      let changed = false;
+
+      if (prevTab !== tabName) {
+        this.set(&#x27;prevTab&#x27;, tabName);
+        changed = true;
+      }
+
+      // if data-tab stays the same - disable it
+      if (!changed) {
+        this.set(&#x27;prevTab&#x27;, undefined);
+        set(currentTab, &#x27;active&#x27;, false);
+      }
+
+      //if data-tab changed but there was not prev one
+      else if (changed &amp;&amp; !prevTab) {
+        changed = false;
+      }
+
+      let e = {
+        tabName: tabName,
+        prevTab: prevTab,
+        changed: changed,
+        originalEvent: event,
+      };
+
+      this.get(&#x27;change&#x27;, e);
+    },
+  },
+
+  /**
+      Initializes component&#x27;s DOM-related properties.
+    */
+  didInsertElement() {
+    this._super(...arguments);
+
+    // initialize semantic ui tabs
+    this.$(&#x27;.item&#x27;).tab();
+
+    if (this.get(&#x27;isOverflowedTabs&#x27;)) {
+      // Dragscroll inplementation for tabs
+      const slider = document.querySelector(&#x27;.dragscroll&#x27;);
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener(&#x27;mousedown&#x27;, (e) =&gt; {
+        isDown = true;
+        slider.classList.add(&#x27;active&#x27;);
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener(&#x27;mouseleave&#x27;, () =&gt; {
+        isDown = false;
+        slider.classList.remove(&#x27;active&#x27;);
+      });
+
+      slider.addEventListener(&#x27;mouseup&#x27;, () =&gt; {
+        isDown = false;
+        slider.classList.remove(&#x27;active&#x27;);
+      });
+
+      slider.addEventListener(&#x27;mousemove&#x27;, (e) =&gt; {
+        if (!isDown) {
+          return false;
+        } else {
+          e.preventDefault();
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          slider.scrollLeft = scrollLeft - walk;
+        }
+      });
+
+      slider.addEventListener(&#x27;wheel&#x27;, (e) =&gt; {
+
+        // Prevent default.
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Stop link scroll.
+        this.$(&#x27;body&#x27;).stop();
+
+        // Calculate delta, direction.
+        const n = this.normalizeWheel(e);
+        const x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
+        const delta = Math.min(Math.abs(x), 150);
+        const direction = x &gt; 0 ? 1 : -1;
+
+        // Scroll page.
+        this.$(&#x27;.dragscroll&#x27;).scrollLeft(this.$(&#x27;.dragscroll&#x27;).scrollLeft() + delta * direction);
+      });
+
+      // Dropdown visibility implementation
+      window.addEventListener(&#x27;resize&#x27;, () =&gt; {
+        this.setNavDropdownVisibility();
+      });
+
+      this.setNavDropdownVisibility();
+    }
+  },
+
+  /**
+    Handles DOM-related component&#x27;s properties after each render.
+  */
+  didRender() {
+    this._super(...arguments);
+
+    // Initialize possibly added new tabs.
+    this.$(&#x27;.item&#x27;).tab();
+
+    if (this.get(&#x27;isOverflowedTabs&#x27;)) {
+      // Inititalize semantic ui dropdown (hidden by default)
+      this.$(this.navDropdownDomString).dropdown({
+        transition: &#x27;drop&#x27;,
+        action: &#x27;activate&#x27;,
+        onChange(newTab) {
+          $.tab(&#x27;change tab&#x27;, newTab);
+        },
+      });
+    }
+  },
+
+  /**
+    Deinitializes component&#x27;s DOM-related properties.
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    // destroy semantic ui tabs
+    this.$(&#x27;.item&#x27;).tab(&#x27;destroy&#x27;);
+  },
+
+  /**
+    Component&#x27;s action invoking when tab was clicked and it&#x27;s &#x27;active&#x27; state changed.
+    @method sendingActions.change
+    @param {Object} e Action&#x27;s event object.
+    @param {String} e.tabName Name of clicked tab
+    @param {Boolean} e.changed Flag: whether tab was changed. True if yes, False if not, Null if there is no active tab
+    @param {Object} e.originalEvent [jQuery event object](http://api.jquery.com/category/events/event-object/)
+    which describes inner input&#x27;s &#x27;change&#x27; event.
+  */
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

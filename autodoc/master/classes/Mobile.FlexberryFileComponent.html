@@ -1,0 +1,3335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mobile.FlexberryFileComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>Mobile.FlexberryFileComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends <a href="../classes/FlexberryFileComponent.html" class="crosslink">FlexberryFileComponent</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_mobile_flexberry-file.js.html#l8"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:8</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Mobile version of <a href="../classes/FlexberryFileComponent.html" class="crosslink">flexberry-file</a> component (with mobile-specific defaults).</p>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__dataURLtoFile" data-tablink="_dataURLtoFile">_dataURLtoFile</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__isValidTypeFile" data-tablink="_isValidTypeFile">_isValidTypeFile</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__onRelatedModelPreSave" data-tablink="_onRelatedModelPreSave">_onRelatedModelPreSave</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__previewOptionsDidChange" data-tablink="_previewOptionsDidChange">_previewOptionsDidChange</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__subscribeOnRelatedModelPreSaveEvent" data-tablink="_subscribeOnRelatedModelPreSaveEvent">_subscribeOnRelatedModelPreSaveEvent</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__unsubscribeFromRelatedModelPresaveEvent" data-tablink="_unsubscribeFromRelatedModelPresaveEvent">_unsubscribeFromRelatedModelPresaveEvent</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__uploadDataDidChange" data-tablink="_uploadDataDidChange">_uploadDataDidChange</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__valueDidChange" data-tablink="_valueDidChange">_valueDidChange</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.addButtonClick" data-tablink="actions.addButtonClick">actions.addButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.downloadButtonClick" data-tablink="actions.downloadButtonClick">actions.downloadButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.onMenuItemClick" data-tablink="actions.onMenuItemClick">actions.onMenuItemClick</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.removeButtonClick" data-tablink="actions.removeButtonClick">actions.removeButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.uploadButtonClick" data-tablink="actions.uploadButtonClick">actions.uploadButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.viewLoadedImage" data-tablink="actions.viewLoadedImage">actions.viewLoadedImage</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_downloadFile" data-tablink="downloadFile">downloadFile</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_getTargetObjectByCondition." data-tablink="getTargetObjectByCondition.">getTargetObjectByCondition.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_initProperty" data-tablink="initProperty">initProperty</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_removeFile" data-tablink="removeFile">removeFile</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showDownloadErrorModalDialog" data-tablink="showDownloadErrorModalDialog">showDownloadErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showErrorModalDialog" data-tablink="showErrorModalDialog">showErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showFileExtensionErrorModalDialog" data-tablink="showFileExtensionErrorModalDialog">showFileExtensionErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showUploadErrorModalDialog" data-tablink="showUploadErrorModalDialog">showUploadErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_uploadFile" data-tablink="uploadFile">uploadFile</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__addButtonIsEnabled" data-tablink="_addButtonIsEnabled">_addButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__addButtonIsVisible" data-tablink="_addButtonIsVisible">_addButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__canLoadPreview" data-tablink="_canLoadPreview">_canLoadPreview</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__downloadButtonIsEnabled" data-tablink="_downloadButtonIsEnabled">_downloadButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__downloadButtonIsVisible" data-tablink="_downloadButtonIsVisible">_downloadButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialog" data-tablink="_errorModalDialog">_errorModalDialog</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialogCaption" data-tablink="_errorModalDialogCaption">_errorModalDialogCaption</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialogContent" data-tablink="_errorModalDialogContent">_errorModalDialogContent</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorPreviewCaption" data-tablink="_errorPreviewCaption">_errorPreviewCaption</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileInputId" data-tablink="_fileInputId">_fileInputId</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileName" data-tablink="_fileName">_fileName</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileSizeUnits" data-tablink="_fileSizeUnits">_fileSizeUnits</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasFile" data-tablink="_hasFile">_hasFile</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__initialValue" data-tablink="_initialValue">_initialValue</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__isMobile" data-tablink="_isMobile">_isMobile</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__jsonInitialValue" data-tablink="_jsonInitialValue">_jsonInitialValue</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__jsonValue" data-tablink="_jsonValue">_jsonValue</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__menuItems" data-tablink="_menuItems">_menuItems</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__previewDownloadIsInProgress" data-tablink="_previewDownloadIsInProgress">_previewDownloadIsInProgress</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__previewImageAsBase64String" data-tablink="_previewImageAsBase64String">_previewImageAsBase64String</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__removeButtonIsEnabled" data-tablink="_removeButtonIsEnabled">_removeButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__removeButtonIsVisible" data-tablink="_removeButtonIsVisible">_removeButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__selectedFile" data-tablink="_selectedFile">_selectedFile</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadButtonIsEnabled" data-tablink="_uploadButtonIsEnabled">_uploadButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadButtonIsVisible" data-tablink="_uploadButtonIsVisible">_uploadButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadData" data-tablink="_uploadData">_uploadData</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadDataCopy" data-tablink="_uploadDataCopy">_uploadDataCopy</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadIsInProgress" data-tablink="_uploadIsInProgress">_uploadIsInProgress</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_accept" data-tablink="accept">accept</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfig" data-tablink="appConfig">appConfig</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettings" data-tablink="appConfigSettings">appConfigSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettingsPath" data-tablink="appConfigSettingsPath">appConfigSettingsPath</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64FileExtension" data-tablink="base64FileExtension">base64FileExtension</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64FileName" data-tablink="base64FileName">base64FileName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64Value" data-tablink="base64Value">base64Value</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_buttonClass" data-tablink="buttonClass">buttonClass</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNameBindings" data-tablink="classNameBindings">classNameBindings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNames" data-tablink="classNames">classNames</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_componentName" data-tablink="componentName">componentName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_currentController" data-tablink="currentController">currentController</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicProperties" data-tablink="dynamicProperties">dynamicProperties</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_headers" data-tablink="headers">headers</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_inputClass" data-tablink="inputClass">inputClass</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_isValidTypeFileCustom" data-tablink="isValidTypeFileCustom">isValidTypeFileCustom</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_maxUploadFileSize" data-tablink="maxUploadFileSize">maxUploadFileSize</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_maxUploadFileSizeUnit" data-tablink="maxUploadFileSizeUnit">maxUploadFileSizeUnit</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_openInNewWindowInsteadOfLoading" data-tablink="openInNewWindowInsteadOfLoading">openInNewWindowInsteadOfLoading</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_placeholder" data-tablink="placeholder">placeholder</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_previewSettings" data-tablink="previewSettings">previewSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonly" data-tablink="readonly">readonly</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonlyAttr" data-tablink="readonlyAttr">readonlyAttr</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_relatedModel" data-tablink="relatedModel">relatedModel</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_required" data-tablink="required">required</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showDownloadButton" data-tablink="showDownloadButton">showDownloadButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showModalDialogOnUploadError" data-tablink="showModalDialogOnUploadError">showModalDialogOnUploadError</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showPreview" data-tablink="showPreview">showPreview</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showUploadButton" data-tablink="showUploadButton">showUploadButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_uploadOnModelPreSave" data-tablink="uploadOnModelPreSave">uploadOnModelPreSave</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_uploadUrl" data-tablink="uploadUrl">uploadUrl</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_value" data-tablink="value">value</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_viewImageAction" data-tablink="viewImageAction">viewImageAction</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__dataURLtoFile" class="method item private inherited">
+                        <h3 class="name"><code>_dataURLtoFile</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>dataUrl</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__dataURLtoFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l775"><code>addon&#x2F;components&#x2F;flexberry-file.js:775</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Method converts base64 string to File
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">dataUrl</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Base64 string
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Filename for saving
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__isValidTypeFile" class="method item private inherited">
+                        <h3 class="name"><code>_isValidTypeFile</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileType</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>accept</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__isValidTypeFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1081"><code>addon&#x2F;components&#x2F;flexberry-file.js:1081</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Defines valid of file type.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileType</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            file type as MIME TYPES.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">accept</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            available MIME TYPES.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__onRelatedModelPreSave" class="method item private inherited">
+                        <h3 class="name"><code>_onRelatedModelPreSave</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>e</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__onRelatedModelPreSave">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1022"><code>addon&#x2F;components&#x2F;flexberry-file.js:1022</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles related model's 'preSave' event.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">e</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Related model's 'preSave' event arguments.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">promises</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Related model's 'preSave' operations promises array.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__previewOptionsDidChange" class="method item private inherited">
+                        <h3 class="name"><code>_previewOptionsDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__previewOptionsDidChange">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1143"><code>addon&#x2F;components&#x2F;flexberry-file.js:1143</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Preview options change handler.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__subscribeOnRelatedModelPreSaveEvent" class="method item private inherited">
+                        <h3 class="name"><code>_subscribeOnRelatedModelPreSaveEvent</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__subscribeOnRelatedModelPreSaveEvent">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1041"><code>addon&#x2F;components&#x2F;flexberry-file.js:1041</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Subscribes on related model's 'preSave' event.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__unsubscribeFromRelatedModelPresaveEvent" class="method item private inherited">
+                        <h3 class="name"><code>_unsubscribeFromRelatedModelPresaveEvent</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__unsubscribeFromRelatedModelPresaveEvent">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1061"><code>addon&#x2F;components&#x2F;flexberry-file.js:1061</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Unsubscribes from related model's 'preSave' event.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__uploadDataDidChange" class="method item private inherited">
+                        <h3 class="name"><code>_uploadDataDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__uploadDataDidChange">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1120"><code>addon&#x2F;components&#x2F;flexberry-file.js:1120</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Upload data change handler.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__valueDidChange" class="method item private inherited">
+                        <h3 class="name"><code>_valueDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method__valueDidChange">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1102"><code>addon&#x2F;components&#x2F;flexberry-file.js:1102</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Value change handler.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.addButtonClick" class="method item public inherited">
+                        <h3 class="name"><code>actions.addButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_actions.addButtonClick">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l587"><code>addon&#x2F;components&#x2F;flexberry-file.js:587</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on add button.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.downloadButtonClick" class="method item public inherited">
+                        <h3 class="name"><code>actions.downloadButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_actions.downloadButtonClick">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l618"><code>addon&#x2F;components&#x2F;flexberry-file.js:618</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on download button.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.onMenuItemClick" class="method item public">
+                        <h3 class="name"><code>actions.onMenuItemClick</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>e</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-file.js.html#l81"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:81</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on menu item of selected file.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">e</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Information about selected menu item.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name optional">[data]</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Data of selected menu item.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.removeButtonClick" class="method item public inherited">
+                        <h3 class="name"><code>actions.removeButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_actions.removeButtonClick">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l598"><code>addon&#x2F;components&#x2F;flexberry-file.js:598</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on remove button.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.uploadButtonClick" class="method item public inherited">
+                        <h3 class="name"><code>actions.uploadButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_actions.uploadButtonClick">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l608"><code>addon&#x2F;components&#x2F;flexberry-file.js:608</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on upload button.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.viewLoadedImage" class="method item public inherited">
+                        <h3 class="name"><code>actions.viewLoadedImage</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_actions.viewLoadedImage">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l566"><code>addon&#x2F;components&#x2F;flexberry-file.js:566</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on selected image preview and sends action with data outside component
+                    in order to view selected image at modal window.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_downloadFile" class="method item inherited">
+                        <h3 class="name"><code>downloadFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_downloadFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l884"><code>addon&#x2F;components&#x2F;flexberry-file.js:884</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Downloads previously uploaded file.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_getTargetObjectByCondition." class="method item inherited">
+                        <h3 class="name"><code>getTargetObjectByCondition.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>condition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">Null | <a href="http://emberjs.com/api/classes/Ember.Component.html" class="crosslink external" target="_blank">Ember.Component</a> | <a href="http://emberjs.com/api/classes/Ember.Controller.html" class="crosslink external" target="_blank">Ember.Controller</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_getTargetObjectByCondition.">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l224"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:224</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Returns that 'targetObject' (from 'targetObject's hierarchy) which satisfies a given condition.
+                    
+                    <code>&#x60;</code>javascript
+                    let controller = this.getTargetObjectByCondition((targetObject) => {
+                      return targetObject instanceof Ember.Controller;
+                    });
+                    <code>&#x60;</code>
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">condition</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">Null | <a href="http://emberjs.com/api/classes/Ember.Component.html" class="crosslink external" target="_blank">Ember.Component</a> | <a href="http://emberjs.com/api/classes/Ember.Controller.html" class="crosslink external" target="_blank">Ember.Controller</a></span>:
+                                        Target object which satisfies a given condition or null.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_initProperty" class="method item inherited">
+                        <h3 class="name"><code>initProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_initProperty">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l152"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:152</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Initializes component's property with recpect to following priority:
+                    1 - template-defined parameters,
+                    2 - applicaion configuration-defined parameters (JSON from ./config/environment by path defined in 'appConfigSettingsPath' property),
+                    3 - component-defined defaults.
+                    Note! It is important to be declared as undefined for those component properties, which will be initialized through 'initProperty' call.
+                    
+                    <code>&#x60;</code>javascript
+                    // ./config/environment.js.
+                    module.exports = function(environment) {
+                      var ENV = {
+                        APP: {
+                          components: {
+                            myComponent: {
+                              myComponentProperty: 'myComponentProperty config-defined default value',
+                            }
+                          }
+                        }
+                      };
+                      return ENV;
+                    };
+                    <code>&#x60;</code>
+                    
+                    <code>&#x60;</code>javascript
+                    // /components/my-component.js
+                    import FlexberryBaseComponent from 'ember-flexberry/flexberry-base-component';
+                    
+                    export default FlexberryBaseComponent.extend({
+                      appConfigSettingsPath: 'APP.components.myComponent',
+                    
+                      myComponentProperty: undefined,
+                    
+                      init() {
+                        this._super.apply(this, arguments);
+                        this.initProperty({ propertyName: 'myComponentProperty', defaultValue: 'myComponentProperty default value' });
+                      }
+                    });
+                    <code>&#x60;</code>
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Method options.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">propertyName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">defaultValue</code>
+                                                        <span class="type"></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property default value (from component defined default's).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_removeFile" class="method item inherited">
+                        <h3 class="name"><code>removeFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_removeFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l814"><code>addon&#x2F;components&#x2F;flexberry-file.js:814</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Removes selected file.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_showDownloadErrorModalDialog" class="method item inherited">
+                        <h3 class="name"><code>showDownloadErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>errorMessage</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_showDownloadErrorModalDialog">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l1000"><code>addon&#x2F;components&#x2F;flexberry-file.js:1000</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Shows errors if there were some during file download.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            File name.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">errorMessage</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Message about error occurred during file download.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_showErrorModalDialog" class="method item inherited">
+                        <h3 class="name"><code>showErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>errorCaption</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>errorContent</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_showErrorModalDialog">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l910"><code>addon&#x2F;components&#x2F;flexberry-file.js:910</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Shows error modal dialog.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">errorCaption</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Error caption (window header caption).
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">errorContent</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Error content (window body content).
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        Error content.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_showFileExtensionErrorModalDialog" class="method item inherited">
+                        <h3 class="name"><code>showFileExtensionErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_showFileExtensionErrorModalDialog">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l959"><code>addon&#x2F;components&#x2F;flexberry-file.js:959</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Shows file extension errors if there were some.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Added file name.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        Error content.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_showUploadErrorModalDialog" class="method item inherited">
+                        <h3 class="name"><code>showUploadErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>actualFileSize</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>maxFileSize</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>sizeUnit</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryFileComponent.html#method_showUploadErrorModalDialog">
+                                    FlexberryFileComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_flexberry-file.js.html#l933"><code>addon&#x2F;components&#x2F;flexberry-file.js:933</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Shows file size errors if there were some.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Added file name.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">actualFileSize</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Actual size of added file.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">maxFileSize</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Max file size allowed.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">sizeUnit</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Max file size unit.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        Error content.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_uploadFile" class="method item inherited">
+                        <h3 class="name"><code>uploadFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#method_uploadFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l827"><code>addon&#x2F;components&#x2F;flexberry-file.js:827</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Uploads selected file.
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__addButtonIsEnabled" class="property item private inherited">
+                        <h3 class="name"><code>_addButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__addButtonIsEnabled">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l196"><code>addon&#x2F;components&#x2F;flexberry-file.js:196</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether add button is enabled now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__addButtonIsVisible" class="property item private inherited">
+                        <h3 class="name"><code>_addButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__addButtonIsVisible">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l184"><code>addon&#x2F;components&#x2F;flexberry-file.js:184</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether add button is visible now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__canLoadPreview" class="property item inherited">
+                        <h3 class="name"><code>_canLoadPreview</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__canLoadPreview">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l422"><code>addon&#x2F;components&#x2F;flexberry-file.js:422</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            indicates whether preview img can be loaded when show.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property__downloadButtonIsEnabled" class="property item private inherited">
+                        <h3 class="name"><code>_downloadButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__downloadButtonIsEnabled">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l276"><code>addon&#x2F;components&#x2F;flexberry-file.js:276</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether download button is enabled now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__downloadButtonIsVisible" class="property item private inherited">
+                        <h3 class="name"><code>_downloadButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__downloadButtonIsVisible">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l263"><code>addon&#x2F;components&#x2F;flexberry-file.js:263</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether download button is visible now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialog" class="property item private inherited">
+                        <h3 class="name"><code>_errorModalDialog</code></h3>
+                        <span class="type"><a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__errorModalDialog">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l324"><code>addon&#x2F;components&#x2F;flexberry-file.js:324</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Selected jQuery object, containing HTML of error modal dialog.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialogCaption" class="property item private inherited">
+                        <h3 class="name"><code>_errorModalDialogCaption</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__errorModalDialogCaption">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l291"><code>addon&#x2F;components&#x2F;flexberry-file.js:291</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Caption to be displayed in error modal dialog.
+                    It will be displayed only if some error occurs.
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-dialog-caption&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialogContent" class="property item private inherited">
+                        <h3 class="name"><code>_errorModalDialogContent</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__errorModalDialogContent">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l302"><code>addon&#x2F;components&#x2F;flexberry-file.js:302</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Content to be displayed in error modal dialog.
+                    It will be displayed only if some error occurs.
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-dialog-content&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorPreviewCaption" class="property item private inherited">
+                        <h3 class="name"><code>_errorPreviewCaption</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__errorPreviewCaption">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l313"><code>addon&#x2F;components&#x2F;flexberry-file.js:313</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Caption to be displayed in loaded file table cell.
+                    It will be displayed only if preview can't be loaded.
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-preview-caption&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__fileInputId" class="property item private inherited">
+                        <h3 class="name"><code>_fileInputId</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__fileInputId">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l46"><code>addon&#x2F;components&#x2F;flexberry-file.js:46</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            File input identifier.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__fileName" class="property item private inherited">
+                        <h3 class="name"><code>_fileName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__fileName">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l101"><code>addon&#x2F;components&#x2F;flexberry-file.js:101</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            File name.
+                    It is binded to component file name input, so every change to fileName will automatically change file name input value.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__fileSizeUnits" class="property item private inherited">
+                        <h3 class="name"><code>_fileSizeUnits</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__fileSizeUnits">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l22"><code>addon&#x2F;components&#x2F;flexberry-file.js:22</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Available file size units with its captions.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__hasFile" class="property item private inherited">
+                        <h3 class="name"><code>_hasFile</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__hasFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l119"><code>addon&#x2F;components&#x2F;flexberry-file.js:119</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether some file is added now or not.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__initialValue" class="property item private inherited">
+                        <h3 class="name"><code>_initialValue</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__initialValue">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l66"><code>addon&#x2F;components&#x2F;flexberry-file.js:66</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Copy of value created at initialization moment or after successful upload.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__isMobile" class="property item private">
+                        <h3 class="name"><code>_isMobile</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-file.js.html#l15"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:15</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: whether component is mobile or not.
+                    Used in base class for class names bindings.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property__jsonInitialValue" class="property item private inherited">
+                        <h3 class="name"><code>_jsonInitialValue</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__jsonInitialValue">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l75"><code>addon&#x2F;components&#x2F;flexberry-file.js:75</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Deserialized copy of value created at initialization moment or after successful upload.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__jsonValue" class="property item private inherited">
+                        <h3 class="name"><code>_jsonValue</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__jsonValue">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l88"><code>addon&#x2F;components&#x2F;flexberry-file.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Deserialized value of file component.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__menuItems" class="property item private">
+                        <h3 class="name"><code>_menuItems</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-file.js.html#l26"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:26</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Items for component's menu.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__previewDownloadIsInProgress" class="property item private inherited">
+                        <h3 class="name"><code>_previewDownloadIsInProgress</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__previewDownloadIsInProgress">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l174"><code>addon&#x2F;components&#x2F;flexberry-file.js:174</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether file preview download is in progress now.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property__previewImageAsBase64String" class="property item private inherited">
+                        <h3 class="name"><code>_previewImageAsBase64String</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__previewImageAsBase64String">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l36"><code>addon&#x2F;components&#x2F;flexberry-file.js:36</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Selected file content. It can be used as source for image tag in order to view preview.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__removeButtonIsEnabled" class="property item private inherited">
+                        <h3 class="name"><code>_removeButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__removeButtonIsEnabled">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l221"><code>addon&#x2F;components&#x2F;flexberry-file.js:221</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether remove button is enabled now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__removeButtonIsVisible" class="property item private inherited">
+                        <h3 class="name"><code>_removeButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__removeButtonIsVisible">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l209"><code>addon&#x2F;components&#x2F;flexberry-file.js:209</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether remove button is visible now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__selectedFile" class="property item private inherited">
+                        <h3 class="name"><code>_selectedFile</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__selectedFile">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l151"><code>addon&#x2F;components&#x2F;flexberry-file.js:151</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Current file selected for upload.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadButtonIsEnabled" class="property item private inherited">
+                        <h3 class="name"><code>_uploadButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__uploadButtonIsEnabled">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l248"><code>addon&#x2F;components&#x2F;flexberry-file.js:248</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether upload button is enabled now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadButtonIsVisible" class="property item private inherited">
+                        <h3 class="name"><code>_uploadButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__uploadButtonIsVisible">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l236"><code>addon&#x2F;components&#x2F;flexberry-file.js:236</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether upload button is visible now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadData" class="property item private inherited">
+                        <h3 class="name"><code>_uploadData</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__uploadData">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l131"><code>addon&#x2F;components&#x2F;flexberry-file.js:131</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Data from jQuery fileupload plugin (contains selected file).
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__uploadDataCopy" class="property item private inherited">
+                        <h3 class="name"><code>_uploadDataCopy</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__uploadDataCopy">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l141"><code>addon&#x2F;components&#x2F;flexberry-file.js:141</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Copy of data from jQuery fileupload plugin (contains selected file).
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__uploadIsInProgress" class="property item private inherited">
+                        <h3 class="name"><code>_uploadIsInProgress</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property__uploadIsInProgress">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l164"><code>addon&#x2F;components&#x2F;flexberry-file.js:164</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether file upload is in progress now.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_accept" class="property item inherited">
+                        <h3 class="name"><code>accept</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_accept">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l522"><code>addon&#x2F;components&#x2F;flexberry-file.js:522</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Available file extensions for upload. In MIME type format.
+                    See [the documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) for more details.
+                        </div>
+                    
+                            <p><strong>Default:</strong> undefined</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfig" class="property item inherited">
+                        <h3 class="name"><code>appConfig</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfig">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l87"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Application configuration (JSON from ./config/environment.js).
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettings" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettings">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l96"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:96</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component settings object from application configuration (part of JSON from ./config/environment.js).
+                    Part of appConfig related to appConfigSettingsPath.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettingsPath" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettingsPath</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettingsPath">
+                                    FlexberryBaseComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_flexberry-file.js.html#l377"><code>addon&#x2F;components&#x2F;flexberry-file.js:377</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Path to component's settings in application configuration (JSON from ./config/environment.js).
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;APP.components.flexberryFile&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64FileExtension" class="property item inherited">
+                        <h3 class="name"><code>base64FileExtension</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_base64FileExtension">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l557"><code>addon&#x2F;components&#x2F;flexberry-file.js:557</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Extension for base64 file. {base64FileName}.{base64FileExtension}
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64FileName" class="property item inherited">
+                        <h3 class="name"><code>base64FileName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_base64FileName">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l549"><code>addon&#x2F;components&#x2F;flexberry-file.js:549</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Name for base64 file. {base64FileName}.{base64FileExtension}
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64Value" class="property item inherited">
+                        <h3 class="name"><code>base64Value</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_base64Value">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l541"><code>addon&#x2F;components&#x2F;flexberry-file.js:541</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            External Base64 string
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_buttonClass" class="property item inherited">
+                        <h3 class="name"><code>buttonClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_buttonClass">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l360"><code>addon&#x2F;components&#x2F;flexberry-file.js:360</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            CSS-classes names for component's add, remove, upload, download buttons.
+                    See [Semantic UI buttons classes](http://semantic-ui.com/elements/button.html).
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code><code>&#x60;</code>handlebars
+                    
+                    </code></pre>
+                    <pre class="code prettyprint"><code></code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_classNameBindings" class="property item">
+                        <h3 class="name"><code>classNameBindings</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-file.js.html#l127"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:127</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Components class names bindings.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;isMobile:mobile&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_classNames" class="property item inherited">
+                        <h3 class="name"><code>classNames</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_classNames">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l334"><code>addon&#x2F;components&#x2F;flexberry-file.js:334</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component's wrapping <div> CSS-class names.
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;flexberry-file&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_componentName" class="property item inherited">
+                        <h3 class="name"><code>componentName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_componentName">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l48"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:48</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Unique name of the component.
+                    TODO: use guidFor from 'ember-metal/utils'
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_currentController" class="property item inherited">
+                        <h3 class="name"><code>currentController</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/Ember.Controller.html" class="crosslink external" target="_blank">Ember.Controller</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_currentController">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l106"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:106</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Current controller.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicProperties" class="property item inherited">
+                        <h3 class="name"><code>dynamicProperties</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_dynamicProperties">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l57"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:57</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component dynamic properties ({ componentPropertyName: value }).
+                    Used when component renders dynamically with ember {{component}} helper:
+                    {{component 'my-component' value=value dynamicProperties=myConponentProperties}}.
+                    In the end of component initialization its properties values will be replaced with values from this object.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_headers" class="property item inherited">
+                        <h3 class="name"><code>headers</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_headers">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l504"><code>addon&#x2F;components&#x2F;flexberry-file.js:504</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Headers to the file upload request.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_inputClass" class="property item inherited">
+                        <h3 class="name"><code>inputClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_inputClass">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l343"><code>addon&#x2F;components&#x2F;flexberry-file.js:343</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component's input additional CSS-class names.
+                    See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code><code>&#x60;</code>handlebars
+                    
+                    <code>&#x60;</code></code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_isValidTypeFileCustom" class="property item inherited">
+                        <h3 class="name"><code>isValidTypeFileCustom</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_isValidTypeFileCustom">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l532"><code>addon&#x2F;components&#x2F;flexberry-file.js:532</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Function with custom check for type of uploaded file.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_maxUploadFileSize" class="property item inherited">
+                        <h3 class="name"><code>maxUploadFileSize</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_maxUploadFileSize">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l449"><code>addon&#x2F;components&#x2F;flexberry-file.js:449</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Maximum file size in bytes for uploading files.
+                    It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
+                    If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_maxUploadFileSizeUnit" class="property item inherited">
+                        <h3 class="name"><code>maxUploadFileSizeUnit</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_maxUploadFileSizeUnit">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l459"><code>addon&#x2F;components&#x2F;flexberry-file.js:459</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;Bt&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_openInNewWindowInsteadOfLoading" class="property item inherited">
+                        <h3 class="name"><code>openInNewWindowInsteadOfLoading</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_openInNewWindowInsteadOfLoading">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l495"><code>addon&#x2F;components&#x2F;flexberry-file.js:495</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: download by clicking download or open file in new window.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_placeholder" class="property item inherited">
+                        <h3 class="name"><code>placeholder</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_placeholder">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l468"><code>addon&#x2F;components&#x2F;flexberry-file.js:468</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Text to be displayed instead of file name, if file has not been selected.
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.placeholder&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property_previewSettings" class="property item inherited">
+                        <h3 class="name"><code>previewSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_previewSettings">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l513"><code>addon&#x2F;components&#x2F;flexberry-file.js:513</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Settings for preview modal dialog.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonly" class="property item inherited">
+                        <h3 class="name"><code>readonly</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonly">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l19"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:19</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component is readonly.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonlyAttr" class="property item inherited">
+                        <h3 class="name"><code>readonlyAttr</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a> | Undefined</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonlyAttr">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l28"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:28</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Readonly HTML attribute following to the <code>readonly</code> query param. According to the W3C standard, returns 'readonly' if <code>readonly</code> is <code>true</code> and <code>undefined</code> otherwise.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_relatedModel" class="property item inherited">
+                        <h3 class="name"><code>relatedModel</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_relatedModel">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l69"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:69</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Model to which current component's value is related.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_required" class="property item inherited">
+                        <h3 class="name"><code>required</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_required">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l39"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:39</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component is required.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showDownloadButton" class="property item inherited">
+                        <h3 class="name"><code>showDownloadButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_showDownloadButton">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l440"><code>addon&#x2F;components&#x2F;flexberry-file.js:440</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show download button or not.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showModalDialogOnUploadError" class="property item inherited">
+                        <h3 class="name"><code>showModalDialogOnUploadError</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_showModalDialogOnUploadError">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l486"><code>addon&#x2F;components&#x2F;flexberry-file.js:486</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show modal dialog on upload errors or not.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showPreview" class="property item">
+                        <h3 class="name"><code>showPreview</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryFileComponent.html#property_showPreview">
+                                    FlexberryFileComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-file.js.html#l136"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-file.js:136</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show preview element for images or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showUploadButton" class="property item inherited">
+                        <h3 class="name"><code>showUploadButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_showUploadButton">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l431"><code>addon&#x2F;components&#x2F;flexberry-file.js:431</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show upload button or not.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_uploadOnModelPreSave" class="property item inherited">
+                        <h3 class="name"><code>uploadOnModelPreSave</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_uploadOnModelPreSave">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l404"><code>addon&#x2F;components&#x2F;flexberry-file.js:404</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_uploadUrl" class="property item inherited">
+                        <h3 class="name"><code>uploadUrl</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_uploadUrl">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l477"><code>addon&#x2F;components&#x2F;flexberry-file.js:477</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            File upload URL.
+                    If null or undefined, then APP.components.file.uploadUrl from application config\environment will be used.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_value" class="property item inherited">
+                        <h3 class="name"><code>value</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_value">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l395"><code>addon&#x2F;components&#x2F;flexberry-file.js:395</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Value of file component (contains serialized file metadata such as fileName, fileSize, etc.).
+                    It is binded to related model property, so every change to value will automatically change model property.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_viewImageAction" class="property item inherited">
+                        <h3 class="name"><code>viewImageAction</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryFileComponent.html#property_viewImageAction">FlexberryFileComponent</a>:
+                            <a href="../files/addon_components_flexberry-file.js.html#l386"><code>addon&#x2F;components&#x2F;flexberry-file.js:386</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Name of the action which will be send outside after click on selected image preview.
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;flexberryFileViewImageAction&#x27;</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

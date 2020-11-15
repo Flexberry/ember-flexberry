@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditFormRoute - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>EditFormRoute <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                    <li><a href="FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+            </ul>
+        </div>
+
+        <div class="extends">
+            Extends <a href="../classes/ProjectedModelForm.html" class="crosslink">ProjectedModelForm</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_routes_edit-form.js.html#l19"><code>addon&#x2F;routes&#x2F;edit-form.js:19</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Base route for the Edit Forms.</p>
+<p>This class re-exports to the application as <code>/routes/edit-form</code>.
+So, you can inherit from <code>./edit-form</code>, even if file <code>app/routes/edit-form.js</code> is not presented in the application.</p>
+<p>Example:</p>
+<pre class="code prettyprint"><code class="language-javascript">// app/routes/employee.js
+import EditFormRoute from './edit-form';
+export default EditFormRoute.extend({
+});
+</code></pre>
+<p>If you want to add some common logic on all Edit Forms, you can override <code>app/routes/edit-form.js</code> as follows:</p>
+<pre class="code prettyprint"><code class="language-javascript">// app/routes/edit-form.js
+import EditFormRoute from 'ember-flexberry/routes/edit-form';
+export default EditFormRoute.extend({
+});
+</code></pre>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__openReadOnly" data-tablink="_openReadOnly">_openReadOnly</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__rowAdded" data-tablink="_rowAdded">_rowAdded</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__rowChanged" data-tablink="_rowChanged">_rowChanged</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__rowDeleted" data-tablink="_rowDeleted">_rowDeleted</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.groupEditRowClick" data-tablink="actions.groupEditRowClick">actions.groupEditRowClick</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.willTransition" data-tablink="actions.willTransition">actions.willTransition</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.willTransition" data-tablink="actions.willTransition">actions.willTransition</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_activate" data-tablink="activate">activate</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_beforeModel" data-tablink="beforeModel">beforeModel</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_beforeModel" data-tablink="beforeModel">beforeModel</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_deactivate" data-tablink="deactivate">deactivate</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_model" data-tablink="model">model</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_newRoutePath" data-tablink="newRoutePath">newRoutePath</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_openReadOnly" data-tablink="openReadOnly">openReadOnly</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_resetController" data-tablink="resetController">resetController</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_setupController" data-tablink="setupController">setupController</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_setupController" data-tablink="setupController">setupController</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_unlockObject" data-tablink="unlockObject">unlockObject</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__groupEditEventsService" data-tablink="_groupEditEventsService">_groupEditEventsService</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appState" data-tablink="appState">appState</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_colsConfigMenu" data-tablink="colsConfigMenu">colsConfigMenu</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_defaultBehaviorLock" data-tablink="defaultBehaviorLock">defaultBehaviorLock</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_flexberryDetailInteractionService" data-tablink="flexberryDetailInteractionService">flexberryDetailInteractionService</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modelName" data-tablink="modelName">modelName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modelProjection" data-tablink="modelProjection">modelProjection</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_newSuffix" data-tablink="newSuffix">newSuffix</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_parentRoute" data-tablink="parentRoute">parentRoute</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_parentRouteRecordId" data-tablink="parentRouteRecordId">parentRouteRecordId</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_queryParams" data-tablink="queryParams">queryParams</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__openReadOnly" class="method item private">
+                        <h3 class="name"><code>_openReadOnly</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>answer</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>resolve</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>reject</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>reason</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l218"><code>addon&#x2F;mixins&#x2F;lock-route.js:218</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Depending on answer, open form read only or transition to parent route.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">answer</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">resolve</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">reject</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">reason</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__rowAdded" class="method item private inherited">
+                        <h3 class="name"><code>_rowAdded</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>componentName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method__rowAdded">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l190"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:190</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Event handler for "row has been selected" event in <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">componentName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The name of <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The model corresponding to added row in <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__rowChanged" class="method item private inherited">
+                        <h3 class="name"><code>_rowChanged</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>componentName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method__rowChanged">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l222"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:222</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Event handler for "model(s) corresponding to some row(s) was changed" event in <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">componentName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The name of <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__rowDeleted" class="method item private inherited">
+                        <h3 class="name"><code>_rowDeleted</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>componentName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method__rowDeleted">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l206"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:206</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Event handler for "row has been deleted" event in <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">componentName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The name of <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The model corresponding to deleted row in <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.groupEditRowClick" class="method item inherited">
+                        <h3 class="name"><code>actions.groupEditRowClick</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code class="optional">[options]</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method_actions.groupEditRowClick">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l48"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:48</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p><a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> row click handler.
+                    It sets <code>modelNoRollBack</code> to <code>true</code> at current controller, redirects to detail's route, save necessary data to service.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type">EmberObject</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Record related to clicked table row.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name optional">[options]</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Record related to clicked table row.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">saveBeforeRouteLeave</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Flag: indicates whether to save current model before going to the detail's route.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">editOnSeparateRoute</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Flag: indicates whether to edit detail on separate route.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">modelName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Clicked detail model name (used to create record if record is undefined).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">detailArray</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Current detail array (used to add record to if record is undefined).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">editFormRoute</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Path to detail's form.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.willTransition" class="method item">
+                        <h3 class="name"><code>actions.willTransition</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l47"><code>addon&#x2F;mixins&#x2F;lock-route.js:47</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition">More info</a>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.willTransition" class="method item">
+                        <h3 class="name"><code>actions.willTransition</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l54"><code>addon&#x2F;routes&#x2F;edit-form.js:54</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>It sends message about transition to corresponding controller.</p>
+                    <p>The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/events/willTransition?anchor=willTransition">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_activate" class="method item inherited">
+                        <h3 class="name"><code>activate</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method_activate">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l149"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:149</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This hook is executed when the router enters the route. It is not executed when the model for the route changes.</p>
+                    <p>It is used to subscribe on <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> events.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_beforeModel" class="method item">
+                        <h3 class="name"><code>beforeModel</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l74"><code>addon&#x2F;mixins&#x2F;lock-route.js:74</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/beforeModel?anchor=beforeModel">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_beforeModel" class="method item">
+                        <h3 class="name"><code>beforeModel</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l121"><code>addon&#x2F;routes&#x2F;edit-form.js:121</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/beforeModel?anchor=beforeModel">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_deactivate" class="method item inherited">
+                        <h3 class="name"><code>deactivate</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method_deactivate">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l164"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:164</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This hook is executed when the router completely exits this route. It is not executed when the model for the route changes.</p>
+                    <p>It is used to unsubscribe from <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> events.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_model" class="method item">
+                        <h3 class="name"><code>model</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>params</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l171"><code>addon&#x2F;routes&#x2F;edit-form.js:171</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can implement to convert the URL into the model for this route.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">params</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_newRoutePath" class="method item inherited">
+                        <h3 class="name"><code>newRoutePath</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>ordinalPath</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#method_newRoutePath">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l179"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:179</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>It forms path for new model's route.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">ordinalPath</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The path to model's route.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        <p>The path to new model's route.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_openReadOnly" class="method item">
+                        <h3 class="name"><code>openReadOnly</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>lockUserName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l151"><code>addon&#x2F;mixins&#x2F;lock-route.js:151</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This function will be called to solve open form read only or transition to parent route.
+                    You can override function for custom behavior.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">lockUserName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/routes/user-edit.js
+                    
+                    import EditFormRoute from 'ember-flexberry/routes/edit-form';
+                    
+                    export default EditFormRoute.extend({
+                      ...
+                      openReadOnly(lockUserName) {
+                        return new RSVP.Promise((resolve) =&gt; {
+                          let answer = confirm(<code>This object lock user with name: &#x27;${lockUserName}&#x27;. Open read only?</code>);
+                          resolve(answer);
+                        });
+                      },
+                      ...
+                    });
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_resetController" class="method item">
+                        <h3 class="name"><code>resetController</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>controller</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>isExisting</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l202"><code>addon&#x2F;routes&#x2F;edit-form.js:202</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can use to reset controller values either when the model changes or the route is exiting.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/resetController?anchor=resetController">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">controller</code>
+                                            <span class="type">Controller</span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">isExisting</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_setupController" class="method item">
+                        <h3 class="name"><code>setupController</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>controller</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l134"><code>addon&#x2F;mixins&#x2F;lock-route.js:134</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can use to setup the controller for the current route.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">controller</code>
+                                            <span class="type">Controller</span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_setupController" class="method item">
+                        <h3 class="name"><code>setupController</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>controller</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l249"><code>addon&#x2F;routes&#x2F;edit-form.js:249</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can use to setup the controller for the current route.
+                    <a href="https://www.emberjs.com/api/ember/release/classes/Route/methods/setupController?anchor=setupController">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">controller</code>
+                                            <span class="type">Controller</span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_unlockObject" class="method item">
+                        <h3 class="name"><code>unlockObject</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l186"><code>addon&#x2F;mixins&#x2F;lock-route.js:186</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This function will be called to solve unlock the object before form close.
+                    You can override function for custom behavior.</p>
+                    
+                        </div>
+                    
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/routes/user-edit.js
+                    
+                    import EditFormRoute from 'ember-flexberry/routes/edit-form';
+                    
+                    export default EditFormRoute.extend({
+                      ...
+                      unlockObject() {
+                        return new RSVP.Promise((resolve) =&gt; {
+                          let answer = confirm(<code>Unlock this object?</code>);
+                          resolve(answer);
+                        });
+                      },
+                      ...
+                    });
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__groupEditEventsService" class="property item private inherited">
+                        <h3 class="name"><code>_groupEditEventsService</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#property__groupEditEventsService">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l18"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:18</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service that triggers <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> events.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> ObjectlistviewEventsService</p>
+                    
+                    
+                    </div>
+                    <div id="property_appState" class="property item">
+                        <h3 class="name"><code>appState</code></h3>
+                        <span class="type"><a href="../classes/AppStateService.html" class="crosslink">AppStateService</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditRouteMixin.html#property_appState">
+                                    FlexberryGroupeditRouteMixin
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_routes_edit-form.js.html#l107"><code>addon&#x2F;routes&#x2F;edit-form.js:107</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service for managing the state of the application.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_colsConfigMenu" class="property item">
+                        <h3 class="name"><code>colsConfigMenu</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l115"><code>addon&#x2F;routes&#x2F;edit-form.js:115</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_defaultBehaviorLock" class="property item">
+                        <h3 class="name"><code>defaultBehaviorLock</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_mixins_lock-route.js.html#l33"><code>addon&#x2F;mixins&#x2F;lock-route.js:33</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This object contains answers which will corresponding functions resolved.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> { openReadOnly: true, unlockObject: true }</p>
+                    
+                    
+                    </div>
+                    <div id="property_flexberryDetailInteractionService" class="property item inherited">
+                        <h3 class="name"><code>flexberryDetailInteractionService</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditRouteMixin.html#property_flexberryDetailInteractionService">FlexberryGroupeditRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-groupedit-route.js.html#l37"><code>addon&#x2F;mixins&#x2F;flexberry-groupedit-route.js:37</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service that lets interact between agregator's and detail's form.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> DetailInteractionService</p>
+                    
+                    
+                    </div>
+                    <div id="property_modelName" class="property item inherited">
+                        <h3 class="name"><code>modelName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ProjectedModelForm.html#property_modelName">ProjectedModelForm</a>:
+                            <a href="../files/addon_routes_projected-model-form.js.html#l22"><code>addon&#x2F;routes&#x2F;projected-model-form.js:22</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Model name.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_modelProjection" class="property item inherited">
+                        <h3 class="name"><code>modelProjection</code></h3>
+                        <span class="type">Projection</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ProjectedModelForm.html#property_modelProjection">ProjectedModelForm</a>:
+                            <a href="../files/addon_routes_projected-model-form.js.html#l14"><code>addon&#x2F;routes&#x2F;projected-model-form.js:14</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Model projection.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_newSuffix" class="property item">
+                        <h3 class="name"><code>newSuffix</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l99"><code>addon&#x2F;routes&#x2F;edit-form.js:99</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Suffix for new route (has value only on new routes).</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_parentRoute" class="property item">
+                        <h3 class="name"><code>parentRoute</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l83"><code>addon&#x2F;routes&#x2F;edit-form.js:83</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Route name corresponding edit form.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_parentRouteRecordId" class="property item">
+                        <h3 class="name"><code>parentRouteRecordId</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l91"><code>addon&#x2F;routes&#x2F;edit-form.js:91</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Route id corresponding edit form.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_queryParams" class="property item">
+                        <h3 class="name"><code>queryParams</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_edit-form.js.html#l69"><code>addon&#x2F;routes&#x2F;edit-form.js:69</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Configuration hash for this route's queryParams. <a href="https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams">More info</a>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

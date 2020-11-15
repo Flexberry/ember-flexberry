@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FlexberryErrorComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>FlexberryErrorComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends Component
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_flexberry-error.js.html#l9"><code>addon&#x2F;components&#x2F;flexberry-error.js:9</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>This component displaying errors.</p>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__updateDisplayButtons" data-tablink="_updateDisplayButtons">_updateDisplayButtons</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.close" data-tablink="actions.close">actions.close</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.sendButtonAction" data-tablink="actions.sendButtonAction">actions.sendButtonAction</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__buttonDropdownWidth" data-tablink="_buttonDropdownWidth">_buttonDropdownWidth</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__buttonsSorting" data-tablink="_buttonsSorting">_buttonsSorting</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__buttonsWidth" data-tablink="_buttonsWidth">_buttonsWidth</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__closeButtonWidth" data-tablink="_closeButtonWidth">_closeButtonWidth</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__closeButtonWidth" data-tablink="_closeButtonWidth">_closeButtonWidth</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__editPanelWidth" data-tablink="_editPanelWidth">_editPanelWidth</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__error" data-tablink="_error">_error</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorIsArray" data-tablink="_errorIsArray">_errorIsArray</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__menuButtons" data-tablink="_menuButtons">_menuButtons</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__messageIsNotSpecified" data-tablink="_messageIsNotSpecified">_messageIsNotSpecified</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__panelButtons" data-tablink="_panelButtons">_panelButtons</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__panelButtons" data-tablink="_panelButtons">_panelButtons</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_closeAction" data-tablink="closeAction">closeAction</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_error" data-tablink="error">error</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_menuButtonsSorted" data-tablink="menuButtonsSorted">menuButtonsSorted</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modal" data-tablink="modal">modal</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modalContext" data-tablink="modalContext">modalContext</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_panelButtonsSorted" data-tablink="panelButtonsSorted">panelButtonsSorted</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showCloseButton" data-tablink="showCloseButton">showCloseButton</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_useCloseButton" data-tablink="useCloseButton">useCloseButton</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_useOkButton" data-tablink="useOkButton">useOkButton</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__updateDisplayButtons" class="method item private">
+                        <h3 class="name"><code>_updateDisplayButtons</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l144"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:144</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Update display buttons.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.close" class="method item">
+                        <h3 class="name"><code>actions.close</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l108"><code>addon&#x2F;components&#x2F;flexberry-error.js:108</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Cleans error after displaying.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.sendButtonAction" class="method item public">
+                        <h3 class="name"><code>actions.sendButtonAction</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>action</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l237"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:237</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Call action of a clicked button.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">action</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>action.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__buttonDropdownWidth" class="property item private">
+                        <h3 class="name"><code>_buttonDropdownWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l55"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:55</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Menu dropdown width.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__buttonsSorting" class="property item private">
+                        <h3 class="name"><code>_buttonsSorting</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l95"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:95</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Sorting buttons type.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__buttonsWidth" class="property item private">
+                        <h3 class="name"><code>_buttonsWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l26"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:26</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Buttons width.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__closeButtonWidth" class="property item private">
+                        <h3 class="name"><code>_closeButtonWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l37"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:37</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Close button width.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__closeButtonWidth" class="property item private">
+                        <h3 class="name"><code>_closeButtonWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l46"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:46</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Margin button width.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__editPanelWidth" class="property item private">
+                        <h3 class="name"><code>_editPanelWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l17"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:17</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Edit panel current width.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__error" class="property item private">
+                        <h3 class="name"><code>_error</code></h3>
+                        <span class="type">Error or Array</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l22"><code>addon&#x2F;components&#x2F;flexberry-error.js:22</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Internal property to store the error.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__errorIsArray" class="property item private">
+                        <h3 class="name"><code>_errorIsArray</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l31"><code>addon&#x2F;components&#x2F;flexberry-error.js:31</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Detects if error is an array.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__menuButtons" class="property item private">
+                        <h3 class="name"><code>_menuButtons</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l69"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:69</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Menu buttons.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__messageIsNotSpecified" class="property item private">
+                        <h3 class="name"><code>_messageIsNotSpecified</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l42"><code>addon&#x2F;components&#x2F;flexberry-error.js:42</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Detects if error has not own property with message.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__panelButtons" class="property item private">
+                        <h3 class="name"><code>_panelButtons</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l78"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:78</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Panel buttons.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__panelButtons" class="property item">
+                        <h3 class="name"><code>_panelButtons</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l87"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Buttons.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_closeAction" class="property item">
+                        <h3 class="name"><code>closeAction</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l128"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:128</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Close button action name.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_error" class="property item">
+                        <h3 class="name"><code>error</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" class="crosslink external" target="_blank">Error</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l91"><code>addon&#x2F;components&#x2F;flexberry-error.js:91</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Error for displaying.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_menuButtonsSorted" class="property item">
+                        <h3 class="name"><code>menuButtonsSorted</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l112"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:112</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Sorting menu buttons type.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_modal" class="property item">
+                        <h3 class="name"><code>modal</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l53"><code>addon&#x2F;components&#x2F;flexberry-error.js:53</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Define error display mode, in <code></code> or <code></code> component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_modalContext" class="property item">
+                        <h3 class="name"><code>modalContext</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l62"><code>addon&#x2F;components&#x2F;flexberry-error.js:62</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Selector for modal dialog's context.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;.pusher:first&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_panelButtonsSorted" class="property item">
+                        <h3 class="name"><code>panelButtonsSorted</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l104"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:104</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Sorting panel buttons type.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_showCloseButton" class="property item">
+                        <h3 class="name"><code>showCloseButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-edit-panel.js.html#l120"><code>addon&#x2F;components&#x2F;flexberry-edit-panel.js:120</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Show close button in panel.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_useCloseButton" class="property item">
+                        <h3 class="name"><code>useCloseButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l71"><code>addon&#x2F;components&#x2F;flexberry-error.js:71</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag defining whether or not showing close button.
+                    Rewrites <a href="../classes/ModalDialog.html#property_useCloseButton" class="crosslink"><code>useCloseButton</code></a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_useOkButton" class="property item">
+                        <h3 class="name"><code>useOkButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-error.js.html#l81"><code>addon&#x2F;components&#x2F;flexberry-error.js:81</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag defining whether or not showing ok button.
+                    Rewrites <a href="../classes/ModalDialog.html#property_useOkButton" class="crosslink"><code>useOkButton</code></a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>NewPlatformFlexberryServicesLockListRoute - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>NewPlatformFlexberryServicesLockListRoute <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends <a href="../classes/ListFormRoute.html" class="crosslink">ListFormRoute</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_routes_new-platform-flexberry-services-lock-list.js.html#l7"><code>addon&#x2F;routes&#x2F;new-platform-flexberry-services-lock-list.js:7</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Route list form for <a href="../classes/NewPlatformFlexberryServicesLockModel.html" class="crosslink">NewPlatformFlexberryServicesLockModel</a>.</p>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__attributesForFilter" data-tablink="_attributesForFilter">_attributesForFilter</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__filtersPredicate" data-tablink="_filtersPredicate">_filtersPredicate</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__getFilterPredicate" data-tablink="_getFilterPredicate">_getFilterPredicate</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__invalidSorting" data-tablink="_invalidSorting">_invalidSorting</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__normalizeNeqPredicate" data-tablink="_normalizeNeqPredicate">_normalizeNeqPredicate</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.objectListViewRowClick" data-tablink="actions.objectListViewRowClick">actions.objectListViewRowClick</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.refreshList" data-tablink="actions.refreshList">actions.refreshList</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_model" data-tablink="model">model</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_objectListViewLimitPredicate" data-tablink="objectListViewLimitPredicate">objectListViewLimitPredicate</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_onModelLoadingAlways." data-tablink="onModelLoadingAlways.">onModelLoadingAlways.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_onModelLoadingFulfilled." data-tablink="onModelLoadingFulfilled.">onModelLoadingFulfilled.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_onModelLoadingRejected." data-tablink="onModelLoadingRejected.">onModelLoadingRejected.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_onModelLoadingStarted." data-tablink="onModelLoadingStarted.">onModelLoadingStarted.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_predicateForAttribute" data-tablink="predicateForAttribute">predicateForAttribute</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_predicateForFilter" data-tablink="predicateForFilter">predicateForFilter</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_reloadList" data-tablink="reloadList">reloadList</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_setupController" data-tablink="setupController">setupController</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_advLimit" data-tablink="advLimit">advLimit</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appState" data-tablink="appState">appState</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_colsConfigMenu" data-tablink="colsConfigMenu">colsConfigMenu</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_developerUserSettings" data-tablink="developerUserSettings">developerUserSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_filter" data-tablink="filter">filter</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_filterPredicate" data-tablink="filterPredicate">filterPredicate</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_formLoadTimeTracker" data-tablink="formLoadTimeTracker">formLoadTimeTracker</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modelName" data-tablink="modelName">modelName</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modelProjection" data-tablink="modelProjection">modelProjection</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_objectlistviewEvents" data-tablink="objectlistviewEvents">objectlistviewEvents</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_queryParams" data-tablink="queryParams">queryParams</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_resultPredicate" data-tablink="resultPredicate">resultPredicate</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_sorting" data-tablink="sorting">sorting</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__attributesForFilter" class="method item private inherited">
+                        <h3 class="name"><code>_attributesForFilter</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>projection</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>store</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                            </span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method__attributesForFilter">ListFormRoute</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l272"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:272</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Generates array attributes for filter.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">projection</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">store</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Store.html" class="crosslink external" target="_blank">DS.Store</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
+                                        <p>Array objects format: <code>{ name, type }</code>, where <code>name</code> - attribute name, <code>type</code> - attribute type.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method__filtersPredicate" class="method item private inherited">
+                        <h3 class="name"><code>_filtersPredicate</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                            <span class="returns-inline">
+                                <span class="type">BasePredicate | Undefined</span>
+                            </span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#method__filtersPredicate">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l116"><code>addon&#x2F;mixins&#x2F;limited-route.js:116</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Return predicate for <code>QueryBuilder</code> or <code>undefined</code>.</p>
+                    
+                        </div>
+                    
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">BasePredicate | Undefined</span>:
+                                        <p>Predicate for <code>QueryBuilder</code> or <code>undefined</code>.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method__getFilterPredicate" class="method item private inherited">
+                        <h3 class="name"><code>_getFilterPredicate</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>modelProjection</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>params</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">BasePredicate | Null</span>
+                            </span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method__getFilterPredicate">ListFormRoute</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l246"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:246</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>It forms the filter predicate for data loading.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">modelProjection</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>A projection used for data retrieving.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">params</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Current parameters to form predicate.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">BasePredicate | Null</span>:
+                                        <p>Filter predicate for data loading.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method__invalidSorting" class="method item inherited">
+                        <h3 class="name"><code>_invalidSorting</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>sorting</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method__invalidSorting">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l346"><code>addon&#x2F;routes&#x2F;list-form.js:346</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">sorting</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method__normalizeNeqPredicate" class="method item private inherited">
+                        <h3 class="name"><code>_normalizeNeqPredicate</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>predicate</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                            </span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method__normalizeNeqPredicate">ListFormRoute</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l319"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:319</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Generates new predicate for neq value predicate.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">predicate</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                                        <p>Normalized predicate.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_actions.objectListViewRowClick" class="method item public inherited">
+                        <h3 class="name"><code>actions.objectListViewRowClick</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryObjectlistviewRouteMixin.html#method_actions.objectListViewRowClick">FlexberryObjectlistviewRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-objectlistview-route.js.html#l17"><code>addon&#x2F;mixins&#x2F;flexberry-objectlistview-route.js:17</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Table row click handler.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Ember.Object.html" class="crosslink external" target="_blank">Ember.Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Record related to clicked table row</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.refreshList" class="method item public inherited">
+                        <h3 class="name"><code>actions.refreshList</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryObjectlistviewRouteMixin.html#method_actions.refreshList">FlexberryObjectlistviewRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-objectlistview-route.js.html#l78"><code>addon&#x2F;mixins&#x2F;flexberry-objectlistview-route.js:78</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This action is called when user click on refresh button.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_model" class="method item inherited">
+                        <h3 class="name"><code>model</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>params</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_model">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l95"><code>addon&#x2F;routes&#x2F;list-form.js:95</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can implement to convert the URL into the model for this route.
+                    <a href="http://emberjs.com/api/classes/Ember.Route.html#method_model">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">params</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_objectListViewLimitPredicate" class="method item public inherited">
+                        <h3 class="name"><code>objectListViewLimitPredicate</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">BasePredicate</span>
+                            </span>
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryObjectlistviewRouteMixin.html#method_objectListViewLimitPredicate">FlexberryObjectlistviewRouteMixin</a>:
+                            <a href="../files/addon_mixins_flexberry-objectlistview-route.js.html#l93"><code>addon&#x2F;mixins&#x2F;flexberry-objectlistview-route.js:93</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>It forms the limit predicate for loaded data.</p>
+                    <p>By default it returns <code>undefined</code>.
+                    In order to set specific limit predicate, this method have to be overriden on applied-specific route.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Method options</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name optional">[modelName]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Type of records to load</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[projectionName]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Projection name to load data by</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[params]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Current route query parameters</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">BasePredicate</span>:
+                                        <p>The predicate to limit loaded data</p>
+                    
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-js">// app/routes/limit-function-example.js
+                    import Ember from 'ember';
+                    import ListFormRoute from 'ember-flexberry/routes/list-form';
+                    import { Query } from 'ember-flexberry-data';
+                    
+                    const { StringPredicate } = Query;
+                    
+                    export default ListFormRoute.extend({
+                      modelProjection: 'FolvWithLimitFunctionExampleView',
+                    
+                      modelName: 'ember-flexberry-dummy-suggestion',
+                    
+                      objectListViewLimitPredicate: function(options) {
+                        let methodOptions = Ember.merge({
+                          modelName: undefined,
+                          projectionName: undefined,
+                          params: undefined
+                        }, options);
+                    
+                        if (methodOptions.modelName === this.get('modelName') &amp;&amp;
+                            methodOptions.projectionName === this.get('modelProjection')) {
+                          let currentPerPageValue = methodOptions.params ? methodOptions.params.perPage : undefined;
+                          let limitFunction = (currentPerPageValue &amp;&amp; currentPerPageValue % 2 === 0) ?
+                                              new StringPredicate('address').contains('S') :
+                                              new StringPredicate('address').contains('п');
+                          return limitFunction;
+                        }
+                    
+                        return undefined;
+                      }
+                    });
+                    
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_onModelLoadingAlways." class="method item inherited">
+                        <h3 class="name"><code>onModelLoadingAlways.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>data</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_onModelLoadingAlways.">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l296"><code>addon&#x2F;routes&#x2F;list-form.js:296</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This method will be invoked always when model loading operation completed,
+                    regardless of model loading promise's state (was it fulfilled or rejected).
+                    Override this method to add some custom logic on model loading operation completion.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">data</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Data about completed model loading operation.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Current transition object.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-js">onModelLoadingAlways(data, transition) {
+                      alert('Model loading operation completed!');
+                    }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_onModelLoadingFulfilled." class="method item inherited">
+                        <h3 class="name"><code>onModelLoadingFulfilled.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_onModelLoadingFulfilled.">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l260"><code>addon&#x2F;routes&#x2F;list-form.js:260</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This method will be invoked when model loading operation successfully completed.
+                    Override this method to add some custom logic on model loading operation success.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Loaded model data.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Current transition object.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">onModelLoadingFulfilled(model, transition) {
+                      alert('Model loading operation succeed!');
+                    }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_onModelLoadingRejected." class="method item inherited">
+                        <h3 class="name"><code>onModelLoadingRejected.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>errorData</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_onModelLoadingRejected.">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l277"><code>addon&#x2F;routes&#x2F;list-form.js:277</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This method will be invoked when model loading operation completed, but failed.
+                    Override this method to add some custom logic on model loading operation fail.
+                    By default showing error form.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">errorData</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Data about model loading operation fail.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Current transition object.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">onModelLoadingRejected(errorData, transition) {
+                      alert('Model loading operation failed!');
+                    }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_onModelLoadingStarted." class="method item inherited">
+                        <h3 class="name"><code>onModelLoadingStarted.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>queryParameters</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>transition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_onModelLoadingStarted.">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l243"><code>addon&#x2F;routes&#x2F;list-form.js:243</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>This method will be invoked before model loading operation will be called.
+                    Override this method to add some custom logic on model loading operation start.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">queryParameters</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Query parameters used for model loading operation.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">transition</code>
+                                            <span class="type">Transition</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Current transition object.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">onModelLoadingStarted(queryParameters, transition) {
+                      alert('Model loading operation started!');
+                    }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_predicateForAttribute" class="method item inherited">
+                        <h3 class="name"><code>predicateForAttribute</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>attribute</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>filter</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>filterCondition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">BasePredicate | Null</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_predicateForAttribute">ListFormRoute</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l150"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:150</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Create predicate for attribute. Can you overload this function for extended logic.</p>
+                    <p>Default supported attribute types:</p>
+                    <ul>
+                    <li><code>string</code></li>
+                    <li><code>number</code></li>
+                    </ul>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">attribute</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Object contains attribute info.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">name</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Name of attribute, example <code>name</code> or <code>type.name</code> if it attribute of relationship.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">options</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Object with attribute options.</p>
+                    
+                                                    </div>
+                    
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name optional">[hidden]</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                                <div class="param-description">
+                                                                    Flag, indicate that this hidden attribute.
+                                                                </div>
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name optional">[displayMemberPath]</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                                <div class="param-description">
+                                                                    Flag, indicate that this attribute uses for display relationship.
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">type</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Type of attribute, example <code>string</code> or <code>number</code>.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">filter</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Pattern for search.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">filterCondition</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Condition for predicate, can be <code>or</code> or <code>and</code>.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">BasePredicate | Null</span>:
+                                        <p>Object class of <code>BasePredicate</code> or <code>null</code>, if not need filter.</p>
+                    
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/routes/example.js
+                    ...
+                    // Add support for logical attribute
+                    predicateForAttribute(attribute, filter) {
+                      switch (attribute.type) {
+                        case 'boolean':
+                          let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
+                          let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
+                    
+                          if (yes.indexOf(filter) &gt; 0) {
+                            return new SimplePredicate(attribute.name, 'eq', 'true');
+                          }
+                    
+                          if (no.indexOf(filter) &gt; 0) {
+                            return new SimplePredicate(attribute.name, 'eq', 'false');
+                          }
+                    
+                          return null;
+                    
+                        default:
+                          return this._super(...arguments);
+                      }
+                    },
+                    ...
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_predicateForFilter" class="method item inherited">
+                        <h3 class="name"><code>predicateForFilter</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>filter</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">BasePredicate | Null</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#method_predicateForFilter">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l93"><code>addon&#x2F;mixins&#x2F;limited-route.js:93</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Builds predicate for filter.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">filter</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Object (<code>{ name, condition, pattern }</code>) with parameters for filter.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">BasePredicate | Null</span>:
+                                        <p>Predicate to filter through.</p>
+                    
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/routes/example.js
+                    ...
+                    predicateForFilter(filter) {
+                      if (filter.type === 'string' &amp;&amp; filter.condition === 'like') {
+                        return new StringPredicate(filter.name).contains(filter.pattern);
+                      }
+                    
+                      return this._super(...arguments);
+                    },
+                    ...
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_reloadList" class="method item public inherited">
+                        <h3 class="name"><code>reloadList</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ReloadListMixin.html#method_reloadList">ReloadListMixin</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l30"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:30</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>It reloads data by parameters.</p>
+                    <pre class="code prettyprint"><code>This method is called to get data for flexberry-objectlistview
+                    (both on list-form and lookup modal window).</code></pre>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Method options.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name optional">[modelName]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Type of records to load.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[projectionName]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Projection name to load data by.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[perPage]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Page size.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[page]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Current page.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[sorting]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Current sorting.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[filter]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Current filter.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[predicate]</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Predicate to limit records.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                        <p>A promise, which is resolved with a set of loaded records once the server returns.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_setupController" class="method item inherited">
+                        <h3 class="name"><code>setupController</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>controller</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#method_setupController">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l315"><code>addon&#x2F;routes&#x2F;list-form.js:315</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A hook you can use to setup the controller for the current route.
+                    <a href="http://emberjs.com/api/classes/Ember.Route.html#method_setupController">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">controller</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property_advLimit" class="property item inherited">
+                        <h3 class="name"><code>advLimit</code></h3>
+                        <span class="type"><a href="../classes/AdvLimitService.html" class="crosslink">AdvLimitService</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#property_advLimit">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l87"><code>addon&#x2F;routes&#x2F;list-form.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service for managing advLimits for lists.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_appState" class="property item inherited">
+                        <h3 class="name"><code>appState</code></h3>
+                        <span class="type"><a href="../classes/AppStateService.html" class="crosslink">AppStateService</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#property_appState">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l79"><code>addon&#x2F;routes&#x2F;list-form.js:79</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service for managing the state of the application.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_colsConfigMenu" class="property item inherited">
+                        <h3 class="name"><code>colsConfigMenu</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#property_colsConfigMenu">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l73"><code>addon&#x2F;routes&#x2F;list-form.js:73</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_developerUserSettings" class="property item">
+                        <h3 class="name"><code>developerUserSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_new-platform-flexberry-services-lock-list.js.html#l28"><code>addon&#x2F;routes&#x2F;new-platform-flexberry-services-lock-list.js:28</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                            <p><strong>Default:</strong> { DEFAULT: {} }</p>
+                    
+                    
+                    </div>
+                    <div id="property_filter" class="property item inherited">
+                        <h3 class="name"><code>filter</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#property_filter">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l66"><code>addon&#x2F;mixins&#x2F;limited-route.js:66</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>String with search query.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_filterPredicate" class="property item inherited">
+                        <h3 class="name"><code>filterPredicate</code></h3>
+                        <span class="type">BasePredicate</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#property_filterPredicate">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l84"><code>addon&#x2F;mixins&#x2F;limited-route.js:84</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Result predicate with filters restrictions for olv.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_formLoadTimeTracker" class="property item private inherited">
+                        <h3 class="name"><code>formLoadTimeTracker</code></h3>
+                        <span class="type"><a href="../classes/FormLoadTimeTrackerService.html" class="crosslink">FormLoadTimeTrackerService</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#property_formLoadTimeTracker">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l55"><code>addon&#x2F;routes&#x2F;list-form.js:55</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Link on .</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_modelName" class="property item">
+                        <h3 class="name"><code>modelName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_new-platform-flexberry-services-lock-list.js.html#l14"><code>addon&#x2F;routes&#x2F;new-platform-flexberry-services-lock-list.js:14</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;new-platform-flexberry-services-lock&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_modelProjection" class="property item">
+                        <h3 class="name"><code>modelProjection</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_routes_new-platform-flexberry-services-lock-list.js.html#l21"><code>addon&#x2F;routes&#x2F;new-platform-flexberry-services-lock-list.js:21</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;LockL&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_objectlistviewEvents" class="property item inherited">
+                        <h3 class="name"><code>objectlistviewEvents</code></h3>
+                        <span class="type">Class</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ReloadListMixin.html#property_objectlistviewEvents">ReloadListMixin</a>:
+                            <a href="../files/addon_mixins_reload-list-mixin.js.html#l21"><code>addon&#x2F;mixins&#x2F;reload-list-mixin.js:21</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service that triggers objectlistview events.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> Ember.inject.service()</p>
+                    
+                    
+                    </div>
+                    <div id="property_queryParams" class="property item inherited">
+                        <h3 class="name"><code>queryParams</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#property_queryParams">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l55"><code>addon&#x2F;mixins&#x2F;limited-route.js:55</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Configuration hash for this route's queryParams. <a href="http://emberjs.com/api/classes/Ember.Route.html#property_queryParams">More info</a>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_resultPredicate" class="property item inherited">
+                        <h3 class="name"><code>resultPredicate</code></h3>
+                        <span class="type">BasePredicate</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/LimitedRouteMixin.html#property_resultPredicate">LimitedRouteMixin</a>:
+                            <a href="../files/addon_mixins_limited-route.js.html#l75"><code>addon&#x2F;mixins&#x2F;limited-route.js:75</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Result predicate with all restrictions for olv.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_sorting" class="property item inherited">
+                        <h3 class="name"><code>sorting</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/ListFormRoute.html#property_sorting">ListFormRoute</a>:
+                            <a href="../files/addon_routes_list-form.js.html#l64"><code>addon&#x2F;routes&#x2F;list-form.js:64</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Current sorting.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> []</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

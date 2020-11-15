@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ObjectListViewRowComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>ObjectListViewRowComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends <a href="../classes/FlexberryBaseComponent.html" class="crosslink">FlexberryBaseComponent</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_object-list-view-row.js.html#l14"><code>addon&#x2F;components&#x2F;object-list-view-row.js:14</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Component for displayed one record in <a href="../classes/ObjectListViewComponent.html" class="crosslink">ObjectListViewComponent</a>.</p>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.customButtonInRowAction" data-tablink="actions.customButtonInRowAction">actions.customButtonInRowAction</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.expand" data-tablink="actions.expand">actions.expand</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.loadChildRecords" data-tablink="actions.loadChildRecords">actions.loadChildRecords</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.onRowClick" data-tablink="actions.onRowClick">actions.onRowClick</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.previewLookupValue" data-tablink="actions.previewLookupValue">actions.previewLookupValue</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.removeLookupValue" data-tablink="actions.removeLookupValue">actions.removeLookupValue</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.showLookupDialog" data-tablink="actions.showLookupDialog">actions.showLookupDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_didRender" data-tablink="didRender">didRender</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_getTargetObjectByCondition." data-tablink="getTargetObjectByCondition.">getTargetObjectByCondition.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_initProperty" data-tablink="initProperty">initProperty</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__currentLevel" data-tablink="_currentLevel">_currentLevel</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__expanded" data-tablink="_expanded">_expanded</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hierarchicalIndent" data-tablink="_hierarchicalIndent">_hierarchicalIndent</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__level" data-tablink="_level">_level</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__records" data-tablink="_records">_records</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__recordsIsLoading" data-tablink="_recordsIsLoading">_recordsIsLoading</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfig" data-tablink="appConfig">appConfig</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettings" data-tablink="appConfigSettings">appConfigSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettingsPath" data-tablink="appConfigSettingsPath">appConfigSettingsPath</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_componentName" data-tablink="componentName">componentName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_currentController" data-tablink="currentController">currentController</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_customButtonInRowAction" data-tablink="customButtonInRowAction">customButtonInRowAction</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_defaultLeftPadding" data-tablink="defaultLeftPadding">defaultLeftPadding</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_doRenderData" data-tablink="doRenderData">doRenderData</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicProperties" data-tablink="dynamicProperties">dynamicProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_hasRecords" data-tablink="hasRecords">hasRecords</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_hierarchicalIndent" data-tablink="hierarchicalIndent">hierarchicalIndent</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_hierarchyLoadedLevel" data-tablink="hierarchyLoadedLevel">hierarchyLoadedLevel</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_isParentRecord" data-tablink="isParentRecord">isParentRecord</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonly" data-tablink="readonly">readonly</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonlyAttr" data-tablink="readonlyAttr">readonlyAttr</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_record" data-tablink="record">record</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_records" data-tablink="records">records</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_recordsLoaded" data-tablink="recordsLoaded">recordsLoaded</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_relatedModel" data-tablink="relatedModel">relatedModel</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_required" data-tablink="required">required</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showValidationMessagesInRow" data-tablink="showValidationMessagesInRow">showValidationMessagesInRow</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_tagName" data-tablink="tagName">tagName</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method_actions.customButtonInRowAction" class="method item">
+                        <h3 class="name"><code>actions.customButtonInRowAction</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>action</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l277"><code>addon&#x2F;components&#x2F;object-list-view-row.js:277</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handler for click by custom button in row.
+                    Sends action up to <a href="../classes/ObjectListViewComponent.html" class="crosslink"><code>object-list-view</code></a> component.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">action</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a> | <a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>The action or name of action.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Model in row.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.expand" class="method item">
+                        <h3 class="name"><code>actions.expand</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l296"><code>addon&#x2F;components&#x2F;object-list-view-row.js:296</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Show/hide embedded records.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.loadChildRecords" class="method item">
+                        <h3 class="name"><code>actions.loadChildRecords</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code class="optional">[expand=true]</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l305"><code>addon&#x2F;components&#x2F;object-list-view-row.js:305</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Loads and, by default, displays the records that are children of the record displayed on this row.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name optional">[expand=true]</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                            <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>If <code>true</code>, the child records will be displayed by sending the <code>expand</code> event.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.onRowClick" class="method item">
+                        <h3 class="name"><code>actions.onRowClick</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>params</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>e</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l361"><code>addon&#x2F;components&#x2F;object-list-view-row.js:361</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles rows clicks and sends 'rowClick' action outside.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Record related to clicked row.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">params</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Additional parameters describing clicked row.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">column</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Column in row wich owns the clicked cell.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">columnIndex</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Index of column in row wich owns the clicked cell.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">e</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Click event object.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.previewLookupValue" class="method item">
+                        <h3 class="name"><code>actions.previewLookupValue</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>previewData</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l352"><code>addon&#x2F;components&#x2F;object-list-view-row.js:352</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Redirect action from FlexberryLookupComponent in the controller.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">previewData</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.removeLookupValue" class="method item">
+                        <h3 class="name"><code>actions.removeLookupValue</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>removeData</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l342"><code>addon&#x2F;components&#x2F;object-list-view-row.js:342</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Redirect action from FlexberryLookupComponent in the controller.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">removeData</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.showLookupDialog" class="method item">
+                        <h3 class="name"><code>actions.showLookupDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>chooseData</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l328"><code>addon&#x2F;components&#x2F;object-list-view-row.js:328</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Redirect action from FlexberryLookupComponent in the controller.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">chooseData</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_didRender" class="method item">
+                        <h3 class="name"><code>didRender</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l384"><code>addon&#x2F;components&#x2F;object-list-view-row.js:384</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Called after a component has been rendered, both on initial render and in subsequent rerenders.
+                    <a href="https://emberjs.com/api/ember/release/classes/Component#event_didRender">More info</a>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_getTargetObjectByCondition." class="method item inherited">
+                        <h3 class="name"><code>getTargetObjectByCondition.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>condition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">Null | Component | Controller</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_getTargetObjectByCondition.">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l225"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:225</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns that 'targetObject' (from 'targetObject's hierarchy) which satisfies a given condition.</p>
+                    <pre class="code prettyprint"><code class="language-javascript">let controller = this.getTargetObjectByCondition((targetObject) =&gt; {
+                      return targetObject instanceof Controller;
+                    });
+                    </code></pre>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">condition</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">Null | Component | Controller</span>:
+                                        <p>Target object which satisfies a given condition or null.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_initProperty" class="method item inherited">
+                        <h3 class="name"><code>initProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_initProperty">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l153"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:153</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Initializes component's property with recpect to following priority:
+                    1 - template-defined parameters,
+                    2 - applicaion configuration-defined parameters (JSON from ./config/environment by path defined in 'appConfigSettingsPath' property),
+                    3 - component-defined defaults.
+                    Note! It is important to be declared as undefined for those component properties, which will be initialized through 'initProperty' call.</p>
+                    <pre class="code prettyprint"><code class="language-javascript">// ./config/environment.js.
+                    module.exports = function(environment) {
+                      var ENV = {
+                        APP: {
+                          components: {
+                            myComponent: {
+                              myComponentProperty: 'myComponentProperty config-defined default value',
+                            }
+                          }
+                        }
+                      };
+                      return ENV;
+                    };
+                    </code></pre>
+                    <pre class="code prettyprint"><code class="language-javascript">// /components/my-component.js
+                    import FlexberryBaseComponent from 'ember-flexberry/flexberry-base-component';
+                    
+                    export default FlexberryBaseComponent.extend({
+                      appConfigSettingsPath: 'APP.components.myComponent',
+                    
+                      myComponentProperty: undefined,
+                    
+                      init() {
+                        this._super.apply(this, arguments);
+                        this.initProperty({ propertyName: 'myComponentProperty', defaultValue: 'myComponentProperty default value' });
+                      }
+                    });
+                    </code></pre>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Method options.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">propertyName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">defaultValue</code>
+                                                        <span class="type"></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property default value (from component defined default's).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__currentLevel" class="property item private">
+                        <h3 class="name"><code>_currentLevel</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l60"><code>addon&#x2F;components&#x2F;object-list-view-row.js:60</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Level nesting current record.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
+                    <div id="property__expanded" class="property item private">
+                        <h3 class="name"><code>_expanded</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l30"><code>addon&#x2F;components&#x2F;object-list-view-row.js:30</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag used to display embedded records.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property__hierarchicalIndent" class="property item private">
+                        <h3 class="name"><code>_hierarchicalIndent</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l40"><code>addon&#x2F;components&#x2F;object-list-view-row.js:40</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Stores the number of pixels to isolate one level of hierarchy.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 20</p>
+                    
+                    
+                    </div>
+                    <div id="property__level" class="property item private">
+                        <h3 class="name"><code>_level</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l50"><code>addon&#x2F;components&#x2F;object-list-view-row.js:50</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Level nesting by default.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 0</p>
+                    
+                    
+                    </div>
+                    <div id="property__records" class="property item private">
+                        <h3 class="name"><code>_records</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/Ember.NativeArray.html" class="crosslink external" target="_blank">Ember.NativeArray</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l77"><code>addon&#x2F;components&#x2F;object-list-view-row.js:77</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Store nested records.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> Empty</p>
+                    
+                    
+                    </div>
+                    <div id="property__recordsIsLoading" class="property item">
+                        <h3 class="name"><code>_recordsIsLoading</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l21"><code>addon&#x2F;components&#x2F;object-list-view-row.js:21</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Indicates that child records are being loaded.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfig" class="property item inherited">
+                        <h3 class="name"><code>appConfig</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfig">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l88"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Application configuration (JSON from ./config/environment.js).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettings" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettings">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l97"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:97</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component settings object from application configuration (part of JSON from ./config/environment.js).
+                    Part of appConfig related to appConfigSettingsPath.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettingsPath" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettingsPath</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettingsPath">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l79"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:79</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Path to component's settings in application configuration (JSON from ./config/environment.js).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;APP.components.flexberryBaseComponent&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_componentName" class="property item inherited">
+                        <h3 class="name"><code>componentName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_componentName">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l49"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:49</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Unique name of the component.
+                    TODO: use guidFor from 'ember-metal/utils'</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_currentController" class="property item inherited">
+                        <h3 class="name"><code>currentController</code></h3>
+                        <span class="type">Controller</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_currentController">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l107"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:107</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Current controller.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_customButtonInRowAction" class="property item">
+                        <h3 class="name"><code>customButtonInRowAction</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l267"><code>addon&#x2F;components&#x2F;object-list-view-row.js:267</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Name of action to send out, action triggered by click on user button in row.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;customButtonInRowAction&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_defaultLeftPadding" class="property item">
+                        <h3 class="name"><code>defaultLeftPadding</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l105"><code>addon&#x2F;components&#x2F;object-list-view-row.js:105</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Default left padding in cells.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 10</p>
+                    
+                    
+                    </div>
+                    <div id="property_doRenderData" class="property item">
+                        <h3 class="name"><code>doRenderData</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l96"><code>addon&#x2F;components&#x2F;object-list-view-row.js:96</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag used to start render row content.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicProperties" class="property item inherited">
+                        <h3 class="name"><code>dynamicProperties</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_dynamicProperties">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l58"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:58</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component dynamic properties ({ componentPropertyName: value }).
+                    Used when component renders dynamically with ember {{component}} helper:
+                    {{component 'my-component' value=value dynamicProperties=myConponentProperties}}.
+                    In the end of component initialization its properties values will be replaced with values from this object.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_hasRecords" class="property item">
+                        <h3 class="name"><code>hasRecords</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l182"><code>addon&#x2F;components&#x2F;object-list-view-row.js:182</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag indicate whether there nested records.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_hierarchicalIndent" class="property item">
+                        <h3 class="name"><code>hierarchicalIndent</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l193"><code>addon&#x2F;components&#x2F;object-list-view-row.js:193</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Hierarchical indent based on the current level of nesting.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_hierarchyLoadedLevel" class="property item">
+                        <h3 class="name"><code>hierarchyLoadedLevel</code></h3>
+                        <span class="type">Integer</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l258"><code>addon&#x2F;components&#x2F;object-list-view-row.js:258</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Level of hierarchy, that already was loaded.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> -1</p>
+                    
+                    
+                    </div>
+                    <div id="property_isParentRecord" class="property item">
+                        <h3 class="name"><code>isParentRecord</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l170"><code>addon&#x2F;components&#x2F;object-list-view-row.js:170</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Indicates whether the record displayed on this row has child records.
+                    See <a href="../classes/FlexberryObjectlistviewComponent.html#property_isParentRecordPropertyName" class="crosslink">details here</a>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_readonly" class="property item inherited">
+                        <h3 class="name"><code>readonly</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonly">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l20"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:20</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether component is readonly.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonlyAttr" class="property item inherited">
+                        <h3 class="name"><code>readonlyAttr</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a> | Undefined</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonlyAttr">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l29"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:29</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Readonly HTML attribute following to the <code>readonly</code> query param. According to the W3C standard, returns 'readonly' if <code>readonly</code> is <code>true</code> and <code>undefined</code> otherwise.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_record" class="property item">
+                        <h3 class="name"><code>record</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l114"><code>addon&#x2F;components&#x2F;object-list-view-row.js:114</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Current record.</p>
+                    <ul>
+                    <li><code>key</code> - Ember GUID for record.</li>
+                    <li><code>data</code> - Instance of DS.Model.</li>
+                    <li><code>rowConfig</code> - Object with config for record.</li>
+                    </ul>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_records" class="property item">
+                        <h3 class="name"><code>records</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/Ember.NativeArray.html" class="crosslink external" target="_blank">Ember.NativeArray</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l129"><code>addon&#x2F;components&#x2F;object-list-view-row.js:129</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Store nested records.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> Empty</p>
+                    
+                    
+                    </div>
+                    <div id="property_recordsLoaded" class="property item">
+                        <h3 class="name"><code>recordsLoaded</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l249"><code>addon&#x2F;components&#x2F;object-list-view-row.js:249</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag indicates that record's hierarchy for this row is loaded.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_relatedModel" class="property item inherited">
+                        <h3 class="name"><code>relatedModel</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_relatedModel">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l70"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:70</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Model to which current component's value is related.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_required" class="property item inherited">
+                        <h3 class="name"><code>required</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_required">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l40"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:40</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether component is required.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showValidationMessagesInRow" class="property item">
+                        <h3 class="name"><code>showValidationMessagesInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l87"><code>addon&#x2F;components&#x2F;object-list-view-row.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show validation messages or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_tagName" class="property item">
+                        <h3 class="name"><code>tagName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_object-list-view-row.js.html#l240"><code>addon&#x2F;components&#x2F;object-list-view-row.js:240</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Tag name for the view's outer element. <a href="https://emberjs.com/api/ember/release/classes/Component#property_tagName">More info</a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

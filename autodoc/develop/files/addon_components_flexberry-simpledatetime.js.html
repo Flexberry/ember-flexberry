@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-simpledatetime.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-simpledatetime.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import { computed, observer } from &#x27;@ember/object&#x27;;
+import { isBlank, isNone } from &#x27;@ember/utils&#x27;;
+import $ from &#x27;jquery&#x27;;
+import moment from &#x27;moment&#x27;;
+import { scheduleOnce } from &#x27;@ember/runloop&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import { translationMacro as t } from &#x27;ember-i18n&#x27;;
+
+/**
+  Wrapper for input[type=&#x27;date/datetime/datetime-local&#x27;] component.
+  **Please keep in mind that these input types are not supported in all browsers, [see supported browsers](http://caniuse.com/#feat=input-datetime).**
+
+  @example
+    &#x60;&#x60;&#x60;handlebars
+    {{flexberry-simpledatetime
+      type=&quot;datetime-local&quot;
+      value=model.orderDate
+      min=model.orderDateMin
+      max=model.orderDateMax
+      defaultHour=defaultHour
+      defaultMinute=defaultMinute
+    }}
+    &#x60;&#x60;&#x60;
+
+  @class FlexberrySimpledatetime
+  @extends FlexberryBaseComponent
+*/
+export default FlexberryBaseComponent.extend({
+
+  /**
+    Store current value as Date object.
+
+    @property _valueAsDate
+    @type Date
+    @default null
+    @private
+  */
+  _valueAsDate: computed(() =&gt; null),
+
+  /**
+    Convert date in &#x60;value&#x60; to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.value).
+
+    @property _valueAsString
+    @type String
+    @default null
+    @private
+  */
+  _valueAsString: computed(() =&gt; null),
+
+  /**
+    Convert date in &#x60;min&#x60; to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.min).
+
+    @property _minAsString
+    @type String
+    @default null
+    @private
+  */
+  _minAsString: computed(() =&gt; null),
+
+  /**
+    Convert date in &#x60;max&#x60; to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.max).
+
+    @property _maxAsString
+    @type String
+    @default null
+    @private
+  */
+  _maxAsString: computed(() =&gt; null),
+
+  /**
+    Checks whether the browser supports the date field.
+
+    @property currentTypeSupported
+    @type Boolean
+    @readOnly
+  */
+  currentTypeSupported: computed(&#x27;type&#x27;, {
+    get() {
+      let type = this.get(&#x27;type&#x27;);
+      let input = document.createElement(&#x27;input&#x27;);
+      input.setAttribute(&#x27;type&#x27;, type);
+
+      return input.type === type;
+    },
+  }).readOnly(),
+
+  /**
+    Type of date picker.
+
+    @property type
+    @default null
+    @type String
+  */
+  type: computed(() =&gt; null),
+
+  /**
+    Flag indicates only flatpickr using for this component.
+
+    @property useOnlyFlatpickr
+    @default true
+    @type Boolean
+  */
+  useBrowserInput: false,
+
+  /**
+    Value of date.
+
+    @property value
+    @type Date
+  */
+  value: computed(&#x27;_valueAsString&#x27;, &#x27;_valueAsDate&#x27;, &#x27;useBrowserInput&#x27;, &#x27;currentTypeSupported&#x27;, {
+    get() {
+      if (this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;)) {
+        if (this.get(&#x27;type&#x27;) === &#x27;date&#x27;) {
+          return this._convertDateToLocal(this.get(&#x27;_valueAsString&#x27;));
+        }
+
+        return this._convertStringToDate(this.get(&#x27;_valueAsString&#x27;));
+      } else {
+        if (this.get(&#x27;type&#x27;) === &#x27;date&#x27;) {
+          return this._convertDateToLocal(this.get(&#x27;_valueAsDate&#x27;));
+        }
+
+        return this.get(&#x27;_valueAsDate&#x27;);
+      }
+    },
+    set(key, value) {
+      if (this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;)) {
+        this.set(&#x27;_valueAsString&#x27;, this._convertDateToString(value));
+      } else {
+        this.set(&#x27;_valueAsDate&#x27;, value);
+        let flatpickr = this.get(&#x27;_flatpickr&#x27;);
+        if (flatpickr) {
+          flatpickr.setDate(value);
+        }
+      }
+
+      return value;
+    },
+  }),
+
+  /**
+    Minimum value of date.
+
+    @property min
+    @type Date
+  */
+  min: computed(&#x27;_minAsString&#x27;, &#x27;useBrowserInput&#x27;, &#x27;currentTypeSupported&#x27;, {
+    get() {
+      return this.get(&#x27;_minAsString&#x27;);
+    },
+    set(key, value) {
+      let minValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      if (this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;)) {
+        this.set(&#x27;_minAsString&#x27;, this._convertDateToString(minValue));
+      }
+
+      return value;
+    },
+  }),
+
+  /**
+    Maximum value of date.
+
+    @property max
+    @type Date
+  */
+  max: computed(&#x27;_maxAsString&#x27;, &#x27;useBrowserInput&#x27;, &#x27;currentTypeSupported&#x27;, {
+    get() {
+      return this.get(&#x27;_maxAsString&#x27;);
+    },
+    set(key, value) {
+      let maxValue = value instanceof Date ? value.setMilliseconds(0) : moment(value).toDate().setMilliseconds(0);
+      if (this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;)) {
+        this.set(&#x27;_maxAsString&#x27;, this._convertDateToString(maxValue));
+      }
+
+      return value;
+    },
+  }),
+
+  /**
+    Default value of hour.
+
+    @property defaultHour
+    @default 12
+    @type Integer
+  */
+  defaultHour: 12,
+
+  /**
+    Default value of minute.
+
+    @property defaultMinute
+    @default 0
+    @type Integer
+  */
+  defaultMinute: 0,
+
+  /**
+    Text to be displayed in field, if field has not been filled.
+
+    @property placeholder
+    @type String
+    @default &#x27;t(&#x27;components.flexberry-simpledatetime.placeholder&#x27;)&#x27;
+  */
+  placeholder: t(&#x27;components.flexberry-simpledatetime.placeholder&#x27;),
+
+  /**
+    Array CSS class names.
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: [&#x27;flexberry-simpledatetime&#x27;],
+
+  /**
+    Array CSS class names for scroll.
+
+    @property scrollClassNames
+    @type Array
+  */
+  scrollSelectors: computed(() =&gt; ([&#x27;.full.height&#x27;])),
+
+  /**
+    Namespase for page event.
+
+    @property eventNamespace
+    @type String
+  */
+  eventNamespace: undefined,
+
+  /**
+    If true, then onClick calling flatpickr.open().
+
+    @property canClick
+    @type Bool
+  */
+  canClick: true,
+
+  /**
+    If undefined, then uses application locale.
+    Supported locales: &#x27;en&#x27;, &#x27;ru&#x27;.
+
+    @property locale
+    @type String
+  */
+  locale: undefined,
+
+  /**
+    If true, then flatpickr has remove button.
+
+    @property removeButton
+    @type Bool
+  */
+  removeButton: true,
+
+  /**
+    If true, then flatpickr has open button.
+
+    @property openButton
+    @type Bool
+  */
+  openButton: true,
+
+  /**
+    The selector to get the element (using &#x60;jQuery&#x60;) for [the &#x60;appendTo&#x60; flatpickr option](https://flatpickr.js.org/options/).
+
+    @property calendarContext
+    @type String
+  */
+  calendarContext: undefined,
+
+  /**
+    A string of characters which are used to define how the date will be displayed in the input box.
+    The supported characters are defined in [the table below](https://flatpickr.js.org/formatting/).
+
+    @property dateFormat
+    @type String
+  */
+  dateFormat: &#x27;Y-m-d&#x27;,
+
+  /**
+    A string of characters which are used to define how the date will be displayed in the input box.
+    The supported characters are defined in [the table below](https://flatpickr.js.org/formatting/).
+
+    @property dateTimeFormat
+    @type String
+  */
+  dateTimeFormat: &#x27;Y-m-dTH:i&#x27;,
+
+  /**
+    Exactly the same as date format, but for the altInput field.
+
+    @property altDateFormat
+    @type String
+  */
+  altDateFormat: &#x27;d.m.Y&#x27;,
+
+  /**
+    Exactly the same as date format, but for the altInput field.
+
+    @property altDateTimeFormat
+    @type String
+  */
+  altDateTimeFormat: &#x27;d.m.Y H:i&#x27;,
+
+  /**
+    Date mask.
+
+    @property dateMask
+    @type String
+  */
+  dateMask: &#x27;99.99.9999&#x27;,
+
+  /**
+    DateTime mask.
+
+    @property dateTimeMask
+    @type String
+  */
+  dateTimeMask: &#x27;99.99.9999 99:99&#x27;,
+
+  /**
+    Date format for validate.
+
+    @property validDateFormat
+    @type String
+  */
+  validDateFormat: &#x27;DD.MM.YYYY&#x27;,
+
+  /**
+    DateTime format for validate.
+
+    @property validDateTimeFormat
+    @type String
+  */
+  validDateTimeFormat: &#x27;DD.MM.YYYY HH:mm&#x27;,
+
+  /**
+    Path to component&#x27;s settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default &#x27;APP.components.flexberrySimpledatetime&#x27;
+  */
+  appConfigSettingsPath: &#x27;APP.components.flexberrySimpledatetime&#x27;,
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method init
+  */
+  init() {
+    this._super(...arguments);
+
+    this.initProperty({ propertyName: &#x27;calendarContext&#x27;, defaultValue: undefined });
+  },
+
+  /**
+    Initializes DOM-related component&#x27;s logic.
+  */
+  didInsertElement() {
+    this._super(...arguments);
+    if (!(this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;))) {
+      this._flatpickrCreate();
+    }
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed. Override this function to do any teardown that requires an element, like removing event listeners.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement).
+
+    @method willDestroyElement
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+    this._flatpickrDestroy();
+
+    let namespace = this.get(&#x27;eventNamespace&#x27;);
+    $(this.get(&#x27;scrollSelectors&#x27;).join()).off(&#x60;scroll.${namespace}&#x60;);
+    $(document).off(&#x60;mousedown.${namespace}&#x60;);
+  },
+
+  /**
+    Component click handler.
+
+    @method click
+    @private
+  */
+  click() {
+    if (this.get(&#x27;canClick&#x27;) &amp;&amp; !(this.get(&#x27;useBrowserInput&#x27;) &amp;&amp; this.get(&#x27;currentTypeSupported&#x27;)) &amp;&amp; !this.get(&#x27;readonly&#x27;)) {
+      this.set(&#x27;canClick&#x27;, false);
+      this.get(&#x27;_flatpickr&#x27;).open();
+    }
+  },
+
+  /**
+    Validation date and time.
+
+    @method _validationDateTime
+    @private
+  */
+  _validationDateTime() {
+    let dateIsValid = true;
+    let inputValue = this.$(&#x27;.custom-flatpickr&#x27;)[0].value;
+    let date = this.get(&#x27;type&#x27;) === &#x27;date&#x27; ? moment(inputValue, this.validDateFormat) : moment(inputValue, this.validDateTimeFormat);
+    if (date.isValid()) {
+      let dateArray = inputValue.match(/(\d+)/g) || [];
+      if (dateArray.length &gt; 0) {
+        let dateFormatArray = date._f.match(/([A-Z]+)/g) || [];
+        let dateValid = dateFormatArray.find(function(item, index) {
+          let dateElement;
+          switch (item) {
+            case &#x27;DD&#x27;:
+              dateElement = date.date();
+              break;
+            case &#x27;MM&#x27;:
+              dateElement = date.month() + 1;
+              break;
+            case &#x27;YYYY&#x27;:
+              dateElement = date.year();
+              break;
+          }
+
+          return !(dateElement === Number(dateArray[index]))
+        });
+
+        dateIsValid = this.get(&#x27;type&#x27;) === &#x27;date&#x27; ? !dateValid : dateValid &amp;&amp; date.hours() === Number(dateArray[3]) &amp;&amp;
+          date.minutes() === Number(dateArray[4]);
+      }
+    } else {
+      dateIsValid = false;
+    }
+
+    if (dateIsValid) {
+      /* If before value was not set (undefined) then moment(this.get(&#x27;_valueAsDate&#x27;)) returns current date.
+        If user input current date then moment(...).isSame(date) will return TRUE while in reality it is FALSE.*/
+      let valueAsDate = this.get(&#x27;_valueAsDate&#x27;);
+      if ((isNone(valueAsDate) &amp;&amp; !isNone(date))
+            || !moment(valueAsDate).isSame(date, this.get(&#x27;type&#x27;) === &#x27;date&#x27; ? &#x27;day&#x27; : &#x27;second&#x27;)) {
+        this.get(&#x27;_flatpickr&#x27;).setDate(date.toDate());
+        this.set(&#x27;_valueAsDate&#x27;, this.get(&#x27;_flatpickr&#x27;).selectedDates[0]);
+      }
+    } else {
+      if (!isNone(inputValue)) {
+        this.get(&#x27;_flatpickr&#x27;).clear();
+        this.set(&#x27;_valueAsDate&#x27;, this.get(&#x27;_flatpickr&#x27;).selectedDates[0]);
+      }
+    }
+  },
+
+  _onChange() {
+    const oldValue = this.get(&#x27;value&#x27;);
+    this._validationDateTime();
+    const newValue = this.get(&#x27;value&#x27;);
+
+    if (newValue &amp;&amp; newValue !== oldValue) {
+      this.set(&#x27;_valueAsDate&#x27;, newValue);
+
+      const onChange = this.get(&#x27;onChange&#x27;);
+      if (typeof onChange === &#x27;function&#x27;) {
+        onChange(newValue, oldValue);
+      }
+    }
+  },
+
+  /**
+    Create Flatpickr instance, and save it into &#x60;_flatpickr&#x60; property.
+
+    @method _flatpickrCreate
+    @private
+  */
+  _flatpickrCreate() {
+    const calendarContext = this.get(&#x27;calendarContext&#x27;);
+    const timeless = this.get(&#x27;type&#x27;) === &#x27;date&#x27;;
+    const min = this.get(&#x27;min&#x27;);
+    const max = this.get(&#x27;max&#x27;);
+
+    if (!isNone(min) &amp;&amp; min.getSeconds() &gt; 0) {
+      min.setMinutes(min.getMinutes() + 1);
+      min.setSeconds(0);
+    }
+
+    const options = {
+      altInput: true,
+      time_24hr: true,
+      enableTime: !timeless,
+      allowInput: true,
+      clickOpens: false,
+      disableMobile: true,
+      altInputClass: &#x27;custom-flatpickr&#x27;,
+      minDate: timeless &amp;&amp; min ? moment(min).startOf(&#x27;day&#x27;).toDate() : min,
+      maxDate: timeless &amp;&amp; max ? moment(max).endOf(&#x27;day&#x27;).toDate() : max,
+      defaultDate: this.get(&#x27;value&#x27;),
+      defaultHour: this.get(&#x27;defaultHour&#x27;),
+      defaultMinute: this.get(&#x27;defaultMinute&#x27;),
+      appendTo: calendarContext ? $(calendarContext).get(0) : undefined,
+      locale: this.get(&#x27;locale&#x27;) || this.get(&#x27;i18n.locale&#x27;),
+      altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
+      dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
+      onChange: () =&gt; {
+        let inputValue = this.$(&#x27;.custom-flatpickr&#x27;)[0].value;
+        if (!isBlank(inputValue)) {
+          this._onChange();
+        }
+      },
+      onClose: () =&gt; {
+        this.set(&#x27;canClick&#x27;, true);
+        this.$(&#x27;.custom-flatpickr&#x27;).blur();
+      },
+    };
+
+    this.set(&#x27;_flatpickr&#x27;, this.$(&#x27;.flatpickr &gt; input&#x27;).flatpickr(options));
+    $(&#x27;.flatpickr-calendar .numInput.flatpickr-hour&#x27;).prop(&#x27;readonly&#x27;, true);
+    $(&#x27;.flatpickr-calendar .numInput.flatpickr-minute&#x27;).prop(&#x27;readonly&#x27;, true);
+    this.$(&#x27;.custom-flatpickr&#x27;).mask(timeless ? this.dateMask : this.dateTimeMask);
+
+    this.$(&#x27;.custom-flatpickr&#x27;).change($.proxy(function () {
+      this._onChange();
+    }, this));
+
+    this.$(&#x27;.custom-flatpickr&#x27;).keydown($.proxy(function (e) {
+      if (e.which === 13) {
+        this.$(&#x27;.custom-flatpickr&#x27;).blur();
+        this._onChange();
+      }
+    }, this));
+
+    this.$(&#x27;.custom-flatpickr&#x27;).prop(&#x27;readonly&#x27;, this.get(&#x27;readonly&#x27;));
+
+    let namespace = this.elementId;
+    this.set(&#x27;eventNamespace&#x27;, namespace);
+    $(document).on(&#x60;mousedown.${namespace}&#x60;, (e) =&gt; {
+      let clicky = $(e.target);
+      if (clicky.closest(&#x27;.flatpickr-calendar&#x27;).length === 0 &amp;&amp; clicky.get(0) !== this.$(&#x27;.custom-flatpickr&#x27;).get(0)) {
+        this.get(&#x27;_flatpickr&#x27;).close();
+      }
+    });
+    $(this.get(&#x27;scrollSelectors&#x27;).join()).on(&#x60;scroll.${namespace}&#x60;, () =&gt; this.get(&#x27;_flatpickr&#x27;).close());
+  },
+
+  /**
+    Sets readonly attr for flatpickr.
+  */
+  readonlyObserver: observer(&#x27;readonly&#x27;, function() {
+    this.$(&#x27;.custom-flatpickr&#x27;).prop(&#x27;readonly&#x27;, this.get(&#x27;readonly&#x27;));
+  }),
+
+  /**
+    Observer for reinit flatpickr (defaultHour, defaultMinute, and others, for dynamically updating because set() for this options doesn&#x27;t update view).
+
+    @method reinitFlatpickrObserver
+  */
+  reinitFlatpickrObserver: observer(&#x27;type&#x27;, &#x27;min&#x27;, &#x27;max&#x27;, &#x27;locale&#x27;, &#x27;i18n.locale&#x27;, &#x27;defaultHour&#x27;, &#x27;defaultMinute&#x27;, function () {
+    if (!this.get(&#x27;useBrowserInput&#x27;) || !this.get(&#x27;currentTypeSupported&#x27;)) {
+      this._flatpickrDestroy();
+      scheduleOnce(&#x27;afterRender&#x27;, this, this._flatpickrCreate);
+    }
+  }),
+
+  /**
+    Destroy Flatpickr instance.
+
+    @method _flatpickrDestroy
+    @private
+  */
+  _flatpickrDestroy() {
+    let flatpickr = this.get(&#x27;_flatpickr&#x27;);
+    if (flatpickr) {
+      flatpickr.destroy();
+      this.set(&#x27;_flatpickr&#x27;, null);
+    }
+  },
+
+  /**
+    Convert Date object to appropriate string value for input.
+
+    @method _convertDateToString
+    @param {Date} value Object of Date.
+    @return {String} Date in string format.
+    @private
+  */
+  _convertDateToString(value) {
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date) {
+      let date = moment(value);
+      switch (this.get(&#x27;type&#x27;)) {
+        case &#x27;datetime-local&#x27;:
+        case &#x27;datetime&#x27;:
+          return date.format(&#x27;YYYY-MM-DDTHH:mm&#x27;);
+
+        case &#x27;date&#x27;:
+          return date.format(&#x27;YYYY-MM-DD&#x27;);
+
+        default:
+          throw new Error(&#x60;Not supported type:&#x27;${this.get(&#x27;type&#x27;)}&#x27;.&#x60;);
+      }
+    } else {
+      throw new Error(&#x27;Expected type of Date object.&#x27;);
+    }
+  },
+
+  /**
+    Converts string value of input to Date object.
+
+    @method _convertStringToDate
+    @param {String} value Date in string format.
+    @return {Date} Object of Date.
+    @private
+  */
+  _convertStringToDate(value) {
+    if (!value) {
+      return null;
+    }
+
+    if (typeof value !== &#x27;string&#x27;) {
+      throw new Error(&#x27;Expected type the string.&#x27;);
+    }
+
+    return moment(value).toDate();
+  },
+
+  /**
+    Converts date (without time) to local date.
+
+    @method _convertDateToLocal
+    @param {String|Date} value Date without timezone shift.
+    @return {Date} Object of Date.
+    @private
+  */
+  _convertDateToLocal(value) {
+    let dateToSet = value;
+    if (!isBlank(dateToSet)) {
+      dateToSet.setHours(13);
+      dateToSet.setUTCHours(11);
+      dateToSet.setUTCMinutes(0);
+      dateToSet.setUTCSeconds(0);
+      dateToSet.setUTCMilliseconds(0);
+    }
+
+    return dateToSet;
+  },
+
+  actions: {
+    /**
+      Clear current value.
+
+      @method actions.remove
+    */
+    remove() {
+      if (!this.get(&#x27;readonly&#x27;)) {
+        const flatpickr = this.get(&#x27;_flatpickr&#x27;);
+        const value = this.get(&#x27;value&#x27;) || new Date();
+
+        value.setHours(this.get(&#x27;defaultHour&#x27;), this.get(&#x27;defaultMinute&#x27;));
+
+        flatpickr.setDate(value, false);
+        flatpickr.clear();
+        this._onChange();
+      }
+    },
+
+    /**
+      Open flatpickr.
+
+      @method actions.open
+    */
+    open() {
+      this.click();
+    }
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,0 +1,3411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FlexberryFileComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>FlexberryFileComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends <a href="../classes/FlexberryBaseComponent.html" class="crosslink">FlexberryBaseComponent</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_flexberry-file.js.html#l18"><code>addon&#x2F;components&#x2F;flexberry-file.js:18</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Flexberry file component.</p>
+<p>Usage sample:</p>
+<pre class="code prettyprint"><code class="language-handlebars">
+</code></pre>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__dataURLtoFile" data-tablink="_dataURLtoFile">_dataURLtoFile</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__isValidTypeFile" data-tablink="_isValidTypeFile">_isValidTypeFile</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__onRelatedModelPreSave" data-tablink="_onRelatedModelPreSave">_onRelatedModelPreSave</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__previewOptionsDidChange" data-tablink="_previewOptionsDidChange">_previewOptionsDidChange</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__subscribeOnRelatedModelPreSaveEvent" data-tablink="_subscribeOnRelatedModelPreSaveEvent">_subscribeOnRelatedModelPreSaveEvent</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__unsubscribeFromRelatedModelPresaveEvent" data-tablink="_unsubscribeFromRelatedModelPresaveEvent">_unsubscribeFromRelatedModelPresaveEvent</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__uploadDataDidChange" data-tablink="_uploadDataDidChange">_uploadDataDidChange</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__valueDidChange" data-tablink="_valueDidChange">_valueDidChange</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.addButtonClick" data-tablink="actions.addButtonClick">actions.addButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.downloadButtonClick" data-tablink="actions.downloadButtonClick">actions.downloadButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.removeButtonClick" data-tablink="actions.removeButtonClick">actions.removeButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.uploadButtonClick" data-tablink="actions.uploadButtonClick">actions.uploadButtonClick</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.viewLoadedImage" data-tablink="actions.viewLoadedImage">actions.viewLoadedImage</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_downloadFile" data-tablink="downloadFile">downloadFile</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_getTargetObjectByCondition." data-tablink="getTargetObjectByCondition.">getTargetObjectByCondition.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_initProperty" data-tablink="initProperty">initProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_removeFile" data-tablink="removeFile">removeFile</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showDownloadErrorModalDialog" data-tablink="showDownloadErrorModalDialog">showDownloadErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showErrorModalDialog" data-tablink="showErrorModalDialog">showErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showFileExtensionErrorModalDialog" data-tablink="showFileExtensionErrorModalDialog">showFileExtensionErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showUploadErrorModalDialog" data-tablink="showUploadErrorModalDialog">showUploadErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_showUploadErrorModalDialog" data-tablink="showUploadErrorModalDialog">showUploadErrorModalDialog</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_uploadFile" data-tablink="uploadFile">uploadFile</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__addButtonIsEnabled" data-tablink="_addButtonIsEnabled">_addButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__addButtonIsVisible" data-tablink="_addButtonIsVisible">_addButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__canLoadPreview" data-tablink="_canLoadPreview">_canLoadPreview</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__downloadButtonIsEnabled" data-tablink="_downloadButtonIsEnabled">_downloadButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__downloadButtonIsVisible" data-tablink="_downloadButtonIsVisible">_downloadButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialog" data-tablink="_errorModalDialog">_errorModalDialog</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialogCaption" data-tablink="_errorModalDialogCaption">_errorModalDialogCaption</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorModalDialogContent" data-tablink="_errorModalDialogContent">_errorModalDialogContent</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__errorPreviewCaption" data-tablink="_errorPreviewCaption">_errorPreviewCaption</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileInputId" data-tablink="_fileInputId">_fileInputId</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileName" data-tablink="_fileName">_fileName</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__fileSizeUnits" data-tablink="_fileSizeUnits">_fileSizeUnits</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasFile" data-tablink="_hasFile">_hasFile</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__initialValue" data-tablink="_initialValue">_initialValue</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__jsonInitialValue" data-tablink="_jsonInitialValue">_jsonInitialValue</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__jsonValue" data-tablink="_jsonValue">_jsonValue</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__previewDownloadIsInProgress" data-tablink="_previewDownloadIsInProgress">_previewDownloadIsInProgress</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__previewImageAsBase64String" data-tablink="_previewImageAsBase64String">_previewImageAsBase64String</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__removeButtonIsEnabled" data-tablink="_removeButtonIsEnabled">_removeButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__removeButtonIsVisible" data-tablink="_removeButtonIsVisible">_removeButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__selectedFile" data-tablink="_selectedFile">_selectedFile</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadButtonIsEnabled" data-tablink="_uploadButtonIsEnabled">_uploadButtonIsEnabled</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadButtonIsVisible" data-tablink="_uploadButtonIsVisible">_uploadButtonIsVisible</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadData" data-tablink="_uploadData">_uploadData</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadDataCopy" data-tablink="_uploadDataCopy">_uploadDataCopy</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__uploadIsInProgress" data-tablink="_uploadIsInProgress">_uploadIsInProgress</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_accept" data-tablink="accept">accept</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfig" data-tablink="appConfig">appConfig</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettings" data-tablink="appConfigSettings">appConfigSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettingsPath" data-tablink="appConfigSettingsPath">appConfigSettingsPath</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64FileExtension" data-tablink="base64FileExtension">base64FileExtension</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64FileName" data-tablink="base64FileName">base64FileName</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_base64Value" data-tablink="base64Value">base64Value</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_buttonClass" data-tablink="buttonClass">buttonClass</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNameBindings" data-tablink="classNameBindings">classNameBindings</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNames" data-tablink="classNames">classNames</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_componentName" data-tablink="componentName">componentName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_currentController" data-tablink="currentController">currentController</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicProperties" data-tablink="dynamicProperties">dynamicProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_headers" data-tablink="headers">headers</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_inputClass" data-tablink="inputClass">inputClass</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_isDrag" data-tablink="isDrag">isDrag</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_isValidTypeFileCustom" data-tablink="isValidTypeFileCustom">isValidTypeFileCustom</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_maxUploadFileSize" data-tablink="maxUploadFileSize">maxUploadFileSize</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_maxUploadFileSizeUnit" data-tablink="maxUploadFileSizeUnit">maxUploadFileSizeUnit</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_openInNewWindowInsteadOfLoading" data-tablink="openInNewWindowInsteadOfLoading">openInNewWindowInsteadOfLoading</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_placeholder" data-tablink="placeholder">placeholder</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_previewSettings" data-tablink="previewSettings">previewSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonly" data-tablink="readonly">readonly</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonlyAttr" data-tablink="readonlyAttr">readonlyAttr</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_relatedModel" data-tablink="relatedModel">relatedModel</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_required" data-tablink="required">required</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showDownloadButton" data-tablink="showDownloadButton">showDownloadButton</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showModalDialogOnUploadError" data-tablink="showModalDialogOnUploadError">showModalDialogOnUploadError</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showPreview" data-tablink="showPreview">showPreview</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showUploadButton" data-tablink="showUploadButton">showUploadButton</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_uploadOnModelPreSave" data-tablink="uploadOnModelPreSave">uploadOnModelPreSave</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_uploadUrl" data-tablink="uploadUrl">uploadUrl</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_value" data-tablink="value">value</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_viewImageAction" data-tablink="viewImageAction">viewImageAction</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__dataURLtoFile" class="method item private">
+                        <h3 class="name"><code>_dataURLtoFile</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>dataUrl</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l867"><code>addon&#x2F;components&#x2F;flexberry-file.js:867</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Method converts base64 string to File</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">dataUrl</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Base64 string</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Filename for saving</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__isValidTypeFile" class="method item private">
+                        <h3 class="name"><code>_isValidTypeFile</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileType</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>accept</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1182"><code>addon&#x2F;components&#x2F;flexberry-file.js:1182</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Defines valid of file type.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileType</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>file type as MIME TYPES.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">accept</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>available MIME TYPES.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__onRelatedModelPreSave" class="method item private">
+                        <h3 class="name"><code>_onRelatedModelPreSave</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>e</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1123"><code>addon&#x2F;components&#x2F;flexberry-file.js:1123</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles related model's 'preSave' event.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">e</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Related model's 'preSave' event arguments.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">promises</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Related model's 'preSave' operations promises array.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__previewOptionsDidChange" class="method item private">
+                        <h3 class="name"><code>_previewOptionsDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1253"><code>addon&#x2F;components&#x2F;flexberry-file.js:1253</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Preview options change handler.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__subscribeOnRelatedModelPreSaveEvent" class="method item private">
+                        <h3 class="name"><code>_subscribeOnRelatedModelPreSaveEvent</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1142"><code>addon&#x2F;components&#x2F;flexberry-file.js:1142</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Subscribes on related model's 'preSave' event.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__unsubscribeFromRelatedModelPresaveEvent" class="method item private">
+                        <h3 class="name"><code>_unsubscribeFromRelatedModelPresaveEvent</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1162"><code>addon&#x2F;components&#x2F;flexberry-file.js:1162</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Unsubscribes from related model's 'preSave' event.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__uploadDataDidChange" class="method item private">
+                        <h3 class="name"><code>_uploadDataDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1223"><code>addon&#x2F;components&#x2F;flexberry-file.js:1223</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Upload data change handler.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__valueDidChange" class="method item private">
+                        <h3 class="name"><code>_valueDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1203"><code>addon&#x2F;components&#x2F;flexberry-file.js:1203</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Value change handler.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.addButtonClick" class="method item public">
+                        <h3 class="name"><code>actions.addButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l614"><code>addon&#x2F;components&#x2F;flexberry-file.js:614</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on add button.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.downloadButtonClick" class="method item public">
+                        <h3 class="name"><code>actions.downloadButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l645"><code>addon&#x2F;components&#x2F;flexberry-file.js:645</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on download button.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.removeButtonClick" class="method item public">
+                        <h3 class="name"><code>actions.removeButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l625"><code>addon&#x2F;components&#x2F;flexberry-file.js:625</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on remove button.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.uploadButtonClick" class="method item public">
+                        <h3 class="name"><code>actions.uploadButtonClick</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l635"><code>addon&#x2F;components&#x2F;flexberry-file.js:635</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on upload button.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_actions.viewLoadedImage" class="method item public">
+                        <h3 class="name"><code>actions.viewLoadedImage</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l591"><code>addon&#x2F;components&#x2F;flexberry-file.js:591</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Handles click on selected image preview and sends action with data outside component
+                    in order to view selected image at modal window.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_downloadFile" class="method item">
+                        <h3 class="name"><code>downloadFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l981"><code>addon&#x2F;components&#x2F;flexberry-file.js:981</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Downloads previously uploaded file.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_getTargetObjectByCondition." class="method item inherited">
+                        <h3 class="name"><code>getTargetObjectByCondition.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>condition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">Null | Component | Controller</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_getTargetObjectByCondition.">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l225"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:225</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns that 'targetObject' (from 'targetObject's hierarchy) which satisfies a given condition.</p>
+                    <pre class="code prettyprint"><code class="language-javascript">let controller = this.getTargetObjectByCondition((targetObject) =&gt; {
+                      return targetObject instanceof Controller;
+                    });
+                    </code></pre>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">condition</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">Null | Component | Controller</span>:
+                                        <p>Target object which satisfies a given condition or null.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_initProperty" class="method item inherited">
+                        <h3 class="name"><code>initProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_initProperty">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l153"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:153</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Initializes component's property with recpect to following priority:
+                    1 - template-defined parameters,
+                    2 - applicaion configuration-defined parameters (JSON from ./config/environment by path defined in 'appConfigSettingsPath' property),
+                    3 - component-defined defaults.
+                    Note! It is important to be declared as undefined for those component properties, which will be initialized through 'initProperty' call.</p>
+                    <pre class="code prettyprint"><code class="language-javascript">// ./config/environment.js.
+                    module.exports = function(environment) {
+                      var ENV = {
+                        APP: {
+                          components: {
+                            myComponent: {
+                              myComponentProperty: 'myComponentProperty config-defined default value',
+                            }
+                          }
+                        }
+                      };
+                      return ENV;
+                    };
+                    </code></pre>
+                    <pre class="code prettyprint"><code class="language-javascript">// /components/my-component.js
+                    import FlexberryBaseComponent from 'ember-flexberry/flexberry-base-component';
+                    
+                    export default FlexberryBaseComponent.extend({
+                      appConfigSettingsPath: 'APP.components.myComponent',
+                    
+                      myComponentProperty: undefined,
+                    
+                      init() {
+                        this._super.apply(this, arguments);
+                        this.initProperty({ propertyName: 'myComponentProperty', defaultValue: 'myComponentProperty default value' });
+                      }
+                    });
+                    </code></pre>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Method options.</p>
+                    
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">propertyName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">defaultValue</code>
+                                                        <span class="type"></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property default value (from component defined default's).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_removeFile" class="method item">
+                        <h3 class="name"><code>removeFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l906"><code>addon&#x2F;components&#x2F;flexberry-file.js:906</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Removes selected file.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_showDownloadErrorModalDialog" class="method item">
+                        <h3 class="name"><code>showDownloadErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>errorMessage</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1101"><code>addon&#x2F;components&#x2F;flexberry-file.js:1101</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Shows errors if there were some during file download.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>File name.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">errorMessage</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Message about error occurred during file download.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_showErrorModalDialog" class="method item">
+                        <h3 class="name"><code>showErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>errorCaption</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>errorContent</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1009"><code>addon&#x2F;components&#x2F;flexberry-file.js:1009</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Shows error modal dialog.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">errorCaption</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Error caption (window header caption).</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">errorContent</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Error content (window body content).</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        <p>Error content.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_showFileExtensionErrorModalDialog" class="method item">
+                        <h3 class="name"><code>showFileExtensionErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1060"><code>addon&#x2F;components&#x2F;flexberry-file.js:1060</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Shows file extension errors if there were some.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Added file name.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        <p>Error content.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_showUploadErrorModalDialog" class="method item">
+                        <h3 class="name"><code>showUploadErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>actualFileSize</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>maxFileSize</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>sizeUnit</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1034"><code>addon&#x2F;components&#x2F;flexberry-file.js:1034</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Shows file size errors if there were some.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Added file name.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">actualFileSize</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Actual size of added file.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">maxFileSize</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Max file size allowed.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">sizeUnit</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Max file size unit.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        <p>Error content.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_showUploadErrorModalDialog" class="method item">
+                        <h3 class="name"><code>showUploadErrorModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>fileName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>errorMessage</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l1079"><code>addon&#x2F;components&#x2F;flexberry-file.js:1079</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Shows errors if there were some during file upload.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">fileName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>File name.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">errorMessage</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Message about error occurred during file upload.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>:
+                                        <p>Error content.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_uploadFile" class="method item">
+                        <h3 class="name"><code>uploadFile</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l919"><code>addon&#x2F;components&#x2F;flexberry-file.js:919</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Uploads selected file.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__addButtonIsEnabled" class="property item private">
+                        <h3 class="name"><code>_addButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l204"><code>addon&#x2F;components&#x2F;flexberry-file.js:204</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether add button is enabled now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__addButtonIsVisible" class="property item private">
+                        <h3 class="name"><code>_addButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l192"><code>addon&#x2F;components&#x2F;flexberry-file.js:192</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether add button is visible now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__canLoadPreview" class="property item">
+                        <h3 class="name"><code>_canLoadPreview</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l439"><code>addon&#x2F;components&#x2F;flexberry-file.js:439</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>indicates whether preview img can be loaded when show.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property__downloadButtonIsEnabled" class="property item private">
+                        <h3 class="name"><code>_downloadButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l284"><code>addon&#x2F;components&#x2F;flexberry-file.js:284</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether download button is enabled now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__downloadButtonIsVisible" class="property item private">
+                        <h3 class="name"><code>_downloadButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l271"><code>addon&#x2F;components&#x2F;flexberry-file.js:271</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether download button is visible now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialog" class="property item private">
+                        <h3 class="name"><code>_errorModalDialog</code></h3>
+                        <span class="type"><a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l332"><code>addon&#x2F;components&#x2F;flexberry-file.js:332</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Selected jQuery object, containing HTML of error modal dialog.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialogCaption" class="property item private">
+                        <h3 class="name"><code>_errorModalDialogCaption</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l299"><code>addon&#x2F;components&#x2F;flexberry-file.js:299</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Caption to be displayed in error modal dialog.
+                    It will be displayed only if some error occurs.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-dialog-caption&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorModalDialogContent" class="property item private">
+                        <h3 class="name"><code>_errorModalDialogContent</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l310"><code>addon&#x2F;components&#x2F;flexberry-file.js:310</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Content to be displayed in error modal dialog.
+                    It will be displayed only if some error occurs.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-dialog-content&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__errorPreviewCaption" class="property item private">
+                        <h3 class="name"><code>_errorPreviewCaption</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l321"><code>addon&#x2F;components&#x2F;flexberry-file.js:321</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Caption to be displayed in loaded file table cell.
+                    It will be displayed only if preview can't be loaded.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.error-preview-caption&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property__fileInputId" class="property item private">
+                        <h3 class="name"><code>_fileInputId</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l54"><code>addon&#x2F;components&#x2F;flexberry-file.js:54</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>File input identifier.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__fileName" class="property item private">
+                        <h3 class="name"><code>_fileName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l109"><code>addon&#x2F;components&#x2F;flexberry-file.js:109</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>File name.
+                    It is binded to component file name input, so every change to fileName will automatically change file name input value.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__fileSizeUnits" class="property item private">
+                        <h3 class="name"><code>_fileSizeUnits</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l30"><code>addon&#x2F;components&#x2F;flexberry-file.js:30</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Available file size units with its captions.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__hasFile" class="property item private">
+                        <h3 class="name"><code>_hasFile</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l127"><code>addon&#x2F;components&#x2F;flexberry-file.js:127</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether some file is added now or not.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__initialValue" class="property item private">
+                        <h3 class="name"><code>_initialValue</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l74"><code>addon&#x2F;components&#x2F;flexberry-file.js:74</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Copy of value created at initialization moment or after successful upload.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__jsonInitialValue" class="property item private">
+                        <h3 class="name"><code>_jsonInitialValue</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l83"><code>addon&#x2F;components&#x2F;flexberry-file.js:83</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Deserialized copy of value created at initialization moment or after successful upload.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__jsonValue" class="property item private">
+                        <h3 class="name"><code>_jsonValue</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l96"><code>addon&#x2F;components&#x2F;flexberry-file.js:96</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Deserialized value of file component.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__previewDownloadIsInProgress" class="property item private">
+                        <h3 class="name"><code>_previewDownloadIsInProgress</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l182"><code>addon&#x2F;components&#x2F;flexberry-file.js:182</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether file preview download is in progress now.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property__previewImageAsBase64String" class="property item private">
+                        <h3 class="name"><code>_previewImageAsBase64String</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l44"><code>addon&#x2F;components&#x2F;flexberry-file.js:44</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Selected file content. It can be used as source for image tag in order to view preview.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__removeButtonIsEnabled" class="property item private">
+                        <h3 class="name"><code>_removeButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l229"><code>addon&#x2F;components&#x2F;flexberry-file.js:229</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether remove button is enabled now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__removeButtonIsVisible" class="property item private">
+                        <h3 class="name"><code>_removeButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l217"><code>addon&#x2F;components&#x2F;flexberry-file.js:217</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether remove button is visible now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__selectedFile" class="property item private">
+                        <h3 class="name"><code>_selectedFile</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l159"><code>addon&#x2F;components&#x2F;flexberry-file.js:159</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Current file selected for upload.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadButtonIsEnabled" class="property item private">
+                        <h3 class="name"><code>_uploadButtonIsEnabled</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l256"><code>addon&#x2F;components&#x2F;flexberry-file.js:256</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether upload button is enabled now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadButtonIsVisible" class="property item private">
+                        <h3 class="name"><code>_uploadButtonIsVisible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l244"><code>addon&#x2F;components&#x2F;flexberry-file.js:244</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether upload button is visible now.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__uploadData" class="property item private">
+                        <h3 class="name"><code>_uploadData</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l139"><code>addon&#x2F;components&#x2F;flexberry-file.js:139</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Data from jQuery fileupload plugin (contains selected file).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__uploadDataCopy" class="property item private">
+                        <h3 class="name"><code>_uploadDataCopy</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l149"><code>addon&#x2F;components&#x2F;flexberry-file.js:149</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Copy of data from jQuery fileupload plugin (contains selected file).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__uploadIsInProgress" class="property item private">
+                        <h3 class="name"><code>_uploadIsInProgress</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l172"><code>addon&#x2F;components&#x2F;flexberry-file.js:172</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether file upload is in progress now.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_accept" class="property item">
+                        <h3 class="name"><code>accept</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l539"><code>addon&#x2F;components&#x2F;flexberry-file.js:539</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Available file extensions for upload. In MIME type format.
+                    See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept">the documentation</a> for more details.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> undefined</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfig" class="property item inherited">
+                        <h3 class="name"><code>appConfig</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfig">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l88"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Application configuration (JSON from ./config/environment.js).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettings" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettings">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l97"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:97</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component settings object from application configuration (part of JSON from ./config/environment.js).
+                    Part of appConfig related to appConfigSettingsPath.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettingsPath" class="property item">
+                        <h3 class="name"><code>appConfigSettingsPath</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettingsPath">
+                                    FlexberryBaseComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_flexberry-file.js.html#l394"><code>addon&#x2F;components&#x2F;flexberry-file.js:394</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Path to component's settings in application configuration (JSON from ./config/environment.js).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;APP.components.flexberryFile&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64FileExtension" class="property item">
+                        <h3 class="name"><code>base64FileExtension</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l574"><code>addon&#x2F;components&#x2F;flexberry-file.js:574</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Extension for base64 file. {base64FileName}.{base64FileExtension}</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64FileName" class="property item">
+                        <h3 class="name"><code>base64FileName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l566"><code>addon&#x2F;components&#x2F;flexberry-file.js:566</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Name for base64 file. {base64FileName}.{base64FileExtension}</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_base64Value" class="property item">
+                        <h3 class="name"><code>base64Value</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l558"><code>addon&#x2F;components&#x2F;flexberry-file.js:558</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>External Base64 string</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_buttonClass" class="property item">
+                        <h3 class="name"><code>buttonClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l377"><code>addon&#x2F;components&#x2F;flexberry-file.js:377</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>CSS-classes names for component's add, remove, upload, download buttons.
+                    See <a href="http://semantic-ui.com/elements/button.html">Semantic UI buttons classes</a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code><code>&#x60;</code>handlebars
+                    
+                    </code></pre>
+                    <pre class="code prettyprint"><code></code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_classNameBindings" class="property item">
+                        <h3 class="name"><code>classNameBindings</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l351"><code>addon&#x2F;components&#x2F;flexberry-file.js:351</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Components class names bindings.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;readonly:disabled&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_classNames" class="property item">
+                        <h3 class="name"><code>classNames</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l342"><code>addon&#x2F;components&#x2F;flexberry-file.js:342</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's wrapping <div> CSS-class names.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;flexberry-file&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_componentName" class="property item inherited">
+                        <h3 class="name"><code>componentName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_componentName">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l49"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:49</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Unique name of the component.
+                    TODO: use guidFor from 'ember-metal/utils'</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_currentController" class="property item inherited">
+                        <h3 class="name"><code>currentController</code></h3>
+                        <span class="type">Controller</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_currentController">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l107"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:107</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Current controller.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicProperties" class="property item inherited">
+                        <h3 class="name"><code>dynamicProperties</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_dynamicProperties">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l58"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:58</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component dynamic properties ({ componentPropertyName: value }).
+                    Used when component renders dynamically with ember {{component}} helper:
+                    {{component 'my-component' value=value dynamicProperties=myConponentProperties}}.
+                    In the end of component initialization its properties values will be replaced with values from this object.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_headers" class="property item">
+                        <h3 class="name"><code>headers</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l521"><code>addon&#x2F;components&#x2F;flexberry-file.js:521</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Headers to the file upload request.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_inputClass" class="property item">
+                        <h3 class="name"><code>inputClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l360"><code>addon&#x2F;components&#x2F;flexberry-file.js:360</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's input additional CSS-class names.
+                    See <a href="http://semantic-ui.com/elements/input.html">Semantic UI inputs classes</a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code><code>&#x60;</code>handlebars
+                    
+                    <code>&#x60;</code></code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_isDrag" class="property item">
+                        <h3 class="name"><code>isDrag</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l582"><code>addon&#x2F;components&#x2F;flexberry-file.js:582</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: Is the drag-and-drop event currently proceed.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_isValidTypeFileCustom" class="property item">
+                        <h3 class="name"><code>isValidTypeFileCustom</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l549"><code>addon&#x2F;components&#x2F;flexberry-file.js:549</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Function with custom check for type of uploaded file.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_maxUploadFileSize" class="property item">
+                        <h3 class="name"><code>maxUploadFileSize</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l466"><code>addon&#x2F;components&#x2F;flexberry-file.js:466</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Maximum file size in bytes for uploading files.
+                    It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
+                    If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_maxUploadFileSizeUnit" class="property item">
+                        <h3 class="name"><code>maxUploadFileSizeUnit</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l476"><code>addon&#x2F;components&#x2F;flexberry-file.js:476</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;Bt&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_openInNewWindowInsteadOfLoading" class="property item">
+                        <h3 class="name"><code>openInNewWindowInsteadOfLoading</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l512"><code>addon&#x2F;components&#x2F;flexberry-file.js:512</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: download by clicking download or open file in new window.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_placeholder" class="property item">
+                        <h3 class="name"><code>placeholder</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l485"><code>addon&#x2F;components&#x2F;flexberry-file.js:485</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Text to be displayed instead of file name, if file has not been selected.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-file.placeholder&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property_previewSettings" class="property item">
+                        <h3 class="name"><code>previewSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l530"><code>addon&#x2F;components&#x2F;flexberry-file.js:530</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Settings for preview modal dialog.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonly" class="property item inherited">
+                        <h3 class="name"><code>readonly</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonly">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l20"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:20</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether component is readonly.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonlyAttr" class="property item inherited">
+                        <h3 class="name"><code>readonlyAttr</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a> | Undefined</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonlyAttr">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l29"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:29</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Readonly HTML attribute following to the <code>readonly</code> query param. According to the W3C standard, returns 'readonly' if <code>readonly</code> is <code>true</code> and <code>undefined</code> otherwise.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_relatedModel" class="property item inherited">
+                        <h3 class="name"><code>relatedModel</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_relatedModel">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l70"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:70</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Model to which current component's value is related.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_required" class="property item inherited">
+                        <h3 class="name"><code>required</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_required">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l40"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:40</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether component is required.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showDownloadButton" class="property item">
+                        <h3 class="name"><code>showDownloadButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l457"><code>addon&#x2F;components&#x2F;flexberry-file.js:457</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show download button or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showModalDialogOnUploadError" class="property item">
+                        <h3 class="name"><code>showModalDialogOnUploadError</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l503"><code>addon&#x2F;components&#x2F;flexberry-file.js:503</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show modal dialog on upload errors or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showPreview" class="property item">
+                        <h3 class="name"><code>showPreview</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l430"><code>addon&#x2F;components&#x2F;flexberry-file.js:430</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show preview element for images or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showUploadButton" class="property item">
+                        <h3 class="name"><code>showUploadButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l448"><code>addon&#x2F;components&#x2F;flexberry-file.js:448</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show upload button or not.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_uploadOnModelPreSave" class="property item">
+                        <h3 class="name"><code>uploadOnModelPreSave</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l421"><code>addon&#x2F;components&#x2F;flexberry-file.js:421</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_uploadUrl" class="property item">
+                        <h3 class="name"><code>uploadUrl</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l494"><code>addon&#x2F;components&#x2F;flexberry-file.js:494</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>File upload URL.
+                    If null or undefined, then APP.components.file.uploadUrl from application config\environment will be used.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_value" class="property item">
+                        <h3 class="name"><code>value</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l412"><code>addon&#x2F;components&#x2F;flexberry-file.js:412</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Value of file component (contains serialized file metadata such as fileName, fileSize, etc.).
+                    It is binded to related model property, so every change to value will automatically change model property.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_viewImageAction" class="property item">
+                        <h3 class="name"><code>viewImageAction</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-file.js.html#l403"><code>addon&#x2F;components&#x2F;flexberry-file.js:403</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Name of the action which will be send outside after click on selected image preview.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;flexberryFileViewImageAction&#x27;</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

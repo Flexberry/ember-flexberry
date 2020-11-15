@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/helpers/get-with-dynamic-actions.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/helpers/get-with-dynamic-actions.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Helper from &#x27;@ember/component/helper&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { typeOf, isBlank, isNone } from &#x27;@ember/utils&#x27;;
+import { A, isArray } from &#x27;@ember/array&#x27;;
+import { get, set } from &#x27;@ember/object&#x27;;
+import { addObserver, removeObserver } from &#x27;@ember/object/observers&#x27;;
+import DynamicActionObject from &#x27;../objects/dynamic-action&#x27;;
+import { render } from &#x27;../utils/string&#x27;;
+import { getRecord } from &#x27;../utils/extended-get&#x27;;
+
+// Validates helper&#x27;s properties.
+// Not a helper member, so yuidoc-comments are unnecessary.
+let validateHelperProperties = function(args, hash) {
+  assert(
+    &#x27;Exactly two unnamed arguments must be passed to &#x60;get-with-dynamic-actions&#x60; helper.&#x27;,
+    args.length === 2);
+
+  let propertyOwner = args[0];
+  assert(
+    &#x60;Wrong type of \&#x60;get-with-dynamic-actions\&#x60; helper\&#x60;s first argument: &#x60; +
+    &#x60;actual type is \&#x60;${typeOf(propertyOwner)}\&#x60;, but \&#x60;object\&#x60; or \&#x60;instance\&#x60; is expected.&#x60;,
+    typeOf(propertyOwner) === &#x27;object&#x27; || typeOf(propertyOwner) === &#x27;instance&#x27;);
+
+  let propertyName = args[1];
+  assert(
+    &#x60;Wrong type of \&#x60;get-with-dynamic-actions\&#x60; helper\&#x60;s second argument: &#x60; +
+    &#x60;actual type is \&#x60;${typeOf(propertyName)}\&#x60;, but \&#x60;string\&#x60; is expected.&#x60;,
+    typeOf(propertyName) === &#x27;string&#x27;);
+
+  let hierarchyPropertyName = get(hash, &#x27;hierarchyPropertyName&#x27;);
+  assert(
+    &#x60;Wrong type of \&#x60;get-with-dynamic-actions\&#x60; helper\&#x60;s \&#x60;hierarchyPropertyName\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${typeOf(hierarchyPropertyName)}\&#x60;, but \&#x60;string\&#x60; is expected.&#x60;,
+    isNone(hierarchyPropertyName) || typeOf(hierarchyPropertyName) === &#x27;string&#x27;);
+
+  let dynamicActions = get(hash, &#x27;dynamicActions&#x27;);
+  assert(
+    &#x60;Wrong type of \&#x60;get-with-dynamic-actions\&#x60; helper\&#x60;s \&#x60;dynamicActions\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${typeOf(dynamicActions)}\&#x60;, but \&#x60;array\&#x60; is expected.&#x60;,
+    isNone(dynamicActions) || isArray(dynamicActions));
+};
+
+// Returns new action arguments array where template-like substrings in string arguments
+// are replaced with related context&#x27;s properties.
+// Not a helper member, so yuidoc-comments are unnecessary.
+let getRenderedDynamicActionArguments = function(actionArguments, renderingContext) {
+  if (!isArray(actionArguments)) {
+    return A();
+  }
+
+  // Some action arguments could be a strings with following substrings (templates) inside them: {% path %}.
+  // We should replace these templates with context&#x27;s related properties (current object&#x27;s path instead of {% path %}, etc.),
+  // before arguments will be binded to dynamic actions.
+  let renderedActionArguments = [];
+  for (let i = 0, len = actionArguments.length; i &lt; len; i++) {
+    let actionArgument = actionArguments[i];
+    if (typeOf(actionArgument) === &#x27;string&#x27;) {
+      renderedActionArguments[i] = render(actionArgument, {
+        context: renderingContext,
+        delimiters: [&#x27;{%&#x27;, &#x27;%}&#x27;]
+      });
+    } else {
+      renderedActionArguments[i] = actionArgument;
+    }
+  }
+
+  return renderedActionArguments;
+};
+
+/**
+  Get with dynamic actions helper.
+  Retrieves property with the specified name from the specified object
+  (exactly as [standard get helper](https://www.emberjs.com/api/ember/release/classes/Ember.Templates.helpers/methods/get?anchor=get) does),
+  and additionally binds dynamic actions for retrieved property&#x27;s nested object/objects
+  (even if retrieved property has hierarchical structure).
+
+  Helper must be used with those component&#x27;s,
+  which consumes their inner structure as [JSON-object](http://www.json.org/)
+  or [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject)
+  and there is no way to attach action handlers for their nested component&#x27;s explicitly in hbs-markup.
+
+  @class GetWithDynamicActionsHelper
+  @extends &lt;a href=&quot;https://emberjs.com/api/ember/release/classes/Helper&quot;&gt;Helper&lt;/a&gt;
+
+  Usage:
+  templates/my-form.hbs
+  &#x60;&#x60;&#x60;handlebars
+  {{!-- Without custom &quot;path&quot; keyword (default keyword &quot;path&quot; will be used) --}}
+  {{flexberry-tree
+    nodes=(get-with-dynamic-actions this &quot;treeNodes&quot;
+      hierarchyPropertyName=&quot;nodes&quot;
+      dynamicActions=(array
+        (hash
+          on=&quot;headerClick&quot;
+          actionName=&quot;onTreenodeHeaderClick&quot;
+          actionArguments=(array &quot;{% path %}&quot;)
+        )
+        (hash
+          on=&quot;checkboxChange&quot;
+          actionName=&quot;onTreenodeCheckboxChange&quot;
+          actionArguments=(array &quot;{% path %}.checkboxValue&quot;)
+        )
+      )
+    )
+  }}
+
+  {{!-- With custom &quot;path&quot; keyword --}}
+  {{flexberry-tree
+    nodes=(get-with-dynamic-actions this &quot;treeNodes&quot;
+      hierarchyPropertyName=&quot;nodes&quot;
+      pathKeyword=&quot;nodePath&quot;
+      dynamicActions=(array
+        (hash
+          on=&quot;headerClick&quot;
+          actionName=&quot;onTreenodeHeaderClick&quot;
+          actionArguments=(array &quot;{% nodePath %}&quot;)
+        )
+        (hash
+          on=&quot;checkboxChange&quot;
+          actionName=&quot;onTreenodeCheckboxChange&quot;
+          actionArguments=(array &quot;{% nodePath %}.checkboxValue&quot;)
+        )
+      )
+    )
+  }}
+  &#x60;&#x60;&#x60;
+
+  controllers/my-form.js
+  &#x60;&#x60;&#x60;javascript
+  import Controller from &#x27;@ember/controller&#x27;;
+  import TreeNodeObject from &#x27;ember-flexberry/objects/flexberry-treenode&#x27;;
+
+  export default Controller.extend({
+    treeNodes: A([
+      FlexberryTreenodeObject.create({
+        caption: &#x27;Node 1 (with child nodes)&#x27;,
+        hasCheckbox: true,
+        checkboxValue: false,
+        iconClass: &#x27;map icon&#x27;,
+        nodes: A([
+          caption: &#x27;Node 1.1 (leaf node)&#x27;,
+          hasCheckbox: true,
+          checkboxValue: false,
+          iconClass: &#x27;apple icon&#x27;,
+          nodes: null
+        ])
+      }),
+      FlexberryTreenodeObject.create({
+        caption: &#x27;Node 2 (leaf node)&#x27;,
+        hasCheckbox: true,
+        checkboxValue: false,
+        iconClass: &#x27;compass icon&#x27;,
+        nodes: null
+      })
+    ]),
+
+    actions: {
+      onTreenodeHeaderClick(...args) {
+        let treeNodePath = args[0];
+        let treeNodeHeaderClickActionEventObject = args[args.length - 1];
+
+        console.log(&#x27;Clicked tree node\&#x27;s properties:&#x27;, this.get(treeNodePath));
+        console.log(&#x27;Clicked tree node\&#x27;s \&#x27;headerClick\&#x27; action event object:&#x27;, treeNodeHeaderClickActionEventObject);
+      },
+
+      onTreenodeCheckboxChange(...args) {
+        let treeNodeCheckboxValuePath = args[0];
+        let treeNodeCheckboxChangeActionEventObject = args[args.length - 1];
+
+        // Change tree node&#x27;s &#x27;checkboxValue&#x27; property.
+        this.set(treeNodeCheckboxValuePath, treeNodeCheckboxChangeActionEventObject.newValue);
+      }
+    }
+  });
+  &#x60;&#x60;&#x60;
+*/
+export default Helper.extend({
+  /**
+    Owner of hierarchy root property.
+
+    @property _rootPropertyOwner
+    @type Object
+    @default null
+    @private
+  */
+  _rootPropertyOwner: null,
+
+  /**
+    Name of those property which must be retrieved from owner &amp; returned from helper
+    (after dynamic actions binding).
+
+    @property _rootPropertyName
+    @type String
+    @private
+  */
+  _rootPropertyName: null,
+
+  /**
+    Name of nested property (inside retrieved one), through which
+    child object/objects (objects hierarchy) is/are available.
+
+    @property _hierarchyPropertyName
+    @type String
+    @private
+  */
+  _hierarchyPropertyName: null,
+
+  /**
+    Dynamic actions, which will be binded to object/objects retrieved from the
+    {{#crossLink &quot;GetWithDynamicActionsHelper/_rootPropertyOwner:property&quot;}}owner{{/crossLink}}
+    (and to all nested child objects).
+
+    @property _dynamicActions
+    @type DynamicActionObject[]
+    @private
+  */
+  _dynamicActions: null,
+
+  /**
+    Array with objects containing names of hierarchy properties and observer handlers related to them.
+    Each object in array has following structure: { propertyPath: &#x27;...&#x27;, observerHandler: function() { ... } }.
+
+    @property _hierarchyPropertiesObservers
+    @type Object[]
+    @default null
+    @private
+   */
+  _hierarchyPropertiesObservers: null,
+
+  /**
+    Adds observer for given hierarchy property, which will force helper to recompute
+    on any changes in the specified hierarchy property.
+
+    @method _addHierarchyPropertyObserver
+    @param {String} propertyPath Path to observable property.
+    @private
+  */
+  _addHierarchyPropertyObserver(propertyPath) {
+    let hierarchyPropertiesObservers = this.get(&#x27;_hierarchyPropertiesObservers&#x27;);
+    if (isNone(hierarchyPropertiesObservers)) {
+      hierarchyPropertiesObservers = A();
+      this.set(&#x27;_hierarchyPropertiesObservers&#x27;, hierarchyPropertiesObservers);
+    }
+
+    let observer = hierarchyPropertiesObservers.find((observer) =&gt; {
+      return get(observer, &#x27;propertyPath&#x27;) === propertyPath;
+    });
+    if (isNone(observer)) {
+      observer = {
+        propertyPath: propertyPath,
+        referenceObserver: null,
+        arrayObserver: null
+      };
+      hierarchyPropertiesObservers.pushObject(observer);
+    }
+
+    let arrayObserver = {
+      /* eslint-disable no-unused-vars */
+      arrayWillChange: (arr, start, removeCount, addCount) =&gt; {
+        // Remove observers from removing properties (while properties still exists).
+        if (removeCount !== 0) {
+          for (let i = start; removeCount &gt; 0 &amp;&amp; i &lt; start + removeCount; i++) {
+            let removingPropertyPath = &#x60;${propertyPath}.${i}&#x60;;
+
+            this._removeHierarchyPropertiesObservers({
+              propertyPathStartsWith: removingPropertyPath,
+              status: &#x27;Delete&#x27;
+            });
+          }
+        } else {
+          for (let i = start; i &lt; start + 2; i++) {
+            let replacePropertyPath = &#x60;${propertyPath}.${i}&#x60;;
+
+            this._removeHierarchyPropertiesObservers({
+              propertyPathStartsWith: replacePropertyPath,
+              status: &#x27;Replace&#x27;
+            });
+          }
+        }
+
+      },
+      /* eslint-enable no-unused-vars */
+
+      /* eslint-disable no-unused-vars */
+      arrayDidChange: (arr, start, removeCount, addCount) =&gt; {
+        // Bind dynamic actions for added property, and rebind for following ones (till the end of array), or
+        // rebind dynamic actions for properties following after removed ones (till the end of array).
+        for (let i = start, len = arr.length; i &lt; len; i++) {
+          let addedOrMovedPropertyPath = &#x60;${propertyPath}.${i}&#x60;;
+          let addedOrMovedPropertyValue = getRecord(this, &#x60;_rootPropertyOwner.${addedOrMovedPropertyPath}&#x60;);
+
+          this._bindDynamicActions({
+            propertyPath: addedOrMovedPropertyPath,
+            propertyValue: addedOrMovedPropertyValue,
+
+            // Don&#x27;t observe properties containing inside arrays,
+            // it&#x27;s unnecessary, because whole array has special observer.
+            propertyIsObservable: false
+          });
+        }
+      }
+      /* eslint-enable no-unused-vars */
+    };
+
+    let referenceObserver = () =&gt; {
+      let rootPropertyOwner = this.get(&#x27;_rootPropertyOwner&#x27;);
+      let propertyValue = getRecord(rootPropertyOwner, propertyPath);
+
+      // Property-object reference changed.
+      // Remove old observers.
+      this._removeHierarchyPropertiesObservers({
+        propertyPathStartsWith: propertyPath
+      });
+
+      // Bind dynamic actions for new property-object.
+      // It will add new observers.
+      this._bindDynamicActions({
+        propertyValue: propertyValue,
+        propertyPath: propertyPath
+      });
+    };
+
+    let rootPropertyOwner = this.get(&#x27;_rootPropertyOwner&#x27;);
+    let propertyValue = getRecord(rootPropertyOwner, propertyPath);
+
+    // Observe property reference.
+    if (isNone(get(observer, &#x27;referenceObserver&#x27;))) {
+      set(observer, &#x27;referenceObserver&#x27;, referenceObserver);
+      addObserver(rootPropertyOwner, propertyPath, referenceObserver);
+    }
+
+    // Observe property content.
+    if (isArray(propertyValue) &amp;&amp; isNone(get(observer, &#x27;arrayObserver&#x27;))) {
+      set(observer, &#x27;arrayObserver&#x27;, arrayObserver);
+      propertyValue.addArrayObserver(arrayObserver);
+    }
+  },
+
+  /**
+    Removes all previously attached to hierarchy properties observers.
+
+    @method _removeHierarchyPropertiesObservers
+    @param {Object} options Method options.
+    @param {String} options.propertyPath Path to property from which observers must be removed.
+    @param {String} options.propertyPathStartsWith Prefix of path to properties from which observers must be removed.
+    @private
+  */
+  _removeHierarchyPropertiesObservers(options) {
+    options = options || {};
+    let propertyPath =  get(options, &#x27;propertyPath&#x27;);
+    let propertyPathStartsWith = get(options, &#x27;propertyPathStartsWith&#x27;);
+    let observerCanBeRemoved = function(observer) {
+      let observerPropertyPath = get(observer, &#x27;propertyPath&#x27;);
+
+      return isNone(propertyPath) &amp;&amp; isNone(propertyPathStartsWith) ||
+        typeOf(propertyPath) === &#x27;string&#x27; &amp;&amp; observerPropertyPath === propertyPath ||
+        typeOf(propertyPathStartsWith) === &#x27;string&#x27; &amp;&amp; observerPropertyPath.indexOf(propertyPathStartsWith) === 0;
+    };
+
+    let rootPropertyOwner = this.get(&#x27;_rootPropertyOwner&#x27;);
+    let hierarchyPropertiesObservers = this.get(&#x27;_hierarchyPropertiesObservers&#x27;);
+    let len = hierarchyPropertiesObservers.length;
+    hierarchyPropertiesObservers = this._sort(hierarchyPropertiesObservers);
+    while (--len &gt;= 0) {
+      let observer = hierarchyPropertiesObservers[len];
+      if (!observerCanBeRemoved(observer)) {
+        continue;
+      }
+
+      let observerPropertyPath = get(observer, &#x27;propertyPath&#x27;);
+      let observerPropertyValue = getRecord(rootPropertyOwner, observerPropertyPath);
+
+      let status = get(options, &#x27;status&#x27;);
+      if (status === &#x27;Delete&#x27;) {
+        this._renamePropertyPath(observerPropertyPath, len);
+      }
+
+      let referenceObserver = get(observer, &#x27;referenceObserver&#x27;);
+      removeObserver(rootPropertyOwner, observerPropertyPath, referenceObserver);
+
+      let arrayObserver = get(observer, &#x27;arrayObserver&#x27;);
+      if (isArray(observerPropertyValue)) {
+        observerPropertyValue.removeArrayObserver(arrayObserver);
+      }
+
+      hierarchyPropertiesObservers.removeAt(len);
+    }
+
+    if (hierarchyPropertiesObservers.length === 0) {
+      this.set(&#x27;_hierarchyPropertiesObservers&#x27;, null);
+    }
+  },
+
+  /**
+    Renames property path of observers.
+
+    @method _renamePropertyPath
+    @param {String} observerPropertyPath Path to property from which observers must be removed.
+    @param {Number} len Index of observer in the array to be removed.
+    @private
+  */
+  _renamePropertyPath(observerPropertyPath, len) {
+    let hierarchyPropertiesObservers = this.get(&#x27;_hierarchyPropertiesObservers&#x27;);
+    let rootPropertyOwner = this.get(&#x27;_rootPropertyOwner&#x27;);
+    let observerPropertyPathArray = observerPropertyPath.split(&#x27;.&#x27;);
+
+    if (observerPropertyPathArray.length &gt;= 3) {
+
+      let arrayForSubstring = observerPropertyPathArray.slice(0, observerPropertyPathArray.length - 2);
+      let checkSubstring = arrayForSubstring.join(&#x27;.&#x27;);
+
+      for (let i = len + 1; i &lt; hierarchyPropertiesObservers.length; i++) {
+        let observer = hierarchyPropertiesObservers[i];
+
+        let updatableObserverPropertyPath = get(observer, &#x27;propertyPath&#x27;);
+        let updatableObserverPropertyPathArray = updatableObserverPropertyPath.split(&#x27;.&#x27;);
+        let newObserverPropertyPath = updatableObserverPropertyPathArray[0];
+
+        for (let j = 1; j &lt; updatableObserverPropertyPathArray.length; j++) {
+          if ((j === (observerPropertyPathArray.length - 2)) &amp;&amp; (checkSubstring === newObserverPropertyPath)) {
+            newObserverPropertyPath += &#x27;.&#x27; + (updatableObserverPropertyPathArray[j] - 1).toString();
+
+            let observerPropertyValue = getRecord(rootPropertyOwner, updatableObserverPropertyPath);
+            let referenceObserver = get(observer, &#x27;referenceObserver&#x27;);
+            removeObserver(rootPropertyOwner, updatableObserverPropertyPath, referenceObserver);
+
+            let arrayObserver = get(observer, &#x27;arrayObserver&#x27;);
+            if (isArray(observerPropertyValue)) {
+              observerPropertyValue.removeArrayObserver(arrayObserver);
+            }
+
+          } else {
+            newObserverPropertyPath += &#x27;.&#x27; + updatableObserverPropertyPathArray[j];
+          }
+        }
+
+        set(observer, &#x27;propertyPath&#x27;, newObserverPropertyPath);
+      }
+    }
+  },
+
+  /**
+    Sort array with hierarchy properties observers.
+
+    @method _sort
+    @param {Array} hierarchyPropertiesObservers Array with hierarchy properties observers.
+    @private
+  */
+  _sort(hierarchyPropertiesObservers) {
+
+    let sortArray = hierarchyPropertiesObservers.sort(function (a, b) {
+      if (a.propertyPath &gt; b.propertyPath) {
+        return 1;
+      }
+
+      if (a.propertyPath &lt; b.propertyPath) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return sortArray;
+  },
+
+  /**
+    Binds given dynamic actions to every object in the specified hierarchy.
+
+    @method _bindDynamicActions
+    @param {Object|Object[]} propertyValue Value of some property in the specified hierarchy.
+    @param {String} propertyPath Path to property in the specified hierarchy.
+    @param {String} Name of property that leads to nested child properties in the specified hierarchy.
+    @param {DynamicAction[]} Specified dynamic actions.
+    @private
+  */
+  _bindDynamicActions(options) {
+    options = options || {};
+    let propertyValue = get(options, &#x27;propertyValue&#x27;);
+    let propertyPath = get(options, &#x27;propertyPath&#x27;);
+    let propertyIsObservable = get(options, &#x27;propertyIsObservable&#x27;);
+
+    let hierarchyPropertyName = this.get(&#x27;_hierarchyPropertyName&#x27;);
+    let dynamicActions = this.get(&#x27;_dynamicActions&#x27;);
+
+    if (propertyIsObservable !== false) {
+      // Add property observer to force helper recompute, if some new objects appear/remove in hierarchy.
+      this._addHierarchyPropertyObserver(&#x60;${propertyPath}&#x60;);
+    }
+
+    if (isNone(propertyValue)) {
+      return;
+    }
+
+    // If property is array, then attach dynamic actions for each object in array.
+    if (isArray(propertyValue)) {
+      for (let i = 0, len = propertyValue.length; i &lt; len; i++) {
+        this._bindDynamicActions({
+          propertyValue: propertyValue.objectAt(i),
+          propertyPath: &#x60;${propertyPath}.${i}&#x60;,
+
+          // Don&#x27;t observe properties containing inside arrays,
+          // it&#x27;s unnecessary, because whole array has special observer.
+          propertyIsObservable: false
+        });
+      }
+
+      return;
+    }
+
+    // Here &#x27;propertyValue&#x27; is strict an object or an instance.
+    assert(
+      &#x60;Wrong type of \&#x60;${propertyPath}\&#x60; property retrieved through \&#x60;get-with-dynamic-actions\&#x60; helper: &#x60; +
+      &#x60;actual type is \&#x60;${typeOf(propertyValue)}\&#x60;, but \&#x60;object\&#x60; or \&#x60;instance\&#x60; is expected.&#x60;,
+      typeOf(propertyValue) === &#x27;object&#x27; || typeOf(propertyValue) === &#x27;instance&#x27;);
+
+    // Prepare &amp; add dynamic actions for current &#x27;propertyValue&#x27; (which is always object or instance here).
+    if (isArray(dynamicActions)) {
+      let preparedDynamicActions = A();
+
+      for (let i = 0, len = dynamicActions.length; i &lt; len; i++) {
+        let dynamicAction = dynamicActions[i];
+
+        let argumentsRenderingContext = {};
+        argumentsRenderingContext[this.get(&#x27;_pathKeyword&#x27;)] = propertyPath;
+
+        // Helper shouldn&#x27;t mutate given data, so we need to create new dynamic action with modified properties.
+        let preparedDynamicAction = DynamicActionObject.create({
+          on: get(dynamicAction, &#x27;on&#x27;),
+          actionHandler: get(dynamicAction, &#x27;actionHandler&#x27;),
+          actionName: get(dynamicAction, &#x27;actionName&#x27;),
+
+          // Use &#x27;rootPropertyOwner&#x27; as action context (if context is not defined explicitly).
+          actionContext: get(dynamicAction, &#x27;actionContext&#x27;) || this.get(&#x27;_rootPropertyOwner&#x27;),
+
+          // Perform template substitutions inside action arguments.
+          actionArguments: getRenderedDynamicActionArguments(
+            get(dynamicAction, &#x27;actionArguments&#x27;),
+            argumentsRenderingContext)
+        });
+
+        preparedDynamicActions.pushObject(preparedDynamicAction);
+      }
+
+      set(propertyValue, &#x27;dynamicActions&#x27;, preparedDynamicActions);
+    }
+
+    // Recursively bind dynamic actions to nested child properties.
+    if (!isBlank(hierarchyPropertyName) &amp;&amp; typeOf(hierarchyPropertyName) === &#x27;string&#x27;) {
+      this._bindDynamicActions({
+        propertyValue: get(propertyValue, hierarchyPropertyName),
+        propertyPath: &#x60;${propertyPath}.${hierarchyPropertyName}&#x60;
+      });
+    }
+  },
+
+  /**
+    Overridden [Helper compute method](https://emberjs.com/api/ember/release/classes/Helper#method_compute).
+    Executes helper&#x27;s logic, returns helper&#x27;s value.
+
+    @method compute
+    @param {any[]} args [Helper arguments](https://guides.emberjs.com/v2.4.0/templates/writing-helpers/#toc_helper-arguments).
+    @param {Object} args.0 Property owner, object containing property which must be retrieved &amp; returned from helper
+    (after dynamic action binding).
+    Will be also used as action handlers context (if context wasn&#x27;t specified explicitly in dynamic action bindings).
+    @param {String} args.1 Name of those property which must be retrieved from owner &amp; returned from helper
+    (after dynamic actions binding).
+    Owner&#x27;s property (behind this name) must be an object or array of objects.
+    @param {Object} [hash] Object containing
+    [helper&#x27;s named arguments](https://guides.emberjs.com/v2.4.0/templates/writing-helpers/#toc_named-arguments).
+    @param {Object} [hash.hierarchyPropertyName] Name of nested property (inside retrieved one), through which
+    child object/objects (objects hierarchy) will be available.
+    @param {DynamicActionObject[]} [hash.dynamicActions] Dynamic actions, which will be binded
+    to object/objects retrieved from the owner (and to all nested child objects).
+    @return {Object|Object[]} Retrieved object/objects with binded dynamic actions (including nested child objects).
+  */
+  compute(args, hash) {
+    validateHelperProperties(args, hash);
+
+    let propertyOwner = args[0];
+    let propertyName = args[1];
+    let hierarchyPropertyName = get(hash, &#x27;hierarchyPropertyName&#x27;);
+    let pathKeyword = get(hash, &#x27;pathKeyword&#x27;) || &#x27;path&#x27;;
+    let dynamicActions = get(hash, &#x27;dynamicActions&#x27;);
+
+    this.set(&#x27;_rootPropertyOwner&#x27;, propertyOwner);
+    this.set(&#x27;_rootPropertyName&#x27;, propertyName);
+    this.set(&#x27;_hierarchyPropertyName&#x27;, hierarchyPropertyName);
+    this.set(&#x27;_pathKeyword&#x27;, pathKeyword);
+    this.set(&#x27;_dynamicActions&#x27;, dynamicActions);
+
+    let propertyValue = get(propertyOwner, propertyName);
+    this._bindDynamicActions({
+      propertyValue: propertyValue,
+      propertyPath: propertyName,
+    });
+
+    return propertyValue;
+  },
+
+  /**
+    Destroys helper.
+  */
+  willDestroy() {
+    this._super(...arguments);
+
+    this._removeHierarchyPropertiesObservers();
+    this.set(&#x27;_rootPropertyOwner&#x27;, null);
+    this.set(&#x27;_dynamicActions&#x27;, null);
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

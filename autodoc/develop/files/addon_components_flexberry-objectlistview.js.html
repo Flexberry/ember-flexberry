@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-objectlistview.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-objectlistview.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import $ from &#x27;jquery&#x27;;
+import { isBlank, isNone } from &#x27;@ember/utils&#x27;;
+import { oneWay } from &#x27;@ember/object/computed&#x27;;
+import { inject as service} from &#x27;@ember/service&#x27;;
+import EmberObject, { get, computed } from &#x27;@ember/object&#x27;;
+import Evented from &#x27;@ember/object/evented&#x27;;
+import { guidFor } from &#x27;@ember/object/internals&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { merge } from &#x27;@ember/polyfills&#x27;;
+import { A } from &#x27;@ember/array&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import { translationMacro as t } from &#x27;ember-i18n&#x27;;
+import { later } from &#x27;@ember/runloop&#x27;;
+import { getOwner } from &#x27;@ember/application&#x27;;
+import runAfter from &#x27;../utils/run-after&#x27;;
+
+/**
+  Component to view list of object.
+
+  @class FlexberryObjectlistviewComponent
+  @extends FlexberryBaseComponent
+*/
+export default FlexberryBaseComponent.extend({
+
+  classNames: [&#x27;flexberry-objectlistview&#x27;],
+
+  /**
+    Flag used to display filters.
+
+    @property _showFilters
+    @type Boolean
+    @default false
+    @private
+  */
+  _showFilters: oneWay(&#x27;filters&#x27;),
+
+  /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: service(),
+
+  /**
+    Store the action name at controller for loading records.
+
+    @property _loadRecords
+    @type String
+    @default &#x27;loadRecords&#x27;
+    @private
+  */
+  _loadRecords: &#x27;loadRecords&#x27;,
+
+  /**
+    Store the action name at controller for switch to the hierarchical mode.
+
+    @property _switchHierarchicalMode
+    @type String
+    @default &#x27;switchHierarchicalMode&#x27;
+    @private
+  */
+  _switchHierarchicalMode: &#x27;switchHierarchicalMode&#x27;,
+
+  /**
+    Store the action name at controller for switch to the collapse/expand mode.
+
+    @property _switchExpandMode
+    @type String
+    @default &#x27;switchExpandMode&#x27;
+    @private
+  */
+  _switchExpandMode: &#x27;switchExpandMode&#x27;,
+
+  /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default &#x27;saveHierarchicalAttribute&#x27;
+    @private
+  */
+  _saveHierarchicalAttribute: &#x27;saveHierarchicalAttribute&#x27;,
+
+  /**
+    Flag indicate when available the hierarchical mode.
+
+    @property _availableHierarchicalMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _availableHierarchicalMode: false,
+
+  /**
+    Store the attribute name set by &#x60;hierarchyByAttribute&#x60;.
+
+    @property _hierarchicalAttribute
+    @type String
+    @private
+  */
+  _hierarchicalAttribute: undefined,
+
+  /**
+    Set the attribute name to hierarchy build.
+    If specified, will attempt to build on this attribute hierarchy.
+
+    @property hierarchyByAttribute
+    @type String
+  */
+  hierarchyByAttribute: computed({
+    get() {
+      return this.get(&#x27;_hierarchicalAttribute&#x27;);
+    },
+    set(key, value) {
+      this.set(&#x27;_hierarchicalAttribute&#x27;, value);
+      this.sendAction(&#x27;_saveHierarchicalAttribute&#x27;, value, true, this.get(&#x27;componentName&#x27;));
+      return value;
+    },
+  }),
+
+  /**
+    Set the attribute name to hierarchy build.
+
+    @property hierarchyAttribute
+    @type String
+  */
+  hierarchyAttribute: undefined,
+
+  /**
+    The name of a property in the model that determines whether any record is the parent of other records.
+    If a property value with this name is defined (not &#x60;undefined&#x60;), the button to display child records will be shown immediately, and the records will be loaded only when the button is clicked.
+
+    @property isParentRecordPropertyName
+    @type String
+    @default &#x27;isParentRecord&#x27;
+  */
+  isParentRecordPropertyName: &#x27;isParentRecord&#x27;,
+
+  /**
+    Flag indicate when component is in the hierarchical mode.
+
+    @property inHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  inHierarchicalMode: computed(&#x27;currentController.inHierarchicalMode&#x27;, function() {
+    return this.get(&#x27;currentController.inHierarchicalMode&#x27;);
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property inExpandMode
+    @type Boolean
+    @default false
+  */
+  inExpandMode: computed(&#x27;currentController.inExpandMode&#x27;, function() {
+    return this.get(&#x27;currentController.inExpandMode&#x27;);
+  }),
+
+  /**
+    Flag indicate when component in hierarchycal mode has paging.
+
+    @property hierarchyPaging
+    @type Boolean
+    @default false
+  */
+  hierarchyPaging: computed(&#x27;currentController.hierarchyPaging&#x27;, function() {
+    return this.get(&#x27;currentController.hierarchyPaging&#x27;);
+  }),
+
+  /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  availableCollExpandMode: false,
+
+  /**
+    Indent in pixels to indicate hierarchy.
+
+    @property hierarchicalIndent
+    @type Number
+  */
+  hierarchicalIndent: undefined,
+
+  /**
+    The value of the {{#crossLink &quot;ModalDialog/useSidePageMode:property&quot;}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (&#x60;config/environment.js&#x60;).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
+    Using &#x60;ember-test-selectors&#x60;, creates &#x60;[data-test-component=flexberry-objectlistview]&#x60; selector for this component.
+
+    @property data-test-component
+    @type String
+    @default &#x27;flexberry-objectlistview&#x27;
+  */
+  &#x27;data-test-component&#x27;: &#x27;flexberry-objectlistview&#x27;,
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: undefined,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array&lt;Object&gt;
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: &#x27;ember-flexberry-dummy-suggestion-type&#x27;,
+          projectionName: &#x27;SuggestionTypeL&#x27;,
+          propName: &#x27;name&#x27;,
+          bindingPath: &#x27;type&#x27;
+        }]
+      })
+  */
+  ddlFilterSettings: null,
+
+  /**
+    Path to component&#x27;s settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default &#x27;APP.components.flexberryObjectlistview&#x27;
+  */
+  appConfigSettingsPath: &#x27;APP.components.flexberryObjectlistview&#x27;,
+
+  /**
+    Flag used for disable the hierarchical mode.
+
+    @property disableHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  disableHierarchicalMode: false,
+
+  /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
+
+  /**
+    The passed pages as Ember array.
+
+    @property _pages
+    @type Ember.Array
+  */
+  _pages: computed(&#x27;pages&#x27;, function () {
+    return A(this.get(&#x27;pages&#x27;));
+  }),
+
+  /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
+
+  /**
+    Number page for search.
+
+    @property searchPageValue
+    @type Number
+  */
+  searchPageValue: undefined,
+
+  /**
+    Flag used for disabling searchPageButton.
+
+    @property searchPageButtonReadonly
+    @type Boolean
+  */
+  searchPageButtonReadonly: computed(&#x27;searchPageValue&#x27;, &#x27;_pages.@each.isCurrent&#x27;, function() {
+    const searchPageValue = this.get(&#x27;searchPageValue&#x27;);
+    const searchPage = parseInt(searchPageValue, 10);
+    if (isNaN(searchPage)) {
+      return true;
+    }
+
+    const pages = this.get(&#x27;_pages&#x27;);
+    const firstPage = pages.get(&#x27;firstObject.number&#x27;);
+    const lastPage = pages.get(&#x27;lastObject.number&#x27;);
+    const currentPage = pages.findBy(&#x27;isCurrent&#x27;).number;
+
+    return searchPage &lt; firstPage || searchPage &gt; lastPage || searchPage === currentPage;
+  }),
+
+  /**
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default t(&#x27;components.flexberry-objectlistview.placeholder&#x27;)
+  */
+  placeholder: t(&#x27;components.flexberry-objectlistview.placeholder&#x27;),
+
+  /**
+    Flag: indicates whether allow to resize columns (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+
+    @property allowColumnResize
+    @type Boolean
+    @default true
+  */
+  allowColumnResize: true,
+
+  /**
+  Flag indicates whether to fix the table head (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+
+    @property fixedHeader
+    @type Boolean
+    @default false
+  */
+  fixedHeader: false,
+
+  /**
+    Route for edit form by click row.
+
+    @property editFormRoute
+    @type String
+  */
+  editFormRoute: undefined,
+
+  /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
+    Primary action for row click.
+
+    @property action
+    @type String
+    @default &#x27;objectListViewRowClick&#x27;
+  */
+  action: &#x27;objectListViewRowClick&#x27;,
+
+  /**
+    It indicates current component mode.
+     Available values:
+     &#x60;listform&#x60; - simple list form and after row selection it has to be opened corresponding edit form;
+     &#x60;lookupform&#x60; - component is placed on lookup form and after row selection current lookup form has to be closed.
+
+    @property componentMode
+    @type String
+    @default &#x27;listform&#x27;
+  */
+  componentMode: &#x27;listform&#x27;,
+
+  /**
+    The name of the component. Initially, it was used to store user settings for the component. Now used for different purposes.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
+    The name of the &#x60;flexberry-lookup&#x60; component for which the &#x60;flexberry-objectlistview&#x60; component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
+
+  /**
+    Default cell component that will be used to display values in columns cells.
+
+    @property {Object} cellComponent
+    @property {String} [cellComponent.componentName=undefined]
+    @property {String} [cellComponent.componentProperties=null]
+  */
+  cellComponent: undefined,
+
+  /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
+
+  /**
+    Flag indicates whether to show asterisk icon in first column of every changed row.
+
+    @property showAsteriskInRow
+    @type Boolean
+    @default false
+  */
+  showAsteriskInRow: false,
+
+  /**
+    Flag indicates whether to show checkbox in first column of every row.
+
+    @property showCheckBoxInRow
+    @type Boolean
+    @default false
+  */
+  showCheckBoxInRow: false,
+
+  /**
+    Flag indicates whether to show delete button in first column of every row.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteButtonInRow: false,
+
+  /**
+    Flag indicates whether to show edit button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
+
+  /**
+    Flag indicates whether to show prototype button in first column of every row.
+
+    @property showPrototypeButtonInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeButtonInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+
+    @property showDeleteMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showEditMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
+
+    @property showPrototypeMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeMenuItemInRow: false,
+
+  /**
+    Flag indicate when edit form must be open in modal window.
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+    editInModal: false,
+
+  /**
+    Additional menu items for dropdown menu in last column of every row.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/exapmle.js
+      ...
+      menuItems: [{
+        icon: &#x27;spy icon&#x27;,
+        title: &#x27;Recruit it&#x27;,
+        actionName: &#x27;recruit&#x27;,
+      }],
+      ...
+      actions: {
+        ...
+        recruit(record) {
+          record.set(&#x27;isSpy&#x27;, true);
+        },
+        ...
+      },
+      ...
+      &#x60;&#x60;&#x60;
+
+      Note: For every action in component you need to pass an additional parameter in the form of &#x60;actionName=&quot;actionName&quot;&#x60;.
+      &#x60;&#x60;&#x60;javascript
+      // app/templates/example.hbs
+      ...
+      {{flexberry-groupedit
+        ...
+        menuInRowAdditionalItems=menuItems
+        recruit=&quot;recruit&quot;
+        ...
+      }}
+      ...
+      &#x60;&#x60;&#x60;
+
+    For in-row menu following properties are used:
+    - {{#crossLink &quot;FlexberryGroupeditComponent/showEditMenuItemInRow:property&quot;}}{{/crossLink}},
+    - {{#crossLink &quot;FlexberryGroupeditComponent/showPrototypeMenuItemInRow:property&quot;}}{{/crossLink}},
+    - {{#crossLink &quot;FlexberryGroupeditComponent/showDeleteMenuItemInRow:property&quot;}}{{/crossLink}},
+    - {{#crossLink &quot;FlexberryGroupeditComponent/menuInRowAdditionalItems:property&quot;}}{{/crossLink}}.
+
+    @property menuInRowAdditionalItems
+    @type Array
+    @default null
+  */
+  menuInRowAdditionalItems: null,
+
+  /**
+    Flag indicates whether table are striped.
+
+    @property tableStriped
+    @type Boolean
+    @default true
+  */
+  tableStriped: true,
+
+  /**
+    Flag indicates whether table rows are clickable.
+
+    @property rowClickable
+    @type Boolean
+    @default true
+  */
+  rowClickable: true,
+
+  /**
+    Custom classes for table.
+
+    @property customTableClass
+    @type String
+    @default &#x27;&#x27;
+  */
+  customTableClass: &#x27;&#x27;,
+
+  /**
+    Flag indicates whether ordering by clicking on column headers is allowed.
+
+    @property orderable
+    @type Boolean
+    @default false
+  */
+  orderable: false,
+
+  /**
+    Dictionary with sorting data related to columns.
+
+    @property sorting
+    @type Object
+    @default null
+  */
+  sorting: null,
+
+  /**
+    Model projection which should be used to display given content.
+
+    @property modelProjection
+    @type Object
+    @default null
+  */
+  modelProjection: null,
+
+  /**
+    Content to be displayed (models collection).
+
+    @property content
+    @type DS.ManyArray
+    @default null
+  */
+  content: null,
+
+  /**
+    Model&#x27;s name. Used by toolbar.
+
+    @property modelName
+    @type String
+    @default null
+  */
+  modelName: null,
+
+  /**
+    Classes for buttons.
+
+    @property buttonClass
+    @type String
+  */
+  buttonClass: undefined,
+
+  /**
+    Flag indicates whether to show creation button at toolbar.
+
+    @property createNewButton
+    @type Boolean
+    @default false
+  */
+  createNewButton: false,
+
+  /**
+    Flag indicates whether to show refresh button at toolbar.
+
+    @property refreshButton
+    @type Boolean
+    @default false
+  */
+  refreshButton: false,
+
+  /**
+    Flag indicates whether to show delete button at toolbar.
+
+    @property deleteButton
+    @type Boolean
+    @default false
+  */
+  deleteButton: false,
+
+  /**
+    Flag indicates whether to show colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
+  colsConfigButton: true,
+
+  /**
+    Flag indicates whether to show exportExcelButton button at toolbar.
+
+    @property exportExcelButton
+    @type Boolean
+    @default false
+  */
+  exportExcelButton: false,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
+
+  /**
+    Flag to use filters in OLV component.
+
+    @property enableFilters
+    @type Boolean
+    @default false
+  */
+  enableFilters: false,
+
+  /**
+    The function (action) for setting the available filtering conditions, will be called when the component is initialized.
+
+    The function must return a set of valid values for the &#x60;flexberry-dropdown&#x60; component and is called with two parameters:
+    - &#x60;type&#x60; - string with the attribute type.
+    - &#x60;attribute&#x60; - object with the attribute description.
+
+    @property conditionsByType
+    @type Function
+  */
+  conditionsByType: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized.
+
+    The function must return an object with the following properties:
+    - &#x60;name&#x60; - string with the component name.
+    - &#x60;properties&#x60; object with the properties of the component, passed to the component via &#x60;dynamicProperties&#x60;.
+
+    The function is called with three parameters:
+    - &#x60;type&#x60; - string with the attribute type.
+    - &#x60;relation&#x60; - indicates that the attribute is a relation.
+    - &#x60;attribute&#x60; - object with the attribute description.
+
+    @property componentForFilter
+    @type Function
+  */
+  componentForFilter: undefined,
+
+  /**
+    The function (action) to customize the component used in the filters, will be called when the component is initialized and each time the condition is changed.
+
+    The function must return an object with the following properties:
+    - &#x60;name&#x60; - string with the component name.
+    - &#x60;properties&#x60; object with the properties of the component, passed to the component via &#x60;dynamicProperties&#x60;.
+
+    The function is called with three parameters:
+    - &#x60;newCondition&#x60; - string with the new condition.
+    - &#x60;oldCondition&#x60; - string with the old condition.
+    - &#x60;type&#x60; - string with the attribute type.
+
+    @property componentForFilterByCondition
+    @type Function
+  */
+  componentForFilterByCondition: undefined,
+
+  /**
+    Flag indicates whether to show filter button at toolbar.
+
+    @property filterButton
+    @type Boolean
+    @default false
+  */
+  filterButton: false,
+
+  /**
+    Used to specify &#x27;filter by any match&#x27; field value.
+
+    @property filterText
+    @type String
+    @default null
+  */
+  filterText: null,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
+
+  /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
+
+  /**
+    Flag: view button voice typing.
+    @property isUseVoiceTyping
+    @type Boolean
+  */
+  isUseVoiceTyping: undefined,
+
+  /**
+    Array of pages to show.
+
+    @property pages
+    @type DS.ManyArray
+    @default null
+  */
+  pages: null,
+
+  /**
+    Current number of records to show per page.
+
+    @property perPageValue
+    @type Number
+    @default null
+  */
+  perPageValue: null,
+
+  /**
+    Array of numbers of records to show on one page.
+
+    @property perPageValues
+    @type DS.ManyArray
+    @default null
+  */
+  perPageValues: null,
+
+  /**
+    Total count records.
+
+    @property recordsTotalCount
+    @type Number
+    @default null
+  */
+  recordsTotalCount: null,
+
+  /**
+    Minimum column width, if width isn&#x27;t defined in userSettings.
+
+    @property minAutoColumnWidth
+    @type Number
+    @default 150
+  */
+  minAutoColumnWidth: 150,
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default false
+  */
+  columnsWidthAutoresize: false,
+
+  /**
+    It is used to set how the resize method works.
+    Values: &#x27;fit&#x27;, &#x27;flex&#x27;, &#x27;overflow&#x27;
+
+    @property columnsResizeMode
+    @type String
+    @default &#x27;overflow&#x27;
+  */
+  columnsResizeMode: &#x27;overflow&#x27;,
+
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default A([&#x27;flexberry-dropdown&#x27;, &#x27;flexberry-lookup&#x27;])
+  */
+  overflowedComponents: A([&#x27;flexberry-dropdown&#x27;, &#x27;flexberry-lookup&#x27;]),
+
+  /**
+    Current interval of records.
+
+    @property currentIntervalRecords
+    @type String
+    @readOnly
+  */
+  currentIntervalRecords: computed(&#x27;pages&#x27;, &#x27;perPageValue&#x27;, function() {
+    try {
+      let pages = this.get(&#x27;pages&#x27;);
+      let perPageValue = this.get(&#x27;perPageValue&#x27;);
+      let recordsTotalCount = this.get(&#x27;recordsTotalCount&#x27;);
+      if (isNone(recordsTotalCount) &amp;&amp; this.get(&#x27;showShowingEntries&#x27;)) {
+        throw new Error(&#x27;Property \&#x27;recordsTotalCount\&#x27; is undefined.&#x27;);
+      }
+
+      let currentStartRecords = null;
+      let currentEndRecords = null;
+
+      pages.forEach((page) =&gt; {
+        if (page.isCurrent) {
+          currentStartRecords = page.number * perPageValue - perPageValue + 1;
+          currentEndRecords = page.number * perPageValue;
+        }
+      });
+
+      if (currentEndRecords &gt; recordsTotalCount) {
+        currentEndRecords = recordsTotalCount;
+      }
+
+      return currentStartRecords + &#x27;-&#x27; + currentEndRecords;
+    }
+    catch (error) {
+      return;
+    }
+  }),
+
+  /**
+    Flag indicates whether to show showingEntries.
+
+    @property showShowingEntries
+    @type Boolean
+    @default true
+  */
+  showShowingEntries: true,
+
+  /**
+    Function to determine if current page has previous page.
+
+    @property hasPreviousPage
+    @type Function
+    @default null
+  */
+  hasPreviousPage: null,
+
+  /**
+    Function to determine if current page has next page.
+
+    @property hasNextPage
+    @type Function
+    @default null
+  */
+  hasNextPage: null,
+
+  /**
+    Current selected record of list.
+
+    @property selectedRecord
+    @type DS.Model
+  */
+  selectedRecord: undefined,
+
+  /**
+    Set of properties to set for commponent (when it is used on lookup window).
+
+    @property customProperties
+    @type Object
+  */
+  customProperties: undefined,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoading: false,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoadingProgress: false,
+
+  /**
+    Interface for communication between object-list-view and flexberry-objectlistview.
+
+    @property eventsBus
+    @type Evented
+  */
+  eventsBus: EmberObject.extend(Evented, {}).create(),
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: service(&#x27;objectlistview-events&#x27;),
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: service(&#x27;store&#x27;),
+
+  /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
+
+  /**
+    Array of custom user buttons.
+
+    @example
+      &#x60;&#x60;&#x60;
+      {
+        buttonName: &#x27;...&#x27;, // Button displayed name.
+        buttonAction: &#x27;...&#x27;, // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: &#x27;...&#x27;, // Css classes for button.
+        buttonTitle: &#x27;...&#x27;, // Button title.
+        iconClasses: &#x27;&#x27;, // Css classes for icon. Remember to add the &#x60;icon&#x60; class here, and for the &#x60;button&#x60; tag, through the &#x60;buttonClasses&#x60; property, if necessary.
+        disabled: true, // The state of the button is disabled if &#x60;true&#x60; or enabled if &#x60;false&#x60;.
+      }
+      &#x60;&#x60;&#x60;
+
+    @example
+      Example of how to add user buttons:
+      1) it has to be defined computed property at corresponding controller (name of property is not fixed).
+      &#x60;&#x60;&#x60;
+      import Ember from &#x27;ember&#x27;;
+      import ListFormController from &#x27;ember-flexberry/controllers/list-form&#x27;;
+
+      export default ListFormController.extend({
+        ...
+        customButtonsMethod: computed(&#x27;i18n.locale&#x27;, function() {
+          let i18n = this.get(&#x27;i18n&#x27;);
+          return [{
+            buttonName: i18n.t(&#x27;forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name&#x27;),
+            buttonAction: &#x27;userButtonActionTest&#x27;,
+            buttonClasses: &#x27;test-click-button&#x27;
+          }];
+        })
+      });
+      &#x60;&#x60;&#x60;
+
+      2) it has to be defined set as &#x27;buttonAction&#x27; methods.
+      &#x60;&#x60;&#x60;
+      import Ember from &#x27;ember&#x27;;
+      import ListFormController from &#x27;ember-flexberry/controllers/list-form&#x27;;
+
+      export default ListFormController.extend({
+        ...
+        clickCounter: 1,
+        messageForUser: undefined,
+
+        actions: {
+          userButtonActionTest: function() {
+            let i18n = this.get(&#x27;i18n&#x27;);
+            let clickCounter = this.get(&#x27;clickCounter&#x27;);
+            this.set(&#x27;clickCounter&#x27;, clickCounter + 1);
+            this.set(&#x27;messageForUser&#x27;,
+              i18n.t(&#x27;forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-message&#x27;).string +
+              &#x27; &#x27; + clickCounter);
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+
+      3) defined methods and computed property have to be registered at component.
+      &#x60;&#x60;&#x60;
+      {{flexberry-objectlistview
+        ...
+        customButtons=customButtonsMethod
+        userButtonActionTest=(action &quot;userButtonActionTest&quot;)
+      }}
+      &#x60;&#x60;&#x60;
+
+    @property customButtons
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
+    Custom components in the toolbar.
+
+    @example
+      &#x60;&#x60;&#x60;
+      [
+        {
+          name: &#x27;...&#x27;, // Component name.
+          properties: {...} // Component properties.
+        },
+        ...
+      ]
+      &#x60;&#x60;&#x60;
+
+    @example
+      Example of how to add custom components:
+      1) it has to be defined computed property at corresponding controller.
+      &#x60;&#x60;&#x60;
+      import Ember from &#x27;ember&#x27;;
+      import ListFormController from &#x27;ember-flexberry/controllers/list-form&#x27;;
+
+      export default ListFormController.extend({
+        ...
+        customToolbarComponents: computed(&#x27;dropdownValue&#x27;, function() {
+          return [{
+            name: &#x27;flexberry-dropdown&#x27;,
+            properties: {
+              items: this.get(&#x27;dropdownItems&#x27;),
+              value: this.get(&#x27;dropdownValue&#x27;),
+              onChange: this.get(&#x27;onChange&#x27;).bind(this)
+            }
+          }];
+        })
+      });
+      &#x60;&#x60;&#x60;
+
+      2) in the controller, you must specify the &#x60;onChange&#x60; method.
+      &#x60;&#x60;&#x60;
+      import Ember from &#x27;ember&#x27;;
+      import ListFormController from &#x27;ember-flexberry/controllers/list-form&#x27;;
+
+      export default ListFormController.extend({
+        ...
+        dropdownValue: null,
+        dropdownItems: null,
+
+        onChange: function(value) {
+          this.set(&#x27;dropdownValue&#x27;, value);
+        },
+      });
+      &#x60;&#x60;&#x60;
+
+      3) the &#x60;customToolbarComponents&#x60; property must be specified in the list template.
+      &#x60;&#x60;&#x60;
+      {{flexberry-objectlistview
+        ...
+        customToolbarComponents=customToolbarComponents
+      }}
+      &#x60;&#x60;&#x60;
+
+    @property customToolbarComponents
+    @type Array&lt;Object&gt;
+  */
+  customToolbarComponents: undefined,
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      &#x60;&#x60;&#x60;
+      {
+        buttonName: &#x27;...&#x27;, // Button displayed name.
+        buttonAction: &#x27;...&#x27;, // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: &#x27;...&#x27;, // Css classes for button.
+        buttonIcon: &#x27;...&#x27;, // Button icon
+        buttonTitle: &#x27;...&#x27; // Button title.
+      }
+      &#x60;&#x60;&#x60;
+
+    @property customButtonsInRow
+    @type Array
+  */
+  customButtonsInRow: undefined,
+
+  actions: {
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.sortByColumn
+      @public
+      @param {Object} column Column to sort by
+    */
+    /* eslint-disable no-unused-vars */
+    sortByColumn(column) {
+      throw new Error(&#x27;No handler for sortByColumn action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... sortByColumn=(action &quot;sortByColumn&quot;)}}.&#x27;);
+    },
+    /* eslint-enable no-unused-vars */
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.addColumnToSorting
+      @public
+      @param {Object} column Column to add sorting by
+    */
+    /* eslint-disable no-unused-vars */
+    addColumnToSorting(column) {
+      throw new Error(&#x27;No handler for addColumnToSorting action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... addColumnToSorting=(action &quot;addColumnToSorting&quot;)}}.&#x27;);
+    },
+    /* eslint-enable no-unused-vars */
+
+    /**
+      Handles action from row click (action is handled at route so it can&#x27;t be closure action now).
+
+      @method actions.objectListViewRowClick
+      @public
+      @param {Object} record Clicked record.
+      @param {Object} options Different parameters to handle action.
+    */
+    objectListViewRowClick(record, options) {
+      if ((this.get(&#x27;rowClickable&#x27;) || options.rowEdit) &amp;&amp; !this.get(&#x27;readonly&#x27;)) {
+        let $clickedRow = this._getRowByKey(record.key || guidFor(record));
+        runAfter(this, () =&gt; { return $clickedRow.hasClass(&#x27;active&#x27;); }, () =&gt; {
+          if (this.get(&#x27;componentMode&#x27;) === &#x27;lookupform&#x27;) {
+            /* eslint-disable ember/closure-actions */
+            this.sendAction(&#x27;action&#x27;, record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+            /* eslint-enable ember/closure-actions */
+          } else {
+            let editFormRoute = this.get(&#x27;editFormRoute&#x27;);
+            let editInModal = this.get(&#x27;editInModal&#x27;);
+            let useSidePageMode = this.get(&#x27;useSidePageMode&#x27;);
+            assert(&#x27;Edit form route must be defined for flexberry-objectlistview&#x27;, editFormRoute);
+            if (isNone(options)) {
+              options = {};
+              options.editFormRoute = editFormRoute;
+            } else {
+              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
+            }
+
+            /* eslint-disable ember/closure-actions */
+            this.sendAction(&#x27;action&#x27;, record, options); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+            /* eslint-enable ember/closure-actions */
+          }
+        });
+
+        this._setActiveRow($clickedRow);
+      }
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.previousPage
+      @public
+      @param {Action} action Action previous page.
+    */
+    previousPage(action) {
+      if (!action) {
+        throw new Error(&#x27;No handler for previousPage action set for flexberry-objectlistview. &#x27; +
+                        &#x27;Set handler like {{flexberry-objectlistview ... previousPage=(action &quot;previousPage&quot;)}}.&#x27;);
+      }
+
+      if (!this.get(&#x27;skipSelectedRecords&#x27;)) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won&#x27;t be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
+
+      action(this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.nextPage
+      @public
+      @param {Action} action Action next page.
+    */
+    nextPage(action) {
+      if (!action) {
+        throw new Error(&#x27;No handler for nextPage action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... nextPage=(action &quot;nextPage&quot;)}}.&#x27;);
+      }
+
+      if (!this.get(&#x27;skipSelectedRecords&#x27;)) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won&#x27;t be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
+
+      action(this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.gotoPage
+      @public
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
+    */
+    gotoPage(action, pageNumber) {
+      if (!action) {
+        throw new Error(&#x27;No handler for gotoPage action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... gotoPage=(action &quot;gotoPage&quot;)}}.&#x27;);
+      }
+
+      if (!this.get(&#x27;skipSelectedRecords&#x27;)) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won&#x27;t be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
+
+      action(pageNumber, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Handler to get user button&#x27;s actions and send action to corresponding controllers&#x27;s handler.
+
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      if (!actionName) {
+        throw new Error(&#x27;No handler for custom button of flexberry-objectlistview toolbar was found.&#x27;);
+      }
+
+      this.get(actionName)();
+    },
+
+    /**
+      Handler to get user button&#x27;s in rows actions and send action to corresponding controllers&#x27;s handler.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      if (!actionName) {
+        throw new Error(&#x27;No handler for custom button of flexberry-objectlistview row was found.&#x27;);
+      }
+
+      this.sendAction(actionName, model);
+    },
+
+    /**
+      This action is called when user click on menu in row.
+
+      @method actions.createNewByPrototype
+      @param {String|Number} prototypeId The prototype record ID in row.
+      @public
+    */
+    createNewByPrototype(prototypeId) {
+      assert(&#x27;The prototype record ID is not defined&#x27;, prototypeId);
+      let editFormRoute = this.get(&#x27;editFormRoute&#x27;);
+      assert(&#x27;Property editFormRoute is not defined in controller&#x27;, editFormRoute);
+      let modelController = this.get(&#x27;currentController&#x27;);
+      this.get(&#x27;objectlistviewEventsService&#x27;).setLoadingState(&#x27;loading&#x27;);
+      let appController = getOwner(this).lookup(&#x27;controller:application&#x27;);
+      let thisRouteName = appController.get(&#x27;currentRouteName&#x27;);
+      let thisRecordId = modelController.get(&#x27;model.id&#x27;);
+      let transitionOptions = {
+        queryParams: {
+          prototypeId: prototypeId,
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
+        }
+      };
+
+      later((function() {
+        modelController.transitionToRoute(editFormRoute + &#x27;.new&#x27;, transitionOptions);
+      }), 50);
+    },
+
+    /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty(&#x27;_showFilters&#x27;);
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink &quot;LimitedController&quot;}}{{/crossLink}}.
+
+      @method actions.applyFilters
+      @param {Array} filters Filters.
+    */
+    /* eslint-disable no-unused-vars */
+    applyFilters(filters) {
+      throw new Error(&#x27;No handler for applyFilters action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... applyFilters=(action &quot;applyFilters&quot;)}}.&#x27;);
+    },
+    /* eslint-enable no-unused-vars */
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink &quot;LimitedController&quot;}}{{/crossLink}}.
+
+      @method actions.resetFilters
+      @param {Action} action Action reset filters.
+    */
+    resetFilters(action) {
+      if (!action) {
+        throw new Error(&#x27;No handler for resetFilters action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... resetFilters=(action &quot;resetFilters&quot;)}}.&#x27;);
+      }
+
+      action(this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.filterByAnyMatch
+      @param {String} The pattern to filter objects
+    */
+    /* eslint-disable no-unused-vars */
+    filterByAnyMatch(pattern) {
+      throw new Error(&#x27;No handler for filterByAnyMatch action set for flexberry-objectlistview. &#x27; +
+                      &#x27;Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action &quot;filterByAnyMatch&quot;)}}.&#x27;);
+    },
+    /* eslint-enable no-unused-vars */
+
+    /**
+      Set availability hierarchical mode, and save the attribute name in controller.
+
+      @method actions.availableHierarchicalMode
+      @param {String} hierarchicalAttribute Attribute name to hierarchy building.
+    */
+    availableHierarchicalMode(hierarchicalAttribute) {
+      this.toggleProperty(&#x27;_availableHierarchicalMode&#x27;);
+      this.get(&#x27;currentController&#x27;).send(&#x27;saveHierarchicalAttribute&#x27;, hierarchicalAttribute, false, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Called controller action to switch in hierarchical mode.
+
+      @method actions.switchHierarchicalMode
+    */
+    switchHierarchicalMode() {
+      this.get(&#x27;currentController&#x27;).send(&#x27;switchHierarchicalMode&#x27;, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Called controller action to switch in collapse/expand mode.
+
+      @method actions.switchExpandMode
+    */
+    switchExpandMode() {
+      this.sendAction(&#x27;_switchExpandMode&#x27;, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Redirects the call to controller.
+
+      @method actions.loadRecords
+      @param {String} Primary key.
+      @param {ObjectListViewRowComponent} Instance of {{#crossLink &quot;ObjectListViewRowComponent&quot;}}{{/crossLink}}.
+      @param {String} Property name.
+      @param {Boolean} Flag indicates that this is the first download of data.
+    */
+    loadRecords(id, target, property, firstRunMode) {
+      this.get(&#x27;currentController&#x27;).send(&#x27;loadRecords&#x27;, id, target, property, firstRunMode, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Called when click on perPage.
+
+      @method actions.perPageClick
+      @param {String} perPageValue Selected perPage value.
+    */
+    perPageClick(perPageValue) {
+      var userSettings = this.get(&#x27;userSettingsService&#x27;);
+      if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
+        userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
+      }
+    },
+
+    /**
+      Send action with &#x60;actionName&#x60; into controller.
+
+      @method actions.sendMenuItemAction
+      @param {String} actionName
+      @param {DS.Model} record
+    */
+    sendMenuItemAction(actionName, record) {
+      this.get(actionName)(record);
+    },
+
+    /**
+      Action search and open page.
+
+      @method actions.searchPageButtonAction
+      @param {Function} action The &#x60;goToPage&#x60; action from controller.
+    */
+    searchPageButtonAction(action) {
+      let searchPageValue = this.get(&#x27;searchPageValue&#x27;);
+      let searchPageNumber = parseInt(searchPageValue, 10);
+
+      if (searchPageNumber) {
+        this.send(&#x27;gotoPage&#x27;, action, searchPageNumber);
+        this.set(&#x27;searchPageValue&#x27;, undefined);
+      }
+    }
+  },
+
+  /**
+    Hook that can be used to confirm delete row.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) =&gt; {
+            this.showConfirmDialg({
+              title: &#x60;Delete an object with the ID &#x27;${record.get(&#x27;id&#x27;)}&#x27;?&#x60;,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
+        }
+        ...
+      }
+      ...
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/example.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action &quot;confirmDeleteRow&quot;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+    @method confirmDeleteRow
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If &#x60;true&#x60;, then delete row, if &#x60;Promise&#x60;, then delete row after successful resolve, else cancel.
+  */
+  confirmDeleteRow: undefined,
+
+  /**
+    Hook that can be used to confirm delete rows.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRows() {
+          return new Promise((resolve, reject) =&gt; {
+            this.showConfirmDialg({
+              title: &#x27;Delete all selected records?&#x27;,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
+        }
+        ...
+      }
+      ...
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/example.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action &quot;confirmDeleteRows&quot;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+    @method confirmDeleteRows
+    @return {Boolean|Promise} If &#x60;true&#x60;, then delete row, if &#x60;Promise&#x60;, then delete row after successful resolve, else cancel.
+  */
+  confirmDeleteRows: undefined,
+
+  /**
+    Hook that executes before deleting the record.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        beforeDeleteRecord=(action &#x27;beforeDeleteRecord&#x27;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/employees.js
+      import ListFormController from &#x27;./list-form&#x27;;
+
+      export default ListFormController.extend({
+        actions: {
+          beforeDeleteRecord(record, data) {
+            if (record.get(&#x27;myProperty&#x27;)) {
+              data.cancel = true;
+            }
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+
+    @method beforeDeleteRecord
+    @param {DS.Model} record Deleting record.
+    @param {Object} data Metadata.
+    @param {Boolean} [data.cancel=false] Flag for canceling deletion.
+    @param {Boolean} [data.immediately] See {{#crossLink &quot;ObjectListView/immediateDelete:property&quot;}}{{/crossLink}} property for details.
+  */
+  beforeDeleteRecord: undefined,
+
+  /**
+    Hook that executes before deleting all records on all pages.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        beforeDeleteAllRecords=(action &#x27;beforeDeleteAllRecords&#x27;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/employees.js
+      import ListFormController from &#x27;./list-form&#x27;;
+
+      export default ListFormController.extend({
+        actions: {
+          beforeDeleteAllRecords(modelName, data) {
+            if (modelName === &#x27;application-user&#x27;) {
+              data.cancel = true;
+            }
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+
+    @method beforeDeleteAllRecords
+    @param {String} modelName Model name for deleting records.
+    @param {Object} data Metadata.
+    @param {Boolean} [data.cancel=false] Flag for canceling deletion.
+    @param {Object} [data.filterQuery] Filter applying before delete all records on all pages.
+  */
+  beforeDeleteAllRecords: undefined,
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
+   */
+  init() {
+    this._super(...arguments);
+
+    let customProperties = this.get(&#x27;customProperties&#x27;);
+    if (this.get(&#x27;componentMode&#x27;) === &#x27;lookupform&#x27; &amp;&amp; customProperties &amp;&amp; typeof customProperties === &#x27;object&#x27;) {
+      // For lookup mode we allow to set properties.
+      this.setProperties(customProperties);
+    }
+
+    if (!this.get(&#x27;disableHierarchicalMode&#x27;)) {
+      let modelName = this.get(&#x27;modelName&#x27;);
+      if (modelName) {
+        let model = this.get(&#x27;store&#x27;).modelFor(modelName);
+        let relationships = get(model, &#x27;relationships&#x27;);
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          this.send(&#x27;availableHierarchicalMode&#x27;, hierarchicalrelationships[0].name);
+        } else if (hierarchicalrelationships.length &gt; 1) {
+          let hierarchyAttribute = this.get(&#x27;hierarchyAttribute&#x27;);
+          if (!isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = A(hierarchicalrelationships).findBy(&#x27;name&#x27;, hierarchyAttribute);
+            if (!isNone(hierarchyAttributeExist)) {
+              this.send(&#x27;availableHierarchicalMode&#x27;, hierarchyAttribute);
+            } else {
+              throw new Error(&#x60;Property &#x27;${hierarchyAttribute}&#x27; does not exist in the model.&#x60;);
+            }
+          }
+        }
+      }
+    }
+
+    let eventsBus = this.get(&#x27;eventsBus&#x27;);
+    if (eventsBus) {
+      eventsBus.on(&#x27;setMenuWidth&#x27;, (componentName, tableWidth, containerWidth) =&gt; {
+        if (componentName === this.get(&#x27;componentName&#x27;) &amp;&amp; (!this.get(&#x27;inHierarchicalMode&#x27;) || this.get(&#x27;hierarchyPaging&#x27;))) {
+          this._setMenuWidth(tableWidth, containerWidth);
+        }
+      });
+    }
+
+    this.set(&#x27;cellComponent&#x27;, {
+      componentName: undefined,
+      componentProperties: null,
+    });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: &#x27;useSidePageMode&#x27;, defaultValue: false });
+    this.initProperty({ propertyName: &#x27;showFiltersInModal&#x27;, defaultValue: false });
+  },
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
+
+    @method didRender
+  */
+  didRender() {
+    this._super(...arguments);
+    this.get(&#x27;formLoadTimeTracker&#x27;).set(&#x27;endRenderTime&#x27;, performance.now());
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed.
+    For more information see [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    let eventsBus = this.get(&#x27;eventsBus&#x27;);
+    if (eventsBus) {
+      eventsBus.off(&#x27;setMenuWidth&#x27;);
+    }
+  },
+
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
+  _getRowByKey(key) {
+    let row = null;
+    this.$(&#x27;tbody tr&#x27;).each(function() {
+      let currentKey = $(this).find(&#x27;td:eq(0) div:eq(0)&#x27;).text().trim();
+      if (currentKey === key) {
+        row = $(this);
+        return;
+      }
+    });
+    return row;
+  },
+
+  /**
+    Set the active row.
+
+    @method _setActiveRow
+    @private
+
+    @param {Object} row Table row, which must become active.
+  */
+  _setActiveRow($row) {
+    // Deactivate previously activated row.
+    this.$(&#x27;tbody tr.active&#x27;).removeClass(&#x27;active&#x27;);
+
+    // Activate specified row.
+    if ($row &amp;&amp; $row.addClass) {
+      $row.addClass(&#x27;active&#x27;);
+    }
+  },
+
+  _setMenuWidth(tableWidth, containerWidth) {
+    let $table = this.$(&#x27;table.object-list-view&#x27;);
+    if (isBlank(tableWidth)) {
+      tableWidth = $table.width();
+    }
+
+    if (isBlank(containerWidth)) {
+      containerWidth = $table.parent().width() - 5;
+    }
+
+    // Using scrollWidth, because Internet Explorer don&#x27;t receive correct value for this element with .width().
+    let pages = this.$(&#x27;.ui.secondary.menu .ui.basic.buttons&#x27;)[0];
+    if (tableWidth &lt; pages.scrollWidth) {
+      tableWidth = pages.scrollWidth + 75;
+    }
+
+    this.$(&#x27;.ui.secondary.menu&#x27;).css({ &#x27;width&#x27;: (this.get(&#x27;columnsWidthAutoresize&#x27;) ?
+      containerWidth : containerWidth &lt; tableWidth ? containerWidth : tableWidth) + &#x27;px&#x27; });
+  },
+
+  /**
+    Clear selected records on all pages.
+    This method should be removed when we will ask user about actions with selected records.
+
+    @method _clearSelectedRecords
+    @private
+  */
+  _clearSelectedRecords() {
+    let componentName = this.get(&#x27;componentName&#x27;);
+    this.get(&#x27;objectlistviewEventsService&#x27;).clearSelectedRecords(componentName);
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

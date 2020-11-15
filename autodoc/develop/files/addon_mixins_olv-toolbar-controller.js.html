@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/mixins/olv-toolbar-controller.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/mixins/olv-toolbar-controller.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+import $ from &#x27;jquery&#x27;;
+import Mixin from &#x27;@ember/object/mixin&#x27;;
+import { inject as service } from &#x27;@ember/service&#x27;;
+import { inject as controller } from &#x27;@ember/controller&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { typeOf, isNone } from &#x27;@ember/utils&#x27;;
+import { get, set } from &#x27;@ember/object&#x27;;
+import { isArray, A } from &#x27;@ember/array&#x27;;
+import { capitalize } from &#x27;@ember/string&#x27;;
+import { htmlSafe } from &#x27;@ember/template&#x27;;
+import { getValueFromLocales } from &#x27;ember-flexberry-data/utils/model-functions&#x27;;
+import getAttrLocaleKey from &#x27;../utils/get-attr-locale-key&#x27;;
+
+export default Mixin.create({
+  _userSettingsService: service(&#x27;user-settings&#x27;),
+
+  /**
+    Service that triggers {{#crossLink &quot;FlexberryGroupeditComponent&quot;}}{{/crossLink}} events.
+
+    @property _groupEditEventsService
+    @type Service
+    @private
+  */
+    _groupEditEventsService: service(&#x27;objectlistview-events&#x27;),
+
+  /**
+    Controller to show advlimit config modal window.
+
+    @property advLimitController
+    @type &lt;a href=&quot;http://emberjs.com/api/classes/Ember.InjectedProperty.html&quot;&gt;Ember.InjectedProperty&lt;/a&gt;
+    @default Ember.inject.controller(&#x27;advlimit-dialog&#x27;)
+  */
+  advLimitController: controller(&#x27;advlimit-dialog&#x27;),
+
+  /**
+    Controller to show filters modal window.
+
+    @property filtersDialogController
+    @type &lt;a href=&quot;http://emberjs.com/api/classes/Ember.InjectedProperty.html&quot;&gt;Ember.InjectedProperty&lt;/a&gt;
+    @default Ember.inject.controller(&#x27;filters-dialog&#x27;)
+  */
+  filtersDialogController: controller(&#x27;filters-dialog&#x27;),
+
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type advLimit
+  */
+  advLimit: service(),
+
+  /**
+    Default cell component that will be used to display values in columns cells.
+
+    @property {Object} cellComponent
+    @property {String} [cellComponent.componentName=undefined]
+    @property {String} [cellComponent.componentProperties=null]
+  */
+  cellComponent: {
+    componentName: undefined,
+    componentProperties: null,
+  },
+
+  /**
+    Columns widtghs for current component.
+
+  @property {Object} currentColumnsWidths
+*/
+  currentColumnsWidths: undefined,
+
+  actions: {
+    /**
+      Show columns config dialog.
+
+      @method actions.showConfigDialog
+      @param componentName Component name.
+      @param settingName Setting name.
+      @param useSidePageMode Indicates when use side page mode.
+      @param isExportExcel Indicates if it&#x27;s export excel dialog.
+      @param immediateExport Indicate if auto export is needed.
+    */
+    showConfigDialog(componentName, settingName, useSidePageMode=false, isExportExcel = false, immediateExport = false) {
+      this._showConfigDialog(componentName, settingName, useSidePageMode, this, isExportExcel, immediateExport);
+    },
+
+    /**
+      Show columns config dialog for groupedit.
+
+      @method actions.showSortGeDialog
+      @param componentName Component name.
+      @param useSidePageMode Indicates when use side page mode.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      showSortGeDialog(componentName, useSidePageMode=true, modelProjection, geSorting) {
+        this._showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting);
+      },
+
+      /**
+      Show columns config dialog.
+
+      @method actions.getGeneratedColumns
+      @param componentName Component name.
+      @param settingName Setting name.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      getGeneratedColumns(componentName, settingName, modelProjection, geSorting) {
+        let projectionAttributes = modelProjection.attributes;
+        let fixedColumns = this.get(&#x60;defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths&#x60;) || A();
+        fixedColumns = fixedColumns.filter(({ fixed }) =&gt; fixed).map(obj =&gt; { return obj.propName; });
+        let colsOrder = this.get(&#x27;_userSettingsService&#x27;).getCurrentColsOrder(componentName, settingName);
+        let sorting = geSorting;
+        let columns = this._getGeneratedColumns(projectionAttributes, this, fixedColumns, colsOrder, sorting);
+        this.set(&#x27;colDescs&#x27;, columns);
+
+        this.get(&#x27;_groupEditEventsService&#x27;).setDefaultGeSortTrigger(this.get(&#x27;colDescs&#x27;));
+        return columns;
+      },
+
+    /**
+      Show filters dialog.
+
+      @method actions.showFiltersDialog
+      @param componentName Component name.
+      @param filterColumns columns with available filters.
+    */
+    showFiltersDialog(componentName, filterColumns, useSidePageMode) {
+      let controller = this.get(&#x27;filtersDialogController&#x27;);
+      controller.set(&#x27;mainControler&#x27;, this);
+
+      let loadingParams = {
+        view: &#x27;application&#x27;,
+        outlet: &#x27;modal&#x27;
+      };
+      this.send(&#x27;showModalDialog&#x27;, &#x27;filters-dialog&#x27;);
+
+      loadingParams = {
+        view: &#x27;filters-dialog&#x27;,
+        outlet: &#x27;modal-content&#x27;
+      };
+      this.send(&#x27;showModalDialog&#x27;, &#x27;filters-dialog-content&#x27;,
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName, useSidePageMode: useSidePageMode } }, loadingParams);
+    },
+
+    /**
+      Show adv limit config dialog.
+
+      @method actions.showAdvLimitDialog
+      @param componentName Component name.
+      @param advLimitName Adv limit name.
+    */
+    showAdvLimitDialog(componentName, advLimitName) {
+      let advLimit = this.get(&#x27;advLimit&#x27;).getCurrentAdvLimit(componentName, advLimitName);
+
+      let store = this.get(&#x27;store&#x27;);
+
+      let controller = this.get(&#x27;advLimitController&#x27;);
+      controller.set(&#x27;mainControler&#x27;, this);
+
+      let loadingParams = {
+        view: &#x27;application&#x27;,
+        outlet: &#x27;modal&#x27;
+      };
+      this.send(&#x27;showModalDialog&#x27;, &#x27;advlimit-dialog&#x27;);
+
+      loadingParams = {
+        view: &#x27;advlimit-dialog&#x27;,
+        outlet: &#x27;modal-content&#x27;
+      };
+      this.send(&#x27;showModalDialog&#x27;, &#x27;advlimit-dialog-content&#x27;,
+        { controller: controller, model: { advLimit: advLimit, advLimitName: advLimitName, componentName: componentName, store: store } }, loadingParams);
+    }
+  },
+
+  /**
+    Show columns config dialog.
+
+    @method _showConfigDialog
+    @param componentName
+    @param settingName
+    @param settingsSource
+    @param isExportExcel
+    @param immediateExport
+    @private
+  */
+  _showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel = false, immediateExport = false) {
+    let colsOrder = this.get(&#x27;_userSettingsService&#x27;).getCurrentColsOrder(componentName, settingName);
+    let sorting = this.get(&#x27;_userSettingsService&#x27;).getCurrentSorting(componentName, settingName);
+    let columnWidths = this.get(&#x27;_userSettingsService&#x27;).getCurrentColumnWidths(componentName, settingName);
+    let perPageValue = this.get(&#x27;_userSettingsService&#x27;).getCurrentPerPage(componentName, settingName);
+    let fixedColumns = this.get(&#x60;defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths&#x60;) || A();
+    fixedColumns = fixedColumns.filter(({ fixed }) =&gt; fixed).map(obj =&gt; { return obj.propName; });
+    let saveColWidthState = false;
+    let propName;
+    let colDesc;  //Column description
+    let colDescs = A();  //Columns description
+    let projectionAttributes;
+    let modelName = settingsSource.get(&#x27;modelProjection.modelName&#x27;);
+    if (isExportExcel) {
+      let exportExcelProjectionName = settingsSource.get(&#x27;exportExcelProjection&#x27;) || settingsSource.get(&#x27;modelProjection.projectionName&#x27;);
+      assert(&#x27;Property exportExcelProjection is not defined in controller.&#x27;, exportExcelProjectionName);
+
+      let exportExcelProjection = this.store.modelFor(modelName).projections.get(exportExcelProjectionName);
+      assert(&#x60;Projection &quot;${exportExcelProjectionName}&quot; is not defined in model &quot;${modelName}&quot;.&#x60;, exportExcelProjection);
+
+      projectionAttributes = exportExcelProjection.attributes;
+    } else {
+      let modelProjection = settingsSource.get(&#x27;modelProjection&#x27;);
+      projectionAttributes = modelProjection.attributes;
+    }
+
+    let colList = this._generateColumns(projectionAttributes, isExportExcel, null, null, settingsSource);
+    let namedColList = {};
+    for (let i = 0; i &lt; colList.length; i++) {
+      colDesc = colList[i];
+      propName = colDesc.propName;
+      colDesc.fixed = fixedColumns.indexOf(propName) &gt; -1;
+      namedColList[propName] = colDesc;
+    }
+
+    if (isArray(colsOrder)) {
+      /*
+       Remove propName, that are not in colList
+       */
+      let reliableColsOrder = A();
+      for (let i = 0; i &lt; colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+        if ((propName in namedColList) &amp;&amp; (&#x27;header&#x27; in  namedColList[propName])) {
+          reliableColsOrder.pushObject(colOrder);
+          if (isExportExcel &amp;&amp; colOrder.name) {
+            set(namedColList[propName], &#x27;header.string&#x27;, colOrder.name);
+          }
+        }
+      }
+
+      colsOrder = reliableColsOrder;
+    } else {
+      colsOrder = colList;
+    }
+
+    let namedSorting = {};
+    let sortPriority = 0;
+    if (isNone(sorting)) {
+      sorting = A();
+    }
+
+    for (let i = 0; i &lt; sorting.length; i++) {
+      colDesc = sorting[i];
+      propName = colDesc.propName;
+      if (propName in namedColList) {
+        colDesc.sortPriority = ++sortPriority;
+        namedSorting[propName] = colDesc;
+      }
+    }
+
+    if (isNone(columnWidths)) {
+      columnWidths = A();
+    }
+
+    let namedColWidth = {};
+
+    if (isNone(settingName)) {
+      namedColWidth = settingsSource.get(&#x27;currentColumnsWidths&#x27;) || {};
+    } else {
+      for (let i = 0; i &lt; columnWidths.length; i++) {
+        colDesc = columnWidths[i];
+        propName = colDesc.propName;
+        namedColWidth[propName] = colDesc.width;
+      }
+    }
+
+    if (columnWidths.length &gt; 0) {
+      saveColWidthState = true;
+    }
+
+    for (let i = 0; i &lt; colsOrder.length; i++) {
+      let colOrder = colsOrder[i];
+      propName = colOrder.propName;
+      if (!(propName in namedColList) || !(&#x27;header&#x27; in  namedColList[propName])) {
+        delete namedColList[propName];
+        continue;
+      }
+
+      let name = namedColList[propName].header;
+      let isHasMany = namedColList[propName].isHasMany;
+      let fixed = namedColList[propName].fixed;
+      delete namedColList[propName];
+      colDesc = { name: name, propName: propName, hide: colOrder.hide, isHasMany: isHasMany, fixed: fixed };
+      if (propName in namedSorting) {
+        let sortColumn = namedSorting[propName];
+        colDesc.sortOrder = sortColumn.direction === &#x27;asc&#x27; ? 1 : -1;
+        colDesc.sortPriority = sortColumn.sortPriority;
+      } else {
+        colDesc.sortOrder = 0;
+      }
+
+      if (propName in namedColWidth) {
+        colDesc.columnWidth = namedColWidth[propName];
+      }
+
+      colDescs.pushObject(colDesc);
+    }
+
+    for (propName in namedColList) {
+      colDescs.pushObject({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0,
+        isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
+    }
+
+    let exportParams = { isExportExcel: isExportExcel };
+    let settName = settingName;
+    if (isExportExcel) {
+      let exportExcelProjectionName = settingsSource.get(&#x27;exportExcelProjection&#x27;) || settingsSource.get(&#x27;modelProjection.projectionName&#x27;);
+      exportParams.immediateExport = immediateExport;
+      exportParams.projectionName = exportExcelProjectionName;
+      exportParams.detSeparateCols = this.get(&#x27;_userSettingsService&#x27;).getDetSeparateCols(componentName, settingName);
+      exportParams.detSeparateRows = this.get(&#x27;_userSettingsService&#x27;).getDetSeparateRows(componentName, settingName);
+      if (settName) {
+        settName = settName.split(&#x27;/&#x27;);
+        settName.shift();
+        settName = settName.join(&#x27;/&#x27;);
+      }
+    }
+
+    let store = this.get(&#x27;store&#x27;);
+
+    let controller = this.get(&#x27;colsconfigController&#x27;);
+    controller.set(&#x27;mainControler&#x27;, this);
+    let loadingParams = {
+      view: &#x27;application&#x27;,
+      outlet: &#x27;modal&#x27;
+    };
+    this.send(&#x27;showModalDialog&#x27;, &#x27;colsconfig-dialog&#x27;);
+
+    loadingParams = {
+      view: &#x27;colsconfig-dialog&#x27;,
+      outlet: &#x27;modal-content&#x27;
+    };
+    this.send(&#x27;showModalDialog&#x27;, &#x27;colsconfig-dialog-content&#x27;,
+      { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+      settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
+      exportParams: exportParams, store: store, useSidePageMode: useSidePageMode } }, loadingParams);
+  },
+
+    /**
+    Get columns info.
+
+    @method _getGeneratedColumns
+    @param projectionAttributes
+    @param settingsSource
+    @param fixedColumns
+    @param colsOrder
+    @param sorting
+    @private
+  */
+    _getGeneratedColumns(projectionAttributes, settingsSource, fixedColumns, colsOrder, sorting) {
+      let colDesc;  //Column description
+      let colDescs = A();  //Columns description
+      let propName;
+
+      let colList = this._generateColumns(projectionAttributes, false, null, null, settingsSource);
+      let namedColList = {};
+
+      for (let i = 0; i &lt; colList.length; i++) {
+        colDesc = colList[i];
+        propName = colDesc.propName;
+        colDesc.fixed = fixedColumns.indexOf(propName) &gt; -1;
+        namedColList[propName] = colDesc;
+      }
+
+      if (isArray(colsOrder)) {
+        /*
+        Remove propName, that are not in colList
+        */
+        let reliableColsOrder = A();
+        for (let i = 0; i &lt; colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
+          propName = colOrder.propName;
+          if ((propName in namedColList) &amp;&amp; (&#x27;header&#x27; in  namedColList[propName])) {
+            reliableColsOrder.pushObject(colOrder);
+          }
+        }
+
+        colsOrder = reliableColsOrder;
+      } else {
+        colsOrder = colList;
+      }
+
+      let namedSorting = {};
+      let sortPriority = 0;
+      if (isNone(sorting)) {
+        sorting = A();
+      }
+
+      for (let i = 0; i &lt; sorting.length; i++) {
+        colDesc = sorting[i];
+        propName = colDesc.propName;
+        if (propName in namedColList) {
+          colDesc.sortPriority = ++sortPriority;
+          namedSorting[propName] = colDesc;
+        }
+      }
+
+      for (let i = 0; i &lt; colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+
+        if (!(propName in namedColList) || !(&#x27;header&#x27; in  namedColList[propName])) {
+          delete namedColList[propName];
+          continue;
+        }
+
+        let name = namedColList[propName].header;
+        let isHasMany = namedColList[propName].isHasMany;
+        let fixed = namedColList[propName].fixed;
+        delete namedColList[propName];
+        colDesc = { name: name, propName: propName, isHasMany: isHasMany, fixed: fixed };
+
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction === &#x27;asc&#x27; ? 1 : -1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
+        }
+
+        colDescs.pushObject(colDesc);
+      }
+
+      for (propName in namedColList) {
+        colDescs.pushObject({ propName: propName, name: namedColList[propName].header, sortOrder: 0,
+          isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
+      }
+
+      return colDescs;
+    },
+
+    /**
+    Show columns config dialog for groupedit.
+
+    @method _showSortGeDialog
+    @param componentName
+    @param useSidePageMode
+    @param modelProjection
+    @param geSorting
+    @private
+  */
+    _showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting) {
+    let colsOrder = this.get(&#x27;_userSettingsService&#x27;).getCurrentColsOrder(componentName);
+    let sorting = geSorting;
+    let fixedColumns = this.get(&#x60;defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths&#x60;) || A();
+    fixedColumns = fixedColumns.filter(({ fixed }) =&gt; fixed).map(obj =&gt; { return obj.propName; });
+    let modelName = modelProjection.modelName;
+    let projectionAttributes = modelProjection.attributes;
+    
+    let colDescs = this._getGeneratedColumns(projectionAttributes,
+      this, fixedColumns, colsOrder, sorting);
+
+    let store = this.get(&#x27;store&#x27;);
+
+    let controller = this.get(&#x27;colsconfigController&#x27;);
+    controller.set(&#x27;mainControler&#x27;, this);
+    this.send(&#x27;showModalDialog&#x27;, &#x27;colsconfig-dialog&#x27;);
+
+    let loadingParams = {
+      view: &#x27;colsconfig-dialog&#x27;,
+      outlet: &#x27;modal-content&#x27;
+    };
+
+      this.send(&#x27;showModalDialog&#x27;, &#x27;ge-sorting-dialog-content&#x27;,
+      { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+      store: store, useSidePageMode: useSidePageMode, geSorting: geSorting } }, loadingParams);
+
+    },
+
+  /**
+    Generate the columns.
+
+    @method _generateColumns
+    @private
+  */
+  _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath, settingsSource) {
+    columnsBuf = columnsBuf || A();
+    relationshipPath = relationshipPath || &#x27;&#x27;;
+
+    for (let attrName in attributes) {
+      let currentRelationshipPath = relationshipPath;
+      if (!attributes.hasOwnProperty(attrName)) {
+        continue;
+      }
+
+      let attr = attributes[attrName];
+      assert(&#x60;Unknown kind of projection attribute: ${attr.kind}&#x60;, attr.kind === &#x27;attr&#x27; || attr.kind === &#x27;belongsTo&#x27; || attr.kind === &#x27;hasMany&#x27;);
+      switch (attr.kind) {
+        case &#x27;hasMany&#x27;: {
+          if (isExportExcel &amp;&amp; !attr.options.hidden) {
+            let bindingPath = currentRelationshipPath + attrName;
+            let column = this._createColumn(attr, attrName, bindingPath, settingsSource, true);
+            columnsBuf.pushObject(column);
+          }
+
+          break;
+        }
+
+        case &#x27;belongsTo&#x27;: {
+          if (!attr.options.hidden) {
+            let bindingPath = currentRelationshipPath + attrName;
+            let column = this._createColumn(attr, attrName, bindingPath, settingsSource);
+
+            if (isNone(get(column, &#x27;cellComponent.componentName&#x27;))) {
+              if (attr.options.displayMemberPath) {
+                column.propName += &#x27;.&#x27; + attr.options.displayMemberPath;
+              } else {
+                column.propName += &#x27;.id&#x27;;
+              }
+            }
+
+            columnsBuf.pushObject(column);
+          }
+
+          currentRelationshipPath += attrName + &#x27;.&#x27;;
+          this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath, settingsSource);
+          break;
+        }
+
+        case &#x27;attr&#x27;: {
+          if (attr.options.hidden) {
+            break;
+          }
+
+          let bindingPath = currentRelationshipPath + attrName;
+          let column = this._createColumn(attr, attrName, bindingPath, settingsSource);
+          columnsBuf.pushObject(column);
+          break;
+        }
+      }
+    }
+
+    return columnsBuf.sortBy(&#x27;index&#x27;);
+  },
+
+  /**
+    Create the key from locales.
+  */
+  _createKey(bindingPath, settingsSource) {
+    let projection = settingsSource.get(&#x27;modelProjection&#x27;);
+    let modelName = projection.modelName;
+    let key;
+
+    let mainModelProjection = this.get(&#x27;mainModelProjection&#x27;);
+    if (mainModelProjection) {
+      let modelClass = this.get(&#x27;store&#x27;).modelFor(modelName);
+      let nameRelationship;
+      let mainModelName;
+
+      modelClass.eachRelationship(function(name, descriptor) {
+        if (descriptor.kind === &#x27;belongsTo&#x27; &amp;&amp; descriptor.options.inverse) {
+          nameRelationship = descriptor.options.inverse;
+          mainModelName = descriptor.type;
+        }
+      });
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
+    } else {
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
+    }
+
+    return key;
+  },
+
+  /**
+    Create the column.
+
+    @method _createColumn
+    @private
+  */
+  _createColumn(attr, attrName, bindingPath, settingsSource, isHasMany = false) {
+    let currentController = this.get(&#x27;currentController&#x27;);
+    let getCellComponent = get(currentController || {}, &#x27;getCellComponent&#x27;);
+    let cellComponent = settingsSource.get(&#x27;cellComponent&#x27;);
+
+    if (!this.get(&#x27;editOnSeparateRoute&#x27;) &amp;&amp; typeOf(getCellComponent) === &#x27;function&#x27;) {
+      let recordModel = isNone(this.get(&#x27;content&#x27;)) ? null : this.get(&#x27;content.type&#x27;);
+      cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+    }
+
+    let key = this._createKey(bindingPath, settingsSource);
+    let valueFromLocales = getValueFromLocales(this.get(&#x27;i18n&#x27;), key);
+    let index = get(attr, &#x27;options.index&#x27;);
+
+    let column = {
+      header: valueFromLocales || htmlSafe(attr.caption || capitalize(attrName)),
+      propName: bindingPath,
+      cellComponent: cellComponent,
+      isHasMany: isHasMany,
+      index: index,
+    };
+
+    if (valueFromLocales) {
+      column.keyLocale = key;
+    }
+
+    let customColumnAttributesFunc = settingsSource.get(&#x27;customColumnAttributes&#x27;);
+    if (customColumnAttributesFunc) {
+      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
+      if (customColAttr &amp;&amp; (typeof customColAttr === &#x27;object&#x27;)) {
+        $.extend(true, column, customColAttr);
+      }
+    }
+
+    let sortDef;
+    let sorting = settingsSource.get(&#x27;sorting&#x27;);
+    if (sorting &amp;&amp; (sortDef = sorting[bindingPath])) {
+      column.sorted = true;
+      column.sortAscending = sortDef.sortAscending;
+      column.sortNumber = sortDef.sortNumber;
+    }
+
+    return column;
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

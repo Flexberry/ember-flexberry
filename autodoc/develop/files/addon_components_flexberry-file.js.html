@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-file.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-file.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Ember from &#x27;ember&#x27;; //TODO Import Module. Replace Ember.uuid()
+import $ from &#x27;jquery&#x27;;
+import RSVP from &#x27;rsvp&#x27;;
+import { typeOf, isBlank, isNone } from &#x27;@ember/utils&#x27;;
+import { isArray } from &#x27;@ember/array&#x27;;
+import { run, bind } from &#x27;@ember/runloop&#x27;;
+import { computed, observer } from &#x27;@ember/object&#x27;;
+import { copy } from &#x27;@ember/object/internals&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import { translationMacro as t } from &#x27;ember-i18n&#x27;;
+import { getSizeInUnits } from &#x27;../utils/file-size-units-converter&#x27;;
+
+/**
+  Flexberry file component.
+
+  Usage sample:
+  &#x60;&#x60;&#x60;handlebars
+  {{flexberry-file value=model.file uploadUrl=&quot;http://myApplication/api/File&quot;}}
+  &#x60;&#x60;&#x60;
+
+  @class FlexberryFileComponent
+  @extends FlexberryBaseComponent
+*/
+export default FlexberryBaseComponent.extend({
+  /**
+    Available file size units with its captions.
+
+    @property _fileSizeUnits
+    @type Object
+    @private
+  */
+  _fileSizeUnits: computed(() =&gt; ({
+    Bt: t(&#x27;components.flexberry-file.error-dialog-size-unit-bt&#x27;),
+    Kb: t(&#x27;components.flexberry-file.error-dialog-size-unit-kb&#x27;),
+    Mb: t(&#x27;components.flexberry-file.error-dialog-size-unit-mb&#x27;),
+    Gb: t(&#x27;components.flexberry-file.error-dialog-size-unit-gb&#x27;)
+  })),
+
+  /**
+    Selected file content. It can be used as source for image tag in order to view preview.
+
+    @property _previewImageAsBase64String
+    @type String
+    @default null
+    @private
+  */
+  _previewImageAsBase64String: null,
+
+  /**
+    File input identifier.
+
+    @property _fileInputId
+    @type String
+    @readOnly
+    @private
+  */
+  _fileInputId: computed(&#x27;elementId&#x27;, function() {
+    let fileInputId = &#x27;flexberry-file-file-input-&#x27;;
+    let elementId = this.get(&#x27;elementId&#x27;);
+    if (isBlank(elementId)) {
+      fileInputId += Ember.uuid();
+    } else {
+      fileInputId += elementId;
+    }
+
+    return fileInputId;
+  }),
+
+  /**
+    Copy of value created at initialization moment or after successful upload.
+
+    @property _initialValue
+    @type String
+    @private
+  */
+  _initialValue: null,
+
+  /**
+    Deserialized copy of value created at initialization moment or after successful upload.
+
+    @property _jsonInitialValue
+    @type Object
+    @readOnly
+    @private
+  */
+  _jsonInitialValue: computed(&#x27;_initialValue&#x27;, function() {
+    let initialValue = this.get(&#x27;_initialValue&#x27;);
+    return typeOf(initialValue) === &#x27;string&#x27; &amp;&amp; !isBlank(initialValue) ? JSON.parse(initialValue) : null;
+  }),
+
+  /**
+    Deserialized value of file component.
+
+    @property _jsonValue
+    @type Object
+    @readOnly
+    @private
+  */
+  _jsonValue: computed(&#x27;value&#x27;, function() {
+    let value = this.get(&#x27;value&#x27;);
+    return typeOf(value) === &#x27;string&#x27; &amp;&amp; !isBlank(value) ? JSON.parse(value) : null;
+  }),
+
+  /**
+    File name.
+    It is binded to component file name input, so every change to fileName will automatically change file name input value.
+
+    @property _fileName
+    @type String
+    @readOnly
+    @private
+  */
+  _fileName: computed(&#x27;_jsonValue.fileName&#x27;, function() {
+    let fileName = this.get(&#x27;_jsonValue.fileName&#x27;);
+    if (isNone(fileName)) {
+      return &#x27;&#x27;;
+    }
+
+    return fileName;
+  }),
+
+  /**
+    Flag: indicates whether some file is added now or not.
+
+    @property _hasFile
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _hasFile: computed(&#x27;_jsonValue&#x27;, function() {
+    return !isNone(this.get(&#x27;_jsonValue&#x27;));
+  }),
+
+  /**
+    Data from jQuery fileupload plugin (contains selected file).
+
+    @property _uploadData
+    @type Object
+    @default null
+    @private
+  */
+  _uploadData: null,
+
+  /**
+    Copy of data from jQuery fileupload plugin (contains selected file).
+
+    @property _uploadDataCopy
+    @type Object
+    @default null
+    @private
+  */
+  _uploadDataCopy: null,
+
+  /**
+    Current file selected for upload.
+
+    @property _selectedFile
+    @type Object
+    @readOnly
+    @private
+  */
+  _selectedFile: computed(&#x27;_uploadData&#x27;, function() {
+    let uploadData = this.get(&#x27;_uploadData&#x27;);
+    return uploadData &amp;&amp; uploadData.files &amp;&amp; uploadData.files.length &gt; 0 ? uploadData.files[0] : null;
+  }),
+
+  /**
+    Flag: indicates whether file upload is in progress now.
+
+    @property _uploadIsInProgress
+    @type Boolean
+    @default false
+    @private
+  */
+  _uploadIsInProgress: false,
+
+  /**
+    Flag: indicates whether file preview download is in progress now.
+
+    @property _previewDownloadIsInProgress
+    @type Boolean
+    @default false
+    @private
+  */
+  _previewDownloadIsInProgress: false,
+
+  /**
+    Flag: indicates whether add button is visible now.
+
+    @property _addButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _addButtonIsVisible: computed(&#x27;readonly&#x27;, function() {
+    return !this.get(&#x27;readonly&#x27;);
+  }),
+
+  /**
+    Flag: indicates whether add button is enabled now.
+
+    @property _addButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _addButtonIsEnabled: computed(&#x27;_uploadIsInProgress&#x27;, function() {
+    let uploadIsInProgress = this.get(&#x27;_uploadIsInProgress&#x27;);
+    return !uploadIsInProgress;
+  }),
+
+  /**
+    Flag: indicates whether remove button is visible now.
+
+    @property _removeButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _removeButtonIsVisible: computed(&#x27;readonly&#x27;, function() {
+    return !this.get(&#x27;readonly&#x27;);
+  }),
+
+  /**
+    Flag: indicates whether remove button is enabled now.
+
+    @property _removeButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _removeButtonIsEnabled: computed(&#x27;_uploadIsInProgress&#x27;, &#x27;value&#x27;, function() {
+    let uploadIsInProgress = this.get(&#x27;_uploadIsInProgress&#x27;);
+    let jsonValue = this.get(&#x27;_jsonValue&#x27;);
+
+    return !(uploadIsInProgress || isNone(jsonValue));
+  }),
+
+  /**
+    Flag: indicates whether upload button is visible now.
+
+    @property _uploadButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _uploadButtonIsVisible: computed(&#x27;readonly&#x27;, &#x27;showUploadButton&#x27;, function() {
+    return !this.get(&#x27;readonly&#x27;) &amp;&amp; this.get(&#x27;showUploadButton&#x27;);
+  }),
+
+  /**
+    Flag: indicates whether upload button is enabled now.
+
+    @property _uploadButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _uploadButtonIsEnabled: computed(&#x27;_uploadIsInProgress&#x27;, &#x27;_uploadData&#x27;, function() {
+    let uploadIsInProgress = this.get(&#x27;_uploadIsInProgress&#x27;);
+    let selectedFile = this.get(&#x27;_selectedFile&#x27;);
+
+    return !(uploadIsInProgress || isNone(selectedFile));
+  }),
+
+  /**
+    Flag: indicates whether download button is visible now.
+
+    @property _downloadButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _downloadButtonIsVisible: computed(&#x27;showDownloadButton&#x27;, function() {
+    // Download button is always visible (but disabled if download is not available).
+    return this.get(&#x27;showDownloadButton&#x27;);
+  }),
+
+  /**
+    Flag: indicates whether download button is enabled now.
+
+    @property _downloadButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _downloadButtonIsEnabled: computed(&#x27;_uploadIsInProgress&#x27;, &#x27;_initialValue&#x27;, function() {
+    let uploadIsInProgress = this.get(&#x27;_uploadIsInProgress&#x27;);
+    let jsonInitialValue = this.get(&#x27;_jsonInitialValue&#x27;);
+
+    return !(uploadIsInProgress || isNone(jsonInitialValue));
+  }),
+
+  /**
+    Caption to be displayed in error modal dialog.
+    It will be displayed only if some error occurs.
+
+    @property _errorModalDialogCaption
+    @type String
+    @default t(&#x27;components.flexberry-file.error-dialog-caption&#x27;)
+    @private
+  */
+  _errorModalDialogCaption: t(&#x27;components.flexberry-file.error-dialog-caption&#x27;),
+
+  /**
+    Content to be displayed in error modal dialog.
+    It will be displayed only if some error occurs.
+
+    @property _errorModalDialogContent
+    @type String
+    @default t(&#x27;components.flexberry-file.error-dialog-content&#x27;)
+    @private
+  */
+  _errorModalDialogContent: t(&#x27;components.flexberry-file.error-dialog-content&#x27;),
+
+  /**
+    Caption to be displayed in loaded file table cell.
+    It will be displayed only if preview can&#x27;t be loaded.
+
+    @property _errorPreviewCaption
+    @type String
+    @default t(&#x27;components.flexberry-file.error-preview-caption&#x27;)
+    @private
+  */
+  _errorPreviewCaption: t(&#x27;components.flexberry-file.error-preview-caption&#x27;),
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type &lt;a href=&quot;http://api.jquery.com/Types/#jQuery&quot;&gt;JQueryObject&lt;/a&gt;
+    @default null
+    @private
+  */
+  _errorModalDialog: null,
+
+  /**
+    Component&#x27;s wrapping &lt;div&gt; CSS-class names.
+
+    @property classNames
+    @type String[]
+    @default [&#x27;flexberry-file&#x27;]
+  */
+  classNames: [&#x27;flexberry-file&#x27;],
+
+  /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default [&#x27;readonly:disabled&#x27;]
+  */
+  classNameBindings: [&#x27;readonly:disabled&#x27;],
+
+  /**
+    Component&#x27;s input additional CSS-class names.
+    See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
+
+    @property inputClass
+    @type String
+    @default &#x27;&#x27;
+    @example
+        &#x60;&#x60;&#x60;handlebars
+        {{flexberry-file
+          inputClass=&quot;compact&quot;
+          value=model.file
+        }}
+        &#x60;&#x60;&#x60;
+  */
+  inputClass: &#x27;&#x27;,
+
+  /**
+    CSS-classes names for component&#x27;s add, remove, upload, download buttons.
+    See [Semantic UI buttons classes](http://semantic-ui.com/elements/button.html).
+
+    @property buttonClass
+    @type String
+    @default &#x27;&#x27;
+    @example
+        &#x60;&#x60;&#x60;handlebars
+        {{flexberry-file
+          buttonClass=&quot;red&quot;
+          value=model.file
+        }}
+      &#x60;&#x60;&#x60;
+  */
+  buttonClass: &#x27;&#x27;,
+
+  /**
+    Path to component&#x27;s settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default &#x27;APP.components.flexberryFile&#x27;
+  */
+  appConfigSettingsPath: &#x27;APP.components.flexberryFile&#x27;,
+
+  /**
+    Name of the action which will be send outside after click on selected image preview.
+
+    @property viewImageAction
+    @type String
+    @default &#x27;flexberryFileViewImageAction&#x27;
+  */
+  viewImageAction: &#x27;flexberryFileViewImageAction&#x27;,
+
+  /**
+    Value of file component (contains serialized file metadata such as fileName, fileSize, etc.).
+    It is binded to related model property, so every change to value will automatically change model property.
+
+    @property value
+    @type String
+  */
+  value: null,
+
+  /**
+    Flag: indicates whether to upload file on &#x27;relatedModel&#x27; &#x27;preSave&#x27; event.
+
+    @property uploadOnModelPreSave
+    @type Boolean
+    @default true
+  */
+  uploadOnModelPreSave: undefined,
+
+  /**
+    Flag: indicates whether to show preview element for images or not.
+
+    @property showPreview
+    @type Boolean
+    @default false
+  */
+  showPreview: false,
+
+  /**
+    indicates whether preview img can be loaded when show.
+
+    @property _canLoadPreview
+    @type Boolean
+    @default true
+  */
+  _canLoadPreview: true,
+
+  /**
+    Flag: indicates whether to show upload button or not.
+
+    @property showUploadButton
+    @type Boolean
+    @default false
+  */
+  showUploadButton: undefined,
+
+  /**
+    Flag: indicates whether to show download button or not.
+
+    @property showDownloadButton
+    @type Boolean
+    @default true
+  */
+  showDownloadButton: undefined,
+
+  /**
+    Maximum file size in bytes for uploading files.
+    It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
+    If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
+
+    @property maxUploadFileSize
+    @type Number
+ */
+  maxUploadFileSize: undefined,
+
+  /**
+    Maximum file size unit. May be &#x27;Bt&#x27; &#x27;Kb&#x27; &#x27;Mb&#x27; or &#x27;Gb&#x27;.
+
+    @property maxUploadFileSizeUnit
+    @type String
+    @default &#x27;Bt&#x27;
+  */
+  maxUploadFileSizeUnit: &#x27;Bt&#x27;,
+
+  /**
+    Text to be displayed instead of file name, if file has not been selected.
+
+    @property placeholder
+    @type String
+    @default t(&#x27;components.flexberry-file.placeholder&#x27;)
+  */
+  placeholder: t(&#x27;components.flexberry-file.placeholder&#x27;),
+
+  /**
+    File upload URL.
+    If null or undefined, then APP.components.file.uploadUrl from application config\environment will be used.
+
+    @property uploadUrl
+    @type String
+  */
+  uploadUrl: undefined,
+
+  /**
+    Flag: indicates whether to show modal dialog on upload errors or not.
+
+    @property showModalDialogOnUploadError
+    @type Boolean
+    @default false
+  */
+  showModalDialogOnUploadError: undefined,
+
+  /**
+    Flag: download by clicking download or open file in new window.
+
+    @property openInNewWindowInsteadOfLoading
+    @type Boolean
+    @default false
+  */
+  openFileInNewWindowInsteadOfLoading: undefined,
+
+  /**
+    Headers to the file upload request.
+
+    @property headers
+    @type Object
+    @default null
+  */
+  headers: null,
+
+  /**
+    Settings for preview modal dialog.
+
+    @property previewSettings
+    @type Object
+    @default null
+  */
+  previewSettings: null,
+
+  /**
+    Available file extensions for upload. In MIME type format.
+    See [the documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) for more details.
+
+    @property accept
+    @type String
+    @default undefined
+  */
+  accept: undefined,
+
+  /**
+    Function with custom check for type of uploaded file.
+
+    @property isValidTypeFileCustom
+    @type Function
+    @default null
+  */
+  isValidTypeFileCustom: null,
+
+  /**
+    External Base64 string
+    @property base64Value
+    @type String
+    @default null
+  */
+  base64Value: null,
+
+  /**
+    Name for base64 file. {base64FileName}.{base64FileExtension}
+    @property base64FileName
+    @type String
+    @default null
+  */
+  base64FileName: null,
+
+  /**
+    Extension for base64 file. {base64FileName}.{base64FileExtension}
+    @property base64FileExtension
+    @type String
+    @default null
+  */
+  base64FileExtension: null,
+
+  /**
+    Flag: Is the drag-and-drop event currently proceed.
+    @property isDrag
+    @type Boolean
+    @default false
+  */
+  isDrag: false,
+
+  actions: {
+    /**
+      Handles click on selected image preview and sends action with data outside component
+      in order to view selected image at modal window.
+
+      @method actions.viewLoadedImage
+      @public
+    */
+    viewLoadedImage() {
+      let fileName = this.get(&#x27;_fileName&#x27;);
+      let previewImageAsBase64String = this.get(&#x27;_previewImageAsBase64String&#x27;);
+      if (!isBlank(fileName) &amp;&amp; !isBlank(previewImageAsBase64String)) {
+        let settings = this.get(&#x27;previewSettings&#x27;);
+
+        /* eslint-disable ember/closure-actions */
+        this.sendAction(&#x27;viewImageAction&#x27;, {
+          fileSrc: previewImageAsBase64String,
+          fileName: fileName,
+          settings: settings
+        });
+        /* eslint-enable ember/closure-actions */
+      }
+    },
+
+    /**
+      Handles click on add button.
+
+      @method actions.addButtonClick
+      @public
+    */
+    addButtonClick() {
+      // Add button&#x27;s label is attached to file input through label&#x27;s &#x27;for&#x27; attribute in component&#x27;s template,
+      // so there is no any necessary logic here, file dialog will be opened by browser automatically.
+    },
+
+    /**
+      Handles click on remove button.
+
+      @method actions.removeButtonClick
+      @public
+    */
+    removeButtonClick() {
+      this.removeFile();
+    },
+
+    /**
+      Handles click on upload button.
+
+      @method actions.uploadButtonClick
+      @public
+    */
+    uploadButtonClick() {
+      this.uploadFile();
+    },
+
+    /**
+      Handles click on download button.
+
+      @method actions.downloadButtonClick
+      @public
+    */
+    downloadButtonClick() {
+      this.downloadFile();
+    }
+  },
+
+  /**
+    Handles drag enter event.
+    @param {Event} event Event
+  */
+  dragEnter(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set(&#x27;isDrag&#x27;, true);
+  },
+
+  /**
+    Handles drag over event.
+    @param {Event} event Event
+  */
+  dragOver(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set(&#x27;isDrag&#x27;, true);
+  },
+
+  /**
+    Handles drag leave event.
+    @param {Event} event Event
+  */
+  dragLeave(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set(&#x27;isDrag&#x27;, false);
+  },
+
+  /**
+    Handles drag drop event.
+    @param {Event} event Event
+  */
+  drop(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set(&#x27;isDrag&#x27;, false);
+
+    let uploadData = {
+      files: event.dataTransfer.files
+    };
+
+    this.addFile(this, event, uploadData);
+  },
+
+  /**
+    Add data to control.
+    @param {Object} _this Owner
+    @param {Event} e Event
+    @param {Object} uploadData Upload data.
+   */
+  addFile: function(_this, e, uploadData) {
+    let selectedFile = uploadData &amp;&amp; uploadData.files &amp;&amp; uploadData.files.length &gt; 0 ? uploadData.files[0] : null;
+
+    const accept = _this.get(&#x27;accept&#x27;);
+    const fileType = selectedFile.type;
+    const fileName = selectedFile.name;
+
+    if (!_this._isValidTypeFile(fileType, accept)) {
+      _this.showFileExtensionErrorModalDialog(fileName);
+      return;
+    }
+
+    let maxUploadFileSize = _this.get(&#x27;maxUploadFileSize&#x27;);
+
+    if (!isNone(maxUploadFileSize)) {
+      assert(
+        &#x60;Wrong value of flexberry-file \&#x60;maxUploadFileSize\&#x60; propery: \&#x60;${maxUploadFileSize}\&#x60;.&#x60; +
+        &#x60; Allowed value is a number &gt;= 0.&#x60;, typeOf(maxUploadFileSize) === &#x27;number&#x27; &amp;&amp; maxUploadFileSize &gt;= 0);
+
+      let sizeUnit = _this.get(&#x27;maxUploadFileSizeUnit&#x27;);
+      if (!(sizeUnit in _this.get(&#x27;_fileSizeUnits&#x27;))) {
+        console.log(&#x27;Flexberry-file error, file max size wrong units assigned&#x27;);
+        sizeUnit = Object.keys(_this.get(&#x27;_fileSizeUnits&#x27;))[0];
+      }
+
+      let fileSizeInUnits = getSizeInUnits(selectedFile.size, sizeUnit);
+
+      // Prevent files greater then maxUploadFileSize.
+      if (fileSizeInUnits &gt; maxUploadFileSize) {
+        _this.showFileSizeErrorModalDialog(selectedFile.name, fileSizeInUnits, maxUploadFileSize, sizeUnit);
+
+        // Break file upload.
+        return;
+      }
+    }
+
+    uploadData.headers = _this.get(&#x27;headers&#x27;);
+    _this.set(&#x27;_uploadData&#x27;, uploadData);
+  },
+
+  /**
+    Initializes {{#crossLink &quot;FlexberryFileComponent&quot;}}flexberry-file{{/crossLink}} component.
+  */
+  init() {
+    this._super(...arguments);
+
+    // Remember initial value.
+    let value = this.get(&#x27;value&#x27;);
+    this.set(&#x27;_initialValue&#x27;, copy(value, true));
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: &#x27;uploadUrl&#x27;, defaultValue: null });
+    this.initProperty({ propertyName: &#x27;maxUploadFileSize&#x27;, defaultValue: null });
+    this.initProperty({ propertyName: &#x27;uploadOnModelPreSave&#x27;, defaultValue: true });
+    this.initProperty({ propertyName: &#x27;showUploadButton&#x27;, defaultValue: false });
+    this.initProperty({ propertyName: &#x27;showDownloadButton&#x27;, defaultValue: true });
+    this.initProperty({ propertyName: &#x27;showModalDialogOnUploadError&#x27;, defaultValue: false });
+    this.initProperty({ propertyName: &#x27;showModalDialogOnDownloadError&#x27;, defaultValue: true });
+    this.initProperty({ propertyName: &#x27;openFileInNewWindowInsteadOfLoading&#x27;, defaultValue: false });
+    this.initProperty({ propertyName: &#x27;base64FileName&#x27;, defaultValue: null });
+    this.initProperty({ propertyName: &#x27;base64FileExtension&#x27;, defaultValue: null });
+
+    // Bind related model&#x27;s &#x27;preSave&#x27; event handler&#x27;s context &amp; subscribe on related model&#x27;s &#x27;preSave&#x27;event.
+    this.set(&#x27;_onRelatedModelPreSave&#x27;, this.get(&#x27;_onRelatedModelPreSave&#x27;).bind(this));
+    this._subscribeOnRelatedModelPreSaveEvent();
+    this.get(&#x27;_previewOptionsDidChange&#x27;).apply(this);
+  },
+
+  /**
+    Hook for base64Value update.
+    It runs &quot;change&quot; event on file-input to update file from base64Value if base64FileName and base64FileExtension set.
+  */
+  didReceiveAttrs() {
+    this._super(...arguments);
+    if (this.get(&#x27;base64Value&#x27;)) {
+      assert(&#x60;If you use base64 files, properties &quot;base64FileName&quot; and &quot;base64FileExtension&quot; can&#x27;t be null or undefined&#x60;,
+      (this.get(&#x27;base64FileName&#x27;) &amp;&amp; this.get(&#x27;base64FileExtension&#x27;)));
+      this.$(&#x27;.flexberry-file-file-input&#x27;).change();
+    }
+  },
+
+  /**
+    Initializes {{#crossLink &quot;FlexberryFileComponent&quot;}}flexberry-file{{/crossLink}} component DOM-related properties.
+  */
+  didInsertElement() {
+    this._super(...arguments);
+
+    // Initialize SemanticUI modal dialog, and remember it in a component property,
+    // because after call to errorModalDialog.modal its html will disappear from DOM.
+    let errorModalDialog = this.$(&#x27;.flexberry-file-error-modal-dialog&#x27;);
+    errorModalDialog.modal(&#x27;setting&#x27;, &#x27;closable&#x27;, false);
+    this.set(&#x27;_errorModalDialog&#x27;, errorModalDialog);
+
+    // jQuery fileupload &#x27;add&#x27; callback.
+    let onFileAdd = (e, uploadData) =&gt; {
+      this.addFile(this, e, uploadData);
+    };
+
+    let onFileChange = (e, uploadData) =&gt; {
+      this.set(&#x27;_canLoadPreview&#x27;, true);
+      let fileName = &#x60;${this.get(&#x27;base64FileName&#x27;)}.${this.get(&#x27;base64FileExtension&#x27;)}&#x60;;
+      if (this.get(&#x27;base64Value&#x27;)) {
+        uploadData.files = [this._dataURLtoFile(this.get(&#x27;base64Value&#x27;), fileName)];
+        this.set(&#x27;base64Value&#x27;, null);
+        onFileAdd(e, uploadData);
+      }
+    };
+
+    // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
+    this.$(&#x27;.flexberry-file-file-input&#x27;).fileupload({
+      // Disable autoUpload.
+      autoUpload: false,
+
+      // Type of data that is expected back from the server.
+      dataType: &#x27;json&#x27;,
+
+      // Maximum number of files to be selected and uploaded.
+      maxNumberOfFiles: 1,
+
+      // Enable single file uploads.
+      singleFileUploads: true,
+
+      // Disable drag&amp;drop file adding.
+      dropZone: null,
+
+      // A string containing the URL to which the upload request should be sent.
+      url: this.get(&#x27;uploadUrl&#x27;),
+
+      // File add handler.
+      add: onFileAdd,
+
+      // File change handler. For base64 implmentation
+      change: onFileChange
+    });
+  },
+
+  /**
+    Changes url in jQuery fileupload when uploadUrl changed.
+  */
+  uploadUrlObserver: observer(&#x27;uploadUrl&#x27;, function() {
+    this.$(&#x27;.flexberry-file-file-input&#x27;).fileupload(
+    &#x27;option&#x27;,
+    &#x27;url&#x27;,
+    this.get(&#x27;uploadUrl&#x27;));
+    if (isNone(this.get(&#x27;_uploadData&#x27;))) {
+      this.set(&#x27;_uploadData&#x27;, this.get(&#x27;_uploadDataCopy&#x27;));
+    }
+
+    this.set(&#x27;_initialValue&#x27;, null);
+  }),
+
+  /**
+    Method converts base64 string to File
+
+    @method _dataURLtoFile
+    @param {String} dataUrl Base64 string
+    @param {String} fileName Filename for saving
+    @private
+   */
+  _dataURLtoFile(dataUrl, fileName) {
+    try {
+      let arr = dataUrl.split(&#x27;,&#x27;);
+      let mime = arr[0].match(/:(.*?);/)[1];
+      let bstr = atob(arr[1]);
+      let n = bstr.length;
+      let u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+
+      return new File([u8arr], fileName, { type: mime });
+    }
+    catch (error) {
+      this.showUploadErrorModalDialog(fileName, error.message);
+      return null;
+    }
+  },
+
+  /**
+    Destroys {{#crossLink &quot;FlexberryFileComponent&quot;}}flexberry-file{{/crossLink}} component.
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    this.$(&#x27;.flexberry-file-file-input&#x27;).fileupload(&#x27;destroy&#x27;);
+
+    // Unsubscribe from related model&#x27;s &#x27;preSave&#x27;event.
+    this._unsubscribeFromRelatedModelPresaveEvent();
+  },
+
+  /**
+    Removes selected file.
+
+    @method removeFile
+  */
+  removeFile() {
+    this.set(&#x27;_uploadData&#x27;, null);
+    this.set(&#x27;_uploadDataCopy&#x27;, null);
+    this.set(&#x27;value&#x27;, null);
+    this.set(&#x27;_previewImageAsBase64String&#x27;, null);
+    this.set(&#x27;base64Value&#x27;, null);
+  },
+
+  /**
+    Uploads selected file.
+
+    @method uploadFile
+  */
+  uploadFile() {
+    let file = this.get(&#x27;_selectedFile&#x27;);
+
+    if (isNone(file)) {
+      if (!this.get(&#x27;_hasFile&#x27;)) {
+        this.set(&#x27;value&#x27;, null);
+        this.set(&#x27;_initialValue&#x27;, null);
+      }
+
+      return null;
+    }
+
+    return new RSVP.Promise((resolve, reject) =&gt; {
+      this.set(&#x27;_uploadIsInProgress&#x27;, true);
+
+      let uploadData = this.get(&#x27;_uploadData&#x27;);
+      let initialValue = this.get(&#x27;_initialValue&#x27;);
+      if (!isNone(initialValue)) {
+        uploadData.formData = {
+          // Metadata about previously uploaded file.
+          previousFileDescription: initialValue
+        };
+      }
+
+      uploadData.submit().done((result, textStatus, jqXhr) =&gt; {
+        let value = jqXhr.responseText;
+
+        this.set(&#x27;value&#x27;, value);
+        this.set(&#x27;_initialValue&#x27;, copy(value, true));
+        this.set(&#x27;_uploadDataCopy&#x27;, this.get(&#x27;_uploadData&#x27;));
+        this.set(&#x27;_uploadData&#x27;, null);
+
+        if (!isNone(this.get(&#x27;uploadSuccess&#x27;))) {
+          this.get(&#x27;uploadSuccess&#x27;)({
+            uploadData: uploadData,
+            response: jqXhr,
+            value: value
+          });
+        }
+
+        resolve(this.get(&#x27;_jsonValue&#x27;));
+      }).fail((jqXhr, textStatus, errorThrown) =&gt; {
+        let errorContent = this.showUploadErrorModalDialog(file.name, errorThrown ? &#x27; (&#x27; + errorThrown + &#x27;)&#x27; : &#x27;&#x27;);
+        if (!isNone(this.get(&#x27;uploadFail&#x27;))) {
+          this.get(&#x27;uploadFail&#x27;)({
+            uploadData: uploadData,
+            response: jqXhr,
+            value: this.get(&#x27;value&#x27;)
+          });
+        }
+        reject(new Error(errorContent));
+      }).always(() =&gt; {
+        this.set(&#x27;_uploadIsInProgress&#x27;, false);
+      });
+    });
+  },
+
+  /**
+    Downloads previously uploaded file.
+
+    @method downloadFile
+  */
+  downloadFile() {
+    let fileName = this.get(&#x27;_jsonInitialValue.fileName&#x27;);
+    let fileUrl = this.get(&#x27;_jsonInitialValue.fileUrl&#x27;);
+    if (isBlank(fileUrl)) {
+      return null;
+    }
+
+    $.flexberry.downloadFile({
+      url: fileUrl,
+      headers: this.get(&#x27;headers&#x27;),
+      fileName: fileName,
+      openFileInNewWindowInsteadOfLoading: this.get(&#x27;openFileInNewWindowInsteadOfLoading&#x27;),
+      onSuccess: () =&gt; {
+        /* eslint-disable ember/closure-actions */
+        this.sendAction(&#x27;onDownloadSuccess&#x27;);
+        /* eslint-enable ember/closure-actions */
+      },
+      onError: (errorMessage) =&gt; {
+        this.showDownloadErrorModalDialog(fileName, errorMessage);
+      }
+    });
+  },
+
+  /**
+    Shows error modal dialog.
+
+    @method showErrorModalDialog
+    @param {String} errorCaption Error caption (window header caption).
+    @param {String} errorContent Error content (window body content).
+    @returns {String} Error content.
+  */
+  showErrorModalDialog(errorCaption, errorContent) {
+    let errorModalDialog = this.get(&#x27;_errorModalDialog&#x27;);
+    if (errorModalDialog &amp;&amp; errorModalDialog.modal) {
+      this.set(&#x27;_errorModalDialogCaption&#x27;, errorCaption);
+      this.set(&#x27;_errorModalDialogContent&#x27;, errorContent);
+      errorModalDialog.modal(&#x27;show&#x27;);
+    }
+
+    return errorContent;
+  },
+
+  /* eslint-disable no-unused-vars */
+  previewError(fileName) {
+    this.set(&#x27;_canLoadPreview&#x27;, false);
+  },
+  /* eslint-enable no-unused-vars */
+
+  /**
+    Shows file size errors if there were some.
+
+    @method showUploadErrorModalDialog
+    @param {String} fileName Added file name.
+    @param {String} actualFileSize Actual size of added file.
+    @param {String} maxFileSize Max file size allowed.
+    @param {String} sizeUnit Max file size unit.
+    @returns {String} Error content.
+  */
+  showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize, sizeUnit) {
+    let i18n = this.get(&#x27;i18n&#x27;);
+    let actualFileSizeRoundedString = actualFileSize.toFixed(1);
+    let errorCaption = i18n.t(&#x27;components.flexberry-file.add-file-error-caption&#x27;);
+    let errorContent = i18n.t(&#x27;components.flexberry-file.file-too-big-error-message&#x27;, {
+      fileName: fileName,
+      actualFileSize: actualFileSizeRoundedString,
+      maxFileSize: maxFileSize,
+      sizeUnit: sizeUnit
+    });
+
+    this.showErrorModalDialog(errorCaption, errorContent);
+
+    return errorContent;
+  },
+
+  /**
+    Shows file extension errors if there were some.
+
+    @method showFileExtensionErrorModalDialog
+    @param {String} fileName Added file name.
+    @returns {String} Error content.
+  */
+  showFileExtensionErrorModalDialog(fileName) {
+    let i18n = this.get(&#x27;i18n&#x27;);
+    let errorCaption = i18n.t(&#x27;components.flexberry-file.add-file-error-caption&#x27;);
+    let errorContent = i18n.t(&#x27;components.flexberry-file.file-extension-error-message&#x27;, {
+      fileName: fileName,
+    });
+
+    this.showErrorModalDialog(errorCaption, errorContent);
+
+    return errorContent;
+  },
+
+  /**
+    Shows errors if there were some during file upload.
+
+    @method showUploadErrorModalDialog
+    @param {String} fileName File name.
+    @param {String} errorMessage Message about error occurred during file upload.
+    @returns {String} Error content.
+  */
+  showUploadErrorModalDialog(fileName, errorMessage) {
+    let i18n = this.get(&#x27;i18n&#x27;);
+    let errorCaption = i18n.t(&#x27;components.flexberry-file.upload-file-error-caption&#x27;);
+    let errorContent = i18n.t(&#x27;components.flexberry-file.upload-file-error-message&#x27;, {
+      fileName: fileName,
+      errorMessage: errorMessage
+    });
+    if (this.get(&#x27;showModalDialogOnUploadError&#x27;)) {
+      this.showErrorModalDialog(errorCaption, errorContent);
+    }
+
+    return errorContent;
+  },
+
+  /**
+    Shows errors if there were some during file download.
+
+    @method showDownloadErrorModalDialog
+    @param {String} fileName File name.
+    @param {String} errorMessage Message about error occurred during file download.
+  */
+  showDownloadErrorModalDialog(fileName, errorMessage) {
+    let i18n = this.get(&#x27;i18n&#x27;);
+    let errorCaption = i18n.t(&#x27;components.flexberry-file.download-file-error-caption&#x27;);
+    let errorContent = i18n.t(&#x27;components.flexberry-file.download-file-error-message&#x27;, {
+      fileName: fileName,
+      errorMessage: errorMessage
+    });
+
+    if (this.get(&#x27;showModalDialogOnDownloadError&#x27;)) {
+      this.showErrorModalDialog(errorCaption, errorContent);
+    }
+
+    return errorContent;
+  },
+
+  /**
+    Handles related model&#x27;s &#x27;preSave&#x27; event.
+
+    @method _onRelatedModelPreSave
+    @param {Object} e Related model&#x27;s &#x27;preSave&#x27; event arguments.
+    @param {Object[]} e.promises Related model&#x27;s &#x27;preSave&#x27; operations promises array.
+    @private
+  */
+  _onRelatedModelPreSave(e) {
+    // Remove uploaded file from server, if related model is deleted, otherwise upload selected file to server.
+    let fileOperationPromise = this.get(&#x27;relatedModel.isDeleted&#x27;) ? null : this.uploadFile();
+
+    // Push file operation promise to events object&#x27;s &#x27;promises&#x27; array
+    // (to keep model waiting until operation will be finished).
+    if (!isNone(fileOperationPromise) &amp;&amp; !isNone(e) &amp;&amp; isArray(e.promises)) {
+      e.promises.push(fileOperationPromise);
+    }
+  },
+
+  /**
+    Subscribes on related model&#x27;s &#x27;preSave&#x27; event.
+
+    @method _subscribeOnRelatedModelPreSaveEvent
+    @private
+  */
+  _subscribeOnRelatedModelPreSaveEvent() {
+    let uploadOnModelPreSave = this.get(&#x27;uploadOnModelPreSave&#x27;);
+    if (!uploadOnModelPreSave) {
+      return;
+    }
+
+    let relatedModelOnPropertyType = typeOf(this.get(&#x27;relatedModel.on&#x27;));
+    assert(&#x60;Wrong type of \&#x60;relatedModel.on\&#x60; propery: actual type is ${relatedModelOnPropertyType}, but function is expected.&#x60;,
+      relatedModelOnPropertyType === &#x27;function&#x27;);
+
+    let relatedModel = this.get(&#x27;relatedModel&#x27;);
+    relatedModel.on(&#x27;preSave&#x27;, this.get(&#x27;_onRelatedModelPreSave&#x27;));
+  },
+
+  /**
+    Unsubscribes from related model&#x27;s &#x27;preSave&#x27; event.
+
+    @method _unsubscribeFromRelatedModelPresaveEvent
+    @private
+  */
+  _unsubscribeFromRelatedModelPresaveEvent() {
+    let uploadOnModelPreSave = this.get(&#x27;uploadOnModelPreSave&#x27;);
+    if (!uploadOnModelPreSave) {
+      return;
+    }
+
+    let relatedModelOffPropertyType = typeOf(this.get(&#x27;relatedModel.off&#x27;));
+    assert(&#x60;Wrong type of \&#x60;relatedModel.off\&#x60; propery: actual type is ${relatedModelOffPropertyType}, but function is expected.&#x60;,
+      relatedModelOffPropertyType === &#x27;function&#x27;);
+
+    let relatedModel = this.get(&#x27;relatedModel&#x27;);
+    relatedModel.off(&#x27;preSave&#x27;, this.get(&#x27;_onRelatedModelPreSave&#x27;));
+  },
+
+  /**
+    Defines valid of file type.
+
+    @method _isValidTypeFile
+    @param {String} fileType file type as MIME TYPES.
+    @param {String} accept available MIME TYPES.
+    @private
+  */
+  _isValidTypeFile(fileType, accept) {
+    const isValidTypeFileCustom = this.get(&#x27;isValidTypeFileCustom&#x27;);
+
+    if (isValidTypeFileCustom &amp;&amp; (typeof isValidTypeFileCustom === &#x27;function&#x27;)) {
+      return isValidTypeFileCustom(fileType, accept);
+    }
+
+    const isFileTypeUndefined = fileType === &#x27;&#x27;;
+    const isFileTypeAvailable = !accept || (accept.indexOf(fileType) !== -1 &amp;&amp; !isFileTypeUndefined);
+
+    return isFileTypeAvailable;
+  },
+
+  /**
+    Value change handler.
+
+    @method _valueDidChange
+    @private
+  */
+  _valueDidChange: observer(&#x27;value&#x27;, function() {
+    const value = this.get(&#x27;value&#x27;);
+    if (!value) {
+      this.removeFile();
+    }
+
+    if(!isNone(this.get(&#x27;fileChange&#x27;))){
+      this.get(&#x27;fileChange&#x27;)({
+        uploadData: this.get(&#x27;_uploadData&#x27;),
+        value: value
+      });
+    }
+  }),
+
+  /**
+    Upload data change handler.
+
+    @method _uploadDataDidChange
+    @private
+  */
+  _uploadDataDidChange: observer(&#x27;_uploadData&#x27;, function() {
+    run(() =&gt; {
+      const file = this.get(&#x27;_selectedFile&#x27;);
+
+      if (!isNone(file)) {
+        const fileJson = JSON.stringify({
+          fileName: file.name,
+          fileSize: file.size,
+          fileMimeType: file.type
+        })
+
+        if (fileJson !== this.get(&#x27;value&#x27;)) {
+          this.set(&#x27;_previewImageAsBase64String&#x27;, null);
+        }
+
+        this.set(&#x27;value&#x27;, fileJson);
+      } else {
+        if (this.get(&#x27;_uploadData&#x27;)) {
+          this.set(&#x27;_previewImageAsBase64String&#x27;, null);
+        }
+      }
+    });
+  }),
+
+  /**
+    Preview options change handler.
+
+    @method _previewOptionsDidChange
+    @private
+  */
+  _previewOptionsDidChange: observer(&#x27;showPreview&#x27;, &#x27;_selectedFile&#x27;, &#x27;_jsonValue.previewUrl&#x27;, function() {
+    if (!this.get(&#x27;showPreview&#x27;) || !isBlank(this.get(&#x27;_previewImageAsBase64String&#x27;))) {
+      return;
+    }
+
+    let file = this.get(&#x27;_selectedFile&#x27;);
+    if (!isNone(file)) {
+      let reader = new FileReader();
+      reader.onload = (e) =&gt; {
+        this.set(&#x27;_previewImageAsBase64String&#x27;, e.target.result);
+        this.set(&#x27;_previewDownloadIsInProgress&#x27;, false);
+      };
+
+      this.set(&#x27;_previewDownloadIsInProgress&#x27;, true);
+      reader.readAsDataURL(file);
+
+      return;
+    }
+
+    let previewUrl = this.get(&#x27;_jsonValue.previewUrl&#x27;);
+    if (!isBlank(previewUrl)) {
+      // Download file preview.
+      this.set(&#x27;_previewDownloadIsInProgress&#x27;, true);
+
+      /* eslint-disable no-unused-vars */
+      $.ajax(previewUrl).done((data, textStatus, jqXHR) =&gt; {
+        bind(this, this.set(&#x27;_previewImageAsBase64String&#x27;, data));
+      }).fail((jqXHR, textStatus, errorThrown) =&gt; {
+        this.previewError(this.get(&#x27;_jsonValue.fileName&#x27;));
+      }).always(() =&gt; {
+        this.set(&#x27;_previewDownloadIsInProgress&#x27;, false);
+      });
+      /* eslint-enable no-unused-vars */
+    }
+  })
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/routes/edit-form.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/routes/edit-form.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+ */
+
+import Ember from &#x27;ember&#x27;;
+import ProjectedModelFormRoute from &#x27;./projected-model-form&#x27;;
+import ReloadListMixin from &#x27;../mixins/reload-list-mixin&#x27;;
+import LimitedRouteMixin from &#x27;../mixins/limited-route&#x27;;
+import SortableRouteMixin from &#x27;../mixins/sortable-route&#x27;;
+import FlexberryGroupeditRouteMixin from &#x27;../mixins/flexberry-groupedit-route&#x27;;
+import FlexberryObjectlistviewRouteMixin from &#x27;../mixins/flexberry-objectlistview-route&#x27;;
+import FlexberryObjectlistviewHierarchicalRouteMixin from &#x27;../mixins/flexberry-objectlistview-hierarchical-route&#x27;;
+import ErrorableRouteMixin from &#x27;../mixins/errorable-route&#x27;;
+
+/**
+  Base route for the Edit Forms.
+
+  This class re-exports to the application as &#x60;/routes/edit-form&#x60;.
+  So, you can inherit from &#x60;./edit-form&#x60;, even if file &#x60;app/routes/edit-form.js&#x60; is not presented in the application.
+
+  Example:
+  &#x60;&#x60;&#x60;javascript
+  // app/routes/employee.js
+  import EditFormRoute from &#x27;./edit-form&#x27;;
+  export default EditFormRoute.extend({
+  });
+  &#x60;&#x60;&#x60;
+
+  If you want to add some common logic on all Edit Forms, you can override &#x60;app/routes/edit-form.js&#x60; as follows:
+  &#x60;&#x60;&#x60;javascript
+  // app/routes/edit-form.js
+  import EditFormRoute from &#x27;ember-flexberry/routes/edit-form&#x27;;
+  export default EditFormRoute.extend({
+  });
+  &#x60;&#x60;&#x60;
+
+  @class EditFormRoute
+  @extends ProjectedModelForm
+  @uses FlexberryGroupeditRouteMixin
+ */
+export default ProjectedModelFormRoute.extend(
+FlexberryObjectlistviewRouteMixin,
+FlexberryGroupeditRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin,
+ErrorableRouteMixin,
+LimitedRouteMixin,
+SortableRouteMixin,
+ReloadListMixin, {
+  actions: {
+    /**
+      It sends message about transition to corresponding controller.
+
+      The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
+      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
+
+      @method actions.willTransition
+      @param {Object} transition
+     */
+    willTransition(transition) {
+      this._super(transition);
+      this.controller.send(&#x27;routeWillTransition&#x27;);
+    },
+  },
+
+  /**
+    Configuration hash for this route&#x27;s queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+
+    @property queryParams
+    @type Object
+   */
+  queryParams: {
+    page: { refreshModel: false },
+    perPage: { refreshModel: false },
+    sort: { refreshModel: false },
+    filter: { refreshModel: false },
+    filterCondition: { refreshModel: false }
+  },
+
+  /**
+    Route name corresponding edit form.
+
+    @property parentRoute
+    @type String
+  */
+  parentRoute: undefined,
+
+  /**
+    Route id corresponding edit form.
+
+    @property parentRouteRecordId
+    @type String
+  */
+  parentRouteRecordId: undefined,
+
+  /**
+    Suffix for new route (has value only on new routes).
+
+    @property newSuffix
+    @type String
+  */
+  newSuffix: undefined,
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: Ember.inject.service(),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+
+    @method beforeModel
+    @param {Transition} transition
+    @return {Promise}
+  */
+  beforeModel(transition) {
+    this._super(...arguments);
+
+    if (!Ember.isNone(transition.queryParams.parentParameters)) {
+      let thisRouteName = transition.queryParams.parentParameters.parentRoute;
+      let thisRecordId = transition.queryParams.parentParameters.parentRouteRecordId;
+      if (!Ember.isNone(thisRouteName) || !Ember.isNone(thisRecordId)) {
+        this.set(&#x27;parentRoute&#x27;, thisRouteName);
+        this.set(&#x27;parentRouteRecordId&#x27;, thisRecordId);
+      }
+    }
+
+    let webPage = transition.targetName;
+    let newSuffix = this.get(&#x27;newSuffix&#x27;);
+    if (!Ember.isBlank(newSuffix) &amp;&amp; webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
+      webPage = webPage.substr(0, webPage.length - newSuffix.length);
+    }
+
+    let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get(&#x27;developerUserSettings&#x27;) || {};
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case &#x27;string&#x27;:
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case &#x27;object&#x27;:
+          break;
+        default:
+          Ember.assert(&#x27;Component description &#x27; + &#x27;developerUserSettings.&#x27; + componentName +
+            &#x27;in /app/routes/&#x27; + transition.targetName + &#x27;.js must have types object or string&#x27;, false);
+      }
+      nComponents += 1;
+    }
+
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
+    return userSettingsService.setDeveloperUserSettings(developerUserSettings);
+  },
+
+  /**
+    A hook you can implement to convert the URL into the model for this route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+
+    @method model
+    @param {Object} params
+    @param {Object} transition
+   */
+  model(params, transition) {
+    this._super.apply(this, arguments);
+
+    let modelName = transition.queryParams.modelName || this.get(&#x27;modelName&#x27;);
+    let modelProjName = this.get(&#x27;modelProjection&#x27;);
+
+    // Get data from service in order to decide if it is necessary to reload data or not.
+    // If already visited detail&#x27;s route is observed or it is come back to agregators&#x27;s route,
+    // it is not necessary (otherwise data merge with loaded data can occur occasionally).
+    let flexberryDetailInteractionService = this.get(&#x27;flexberryDetailInteractionService&#x27;);
+    let modelCurrentNotSaved = flexberryDetailInteractionService.get(&#x27;modelCurrentNotSaved&#x27;);
+    let modelSelectedDetail = flexberryDetailInteractionService.get(&#x27;modelSelectedDetail&#x27;);
+    let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail &amp;&amp; modelSelectedDetail.get(&#x27;hasDirtyAttributes&#x27;)));
+
+    // TODO: now &#x27;findRecord&#x27; at ember-flexberry-projection not support &#x27;reload: false&#x27; flag.
+    let findRecordParameters = { reload: needReload, projection: modelProjName };
+
+    // :id param defined in router.js
+    return this.store.findRecord(modelName, params.id, findRecordParameters);
+  },
+
+  /**
+    A hook you can use to reset controller values either when the model changes or the route is exiting.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_resetController).
+
+    @method resetController
+    @param {Ember.Controller} controller
+    @param {Boolean} isExisting
+    @param {Object} transition
+   */
+  resetController(controller, isExisting, transition) {
+    this._super.apply(this, arguments);
+    controller.set(&#x27;readonly&#x27;, false);
+    controller.set(&#x27;parentRouteRecordId&#x27;, undefined);
+    let modelCurrentAgregators = controller.get(&#x27;modelCurrentAgregators&#x27;);
+    let keptAgregators = modelCurrentAgregators &amp;&amp; Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
+
+    controller.send(&#x27;dismissErrorMessages&#x27;);
+    controller.set(&#x27;modelCurrentAgregatorPathes&#x27;, undefined);
+    controller.set(&#x27;modelCurrentAgregators&#x27;, undefined);
+
+    // If flag &#x27;modelNoRollBack&#x27; is set, leave current model as is and remove flag.
+    if (controller.get(&#x27;modelNoRollBack&#x27;) === true) {
+      controller.set(&#x27;modelNoRollBack&#x27;, false);
+      return;
+    }
+
+    // If flag &#x27;modelNoRollBack&#x27; is not set, we have to roll back this model and its agregators.
+    let modelsToRollBack;
+    let model = controller.get(&#x27;model&#x27;);
+    if (this.get(&#x27;flexberryDetailInteractionService&#x27;).hasValues(keptAgregators)) {
+      keptAgregators.push(model);
+      keptAgregators.reverse();
+      modelsToRollBack = keptAgregators;
+    } else {
+      modelsToRollBack = [model];
+    }
+
+    // Roll back all found agregators and its has-many relations.
+    modelsToRollBack.forEach(function(processedModel) {
+      if (processedModel) {
+        processedModel.rollbackAll();
+      }
+    });
+  },
+
+  /**
+    A hook you can use to setup the controller for the current route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+
+    @method setupController
+    @param {Ember.Controller} controller
+    @param {Object} model
+   */
+  setupController(controller, model) {
+    this._super(...arguments);
+
+    // Define &#x27;modelProjection&#x27; for controller instance.
+    let modelClass = model.constructor;
+    let modelProjName = this.get(&#x27;modelProjection&#x27;);
+    let proj = modelClass.projections.get(modelProjName);
+    controller.set(&#x27;modelProjection&#x27;, proj);
+    controller.set(&#x27;routeName&#x27;, this.get(&#x27;routeName&#x27;));
+    controller.set(&#x27;developerUserSettings&#x27;, this.get(&#x27;developerUserSettings&#x27;));
+    if (Ember.isNone(controller.get(&#x27;defaultDeveloperUserSettings&#x27;))) {
+      controller.set(&#x27;defaultDeveloperUserSettings&#x27;, Ember.$.extend(true, {}, this.get(&#x27;developerUserSettings&#x27;)));
+    }
+
+    this.get(&#x27;appState&#x27;).reset();
+
+    let parentRoute = this.get(&#x27;parentRoute&#x27;);
+    let parentRouteRecordId = this.get(&#x27;parentRouteRecordId&#x27;);
+    if (!Ember.isNone(parentRoute) || !Ember.isNone(parentRouteRecordId)) {
+      controller.set(&#x27;parentRoute&#x27;, parentRoute);
+      controller.set(&#x27;parentRouteRecordId&#x27;, parentRouteRecordId);
+    }
+
+    let flexberryDetailInteractionService = this.get(&#x27;flexberryDetailInteractionService&#x27;);
+    let modelCurrentAgregatorPath = flexberryDetailInteractionService.get(&#x27;modelCurrentAgregatorPathes&#x27;);
+    let modelCurrentAgregator = flexberryDetailInteractionService.get(&#x27;modelCurrentAgregators&#x27;);
+    let modelLastUpdatedDetail = flexberryDetailInteractionService.get(&#x27;modelLastUpdatedDetail&#x27;);
+    let saveBeforeRouteLeave = flexberryDetailInteractionService.get(&#x27;saveBeforeRouteLeave&#x27;);
+
+    flexberryDetailInteractionService.set(&#x27;modelSelectedDetail&#x27;, undefined);
+    flexberryDetailInteractionService.set(&#x27;modelCurrentAgregators&#x27;, undefined);
+    flexberryDetailInteractionService.set(&#x27;modelCurrentAgregatorPathes&#x27;, undefined);
+    flexberryDetailInteractionService.set(&#x27;saveBeforeRouteLeave&#x27;, undefined);
+
+    flexberryDetailInteractionService.set(&#x27;modelCurrentNotSaved&#x27;, undefined);
+    flexberryDetailInteractionService.set(&#x27;modelLastUpdatedDetail&#x27;, undefined);
+
+    if (modelLastUpdatedDetail &amp;&amp;
+          ((modelLastUpdatedDetail.get(&#x27;isDeleted&#x27;) &amp;&amp; modelLastUpdatedDetail.get(&#x27;id&#x27;)) ||
+              modelLastUpdatedDetail.get(&#x27;hasDirtyAttributes&#x27;))) {
+      // If detail changed, agregator has to be marked as changed.
+      model.makeDirty();
+    }
+
+    let returnToAgregatorRoute = controller.get(&#x27;returnToAgregatorRoute&#x27;);
+    if (!returnToAgregatorRoute) {
+      // There is no need to set parameters to return to agregator.
+      return;
+    }
+
+    if (flexberryDetailInteractionService.hasValues(modelCurrentAgregatorPath)) {
+      controller.set(&#x27;modelCurrentAgregatorPathes&#x27;, modelCurrentAgregatorPath);
+      controller.set(&#x27;modelCurrentAgregators&#x27;, modelCurrentAgregator);
+      controller.set(&#x27;saveBeforeRouteLeave&#x27;, saveBeforeRouteLeave);
+    }
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

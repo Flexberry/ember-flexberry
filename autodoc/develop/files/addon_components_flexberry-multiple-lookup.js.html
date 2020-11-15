@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-multiple-lookup.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-multiple-lookup.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+import { A } from &#x27;@ember/array&#x27;;
+import { computed, observer, get, set } from &#x27;@ember/object&#x27;;
+import { copy } from &#x27;@ember/object/internals&#x27;;
+import { inject as service } from &#x27;@ember/service&#x27;;
+import { run } from &#x27;@ember/runloop&#x27;;
+import { isNone } from &#x27;@ember/utils&#x27;;
+import { debug, assert } from &#x27;@ember/debug&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import { getRelationType } from &#x27;ember-flexberry-data/utils/model-functions&#x27;;
+import Builder from &#x27;ember-flexberry-data/query/builder&#x27;;
+import Condition from &#x27;ember-flexberry-data/query/condition&#x27;;
+import { BasePredicate, StringPredicate, ComplexPredicate } from &#x27;ember-flexberry-data/query/predicate&#x27;;
+
+export default FlexberryBaseComponent.extend({
+  classNames: [&#x27;multiple-lookup&#x27;],
+  store: service(),
+
+  /**
+   * All records.
+   */
+  records: null,
+
+  /**
+   * Count of dragover events.
+   */
+  dragCount: 0,
+
+  /**
+   * Filtered records.
+   */
+  filteredRecords: computed(&#x27;records.@each.isDeleted&#x27;, function () {
+    return this.get(&#x27;records&#x27;).filterBy(&#x27;isDeleted&#x27;, false);
+  }),
+
+  /**
+   * Draggable records.
+   */
+  draggableRecords: computed(&#x27;records.[]&#x27;, function () {
+    return this.get(&#x27;records&#x27;).filterBy(&#x27;isDeleted&#x27;, false);
+  }),
+
+  /**
+   * New value path.
+   */
+  newValuePropertyName: &#x27;&#x27;,
+
+  /**
+   * Attribute name for tag value.
+   */
+  tagDisplayAttributeName: null,
+
+  /**
+   * Value.
+   */
+  value: null,
+
+  /**
+   * Lookup value input element.
+   */
+  lookupInputElement: null,
+
+  /**
+   * Flag: all elements in one column.
+   */
+  isColumnMode: false,
+
+  /**
+   * Minimum characters for autocomplete search.
+   */
+  minCharacters: 1,
+
+  /**
+   * Maximum characters for autocomplete search.
+   */
+  maxResults: 10,
+
+  /**
+   * Sorting direction.
+   */
+  sorting: &#x27;asc&#x27;,
+
+  /**
+   * Lookup visibility.
+   */
+  chooseComponentVisibility: true,
+
+  /**
+   * Lookup visibility based on readonly and visibility flags.
+   */
+  isChooseComponentVisible: computed(&#x27;chooseComponentVisibility&#x27;, &#x27;readonly&#x27;, function () {
+    const isVisible = this.get(&#x27;chooseComponentVisibility&#x27;);
+    const readonly = this.get(&#x27;readonly&#x27;);
+
+    return isVisible &amp;&amp; !readonly;
+  }),
+
+  /**
+    Default settings for tags.
+
+    @property defaultTagConfig
+    @type Object
+
+    @param {Boolean} [canBeDeleted=true] The tag can be deleted
+    @param {Boolean} [canBeSelected=true] The tag can be selected
+    @param {String} [customClass=&#x27;&#x27;] Custom css classes for the tag
+  */
+  defaultTagConfig: undefined,
+
+  /**
+    Hook for configurate tag.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-multiple-lookup
+        ...
+        configurateTag=(action &quot;configurateTag&quot;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;js
+      // app/controllers/employees.js
+      import ListFormController from &#x27;./list-form&#x27;;
+
+      export default ListFormController.extend({
+        actions: {
+          configurateTag(tagConfig, record) {
+            set(tagConfig, &#x27;canBeDeleted&#x27;, false);
+            if (record === this.get(&#x27;myFavoriteRecord&#x27;)) {
+              set(tagConfig, &#x27;canBeSelected&#x27;, false);
+              set(tagConfig, &#x27;customClass&#x27;, &#x27;my-fav-record&#x27;);
+            }
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+    @method configurateTag
+
+    @param {Object} tagConfig Settings for tag.
+    @param {DS.Model} record The record in tag.
+  */
+  configurateTag: undefined,
+
+  /**
+   * Add new record by value.
+   */
+  addNewRecordByValue() {
+    this.addNewRecord(&#x27;value&#x27;);
+  },
+
+  /**
+   * Initialization of adding a record by field relatedModel.{relationName}.
+   */
+  initAddNewRecordByNewValuePropertyName() {
+    run.debounce(this, this.addNewRecordByNewValuePropertyName, 500);
+  },
+
+  /**
+   * Adding a record by field relatedModel.{relationName}.
+   */
+  addNewRecordByNewValuePropertyName() {
+    this.addNewRecord(this.get(&#x27;newValuePropertyName&#x27;));
+  },
+
+  /**
+   * Adding a record.
+   *
+   * @param propertyPath
+   */
+  addNewRecord(propertyPath) {
+    const newValue = this.get(propertyPath);
+    if (!isNone(newValue)) {
+      if (isNone(this.get(&#x27;filteredRecords&#x27;).findBy(&#x60;${this.get(&#x27;relationName&#x27;)}.id&#x60;, get(newValue, &#x27;id&#x27;)))) {
+        run.next(() =&gt; {
+          this.add(newValue);
+        });
+      }
+
+      this.set(propertyPath, null);
+    }
+  },
+
+  /**
+    Creates an instance of the Builder class with selection and sorting specified in the component parameters.
+   *
+    @function _createQueryBuilder
+    @param {DS.Store} store
+    @param {string} modelName
+    @param {string} projection
+    @param {string} order
+    @returns {Builder}
+   */
+  _createQueryBuilder(store, modelName, projection, order) {
+    const sorting = this.get(&#x27;sorting&#x27;);
+    const displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+    const orderAttributeName = this.get(&#x27;orderAttributeName&#x27;);
+
+    const builder = new Builder(store, modelName);
+
+    if (projection) {
+      builder.selectByProjection(projection);
+    } else {
+      builder.select(displayAttributeName);
+    }
+
+    builder.orderBy(&#x60;${order ? order : &#x60;${orderAttributeName ? orderAttributeName : displayAttributeName} ${sorting}&#x60;}&#x60;);
+
+    return builder;
+  },
+
+  /**
+    Concatenates predicates.
+   *
+    @function _conjuctPredicates
+    @param {BasePredicate} limitPredicate The first predicate to concatenate.
+    @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+    @param {Function} lookupAdditionalLimitFunction Function return BasePredicate to concatenate.
+    @returns {BasePredicate} Concatenation of two predicates.
+    @throws {Error} Throws error if any of parameter predicates has wrong type.
+   */
+  _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
+    const limitArray = A();
+
+    if (limitPredicate) {
+      if (limitPredicate instanceof BasePredicate) {
+        limitArray.pushObject(limitPredicate);
+      } else {
+        throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+    }
+
+    if (autocompletePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
+        limitArray.pushObject(autocompletePredicate);
+      } else {
+        throw new Error(&#x27;Autocomplete predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+    }
+
+    if (lookupAdditionalLimitFunction) {
+      if ((lookupAdditionalLimitFunction instanceof Function)) {
+        const compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get(&#x27;relatedModel&#x27;));
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error(&#x27;lookupAdditionalLimitFunction must return BasePredicate.&#x27;);
+          }
+        }
+      } else {
+        throw new Error(&#x27;lookupAdditionalLimitFunction must to be function.&#x27;);
+      }
+    }
+
+    if (limitArray.length &gt; 1) {
+      return new ComplexPredicate(Condition.And, ...limitArray);
+    } else {
+      return limitArray[0];
+    }
+  },
+
+  /**
+   * Swap element in records by id.
+   * 
+   * @function _swapRecordElementsById
+   * @param {string} activeElementId Id of element to move.
+   * @param {string} currentElementId Id of element for insert position.
+   */
+  _swapRecordElementsById(activeElementId, currentElementId) {
+    const relationName = this.get(&#x27;relationName&#x27;);
+    let records = this.get(&#x27;records&#x27;);
+    let activeElement = records.findBy(relationName + &#x27;.id&#x27;, activeElementId);
+    let currentElement = records.findBy(relationName + &#x27;.id&#x27;, currentElementId);
+    let activeElementIndex = records.indexOf(activeElement);
+    let increaseIndex = activeElementIndex &lt; records.indexOf(currentElement) ? 1 : 0;
+
+    records.removeObject(activeElement);
+
+    let newIndex = records.indexOf(currentElement);
+
+    records.insertAt(newIndex + increaseIndex, activeElement);
+
+    this.set(&#x27;records&#x27;, records);
+    this.set(&#x27;dragCount&#x27;, this.get(&#x27;dragCount&#x27;) + 1);
+  },
+
+  /**
+   * Building a property to display selected values.
+   */
+  buildDisplayValue: observer(&#x27;filteredRecords.[]&#x27;, &#x27;tagDisplayAttributeName&#x27;, &#x27;relationName&#x27;, &#x27;displayAttributeName&#x27;, function () {
+    this.get(&#x27;filteredRecords&#x27;).forEach((record) =&gt; {
+      set(record, &#x27;tagDisplayValue&#x27;, this.getRecordDisplayValue(record));
+      set(record, &#x27;tagIdValue&#x27;, get(record, this.get(&#x27;relationName&#x27;) + &#x27;.id&#x27;));
+    });
+  }),
+
+  /**
+   * Building a tag configuration property.
+   */
+  buildConfigurateTags: observer(&#x27;filteredRecords.[]&#x27;, &#x27;tagDisplayAttributeName&#x27;, &#x27;relationName&#x27;, &#x27;displayAttributeName&#x27;, function () {
+    let configurateTag = this.get(&#x27;configurateTag&#x27;);
+
+    this.get(&#x27;filteredRecords&#x27;).forEach((record) =&gt; {
+      let tagConfig = copy(this.get(&#x27;defaultTagConfig&#x27;));
+      set(record, &#x60;${this.get(&#x27;componentName&#x27;)}_tagConfig&#x60;, tagConfig);
+
+      if (configurateTag) {
+        assert(&#x27;configurateTag must be a function&#x27;, typeof configurateTag === &#x27;function&#x27;);
+        configurateTag(tagConfig, record);
+      }
+    });
+  }),
+
+  /**
+    Object with lookup properties to send on remove action.
+   *
+    @property removeData
+    @type Object
+    @readOnly
+   */
+  removeData: computed(&#x27;relationName&#x27;, &#x27;relatedModel&#x27;, function () {
+    return {
+      relationName: this.get(&#x27;relationName&#x27;),
+      modelToLookup: this.get(&#x27;relatedModel&#x27;)
+    };
+  }),
+
+  /**
+   * Get the value to display in the tag for the list item.
+   *
+   * @param record
+   */
+  getRecordDisplayValue(record) {
+    const tagDisplayAttributeName = this.get(&#x27;tagDisplayAttributeName&#x27;);
+    return !isNone(tagDisplayAttributeName)
+      ? get(record, tagDisplayAttributeName)
+      : get(record, this.get(&#x27;relationName&#x27;) + &#x27;.&#x27; + this.get(&#x27;displayAttributeName&#x27;));
+  },
+
+  init() {
+    this._super(...arguments);
+    const newValuePropertyName = &#x27;relatedModel.&#x27; + this.get(&#x27;relationName&#x27;);
+    this.set(&#x27;newValuePropertyName&#x27;, newValuePropertyName);
+    this.set(&#x27;value&#x27;, null);
+    this.get(&#x27;filteredRecords&#x27;).forEach((record) =&gt; {
+      set(record, &#x27;tagDisplayValue&#x27;, this.getRecordDisplayValue(record));
+      set(record, &#x27;tagIdValue&#x27;, get(record, this.get(&#x27;relationName&#x27;) + &#x27;.id&#x27;));
+    });
+    this.addObserver(&#x27;value&#x27;, this.addNewRecordByValue);
+    this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);
+    this.set(&#x27;defaultTagConfig&#x27;, {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: &#x27;&#x27;,
+    });
+    this.buildConfigurateTags();
+  },
+
+  actions: {
+    updateLookupValue(updateData) {
+      this.get(&#x27;currentController&#x27;).send(&#x27;updateLookupValue&#x27;, updateData);
+    },
+
+    showLookupDialog(chooseData) {
+      this.get(&#x27;currentController&#x27;).send(&#x27;showLookupDialog&#x27;, chooseData);
+    },
+
+    delete(record) {
+      this.delete(record);
+    },
+
+    preview(record) {
+      this.preview(record);
+    },
+  },
+
+  didRender() {
+    const _this = this;
+    const store = this.get(&#x27;store&#x27;);
+    const relatedModel = this.get(&#x27;relatedModel&#x27;);
+
+    const relationName = this.get(&#x27;relationName&#x27;);
+    if (isNone(relationName)) {
+      // We consider that the component works in block form.
+      return;
+    }
+
+    const relationModelName = getRelationType(relatedModel, relationName);
+
+    const displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+    if (!displayAttributeName) {
+      throw new Error(&#x27;&#x60;displayAttributeName&#x60; is required property for autocomplete mode in &#x60;flexberry-lookup&#x60;.&#x27;);
+    }
+
+    const minCharacters = this.get(&#x27;minCharacters&#x27;);
+    if (!minCharacters || typeof (minCharacters) !== &#x27;number&#x27; || minCharacters &lt;= 0) {
+      throw new Error(&#x27;minCharacters has wrong value.&#x27;);
+    }
+
+    const maxResults = this.get(&#x27;maxResults&#x27;);
+    if (!maxResults || typeof (maxResults) !== &#x27;number&#x27; || maxResults &lt;= 0) {
+      throw new Error(&#x27;maxResults has wrong value.&#x27;);
+    }
+
+    // Add select first autocomplete result by enter click.
+    this.$(&#x27;input&#x27;).keyup(function (event) {
+      if (event.keyCode === 13) {
+        const result = _this.$(&#x27;div.results.transition.visible&#x27;);
+        const activeField = result.children(&#x27;a.result.active&#x27;);
+        const resultField = result.children(&#x27;a.result&#x27;)[0];
+        if (resultField &amp;&amp; activeField.length === 0) {
+          resultField.click();
+        }
+      }
+    });
+
+    let state;
+    const i18n = this.get(&#x27;i18n&#x27;);
+    this.$(&#x27;.ui.search&#x27;).search({
+      minCharacters: minCharacters,
+      maxResults: maxResults + 1,
+      cache: false,
+      templates: {
+        message: function () {
+          return &#x27;&lt;div class=&quot;message empty&quot;&gt;&lt;div class=&quot;header&quot;&gt;&#x27; +
+            i18n.t(&#x27;components.flexberry-lookup.dropdown.messages.noResultsHeader&#x27;).string +
+            &#x27;&lt;/div&gt;&lt;div class=&quot;description&quot;&gt;&#x27; +
+            i18n.t(&#x27;components.flexberry-lookup.dropdown.messages.noResults&#x27;).string +
+            &#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;
+        }
+      },
+      apiSettings: {
+        /**
+          Mocks call to the data source,
+          Uses query language and store for loading data explicitly.
+         *
+          @param {object} settings
+          @param {Function} callback
+         */
+        responseAsync(settings, callback) {
+          // Prevent async data-request from being sent in readonly mode.
+          if (get(_this, &#x27;readonly&#x27;)) {
+            return;
+          }
+
+          const autocompleteProjection = get(_this, &#x27;autocompleteProjection&#x27;);
+          const autocompleteOrder = get(_this, &#x27;autocompleteOrder&#x27;);
+
+          const builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
+
+          const autocompletePredicate = settings.urlData.query ?
+            new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+            undefined;
+          const resultPredicate =
+            _this._conjuctPredicates(get(_this, &#x27;lookupLimitPredicate&#x27;), get(_this, &#x27;lookupAdditionalLimitFunction&#x27;), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          const maxRes = get(_this, &#x27;maxResults&#x27;);
+          let iCount = 1;
+          builder.top(maxRes + 1);
+          builder.count();
+
+          run(() =&gt; {
+            store.query(relationModelName, builder.build()).then((records) =&gt; {
+              callback({
+                success: true,
+                results: records.map(i =&gt; {
+                  const attributeName = get(i, displayAttributeName);
+                  if (iCount &gt; maxRes &amp;&amp; records.meta.count &gt; maxRes) {
+                    return {
+                      title: &#x27;...&#x27;
+                    };
+                  } else {
+                    iCount += 1;
+                    return {
+                      title: attributeName,
+                      instance: i
+                    };
+                  }
+                })
+              });
+            }, () =&gt; {
+              callback({ success: false });
+            });
+          });
+        }
+      },
+
+      /**
+       * Handles opening of the autocomplete list.
+       * Sets current state (taht autocomplete list is opened) for future purposes.
+       */
+      onResultsOpen() {
+        state = &#x27;opened&#x27;;
+
+        run(() =&gt; {
+          debug(&#x60;Flexberry Lookup::autocomplete state = ${state}&#x60;);
+        });
+      },
+
+      /**
+       * Handles selection of item from the autocomplete list.
+       * Saves selected model and notifies the controller.
+       *
+       * @param {object} result Item from array of objects, built in &#x60;responseAsync&#x60;.
+       */
+      onSelect(result) {
+        state = &#x27;selected&#x27;;
+
+        debug(&#x60;Flexberry Lookup::autocomplete state = ${state}; result = ${result}&#x60;);
+        set(_this, &#x27;value&#x27;, result.instance);
+
+        // Removing focus is necessary to clear the text in the input field.
+        _this.$(&#x27;input&#x27;).blur();
+        _this.$(&#x27;.ui.search&#x27;).search(&#x27;set value&#x27;, &#x27;&#x27;);
+        _this.$(&#x27;input&#x27;).focus();
+        return false;
+      },
+
+      /**
+       * Handles closing of the autocomplete list.
+       * Restores display text if nothing has been selected.
+       */
+      onResultsClose() {
+        // Set displayValue directly because value hasn&#x27;been changes
+        // and Ember won&#x27;t change computed property.
+
+        _this.$(&#x27;.ui.search&#x27;).search(&#x27;set value&#x27;, &#x27;&#x27;);
+        state = &#x27;closed&#x27;;
+
+        run(() =&gt; {
+          debug(&#x60;Flexberry Lookup::autocomplete state = ${state}&#x60;);
+        });
+      }
+    });
+
+    // List of tags.
+    let tagsListElement = this.$(&#x27;.draggable-tags&#x27;)[0];
+
+    // Dragstart event.
+    tagsListElement.addEventListener(&#x27;dragstart&#x27;, (evt) =&gt; {
+      evt.target.classList.add(&#x27;selected&#x27;);
+    })
+    
+    // Dragend event.
+    tagsListElement.addEventListener(&#x27;dragend&#x27;, (evt) =&gt; {
+      let currentElement = evt.target;
+
+      if (!currentElement.classList.contains(&#x27;selected&#x27;)) return;
+
+      currentElement.classList.remove(&#x27;selected&#x27;);
+    });
+
+    // Dragover event.
+    tagsListElement.addEventListener(&#x27;dragover&#x27;, (evt) =&gt; {
+      // Allow to drop.
+      evt.preventDefault();
+    
+      // Find moving element.
+      const activeElement = tagsListElement.querySelector(&#x27;.selected&#x27;);
+
+      if (activeElement === null) return;
+
+      // Current element.
+      var currentElement = evt.target;
+
+      // Take tag element.
+      while (!currentElement.classList.contains(&#x27;draggable-tag&#x27;)) {
+        currentElement = currentElement.parentElement;
+
+        if (!currentElement) return;
+      }
+
+      if (activeElement === currentElement) return;
+    
+      const activeElementId = activeElement.getAttribute(&#x27;id&#x27;);
+      const currentElementId = currentElement.getAttribute(&#x27;id&#x27;);
+
+      // Swap elements.
+      _this._swapRecordElementsById(activeElementId, currentElementId);
+    });
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

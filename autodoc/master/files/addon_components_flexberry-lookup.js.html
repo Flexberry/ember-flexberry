@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-lookup.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-lookup.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Ember from &#x27;ember&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+
+import { translationMacro as t } from &#x27;ember-i18n&#x27;;
+import { getRelationType } from &#x27;ember-flexberry-data/utils/model-functions&#x27;;
+import { Query } from &#x27;ember-flexberry-data&#x27;;
+import Information from &#x27;ember-flexberry-data/utils/information&#x27;;
+
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  StringPredicate,
+  SimplePredicate,
+  ComplexPredicate
+} = Query;
+
+/**
+  Lookup component for Semantic UI.
+
+  @example
+    &#x60;&#x60;&#x60;javascript
+    // app/controllers/post.js
+    import EditFormController from &#x27;./edit-form&#x27;;
+    export default EditFormController.extend({
+      ...
+    });
+    &#x60;&#x60;&#x60;
+
+    &#x60;&#x60;&#x60;handlebars
+    &lt;!-- app/templates/post.hbs --&gt;
+    ...
+    {{flexberry-lookup
+      componentName=&quot;AuthorLookup&quot;
+      choose=&quot;showLookupDialog&quot;
+      remove=&quot;removeLookupValue&quot;
+      value=model.author
+      projection=&quot;UserL&quot;
+      relationName=&quot;author&quot;
+      displayAttributeName=&quot;name&quot;
+      title=&quot;Author&quot;
+      placeholder=&quot;Not select&quot;
+      chooseText=&quot;Select&quot;
+      removeText=&quot;Clear&quot;
+      perPage=50
+    }}
+    ...
+    &#x60;&#x60;&#x60;
+
+  @class FlexberryLookup
+  @extends FlexberryBaseComponent
+*/
+export default FlexberryBaseComponent.extend({
+  /**
+    This property is used in order to cache loaded for dropdown mode values.
+    Values are kept as array with master id as key and master object as value.
+    This property is initialized after request to server got dropdown values.
+    This cache is important because semantic ui dropdown component lets use only text values,
+    while for lookup it is necessary to get object values.
+
+    @property _cachedDropdownValues
+    @private
+    @type Array
+  */
+  _cachedDropdownValues: undefined,
+
+  /**
+    This property is used in order to cache last value
+    of flag {{#crossLink &quot;FlexberryLookup/autocomplete:property&quot;}}{{/crossLink}}
+    in order to let init this mode afrer re-render only once if flag was enabled.
+
+    @property _cachedAutocompleteValue
+    @private
+    @type Boolean
+  */
+  _cachedAutocompleteValue: undefined,
+
+  /**
+    This property is used in order to cache last value
+    of autocomplete input.
+
+    @private
+    @property _lastAutocompleteValue
+    @type String
+  */
+  _lastAutocompleteValue: undefined,
+
+  /**
+    This property is used in order to cache last value
+    of flag {{#crossLink &quot;FlexberryLookup/dropdown:property&quot;}}{{/crossLink}}
+    in order to let init this mode afrer re-render only once if flag was enabled.
+
+    @property _cachedDropdownValue
+    @private
+    @type Boolean
+  */
+  _cachedDropdownValue: undefined,
+
+  /**
+    @private
+    @property _pageInResultsForAutocomplete
+    @type Number
+    @default 1
+  */
+  _pageInResultsForAutocomplete: 1,
+
+  /**
+    Computed property for {{#crossLink &quot;FlexberryLookup/modalDialogSettings:property&quot;}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: Ember.computed(&#x27;modalDialogSettings&#x27;, function () {
+    return Ember.merge({
+      sizeClass: this.get(&#x27;_sizeClass&#x27;),
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get(&#x27;modalDialogSettings&#x27;));
+  }),
+
+  /**
+    Text to be displayed in field, if value not selected.
+
+    @property placeholder
+    @type String
+    @default t(&#x27;components.flexberry-lookup.placeholder&#x27;)
+  */
+  placeholder: t(&#x27;components.flexberry-lookup.placeholder&#x27;),
+
+  /**
+    Text on button preview value.
+
+    @property previewText
+    @type String
+    @default &#x27;&lt;i class=&quot;eye icon&quot;&gt;&lt;/i&gt;&#x27;
+  */
+  previewText: &#x27;&lt;i class=&quot;eye icon&quot;&gt;&lt;/i&gt;&#x27;,
+
+  /**
+    Text on button opening a modal window.
+
+    @property chooseText
+    @type String
+    @default &#x27;&lt;i class=&quot;change icon&quot;&gt;&lt;/i&gt;&#x27;
+  */
+  chooseText: &#x27;&lt;i class=&quot;change icon&quot;&gt;&lt;/i&gt;&#x27;,
+
+  /**
+    Text on button clear value.
+
+    TODD: Use &#x27;flexberry-lookup.remove-button-text&#x27; from locale.
+
+    @property removeText
+    @type String
+    @default &#x27;&lt;i class=&quot;remove icon&quot;&gt;&lt;/i&gt;&#x27;
+  */
+  removeText: &#x27;&lt;i class=&quot;remove icon&quot;&gt;&lt;/i&gt;&#x27;,
+
+  /**
+    CSS classes for preview button.
+
+    @property previewButtonClass
+    @type String
+  */
+  previewButtonClass: undefined,
+
+  /**
+    CSS classes for flexberry-lookup at dropdown mode.
+
+    @property dropdownClass
+    @type String
+  */
+  dropdownClass: undefined,
+
+  /**
+    CSS classes for choose button.
+
+    @property chooseButtonClass
+    @type String
+  */
+  chooseButtonClass: undefined,
+
+  /**
+    CSS classes for remove button.
+
+    @property removeButtonClass
+    @type String
+  */
+  removeButtonClass: undefined,
+
+  /**
+    Projection name.
+
+    @property projection
+    @type String
+    @required
+  */
+  projection: undefined,
+
+  /**
+    Relation name.
+
+    @property relationName
+    @type String
+    @required
+  */
+  relationName: undefined,
+
+  /**
+    Title for modal window.
+
+    @property title
+    @type String
+  */
+  title: undefined,
+
+  /**
+    Flag to show that lookup is in autocomplete mode.
+
+    @property autocomplete
+    @type Boolean
+    @default false
+  */
+  autocomplete: false,
+
+  /**
+    If &#x60;true&#x60;, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
+    Flag to show that lookup is in dropdown mode.
+
+    @property dropdown
+    @type Boolean
+    @default false
+  */
+  dropdown: false,
+
+  /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    The URL that will be used for viewing the selected object.
+
+    @property previewFormRoute
+    @type String
+    @default undefined
+  */
+  previewFormRoute: undefined,
+
+  /**
+    Projection name preview form.
+
+    @property previewFormProjection
+    @type String
+    @default undefined
+  */
+  previewFormProjection: undefined,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    The controller for viewing the selected object.
+
+    @property controllerForPreview
+    @type String
+    @default undefined
+  */
+  controllerForPreview: undefined,
+
+  /**
+    Flag to show that lookup has search or autocomplete in dropdown mode.
+
+    @property dropdownIsSearch
+    @type Boolean
+    @default false
+  */
+  dropdownIsSearch: false,
+
+  /**
+    Specify direction for sorting by &#x60;displayAttributeName&#x60;.
+    For &#x60;autocomplete&#x60; or &#x60;dropdown&#x60; mode only.
+    Possible values: &#x60;asc&#x60; or &#x60;desc&#x60;.
+
+    @property sorting
+    @type String
+    @default &#x27;asc&#x27;
+  */
+  sorting: &#x27;asc&#x27;,
+
+  /**
+    Flag to fill value by limitPredicate.
+
+    @property autofillByLimit
+    @type Boolean
+    @default false
+  */
+  autofillByLimit: false,
+
+  /**
+    Observer on &#x27;autofillByLimit&#x27;.
+
+    @property _autofillByLimitObserver
+  */
+  _autofillByLimitObserver: Ember.on(&#x27;init&#x27;, Ember.observer(&#x27;autofillByLimit&#x27;, function() {
+    if (this.get(&#x27;autofillByLimit&#x27;)) {
+      this.addObserver(&#x27;relatedModel&#x27;, this, this._autofillByLimitObserverFunction);
+      this.addObserver(&#x27;relationName&#x27;, this, this._autofillByLimitObserverFunction);
+      this.addObserver(&#x27;lookupLimitPredicate&#x27;, this, this._autofillByLimitObserverFunction);
+      this.addObserver(&#x27;lookupAdditionalLimitFunction&#x27;, this, this._autofillByLimitObserverFunction);
+    } else {
+      this.removeObserver(&#x27;relatedModel&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;relationName&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;lookupLimitPredicate&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;lookupAdditionalLimitFunction&#x27;, this, this._autofillByLimitObserverFunction);
+    }
+  })),
+
+  /**
+    Classes by property of autocomplete.
+
+    @property autocompleteClass
+    @type String
+    @readOnly
+  */
+  autocompleteClass: Ember.computed(&#x27;autocomplete&#x27;, function() {
+    if (this.get(&#x27;autocomplete&#x27;)) {
+      return &#x27;ui search&#x27;;
+    }
+  }),
+
+  /**
+    FOLV component name.
+
+    @property folvComponentName
+    @type String
+    @readOnly
+  */
+  folvComponentName: Ember.computed(&#x27;componentName&#x27;, function() {
+    let componentName = this.get(&#x27;componentName&#x27;) || &#x27;undefined&#x27;;
+    return &#x60;${componentName}&#x60;;
+  }),
+
+  /**
+    Action&#x27;s name to update model&#x27;s relation value.
+
+    @property updateLookupAction
+    @type String
+    @default &#x27;updateLookupValue&#x27;
+  */
+  updateLookupAction: &#x27;updateLookupValue&#x27;,
+
+  /**
+    Maximum number of results to display on autocomplete or dropdown.
+
+    @property maxResults
+    @type Number
+    @default 10
+  */
+  maxResults: 10,
+
+  /**
+    Flag for remove autocomplete value if it&#x27;s not in the results (remove when false).
+
+    @property autocompletePersistValue
+    @type Boolean
+    @default false
+  */
+  autocompletePersistValue: false,
+
+  /**
+    Stores autocomplete value, when autocompletePersistValue=true and lookup value clearing.
+
+    @property autocompletePersistValueCache
+    @type String
+    @default undefined
+  */
+  autocompletePersistValueCache: undefined,
+
+  /**
+    Limit function on lookup.
+    It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
+
+    @property lookupLimitPredicate
+    @type BasePredicate
+    @default undefined
+  */
+  lookupLimitPredicate: undefined,
+
+  /**
+    Function of limit function for lookup in GroupEdit.
+    It should not be function return BasePredicate.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+        lookupAdditionalLimitFunction = function (relationModel) {
+        return new StringPredicate(&#x27;LookUpField&#x27;).contains(relationModel.get(&#x27;GroupEditField&#x27;));
+      };
+      &#x60;&#x60;&#x60;
+
+    @property lookupAdditionalLimitFunction
+    @type Function
+    @default undefined
+  */
+  lookupAdditionalLimitFunction: undefined,
+
+  /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink &quot;ModalDialog/sizeClass:property&quot;}}&#x60;sizeClass&#x60;{{/crossLink}}, not set by default.
+      - {{#crossLink &quot;ModalDialog/useOkButton:property&quot;}}&#x60;useOkButton&#x60;{{/crossLink}}, default &#x60;false&#x60;.
+      - {{#crossLink &quot;ModalDialog/useCloseButton:property&quot;}}&#x60;useCloseButton&#x60;{{/crossLink}}, default &#x60;false&#x60;.
+      - {{#crossLink &quot;ModalDialog/settings:property&quot;}}&#x60;settings&#x60;{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink &quot;ModalDialog/sizeClass:property&quot;}}&#x60;sizeClass&#x60;{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use &#x60;modalDialogSettings.sizeClass&#x60;.
+  */
+  sizeClass: Ember.computed.deprecatingAlias(&#x27;_sizeClass&#x27;, {
+    id: &#x27;flexberry-lookup.modal-dialog-size-class&#x27;,
+    until: &#x27;3.0&#x27;,
+  }),
+
+  /**
+    This computed property forms a set of properties to send to lookup window.
+    Closure action &#x60;lookupWindowCustomProperties&#x60; is called here if defined,
+    otherwise &#x60;undefined&#x60; is returned.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      // app/controllers/post.js
+      import EditFormController from &#x27;./edit-form&#x27;;
+      export default EditFormController.extend({
+        actions: {
+          lookupWindowCustomProperties({ relationName, projection }) {
+            if (relationName === &#x27;author&#x27; &amp;&amp; projection === &#x27;UserL&#x27;) {
+              return {
+                filterButton: true,
+                filterByAnyWord: true,
+                enableFilters: true,
+                refreshButton: true,
+                perPage: 25,
+              };
+            }
+          },
+        },
+      });
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/post.hbs --&gt;
+      {{flexberry-lookup
+        componentName=&quot;AuthorLookup&quot;
+        choose=&quot;showLookupDialog&quot;
+        remove=&quot;removeLookupValue&quot;
+        value=model.author
+        projection=&quot;UserL&quot;
+        relationName=&quot;author&quot;
+        displayAttributeName=&quot;name&quot;
+        title=&quot;Author&quot;
+        placeholder=&quot;Not select&quot;
+        chooseText=&quot;Select&quot;
+        removeText=&quot;Clear&quot;
+        lookupWindowCustomProperties=(action &quot;getLookupFolvProperties&quot;)
+      }}
+      &#x60;&#x60;&#x60;
+
+    @property _lookupWindowCustomPropertiesData
+    @type Object
+    @private
+  */
+  _lookupWindowCustomPropertiesData: Ember.computed(
+    &#x27;projection&#x27;,
+    &#x27;relationName&#x27;,
+    &#x27;lookupWindowCustomProperties&#x27;,
+    function() {
+      let lookupWindowCustomProperties = this.get(&#x27;lookupWindowCustomProperties&#x27;);
+      if (lookupWindowCustomProperties) {
+        let result = lookupWindowCustomProperties({
+          relationName: this.get(&#x27;relationName&#x27;),
+          projection: this.get(&#x27;projection&#x27;),
+          componentName: this.get(&#x27;componentName&#x27;)
+        });
+
+        return result;
+      }
+
+      return undefined;
+    }),
+
+  /**
+    Object with lookup properties to send on choose action.
+
+    @property chooseData
+    @type Object
+    @readOnly
+  */
+  chooseData: Ember.computed(
+    &#x27;projection&#x27;,
+    &#x27;relationName&#x27;,
+    &#x27;title&#x27;,
+    &#x27;lookupLimitPredicate&#x27;,
+    &#x27;relatedModel&#x27;,
+    &#x27;updateLookupAction&#x27;,
+    &#x27;notUseUserSettings&#x27;,
+    &#x27;_modalDialogSettings&#x27;,
+    &#x27;_lookupWindowCustomPropertiesData&#x27;,
+    function() {
+      let perPage = this.get(&#x27;userSettings&#x27;).getCurrentPerPage(this.get(&#x27;folvComponentName&#x27;));
+      return {
+        projection: this.get(&#x27;projection&#x27;),
+        relationName: this.get(&#x27;relationName&#x27;),
+        title: this.get(&#x27;title&#x27;),
+        predicate: this._conjuctPredicates(this.get(&#x27;lookupLimitPredicate&#x27;), this.get(&#x27;lookupAdditionalLimitFunction&#x27;)),
+        modelToLookup: this.get(&#x27;relatedModel&#x27;),
+        lookupWindowCustomPropertiesData: this.get(&#x27;_lookupWindowCustomPropertiesData&#x27;),
+        componentName: this.get(&#x27;componentName&#x27;),
+        notUseUserSettings: this.get(&#x27;notUseUserSettings&#x27;),
+        perPage: perPage || this.get(&#x27;perPage&#x27;),
+        folvComponentName: this.get(&#x27;folvComponentName&#x27;),
+        modalDialogSettings: this.get(&#x27;_modalDialogSettings&#x27;),
+        updateLookupAction: this.get(&#x27;updateLookupAction&#x27;),
+      };
+    }),
+
+  /**
+    Object with lookup properties to send on remove action.
+
+    @property removeData
+    @type Object
+    @readOnly
+  */
+  removeData: Ember.computed(&#x27;relationName&#x27;, &#x27;relatedModel&#x27;, function() {
+    return {
+      relationName: this.get(&#x27;relationName&#x27;),
+      modelToLookup: this.get(&#x27;relatedModel&#x27;)
+    };
+  }),
+
+  /**
+    Current store. Used for loading data for autocomplete and for dropdown.
+
+    @property store
+    @type DS.Store
+    @readOnly
+  */
+  store: Ember.inject.service(&#x27;store&#x27;),
+
+  /**
+    The user settings service.
+
+    @property userSettings
+    @type UserSettingsService
+  */
+  userSettings: Ember.inject.service(&#x27;user-settings&#x27;),
+
+  /**
+    Name of the attribute of the model to display for the user.
+    Is required for autocomplete and dropdown modes.
+
+    @property displayAttributeName
+    @type String
+    @default null
+  */
+  displayAttributeName: null,
+
+  /**
+    Type of the attribute of the model to display for the user.
+
+    @property displayAttributeType
+    @type String
+  */
+  displayAttributeType: Ember.computed(&#x27;displayAttributeName&#x27;, function() {
+    let information = new Information(this.get(&#x27;store&#x27;));
+    let relationModelName = getRelationType(this.get(&#x27;relatedModel&#x27;), this.get(&#x27;relationName&#x27;));
+    let attrType = information.getType(relationModelName, this.get(&#x27;displayAttributeName&#x27;));
+    return attrType;
+  }),
+
+  /**
+    Name of the attribute of the model to display for the user
+    for hidden attribute by master.
+    Is required for autocomplete and dropdown modes.
+
+    @property autocompleteOrder
+    @type String
+    @default null
+  */
+  autocompleteOrder: null,
+
+  /**
+    Direction of list for autocomplete values.
+    Availible values: &#x27;upward&#x27;, &#x27;downward&#x27;, &#x27;auto&#x27;.
+
+    @property autocompleteDirection
+    @type String
+    @default downward
+  */
+  autocompleteDirection: &#x27;downward&#x27;,
+
+  /**
+    Projection name for autocomplete query.
+
+    @property autocompleteProjection
+    @type String
+    @default undefined
+  */
+  autocompleteProjection: undefined,
+
+  /**
+    Current selected instance of the model.
+
+    @property value
+    @type Object
+  */
+  value: undefined,
+
+  /**
+    Flag indicating whether a modal dialog is open.
+
+    @property modalIsShow
+    @type Boolean
+    @default false
+  */
+  modalIsShow: false,
+
+  /**
+    Flag indicating whether a modal dialog starts to show.
+    Needs for add loading indicator for choose button.
+
+    @property modalIsStartToShow
+    @type Boolean
+    @default false
+  */
+  modalIsStartToShow: false,
+
+  /**
+    Flag: indicates whether a modal dialog will be shown soon.
+
+    @property modalIsBeforeToShow
+    @type Boolean
+    @default false
+  */
+  modalIsBeforeToShow: false,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service(&#x27;lookup-events&#x27;),
+
+  /**
+    Text that displayed for the user as representation of currently selected value.
+    This property is binded to the view and can be changed by user (it won&#x27;t be applied to model automatically).
+
+    @property displayValue
+    @type String
+  */
+  displayValue: undefined,
+
+  /**
+    Standard CSS class names to apply to the view&#x27;s outer element.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: [&#x27;flexberry-lookup&#x27;],
+
+  /**
+    A list of properties of the view to apply as class names.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings).
+
+    @property classNameBindings
+    @type Array
+    @readOnly
+  */
+  classNameBindings: [&#x27;autocompleteClass&#x27;, &#x27;isActive:active&#x27;],
+
+  /**
+    Flag: indicates whether component is active or not.
+    Used to highlight component before data loading operation will be started.
+
+    @property isActive
+    @type Boolean
+    @default false
+  */
+  isActive: false,
+
+  /**
+    Flag: indicates whether component is in blocked state now.
+
+    @property isBlocked
+    @type Boolean
+    @readOnly
+  */
+  isBlocked: Ember.computed(&#x27;modalIsBeforeToShow&#x27;, &#x27;modalIsStartToShow&#x27;, &#x27;modalIsShow&#x27;, function() {
+    return this.get(&#x27;modalIsBeforeToShow&#x27;) || this.get(&#x27;modalIsStartToShow&#x27;) || this.get(&#x27;modalIsShow&#x27;);
+  }),
+
+  /**
+    Used to identify lookup on the page.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
+    Semantic-ui settings for dropdown.
+    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
+  */
+  on: &#x27;click&#x27;,
+  allowReselection: false,
+  allowAdditions: false,
+  hideAdditions: true,
+  minCharacters: 1,
+  match: &#x27;both&#x27;,
+  selectOnKeydown: true,
+  forceSelection: true,
+  allowCategorySelection: false,
+  direction: &#x27;auto&#x27;,
+  keepOnScreen: true,
+  fullTextSearch: false,
+  preserveHTML: true,
+  sortSelect: false,
+  showOnFocus: true,
+  allowTab: true,
+  transition: &#x27;auto&#x27;,
+  duration: 200,
+
+  actions: {
+    /**
+      Open window for select value.
+
+      @method actions.choose
+      @param {Object} chooseData
+    */
+    choose(chooseData) {
+      if (this.get(&#x27;readonly&#x27;) || this.get(&#x27;isBlocked&#x27;)) {
+        return;
+      }
+
+      let componentName = this.get(&#x27;componentName&#x27;);
+      if (!componentName) {
+        Ember.warn(&#x27;&#x60;componentName&#x60; of flexberry-lookup is undefined.&#x27;, false, { id: &#x27;ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined&#x27; });
+      } else {
+        // Show choose button spinner.
+        this.get(&#x27;lookupEventsService&#x27;).lookupDialogOnShowTrigger(componentName);
+      }
+
+      // If in groupedit with lookupAdditionalLimitFunction reread chooseData.predicate.
+      if (this.get(&#x27;lookupAdditionalLimitFunction&#x27;)) {
+        chooseData.predicate = this._conjuctPredicates(this.get(&#x27;lookupLimitPredicate&#x27;), this.get(&#x27;lookupAdditionalLimitFunction&#x27;));
+      }
+
+      // Set state to active to add &#x27;active&#x27; css-class.
+      this.set(&#x27;isActive&#x27;, true);
+
+      // Signalize that modal dialog will be shown soon.
+      this.set(&#x27;modalIsBeforeToShow&#x27;, true);
+
+      // Send &#x27;choose&#x27; action after &#x27;active&#x27; css-class will be completely added into component&#x27;s DOM-element.
+      Ember.run.later(() =&gt; {
+        this.sendAction(&#x27;choose&#x27;, chooseData);
+        this.set(&#x27;isActive&#x27;, false);
+      }, 300);
+    },
+
+    /**
+      Clear current value.
+
+      @method actions.remove
+      @param {Object} removeData
+    */
+    remove(removeData) {
+      if (this.get(&#x27;readonly&#x27;)) {
+        return;
+      }
+
+      if (this.get(&#x27;autocompletePersistValue&#x27;)) {
+        this.set(&#x27;autocompletePersistValueCache&#x27;, undefined);
+        this.set(&#x27;displayValue&#x27;, undefined);
+      }
+
+      this.sendAction(&#x27;remove&#x27;, removeData);
+    },
+
+    /**
+      Show window for select value.
+
+      @method actions.preview
+    */
+    preview() {
+      let previewFormRoute = this.get(&#x27;previewFormRoute&#x27;);
+      if (Ember.isNone(previewFormRoute)) {
+        throw new Error(&#x27;\&#x60;previewFormRoute\&#x60; is undefined.&#x27;);
+      }
+
+      let relatedModel = this.get(&#x27;relatedModel&#x27;);
+      let relationName = this.get(&#x27;relationName&#x27;);
+      let relationModelName = getRelationType(relatedModel, relationName);
+
+      let thisRouteName = this.get(&#x27;currentController.routeName&#x27;);
+      let thisRecordId = this.get(&#x27;relatedModel.id&#x27;);
+      let transitionOptions = {
+        queryParams: {
+          readonly: true,
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
+      let previewData = {
+        recordId: this.get(&#x27;value.id&#x27;),
+        transitionRoute: previewFormRoute,
+        transitionOptions: transitionOptions,
+        showInSeparateRoute: this.get(&#x27;previewOnSeparateRoute&#x27;),
+        modelName: relationModelName,
+        controller: this.get(&#x27;controllerForPreview&#x27;),
+        projection: this.get(&#x27;previewFormProjection&#x27;),
+        modalDialogSettings: this.get(&#x27;_modalDialogSettings&#x27;),
+      };
+
+      this.sendAction(&#x27;preview&#x27;, previewData);
+    },
+
+    /**
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
+    onInputFocusOut() {
+      if (!this.get(&#x27;value&#x27;) &amp;&amp; !this.get(&#x27;autocompletePersistValue&#x27;) &amp;&amp; !this.get(&#x27;usePaginationForAutocomplete&#x27;)) {
+        this.set(&#x27;displayValue&#x27;, null);
+      }
+    }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
+
+    this._super(...arguments);
+
+    this.get(&#x27;lookupEventsService&#x27;).on(&#x27;lookupDialogOnShow&#x27;, this, this._setModalIsStartToShow);
+    this.get(&#x27;lookupEventsService&#x27;).on(&#x27;lookupDialogOnVisible&#x27;, this, this._setModalIsVisible);
+    this.get(&#x27;lookupEventsService&#x27;).on(&#x27;lookupDialogOnHidden&#x27;, this, this._setModalIsHidden);
+
+    if (this.get(&#x27;autocompletePersistValue&#x27;) &amp;&amp; Ember.isNone(this.get(&#x27;value&#x27;))) {
+      this.set(&#x27;autocompletePersistValueCache&#x27;, this.get(&#x27;displayValue&#x27;));
+    }
+
+    if (this.get(&#x27;autofillByLimit&#x27;)) {
+      this._onAutofillByLimit();
+    }
+  },
+
+  /**
+    Observe lookup value changes.
+  */
+  valueObserver: Ember.on(&#x27;init&#x27;, Ember.observer(&#x27;value&#x27;, &#x27;displayAttributeName&#x27;, function() { Ember.run.once(this, &#x27;_valueObserver&#x27;); })),
+
+  /**
+    Observe lookup autocomplete max results changes.
+  */
+  maxResultsObserver: Ember.observer(&#x27;maxResults&#x27;, function() {
+    if (this.get(&#x27;autocomplete&#x27;)) {
+      this._onAutocomplete();
+    }
+  }),
+
+  /**
+    It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
+    # WRANING!
+
+    @method didDestroyElement
+  */
+  didDestroyElement() {
+    this._super(...arguments);
+    this.removeObserver(&#x27;i18n.locale&#x27;, this, this._languageReinit);
+  },
+
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement).
+
+    @method didInsertElement
+  */
+  didInsertElement() {
+    this._super(...arguments);
+    this.addObserver(&#x27;i18n.locale&#x27;, this, this._languageReinit);
+  },
+
+  /**
+    Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
+  */
+  _hasBlockSetter: Ember.computed(function() {
+    this.set(&#x27;_hasBlock&#x27;, true);
+  }),
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+
+    @method didRender
+  */
+  didRender() {
+    this._super(...arguments);
+
+    let isAutocomplete = this.get(&#x27;autocomplete&#x27;);
+    let isDropdown = this.get(&#x27;dropdown&#x27;);
+    if (isAutocomplete &amp;&amp; isDropdown) {
+      throw new Error(&#x27;Component flexberry-lookup should not have both flags \&#x27;autocomplete\&#x27; and \&#x27;dropdown\&#x27; enabled.&#x27;);
+    }
+
+    let hasBlock = this.get(&#x27;_hasBlock&#x27;);
+
+    if (isDropdown &amp;&amp; hasBlock) {
+      throw new Error(&#x27;Component flexberry-lookup should not have both flag \&#x27;dropdown\&#x27; enabled and the block form definition.&#x27;);
+    }
+
+    if (isAutocomplete &amp;&amp; hasBlock) {
+      throw new Error(&#x27;Component flexberry-lookup should not have both flag \&#x27;autocomplete\&#x27; enabled and the block form definition.&#x27;);
+    }
+
+    let cachedDropdownValue = this.get(&#x27;_cachedDropdownValue&#x27;);
+    let cachedAutocompleteValue = this.get(&#x27;_cachedAutocompleteValue&#x27;);
+
+    if (isAutocomplete &amp;&amp; !cachedAutocompleteValue) {
+      this._onAutocomplete();
+    } else if (isDropdown &amp;&amp; !cachedDropdownValue) {
+      this._onDropdown();
+    }
+
+    this.set(&#x27;_cachedDropdownValue&#x27;, isDropdown);
+    this.set(&#x27;_cachedAutocompleteValue&#x27;, isAutocomplete);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this._super(...arguments);
+    this.get(&#x27;lookupEventsService&#x27;).off(&#x27;lookupDialogOnShow&#x27;, this, this._setModalIsStartToShow);
+    this.get(&#x27;lookupEventsService&#x27;).off(&#x27;lookupDialogOnVisible&#x27;, this, this._setModalIsVisible);
+    this.get(&#x27;lookupEventsService&#x27;).off(&#x27;lookupDialogOnHidden&#x27;, this, this._setModalIsHidden);
+    if (this.get(&#x27;autofillByLimit&#x27;)) {
+      this.removeObserver(&#x27;relatedModel&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;relationName&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;lookupLimitPredicate&#x27;, this, this._autofillByLimitObserverFunction);
+      this.removeObserver(&#x27;lookupAdditionalLimitFunction&#x27;, this, this._autofillByLimitObserverFunction);
+    }
+  },
+
+  /**
+    Additional observer of value and &#x60;relatedModel.relationName&#x60; change, updates &#x60;displayValue&#x60;.
+
+    @method _valueObserver
+    @private
+  */
+  _valueObserver() {
+    this.set(&#x27;displayValue&#x27;, this._buildDisplayValue());
+  },
+
+  /**
+    Set the value for the property &#x60;modalIsStartToShow&#x60;.
+
+    @method _setModalIsStartToShow
+    @private
+  */
+  _setModalIsStartToShow(componentName) {
+    if (this.get(&#x27;componentName&#x27;) === componentName &amp;&amp; this.get(&#x27;modalIsShow&#x27;)) {
+      this.set(&#x27;modalIsBeforeToShow&#x27;, false);
+      this.set(&#x27;modalIsStartToShow&#x27;, true);
+    }
+  },
+
+  /**
+    Set the value for the property &#x60;modalIsShow&#x60; &amp; &#x60;modalIsStartToShow&#x60;.
+
+    @method _setModalIsVisible
+    @private
+  */
+  _setModalIsVisible(componentName, lookupDialog) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      this.set(&#x27;modalIsBeforeToShow&#x27;, false);
+      this.set(&#x27;modalIsShow&#x27;, true);
+      this.set(&#x27;modalIsStartToShow&#x27;, false);
+    }
+  },
+
+  /**
+    Set the value for the property &#x60;modalIsShow&#x60;.
+
+    @method _setModalIsHidden
+    @private
+  */
+  _setModalIsHidden(componentName) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      this.set(&#x27;modalIsBeforeToShow&#x27;, false);
+      this.set(&#x27;modalIsShow&#x27;, false);
+      this.set(&#x27;modalIsStartToShow&#x27;, false);
+    }
+  },
+
+  /**
+    Initialize component with autocomplete mode.
+
+    @method _onAutocomplete
+    @private
+  */
+  _onAutocomplete() {
+    let _this = this;
+    let store = this.get(&#x27;store&#x27;);
+    let relatedModel = this.get(&#x27;relatedModel&#x27;);
+
+    let relationName = this.get(&#x27;relationName&#x27;);
+    if (!relationName) {
+      throw new Error(&#x27;relationName is not defined.&#x27;);
+    }
+
+    let relationModelName = getRelationType(relatedModel, relationName);
+
+    let displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+    if (!displayAttributeName) {
+      throw new Error(&#x27;\&#x60;displayAttributeName\&#x60; is required property for autocomplete mode in \&#x60;flexberry-lookup\&#x60;.&#x27;);
+    }
+
+    let minCharacters = this.get(&#x27;minCharacters&#x27;);
+    if (!minCharacters || typeof (minCharacters) !== &#x27;number&#x27; || minCharacters &lt;= 0) {
+      throw new Error(&#x27;minCharacters has wrong value.&#x27;);
+    }
+
+    let maxResults = this.get(&#x27;maxResults&#x27;);
+    if (!maxResults || typeof (maxResults) !== &#x27;number&#x27; || maxResults &lt;= 0) {
+      throw new Error(&#x27;maxResults has wrong value.&#x27;);
+    }
+
+    // Add select first autocomplete result by enter click.
+    this.$(&#x27;input&#x27;).keyup(function(event) {
+      if (event.keyCode === 13) {
+        let result = _this.$(&#x27;div.results.transition.visible&#x27;);
+        let activeField = result.children(&#x27;a.result.active&#x27;);
+        let resultField = result.children(&#x27;a.result&#x27;)[0];
+        if (resultField &amp;&amp; activeField.length === 0) {
+          resultField.click();
+        }
+      }
+    });
+
+    let state;
+    let i18n = _this.get(&#x27;i18n&#x27;);
+    this.$().search({
+      minCharacters: minCharacters,
+
+      // +2 for page switch buttons.
+      maxResults: maxResults + 2,
+      cache: false,
+      templates: {
+        message: function(message, type) {
+          return &#x27;&lt;div class=&quot;message empty&quot;&gt;&lt;div class=&quot;header&quot;&gt;&#x27; +
+          i18n.t(&#x27;components.flexberry-lookup.dropdown.messages.noResultsHeader&#x27;).string +
+          &#x27;&lt;/div&gt;&lt;div class=&quot;description&quot;&gt;&#x27; +
+          i18n.t(&#x27;components.flexberry-lookup.dropdown.messages.noResults&#x27;).string +
+          &#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;
+        }
+      },
+      apiSettings: {
+        /**
+          Mocks call to the data source,
+          Uses query language and store for loading data explicitly.
+
+          @param {Object} settings
+          @param {Function} callback
+        */
+        responseAsync(settings, callback) {
+          // Prevent async data-request from being sent in readonly mode.
+          if (_this.get(&#x27;readonly&#x27;)) {
+            return;
+          }
+
+          // Set default page to value change.
+          if (_this.get(&#x27;_lastAutocompleteValue&#x27;) !== settings.urlData.query) {
+            _this.set(&#x27;_pageInResultsForAutocomplete&#x27;, 1);
+            _this.set(&#x27;_lastAutocompleteValue&#x27;, settings.urlData.query);
+          }
+
+          let autocompleteProjection = _this.get(&#x27;autocompleteProjection&#x27;);
+          let autocompleteOrder = _this.get(&#x27;autocompleteOrder&#x27;);
+
+          let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let resultPredicate = _this._conjuctPredicates(_this.get(&#x27;lookupLimitPredicate&#x27;), _this.get(&#x27;lookupAdditionalLimitFunction&#x27;), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          const usePagination = _this.get(&#x27;usePaginationForAutocomplete&#x27;);
+          const skip = maxResults * (_this.get(&#x27;_pageInResultsForAutocomplete&#x27;) - 1);
+          builder.skip(skip);
+          builder.top(maxResults);
+          builder.count();
+
+          Ember.run(() =&gt; {
+            store.query(relationModelName, builder.build()).then((records) =&gt; {
+              const results = records.map((r) =&gt; ({ title: r.get(displayAttributeName), instance: r }));
+
+              if (usePagination &amp;&amp; skip &gt; 0) {
+                results.unshift({ title: &#x27;&lt;div class=&quot;ui center aligned container&quot;&gt;&lt;i class=&quot;angle up icon&quot;&gt;&lt;/i&gt;&lt;/div&gt;&#x27;, prevPage: true });
+              }
+
+              if (skip + records.get(&#x27;length&#x27;) &lt; records.get(&#x27;meta.count&#x27;)) {
+                const title = usePagination ? &#x27;&lt;div class=&quot;ui center aligned container&quot;&gt;&lt;i class=&quot;angle down icon&quot;&gt;&lt;/i&gt;&lt;/div&gt;&#x27; : &#x27;...&#x27;;
+                results.push({ title: title, nextPage: usePagination });
+              }
+
+              callback({ success: true, results: results });
+            }, () =&gt; {
+              callback({ success: false });
+            });
+          });
+        }
+      },
+
+      /**
+       * Handles opening of the autocomplete list.
+       * Sets current state (that autocomplete list is opened).
+       */
+      onResultsOpen() {
+        state = &#x27;opened&#x27;;
+
+        Ember.run(() =&gt; {
+          Ember.debug(&#x60;Flexberry Lookup::autocomplete state = ${state}&#x60;);
+        });
+
+        let autocompleteDirection = Ember.get(_this, &#x27;autocompleteDirection&#x27;);
+        if (autocompleteDirection == &#x27;auto&#x27;)
+        {
+          const { height, left, width, bottom } = _this.element.getBoundingClientRect();
+          let elementHeight = _this.$(&#x27;div.results&#x27;).outerHeight();
+          let upward = window.innerHeight - bottom &lt; elementHeight;
+          autocompleteDirection = upward ? &#x27;upward&#x27; : &#x27;downward&#x27;;
+        }
+
+        if (autocompleteDirection == &#x27;upward&#x27;) {
+          _this.$(&#x27;div.results&#x27;).addClass(&#x27;upward&#x27;);
+        }
+        else {
+          _this.$(&#x27;div.results&#x27;).removeClass(&#x27;upward&#x27;);
+        }
+      },
+
+      /**
+       * Handles selection of item from the autocomplete list.
+       * Saves selected model and notifies the controller.
+       *
+       * @param {Object} result Item from array of objects, built in &#x60;responseAsync&#x60;.
+       */
+      onSelect(result) {
+        if (result.instance) {
+          state = &#x27;selected&#x27;;
+          _this.set(&#x27;_pageInResultsForAutocomplete&#x27;, 1);
+
+          Ember.run(() =&gt; {
+            Ember.debug(&#x60;Flexberry Lookup::autocomplete state = ${state}; result = ${result}&#x60;);
+
+            _this.set(&#x27;value&#x27;, result.instance);
+            _this.get(&#x27;currentController&#x27;).send(_this.get(&#x27;updateLookupAction&#x27;),
+              {
+                relationName: relationName,
+                modelToLookup: relatedModel,
+                newRelationValue: result.instance,
+                componentName: _this.get(&#x27;componentName&#x27;)
+              });
+          });
+        } else {
+          if (_this.get(&#x27;usePaginationForAutocomplete&#x27;)) {
+            state = &#x27;loading&#x27;;
+            if (result.nextPage) {
+              _this.incrementProperty(&#x27;_pageInResultsForAutocomplete&#x27;);
+            }
+
+            if (result.prevPage) {
+              _this.decrementProperty(&#x27;_pageInResultsForAutocomplete&#x27;);
+            }
+
+            // In the &#x60;Semantic UI&#x60; of version 2.1.7, the results are closed regardless of what the &#x60;onSelect&#x60; handler returns.
+            // This function allows us to start the search again, thanks to the &#x60;searchOnFocus&#x60; option.
+            Ember.run.later(() =&gt; {
+              _this.$().search(&#x27;add results&#x27;, &#x27;&#x27;);
+              _this.$(&#x27;input&#x27;).focus();
+            }, 500);
+          }
+
+          return false;
+        }
+      },
+
+      /**
+       * Handles closing of the autocomplete list.
+       * Restores display text if nothing has been selected.
+       */
+      onResultsClose() {
+        // Set displayValue directly because value hasn&#x27;been changes
+        // and Ember won&#x27;t change computed property.
+
+        if (state !== &#x27;selected&#x27; &amp;&amp; state !== &#x27;loading&#x27;) {
+          _this.set(&#x27;_pageInResultsForAutocomplete&#x27;, 1);
+          let displayValue = _this.get(&#x27;displayValue&#x27;);
+          if (displayValue) {
+            if (_this.get(&#x27;autocompletePersistValue&#x27;)) {
+              let builder = new Builder(store, relationModelName).select(displayAttributeName);
+
+              let autocompletePredicate = new SimplePredicate(displayAttributeName, &#x27;eq&#x27;, displayValue);
+              let resultPredicate = _this._conjuctPredicates(
+                _this.get(&#x27;lookupLimitPredicate&#x27;),
+                _this.get(&#x27;lookupAdditionalLimitFunction&#x27;),
+                autocompletePredicate);
+              if (resultPredicate) {
+                builder.where(resultPredicate);
+              }
+
+              Ember.run(() =&gt; {
+                store.query(relationModelName, builder.build()).then((records) =&gt; {
+                  let record = records.objectAt(0);
+                  if (Ember.isNone(record)) {
+                    _this.set(&#x27;autocompletePersistValueCache&#x27;, displayValue);
+                    _this.sendAction(&#x27;remove&#x27;, _this.get(&#x27;removeData&#x27;));
+                  } else {
+                    _this.set(&#x27;value&#x27;, record);
+                    _this.get(&#x27;currentController&#x27;).send(_this.get(&#x27;updateLookupAction&#x27;),
+                      {
+                        relationName: relationName,
+                        modelToLookup: relatedModel,
+                        newRelationValue: record,
+                        componentName: _this.get(&#x27;componentName&#x27;)
+                      });
+                  }
+                });
+              });
+            } else {
+              _this.set(&#x27;displayValue&#x27;, _this._buildDisplayValue());
+            }
+          } else {
+            _this.sendAction(&#x27;remove&#x27;, _this.get(&#x27;removeData&#x27;));
+          }
+        }
+
+        state = &#x27;closed&#x27;;
+
+        Ember.run(() =&gt; {
+          Ember.debug(&#x60;Flexberry Lookup::autocomplete state = ${state}&#x60;);
+        });
+      }
+    });
+  },
+
+  /**
+    Initialize component with dropdown mode.
+
+    @method _onDropdown
+    @private
+  */
+  _onDropdown() {
+    let _this = this;
+    let store = this.get(&#x27;store&#x27;);
+
+    let relatedModel = this.get(&#x27;relatedModel&#x27;);
+    let relationName = this.get(&#x27;relationName&#x27;);
+    if (!relationName) {
+      throw new Error(&#x27;relationName is not defined.&#x27;);
+    }
+
+    let relationModelName = getRelationType(relatedModel, relationName);
+    let minCharacters = this.get(&#x27;minCharacters&#x27;);
+    let dropdownIsSearch = this.get(&#x27;dropdownIsSearch&#x27;);
+
+    let displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+    if (!displayAttributeName) {
+      throw new Error(&#x27; \&#x60;displayAttributeName\&#x60; is required property for dropdown mode in \&#x60;flexberry-lookup\&#x60;.&#x27;);
+    }
+
+    let i18n = _this.get(&#x27;i18n&#x27;);
+    this.$(&#x27;.flexberry-dropdown&#x27;).dropdown({
+      minCharacters: dropdownIsSearch ? minCharacters : 0,
+      cache: false,
+      on: this.get(&#x27;on&#x27;),
+      allowReselection: this.get(&#x27;allowReselection&#x27;),
+      allowAdditions: this.get(&#x27;allowAdditions&#x27;),
+      hideAdditions: this.get(&#x27;hideAdditions&#x27;),
+      match: this.get(&#x27;match&#x27;),
+      selectOnKeydown: this.get(&#x27;selectOnKeydown&#x27;),
+      forceSelection: this.get(&#x27;forceSelection&#x27;),
+      allowCategorySelection: this.get(&#x27;allowCategorySelection&#x27;),
+      direction: this.get(&#x27;direction&#x27;),
+      keepOnScreen: this.get(&#x27;keepOnScreen&#x27;),
+      fullTextSearch: this.get(&#x27;fullTextSearch&#x27;),
+      preserveHTML: this.get(&#x27;preserveHTML&#x27;),
+      sortSelect: this.get(&#x27;sortSelect&#x27;),
+      showOnFocus: this.get(&#x27;showOnFocus&#x27;),
+      allowTab: this.get(&#x27;allowTab&#x27;),
+      transition: this.get(&#x27;transition&#x27;),
+      duration: this.get(&#x27;duration&#x27;),
+      message: {
+        noResults: i18n.t(&#x27;components.flexberry-lookup.dropdown.messages.noResults&#x27;).string
+      },
+      apiSettings: {
+        responseAsync(settings, callback) {
+          console.log(&#x27;load&#x27;);
+          let projectionName = _this.get(&#x27;projection&#x27;);
+          let autocompleteOrder = _this.get(&#x27;autocompleteOrder&#x27;);
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
+          let resultPredicate = _this._conjuctPredicates(_this.get(&#x27;lookupLimitPredicate&#x27;), _this.get(&#x27;lookupAdditionalLimitFunction&#x27;), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          Ember.run(() =&gt; {
+            store.query(relationModelName, builder.build()).then((records) =&gt; {
+              // We have to cache data because dropdown component sets text as value and we lose object value.
+              let resultArray = [];
+              let results = records.map((i) =&gt; {
+                let attributeName = i.get(displayAttributeName);
+                resultArray[i.id] = i;
+                return {
+                  name: attributeName,
+                  value: i.id
+                };
+              });
+
+              if (!_this.get(&#x27;required&#x27;)) {
+                results.unshift({ name: _this.get(&#x27;placeholder&#x27;), value: null });
+                resultArray[&#x27;null&#x27;] = null;
+              }
+
+              callback({ success: true, results: results });
+              _this.set(&#x27;_cachedDropdownValues&#x27;, resultArray);
+            }, () =&gt; {
+              callback({ success: false });
+            });
+          });
+        }
+      },
+      onChange(value) {
+        let newValue = value;
+        if (value) {
+          let cachedValues = _this.get(&#x27;_cachedDropdownValues&#x27;);
+          let cachedValuesContainsVlue = cachedValues &amp;&amp; (cachedValues[value] === null || cachedValues[value]);
+          Ember.assert(&#x27;Can\&#x27;t find selected dropdown value among cached values.&#x27;, cachedValuesContainsVlue);
+          if (cachedValuesContainsVlue) {
+            newValue = cachedValues[value];
+          }
+        }
+
+        _this.get(&#x27;currentController&#x27;).send(_this.get(&#x27;updateLookupAction&#x27;),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: newValue,
+            componentName: _this.get(&#x27;componentName&#x27;)
+          });
+      }
+    });
+  },
+
+  /**
+    Build predicate with settingsUrlDataQuery.
+
+    @method _getAutocomplitePredicate
+    @param {String} settingsUrlDataQuery
+    @returns {Predicate}
+    @private
+  */
+  _getAutocomplitePredicate(settingsUrlDataQuery) {
+    if (settingsUrlDataQuery) {
+      let displayAttributeType = this.get(&#x27;displayAttributeType&#x27;);
+      let displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+      switch (displayAttributeType) {
+        case &#x27;decimal&#x27;:
+        case &#x27;int&#x27;:
+        case &#x27;long&#x27;:
+          return new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settingsUrlDataQuery);
+
+        default:
+          return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);
+      }
+    }
+  },
+
+  /**
+    Builds display text by selected model.
+
+    @method _buildDisplayValue
+    @returns {String}
+    @private
+  */
+  _buildDisplayValue() {
+    let autocompletePersistValueCache = this.get(&#x27;autocompletePersistValueCache&#x27;);
+    if (autocompletePersistValueCache) {
+      this.set(&#x27;autocompletePersistValueCache&#x27;, undefined);
+    }
+
+    let selectedModel = this.get(&#x27;value&#x27;);
+    let displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+    if (!selectedModel) {
+      return autocompletePersistValueCache ? autocompletePersistValueCache : &#x27;&#x27;;
+    }
+
+    if (!displayAttributeName) {
+      Ember.warn(&#x27;\&#x60;displayAttributeName\&#x60; is not defined.&#x27;, false, { id: &#x27;ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined&#x27; });
+      return &#x27;&#x27;;
+    }
+
+    return selectedModel.get(displayAttributeName);
+  },
+
+  /**
+    Creates an instance of the Builder class with selection and sorting specified in the component parameters.
+
+    @method _createQueryBuilder
+    @param {DS.Store} store
+    @param {String} modelName
+    @param {String} projection
+    @param {String} order
+    @return {Builder}
+  */
+  _createQueryBuilder(store, modelName, projection, order) {
+    let sorting = this.get(&#x27;sorting&#x27;);
+    let displayAttributeName = this.get(&#x27;displayAttributeName&#x27;);
+
+    let builder = new Builder(store, modelName);
+
+    if (projection) {
+      builder.selectByProjection(projection);
+    } else {
+      builder.select(displayAttributeName);
+    }
+
+    builder.orderBy(&#x60;${order ? order : &#x60;${displayAttributeName} ${sorting}&#x60;}&#x60;);
+
+    return builder;
+  },
+
+  /**
+    Concatenates predicates.
+
+    @method _conjuctPredicates
+    @param {BasePredicate} limitPredicate The first predicate to concatenate.
+    @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+    @param {Function} lookupAdditionalLimitFunction Function return BasePredicate to concatenate.
+    @return {BasePredicate} Concatenation of two predicates.
+    @throws {Error} Throws error if any of parameter predicates has wrong type.
+  */
+  _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
+    let limitArray = Ember.A();
+
+    if (limitPredicate) {
+      if (limitPredicate instanceof BasePredicate) {
+        limitArray.pushObject(limitPredicate);
+      } else {
+        throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+    }
+
+    if (autocompletePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
+        limitArray.pushObject(autocompletePredicate);
+      } else {
+        throw new Error(&#x27;Autocomplete predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+    }
+
+    if (lookupAdditionalLimitFunction) {
+      if ((lookupAdditionalLimitFunction instanceof Function)) {
+        let compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get(&#x27;relatedModel&#x27;));
+        if (compileAdditionakBasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
+            limitArray.pushObject(compileAdditionakBasePredicate);
+          } else {
+            throw new Error(&#x27;lookupAdditionalLimitFunction must return BasePredicate.&#x27;);
+          }
+        }
+      } else {
+        throw new Error(&#x27;lookupAdditionalLimitFunction must to be function.&#x27;);
+      }
+    }
+
+    if (limitArray.length &gt; 1) {
+      return new ComplexPredicate(Condition.And, ...limitArray);
+    } else {
+      return limitArray[0];
+    }
+  },
+
+  /**
+    Handles changing current locale.
+    It reinits autocomplete or dropdown mode (depending on flag) in order to localize messages.
+
+    @method _languageReinit
+    @private
+  */
+  _languageReinit() {
+    if (this.get(&#x27;autocomplete&#x27;)) {
+      this._onAutocomplete();
+    } else if (this.get(&#x27;dropdown&#x27;)) {
+      this._onDropdown();
+    }
+  },
+
+  /**
+    Function for autofillByLimit observer.
+
+    @method _autofillByLimitObserverFunction
+    @private
+  */
+  _autofillByLimitObserverFunction() {
+    Ember.run.once(this, &#x27;_onAutofillByLimit&#x27;);
+  },
+
+  /**
+    Handles changing properties affecting the sample.
+
+    @method _onAutofillByLimit
+    @private
+  */
+  _onAutofillByLimit() {
+    if (this.get(&#x27;readonly&#x27;)) {
+      return;
+    }
+
+    let _this = this;
+    let relationName = this.get(&#x27;relationName&#x27;);
+    if (!relationName) {
+      throw new Error(&#x27;relationName is not defined.&#x27;);
+    }
+
+    let store = this.get(&#x27;store&#x27;);
+    let relatedModel = this.get(&#x27;relatedModel&#x27;);
+    let relationModelName = getRelationType(relatedModel, relationName);
+
+    let builder = new Builder(store, relationModelName).selectByProjection(this.get(&#x27;projection&#x27;));
+
+    let lookupLimitPredicate = this._conjuctPredicates(this.get(&#x27;lookupLimitPredicate&#x27;), this.get(&#x27;lookupAdditionalLimitFunction&#x27;));
+    if (lookupLimitPredicate) {
+      builder.where(lookupLimitPredicate);
+    }
+
+    builder.top(2);
+    store.query(relationModelName, builder.build()).then((records) =&gt; {
+      if (Ember.get(records, &#x27;length&#x27;) === 1) {
+        let record = records.objectAt(0);
+        _this.set(&#x27;value&#x27;, record);
+        _this.get(&#x27;currentController&#x27;).send(_this.get(&#x27;updateLookupAction&#x27;),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: record,
+            componentName: _this.get(&#x27;componentName&#x27;)
+          });
+      }
+    });
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

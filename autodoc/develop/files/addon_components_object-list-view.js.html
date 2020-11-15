@@ -1,0 +1,3400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/object-list-view.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/object-list-view.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+import $ from &#x27;jquery&#x27;;
+import RSVP from &#x27;rsvp&#x27;;
+import EmberObject, { get, set, setProperties, computed, observer } from &#x27;@ember/object&#x27;;
+import { guidFor, copy } from &#x27;@ember/object/internals&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { A, isArray } from &#x27;@ember/array&#x27;;
+import { inject as service } from &#x27;@ember/service&#x27;;
+import { typeOf, isBlank, isNone, isEmpty } from &#x27;@ember/utils&#x27;;
+import { htmlSafe, capitalize } from &#x27;@ember/string&#x27;;
+import { getOwner } from &#x27;@ember/application&#x27;;
+import { once, schedule, scheduleOnce } from &#x27;@ember/runloop&#x27;;
+
+import { translationMacro as t } from &#x27;ember-i18n&#x27;;
+import { getValueFromLocales } from &#x27;ember-flexberry-data/utils/model-functions&#x27;;
+import generateUniqueId from &#x27;ember-flexberry-data/utils/generate-unique-id&#x27;;
+import getAttrLocaleKey from &#x27;../utils/get-attr-locale-key&#x27;;
+import Builder from &#x27;ember-flexberry-data/query/builder&#x27;;
+
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import FlexberryLookupCompatibleComponentMixin from &#x27;../mixins/flexberry-lookup-compatible-component&#x27;;
+import FlexberryFileCompatibleComponentMixin from &#x27;../mixins/flexberry-file-compatible-component&#x27;;
+import getProjectionByName from &#x27;../utils/get-projection-by-name&#x27;;
+import runAfter from &#x27;../utils/run-after&#x27;;
+import defaultConditionsByType from &#x27;../utils/default-conditions-by-type&#x27;;
+
+/**
+  Object list view component.
+
+  @class ObjectListViewComponent
+  @extends FlexberryBaseComponent
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses ErrorableControllerMixin
+*/
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin, {
+  /**
+    Projection set by property {{#crossLink &quot;ObjectListViewComponent/modelProjection:property&quot;}}{{/crossLink}}.
+
+    @property _modelProjection
+    @type Object
+    @default null
+    @private
+  */
+  _modelProjection: null,
+
+  _contentObserver: observer(&#x27;content&#x27;, function() {
+    this._setContent(this.get(&#x27;componentName&#x27;));
+
+    if (this.get(&#x27;allSelect&#x27;)) {
+      let contentWithKeys = this.get(&#x27;contentWithKeys&#x27;);
+      let checked = this.get(&#x27;allSelect&#x27;);
+
+      contentWithKeys.forEach((item) =&gt; {
+        if (item.get(&#x27;rowConfig.canBeSelected&#x27;)) {
+          item.set(&#x27;selected&#x27;, checked);
+        }
+      });
+    }
+  }),
+
+  sortTitle: t(&#x27;components.object-list-view.header-title-attr&#x27;),
+
+  /**
+    Title for table headers.
+
+    @property sortTitleCompute
+    @type String
+  */
+  sortTitleCompute: computed(&#x27;orderable&#x27;, &#x27;sortTitle&#x27;, function() {
+    if (this.get(&#x27;orderable&#x27;)) {
+      return this.get(&#x27;sortTitle&#x27;);
+    } else {
+      return &#x27;&#x27;;
+    }
+  }),
+
+  /**
+    Flag indicates on availability in view order property.
+
+    @property orderedProperty
+    @type String
+  */
+  orderedProperty: undefined,
+
+  /**
+    Model projection which should be used to display given content.
+    Accepts object or name projections.
+
+    @property modelProjection
+    @type Object|String
+    @default null
+  */
+  modelProjection: computed(&#x27;_modelProjection&#x27;, {
+    /* eslint-disable no-unused-vars */
+    get(key) {
+      return this.get(&#x27;_modelProjection&#x27;);
+    },
+    set(key, value) {
+      if (typeof value === &#x27;string&#x27;) {
+        let projectionName = value;
+        let modelName = this.get(&#x27;modelName&#x27;);
+        value = getProjectionByName(projectionName, modelName, this.get(&#x27;store&#x27;));
+        assert(&#x60;Projection with name &#x27;${projectionName}&#x27; for model with name &#x27;${modelName}&#x27; is not found.&#x60;, value);
+      } else if (typeof value !== &#x27;object&#x27;) {
+        throw new Error(&#x60;Property &#x27;modelProjection&#x27; should be a string or object.&#x60;);
+      }
+
+      this.set(&#x27;_modelProjection&#x27;, value);
+      return value;
+    },
+    /* eslint-enable no-unused-vars */
+  }),
+
+  /**
+    Main model projection. Accepts object projections.
+    Needs for support locales of captions.
+
+    @property mainModelProjection
+    @type Object
+  */
+  mainModelProjection: undefined,
+
+  /**
+    Default classes for component wrapper.
+  */
+  classNames: [&#x27;object-list-view-container&#x27;],
+
+  /**
+    Table row click action name.
+
+    @property action
+    @type String
+    @default &#x27;&#x27;
+    @readOnly
+  */
+  action: &#x27;&#x27;,
+
+  /**
+    Flag indicates whether allow to resize columns (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+
+    @property allowColumnResize
+    @type Boolean
+    @default true
+  */
+  allowColumnResize: true,
+
+  /**
+    Flag indicates whether to fix the table head (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
+  /**
+    Table add column to sorting action name.
+
+    @property addColumnToSorting
+    @type String
+    @default &#x27;addColumnToSorting&#x27;
+    @readOnly
+  */
+  addColumnToSorting: &#x27;addColumnToSorting&#x27;,
+
+  /**
+    Table sort by column action name.
+
+    @property sortByColumn
+    @type String
+    @default &#x27;sortByColumn&#x27;
+    @readOnly
+  */
+  sortByColumn: &#x27;sortByColumn&#x27;,
+
+  /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
+
+  defaultPaddingStyle: computed(&#x27;defaultLeftPadding&#x27;, function() {
+    let defaultLeftPadding = this.get(&#x27;defaultLeftPadding&#x27;);
+    return htmlSafe(&#x60;padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;&#x60;);
+  }),
+
+  /**
+    Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
+
+    If flag is enabled component compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @property searchForContentChange
+    @type Boolean
+    @default false
+  */
+  searchForContentChange: false,
+
+  /**
+    Flag indicates whether table are striped.
+
+    @property tableStriped
+    @type Boolean
+    @default true
+  */
+  tableStriped: true,
+
+  /**
+    Flag indicates whether table rows are clickable.
+
+    @property rowClickable
+    @type Boolean
+    @default true
+  */
+  rowClickable: true,
+
+  /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
+    Custom classes for table.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        customTableClass=&quot;inverted blue&quot;
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+    @property customTableClass
+    @type String
+    @default &#x27;&#x27;
+  */
+  customTableClass: &#x27;&#x27;,
+
+  /**
+    The flag is selected for all records.
+
+    @property allSelect
+    @type Boolean
+    @default false
+  */
+  allSelect: false,
+
+  /**
+    Classes for table.
+
+    @property tableClass
+    @type String
+    @readOnly
+  */
+  tableClass: computed(&#x27;tableStriped&#x27;, &#x27;rowClickable&#x27;, &#x27;customTableClass&#x27;, &#x27;allowColumnResize&#x27;, function() {
+    let tableStriped = this.get(&#x27;tableStriped&#x27;);
+    let rowClickable = this.get(&#x27;rowClickable&#x27;);
+    let allowColumnResize = this.get(&#x27;allowColumnResize&#x27;);
+    let classes = this.get(&#x27;customTableClass&#x27;);
+
+    if (tableStriped) {
+      classes += &#x27; striped&#x27;;
+    }
+
+    if (rowClickable) {
+      classes += &#x27; selectable&#x27;;
+    }
+
+    if (allowColumnResize) {
+      classes += &#x27; fixed JColResizer&#x27;;
+    }
+
+    return classes;
+  }),
+
+  /**
+    Path to component&#x27;s settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default &#x27;APP.components.objectListView&#x27;
+  */
+  appConfigSettingsPath: &#x27;APP.components.objectListView&#x27;,
+
+  /**
+    Default cell component that will be used to display values in columns cells.
+
+    @property {Object} cellComponent
+    @property {String} [cellComponent.componentName=&#x27;object-list-view-cell&#x27;]
+    @property {String} [cellComponent.componentProperties=null]
+  */
+  cellComponent: undefined,
+
+  /**
+    Custom data for the editform
+
+    @property {Object} customParameters
+  */
+  customParameters: undefined,
+
+  /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
+
+  /**
+    Flag indicates whether to show asterisk icon in first column of every changed row.
+
+    @property showAsteriskInRow
+    @type Boolean
+    @default false
+  */
+  showAsteriskInRow: false,
+
+  /**
+    Flag indicates whether to show checkbox in first column of every row.
+
+    @property showCheckBoxInRow
+    @type Boolean
+    @default false
+  */
+  showCheckBoxInRow: false,
+
+  /**
+    Flag indicates whether to show delete button in first column of every row.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteButtonInRow: false,
+
+  /**
+    Flag indicates whether to show edit button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
+
+  /**
+    Flag indicates whether to show prototype button in first column of every row.
+
+    @property showPrototypeButtonInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeButtonInRow: false,
+
+  /**
+    Flag indicates whether to not use userSetting from backend
+    @property notUseUserSettings
+    @type Boolean
+    @default false
+  */
+  notUseUserSettings: false,
+
+  /**
+    Flag indicates whether to show helper column or not.
+
+    @property showHelperColumn
+    @type Boolean
+    @readOnly
+  */
+  showHelperColumn: computed(
+    &#x27;showAsteriskInRow&#x27;,
+    &#x27;showCheckBoxInRow&#x27;,
+    &#x27;showEditButtonInRow&#x27;,
+    &#x27;showPrototypeButtonInRow&#x27;,
+    &#x27;showDeleteButtonInRow&#x27;,
+    &#x27;customButtonsInRow&#x27;,
+    &#x27;modelProjection&#x27;,
+    function() {
+      if (this.get(&#x27;modelProjection&#x27;)) {
+        return this.get(&#x27;showAsteriskInRow&#x27;) ||
+          this.get(&#x27;showCheckBoxInRow&#x27;) ||
+          this.get(&#x27;showEditButtonInRow&#x27;) ||
+          this.get(&#x27;showPrototypeButtonInRow&#x27;) ||
+          this.get(&#x27;showDeleteButtonInRow&#x27;) ||
+          !!this.get(&#x27;customButtonsInRow&#x27;);
+      } else {
+        return false;
+      }
+    }
+  ).readOnly(),
+
+  /**
+    Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
+
+    @property showDeleteMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showDeleteMenuItemInRow: false,
+
+  /**
+    Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showEditMenuItemInRow: false,
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: false,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array&lt;Object&gt;
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: &#x27;ember-flexberry-dummy-suggestion-type&#x27;,
+          projectionName: &#x27;SuggestionTypeL&#x27;,
+          propName: &#x27;name&#x27;,
+          bindingPath: &#x27;type&#x27;
+        }]
+      })
+  */
+  ddlFilterSettings: null,
+
+  /**
+    Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
+
+    @property showPrototypeMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showPrototypeMenuItemInRow: false,
+
+  /**
+    Flag indicates that on page selected all records.
+
+    @property allSelectAtPage
+    @type Boolean
+    @default false
+  */
+  allSelectAtPage: false,
+
+  /**
+    Additional menu items for dropdown menu in last column of every row.
+
+    @property menuInRowAdditionalItems
+    @type Boolean
+    @default null
+  */
+  menuInRowAdditionalItems: null,
+
+  /**
+    Flag indicates whether additional menu items for dropdown menu in last column of every row are defined.
+
+    @property menuInRowHasAdditionalItems
+    @type Boolean
+    @readOnly
+  */
+  menuInRowHasAdditionalItems: computed(&#x27;menuInRowAdditionalItems.[]&#x27;, function() {
+    let menuInRowAdditionalItems = this.get(&#x27;menuInRowAdditionalItems&#x27;);
+    return isArray(menuInRowAdditionalItems) &amp;&amp; menuInRowAdditionalItems.length &gt; 0;
+  }),
+
+  /**
+    Flag indicates whether to show menu column or not.
+
+    @property showMenuColumn
+    @type Boolean
+    @readOnly
+  */
+  showMenuColumn: computed(
+    &#x27;showEditMenuItemInRow&#x27;,
+    &#x27;showPrototypeMenuItemInRow&#x27;,
+    &#x27;showDeleteMenuItemInRow&#x27;,
+    &#x27;menuInRowHasAdditionalItems&#x27;,
+    function() {
+      return (
+        this.get(&#x27;showEditMenuItemInRow&#x27;) ||
+        this.get(&#x27;showPrototypeMenuItemInRow&#x27;) ||
+        this.get(&#x27;showDeleteMenuItemInRow&#x27;) ||
+        this.get(&#x27;menuInRowHasAdditionalItems&#x27;)
+      );
+    }
+  ),
+
+  /**
+    Table columns related to current model projection.
+
+    @property columns
+    @type Object[]
+    @readOnly
+  */
+  columns: computed(&#x27;modelProjection&#x27;, &#x27;enableFilters&#x27;, &#x27;content&#x27;, function() {
+    let ret;
+    let projection = this.get(&#x27;modelProjection&#x27;);
+
+    if (!projection) {
+      return A();
+    }
+
+    let cols = this._generateColumns(projection.attributes);
+    let userSettings;
+    if (this.notUseUserSettings) {
+
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
+      // In future release backend can save userSettings for each olv.
+      userSettings = this.get(&#x27;currentController.developerUserSettings&#x27;);
+      userSettings = userSettings ? userSettings[this.get(&#x27;componentName&#x27;)] : undefined;
+      userSettings = userSettings ? userSettings.DEFAULT : undefined;
+    } else {
+      userSettings = this.get(&#x27;userSettingsService&#x27;).getCurrentUserSetting(this.get(&#x27;componentName&#x27;)); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
+    }
+
+    if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = getOwner(this).lookup(&#x27;default-user-setting:&#x27; + this.get(&#x27;modelName&#x27;));
+      if (!isNone(userSettingValue)) {
+        userSettings = userSettingValue.DEFAULT
+      }
+    }
+
+    let onEditForm = this.get(&#x27;onEditForm&#x27;);
+
+    // TODO: add userSettings support on edit form.
+    if (userSettings &amp;&amp; !onEditForm) {
+      let namedCols = {};
+      for (let i = 0; i &lt; cols.length; i++) {
+        let col = cols[i];
+        delete col.sorted;
+        delete col.sortNumber;
+        delete col.sortAscending;
+        delete col.width;
+        let propName = col.propName;
+        namedCols[propName] = col;
+      }
+
+      // Set columns width.
+      if (isArray(userSettings.columnWidths)) {
+        for (let i = 0; i &lt; userSettings.columnWidths.length; i++) {
+          let columnWidth = userSettings.columnWidths[i];
+          if (namedCols[columnWidth.propName]) {
+            namedCols[columnWidth.propName].width = columnWidth.width || 150;
+          }
+        }
+      }
+
+      if (userSettings.sorting === undefined) {
+        userSettings.sorting = [];
+      }
+
+      if (isNone(this.get(&#x27;orderedProperty&#x27;))) {
+        for (let i = 0; i &lt; userSettings.sorting.length; i++) {
+          let sorting = userSettings.sorting[i];
+          if (namedCols[sorting.propName]) {
+            namedCols[sorting.propName].sorted = true;
+            namedCols[sorting.propName].sortAscending = sorting.direction === &#x27;asc&#x27; ? true : false;
+            namedCols[sorting.propName].sortNumber = i + 1;
+          }
+        }
+      }
+
+      if (userSettings.colsOrder !== undefined) {
+        ret = [];
+        for (let i = 0; i &lt; userSettings.colsOrder.length; i++) {
+          let userSetting = userSettings.colsOrder[i];
+          if (!userSetting.hide &amp;&amp; namedCols[userSetting.propName]) {
+            ret[ret.length] = namedCols[userSetting.propName];
+          }
+        }
+      } else {
+        ret = cols;
+      }
+    } else {
+      ret = cols;
+    }
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).setOlvFilterColumnsArray(this.get(&#x27;componentName&#x27;), ret);
+    return ret;
+  }),
+
+  /**
+    Total columns count (including additional columns).
+
+    @property colspan
+    @type Number
+    @readOnly
+  */
+  colspan: computed(&#x27;columns.length&#x27;, &#x27;showHelperColumn&#x27;, &#x27;showMenuColumn&#x27;, function() {
+    let columnsCount = 0;
+    if (this.get(&#x27;showHelperColumn&#x27;)) {
+      columnsCount += 1;
+    }
+
+    if (this.get(&#x27;showMenuColumn&#x27;)) {
+      columnsCount += 1;
+    }
+
+    let columns = this.get(&#x27;columns&#x27;);
+    columnsCount += isArray(columns) ? columns.length : 0;
+
+    return columnsCount;
+  }),
+
+  /**
+    @property checkRowsSettingsItems
+    @readOnly
+  */
+  checkRowsSettingsItems: computed(
+    &#x27;i18n.locale&#x27;,
+    &#x27;userSettingsService.isUserSettingsServiceEnabled&#x27;,
+    &#x27;readonly&#x27;,
+    &#x27;allSelect&#x27;,
+    &#x27;allSelectAtPage&#x27;,
+    function() {
+      let i18n = this.get(&#x27;i18n&#x27;);
+      let readonly = this.get(&#x27;readonly&#x27;);
+      let allSelect = this.get(&#x27;allSelect&#x27;);
+
+      let rootItem = {
+        icon: &#x27;icon-guideline-check-menu icon&#x27;,
+        iconAlignment: &#x27;right&#x27;,
+        title: &#x27;&#x27;,
+        items: [],
+        localeKey: &#x27;&#x27;
+      };
+
+      let isUncheckAllAtPage = this.get(&#x27;allSelectAtPage&#x27;);
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t(&#x27;components.olv-toolbar.uncheck-all-at-page-button-text&#x27;) : i18n.t(&#x27;components.olv-toolbar.check-all-at-page-button-text&#x27;);
+      let checkAllAtPageTitleKey = isUncheckAllAtPage ? &#x27;components.olv-toolbar.uncheck-all-at-page-button-text&#x27; : &#x27;components.olv-toolbar.check-all-at-page-button-text&#x27;;
+
+      let checkAllTitle = allSelect ? i18n.t(&#x27;components.olv-toolbar.uncheck-all-button-text&#x27;) : i18n.t(&#x27;components.olv-toolbar.check-all-button-text&#x27;);
+      let checkAllTitleKey = allSelect ? &#x27;components.olv-toolbar.uncheck-all-button-text&#x27; : &#x27;components.olv-toolbar.check-all-button-text&#x27;;
+
+      if (!readonly) {
+        if (!allSelect) {
+          rootItem.items.push({
+            title: checkAllAtPageTitle,
+            localeKey: checkAllAtPageTitleKey
+          });
+        }
+
+        let classNames = this.get(&#x27;classNames&#x27;);
+        if (classNames &amp;&amp; classNames.indexOf(&#x27;groupedit-container&#x27;) === -1) {
+          rootItem.items.push({
+            title: checkAllTitle,
+            localeKey: checkAllTitleKey
+          });
+        }
+      }
+
+      return this.get(&#x27;userSettingsService&#x27;).isUserSettingsServiceEnabled ? [rootItem] : [];
+    }
+  ),
+
+  /**
+    Flag indicates whether some column contains editable component instead of default cellComponent.
+    Don&#x27;t work if change &#x60;componentName&#x60; inside &#x60;cellComponent&#x60;.
+
+    @property hasEditableValues
+    @type Boolean
+    @readOnly
+  */
+  hasEditableValues: computed(&#x27;columns.{[],@each.cellComponent}&#x27;, function() {
+    let columns = this.get(&#x27;columns&#x27;);
+    if (!isArray(columns)) {
+      return true;
+    }
+
+    let defaultCellCompoinentName = this.get(&#x27;cellComponent.componentName&#x27;);
+    return columns.filter(function(column) {
+      return column.cellComponent.componentName !== defaultCellCompoinentName;
+    }).length &gt; 0;
+  }),
+
+  /**
+    Content to be displayed (models collection).
+
+    @property content
+    @type DS.ManyArray
+    @default null
+  */
+  content: null,
+
+  /**
+    Array of models from content collection with some synthetic keys related to them.
+
+    @property contentWithKeys
+    @type Object[]
+    @default null
+  */
+  contentWithKeys: null,
+
+  contentForRender: null,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoading: false,
+
+  /**
+    Flag indicates whether to show row by row loading in progress.
+
+    @property rowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  rowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether content is defined.
+
+    @property hasContent
+    @type Boolean
+    @readOnly
+  */
+  hasContent: computed(&#x27;contentWithKeys.length&#x27;, function() {
+    return this.get(&#x27;contentWithKeys.length&#x27;) &gt; 0;
+  }),
+
+  /**
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default &#x27;t(&#x27;components.object-list-view.placeholder&#x27;)&#x27;
+  */
+  placeholder: t(&#x27;components.object-list-view.placeholder&#x27;),
+
+  /**
+    Flag indicates whether table headers are clickable.
+
+    @property orderable
+    @type Boolean
+    @default false
+  */
+  orderable: false,
+
+  /**
+    Dictionary with sorting data related to columns.
+
+    @property sorting
+    @type Object
+    @default null
+  */
+  sorting: null,
+
+  /**
+    Last selected record.
+
+    @property selectedRecord
+    @type DS.Model
+    @default null
+  */
+  selectedRecord: null,
+
+  /**
+    All selected records.
+
+    @property selectedRecords
+    @type DS.Model[]
+    @default null
+  */
+  selectedRecords: null,
+
+  /**
+    Custom attributes which will be added to each generated column.
+
+    @property customColumnAttributes
+    @type Object
+    @default null
+  */
+  customColumnAttributes: null,
+
+  /**
+    Filter setting.
+
+    @property filterByAnyMatch
+    @type String
+    @default &#x27;filterByAnyMatch&#x27;
+  */
+  filterByAnyMatch: &#x27;filterByAnyMatch&#x27;,
+
+  /**
+    Hook for configurate rows.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        configurateRow=(action &quot;configurateRow&quot;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;js
+      // app/controllers/employees.js
+      import ListFormController from &#x27;./list-form&#x27;;
+
+      export default ListFormController.extend({
+        actions: {
+          configurateRow(rowConfig, record) {
+            set(rowConfig, &#x27;canBeDeleted&#x27;, false);
+            if (record.get(&#x27;isMyFavoriteRecord&#x27;)) {
+              set(rowConfig, &#x27;customClass&#x27;, &#x27;my-fav-record&#x27;);
+            }
+
+            let readonlyColumns = [];
+            if (record.get(&#x27;isNameColumnReadonly&#x27;)) {
+              readonlyColumns.push(&#x27;name&#x27;);
+            }
+
+            set(rowConfig, &#x27;readonlyColumns&#x27;, readonlyColumns);
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+    @method configurateRow
+
+    @param {Object} rowConfig Settings for row.
+                            See {{#crossLink &quot;ObjectListView/defaultRowConfig:property&quot;}}{{/crossLink}}
+                            property for details
+    @param {DS.Model} record The record in row.
+  */
+  configurateRow: undefined,
+
+  /**
+    Hook for configurate selected rows.
+
+    @example
+      &#x60;&#x60;&#x60;handlebars
+      &lt;!-- app/templates/employees.hbs --&gt;
+      {{flexberry-objectlistview
+        ...
+        configurateSelectedRows=(action &quot;configurateSelectedRows&quot;)
+        ...
+      }}
+      &#x60;&#x60;&#x60;
+
+      &#x60;&#x60;&#x60;js
+      // app/controllers/employees.js
+      import ListFormController from &#x27;./list-form&#x27;;
+
+      export default ListFormController.extend({
+        actions: {
+          configurateSelectedRows(selectedRecords) {
+            // do something
+          }
+        }
+      });
+      &#x60;&#x60;&#x60;
+    @method configurateSelectedRows
+
+    @param {DS.Model[]} selectedRecords All selected records.
+  */
+  configurateSelectedRows: undefined,
+
+  selectedRowsChanged: observer(&#x27;selectedRecords.@each&#x27;, function() {
+    let selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+    let configurateSelectedRows = this.get(&#x27;configurateSelectedRows&#x27;);
+    if (configurateSelectedRows) {
+      assert(&#x27;configurateSelectedRows must be a function&#x27;, typeof configurateSelectedRows === &#x27;function&#x27;);
+      configurateSelectedRows(selectedRecords);
+    }
+
+    // Set title flag of select all at page button.
+    const contentWithKeys = this.get(&#x27;contentWithKeys&#x27;);
+    if (contentWithKeys) {
+      let isAllSelectAtPage = true;
+      for (let i = 0; i &lt; contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get(&#x27;selected&#x27;)) {
+          isAllSelectAtPage = false;
+        }
+      }
+
+      this.set(&#x27;allSelectAtPage&#x27;, isAllSelectAtPage);
+    }
+
+
+  }),
+
+  /**
+    Default settings for rows.
+
+    @property defaultRowConfig
+    @type Object
+
+    @param {Boolean} [canBeDeleted=true] The row can be deleted
+    @param {Boolean} [canBeSelected=true] The row can be selected via checkbox
+    @param {String} [customClass=&#x27;&#x27;] Custom css classes for the row
+  */
+  defaultRowConfig: undefined,
+
+  /**
+    Flag indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
+
+    @property immediateDelete
+    @type Boolean
+    @default false
+  */
+  immediateDelete: false,
+
+  /**
+    Flag indicates whether records should be edited on separate route.
+
+    @property editOnSeparateRoute
+    @type Object
+    @default false
+  */
+  editOnSeparateRoute: false,
+
+  /**
+    Flag indicates whether to save current model before going to the detail&#x27;s route.
+
+    @property saveBeforeRouteLeave
+    @type Boolean
+    @default false
+  */
+  saveBeforeRouteLeave: false,
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: service(&#x27;store&#x27;),
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: service(&#x27;objectlistview-events&#x27;),
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: service(),
+
+  /**
+    Used to identify objectListView on the page.
+
+    @property componentName
+    @type String
+    @default &#x27;&#x27;
+  */
+  componentName: &#x27;&#x27;,
+
+  /**
+   * Clears selection from row
+   *
+   * @param {DS.Model} recordWithKey Model in row
+   */
+  clearSelectionFromRow(recordWithKey) {
+    if (recordWithKey) {
+      set(recordWithKey, &#x27;selected&#x27;, false);
+      this.send(&#x27;selectRow&#x27;, recordWithKey, { checked: false });
+    }
+  },
+
+  actions: {
+    /**
+      Just redirects action up to {{#crossLink &quot;FlexberryObjectlistviewComponent&quot;}}&#x60;flexberry-objectlistview&#x60;{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction(&#x27;customButtonInRowAction&#x27;, actionName, model);
+    },
+
+    /**
+      This action is called when user click on row.
+
+      @method actions.rowClick
+      @public
+      @param {Object} recordWithKey Object containing record related to clicked row and it&#x27;s key.
+      @param {Object} recordWithKey.key Key of record related to clicked row
+      @param {Object} recordWithKey.data Record related to clicked row.
+      @param {Object} params Additional parameters describing clicked row.
+      @param {Object} params.column Column in row wich owns the clicked cell.
+      @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
+      @param {jQuery.Event} params.originalEvent Сlick event object.
+    */
+    rowClick(recordWithKey, params) {
+      let editOnSeparateRoute = this.get(&#x27;editOnSeparateRoute&#x27;);
+      if (this.get(&#x27;readonly&#x27;)) {
+        if (!editOnSeparateRoute) {
+          return;
+        }
+      }
+
+      if (this.rowClickable || params.rowEdit) {
+        let recordKey = recordWithKey &amp;&amp; recordWithKey.key;
+        let recordData = recordWithKey &amp;&amp; recordWithKey.data;
+        let recordModelName = isNone(recordData) ? undefined : recordData.constructor.modelName;
+
+        let $selectedRow = this._getRowByKey(recordKey);
+        let editOnSeparateRoute = this.get(&#x27;editOnSeparateRoute&#x27;);
+        params = params || {};
+        /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
+        $.extend(params, {
+          onEditForm: this.get(&#x27;onEditForm&#x27;),
+          saveBeforeRouteLeave: this.get(&#x27;saveBeforeRouteLeave&#x27;),
+          editOnSeparateRoute: editOnSeparateRoute,
+          modelName: recordModelName || this.get(&#x27;modelProjection&#x27;).modelName,
+          detailArray: this.get(&#x27;content&#x27;),
+          readonly: this.get(&#x27;readonly&#x27;),
+          goToEditForm: true,
+          customParameters: this.get(&#x27;customParameters&#x27;)
+        });
+        /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
+        runAfter(this, () =&gt; { return isNone($selectedRow) || $selectedRow.hasClass(&#x27;active&#x27;); }, () =&gt; {
+          this.get(&#x27;action&#x27;)(recordData, params);
+        });
+
+        this._setActiveRecord(recordKey);
+
+        if (!editOnSeparateRoute) {
+          // It is necessary only when we will not go to other route on click.
+          this.set(&#x27;selectedRecord&#x27;, recordData);
+        }
+      }
+    },
+
+    /**
+      This action is called when user click on header.
+
+      @method actions.headerCellClick
+      @public
+      @param {Object} column
+      @param {jQuery.Event} e jQuery.Event by click on column.
+    */
+    headerCellClick(column, e) {
+      if (!this.orderable || column.sortable === false || !isNone(this.get(&#x27;orderedProperty&#x27;))) {
+        return;
+      }
+
+      let action = e.ctrlKey ? &#x27;addColumnToSorting&#x27; : &#x27;sortByColumn&#x27;;
+      this.get(action)(column, this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      This action is called when user click on menu in row.
+
+      @method actions.deleteRow
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
+    /* eslint-disable no-unused-vars */
+    deleteRow(recordWithKey, e) {
+
+      // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
+      if (this.get(&#x27;readonly&#x27;) || !recordWithKey.rowConfig.canBeDeleted) {
+        return;
+      }
+
+      let confirmDeleteRow = this.get(&#x27;confirmDeleteRow&#x27;);
+      let possiblePromise = null;
+
+      if (confirmDeleteRow) {
+        assert(&#x27;Error: confirmDeleteRow must be a function.&#x27;, typeof confirmDeleteRow === &#x27;function&#x27;);
+
+        possiblePromise = confirmDeleteRow(recordWithKey.data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise))) {
+          return;
+        }
+      }
+
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() =&gt; {
+          this._deleteRecord(recordWithKey.data, this.get(&#x27;immediateDelete&#x27;));
+        });
+      } else {
+        this._deleteRecord(recordWithKey.data, this.get(&#x27;immediateDelete&#x27;));
+      }
+
+      this.clearSelectionFromRow(recordWithKey);
+    },
+
+    /* eslint-enable no-unused-vars */
+
+    /**
+      This action is called when user select the row.
+
+      @method actions.selectRow
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
+    selectRow(recordWithKey, e) {
+      const selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+
+      const record = recordWithKey.data;
+
+      recordWithKey.selected = e.checked;
+      if (e.checked) {
+        if (selectedRecords.indexOf(record) === -1) {
+          selectedRecords.pushObject(record);
+        }
+      } else {
+        selectedRecords.removeObject(record);
+      }
+
+      const componentName = this.get(&#x27;componentName&#x27;);
+      const olvEventsService = this.get(&#x27;objectlistviewEventsService&#x27;);
+
+      // With this trigger, the &#x60;flexberry-groupedit&#x60; component implements the disabling of the rows moving buttons.
+      // The implementation uses the &#x60;active&#x60; class, since its update was moved to the template, the trigger must be called after updating the template.
+      // TODO: Make it better!
+      schedule(&#x27;afterRender&#x27;, olvEventsService, olvEventsService.rowSelectedTrigger, componentName, record, selectedRecords.length, e.checked, recordWithKey);
+    },
+
+    /**
+      This action is called when click check all at page button.
+
+      @method actions.checkAllAtPage
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on check all at page button
+    */
+  /* eslint-disable no-unused-vars */
+    checkAllAtPage(e) {
+      if (this.get(&#x27;allSelect&#x27;)) {
+        return;
+      }
+
+      let contentWithKeys = this.get(&#x27;contentWithKeys&#x27;);
+      let selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+
+      let checked = false;
+
+      for (let i = 0; i &lt; contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get(&#x27;selected&#x27;) &amp;&amp; contentWithKeys[i].get(&#x27;rowConfig.canBeSelected&#x27;)) {
+          checked = true;
+        }
+      }
+
+      for (let i = 0; i &lt; contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+
+        if (recordWithKey.get(&#x27;rowConfig.canBeSelected&#x27;)) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (checked) {
+            if (!selectedRow.hasClass(&#x27;active&#x27;)) {
+              selectedRow.addClass(&#x27;active&#x27;);
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass(&#x27;active&#x27;)) {
+              selectedRow.removeClass(&#x27;active&#x27;);
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
+          }
+
+          recordWithKey.set(&#x27;selected&#x27;, checked);
+
+          let componentName = this.get(&#x27;componentName&#x27;);
+          this.get(&#x27;objectlistviewEventsService&#x27;).rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
+        }
+      }
+    },
+    /* eslint-enable no-unused-vars */
+
+    /**
+      This action is called when click check all at all button.
+
+      @method actions.checkAll
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on ckeck all button
+    */
+    /* eslint-disable no-unused-vars */
+    checkAll(e) {
+      let checked = !this.get(&#x27;allSelect&#x27;);
+
+      let componentName = this.get(&#x27;componentName&#x27;);
+      this.get(&#x27;objectlistviewEventsService&#x27;).updateSelectAllTrigger(componentName, checked, true);
+      this.selectedRowsChanged();
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onCheckRowMenuItemClick
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onCheckRowMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find(&#x27;span&#x27;);
+      if (namedItemSpans.length &lt;= 0) {
+        return;
+      }
+
+      let i18n = this.get(&#x27;i18n&#x27;);
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      let isUncheckAllAtPage = this.get(&#x27;allSelectAtPage&#x27;);
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t(&#x27;components.olv-toolbar.uncheck-all-at-page-button-text&#x27;) :
+      i18n.t(&#x27;components.olv-toolbar.check-all-at-page-button-text&#x27;);
+
+      let isUncheckAll = this.get(&#x27;allSelect&#x27;);
+      let checkAllTitle = isUncheckAll ? i18n.t(&#x27;components.olv-toolbar.uncheck-all-button-text&#x27;) :
+      i18n.t(&#x27;components.olv-toolbar.check-all-button-text&#x27;);
+
+      switch (namedSetting) {
+        case checkAllAtPageTitle.toString(): {
+          this.send(&#x27;checkAllAtPage&#x27;);
+          break;
+        }
+
+        case checkAllTitle.toString(): {
+          this.send(&#x27;checkAll&#x27;);
+          break;
+        }
+      }
+    },
+
+    /* eslint-enable no-unused-vars */
+
+    /**
+      This action is called when click clear sorting button.
+
+      @method actions.clearSorting
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on clear sorting button
+    */
+    /* eslint-disable no-unused-vars */
+    clearSorting(e) {
+      let componentName = this.get(&#x27;componentName&#x27;);
+      let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+
+      if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+        alert(&#x27;No default usersettings&#x27;);
+        return;
+      }
+
+      let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+      let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
+      currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
+      userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
+      .then(record =&gt; {
+        if (this.get(&#x27;class&#x27;) !== &#x27;groupedit-container&#x27;)
+        {
+          this.get(&#x27;objectlistviewEventsService&#x27;).setSortingTrigger(componentName, currentUserSetting.sorting);
+        } else {
+          this.set(&#x27;sorting&#x27;, currentUserSetting.sorting);
+          let objectlistviewEventsService = this.get(&#x27;objectlistviewEventsService&#x27;);
+          objectlistviewEventsService.updateWidthTrigger(componentName);
+        }
+      });
+    },
+
+    /**
+      Applies filters if the &#x60;Enter&#x60; key has been pressed.
+
+      @method actions.applyFiltersByEnter
+    */
+    applyFiltersByEnter(e) {
+      if (e.keyCode === 13) {
+        this._refreshList(this.get(&#x27;componentName&#x27;));
+      }
+    },
+
+    /**
+      Called when filter condition in any column was changed by user.
+
+      @method actions.filterConditionChanged
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
+    */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      if (oldCondition === &#x27;between&#x27; || newCondition === &#x27;empty&#x27; || newCondition === &#x27;nempty&#x27;) {
+        set(filter, &#x27;pattern&#x27;, null);
+      }
+
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
+      let componentForFilterByCondition = this.get(&#x27;componentForFilterByCondition&#x27;);
+      if (componentForFilterByCondition) {
+        assert(&#x60;Need function in &#x27;componentForFilterByCondition&#x27;.&#x60;, typeof componentForFilterByCondition === &#x27;function&#x27;);
+        $.extend(true, options, componentForFilterByCondition(newCondition, oldCondition, filter.type));
+      }
+
+      setProperties(filter.component, options);
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterForColumn
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterForColumn(filter) {
+      set(filter, &#x27;component.name&#x27;, get(filter, &#x27;component._defaultComponent&#x27;));
+      set(filter, &#x27;condition&#x27;, null);
+      set(filter, &#x27;pattern&#x27;, null);
+      let options = this._getFilterComponentByCondition(undefined, &quot;between&quot;);
+      setProperties(filter.component, options);
+    },
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
+  */
+  init() {
+    this._super(...arguments);
+    assert(&#x27;ObjectListView must have componentName attribute.&#x27;, this.get(&#x27;componentName&#x27;));
+
+    this._initDdlFilterSettings();
+
+    this.set(&#x27;selectedRecords&#x27;, A());
+    this.set(&#x27;cellComponent&#x27;, {
+      componentName: undefined,
+      componentProperties: null,
+    });
+    this.set(&#x27;defaultRowConfig&#x27;, {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: &#x27;&#x27;
+    });
+    if (isNone(this.get(&#x27;customParameters&#x27;))) {
+      this.set(&#x27;customParameters&#x27;, {});
+    }
+
+    let searchForContentChange = this.get(&#x27;searchForContentChange&#x27;);
+    if (searchForContentChange) {
+      this.addObserver(&#x27;content.[]&#x27;, this, this._contentDidChangeProxy);
+    }
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvAddRow&#x27;, this, this._addRow);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvDeleteRows&#x27;, this, this._deleteRows);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvDeleteAllRows&#x27;, this, this._deleteAllRows);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;filterByAnyMatch&#x27;, this, this._filterByAnyMatch);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;refreshList&#x27;, this, this._refreshList);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;geSortApply&#x27;, this, this._setContent);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;updateWidth&#x27;, this, this.setColumnWidths);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;updateSelectAll&#x27;, this, this._selectAll);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;moveRow&#x27;, this, this._moveRow);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;filterConditionChanged&#x27;, this, this._filterConditionChanged);
+    this.get(&#x27;_contentObserver&#x27;).apply(this);
+    this.get(&#x27;selectedRowsChanged&#x27;).apply(this);
+  },
+
+  /**
+    Handler for updateWidth action.
+
+    @method setColumnWidths
+
+    @param {String} componentName The name of object-list-view component.
+  */
+  setColumnWidths(componentName) {
+    let columnsWidthAutoresize = this.get(&#x27;columnsWidthAutoresize&#x27;);
+    if (columnsWidthAutoresize) {
+      this._setColumnWidths(componentName);
+    } else {
+      if (this.get(&#x27;eventsBus&#x27;)) {
+        this.get(&#x27;eventsBus&#x27;).trigger(&#x27;setMenuWidth&#x27;, this.get(&#x27;componentName&#x27;));
+      }
+    }
+  },
+
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    For more information see [didInsertElement](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
+  */
+  didInsertElement() {
+    this._super(...arguments);
+
+    $(window).on(&#x60;resize.${this.get(&#x27;elementId&#x27;)}&#x60;, () =&gt; {
+      if (this.get(&#x27;columnsWidthAutoresize&#x27;)) {
+        this._setColumnWidths();
+      } else {
+        if (this.get(&#x27;eventsBus&#x27;)) {
+          this.get(&#x27;eventsBus&#x27;).trigger(&#x27;setMenuWidth&#x27;, this.get(&#x27;componentName&#x27;));
+        }
+      }
+    });
+
+    if (this.rowClickable) {
+      let key = this._getModelKey(this.selectedRecord);
+      if (key) {
+        this._setActiveRecord(key);
+      }
+    }
+
+    if (this.get(&#x27;onEditForm&#x27;)) {
+      this.get(&#x27;currentController&#x27;).getCustomContent();
+    }
+
+    this._setColumnWidths();
+  },
+
+  /**
+    Flag indicates whether columns resizable plugin already was initialized.
+
+    @property _colResizableInit
+    @type Boolean
+    @default false
+    @private
+  */
+  _colResizableInit: false,
+
+  /**
+    Field contains index for already rendered row.
+
+    @property _colResizableInit
+    @type Number
+    @default -1
+    @private
+  */
+  _renderedRowIndex: -1,
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    For more information see [didRender](https://emberjs.com/api/ember/release/classes/Component#method_didRender) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
+  */
+  didRender() {
+    this._super(...arguments);
+
+    // Start row by row rendering at first row.
+    if (this.get(&#x27;useRowByRowLoading&#x27;)) {
+      let contentForRender = this.get(&#x27;contentForRender&#x27;);
+      if (contentForRender) {
+        let contentLength = contentForRender.get(&#x27;length&#x27;);
+        if (contentLength &gt; 0) {
+          let renderedRowIndex = this.get(&#x27;_renderedRowIndex&#x27;) + 1;
+
+          if (renderedRowIndex &gt;= contentLength) {
+            // The last menu needs will be up.
+            this.$(&#x27;.object-list-view-menu .ui.dropdown&#x27;).removeClass(&#x27;bottom&#x27;).not(&#x27;:first&#x27;).last().addClass(&#x27;bottom&#x27;);
+            this.$(&#x27;.object-list-view-menu &gt; .ui.dropdown&#x27;).dropdown();
+
+            // Remove long loading spinners.
+            this.set(&#x27;rowByRowLoadingProgress&#x27;, false);
+
+            this.set(&#x27;_renderedRowIndex&#x27;, -1);
+
+            if (this.rowClickable) {
+              let key = this._getModelKey(this.selectedRecord);
+              if (key) {
+                this._setActiveRecord(key);
+              }
+            }
+
+            this._setColumnWidths();
+          } else {
+            // Start render row.
+            let modelWithKey = contentForRender[renderedRowIndex];
+            if (!modelWithKey.get(&#x27;doRenderData&#x27;)) {
+              modelWithKey.set(&#x27;doRenderData&#x27;, true);
+              this.set(&#x27;_renderedRowIndex&#x27;, renderedRowIndex);
+
+              if (renderedRowIndex === 0) {
+                if (this.get(&#x27;useRowByRowLoadingProgress&#x27;)) {
+                  // Set loading progress.
+                  this.set(&#x27;rowByRowLoadingProgress&#x27;, true);
+                }
+              }
+            }
+
+            if (this.get(&#x27;allowColumnResize&#x27;)) {
+              this._reinitResizablePlugin();
+            } else {
+              let $table = this.$(&#x27;table.object-list-view&#x27;);
+              $table.colResizable({ disable: true });
+            }
+          }
+        }
+      }
+    } else {
+
+      if (this.get(&#x27;allowColumnResize&#x27;)) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$(&#x27;table.object-list-view&#x27;);
+        $table.colResizable({ disable: true });
+      }
+
+      // The last menu needs will be up.
+      this.$(&#x27;.object-list-view-menu .ui.dropdown&#x27;).removeClass(&#x27;bottom&#x27;).not(&#x27;:first&#x27;).last().addClass(&#x27;bottom&#x27;);
+      this.$(&#x27;.object-list-view-menu &gt; .ui.dropdown&#x27;).dropdown();
+    }
+
+    this._setCurrentColumnsWidth();
+
+    if (this.get(&#x27;fixedHeader&#x27;)) {
+      let $currentTable = this.$(&#x27;table.object-list-view&#x27;);
+      $currentTable.parent().addClass(&#x27;fixed-header&#x27;);
+
+      this._fixedTableHead($currentTable);
+    }
+  },
+
+  /**
+    Restores the state of selected rows after updating the list.
+
+    See [EmberJS API](https://api.emberjs.com/).
+
+    @method didUpdateAttrs
+  */
+  didUpdateAttrs() {
+    scheduleOnce(&#x27;afterRender&#x27;, this, this._restoreSelectedRecords);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
+  */
+  willDestroy() {
+    if (this.get(&#x27;skipSelectedRecords&#x27;)) {
+      this.get(&#x27;objectlistviewEventsService&#x27;).holdMultiSelectedRecords(this.get(&#x27;componentName&#x27;));
+    }
+
+    this.removeObserver(&#x27;content.[]&#x27;, this, this._contentDidChangeProxy);
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvAddRow&#x27;, this, this._addRow);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvDeleteRows&#x27;, this, this._deleteRows);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvDeleteAllRows&#x27;, this, this._deleteAllRows);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;filterByAnyMatch&#x27;, this, this._filterByAnyMatch);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;refreshList&#x27;, this, this._refreshList);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;geSortApply&#x27;, this, this._setContent);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;updateWidth&#x27;, this, this.setColumnWidths);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;updateSelectAll&#x27;, this, this._selectAll);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;moveRow&#x27;, this, this._moveRow);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;filterConditionChanged&#x27;, this, this._filterConditionChanged);
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).clearSelectedRecords(this.get(&#x27;componentName&#x27;));
+
+    this._super(...arguments);
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed.
+    For more information see [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    $(window).off(&#x60;resize.${this.get(&#x27;elementId&#x27;)}&#x60;);
+  },
+
+  /**
+    It reinits plugin for column resize.
+    Reinit is important for proper position of resize elements.
+
+    @method _reinitResizablePlugin
+    @private
+  */
+  _reinitResizablePlugin() {
+    let $currentTable = this.$(&#x27;table.object-list-view&#x27;);
+    let cols = this.get(&#x27;columns&#x27;);
+    let helper = this.get(&#x27;showHelperColumn&#x27;);
+    let menu = this.get(&#x27;showMenuColumn&#x27;);
+    let disabledColumns = [];
+    let fixedColumns = this.get(&#x27;currentController.defaultDeveloperUserSettings&#x27;);
+    fixedColumns = fixedColumns ? fixedColumns[this.get(&#x27;componentName&#x27;)] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) =&gt; width);
+    fixedColumns = fixedColumns.filter(({ fixed }) =&gt; fixed).map(obj =&gt; { return obj.propName; });
+    for (let k = 0; k &lt; fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === &#x27;OlvRowMenu&#x27;) {
+        this.$(&#x27;.object-list-view-menu&#x27;).css({ &#x27;width&#x27;: fixedColumnsWidth[k].width + &#x27;px&#x27; });
+      }
+
+      if (fixedColumnsWidth[k].propName === &#x27;OlvRowToolbar&#x27;) {
+        this.$(&#x27;.object-list-view-operations&#x27;).css({ &#x27;width&#x27;: fixedColumnsWidth[k].width + &#x27;px&#x27; });
+      }
+    }
+
+    if (helper &amp;&amp; fixedColumns.indexOf(&#x27;OlvRowToolbar&#x27;) &gt; -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu &amp;&amp; fixedColumns.indexOf(&#x27;OlvRowMenu&#x27;) &gt; -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i &lt; cols.length; i++) {
+      let col = cols[i];
+      if (fixedColumns.indexOf(col.propName) &gt; -1) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
+
+    // Disable plugin and then init it again.
+    $currentTable.colResizable({ disable: true });
+
+    $currentTable.colResizable({
+      minWidth: 50,
+      disabledColumns: disabledColumns,
+      resizeMode: this.get(&#x27;columnsResizeMode&#x27;),
+      onResize: (e)=&gt; {
+        // Save column width as user setting on resize.
+        this._afterColumnResize(e);
+      }
+    });
+  },
+
+  /**
+    It handles the end of getting user setting with column widths.
+
+    @method _setColumnWidths
+    @private
+
+    @param {Array} userSetting User setting to apply to control
+  */
+  _setColumnWidths(componentName) {
+    if (isBlank(componentName) || this.get(&#x27;componentName&#x27;) === componentName) {
+      let userSetting;
+      if (this.notUseUserSettings) {
+        userSetting = this.get(&#x27;currentController.developerUserSettings&#x27;);
+        userSetting = userSetting ? userSetting[this.get(&#x27;componentName&#x27;)] : undefined;
+        userSetting = userSetting ? userSetting.DEFAULT : undefined;
+        userSetting = userSetting ? userSetting.columnWidths : undefined;
+      } else {
+        userSetting = this.get(&#x27;userSettingsService&#x27;).getCurrentColumnWidths(this.get(&#x27;componentName&#x27;));
+      }
+
+      userSetting = isArray(userSetting) ? A(userSetting) : A();
+
+      let $table = this.$(&#x27;table.object-list-view&#x27;);
+      let $columns = $table.find(&#x27;th&#x27;);
+
+      if (this.get(&#x27;allowColumnResize&#x27;)) {
+        $table.addClass(&#x27;fixed&#x27;);
+        this._reinitResizablePlugin();
+      } else {
+        $table.colResizable({ disable: true });
+      }
+
+      let hashedUserSetting = {};
+      let tableWidth = 0;
+      let olvRowMenuWidth = 0;
+      let olvRowToolbarWidth = 0;
+      let padding = (this.get(&#x27;defaultLeftPadding&#x27;) || 0) * 2;
+      let minAutoColumnWidth = this.get(&#x27;minAutoColumnWidth&#x27;);
+
+      $.each($columns, (key, item) =&gt; {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        assert(&#x27;Column property name is not defined&#x27;, currentPropertyName);
+
+        let setting = userSetting.filter(sett =&gt; (sett.propName === currentPropertyName) &amp;&amp; !isBlank(sett.width));
+        setting = setting.length &gt; 0 ? setting[0] : undefined;
+        if (!setting) {
+          setting = {};
+          setting.propName = currentPropertyName;
+          if (currentPropertyName === &#x27;OlvRowMenu&#x27;) {
+            setting.width = 68 - padding;
+          }
+
+          if (currentPropertyName === &#x27;OlvRowToolbar&#x27;) {
+            let checkbox = this.get(&#x27;showCheckBoxInRow&#x27;);
+            let delButton = this.get(&#x27;showDeleteButtonInRow&#x27;);
+            let editButton = this.get(&#x27;showEditButtonInRow&#x27;);
+
+            // TODO: Probably need to replace this.
+            setting.width = (checkbox &amp;&amp; delButton &amp;&amp; editButton ? 130 : (checkbox &amp;&amp; delButton) || (checkbox &amp;&amp; editButton) ||
+            (delButton &amp;&amp; editButton) ? 100 : checkbox || delButton || editButton ? 86 : 65) - padding;
+          }
+        }
+
+        tableWidth += padding + (setting.width || minAutoColumnWidth || 1);
+        if (currentPropertyName === &#x27;OlvRowToolbar&#x27;) {
+          olvRowToolbarWidth = setting.width;
+        }
+
+        if (currentPropertyName === &#x27;OlvRowMenu&#x27;) {
+          olvRowMenuWidth = setting.width;
+        }
+
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth || 1;
+      });
+
+      let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
+      let containerWidth = $table[0].parentElement.clientWidth - 5;
+      let columnsWidthAutoresize = this.get(&#x27;columnsWidthAutoresize&#x27;);
+      if ($columns.length === 0) {
+        tableWidth = containerWidth;
+      }
+
+      let widthCondition = columnsWidthAutoresize &amp;&amp; containerWidth &gt; tableWidth;
+      $table.css({ width: &#x60;${columnsWidthAutoresize ? containerWidth : tableWidth}px&#x60; });
+      if (this.get(&#x27;eventsBus&#x27;)) {
+        this.get(&#x27;eventsBus&#x27;).trigger(&#x27;setMenuWidth&#x27;, this.get(&#x27;componentName&#x27;), tableWidth, containerWidth);
+      }
+
+      $.each($columns, (key, item) =&gt; {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        assert(&#x27;Column property name is not defined&#x27;, currentPropertyName);
+
+        let savedColumnWidth = hashedUserSetting[currentPropertyName];
+        if (savedColumnWidth) {
+          if (widthCondition &amp;&amp; currentPropertyName !== &#x27;OlvRowToolbar&#x27; &amp;&amp; currentPropertyName !== &#x27;OlvRowMenu&#x27;) {
+            savedColumnWidth = (savedColumnWidth + padding) / (tableWidth - helperColumnsWidth) * (containerWidth - helperColumnsWidth) - 1;
+            currentItem.width(savedColumnWidth - padding);
+          } else {
+            currentItem.width(savedColumnWidth);
+          }
+        }
+      });
+
+      if (this.get(&#x27;allowColumnResize&#x27;)) {
+        this._reinitResizablePlugin();
+      }
+    }
+  },
+
+  /**
+    It handles the end of column resize.
+    New column widths are send to user settings service for saving.
+
+    @method _afterColumnResize
+    @private
+
+    @param {Object} eventParams Parameters of the end of column resizing
+  */
+  _afterColumnResize(eventParams) {
+
+    // Send info to service with user settings.
+    let userWidthSettings = [];
+    let $columns = this.$(eventParams.currentTarget).find(&#x27;th&#x27;);
+    $.each($columns, (key, item) =&gt; {
+      let currentItem = this.$(item);
+      let currentPropertyName = this._getColumnPropertyName(currentItem);
+      assert(&#x27;Column property name is not defined&#x27;, currentPropertyName);
+
+      // There can be fractional values potentially.
+      let currentColumnWidth = currentItem.width();
+      currentColumnWidth = Math.round(currentColumnWidth);
+
+      userWidthSettings.push({
+        propName: currentPropertyName,
+        width: currentColumnWidth
+      });
+    });
+    this._setCurrentColumnsWidth();
+    this.get(&#x27;userSettingsService&#x27;).setCurrentColumnWidths(this.get(&#x27;componentName&#x27;), undefined, userWidthSettings);
+  },
+
+  /**
+    This method returns property name for column.
+    Property name is got from atribute &#x60;data-olv-header-property-name&#x60; of column header.
+    If property name won&#x27;t be found, exeption will be thrown.
+
+    @method _getColumnPropertyName
+    @private
+
+    @param {Object} currentItem Current column header to get property name from
+    @return {String} Corresponding property name for column
+  */
+  _getColumnPropertyName(currentItem) {
+    let currentPropertyName = currentItem.attr(&#x27;data-olv-header-property-name&#x27;);
+    if (!currentPropertyName) {
+      currentPropertyName =
+        currentItem.find(&#x27;*[data-olv-header-property-name]&#x27;).attr(&#x27;data-olv-header-property-name&#x27;);
+    }
+
+    assert(
+    &#x27;There is no tag with attribute \&#x27;data-olv-header-property-name\&#x27; at column header.&#x27;, currentPropertyName);
+    return currentPropertyName;
+  },
+
+  /**
+    Generate the columns.
+
+    @method _generateColumns
+    @private
+  */
+  _generateColumns(attributes, columnsBuf, relationshipPath) {
+    columnsBuf = columnsBuf || A();
+    relationshipPath = relationshipPath || &#x27;&#x27;;
+
+    for (let attrName in attributes) {
+      let currentRelationshipPath = relationshipPath;
+      if (!attributes.hasOwnProperty(attrName)) {
+        continue;
+      }
+
+      let attr = attributes[attrName];
+      assert(&#x60;Unknown kind of projection attribute: ${attr.kind}&#x60;, attr.kind === &#x27;attr&#x27; || attr.kind === &#x27;belongsTo&#x27; || attr.kind === &#x27;hasMany&#x27;);
+      switch (attr.kind) {
+        case &#x27;hasMany&#x27;:
+          break;
+
+        case &#x27;belongsTo&#x27;: {
+          if (!attr.options.hidden) {
+            let bindingPath = currentRelationshipPath + attrName;
+            let column = this._createColumn(attr, attrName, bindingPath);
+            column.relationshipPath = currentRelationshipPath.slice(0, -1);
+            column.attrName = attrName;
+
+            if (column.cellComponent.componentName === undefined) {
+              if (attr.options.displayMemberPath) {
+                column.propName += &#x27;.&#x27; + attr.options.displayMemberPath;
+              } else {
+                column.propName += &#x27;.id&#x27;;
+              }
+            }
+
+            columnsBuf.pushObject(column);
+          }
+
+          currentRelationshipPath += attrName + &#x27;.&#x27;;
+          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
+          break;
+        }
+
+        case &#x27;attr&#x27;: {
+          if (attr.options.hidden) {
+            break;
+          }
+
+          let bindingPath = currentRelationshipPath + attrName;
+          let column = this._createColumn(attr, attrName, bindingPath);
+          column.relationshipPath = currentRelationshipPath.slice(0, -1);
+          column.attrName = attrName;
+          columnsBuf.pushObject(column);
+          break;
+        }
+      }
+    }
+
+    return columnsBuf.sortBy(&#x27;index&#x27;);
+  },
+
+  /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!isNone(this.get(&#x27;currentController&#x27;))) {
+      let $columns = this.$(&#x27;table.object-list-view&#x27;).find(&#x27;th&#x27;);
+      let currentWidths = {};
+      $.each($columns, (key, item) =&gt; {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        assert(&#x27;Column property name is not defined&#x27;, currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      let widthsFunction = this.get(&#x27;currentController.setColumnsWidths&#x27;);
+      if (widthsFunction instanceof Function) {
+        widthsFunction.apply(this.get(&#x27;currentController&#x27;), [this.get(&#x27;componentName&#x27;), currentWidths]);
+      } else {
+        this.set(&#x27;currentController.currentColumnsWidths&#x27;, currentWidths);
+      }
+    }
+  },
+
+  /**
+    Create the key from locales.
+  */
+  _createKey(bindingPath) {
+    let projection = this.get(&#x27;modelProjection&#x27;);
+    let modelName = projection.modelName;
+    let key;
+
+    let mainModelProjection = this.get(&#x27;mainModelProjection&#x27;);
+    if (mainModelProjection) {
+      let modelClass = this.get(&#x27;store&#x27;).modelFor(modelName);
+      let nameRelationship;
+      let mainModelName;
+
+      modelClass.eachRelationship(function(name, descriptor) {
+        if (descriptor.kind === &#x27;belongsTo&#x27; &amp;&amp; descriptor.options.inverse) {
+          nameRelationship = descriptor.options.inverse;
+          mainModelName = descriptor.type;
+        }
+      });
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
+    } else {
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
+    }
+
+    return key;
+  },
+
+  /**
+    Create the column.
+
+    @method _createColumn
+    @private
+  */
+  _createColumn(attr, attrName, bindingPath) {
+
+    // We get the &#x27;getCellComponent&#x27; function directly from the controller,
+    // and do not pass this function as a component attrubute,
+    // to avoid &#x27;EmberObject.create no longer supports defining methods that call _super&#x27; error,
+    // if controller&#x27;s &#x27;getCellComponent&#x27; method call its super method from the base controller.
+    let currentController = this.get(&#x27;currentController&#x27;);
+    let getCellComponent = get(currentController || {}, &#x27;getCellComponent&#x27;);
+    let cellComponent = this.get(&#x27;cellComponent&#x27;);
+
+    if (!this.get(&#x27;editOnSeparateRoute&#x27;) &amp;&amp; typeOf(getCellComponent) === &#x27;function&#x27;) {
+      let recordModel = isNone(this.get(&#x27;content&#x27;)) ? null : this.get(&#x27;content.type&#x27;);
+      cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+
+      let orderedProperty = this.get(&#x27;orderedProperty&#x27;);
+      if (!isNone(orderedProperty) &amp;&amp; orderedProperty === bindingPath) {
+        if (isNone(cellComponent.componentProperties)) {
+          cellComponent.componentProperties = {};
+        }
+
+        set(cellComponent.componentProperties, &#x27;readonly&#x27;, true);
+      }
+    }
+
+    let key = this._createKey(bindingPath);
+    let valueFromLocales = getValueFromLocales(this.get(&#x27;i18n&#x27;), key);
+    let index = get(attr, &#x27;options.index&#x27;);
+
+    let column = {
+      header: valueFromLocales || attr.caption || capitalize(attrName),
+      propName: bindingPath, // TODO: rename column.propName
+      cellComponent: cellComponent,
+      index: index,
+    };
+
+    if (valueFromLocales) {
+      column.keyLocale = key;
+    }
+
+    let customColumnAttributesFunc = this.get(&#x27;customColumnAttributes&#x27;);
+    if (customColumnAttributesFunc) {
+      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
+      if (customColAttr &amp;&amp; (typeof customColAttr === &#x27;object&#x27;)) {
+        $.extend(true, column, customColAttr);
+      }
+    }
+
+    if (this.get(&#x27;enableFilters&#x27;)) {
+      this._addFilterForColumn(column, attr, bindingPath);
+    }
+
+    let sortDef;
+    let sorting = this.get(&#x27;sorting&#x27;);
+    if (sorting &amp;&amp; (sortDef = sorting[bindingPath])) {
+      column.sorted = true;
+      column.sortAscending = sortDef.sortAscending;
+      column.sortNumber = sortDef.sortNumber;
+    }
+
+    return column;
+  },
+
+  /**
+    Add filter parameters for column.
+
+    @method _addFilterForColumn
+    @param {Object} column
+    @param {Object} attr
+    @param {String} bindingPath
+  */
+  _addFilterForColumn(column, attr, bindingPath) {
+    let relation = attr.kind !== &#x27;attr&#x27;;
+    let attribute = this._getAttribute(attr, bindingPath);
+    let name = relation ? &#x60;${bindingPath}.${attribute.name}&#x60; : bindingPath;
+    let type = attribute.type;
+    let pattern;
+    let condition;
+    let conditions;
+    let conditionsByType = this.get(&#x27;conditionsByType&#x27;);
+
+    if (conditionsByType) {
+      assert(&#x60;Need function in &#x27;conditionsByType&#x27;.&#x60;, typeof conditionsByType === &#x27;function&#x27;);
+      conditions = conditionsByType(type, attribute);
+    } else {
+      conditions = defaultConditionsByType(type, this.get(&#x27;i18n&#x27;));
+    }
+
+    let filters = this.get(&#x27;filters&#x27;);
+    if (filters &amp;&amp; filters.hasOwnProperty(name)) {
+      pattern = filters[name].pattern;
+      condition = filters[name].condition;
+    }
+
+    let component = this._getComponentForDdlFilter(bindingPath);
+    if (!component)
+    {
+      component = this._getFilterComponent(type);
+    }
+
+    let componentForFilter = this.get(&#x27;componentForFilter&#x27;);
+
+    if (componentForFilter) {
+      assert(&#x60;Need function in &#x27;componentForFilter&#x27;.&#x60;, typeof componentForFilter === &#x27;function&#x27;);
+      $.extend(true, component, componentForFilter(type, relation, attribute));
+    }
+
+    let transformInstance = getOwner(this).lookup(&#x27;transform:&#x27; + type);
+    let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+    if (transformClass &amp;&amp; transformClass.componentForFilter) {
+      $.extend(true, component, transformClass.componentForFilter(relation));
+    }
+
+    let options = this._getFilterComponentByCondition(condition, null, type);
+    let componentForFilterByCondition = this.get(&#x27;componentForFilterByCondition&#x27;);
+    if (componentForFilterByCondition) {
+      assert(&#x60;Need function in &#x27;componentForFilterByCondition&#x27;.&#x60;, typeof componentForFilterByCondition === &#x27;function&#x27;);
+      $.extend(true, options, componentForFilterByCondition(condition, null, type));
+    }
+
+    $.extend(true, component, options);
+
+    // Hack to restore component when clearing filter for one column.
+    if (component.name === &#x27;olv-filter-interval&#x27;) {
+      component._defaultComponent = component.properties.componentName;
+    } else {
+      component._defaultComponent = component.name;
+    }
+
+    column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Initializes a list of values for the specified filters.
+
+    @method _initDdlFilterSettings
+    @return {Promise}
+  */
+  _initDdlFilterSettings() {
+    const ddlFilterSettings = this.get(&#x27;ddlFilterSettings&#x27;);
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const promises =  A();
+    const store = this.get(&#x27;store&#x27;);
+    ddlFilterSettings.map(obj =&gt; {
+      const builder = new Builder(store, obj.modelName).selectByProjection(obj.projectionName);
+      const promise = store.query(obj.modelName, builder.build()).then(items =&gt; {
+        obj.items = items.map(item =&gt; {
+          return get(item, obj.propName);
+        });
+      });
+
+      promises.push(promise);
+    });
+
+    return RSVP.all(promises);
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getComponentForDdlFilter
+    @param {String} bindingPath
+    @return {Object} Object with parameters for component.
+  */
+  _getComponentForDdlFilter(bindingPath) {
+    const ddlFilterSettings = this.get(&#x27;ddlFilterSettings&#x27;);
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const filterSettings = ddlFilterSettings.find(obj =&gt; obj.bindingPath === bindingPath);
+    if (filterSettings) {
+      return {
+        name: &#x27;flexberry-dropdown&#x27;,
+        properties: {
+          items: filterSettings.items,
+          class: &#x27;fluid&#x27;
+        }
+      };
+    }
+
+    return;
+  },
+
+  /**
+    Return attribute of model.
+
+    @method _getAttribute
+    @param {Object} attr
+    @param {String} bindingPath
+    @return {Object} Return attribute of model.
+  */
+  _getAttribute(attr, bindingPath) {
+    let modelName;
+    let attributeName;
+    if (attr.kind !== &#x27;attr&#x27;) {
+      attributeName = attr.options.displayMemberPath;
+      modelName = attr.modelName;
+    } else if (bindingPath.indexOf(&#x27;.&#x27;) &gt; 0) {
+      let path = bindingPath.split(&#x27;.&#x27;);
+      attributeName = path.pop();
+      modelName = this.get(&#x60;modelProjection.attributes.${path.join(&#x27;.attributes.&#x27;)}.modelName&#x60;);
+    } else {
+      attributeName = bindingPath;
+      modelName = this.get(&#x27;modelProjection.modelName&#x27;);
+    }
+
+    let model = this.get(&#x27;store&#x27;).modelFor(modelName);
+    return get(model, &#x27;attributes&#x27;).get(attributeName);
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getFilterComponent
+    @param {String} type
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponent(type) {
+    const component = { name: undefined };
+
+    switch (type) {
+      case &#x27;file&#x27;:
+        break;
+
+      case &#x27;string&#x27;:
+        component.name = &#x27;flexberry-textbox&#x27;;
+        component.properties = {
+          isUseVoiceTyping: this.get(&#x27;isUseVoiceTyping&#x27;)
+        };
+        break;
+
+      case &#x27;number&#x27;:
+      case &#x27;decimal&#x27;:
+        component.name = &#x27;flexberry-textbox&#x27;;
+        component.properties = {
+          type: &#x27;number&#x27;,
+        };
+        break;
+
+      case &#x27;boolean&#x27;: {
+        component.name = &#x27;flexberry-dropdown&#x27;;
+        component.properties = {
+          items: [&#x27;true&#x27;, &#x27;false&#x27;],
+          class: &#x27;fluid&#x27;,
+        };
+        break;
+      }
+
+      case &#x27;date&#x27;: {
+        component.name = &#x27;flexberry-simpledatetime&#x27;;
+        component.properties = { type: &#x27;date&#x27;, removeButton: false };
+        break;
+      }
+
+      default: {
+        let transformInstance = getOwner(this).lookup(&#x27;transform:&#x27; + type);
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+        if (transformClass &amp;&amp; transformClass.isEnum) {
+          component.name = &#x27;flexberry-dropdown&#x27;;
+          component.properties = {
+            items: transformInstance.get(&#x27;captions&#x27;),
+            class: &#x27;compact&#x27;,
+          };
+        }
+
+        break;
+      }
+    }
+
+    return component;
+  },
+  /* eslint-enable no-unused-vars */
+
+  /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
+
+  /**
+    Alter filter component depending on condition chosen by user.
+
+    @private
+    @method _getFilterComponentByCondition
+    @param {String} newCondtition
+    @param {String} oldCondition
+    @param {String} attributeType
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponentByCondition(newCondition, oldCondition, attributeType) {
+    if (newCondition === &#x27;between&#x27;) {
+      const filterComponent = {
+        name: &#x27;olv-filter-interval&#x27;
+      };
+
+      if (attributeType === &#x27;number&#x27;) {
+        filterComponent.properties = {
+          componentName: &#x27;flexberry-textbox&#x27;,
+          dynProps: {
+            type: &#x27;number&#x27;,
+          }
+        }
+      }
+
+      if (attributeType === &#x27;date&#x27;) {
+        filterComponent.properties = {
+          componentName: &#x27;flexberry-simpledatetime&#x27;,
+          dynProps: {
+            removeButton: false,
+            type: &#x27;date&#x27;,
+          }
+        }
+      }
+
+      return filterComponent;
+    }
+
+    if (oldCondition === &#x27;between&#x27;) {
+      return { name: &#x27;flexberry-textbox&#x27; };
+    }
+
+    return {};
+  },
+
+  /**
+    Sets content for component.
+
+    @method _setContent
+    @param {String} componentName Name of the component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  _setContent(componentName, sorting) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      let content = this.get(&#x27;content&#x27;);
+      if (content &amp;&amp; !content.isLoading) {
+        this.set(&#x27;contentWithKeys&#x27;, A());
+        this.set(&#x27;contentForRender&#x27;, A());
+        if (content instanceof RSVP.Promise) {
+          content.then((items) =&gt; {
+            items.forEach((item) =&gt; {
+              this._addModel(item);
+            });
+          }).then(()=&gt; {
+            this.set(&#x27;contentWithKeys&#x27;, this.contentForRender);
+          });
+        } else {
+          content.forEach((item) =&gt; {
+            this._addModel(item);
+          });
+          this.set(&#x27;contentWithKeys&#x27;, this.contentForRender);
+        }
+      }
+
+      if (isArray(sorting) &amp;&amp; isNone(this.get(&#x27;orderedProperty&#x27;))) {
+        let columns = this.get(&#x27;columns&#x27;);
+        if (isArray(columns)) {
+          columns.forEach((column) =&gt; {
+            set(column, &#x27;sorted&#x27;, false);
+            delete column.sortAscending;
+            delete column.sortNumber;
+            let idPosition = sorting.length;
+            for (let i = 0; i &lt; sorting.length; i++) {
+              if (sorting[i].propName === &#x27;id&#x27;) {
+                idPosition = i;
+              } else if (column.propName === sorting[i].propName) {
+                set(column, &#x27;sortAscending&#x27;, sorting[i].direction === &#x27;asc&#x27; ? true : false);
+                set(column, &#x27;sorted&#x27;, true);
+                set(column, &#x27;sortNumber&#x27;, i &gt; idPosition ? i : i + 1);
+              }
+            }
+          }, this);
+        }
+      }
+    }
+  },
+
+  /**
+    Refresh list with the entered filter.
+
+    @method _refreshList
+    @param {String} componentName
+    @private
+  */
+  _refreshList(componentName) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      if (this.get(&#x27;onEditForm&#x27;)) {
+        this.currentController.getCustomContent();
+      } else {
+        if (this.get(&#x27;enableFilters&#x27;)) {
+          let filters = {};
+          let hasFilters = false;
+          this.get(&#x27;columns&#x27;).forEach((column) =&gt; {
+            if ((column.filter.condition === &#x27;between&#x27; &amp;&amp; column.filter.pattern) ||
+              ((column.filter.condition || column.filter.pattern) &amp;&amp; column.filter.condition !== &#x27;between&#x27;)) {
+              hasFilters = true;
+              filters[column.filter.name] = column.filter;
+            }
+          });
+
+          if (hasFilters) {
+            this.get(&#x27;applyFilters&#x27;)(filters, componentName);
+          } else {
+            if (this.get(&#x27;currentController.filters&#x27;)) {
+              this.get(&#x27;currentController&#x27;).send(&#x27;resetFilters&#x27;, componentName);
+            } else {
+              this.get(&#x27;currentController&#x27;).send(&#x27;refreshList&#x27;, componentName);
+            }
+          }
+        } else {
+          this.get(&#x27;currentController&#x27;).send(&#x27;refreshList&#x27;, componentName);
+        }
+      }
+    }
+  },
+
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
+  _getRowByKey(key) {
+    let row = null;
+    if (isBlank(key)) {
+      return row;
+    }
+
+    this.$(&#x27;tbody tr&#x27;).each(function() {
+      let currentKey = $(this).find(&#x27;td:eq(0) div:eq(0)&#x27;).text().trim();
+      if (currentKey === key) {
+        row = $(this);
+        return;
+      }
+    });
+
+    return row;
+  },
+
+  /**
+    Get the key of model.
+
+    @method _getModelKey
+    @private
+  */
+  _getModelKey(record) {
+    if (!this.get(&#x27;contentWithKeys&#x27;)) {
+      return null;
+    }
+
+    let modelWithKeyItem = this.get(&#x27;contentWithKeys&#x27;).findBy(&#x27;data&#x27;, record);
+    return modelWithKeyItem ? modelWithKeyItem.key : null;
+  },
+
+  /**
+    Remove the model with key.
+
+    @method _removeModelWithKey
+    @private
+  */
+  _removeModelWithKey(key) {
+    let itemToRemove = this.get(&#x27;contentWithKeys&#x27;).findBy(&#x27;key&#x27;, key);
+    if (itemToRemove) {
+      this.get(&#x27;contentWithKeys&#x27;).removeObject(itemToRemove);
+
+      let orderedProperty = this.get(&#x27;orderedProperty&#x27;);
+      if (!isNone(orderedProperty)) {
+        let valueOrder = itemToRemove.get(&#x60;data.${orderedProperty}&#x60;);
+        let updateItems = this.get(&#x27;contentWithKeys&#x27;).filter((value) =&gt; value.get(&#x60;data.${orderedProperty}&#x60;) &gt; valueOrder);
+        updateItems.forEach((updateItem) =&gt; {
+          let data = updateItem.get(&#x27;data&#x27;);
+          let oldOrder = data.get(&#x60;${orderedProperty}&#x60;);
+          data.set(&#x60;${orderedProperty}&#x60;, oldOrder - 1);
+        });
+      }
+    }
+  },
+
+  /**
+    Adds detail model to current model, generates unique key for detail model.
+    If record is deleted then &#x60;undefined&#x60; is returned and record isn&#x27;t added to list.
+
+    @method _addModel
+    @private
+
+    @param {DS.Model} record Detail model to add to current model
+    @return {String} Unique key for added record or &#x60;undefined&#x60; if record is deleted
+  */
+  _addModel(record) {
+    if (record.get(&#x27;isDeleted&#x27;)) {
+      return undefined;
+    }
+
+    let modelWithKey = EmberObject.create({});
+    let key = guidFor(record);
+
+    modelWithKey.set(&#x27;key&#x27;, key);
+    modelWithKey.set(&#x27;data&#x27;, record);
+
+    let rowConfig = copy(this.get(&#x27;defaultRowConfig&#x27;));
+    modelWithKey.set(&#x27;rowConfig&#x27;, rowConfig);
+    record.set(&#x27;rowConfig&#x27;, rowConfig);
+
+    let configurateRow = this.get(&#x27;configurateRow&#x27;);
+    if (configurateRow) {
+      assert(&#x27;configurateRow must be a function&#x27;, typeof configurateRow === &#x27;function&#x27;);
+      configurateRow(rowConfig, record);
+    }
+
+    // Mark previously selected records.
+    let componentName = this.get(&#x27;componentName&#x27;);
+    let selectedRecords = this.get(&#x27;objectlistviewEventsService&#x27;).getSelectedRecords(componentName);
+    let multiSelectedRecords = this.get(&#x27;objectlistviewEventsService&#x27;).getMultiSelectedRecords(componentName);
+
+    let selectedRecordsToRestore = multiSelectedRecords ? multiSelectedRecords : selectedRecords;
+
+    if (this.get(&#x27;skipSelectedRecords&#x27;) === false &amp;&amp; !isEmpty(selectedRecordsToRestore)) {
+      /* eslint-disable no-unused-vars */
+      selectedRecordsToRestore.forEach((recordWithData, key) =&gt; {
+        if (record === recordWithData.data) {
+          modelWithKey.selected = true;
+        }
+      });
+      /* eslint-enable no-unused-vars */
+    }
+
+    if (this.get(&#x27;useRowByRowLoading&#x27;)) {
+      let modelIndex = this.get(&#x27;contentForRender.length&#x27;);
+      modelWithKey.set(&#x27;modelIndex&#x27;, modelIndex);
+      modelWithKey.set(&#x27;doRenderData&#x27;, false);
+    } else {
+      modelWithKey.set(&#x27;doRenderData&#x27;, true);
+    }
+
+    this.get(&#x27;contentForRender&#x27;).pushObject(modelWithKey);
+
+    return key;
+  },
+
+  /**
+    Adds row to component and calls click on row action if detail is edited on separate route.
+    This method is triggered on toolbar&#x27;s add batton click.
+
+    @method _addRow
+    @private
+
+    @param {String} componentName The name of triggered component
+  */
+  _addRow(componentName) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      if (this.get(&#x27;editOnSeparateRoute&#x27;)) {
+
+        // Depending on settings current model has to be saved before adding detail.
+        this.send(&#x27;rowClick&#x27;, undefined, undefined);
+      } else {
+        const modelName = this.get(&#x27;modelProjection&#x27;).modelName;
+        const modelToAdd = this.get(&#x27;store&#x27;).createRecord(modelName, { id: generateUniqueId() });
+        if (!isNone(this.get(&#x27;orderedProperty&#x27;))) {
+          modelToAdd.set(&#x60;${this.get(&#x27;orderedProperty&#x27;)}&#x60;, this.get(&#x27;content&#x27;).length + 1);
+        }
+
+        this._addModel(modelToAdd);
+        this.get(&#x27;content&#x27;).addObject(modelToAdd);
+        this.get(&#x27;objectlistviewEventsService&#x27;).rowAddedTrigger(componentName, modelToAdd);
+      }
+    }
+  },
+
+  /**
+    Handler for &quot;delete all rows on all pages&quot; event in objectlistview.
+
+    @method _deleteRows
+
+    @param {String} componentName The name of objectlistview component
+    @param {Object} filterQuery Filter applying before delete all records on all pages
+  */
+  _deleteAllRows(componentName, filterQuery) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      let currentController = this.get(&#x27;currentController&#x27;);
+      currentController.onDeleteActionStarted();
+      let beforeDeleteAllRecords = this.get(&#x27;beforeDeleteAllRecords&#x27;);
+      let possiblePromise = null;
+      let modelName = this.get(&#x27;modelName&#x27;);
+      let data = {
+        cancel: false,
+        filterQuery: filterQuery,
+        componentName: componentName
+      };
+
+      if (beforeDeleteAllRecords) {
+        assert(&#x27;beforeDeleteAllRecords must be a function&#x27;, typeof beforeDeleteAllRecords === &#x27;function&#x27;);
+
+        possiblePromise = beforeDeleteAllRecords(modelName, data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise)) &amp;&amp; data.cancel) {
+          return;
+        }
+      }
+
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() =&gt; {
+          if (!data.cancel) {
+            this._actualDeleteAllRecords(componentName, modelName, data.filterQuery);
+          }
+        });
+      } else {
+        this._actualDeleteAllRecords(componentName, modelName, data.filterQuery);
+      }
+    }
+  },
+
+  /**
+    Actually delete the all records on all pages.
+
+    @method _actualDeleteAllRecords
+    @private
+
+    @param {String} componentName The name of objectlistview component
+    @param {String} modelName Model name that defines type of records to delete
+    @param {Object} filterQuery Filter applying before delete all records
+  */
+  _actualDeleteAllRecords(componentName, modelName, filterQuery) {
+    let currentController = this.get(&#x27;currentController&#x27;);
+    this.get(&#x27;appState&#x27;).loading();
+    let promise = this.get(&#x27;store&#x27;).deleteAllRecords(modelName, filterQuery);
+
+    promise.then((data)=&gt; {
+      if (data.deletedCount &gt; -1) {
+        this.get(&#x27;appState&#x27;).success();
+        this.get(&#x27;objectlistviewEventsService&#x27;).rowsDeletedTrigger(componentName, data.deletedCount, true);
+        currentController.onDeleteActionFulfilled(true);
+        this.get(&#x27;objectlistviewEventsService&#x27;).refreshListTrigger(componentName);
+      } else {
+        this.get(&#x27;appState&#x27;).error();
+        let errorData = {
+          message: data.message
+        };
+
+        currentController.onDeleteActionRejected(errorData);
+        currentController.send(&#x27;handleError&#x27;, errorData);
+      }
+    }).catch((errorData) =&gt; {
+      this.get(&#x27;appState&#x27;).error();
+      if (!isNone(errorData.status) &amp;&amp; errorData.status === 0 &amp;&amp; !isNone(errorData.statusText) &amp;&amp;  errorData.statusText === &#x27;error&#x27;) {
+        // This message will be converted to corresponding localized message.
+        errorData.message = &#x27;Ember Data Request returned a 0 Payload (Empty Content-Type)&#x27;;
+      }
+
+      currentController.onDeleteActionRejected(errorData);
+      this.get(&#x27;currentController&#x27;).send(&#x27;handleError&#x27;, errorData);
+    }).finally((data) =&gt; {
+      currentController.onDeleteActionAlways(data);
+    });
+  },
+
+  /**
+    Handler for &quot;delete selected rows&quot; event in objectlistview.
+
+    @method _deleteRows
+
+    @param {String} componentName The name of objectlistview component
+    @param {Boolean} immediately Flag to delete record immediately
+  */
+  _deleteRows(componentName, immediately) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      let selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+      let count = selectedRecords.length;
+      selectedRecords.forEach((item) =&gt; {
+        once(this, function() {
+          this._deleteRecord(item, immediately);
+        });
+      }, this);
+
+      selectedRecords.clear();
+      this.get(&#x27;objectlistviewEventsService&#x27;).rowsDeletedTrigger(componentName, count, immediately);
+    }
+  },
+
+  /**
+    Delete the record.
+
+    @method _deleteRecord
+    @private
+
+    @param {DS.Model} record A record to delete
+    @param {Boolean} immediately If &#x60;true&#x60;, relationships have been destroyed (delete and save)
+  */
+  _deleteRecord(record, immediately) {
+    let currentController = this.get(&#x27;currentController&#x27;);
+    currentController.onDeleteActionStarted();
+    let beforeDeleteRecord = this.get(&#x27;beforeDeleteRecord&#x27;);
+    let possiblePromise = null;
+    let data = {
+      immediately: immediately,
+      cancel: false
+    };
+
+    if (beforeDeleteRecord) {
+      assert(&#x27;beforeDeleteRecord must be a function&#x27;, typeof beforeDeleteRecord === &#x27;function&#x27;);
+
+      possiblePromise = beforeDeleteRecord(record, data);
+
+      if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise)) &amp;&amp; data.cancel) {
+        return;
+      }
+    }
+
+    if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+      possiblePromise.then(() =&gt; {
+        if (!data.cancel) {
+          this._actualDeleteRecord(record, data.immediately);
+        }
+      });
+    } else {
+      this._actualDeleteRecord(record, data.immediately);
+    }
+  },
+
+  /**
+    Actually delete the record.
+
+    @method _actualDeleteRecord
+    @private
+
+    @param {DS.Model} record A record to delete
+    @param {Boolean} immediately If &#x60;true&#x60;, relationships have been destroyed (delete and save)
+  */
+
+  _actualDeleteRecord(record, immediately) {
+    let currentController = this.get(&#x27;currentController&#x27;);
+    let key = this._getModelKey(record);
+    this._removeModelWithKey(key);
+
+    this._deleteHasManyRelationships(record, immediately).then(() =&gt; immediately ? record.destroyRecord().then(() =&gt; {
+      currentController.send(&#x27;saveAgregator&#x27;);
+      currentController.onDeleteActionFulfilled(true);
+    }) : record.deleteRecord()).catch((reason) =&gt; {
+
+      currentController.onDeleteActionRejected(reason, record);
+      currentController.send(&#x27;error&#x27;, reason);
+
+      record.rollbackAll();
+    }).finally((data) =&gt; {
+      currentController.onDeleteActionAlways(data);
+    });
+
+    let componentName = this.get(&#x27;componentName&#x27;);
+    this.get(&#x27;objectlistviewEventsService&#x27;).rowDeletedTrigger(componentName, record, immediately);
+  },
+
+  /**
+    Delete all hasMany relationships in the &#x60;record&#x60;.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If &#x60;true&#x60;, relationships have been destroyed (delete and save)
+    @return {Promise} A promise that will be resolved when relationships have been deleted
+  */
+  _deleteHasManyRelationships(record, immediately) {
+    /*
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM.
+    ORM will delete all hasMany relationships on server side,
+    but it is needed to unload hasMany relationships on client side.
+
+    If ONLINE with flag NOT IMMEDIATELY then it is necessary manually to &quot;deleteRecord&quot;
+    of all hasMany relationships.
+
+    If OFFLINE then adapter will delete connected hasMany relationships.
+    */
+
+    let promises = A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the &#x60;record&#x60; and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If &#x60;true&#x60;, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
+    let store = this.get(&#x27;store&#x27;);
+    record.eachRelationship((name, desc) =&gt; {
+      if (desc.kind === &#x27;hasMany&#x27;) {
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i &gt;= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
+          if (immediately) {
+            store.unloadRecord(relRecord);
+          }
+          else {
+            promises.pushObject(relRecord.deleteRecord());
+          }
+        }
+      }
+    });
+  },
+
+  /**
+    The handler for &quot;filter by any match&quot; event triggered in objectlistview events service.
+
+    @method _filterByAnyMatch
+    @private
+
+    @param {String} pattern The pattern to filter objects
+  */
+  _filterByAnyMatch(componentName, pattern) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      let anyWord = this.get(&#x27;filterByAnyWord&#x27;);
+      let allWords = this.get(&#x27;filterByAllWords&#x27;);
+      assert(&#x60;Only one of the options can be used: &#x27;filterByAnyWord&#x27; or &#x27;filterByAllWords&#x27;.&#x60;, !(allWords &amp;&amp; anyWord));
+      let filterCondition = anyWord || allWords ? (anyWord ? &#x27;or&#x27; : &#x27;and&#x27;) : undefined;
+      let filterProjectionName = this.get(&#x27;filterProjectionName&#x27;);
+      this.get(&#x27;filterByAnyMatch&#x27;)(pattern, filterCondition, componentName, filterProjectionName);
+    }
+  },
+
+  /**
+    Set the active record.
+
+    @method _setActiveRecord
+    @private
+
+    @param {String} key The key of record
+  */
+  _setActiveRecord(key) {
+    // Hide highlight from previously activated row.
+    this.$(&#x27;tbody tr.active&#x27;).removeClass(&#x27;active&#x27;);
+
+    // Activate specified row.
+    let $selectedRow = this._getRowByKey(key);
+    if ($selectedRow) {
+      $selectedRow.addClass(&#x27;active&#x27;);
+    }
+  },
+
+  // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
+  _rowsChanged: observer(&#x27;content.@each.dirtyType&#x27;, function() {
+    let content = this.get(&#x27;content&#x27;);
+    if (isArray(content) &amp;&amp; content.isAny(&#x27;dirtyType&#x27;, &#x27;updated&#x27;)) {
+      let componentName = this.get(&#x27;componentName&#x27;);
+      this.get(&#x27;objectlistviewEventsService&#x27;).rowsChangedTrigger(componentName);
+    }
+  }),
+
+  /**
+    It observes changes of flag {{#crossLink &quot;ObjectListViewComponent/searchForContentChange:property&quot;}}searchForContentChange{{/crossLink}}.
+
+    If flag {{#crossLink &quot;ObjectListViewComponent/searchForContentChange:property&quot;}}{{/crossLink}} changes its value
+    observer on component content is set otherwise it is removed.
+
+    @method _searchForContentChange
+    @private
+  */
+  _searchForContentChange: observer(&#x27;searchForContentChange&#x27;, function() {
+    let searchForContentChange = this.get(&#x27;searchForContentChange&#x27;);
+    if (searchForContentChange) {
+      this.addObserver(&#x27;content.[]&#x27;, this, this._contentDidChangeProxy);
+    } else {
+      this.removeObserver(&#x27;content.[]&#x27;, this, this._contentDidChangeProxy);
+    }
+  }),
+
+  /**
+    Schedules the &#x60;_contentDidChange&#x60; function to run once in the &#x60;render&#x60; queue.
+
+    @private
+    @method _contentDidChangeProxy
+  */
+  _contentDidChangeProxy() {
+    scheduleOnce(&#x27;render&#x27;, this, this._contentDidChange);
+  },
+
+  /**
+    It observes changes of model&#x27;s data that are displayed on component
+    if flag {{#crossLink &quot;ObjectListViewComponent/searchForContentChange:property&quot;}}{{/crossLink}} is enabled.
+
+    Property changing displayes automatically.
+    Component compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @method _contentDidChange
+    @private
+  */
+  _contentDidChange() {
+
+    // Property changing displays automatically.
+    let content = this.get(&#x27;content&#x27;);
+    let contentWithKeys = this.get(&#x27;contentWithKeys&#x27;);
+
+    if (isNone(content) || isNone(contentWithKeys)) return;
+
+    let componentName = this.get(&#x27;componentName&#x27;);
+    let immediateDelete = this.get(&#x27;immediateDelete&#x27;);
+    let selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+
+    // Search for added and deleted records.
+    let addedItems = [];
+    let deletedItems = [];
+    content.forEach((item) =&gt; {
+      let foundRecord = this._getModelKey(item);
+      let isDeleted = item.get(&#x27;isDeleted&#x27;);
+      if (!foundRecord &amp;&amp; !isDeleted) {
+        addedItems.push(item);
+      } else if (foundRecord &amp;&amp; isDeleted) {
+        deletedItems.push(item);
+      }
+    });
+
+    contentWithKeys.forEach((item) =&gt; {
+      let record = item.get(&#x27;data&#x27;);
+      if (!content.includes(record)) {
+        deletedItems.push(record);
+      }
+    });
+
+    // Apply changes to component.
+    addedItems.forEach((addedItem) =&gt; {
+      this._addModel(addedItem);
+      this.get(&#x27;objectlistviewEventsService&#x27;).rowAddedTrigger(componentName, addedItem);
+    });
+
+    deletedItems.forEach((deletedItem) =&gt; {
+      let key = this._getModelKey(deletedItem);
+      this._removeModelWithKey(key);
+      selectedRecords.removeObject(deletedItem);
+      this.get(&#x27;objectlistviewEventsService&#x27;).rowDeletedTrigger(componentName, deletedItem, immediateDelete);
+    });
+  },
+
+  /**
+    Get attributes name from model.
+
+    @method _getAttributesName
+    @private
+  */
+  _getAttributesName() {
+    let attributes = this.get(&#x27;_modelProjection&#x27;).attributes;
+    let attrsArray = [];
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    return attrsArray;
+  },
+
+  /**
+    Restore selected records after refreshing or transition to other page.
+
+    @method _restoreSelectedRecords
+    @private
+  */
+  _restoreSelectedRecords() {
+    // Restore selected records.
+    // TODO: when we will ask user about actions with selected records clearing selected records won&#x27;t be use, because it resets selecting on other pages.
+    if (this.get(&#x27;selectedRecords&#x27;)) {
+      this.get(&#x27;selectedRecords&#x27;).clear();
+    }
+
+    let componentName = this.get(&#x27;componentName&#x27;);
+
+    let selectedRecordsToRestore = this.get(&#x27;objectlistviewEventsService&#x27;).getSelectedRecords(componentName);
+
+    if (selectedRecordsToRestore &amp;&amp; selectedRecordsToRestore.size &amp;&amp; selectedRecordsToRestore.size &gt; 0) {
+      let e = {
+        checked: true
+      };
+
+      let someRecordWasSelected = false;
+      /* eslint-disable no-unused-vars */
+      selectedRecordsToRestore.forEach((recordWithData, key) =&gt; {
+        if (this._getModelKey(recordWithData.data)) {
+          someRecordWasSelected = true;
+          this.send(&#x27;selectRow&#x27;, recordWithData, e);
+        }
+      });
+      /* eslint-enable no-unused-vars */
+
+      if (!someRecordWasSelected &amp;&amp; !this.get(&#x27;allSelect&#x27;)) {
+        // Reset toolbar buttons enabled state.
+        this.get(&#x27;objectlistviewEventsService&#x27;).rowSelectedTrigger(componentName, null, 0, false, null);
+      }
+    } else if (!this.get(&#x27;allSelect&#x27;)) {
+      // Reset toolbar buttons enabled state.
+      this.get(&#x27;objectlistviewEventsService&#x27;).rowSelectedTrigger(componentName, null, 0, false, null);
+    }
+  },
+
+  /**
+    Select/Unselect all records on all pages.
+
+    @method _selectAll
+    @private
+  */
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
+    if (componentName === this.componentName)
+    {
+      this.set(&#x27;allSelect&#x27;, selectAllParameter);
+
+      let contentWithKeys = this.get(&#x27;contentWithKeys&#x27;);
+      let selectedRecords = this.get(&#x27;selectedRecords&#x27;);
+      for (let i = 0; i &lt; contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        if (recordWithKey.get(&#x27;rowConfig.canBeSelected&#x27;)) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass(&#x27;active&#x27;)) {
+              selectedRow.addClass(&#x27;active&#x27;);
+            }
+          } else {
+            if (selectedRow.hasClass(&#x27;active&#x27;)) {
+              selectedRow.removeClass(&#x27;active&#x27;);
+            }
+          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set(&#x27;selected&#x27;, selectAllParameter);
+        }
+
+      }
+
+      if (!skipConfugureRows) {
+        this.selectedRowsChanged();
+      }
+    }
+  },
+
+  /**
+    It observes changes of flag {{#crossLink &quot;FlexberryObjectlistviewComponent/showFilters:property&quot;}}showFilters{{/crossLink}}.
+
+    If flag {{#crossLink &quot;FlexberryObjectlistviewComponent/showFilters:property&quot;}}{{/crossLink}} changes its value
+    and flag is true trigger scroll.
+
+    @method _showFiltersObserver
+    @private
+  */
+  _showFiltersObserver: observer(&#x27;showFilters&#x27;, function() {
+    let showFilters = this.get(&#x27;showFilters&#x27;);
+    if (showFilters) {
+      schedule(&#x27;afterRender&#x27;, this, function() {
+        $(this.element).scroll();
+      });
+    }
+  }),
+
+  /**
+    Set style of table parent.
+
+    @method _setParent
+    @private
+  */
+  _setParent(settings) {
+    let parent = $(settings.parent);
+    let table = $(settings.table);
+
+    if (!parent.children(table).length) {
+      parent.append(table);
+    }
+
+    $(&#x27;.full.height .flexberry-content .ui.main.container&#x27;).css(&#x27;margin-bottom&#x27;, &#x27;0&#x27;);
+
+    let toolbarsHeight = parent.prev().outerHeight(true) +
+                          parent.next().outerHeight(true) +
+                          $(&#x27;.background-logo&#x27;).outerHeight() +
+                          $(&#x27;h3&#x27;).outerHeight(true) +
+                          $(&#x27;.footer .flex-container&#x27;).outerHeight();
+    let tableHeight = &#x60;calc(100vh - ${toolbarsHeight}px - 0.5rem)&#x60;;
+
+    parent
+        .css({
+          &#x27;overflow-x&#x27;: &#x27;auto&#x27;,
+          &#x27;overflow-y&#x27;: &#x27;auto&#x27;,
+          &#x27;max-height&#x27;: tableHeight
+        });
+    parent.scroll(function () {
+      let top = parent.scrollTop();
+
+      this.find(&#x27;thead tr &gt; *&#x27;).css(&#x27;top&#x27;, top);
+
+      // fixed filters.
+      if (this.find(&#x27;tbody tr&#x27;).is(&#x27;.object-list-view-filters&#x27;)) {
+        this.find(&#x27;tbody tr.object-list-view-filters&#x27;).find(&#x27; &gt; *&#x27;).css(&#x27;top&#x27;, top);
+      }
+
+    }.bind(table));
+  },
+
+  /**
+    Set fixed cells backgrounds.
+
+    @method _setBackground
+    @private
+  */
+  _setBackground(elements) {
+    elements.each(function (k, element) {
+      let _element = $(element);
+      let parent = $(_element).parent();
+
+      let elementBackground = _element.css(&#x27;background-color&#x27;);
+      elementBackground = (elementBackground === &#x27;transparent&#x27; || elementBackground === &#x27;rgba(0, 0, 0, 0)&#x27;) ? null : elementBackground;
+
+      let parentBackground = parent.css(&#x27;background-color&#x27;);
+      parentBackground = (parentBackground === &#x27;transparent&#x27; || parentBackground === &#x27;rgba(0, 0, 0, 0)&#x27;) ? null : parentBackground;
+
+      let background = parentBackground ? parentBackground : &#x27;white&#x27;;
+      background = elementBackground ? elementBackground : background;
+
+      _element.css(&#x27;background-color&#x27;, background);
+    });
+  },
+
+  /**
+    Fixed table head.
+
+    @method _setBackground
+    @private
+  */
+  _fixedTableHead($currentTable) {
+    let defaults = {
+      head: true,
+      foot: false,
+      left: 0,
+      right: 0,
+      &#x27;z-index&#x27;: 0
+    };
+
+    /*
+    (Mozila Firefox(version &gt;58) bug fixes)
+
+    If the browser is Firefox (version &gt;58), then
+    tableHeadFixer is enabled, otherwise
+    thead position: sticky
+    */
+    let ua = navigator.userAgent;
+
+    if ((ua.search(/Firefox/) !== -1 &amp;&amp; ua.split(&#x27;Firefox/&#x27;)[1].substr(0, 2) &gt; 58) ||
+        (ua.search(/iPhone|iPad/) !== -1 &amp;&amp; ua.split(&#x27;Version/&#x27;)[1].substr(0, 2) &gt;= 8) ||
+        (ua.search(/Android/) !== -1 &amp;&amp; ua.split(&#x27;Chrome/&#x27;)[1].substr(0, 2) &gt;= 78)) {
+      $currentTable
+            .find(&#x27;thead tr &gt; *&#x27;)
+            .css({ &#x27;position&#x27;:&#x27;sticky&#x27;, &#x27;top&#x27;:&#x27;0&#x27; });
+
+    } else {
+      let settings = $.extend({}, defaults);
+
+      settings.table = $currentTable;
+      settings.parent = $(settings.table).parent();
+      this._setParent(settings);
+
+      let thead = $(settings.table).find(&#x27;thead&#x27;);
+      let cells = thead.find(&#x27;tr &gt; *&#x27;);
+
+      this._setBackground(cells);
+      cells.css({
+        &#x27;position&#x27;: &#x27;relative&#x27;
+      });
+    }
+  },
+
+  /**
+    Move all selected records.
+
+    @method _moveRow
+    @private
+  */
+  _moveRow(componentName, shift) {
+    if (componentName === this.componentName) {
+      let contentForRender = this.get(&#x27;contentForRender&#x27;);
+      let orderedProperty = this.get(&#x27;orderedProperty&#x27;);
+      let selectedRecords = this.get(&#x27;selectedRecords&#x27;).sortBy(&#x60;${orderedProperty}&#x60;);
+      if (shift &gt; 0) {
+        selectedRecords.reverseObjects();
+      }
+
+      selectedRecords.forEach((record) =&gt; {
+        let content = contentForRender.map(i =&gt; i.data);
+        let indexRecord = content.indexOf(record);
+        let newIndex = indexRecord + shift;
+        if (newIndex &gt;= 0 &amp;&amp; newIndex &lt; content.length &amp;&amp; !selectedRecords.includes(content[newIndex])) {
+          let orderValue = content[indexRecord].get(&#x60;${orderedProperty}&#x60;);
+          let orderValueAbove = content[newIndex].get(&#x60;${orderedProperty}&#x60;);
+          content[indexRecord].set(&#x60;${orderedProperty}&#x60;, orderValueAbove);
+          content[newIndex].set(&#x60;${orderedProperty}&#x60;, orderValue);
+
+          let temp = [contentForRender[indexRecord]];
+          contentForRender.replace(indexRecord, 1);
+          contentForRender.replace(newIndex, 0, temp);
+        }
+      });
+    }
+  },
+
+  /**
+    Calls the &#x60;filterConditionChanged&#x60; action when filters are displayed in the modal window.
+
+    @private
+    @method _filterConditionChanged
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  _filterConditionChanged(componentName, filter, newValue, oldValue) {
+    if (this.get(&#x27;componentName&#x27;) === componentName) {
+      this.send(&#x27;filterConditionChanged&#x27;, filter, newValue, oldValue);
+    }
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

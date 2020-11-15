@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/mixins/reload-list-mixin.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/mixins/reload-list-mixin.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+ * @module ember-flexberry
+ */
+
+import Mixin from &#x27;@ember/object/mixin&#x27;;
+import { get } from &#x27;@ember/object&#x27;
+import { merge } from &#x27;@ember/polyfills&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { inject as service } from &#x27;@ember/service&#x27;;
+import { isNone } from &#x27;@ember/utils&#x27;;
+import { A, isArray } from &#x27;@ember/array&#x27;;
+
+import Builder from &#x27;ember-flexberry-data/query/builder&#x27;;
+import Condition from &#x27;ember-flexberry-data/query/condition&#x27;;
+import FilterOperator from &#x27;ember-flexberry-data/query/filter-operator&#x27;;
+import { BasePredicate, SimplePredicate, StringPredicate, ComplexPredicate,
+  DatePredicate, stringToPredicate } from &#x27;ember-flexberry-data/query/predicate&#x27;;
+
+/**
+ * Mixin for {{#crossLink &quot;DS.Controller&quot;}}Controller{{/crossLink}} to support data reload.
+ *
+ * @class ReloadListMixin
+ * @extends Mixin
+ * @public
+ */
+export default Mixin.create({
+  /**
+   Service that triggers objectlistview events.
+
+   @property objectlistviewEvents
+   @type {Class}
+   @default inject()
+   */
+  objectlistviewEvents: service(),
+
+  /**
+   * It reloads data by parameters.
+
+     This method is called to get data for flexberry-objectlistview
+     (both on list-form and lookup modal window).
+
+   * @method reloadList
+   * @public
+   *
+   * @param {Object} options Method options.
+   * @param {String} [options.modelName] Type of records to load.
+   * @param {String} [options.projectionName] Projection name to load data by.
+   * @param {String} [options.perPage] Page size.
+   * @param {String} [options.page] Current page.
+   * @param {String} [options.sorting] Current sorting.
+   * @param {String} [options.filter] Current filter.
+   * @param {String} [options.filterProjectionName] Name of model projection which should be used for filtering throught search-element on toolbar. Filtering is processed only by properties defined in this projection.
+   * @param {String} [options.predicate] Predicate to limit records.
+   * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
+   */
+  reloadList: function(options) {
+    if (options.filters instanceof ComplexPredicate) {
+      var newFilter = A();
+      options.filters._predicates.forEach((predicate) =&gt; {
+        newFilter.push(this._normalizeNeqPredicate(predicate));
+      }, this);
+
+      options.filters._predicates = newFilter;
+    } else {
+      options.filters = this._normalizeNeqPredicate(options.filters);
+    }
+
+    let store = this.store;
+    assert(&#x27;Store for data loading is not defined.&#x27;, store);
+
+    let reloadOptions = options;
+
+    let modelName = reloadOptions.modelName;
+    assert(&#x27;Model name for data loading is not defined.&#x27;, modelName);
+
+    let projectionName = reloadOptions.projectionName;
+    assert(&#x27;Projection name for data loading is not defined.&#x27;, projectionName);
+
+    let modelConstructor = store.modelFor(modelName);
+    let projection = get(modelConstructor, &#x27;projections&#x27;)[projectionName];
+    if (!projection) {
+      throw new Error(&#x60;No projection with &#x27;${projectionName}&#x27; name defined in &#x27;${modelName}&#x27; model.&#x60;);
+    }
+
+    let filterProjectionName = reloadOptions.filterProjectionName;
+    let filterProjection = undefined;
+    if (filterProjectionName) {
+      filterProjection = get(modelConstructor, &#x27;projections&#x27;)[filterProjectionName];
+      if (!filterProjection) {
+        throw new Error(&#x60;No projection with &#x27;${filterProjection}&#x27; name defined in &#x27;${modelName}&#x27; model.&#x60;);
+      }
+    }
+
+    let allPredicates = Ember.A();
+
+    if (reloadOptions.predicate &amp;&amp; !(reloadOptions.predicate instanceof BasePredicate)) {
+      throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+    }
+
+    allPredicates.addObject(reloadOptions.predicate);
+
+    if (reloadOptions.filters &amp;&amp; !(reloadOptions.filters instanceof BasePredicate)) {
+      throw new Error(&#x27;Incorrect filters. It has to be instance of BasePredicate.&#x27;);
+    }
+
+    allPredicates.addObject(reloadOptions.filters);
+
+    if (reloadOptions.advLimit) {
+      const advPredicate = stringToPredicate(reloadOptions.advLimit);
+      if (!(advPredicate instanceof BasePredicate)) {
+        throw new Error(&#x27;Incorrect advLimit. It has to be instance of BasePredicate.&#x27;);
+      }
+
+      allPredicates.addObject(advPredicate);
+    }
+
+    let perPage = reloadOptions.perPage;
+    let page = reloadOptions.page;
+    let pageNumber = parseInt(page, 10);
+    let perPageNumber = parseInt(perPage, 10);
+    assert(&#x27;page must be greater than zero.&#x27;, pageNumber &gt; 0);
+    assert(&#x27;perPage must be greater than zero.&#x27;, perPageNumber &gt; 0);
+
+    let builder = new Builder(store)
+      .from(modelName)
+      .selectByProjection(projectionName)
+      .count();
+
+    if (reloadOptions.hierarchicalAttribute) {
+      if (reloadOptions.hierarchyPaging) {
+        builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+        builder.orderBy(&#x27;id asc&#x27;);
+      }
+
+      let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, &#x27;eq&#x27;, null);
+      allPredicates.addObject(hierarchicalPredicate);
+    } else {
+      builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+    }
+
+    if (isArray(reloadOptions.sorting)) {
+      let sorting = reloadOptions.sorting.filter(i =&gt; i.direction !== &#x27;none&#x27;).map(i =&gt; &#x60;${i.propName} ${i.direction}&#x60;).join(&#x27;,&#x27;);
+      if (sorting) {
+        builder.orderBy(sorting);
+      }
+    }
+
+    const filter = reloadOptions.filter;
+    const filterCondition = reloadOptions.filterCondition;
+    const filterPredicate = filter
+            ? this._getFilterPredicate(
+                      filterProjection ? filterProjection : projection,
+                      { filter, filterCondition })
+            : undefined;
+    allPredicates.addObject(filterPredicate);
+    allPredicates = allPredicates.compact();
+    const resultPredicate = allPredicates.length &gt; 1 ?
+      new ComplexPredicate(Condition.And, ...allPredicates) :
+      allPredicates[0];
+
+    this.get(&#x27;objectlistviewEvents&#x27;).setLimitFunction(resultPredicate, reloadOptions.componentName);
+
+    if (resultPredicate) {
+      builder.where(resultPredicate);
+    }
+
+    return store.query(modelName, builder.build());
+  },
+
+  /**
+    Create predicate for attribute. Can you overload this function for extended logic.
+
+    Default supported attribute types:
+    - &#x60;string&#x60;
+    - &#x60;number&#x60;
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      // app/routes/example.js
+      ...
+      // Add support for logical attribute
+      predicateForAttribute(attribute, filter) {
+        switch (attribute.type) {
+          case &#x27;boolean&#x27;:
+            let yes = [&#x27;TRUE&#x27;, &#x27;True&#x27;, &#x27;true&#x27;, &#x27;YES&#x27;, &#x27;Yes&#x27;, &#x27;yes&#x27;, &#x27;ДА&#x27;, &#x27;Да&#x27;, &#x27;да&#x27;, &#x27;1&#x27;, &#x27;+&#x27;];
+            let no = [&#x27;False&#x27;, &#x27;False&#x27;, &#x27;false&#x27;, &#x27;NO&#x27;, &#x27;No&#x27;, &#x27;no&#x27;, &#x27;НЕТ&#x27;, &#x27;Нет&#x27;, &#x27;нет&#x27;, &#x27;0&#x27;, &#x27;-&#x27;];
+
+            if (yes.indexOf(filter) &gt; 0) {
+              return new SimplePredicate(attribute.name, &#x27;eq&#x27;, &#x27;true&#x27;);
+            }
+
+            if (no.indexOf(filter) &gt; 0) {
+              return new SimplePredicate(attribute.name, &#x27;eq&#x27;, &#x27;false&#x27;);
+            }
+
+            return null;
+
+          default:
+            return this._super(...arguments);
+        }
+      },
+      ...
+      &#x60;&#x60;&#x60;
+
+    @method predicateForAttribute
+    @param {Object} attribute Object contains attribute info.
+    @param {String} attribute.name Name of attribute, example &#x60;name&#x60; or &#x60;type.name&#x60; if it attribute of relationship.
+    @param {Object} attribute.options Object with attribute options.
+    @param {Boolean} [attribute.options.hidden] Flag, indicate that this hidden attribute.
+    @param {Boolean} [attribute.options.displayMemberPath] Flag, indicate that this attribute uses for display relationship.
+    @param {String} attribute.type Type of attribute, example &#x60;string&#x60; or &#x60;number&#x60;.
+    @param {String} filter Pattern for search.
+    @param {String} filterCondition Condition for predicate, can be &#x60;or&#x60; or &#x60;and&#x60;.
+    @return {BasePredicate|null} Object class of &#x60;BasePredicate&#x60; or &#x60;null&#x60;, if not need filter.
+    @for ListFormRoute
+  */
+  predicateForAttribute(attribute, filter, filterCondition) {
+    if (attribute.options.hidden &amp;&amp; !attribute.options.displayMemberPath) {
+      return null;
+    }
+
+    switch (attribute.type) {
+      case &#x27;string&#x27;: {
+        let words = filter.trim().replace(/\s+/g, &#x27; &#x27;).split(&#x27; &#x27;);
+        if (filterCondition &amp;&amp; words.length &gt; 1) {
+          let predicates = words.map(word =&gt; new StringPredicate(attribute.name).contains(word));
+          return new ComplexPredicate(filterCondition, ...predicates);
+        }
+
+        return new StringPredicate(attribute.name).contains(filter);
+      }
+
+      case &#x27;number&#x27;: {
+        if (isFinite(filter)) {
+          return new SimplePredicate(attribute.name, &#x27;eq&#x27;, +filter);
+        }
+
+        return null;
+      }
+
+      case &#x27;decimal&#x27;: {
+        filter = filter.replace(&#x27;,&#x27;, &#x27;.&#x27;);
+        if (isFinite(filter)) {
+          return new SimplePredicate(attribute.name, &#x27;eq&#x27;, +filter);
+        }
+
+        return null;
+      }
+
+      case &#x27;boolean&#x27;: {
+        let yes = [&#x27;TRUE&#x27;, &#x27;True&#x27;, &#x27;true&#x27;, &#x27;YES&#x27;, &#x27;Yes&#x27;, &#x27;yes&#x27;, &#x27;ДА&#x27;, &#x27;Да&#x27;, &#x27;да&#x27;, &#x27;1&#x27;, &#x27;+&#x27;];
+        let no = [&#x27;False&#x27;, &#x27;False&#x27;, &#x27;false&#x27;, &#x27;NO&#x27;, &#x27;No&#x27;, &#x27;no&#x27;, &#x27;НЕТ&#x27;, &#x27;Нет&#x27;, &#x27;нет&#x27;, &#x27;0&#x27;, &#x27;-&#x27;];
+
+        if (yes.indexOf(filter) &gt; 0) {
+          return new SimplePredicate(attribute.name, &#x27;eq&#x27;, &#x27;true&#x27;);
+        }
+
+        if (no.indexOf(filter) &gt; 0) {
+          return new SimplePredicate(attribute.name, &#x27;eq&#x27;, &#x27;false&#x27;);
+        }
+
+        return null;
+      }
+
+      default: {
+        return null;
+      }
+    }
+  },
+
+  /**
+    It forms the filter predicate for data loading.
+
+    @method _getFilterPredicate
+    @param {Object} modelProjection A projection used for data retrieving.
+    @param {Object} params Current parameters to form predicate.
+    @return {BasePredicate|null} Filter predicate for data loading.
+    @private
+  */
+  _getFilterPredicate: function(modelProjection, params) {
+    assert(&#x27;Projection is not defined&#x27;, modelProjection);
+
+    let predicates = [];
+    if (params.filter) {
+      let attributes = this._attributesForFilter(modelProjection, this.store);
+      attributes.forEach((attribute) =&gt; {
+        let predicate = this.predicateForAttribute(attribute, params.filter, params.filterCondition);
+        if (predicate) {
+          predicates.push(predicate);
+        }
+      });
+    }
+
+    return predicates.length ? predicates.length &gt; 1 ? new ComplexPredicate(Condition.Or, ...predicates) : predicates[0] : null;
+  },
+
+  /**
+    Generates array attributes for filter.
+
+    @method _attributesForFilter
+    @param {Object} projection
+    @param {DS.Store} store
+    @return {Array} Array objects format: &#x60;{ name, type }&#x60;, where &#x60;name&#x60; - attribute name, &#x60;type&#x60; - attribute type.
+    @private
+  */
+  _attributesForFilter(projection, store) {
+    let attributes = [];
+
+    for (let name in projection.attributes) {
+      if (projection.attributes.hasOwnProperty(name)) {
+        let attribute = projection.attributes[name];
+        switch (attribute.kind) {
+          case &#x27;attr&#x27;: {
+            let options = merge({}, attribute.options);
+            options.displayMemberPath = projection.options &amp;&amp; projection.options.displayMemberPath === name;
+            attributes.push({
+              name: name,
+              options: options,
+              type: get(store.modelFor(projection.modelName), &#x27;attributes&#x27;).get(name).type,
+            });
+            break;
+          }
+
+          case &#x27;belongsTo&#x27;: {
+            let belongsToAttributes = this._attributesForFilter(attribute, store);
+            for (let i = 0; i &lt; belongsToAttributes.length; i++) {
+              belongsToAttributes[i].name = &#x60;${name}.${belongsToAttributes[i].name}&#x60;;
+              attributes.push(belongsToAttributes[i]);
+            }
+
+            break;
+          }
+
+          case &#x27;hasMany&#x27;:
+            break;
+
+          default: {
+            throw new Error(&#x60;Not supported kind: ${attribute.kind}&#x60;);
+          }
+        }
+      }
+    }
+
+    return attributes;
+  },
+
+  /**
+    Generates new predicate for neq value predicate.
+
+    @method _normalizeNeqPredicate
+    @param {Object} predicate
+    @return {Object} Normalized predicate.
+    @private
+  */
+  _normalizeNeqPredicate(predicate) {
+    let result = predicate;
+    if (!isNone(predicate) &amp;&amp; predicate._operator === &#x27;neq&#x27; &amp;&amp; predicate._value !== null) {
+      let sp1 = predicate;
+      let sp2;
+      if (predicate instanceof SimplePredicate || predicate instanceof DatePredicate) {
+        sp2 = new SimplePredicate(sp1._attributePath, FilterOperator.Eq, null);
+      }
+
+      result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;
+    }
+
+    return result;
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

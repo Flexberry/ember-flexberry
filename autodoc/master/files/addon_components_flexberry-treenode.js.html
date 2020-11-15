@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/flexberry-treenode.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/flexberry-treenode.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Ember from &#x27;ember&#x27;;
+import SlotsMixin from &#x27;ember-block-slots&#x27;;
+import RequiredActionsMixin from &#x27;../mixins/required-actions&#x27;;
+import DomActionsMixin from &#x27;../mixins/dom-actions&#x27;;
+import DynamicActionsMixin from &#x27;../mixins/dynamic-actions&#x27;;
+import DynamicPropertiesMixin from &#x27;../mixins/dynamic-properties&#x27;;
+
+/**
+  Component&#x27;s CSS-classes names.
+  JSON-object containing string constants with CSS-classes names related to component&#x27;s hbs-markup elements.
+
+  @property {Object} flexberryClassNames
+  @property {String} flexberryClassNames.prefix Component&#x27;s CSS-class names prefix (&#x27;flexberry-treenode&#x27;).
+  @property {String} flexberryClassNames.wrapper Component&#x27;s wrapping &lt;div&gt; CSS-class name (&#x27;flexberry-treenode&#x27;).
+  @property {String} flexberryClassNames.header Component&#x27;s header &lt;div&gt; CSS-class name (&#x27;flexberry-treenode-header&#x27;).
+  @property {String} flexberryClassNames.content Component&#x27;s content &lt;div&gt; CSS-class name (&#x27;flexberry-treenode-content&#x27;).
+  @property {String} flexberryClassNames.expandCollapseIcon Component&#x27;s expand/collapse icon CSS-class name (&#x27;flexberry-treenode-expand-collapse-icon&#x27;).
+  @property {String} flexberryClassNames.preventExpandCollapse Component&#x27;s CSS-class name to prevent nodes expand/collapse animation (&#x27;flexberry-treenode-prevent-expand-collapse&#x27;).
+  @readonly
+  @static
+
+  @for FlexberryTreenodeComponent
+*/
+const flexberryClassNamesPrefix = &#x27;flexberry-treenode&#x27;;
+const flexberryClassNames = {
+  prefix: flexberryClassNamesPrefix,
+  wrapper: flexberryClassNamesPrefix,
+  header: flexberryClassNamesPrefix + &#x27;-header&#x27;,
+  content: flexberryClassNamesPrefix + &#x27;-content&#x27;,
+  expandCollapseIcon: flexberryClassNamesPrefix + &#x27;-expand-collapse-icon&#x27;,
+  preventExpandCollapse: flexberryClassNamesPrefix + &#x27;-prevent-expand-collapse&#x27;
+};
+
+/**
+  Flexberry tree node component with [Semantic UI accordion](http://semantic-ui.com/modules/accordion.html) style.
+  Component must be used in combination with {{#crossLink &quot;FlexberryTreeComponent&quot;}}flexberry-tree component{{/crossLink}}
+  as a wrapper for those tree nodes, which are placed on the same tree level.
+
+  Usage:
+  templates/my-form.hbs
+  &#x60;&#x60;&#x60;handlebars
+  {{#flexberry-tree exclusive=false}}
+    {{#flexberry-treenode caption=&quot;Node 1 (with child nodes)&quot;}}
+      Node 1 custom content
+
+      {{#flexberry-tree}}
+        {{flexberry-treenode caption=&quot;Node 1.1 (leaf node)&quot;}}
+
+        {{#flexberry-treenode caption=&quot;Node 1.2 (with child nodes)&quot;}}
+          Node 1.2 custom content
+
+          {{#flexberry-tree}}
+            {{#flexberry-treenode caption=&quot;Node 1.2.1 (with child nodes)&quot;}}
+              Node 1.2.1 custom content
+
+              {{#flexberry-tree}}
+                {{flexberry-treenode caption=&quot;Node 1.2.1.1 (leaf node)&quot;}}
+              {{/flexberry-tree}}
+            {{/flexberry-treenode}}
+
+            {{flexberry-treenode caption=&quot;Node 1.2.2 (leaf node)&quot;}}
+          {{/flexberry-tree}}
+        {{/flexberry-treenode}}
+      {{/flexberry-tree}}
+    {{/flexberry-treenode}}
+
+    {{flexberry-treenode caption=&quot;Node 2 (leaf node)&quot;}}
+  {{/flexberry-tree}}
+  &#x60;&#x60;&#x60;
+
+  @class FlexberryTreenodeComponent
+  @extends &lt;a href=&quot;http://emberjs.com/api/classes/Ember.Component.html&quot;&gt;Ember.Component&lt;/a&gt;
+  @uses &lt;a href=&quot;https://github.com/ciena-blueplanet/ember-block-slots#usage&quot;&gt;SlotsMixin&lt;/a&gt;
+  @uses RequiredActionsMixin
+  @uses DomActionsMixin
+  @uses DynamicActionsMixin
+  @uses DynamicPropertiesMixin
+*/
+let FlexberryTreenodeComponent = Ember.Component.extend(
+  SlotsMixin,
+  RequiredActionsMixin,
+  DomActionsMixin,
+  DynamicActionsMixin,
+  DynamicPropertiesMixin, {
+
+    /**
+      Flag: indicates whether some {{#crossLink &quot;FlexberryTreenodeComponent/nodes:property&quot;}}tree &#x27;nodes&#x27;{{/childNodes}} are defined.
+
+      @property _hasNodes
+      @type boolean
+      @readOnly
+      @private
+    */
+    _hasNodes: Ember.computed(&#x27;nodes.[]&#x27;, function() {
+      let nodes = this.get(&#x27;nodes&#x27;);
+
+      return Ember.isArray(nodes) &amp;&amp; nodes.length &gt; 0;
+    }),
+
+    /**
+      Flag: indicates whether some nested content is defined
+      (some yield markup or {{#crossLink &quot;FlexberryTreenodeComponent/nodes:property&quot;}}&#x27;nodes&#x27;{{/childNodes}} are defined).
+
+      @property _hasContent
+      @type boolean
+      @readOnly
+      @private
+    */
+    _hasContent: Ember.computed(&#x27;_slots.[]&#x27;, &#x27;_hasNodes&#x27;, function() {
+      // Yielded {{block-slot &quot;content&quot;}} is defined or &#x27;nodes&#x27; are defined.
+      return this._isRegistered(&#x27;content&#x27;) || this.get(&#x27;_hasNodes&#x27;);
+    }),
+
+    /**
+      Reference to component&#x27;s CSS-classes names.
+      Must be also a component&#x27;s instance property to be available from component&#x27;s hbs-markup.
+    */
+    flexberryClassNames,
+
+    /**
+      Component&#x27;s wrapping &lt;div&gt; CSS-classes names.
+
+      Any other CSS-class names can be added through component&#x27;s &#x27;class&#x27; property.
+      &#x60;&#x60;&#x60;handlebars
+      {{#flexberry-treenode class=&quot;styled&quot;}}
+        Tree&#x27;s content
+      {{/flexberry-treenode}}
+      &#x60;&#x60;&#x60;
+
+      @property classNames
+      @type String[]
+      @default [&#x27;flexberry-treenode&#x27;]
+    */
+    classNames: [flexberryClassNames.wrapper],
+
+    /**
+      Tree node&#x27;s caption (will be displayed in node&#x27;s header).
+
+      @property caption
+      @type String
+      @default null
+    */
+    caption: null,
+
+    /**
+      Child nodes.
+      This property is optional and must be used when there are too many child nodes,
+      and you don&#x27;t want to define them explicitly in the .hbs markup,
+      then you can define nodes array somewhere in code &amp; pass defined array to this component&#x27;s property.
+
+      @property nodes
+      @type FlexberryTreenodeObject[]
+      @default null
+    */
+    nodes: null,
+
+    actions: {
+      /**
+        Handles tree node header&#x27;s &#x27;click&#x27; event.
+        Prevents &#x27;click&#x27; event from bubbling for leaf nodes.
+        Invokes component&#x27;s {{#crossLink &quot;FlexberryTreenodeComponent/sendingActions.headerClick:method&quot;}}&#x27;headerClick&#x27;{{/crossLink}} action.
+        Invokes component&#x27;s {{#crossLink &quot;FlexberryTreenodeComponent/sendingActions.beforeExpand:method&quot;}}&#x27;beforeExpand&#x27;{{/crossLink}} action.
+        Invokes component&#x27;s {{#crossLink &quot;FlexberryTreenodeComponent/sendingActions.beforeCollapse:method&quot;}}&#x27;beforeCollapse&#x27;{{/crossLink}} action.
+
+        @method actions.onHeaderClick
+        @param {Object} [jQuery event object](http://api.jquery.com/category/events/event-object/)
+        which describes Inner header element&#x27;s &#x27;click&#x27; event.
+      */
+      onHeaderClick(e) {
+        // Send &#x27;headerClick&#x27; action anyway.
+        this.sendAction(&#x27;headerClick&#x27;, {
+          originalEvent: e
+        });
+
+        // As the &#x27;click&#x27; event-target here could be passed any inner element nested inside node&#x27;s header
+        // (even some inner elements of dynamic components nested inside node),
+        // that&#x27;s why we should check for a special class-name in event-target itself &amp; in it&#x27;s parent elements.
+        let $clickTarget = Ember.$(e.target);
+        let clickTargetShouldPreventExpandCollapse = $clickTarget.hasClass(flexberryClassNames.preventExpandCollapse);
+        if (!clickTargetShouldPreventExpandCollapse)  {
+          clickTargetShouldPreventExpandCollapse = $clickTarget.parents().hasClass(flexberryClassNames.preventExpandCollapse);
+        }
+
+        // Prevent node header&#x27;s click event from bubbling to disable expand/collapse animation in the following situations:
+        // if click event-target is element containing special class-name preventing node from expanding/collapsing,
+        // if node is leaf (node without nested content).
+        if (clickTargetShouldPreventExpandCollapse || !this.get(&#x27;_hasContent&#x27;)) {
+          e.stopPropagation();
+
+          return;
+        }
+
+        let expandedNodeClassName = Ember.$.fn.accordion.settings.className.active;
+        if (Ember.$(e.currentTarget).hasClass(expandedNodeClassName)) {
+          this.sendAction(&#x27;beforeCollapse&#x27;, {
+            originalEvent: e
+          });
+        } else {
+          this.sendAction(&#x27;beforeExpand&#x27;, {
+            originalEvent: e
+          });
+        }
+      }
+    },
+
+    /**
+      Observes changes in {{#crossLink &quot;FlexberryTreenodeComponent/_hasNodes:property&quot;}}&#x27;_hasContent&#x27; flag{{/crossLink}},
+      and collapses node if &#x27;_hasContent&#x27; became false.
+
+      @method _hasContentDidChange
+      @private
+    */
+    _hasContentDidChange: Ember.observer(&#x27;_hasContent&#x27;, function() {
+      if (this.get(&#x27;_hasContent&#x27;)) {
+        return;
+      }
+
+      let $treeNode = this.$();
+      if (Ember.isNone($treeNode)) {
+        return;
+      }
+
+      let collapse = function($element) {
+        let active = Ember.$.fn.accordion.settings.className.active;
+        if (!Ember.isNone($element) &amp;&amp; $element.hasClass(active)) {
+          $element.removeClass(active);
+        }
+      };
+
+      collapse($treeNode.children(&#x60;.${flexberryClassNames.header}&#x60;).first());
+      collapse($treeNode.children(&#x60;.${flexberryClassNames.content}&#x60;).first());
+    })
+
+    /**
+      Component&#x27;s action invoking when tree node&#x27;s header has been clicked.
+
+      @method sendingActions.headerClick
+      @param {Object} e Action&#x27;s event object.
+      @param {Object} e.originalEvent [jQuery event object](http://api.jquery.com/category/events/event-object/)
+      which describes event that triggers this action.
+    */
+
+    /**
+      Component&#x27;s action invoking before node will be expanded.
+      Node can be prevented from being expanded with call to action event object&#x27;s &#x27;originalEvent.stopPropagation()&#x27;.
+
+      @method sendingActions.beforeExpand
+      @param {Object} e Action&#x27;s event object.
+      @param {Object} e.originalEvent [jQuery event object](http://api.jquery.com/category/events/event-object/)
+      which describes event that triggers node&#x27;s expanding.
+    */
+
+    /**
+      Component&#x27;s action invoking before node will be collapsed.
+      Node can be prevented from being collapsed with call to action event object&#x27;s &#x27;originalEvent.stopPropagation()&#x27;.
+
+      @method sendingActions.beforeCollapse
+      @param {Object} e Action&#x27;s event object.
+      @param {Object} e.originalEvent [jQuery event object](http://api.jquery.com/category/events/event-object/)
+      which describes event that triggers node&#x27;s collapsing.
+    */
+  }
+);
+
+// Add component&#x27;s CSS-class names as component&#x27;s class static constants
+// to make them available outside of the component instance.
+FlexberryTreenodeComponent.reopenClass({
+  flexberryClassNames
+});
+
+export default FlexberryTreenodeComponent;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

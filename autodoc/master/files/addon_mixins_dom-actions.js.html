@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/mixins/dom-actions.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/mixins/dom-actions.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Ember from &#x27;ember&#x27;;
+
+// Validates DOM-event options.
+// Not a mixin member, so yuidoc-comments are unnecessary.
+let validateDomEventOptions = function(options, eventIsAttaching) {
+  options = options || {};
+  let eventTarget = Ember.get(options, &#x27;eventTarget&#x27;);
+  let eventName = Ember.get(options, &#x27;eventName&#x27;);
+  let eventHandler = Ember.get(options, &#x27;eventHandler&#x27;);
+
+  Ember.assert(
+    &#x60;Wrong type of \&#x60;options.eventTarget\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${Ember.typeOf(eventTarget)}\&#x60;, but \&#x60;object\&#x60; or \&#x60;instance\&#x60; is expected.&#x60;,
+    Ember.typeOf(eventTarget) === &#x27;object&#x27; || Ember.typeOf(eventTarget) === &#x27;instance&#x27;);
+
+  let methodName = eventIsAttaching ? &#x27;on&#x27; : &#x27;off&#x27;;
+  Ember.assert(
+    &#x60;Wrong type of \&#x60;options.eventTarget.{$methodName}\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${Ember.typeOf(eventTarget[methodName])}\&#x60;, but \&#x60;function\&#x60; is expected.&#x60;,
+    Ember.typeOf(eventTarget[methodName]) === &#x27;function&#x27;);
+
+  Ember.assert(
+    &#x60;Wrong type of \&#x60;options.eventName\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${Ember.typeOf(eventName)}\&#x60;, but \&#x60;string\&#x60; is expected.&#x60;,
+    Ember.typeOf(eventName) === &#x27;string&#x27;);
+
+  Ember.assert(
+    &#x60;Wrong type of \&#x60;options.eventHandler\&#x60; property: &#x60; +
+    &#x60;actual type is \&#x60;${Ember.typeOf(eventHandler)}\&#x60;, but \&#x60;function\&#x60; is expected.&#x60;,
+    Ember.typeOf(eventHandler) === &#x27;function&#x27;);
+};
+
+/**
+  Mixin containing logic making available to handle DOM-events related to component
+  as inner &amp; outer component&#x27;s actions.
+  Also contains methods to attach custom handlers for DOM-events with delayed clean up logic
+  which will be executed before component will be destroyed.
+
+  @class DomActionsMixin
+  @extends &lt;a href=&quot;http://emberjs.com/api/classes/Ember.Mixin.html&quot;&gt;Ember.Mixin&lt;/a&gt;
+*/
+export default Ember.Mixin.create({
+  /**
+    Dictionary containing names of DOM-events available for component&#x27;s wrapping DOM-element
+    and component&#x27;s actions names related to them.
+
+    @property _availableDomEvents
+    @type Object
+    @readOnly
+    @private
+  */
+  _availableDomEvents: Ember.computed(function() {
+    // Code from Ember.Component &#x27;init&#x27; hook to get DOM-events available for component.
+    let eventDispatcher = Ember.getOwner(this).lookup(&#x27;event_dispatcher:main&#x27;);
+
+    return eventDispatcher &amp;&amp; eventDispatcher._finalEvents || {};
+  }),
+
+  /**
+    Array with objects containing selected event targets &amp; handlers attached to them.
+    Each object in array has following structure: {
+      eventTarget: ...,
+      attachedEventHandlers: {
+        click: [function() {}, function() {}, ...],
+        dblclick: [function() {}, function() {}, ...],
+        ...
+      }
+    }.
+
+    @property _eventsMetadata
+    @type Object[]
+    @default null
+    @private
+   */
+  _eventsMetadata: null,
+
+  /**
+    Flag: indicates whether component is tagless or not
+    (has empty [tagName](http://emberjs.com/api/classes/Ember.Component.html#property_tagName) or not).
+
+    @property isTagless
+    @type Boolean
+    @readOnly
+   */
+  isTagless: Ember.computed(&#x27;tagName&#x27;, function() {
+    let tagName = this.get(&#x27;tagName&#x27;);
+    if (Ember.typeOf(tagName) === &#x27;string&#x27;) {
+      tagName = Ember.$.trim(tagName);
+    }
+
+    return tagName === &#x27;&#x27;;
+  }),
+
+  /**
+    Attaches event handler for a given event-target.
+    Also remembers attached handlers and related event-targets for clean up logic
+    which will be executed before component will be destroyed, so use this method instead of
+    explicit calls to [jQuery.on method](http://api.jquery.com/on/) to avoid possible memory leaks.
+
+    @method attachEventHandler
+    @param {Object} options Method options.
+    @param {Object} options.eventTarget DOM-element ([jQuery-object](http://api.jquery.com/Types/#jQuery))
+    for which event-handler must be attached.
+    @param {String} options.eventName Event name.
+    @param {Function} options.eventHandler Event handler.
+  */
+  attachEventHandler(options) {
+    validateDomEventOptions(options, true);
+    let eventTarget = Ember.get(options, &#x27;eventTarget&#x27;);
+    let eventName = Ember.get(options, &#x27;eventName&#x27;);
+    let eventHandler = Ember.get(options, &#x27;eventHandler&#x27;);
+
+    // Find event-metadata for a given DOM-element.
+    let eventsMetadata = this.get(&#x27;_eventsMetadata&#x27;);
+    let eventMetadata = eventsMetadata.filter((metadata) =&gt; {
+      return metadata.eventTarget === eventTarget;
+    })[0];
+
+    // Create new metadata if necessary.
+    if (Ember.isNone(eventMetadata)) {
+      eventMetadata = {
+        eventTarget: eventTarget
+      };
+
+      eventsMetadata.pushObject(eventMetadata);
+    }
+
+    let attachedEventHandlers = Ember.get(eventMetadata, &#x27;attachedEventHandlers&#x27;);
+    if (Ember.isNone(attachedEventHandlers)) {
+      attachedEventHandlers = {};
+      Ember.set(eventMetadata, &#x27;attachedEventHandlers&#x27;, attachedEventHandlers);
+    }
+
+    let specifiedEventAttachedEventHandlers = Ember.get(attachedEventHandlers, eventName);
+    if (!Ember.isArray(specifiedEventAttachedEventHandlers)) {
+      specifiedEventAttachedEventHandlers = Ember.A();
+      Ember.set(attachedEventHandlers, eventName, specifiedEventAttachedEventHandlers);
+    }
+
+    if (!specifiedEventAttachedEventHandlers.contains(eventHandler)) {
+      // Store given event-handler.
+      specifiedEventAttachedEventHandlers.pushObject(eventHandler);
+
+      // Finally attach event-handler for given event-target.
+      eventTarget.on(eventName, eventHandler);
+    }
+  },
+
+  /**
+    Detaches event-handler from a given event-target.
+    Also cleans up metadata remembered when event-handler was attached through
+    {{#crossLink &quot;DomActionsMixin/attachEventHandler:method&quot;}}&#x27;attachEventHandler&#x27; method {{/crossLink}}.
+
+    @method detachEventHandler
+    @param {Object} options Method options.
+    @param {Object} options.eventTarget DOM-element ([jQuery-object](http://api.jquery.com/Types/#jQuery))
+    from which event-handler must be detached.
+    @param {String} options.eventName Event name.
+    @param {Function} options.eventHandler Event handler.
+  */
+  detachEventHandler(options) {
+    validateDomEventOptions(options, false);
+    let eventTarget = Ember.get(options, &#x27;eventTarget&#x27;);
+    let eventName = Ember.get(options, &#x27;eventName&#x27;);
+    let eventHandler = Ember.get(options, &#x27;eventHandler&#x27;);
+
+    // Detach event-handler from given DOM-element.
+    eventTarget.off(eventName, eventHandler);
+
+    // Clean up metadata.
+    let eventsMetadata = this.get(&#x27;_eventsMetadata&#x27;);
+    let eventMetadata = eventsMetadata.filter((metadata) =&gt; {
+      return metadata.eventTarget === eventTarget;
+    })[0];
+
+    if (Ember.isNone(eventMetadata)) {
+      return;
+    }
+
+    // Get object (keys - events names, values - arrays with attached handlers).
+    let attachedEventHandlers = Ember.get(eventMetadata, &#x27;attachedEventHandlers&#x27;);
+    if (!Ember.isNone(attachedEventHandlers)) {
+      // Get handlers array for specified event-name.
+      let specifiedEventAttachedEventHandlers = Ember.get(attachedEventHandlers, eventName);
+
+      if (Ember.isArray(specifiedEventAttachedEventHandlers) &amp;&amp; specifiedEventAttachedEventHandlers.contains(eventHandler)) {
+        // Remove handler from metadata.
+        specifiedEventAttachedEventHandlers.removeObject(eventHandler);
+
+        // Remove whole array if there is no handlers any more.
+        if (specifiedEventAttachedEventHandlers.length === 0) {
+          delete attachedEventHandlers[eventName];
+        }
+      }
+    }
+
+    // Remove whole metadata for specified DOM-element if there is no handlers any more.
+    if (Ember.isNone(attachedEventHandlers) || Object.keys(attachedEventHandlers).length === 0) {
+      eventsMetadata.removeObject(eventMetadata);
+    }
+  },
+
+  /**
+    Detaches all event-handlers remembered in metadata when event-handlers were attached through
+    {{#crossLink &quot;DomActionsMixin/attachEventHandler:method&quot;}}&#x27;attachEventHandler&#x27; method {{/crossLink}}.
+
+    @method detachAllEventHandlers
+  */
+  detachAllEventHandlers() {
+    let eventsMetadata = this.get(&#x27;_eventsMetadata&#x27;);
+    var metadataCount = Ember.get(eventsMetadata, &#x27;length&#x27;);
+    while (--metadataCount &gt;= 0) {
+      let eventMetadata = eventsMetadata[metadataCount];
+
+      let eventTarget = Ember.get(eventMetadata, &#x27;eventTarget&#x27;);
+      let attachedEventHandlers = Ember.get(eventMetadata, &#x27;attachedEventHandlers&#x27;);
+      if (Ember.isNone(attachedEventHandlers)) {
+        eventsMetadata.removeObject(eventMetadata);
+        break;
+      }
+
+      let eventNames = Object.keys(attachedEventHandlers);
+      for (let i = 0, len = eventNames.length; i &lt; len; i++) {
+        let eventName = eventNames[i];
+        let specifiedEventAttachedEventHandlers = Ember.get(attachedEventHandlers, eventName);
+
+        if (!Ember.isArray(specifiedEventAttachedEventHandlers)) {
+          delete attachedEventHandlers[eventName];
+          break;
+        }
+
+        var handlersCount = Ember.get(specifiedEventAttachedEventHandlers, &#x27;length&#x27;);
+        while (--handlersCount &gt;= 0) {
+          this.detachEventHandler({
+            eventTarget: eventTarget,
+            eventName: eventName,
+            eventHandler: specifiedEventAttachedEventHandlers[handlersCount]
+          });
+        }
+      }
+    }
+  },
+
+  /**
+    Overridden [&#x27;send&#x27; method](https://github.com/emberjs/ember.js/blob/v2.7.0/packages/ember-runtime/lib/mixins/action_handler.js#L145).
+    Method logic still the same, but method now returns value returned by the action handler.
+
+    &#x60;&#x60;&#x60;
+    @method send
+    @param {String} actionName Name of the action that must be triggered.
+    @param {*} args Arguments that must be passed to action.
+    @return {any} Returns value returned by action handler.
+  */
+  send(actionName, ...args) {
+    // Modified code of &#x27;send&#x27;-method from original Ember action-handler mixin.
+    let actionShouldBubble;
+    let actionHandlerResult;
+    let actionHandler = this.get(&#x60;actions.${actionName}&#x60;);
+
+    if (Ember.typeOf(actionHandler) === &#x27;function&#x27;) {
+      actionHandlerResult = actionHandler.apply(this, args);
+
+      // If inner action founded, bubble only if it returned &#x27;true&#x27;.
+      actionShouldBubble = actionHandlerResult === true;
+    } else {
+      // If inner action wasn&#x27;t found, then bubble is necessary.
+      actionShouldBubble = true;
+    }
+
+    if (actionShouldBubble) {
+      let target = this.get(&#x27;target&#x27;);
+      if (!Ember.isNone(target)) {
+        Ember.assert(
+          &#x60;The \&#x60;target\&#x60; (${target}) for ${this} doesn\&#x60;t have a \&#x60;send\&#x60; method&#x60;,
+          Ember.typeOf(this.get(&#x27;target.send&#x27;)) === &#x27;function&#x27;);
+
+        target.send(...arguments);
+      }
+    }
+
+    // It is the only one &#x27;send&#x27;-logic modification:
+    // &#x27;send&#x27; method now returns value returned by founded inner action.
+    // It is necessary when DOM-events are handling like inner &amp; outer actions,
+    // to break outer action sending, if inner action handler returned &#x27;false&#x27;.
+    return actionHandlerResult;
+  },
+
+  /**
+    Initializes some mixin properties.
+  */
+  init() {
+    this._super(...arguments);
+
+    // Initialize array-property for this component&#x27;s instance.
+    this.set(&#x27;_eventsMetadata&#x27;, Ember.A());
+  },
+
+  /**
+    Initializes component&#x27;s DOM-events related logic.
+  */
+  didInsertElement() {
+    this._super(...arguments);
+
+    // DOM-events are not available for tagless components.
+    if (this.get(&#x27;isTagless&#x27;)) {
+      return;
+    }
+
+    // Events names example: domEventName = &#x27;dblclick&#x27;, but componentActionName = &#x27;doubleClick&#x27;.
+    // See https://guides.emberjs.com/v2.4.0/components/handling-events/.
+    let availableDomEvents = this.get(&#x27;_availableDomEvents&#x27;);
+    let $component = this.$();
+    let attachEventsActions = (domEventName, componentActionName) =&gt; {
+      this.attachEventHandler({
+        eventTarget: $component,
+        eventName: domEventName,
+        eventHandler: (...args) =&gt; {
+          let canSendAction = true;
+
+          // Trigger component&#x27;s inner action handler.
+          // (Check if action is defined in component to avoid assertion failed exception).
+          if (Ember.typeOf(this.get(&#x60;actions.${componentActionName}&#x60;)) === &#x27;function&#x27;) {
+            canSendAction = this.send(componentActionName, ...args) !== false;
+          }
+
+          // Trigger component&#x27;s outer action if inner action handler doesn&#x27;t return &#x27;false&#x27;.
+          if (canSendAction) {
+            this.sendAction(componentActionName, ...args);
+          }
+        }
+      });
+    };
+
+    for (let domEventName in availableDomEvents) {
+      if (!availableDomEvents.hasOwnProperty(domEventName)) {
+        break;
+      }
+
+      let componentActionName = availableDomEvents[domEventName];
+      if (Ember.typeOf(componentActionName) !== &#x27;string&#x27;) {
+        break;
+      }
+
+      // Attach actions logic for every available DOM-event.
+      attachEventsActions(domEventName, componentActionName);
+    }
+  },
+
+  /**
+    Executes some logic before every render.
+  */
+  willRender() {
+    this._super(...arguments);
+
+    // DOM-events are not available for tagless components.
+    if (this.get(&#x27;isTagless&#x27;)) {
+      return;
+    }
+
+    // Events names example: domEventName = &#x27;dblclick&#x27;, but componentActionName = &#x27;doubleClick&#x27;.
+    // See https://guides.emberjs.com/v2.4.0/components/handling-events/.
+    let availableDomEvents = this.get(&#x27;_availableDomEvents&#x27;);
+
+    // Remove component&#x27;s standard DOM-events handlers, because they are useless,
+    // they are replaced with component&#x27;s inner actions in &#x27;didInsertElement&#x27; hook.
+    // Ember adds them in every component&#x27;s render/rerender time, so we need to remove them each time,
+    // otherwise DOM-actions will be triggered twice when they happen.
+    for (let domEventName in availableDomEvents) {
+      if (!availableDomEvents.hasOwnProperty(domEventName)) {
+        break;
+      }
+
+      let componentActionName = availableDomEvents[domEventName];
+      if (Ember.typeOf(componentActionName) !== &#x27;string&#x27;) {
+        break;
+      }
+
+      this.set(componentActionName, undefined);
+      delete this[componentActionName];
+    }
+  },
+
+  /**
+    Cleans up component&#x27;s DOM-events related logic.
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    // DOM-events are not available for tagless components.
+    if (this.get(&#x27;isTagless&#x27;)) {
+      return;
+    }
+
+    this.detachAllEventHandlers();
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

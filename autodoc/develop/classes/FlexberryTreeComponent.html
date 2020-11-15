@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FlexberryTreeComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>FlexberryTreeComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                    <li><a href="&lt;a href=&quot;https://github.com/ciena-blueplanet/ember-block-slots#usage&quot;&gt;SlotsMixin&lt;/a&gt;.html">&lt;a href=&quot;https://github.com/ciena-blueplanet/ember-block-slots#usage&quot;&gt;SlotsMixin&lt;/a&gt;</a></li>
+                    <li><a href="RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+                    <li><a href="DomActionsMixin.html">DomActionsMixin</a></li>
+                    <li><a href="DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+                    <li><a href="DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+            </ul>
+        </div>
+
+        <div class="extends">
+            Extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_flexberry-tree.js.html#l43"><code>addon&#x2F;components&#x2F;flexberry-tree.js:43</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Flexberry tree component with <a href="http://semantic-ui.com/modules/accordion.html">Semantic UI accordion</a> style.
+Component must be used in combination with <a href="../classes/FlexberryTreenodeComponent.html" class="crosslink">flexberry-treenode component</a>,
+because it's only a wrapper for those tree nodes, which are placed on the same tree level.</p>
+<p>Usage:
+templates/my-form.hbs</p>
+<pre class="code prettyprint"><code class="language-handlebars"></code></pre>
+
+</div>
+
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__accordionPropertiesDidChange" data-tablink="_accordionPropertiesDidChange">_accordionPropertiesDidChange</a>
+
+                            </li>
+                            <li class="index-item method private inherited inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__actionHandlerIsDefined" data-tablink="_actionHandlerIsDefined">_actionHandlerIsDefined</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__addDynamicProperty" data-tablink="_addDynamicProperty">_addDynamicProperty</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__destroyAccordion" data-tablink="_destroyAccordion">_destroyAccordion</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__dynamicPropertiesDidChange" data-tablink="_dynamicPropertiesDidChange">_dynamicPropertiesDidChange</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__initializeAccordion" data-tablink="_initializeAccordion">_initializeAccordion</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__removeDynamicProperties" data-tablink="_removeDynamicProperties">_removeDynamicProperties</a>
+
+                            </li>
+                            <li class="index-item method private inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method__removeDynamicProperty" data-tablink="_removeDynamicProperty">_removeDynamicProperty</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_attachEventHandler" data-tablink="attachEventHandler">attachEventHandler</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_closeModalDialog" data-tablink="closeModalDialog">closeModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_createdModalDialog" data-tablink="createdModalDialog">createdModalDialog</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_detachAllEventHandlers" data-tablink="detachAllEventHandlers">detachAllEventHandlers</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_detachEventHandler" data-tablink="detachEventHandler">detachEventHandler</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_send" data-tablink="send">send</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__availableDomEvents" data-tablink="_availableDomEvents">_availableDomEvents</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__componentWrapperIsAvailable" data-tablink="_componentWrapperIsAvailable">_componentWrapperIsAvailable</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__dynamicActions" data-tablink="_dynamicActions">_dynamicActions</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__dynamicPropertiesMetadata" data-tablink="_dynamicPropertiesMetadata">_dynamicPropertiesMetadata</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__eventsMetadata" data-tablink="_eventsMetadata">_eventsMetadata</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasContent" data-tablink="_hasContent">_hasContent</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasFooter" data-tablink="_hasFooter">_hasFooter</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasHeader" data-tablink="_hasHeader">_hasHeader</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__hasNodes" data-tablink="_hasNodes">_hasNodes</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__isRoot" data-tablink="_isRoot">_isRoot</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__openedModalDialog" data-tablink="_openedModalDialog">_openedModalDialog</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__requiredActions" data-tablink="_requiredActions">_requiredActions</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_animateChildren" data-tablink="animateChildren">animateChildren</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_animationDuration" data-tablink="animationDuration">animationDuration</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNameBindings" data-tablink="classNameBindings">classNameBindings</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_classNames" data-tablink="classNames">classNames</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_collapsible" data-tablink="collapsible">collapsible</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicActions" data-tablink="dynamicActions">dynamicActions</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicProperties" data-tablink="dynamicProperties">dynamicProperties</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_exclusive" data-tablink="exclusive">exclusive</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_flexberryClassNames" data-tablink="flexberryClassNames">flexberryClassNames</a>
+
+                                    <span class="flag static">static</span>
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_isTagless" data-tablink="isTagless">isTagless</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_nodes" data-tablink="nodes">nodes</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_placeholder" data-tablink="placeholder">placeholder</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method__accordionPropertiesDidChange" class="method item private">
+                        <h3 class="name"><code>_accordionPropertiesDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l293"><code>addon&#x2F;components&#x2F;flexberry-tree.js:293</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Reinitializes <a href="http://semantic-ui.com/modules/accordion.html">Semantic UI accordion</a> on component's wrapping <div>
+                    when following component's accordion-related properties changed:
+                    {{crossLink "FlexberryTreeComponent/exclusive:property"}}'exclusive'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/collapsible:property"}}'collapsible'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/animateChildren:property"}}'animateChildren'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/duration:property"}}'duration'{{/crossLink}}</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__actionHandlerIsDefined" class="method item private inherited">
+                        <h3 class="name"><code>_actionHandlerIsDefined</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                            </span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/RequiredActionsMixin.html#method__actionHandlerIsDefined">
+                                    RequiredActionsMixin
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_mixins_dynamic-actions.js.html#l119"><code>addon&#x2F;mixins&#x2F;dynamic-actions.js:119</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Returns flag, indicating whether action handler is defined, for action with the specified name, or not.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Method options
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">actionName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Name of component's action for which handler's existence this method should check.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                                        Flag, indicating whether action handler is defined, for action with the specified name, or not.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method__addDynamicProperty" class="method item private inherited">
+                        <h3 class="name"><code>_addDynamicProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>propertyName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#method__addDynamicProperty">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l70"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:70</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Adds component's new dynamic property.
+                    Gets related value from {{#crossLink "DynamicPropertiesMixin:dynamicProperties:property"}}dynamic properties{{/crossLink}},
+                    and assignes it to related component's property, then attaches observer.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">propertyName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Name of dynamic property that must be added.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method__destroyAccordion" class="method item private">
+                        <h3 class="name"><code>_destroyAccordion</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l280"><code>addon&#x2F;components&#x2F;flexberry-tree.js:280</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Destroys <a href="http://semantic-ui.com/modules/accordion.html">Semantic UI accordion</a> on component's wrapping <div>.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__dynamicPropertiesDidChange" class="method item private inherited">
+                        <h3 class="name"><code>_dynamicPropertiesDidChange</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#method__dynamicPropertiesDidChange">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l205"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:205</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Observes & handles any changes in
+                    {{#crossLink "DynamicPropertiesMixin/dynamicProperties:property"}}'dynamicProperties'{{/crossLink}},
+                    assigns actual values to a component's related properties (including initialization moment).
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__initializeAccordion" class="method item private">
+                        <h3 class="name"><code>_initializeAccordion</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l257"><code>addon&#x2F;components&#x2F;flexberry-tree.js:257</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Initializes <a href="http://semantic-ui.com/modules/accordion.html">Semantic UI accordion</a> on component's wrapping <div>
+                    depending on following component's accordion-related properties:
+                    {{crossLink "FlexberryTreeComponent/exclusive:property"}}'exclusive'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/collapsible:property"}}'collapsible'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/animateChildren:property"}}'animateChildren'{{/crossLink}},
+                    {{crossLink "FlexberryTreeComponent/duration:property"}}'duration'{{/crossLink}}</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__removeDynamicProperties" class="method item private inherited">
+                        <h3 class="name"><code>_removeDynamicProperties</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#method__removeDynamicProperties">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l189"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:189</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Removes component's all previously added dynamic properties.
+                    Removes related component's properties & observers.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method__removeDynamicProperty" class="method item private inherited">
+                        <h3 class="name"><code>_removeDynamicProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>propertyName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#method__removeDynamicProperty">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l158"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:158</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Removes component's previously added dynamic property.
+                    Removes related component's property & observer.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">propertyName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Name of dynamic property that must be removed.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_attachEventHandler" class="method item inherited">
+                        <h3 class="name"><code>attachEventHandler</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_attachEventHandler">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l104"><code>addon&#x2F;mixins&#x2F;dom-actions.js:104</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Attaches event handler for a given event-target.
+                    Also remembers attached handlers and related event-targets for clean up logic
+                    which will be executed before component will be destroyed, so use this method instead of
+                    explicit calls to [jQuery.on method](http://api.jquery.com/on/) to avoid possible memory leaks.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Method options.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">eventTarget</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>DOM-element (<a href="http://api.jquery.com/Types/#jQuery">jQuery-object</a>)
+                    for which event-handler must be attached.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">eventName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Event name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">eventHandler</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Event handler.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_closeModalDialog" class="method item inherited">
+                        <h3 class="name"><code>closeModalDialog</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_closeModalDialog">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_colsconfig-dialog-controller.js.html#l42"><code>addon&#x2F;mixins&#x2F;colsconfig-dialog-controller.js:42</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Close current modal window if it exists.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_createdModalDialog" class="method item inherited">
+                        <h3 class="name"><code>createdModalDialog</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>modalDialog</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_createdModalDialog">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_colsconfig-dialog-controller.js.html#l24"><code>addon&#x2F;mixins&#x2F;colsconfig-dialog-controller.js:24</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles create modal window action.
+                    It saves created window to have opportunity to close it later.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">modalDialog</code>
+                                            <span class="type">JQuery</span>
+                    
+                    
+                                        <div class="param-description">
+                                            Created modal window.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_detachAllEventHandlers" class="method item inherited">
+                        <h3 class="name"><code>detachAllEventHandlers</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_detachAllEventHandlers">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l213"><code>addon&#x2F;mixins&#x2F;dom-actions.js:213</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Detaches all event-handlers remembered in metadata when event-handlers were attached through
+                    {{#crossLink "DomActionsMixin/attachEventHandler:method"}}'attachEventHandler' method {{/crossLink}}.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_detachEventHandler" class="method item inherited">
+                        <h3 class="name"><code>detachEventHandler</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_detachEventHandler">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l159"><code>addon&#x2F;mixins&#x2F;dom-actions.js:159</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Detaches event-handler from a given event-target.
+                    Also cleans up metadata remembered when event-handler was attached through
+                    {{#crossLink "DomActionsMixin/attachEventHandler:method"}}'attachEventHandler' method {{/crossLink}}.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Method options.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">eventTarget</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>DOM-element (<a href="http://api.jquery.com/Types/#jQuery">jQuery-object</a>)
+                    from which event-handler must be detached.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">eventName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Event name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">eventHandler</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Event handler.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_send" class="method item inherited">
+                        <h3 class="name"><code>send</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>actionName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>args</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">Any</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#method_send">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l254"><code>addon&#x2F;mixins&#x2F;dom-actions.js:254</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Overridden ['send' method](https://github.com/emberjs/ember.js/blob/v2.7.0/packages/ember-runtime/lib/mixins/action_handler.js#L145).
+                    Method logic still the same, but method now returns value returned by the action handler.
+                    
+                    <code>&#x60;</code>
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">actionName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Name of the action that must be triggered.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">args</code>
+                                            <span class="type"></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Arguments that must be passed to action.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">Any</span>:
+                                        Returns value returned by action handler.
+                                </div>
+                            </div>
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__availableDomEvents" class="property item private inherited">
+                        <h3 class="name"><code>_availableDomEvents</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#property__availableDomEvents">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l53"><code>addon&#x2F;mixins&#x2F;dom-actions.js:53</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Dictionary containing names of DOM-events available for component's wrapping DOM-element
+                    and component's actions names related to them.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__componentWrapperIsAvailable" class="property item private inherited">
+                        <h3 class="name"><code>_componentWrapperIsAvailable</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#property__componentWrapperIsAvailable">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l48"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:48</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component's wrapper DOM-element is available for select now.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__dynamicActions" class="property item private inherited">
+                        <h3 class="name"><code>_dynamicActions</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicActionsMixin.html#property__dynamicActions">DynamicActionsMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-actions.js.html#l64"><code>addon&#x2F;mixins&#x2F;dynamic-actions.js:64</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component's dynamic actions from
+                    {{#crossLink "DynamicActionsMixin:dynamicActions:property"}}'dynamicActions' property{{/crossLink}},
+                    mapped from array into flat [JSON-object](http://www.json.org/).
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__dynamicPropertiesMetadata" class="property item private inherited">
+                        <h3 class="name"><code>_dynamicPropertiesMetadata</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#property__dynamicPropertiesMetadata">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l57"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:57</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Array with objects containing names of already assigned
+                    {{#crossLink "DynamicPropertiesMixin:dynamicProperties:property"}}dynamic properties{{/crossLink}}
+                    and observer handlers related to them.
+                    Each object in array has following structure: { propertyName: '...', propertyObserverHandler: function() { ... } }.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__eventsMetadata" class="property item private inherited">
+                        <h3 class="name"><code>_eventsMetadata</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object[]</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#property__eventsMetadata">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_dom-actions.js.html#l69"><code>addon&#x2F;mixins&#x2F;dom-actions.js:69</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Array with objects containing selected event targets & handlers attached to them.
+                    Each object in array has following structure: {
+                      eventTarget: ...,
+                      attachedEventHandlers: {
+                        click: [function() {}, function() {}, ...],
+                        dblclick: [function() {}, function() {}, ...],
+                        ...
+                      }
+                    }.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property__hasContent" class="property item private">
+                        <h3 class="name"><code>_hasContent</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l137"><code>addon&#x2F;components&#x2F;flexberry-tree.js:137</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether some nested content is defined
+                    (some yield markup or {{#crossLink "FlexberryTreeComponent/nodes:property"}}'nodes'{{/childNodes}} are defined).</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__hasFooter" class="property item private">
+                        <h3 class="name"><code>_hasFooter</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l151"><code>addon&#x2F;components&#x2F;flexberry-tree.js:151</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether some nested content for footer is defined
+                    (some yield markup for 'footer').</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__hasHeader" class="property item private">
+                        <h3 class="name"><code>_hasHeader</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l123"><code>addon&#x2F;components&#x2F;flexberry-tree.js:123</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether some nested content for header is defined
+                    (some yield markup for 'header').</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__hasNodes" class="property item private">
+                        <h3 class="name"><code>_hasNodes</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l109"><code>addon&#x2F;components&#x2F;flexberry-tree.js:109</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether some {{#crossLink "FlexberryTreeComponent/nodes:property"}}tree 'nodes'{{/childNodes}} are defined.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__isRoot" class="property item private">
+                        <h3 class="name"><code>_isRoot</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l95"><code>addon&#x2F;components&#x2F;flexberry-tree.js:95</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether tree is placed on root level (hasn't parent nodes).</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__openedModalDialog" class="property item inherited">
+                        <h3 class="name"><code>_openedModalDialog</code></h3>
+                        <span class="type">JQuery</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DomActionsMixin.html#property__openedModalDialog">DomActionsMixin</a>:
+                            <a href="../files/addon_mixins_colsconfig-dialog-controller.js.html#l14"><code>addon&#x2F;mixins&#x2F;colsconfig-dialog-controller.js:14</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Current opened modal window.
+                        </div>
+                    
+                            <p><strong>Default:</strong> undefined</p>
+                    
+                    
+                    </div>
+                    <div id="property__requiredActions" class="property item inherited">
+                        <h3 class="name"><code>_requiredActions</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/RequiredActionsMixin.html#property__requiredActions">RequiredActionsMixin</a>:
+                            <a href="../files/addon_mixins_required-actions.js.html#l19"><code>addon&#x2F;mixins&#x2F;required-actions.js:19</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component's required actions names.
+                    For actions enumerated in this array an assertion exceptions will be thrown,
+                    if actions handlers are not defined for them.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_animateChildren" class="property item">
+                        <h3 class="name"><code>animateChildren</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l226"><code>addon&#x2F;components&#x2F;flexberry-tree.js:226</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether nested child nodes content opacity should be animated
+                    (if true, it may cause performance issues with many nested child nodes).</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_animationDuration" class="property item">
+                        <h3 class="name"><code>animationDuration</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l236"><code>addon&#x2F;components&#x2F;flexberry-tree.js:236</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Tree nodes expand/collapse animation duration in milliseconds.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> 350</p>
+                    
+                    
+                    </div>
+                    <div id="property_classNameBindings" class="property item">
+                        <h3 class="name"><code>classNameBindings</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l187"><code>addon&#x2F;components&#x2F;flexberry-tree.js:187</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's wrapping <div>
+                    <a href="https://emberjs.com/api/ember/release/classes/Component#property_classNameBindings">CSS-classes names bindings</a>.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;_isRoot:ui&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_classNames" class="property item">
+                        <h3 class="name"><code>classNames</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l171"><code>addon&#x2F;components&#x2F;flexberry-tree.js:171</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's wrapping <div> CSS-classes names.</p>
+                    <p>Any other CSS-class names can be added through component's 'class' property.</p>
+                    <pre class="code prettyprint"><code class="language-handlebars"></code></pre>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> [&#x27;flexberry-tree&#x27;, &#x27;accordion&#x27;]</p>
+                    
+                    
+                    </div>
+                    <div id="property_collapsible" class="property item">
+                        <h3 class="name"><code>collapsible</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l217"><code>addon&#x2F;components&#x2F;flexberry-tree.js:217</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether it is allowed for already expanded tree nodes to collapse.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicActions" class="property item inherited">
+                        <h3 class="name"><code>dynamicActions</code></h3>
+                        <span class="type"><a href="../classes/DynamicActionObject.html" class="crosslink">DynamicActionObject[]</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicActionsMixin.html#property_dynamicActions">DynamicActionsMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-actions.js.html#l105"><code>addon&#x2F;mixins&#x2F;dynamic-actions.js:105</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component's dynamic actions.
+                    If component consumes it's inner structure as [JSON-object](http://www.json.org/)
+                    or [Ember-object](https://emberjs.com/api/ember/release/classes/EmberObject)
+                    and there is no way to attach action handlers explicitly in hbs-markup,
+                    then you can define {{#crossLink "DynamicActionObject"}}dynamic actions{{/crossLink}}
+                    somewhere in code & pass defined array into this component's property.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicProperties" class="property item inherited">
+                        <h3 class="name"><code>dynamicProperties</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/DynamicPropertiesMixin.html#property_dynamicProperties">DynamicPropertiesMixin</a>:
+                            <a href="../files/addon_mixins_dynamic-properties.js.html#l38"><code>addon&#x2F;mixins&#x2F;dynamic-properties.js:38</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Object containing dynamic properties that must be assigned to
+                    component using {{#crossLink "DynamicPropertiesMixin"}}dynamic-properties mixin{{/crossLink}}.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_exclusive" class="property item">
+                        <h3 class="name"><code>exclusive</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l207"><code>addon&#x2F;components&#x2F;flexberry-tree.js:207</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether only one tree node can be expanded at the same time.
+                    If true, all expanded tree nodes will be automatically collapsed, on some other node expand.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_flexberryClassNames" class="property item">
+                        <h3 class="name"><code>flexberryClassNames</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                            <span class="flag static">static</span>
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l18"><code>addon&#x2F;components&#x2F;flexberry-tree.js:18</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's CSS-classes names.
+                    JSON-object containing string constants with CSS-classes names related to component's hbs-markup elements.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                            <h4>Sub-properties:</h4>
+                    
+                            <ul class="params-list">
+                                <li class="param">
+                                        <code class="param-name">prefix</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                    <div class="param-description">
+                                        <p>Component's CSS-class names prefix ('flexberry-tree').</p>
+                    
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name">wrapper</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                    <div class="param-description">
+                                        <p>Component's wrapping <div> CSS-class name ('flexberry-tree').</p>
+                    
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name">header</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                    <div class="param-description">
+                                        <p>Component's start toolbar CSS-class name ('flexberry-tree-header').</p>
+                    
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name">footer</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                    <div class="param-description">
+                                        <p>Component's end toolbar CSS-class name ('flexberry-tree-footer').</p>
+                    
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name">placeholder</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                    <div class="param-description">
+                                        <p>Component's placeholder CSS-class name ('flexberry-tree-placeholder').</p>
+                    
+                                    </div>
+                    
+                                </li>
+                            </ul>
+                    </div>
+                    <div id="property_isTagless" class="property item inherited">
+                        <h3 class="name"><code>isTagless</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/DynamicPropertiesMixin.html#property_isTagless">
+                                    DynamicPropertiesMixin
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_mixins_dom-actions.js.html#l87"><code>addon&#x2F;mixins&#x2F;dom-actions.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component is tagless or not
+                    (has empty [tagName](https://emberjs.com/api/ember/release/classes/Component#property_tagName) or not).
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_nodes" class="property item">
+                        <h3 class="name"><code>nodes</code></h3>
+                        <span class="type">FlexberryTreenodeObject</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l245"><code>addon&#x2F;components&#x2F;flexberry-tree.js:245</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Tree nodes.
+                    This property is optional and must be used when there are too many child nodes,
+                    and you don't want to define them explicitly in the .hbs markup,
+                    then you can define nodes array somewhere in code &amp; pass defined array to this component's property.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_placeholder" class="property item">
+                        <h3 class="name"><code>placeholder</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_flexberry-tree.js.html#l197"><code>addon&#x2F;components&#x2F;flexberry-tree.js:197</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Component's placeholder.
+                    Will be displayed if nested tree nodes are not defined.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-tree.placeholder&#x27;)</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

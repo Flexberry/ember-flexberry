@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/controllers/edit-form.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/controllers/edit-form.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import { getOwner } from &#x27;@ember/application&#x27;;
+import { deprecate } from &#x27;@ember/application/deprecations&#x27;;
+import { A, isArray } from &#x27;@ember/array&#x27;;
+import Controller, { inject as injectController } from &#x27;@ember/controller&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { get, computed } from &#x27;@ember/object&#x27;;
+import Evented from &#x27;@ember/object/evented&#x27;;
+import { inject as injectService} from &#x27;@ember/service&#x27;;
+import { isNone, isEmpty } from &#x27;@ember/utils&#x27;;
+
+import DS from &#x27;ember-data&#x27;;
+import ResultCollection from &#x27;ember-cp-validations/validations/result-collection&#x27;;
+import $ from &#x27;jquery&#x27;;
+import RSVP, { reject } from &#x27;rsvp&#x27;;
+
+import FlexberryLookupMixin from &#x27;../mixins/flexberry-lookup-controller&#x27;;
+import ErrorableControllerMixin from &#x27;../mixins/errorable-controller&#x27;;
+import FlexberryFileControllerMixin from &#x27;../mixins/flexberry-file-controller&#x27;;
+import needSaveCurrentAgregator from &#x27;../utils/need-save-current-agregator&#x27;;
+import getCurrentAgregator from &#x27;../utils/get-current-agregator&#x27;;
+import PaginatedControllerMixin from &#x27;../mixins/paginated-controller&#x27;;
+import SortableControllerMixin from &#x27;../mixins/sortable-controller&#x27;;
+import LimitedControllerMixin from &#x27;../mixins/limited-controller&#x27;;
+import FlexberryOlvToolbarMixin from &#x27;../mixins/olv-toolbar-controller&#x27;;
+import FlexberryObjectlistviewHierarchicalControllerMixin from &#x27;../mixins/flexberry-objectlistview-hierarchical-controller&#x27;;
+
+/**
+  Base controller for the Edit Forms.
+
+  This class re-exports to the application as &#x60;/controllers/edit-form&#x60;.
+  So, you can inherit from &#x60;./edit-form&#x60;, even if file &#x60;app/controllers/edit-form.js&#x60; is not presented in the application.
+
+  @example
+    &#x60;&#x60;&#x60;javascript
+    // app/controllers/employee.js
+    import EditFormController from &#x27;./edit-form&#x27;;
+    export default EditFormController.extend({
+    });
+    &#x60;&#x60;&#x60;
+
+    If you want to add some common logic on all Edit Forms, you can override &#x60;app/controllers/edit-form.js&#x60; as follows:
+    &#x60;&#x60;&#x60;javascript
+    // app/controllers/edit-form.js
+    import EditFormController from &#x27;ember-flexberry/controllers/edit-form&#x27;;
+    export default EditFormController.extend({
+    });
+    &#x60;&#x60;&#x60;
+
+  @class EditFormController
+  @extends &lt;a href=&quot;https://emberjs.com/api/ember/release/classes/Controller&quot;&gt;Controller&lt;/a&gt;
+  @uses &lt;a href=&quot;https://emberjs.com/api/ember/release/classes/Evented&quot;&gt;Evented&lt;/a&gt;
+  @uses FlexberryLookupMixin
+  @uses ErrorableControllerMixin
+  @uses FlexberryFileControllerMixin
+*/
+export default Controller.extend(
+Evented,
+FlexberryLookupMixin,
+ErrorableControllerMixin,
+FlexberryFileControllerMixin,
+PaginatedControllerMixin,
+SortableControllerMixin,
+LimitedControllerMixin,
+FlexberryOlvToolbarMixin,
+FlexberryObjectlistviewHierarchicalControllerMixin, {
+  /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration(&#x27;ember-cp-validations@validations/result-collection:main&#x27;);
+  }).readOnly(),
+
+  /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type &lt;a href=&quot;http://emberjs.com/api/classes/Ember.InjectedProperty.html&quot;&gt;Ember.InjectedProperty&lt;/a&gt;
+    @default Ember.inject.controller(&#x27;colsconfig-dialog&#x27;)
+  */
+  colsconfigController: injectController(&#x27;colsconfig-dialog&#x27;),
+
+  /**
+    Flag to enable return to agregator&#x27;s path if possible.
+
+    @property returnToAgregatorRoute
+    @type Boolean
+    @default false
+  */
+  returnToAgregatorRoute: false,
+
+  /**
+    Route name corresponding list form.
+
+    @property parentRoute
+    @type String
+  */
+  parentRoute: undefined,
+
+  /**
+    Parent route record ID.
+
+    @property parentRouteRecordId
+    @type String
+  */
+  parentRouteRecordId: undefined,
+
+  /**
+    Route name corresponding this edit form.
+
+    @property routeName
+    @type String
+  */
+  routeName: undefined,
+
+  /**
+    Indicates whether the current form is opened only for reading.
+
+    @property readonly
+    @type Boolean
+    @default false
+  */
+  readonly: false,
+
+  /**
+    Service for managing the state of the application.
+
+    @property appState
+    @type AppStateService
+  */
+  appState: injectService(),
+
+  /**
+    Readonly HTML attribute following to the &#x60;readonly&#x60; query param. According to the W3C standard, returns &#x27;readonly&#x27; if &#x60;readonly&#x60; is &#x60;true&#x60; and &#x60;undefined&#x60; otherwise.
+
+    TODO: Add unit test.
+
+    @property readonlyAttr
+    @type String|undefined
+    @default undefined
+    @readOnly
+  */
+  readonlyAttr: computed(&#x27;readonly&#x27;, function() {
+    return this.get(&#x27;readonly&#x27;) ? &#x27;readonly&#x27; : undefined;
+  }),
+
+  /**
+    Object with settings for modal window.
+
+    Structure object:
+    - **controllerName** - Controller name, default: &#x27;lookup-dialog&#x27;.
+    - **template** - Template name modal window, default: &#x27;lookup-dialog&#x27;.
+    - **contentTemplate** - Template name that rendering after loading data, default: &#x27;lookup-dialog-content&#x27;.
+    - **loaderTemplate** - Template name that will be visible while loading data, default: &#x27;loading&#x27;.
+
+    @property lookupSettings
+    @type Object
+  */
+  lookupSettings: undefined,
+
+  /**
+    If &#x60;true&#x60;, all details will be deleted along with the main model.
+
+    @property destroyHasManyRelationshipsOnModelDestroy
+    @type Boolean
+    @default false
+  */
+  destroyHasManyRelationshipsOnModelDestroy: false,
+
+  /**
+    Controller to show lookup modal window.
+
+    @property lookupController
+    @type Controller
+    @default LookupDialog
+  */
+  lookupController: injectController(&#x27;lookup-dialog&#x27;),
+
+  /**
+    Flag to cancel rollback of model on controller resetting.
+    Flag is set for interaction of agregator&#x27;s and detail&#x27;s routes.
+
+    @property modelNoRollBack
+    @type Boolean
+    @default false
+  */
+  modelNoRollBack: false,
+
+  /**
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
+
+    @property queryParams
+    @type Array
+    @default [&#x27;readonly&#x27;]
+  */
+  queryParams: [&#x27;readonly&#x27;],
+
+  /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
+  /**
+    Object with default developer user settings.
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default undefined
+  */
+  defaultDeveloperUserSettings: undefined,
+
+  /**
+    Reference to object to be validated.
+
+    @property validationObject
+    @type Any
+    @default model
+  */
+  validationObject: computed.deprecatingAlias(&#x27;validationModel&#x27;, {
+    id: &#x27;ember-flexberry.edit-form-controller.validation-object-property&#x27;,
+    until: &#x27;4.0.0&#x27;,
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: computed.alias(&#x27;model&#x27;),
+
+  actions: {
+    /**
+      Default action for button &#x27;Save&#x27;.
+      You can override this action to add custom logic.
+
+      @example
+        &#x60;&#x60;&#x60;javascript
+        // app/controllers/your-controller.js
+        ...
+        actions: {
+          ...
+          save() {
+            if (confirm(&#x27;You sure?&#x27;)) {
+              this.save();
+            }
+          }
+          ...
+        }
+        ...
+        onSaveActionFulfilled() {
+          alert(&#x27;Save successful!&#x27;);
+        }
+        ...
+        onSaveActionRejected() {
+          alert(&#x27;Save failed!&#x27;);
+        }
+        ...
+        &#x60;&#x60;&#x60;
+
+      @method actions.save
+    */
+    save() {
+      this.save();
+    },
+
+    /**
+      Default action for button &#x27;Save and close&#x27;.
+      You can override this action to add custom logic.
+
+      @example
+        &#x60;&#x60;&#x60;javascript
+        // app/controllers/your-controller.js
+        ...
+        actions: {
+          ...
+          saveAndClose() {
+            if (confirm(&#x27;You sure?&#x27;)) {
+              this.save(true);
+            }
+          }
+          ...
+        }
+        ...
+        onSaveActionFulfilled() {
+          alert(&#x27;Save successful!&#x27;);
+        }
+        ...
+        onSaveActionRejected() {
+          alert(&#x27;Save failed!&#x27;);
+        }
+        ...
+        &#x60;&#x60;&#x60;
+
+      @method actions.saveAndClose
+      @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process will be skipped after save.
+    */
+    saveAndClose(skipTransition) {
+      this.save(true, skipTransition);
+    },
+
+    /**
+      Default action for button &#x27;Delete&#x27;.
+      You can override this action to add custom logic.
+
+      @example
+        &#x60;&#x60;&#x60;javascript
+        // app/controllers/your-controller.js
+        ...
+        actions: {
+          ...
+          delete() {
+            if (confirm(&#x27;You sure?&#x27;)) {
+              this.delete(false);
+            }
+          }
+          ...
+        }
+        ...
+        onDeleteActionFulfilled() {
+          alert(&#x27;Successful delete!&#x27;);
+          this.close();
+        }
+        ...
+        onDeleteActionRejected() {
+          alert(&#x27;Failed delete!&#x27;);
+        }
+        ...
+        &#x60;&#x60;&#x60;
+
+      @method actions.delete
+      @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process will be skipped after delete.
+    */
+    delete(skipTransition) {
+      this.delete(skipTransition);
+    },
+
+    /**
+      Default action for button &#x27;Close&#x27;.
+      You can override this action to add custom logic.
+
+      @example
+        &#x60;&#x60;&#x60;javascript
+        // app/controllers/your-controller.js
+        ...
+        actions: {
+          ...
+          close() {
+            if (confirm(&#x27;You sure?&#x27;)) {
+              this.close();
+            }
+          }
+          ...
+        }
+        ...
+        &#x60;&#x60;&#x60;
+
+      @method actions.close
+      @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+    */
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
+    },
+
+    /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      assert(&#x60;Please specify &#x27;beforeDeleteAllRecords&#x27; action for &#x27;${this.componentName}&#x27; list compoenent in corresponding controller&#x60;);
+    },
+
+    /**
+      Sorting list by column.
+
+      @method actions.sortByColumn
+      @param {Object} column Column for sorting.
+    */
+    sortByColumn: function(column, componentName) {
+      this._super.apply(this, [column, componentName, &#x27;sorting&#x27;]);
+    },
+
+    /**
+      Add column into end list sorting.
+
+      @method actions.addColumnToSorting
+      @param {Object} column Column for sorting.
+    */
+    addColumnToSorting: function(column, componentName) {
+      this._super.apply(this, [column, componentName, &#x27;sorting&#x27;]);
+    },
+  },
+
+  init() {
+    this._super(...arguments);
+    this.set(&#x27;lookupSettings&#x27;, {
+      controllerName: &#x27;lookup-dialog&#x27;,
+      template: &#x27;lookup-dialog&#x27;,
+      contentTemplate: &#x27;lookup-dialog-content&#x27;,
+      loaderTemplate: &#x27;loading&#x27;
+    });
+
+    this.set(&#x27;lookupMultiGESettings&#x27;, {
+      controllerName: &#x27;lookup-dialog&#x27;,
+      template: &#x27;lookup-dialog&#x27;,
+      contentTemplate: &#x27;ge-multi-lookup-dialog-content&#x27;,
+      loaderTemplate: &#x27;loading&#x27;
+    });
+  },
+
+  /**
+    Runs validation on {{#crossLink &quot;EditFormController/validationObject:property&quot;}}{{/crossLink}} and returns promise.
+    Promise resolved if validation successful or rejected if validation failed.
+    Promise always settled with [ResultCollection](http://offirgolan.github.io/ember-cp-validations/docs/classes/ResultCollection.html) object.
+
+    @method validate
+    @return {RSVP.Promise}
+  */
+  validate() {
+    Ember.deprecate(&#x60;Use method &#x27;validateModel&#x27; instead.&#x60;, false, {
+      id: &#x27;ember-flexberry.edit-form-controller.validate-method&#x27;,
+      until: &#x27;4.0.0&#x27;,
+    });
+
+    return this.validateModel();
+  },
+
+  /**
+   * Runs validation on {{#crossLink &quot;EditFormController/validationModel:property&quot;}}{{/crossLink}} and returns promise.
+   * Promise resolved if validation successful or rejected if validation failed.
+   *
+   * @returns {Promise}
+   */
+  validateModel() {
+    const validationModel = this.get(&#x27;validationModel&#x27;);
+    if (validationModel) {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) =&gt; {
+        if (validations instanceof ResultCollection &amp;&amp; validations.get(&#x27;isInvalid&#x27;)) {
+          this.get(&#x27;appState&#x27;).validationShow();
+
+          return RSVP.reject(validations);
+        }
+
+        return RSVP.resolve();
+      });
+    }
+
+    return RSVP.resolve();
+  },
+
+  /**
+    Save object.
+
+    @method save
+    @param {Boolean} close If &#x60;true&#x60;, then save and close.
+    @param {Boolean} skipTransition If &#x60;true&#x60;, then transition after save process will be skipped.
+    @return {Promise}
+  */
+  save(close, skipTransition) {
+    this.send(&#x27;dismissErrorMessages&#x27;);
+
+    this.onSaveActionStarted();
+
+    return this.validateModel().then(() =&gt; {
+      this.get(&#x27;appState&#x27;).loading();
+
+      const afterSaveModelFunction = () =&gt; {
+        this.get(&#x27;appState&#x27;).success();
+        this.onSaveActionFulfilled();
+        let isModal = this.get(&#x27;isModal&#x27;);
+        if (close) {
+          this.get(&#x27;appState&#x27;).reset();
+          this.close(skipTransition);
+        } else if (!skipTransition &amp;&amp; !isModal) {
+          const routeName = this.get(&#x27;routeName&#x27;);
+          if (routeName.indexOf(&#x27;.new&#x27;) &gt; 0) {
+            const qpars = {};
+            const queryParams = this.get(&#x27;queryParams&#x27;);
+            queryParams.forEach(function(item) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            transitionQuery.queryParams.recordAdded = true;
+            transitionQuery.queryParams.parentRoute = this.get(&#x27;parentRoute&#x27;);
+            transitionQuery.queryParams.parentRouteRecordId = this.get(&#x27;parentRouteRecordId&#x27;);
+
+            // Refresh form model after save. For batch update.
+            const store = this.get(&#x27;store&#x27;);
+            const modelName = this.get(&#x27;modelProjection&#x27;).modelName;
+            const modelId = this.get(&#x27;model.id&#x27;);
+            const modelAfterSaveRefreshed = store.peekRecord(modelName , modelId);
+
+            this.transitionToRoute(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
+          }
+        }
+      };
+
+      return this.saveModel().then(afterSaveModelFunction).catch((errorData) =&gt; {
+        this.get(&#x27;appState&#x27;).error();
+        this.onSaveActionRejected(errorData);
+        return reject(errorData);
+      }).finally((data) =&gt; {
+        this.onSaveActionAlways(data);
+      });
+    }).catch((errorData) =&gt; {
+      this.get(&#x27;appState&#x27;).error();
+      this.onSaveActionRejected(errorData);
+      return reject(errorData);
+    });
+  },
+
+  /**
+    The default save model logic implementation.
+
+    @method saveModel
+    @return {Promise}
+  */
+  saveModel() {
+    const model = this.get(&#x27;model&#x27;);
+
+    // This is possible when using offline mode.
+    const agragatorModel = getCurrentAgregator.call(this);
+    if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+      return model.save().then(() =&gt; this._saveHasManyRelationships(model)).then((result) =&gt; {
+        const errors = A(result || []).filterBy(&#x27;state&#x27;, &#x27;rejected&#x27;);
+        if (!isEmpty(errors)) {
+          return reject(errors);
+        }
+
+        return agragatorModel.save();
+      });
+    } else {
+      const unsavedModels = this._getModelWithHasMany(model).filterBy(&#x27;hasDirtyAttributes&#x27;);
+      if ((unsavedModels.length === 1 &amp;&amp; unsavedModels[0] !== model) || unsavedModels.length &gt; 1) {
+        return this.get(&#x27;store&#x27;).batchUpdate(unsavedModels);
+      }
+
+      return model.save();
+    }
+  },
+
+  /**
+    Delete object, if successful transition to parent route.
+
+    @method delete
+    @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process will be skipped after delete.
+    @return {Promise}
+  */
+  delete(skipTransition) {
+    this.send(&#x27;dismissErrorMessages&#x27;);
+
+    this.onDeleteActionStarted();
+    this.get(&#x27;appState&#x27;).loading();
+
+    let model = this.get(&#x27;model&#x27;);
+    let deletePromise = null;
+    let deleteOperation = () =&gt; {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return agragatorModel.save().then(() =&gt; {
+          this.onDeleteActionFulfilled(skipTransition);
+        });
+      } else {
+        this.onDeleteActionFulfilled(skipTransition);
+      }
+    };
+
+    if (this.get(&#x27;destroyHasManyRelationshipsOnModelDestroy&#x27;)) {
+      deletePromise = this.destroyHasManyRelationships(model).then(() =&gt; {
+        return model.destroyRecord().then(deleteOperation);
+      });
+    } else {
+      deletePromise = model.destroyRecord().then(deleteOperation);
+    }
+
+    deletePromise.catch((errorData) =&gt; {
+      model.rollbackAll();
+      this.get(&#x27;appState&#x27;).error();
+      this.onDeleteActionRejected(errorData);
+    }).finally((data) =&gt; {
+      this.onDeleteActionAlways(data);
+    });
+
+    return deletePromise;
+  },
+
+  /**
+    Сlose edit form and transition to parent route.
+
+    @method close
+    @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+  */
+  close(skipTransition, rollBackModel) {
+    this.get(&#x27;appState&#x27;).reset();
+    this.onCloseActionStarted();
+    let isModal = this.get(&#x27;isModal&#x27;);
+    let modalController = this.get(&#x27;modalController&#x27;);
+    if (isModal &amp;&amp; !isNone(modalController)) {
+      modalController.send(&#x27;onEditRecordDialogClosing&#x27;);
+    } else {
+      if (!skipTransition) {
+        this.transitionToParentRoute(skipTransition, rollBackModel);
+      }
+    }
+  },
+
+  /**
+    This method will be invoked before save operation will be called.
+    Override this method to add some custom logic on save operation start.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onSaveActionStarted() {
+        alert(&#x27;Save operation started!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onSaveActionStarted.
+  */
+  onSaveActionStarted() {
+  },
+
+  /**
+    This method will be invoked when save operation successfully completed.
+    Override this method to add some custom logic on save operation success.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onSaveActionFulfilled() {
+        alert(&#x27;Save operation succeed!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onSaveActionFulfilled.
+  */
+  onSaveActionFulfilled() {
+  },
+
+  /**
+    This method will be invoked when save operation completed, but failed.
+    Override this method to add some custom logic on save operation fail.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onSaveActionRejected() {
+        alert(&#x27;Save operation failed!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onSaveActionRejected.
+    @param {Object} errorData Data about save operation fail.
+  */
+  onSaveActionRejected(errorData) {
+    $(&#x27;.ui.form .full.height&#x27;).scrollTop(0);
+    if (!(errorData instanceof ResultCollection) &amp;&amp; !(errorData instanceof DS.Errors)) {
+      this.send(&#x27;handleError&#x27;, errorData);
+    }
+  },
+
+  /**
+    This method will be invoked always when save operation completed,
+    regardless of save promise&#x27;s state (was it fulfilled or rejected).
+    Override this method to add some custom logic on save operation completion.
+
+    @example
+      &#x60;&#x60;&#x60;js
+      onSaveActionAlways(data) {
+        alert(&#x27;Save operation completed!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  /* eslint-disable no-unused-vars */
+  onSaveActionAlways(data) {
+  },
+  /* eslint-enable no-unused-vars */
+
+  /**
+    This method will be invoked before delete operation will be called.
+    Override this method to add custom logic on delete operation start.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onDeleteActionStarted() {
+        alert(&#x27;Delete operation started!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onDeleteActionStarted.
+  */
+  onDeleteActionStarted() {
+  },
+
+  /**
+    This method will be invoked when delete operation successfully completed.
+    Override this method to add some custom logic on delete operation success.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onDeleteActionFulfilled() {
+        alert(&#x27;Delete operation succeed!&#x27;);
+        this.close(false);
+      }
+      &#x60;&#x60;&#x60;
+    @method onDeleteActionFulfilled.
+    @param {Boolean} skipTransition If &#x60;true&#x60;, then transition during close form process (default behavior) will be skipped.
+  */
+  onDeleteActionFulfilled(skipTransition) {
+    this.close(skipTransition);
+  },
+
+  /**
+    This method will be invoked when delete operation completed, but failed.
+    Override this method to add some custom logic on delete operation fail.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onDeleteActionRejected() {
+        alert(&#x27;Delete operation failed!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onDeleteActionRejected.
+    @param {Object} errorData Data about delete operation fail.
+  */
+  onDeleteActionRejected(errorData) {
+    this.send(&#x27;error&#x27;, errorData);
+  },
+
+  /**
+    This method will be invoked always when delete operation completed,
+    regardless of save promise&#x27;s state (was it fulfilled or rejected).
+    Override this method to add some custom logic on delete operation completion.
+
+    @example
+      &#x60;&#x60;&#x60;js
+      onDeleteActionAlways(data) {
+        alert(&#x27;Delete operation completed!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  /* eslint-disable no-unused-vars */
+  onDeleteActionAlways(data) {
+  },
+  /* eslint-enable no-unused-vars */
+
+  /**
+    This method will be invoked before close method will be called.
+    Override this method to add custom logic on close method start.
+
+    @example
+      &#x60;&#x60;&#x60;javascript
+      onCloseActionStarted() {
+        alert(&#x27;Form will be closed right now!&#x27;);
+      }
+      &#x60;&#x60;&#x60;
+    @method onDeleteActionStarted.
+  */
+  onCloseActionStarted() {
+  },
+
+  /**
+    Method transition to parent route (corresponding list form).
+
+    @method transitionToParentRoute
+    @param {Boolean} skipTransition If &#x60;true&#x60;, then transition will be skipped.
+  */
+  transitionToParentRoute(skipTransition) {
+    if (!skipTransition) {
+      // TODO: нужно учитывать пэйджинг.
+      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+      let parentRoute = this.get(&#x27;parentRoute&#x27;);
+      assert(&#x27;Parent route must be defined.&#x27;, parentRoute);
+      let parentRouteRecordId = this.get(&#x27;parentRouteRecordId&#x27;);
+      if (isNone(parentRouteRecordId)) {
+        this.transitionToRoute(parentRoute);
+      } else {
+        this.transitionToRoute(parentRoute, parentRouteRecordId);
+      }
+    }
+  },
+
+  /**
+    Method to get type and attributes of component, which will be embeded in object-list-view cell.
+
+    @method getCellComponent
+    @param {Object} attr Attribute of projection property related to current table cell.
+    @param {String} bindingPath Path to model property related to current table cell.
+    @param {DS.Model} modelClass Model class of data record related to current table row.
+    @return {Object} Object containing name &amp; properties of component, which will be used to render current table cell ({ componentName: &#x27;my-component&#x27;,  componentProperties: { ... } }).
+  */
+  getCellComponent(attr, bindingPath, modelClass) {
+    let cellComponent = {
+      componentName: &#x27;flexberry-textbox&#x27;,
+      componentProperties: null
+    };
+
+    if (attr.kind === &#x27;belongsTo&#x27;) {
+      cellComponent.componentName = &#x27;flexberry-lookup&#x27;;
+      return cellComponent;
+    }
+
+    let modelAttr = !isNone(modelClass) ? get(modelClass, &#x27;attributes&#x27;).get(bindingPath) : null;
+    if (!(attr.kind === &#x27;attr&#x27; &amp;&amp; modelAttr &amp;&amp; modelAttr.type)) {
+      return cellComponent;
+    }
+
+    let modelAttrOptions = get(modelAttr, &#x27;options&#x27;);
+
+    // Handle order attributes (they must be readonly).
+    if (modelAttrOptions &amp;&amp; modelAttrOptions.isOrderAttribute) {
+      cellComponent.componentName = undefined;
+    }
+
+    switch (modelAttr.type) {
+      case &#x27;string&#x27;:
+      case &#x27;number&#x27;:
+        break;
+      case &#x27;boolean&#x27;: {
+        cellComponent.componentName = &#x27;flexberry-checkbox&#x27;;
+        break;
+      }
+
+      case &#x27;date&#x27;: {
+        cellComponent.componentName = &#x27;flexberry-simpledatetime&#x27;;
+        cellComponent.componentProperties = { type: &#x27;date&#x27; };
+        break;
+      }
+
+      case &#x27;file&#x27;: {
+        cellComponent.componentName = &#x27;flexberry-file&#x27;;
+        cellComponent.componentProperties = { inputClass: &#x27;fluid&#x27; };
+        break;
+      }
+
+      default: {
+
+        // Current cell type is possibly custom transform.
+        let transformInstance = getOwner(this).lookup(&#x27;transform:&#x27; + modelAttr.type);
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+        // Handle enums (extended from transforms/flexberry-enum.js).
+        if (transformClass &amp;&amp; transformClass.isEnum) {
+          cellComponent.componentName = &#x27;flexberry-dropdown&#x27;;
+          cellComponent.componentProperties = {
+            items: transformInstance.get(&#x27;captions&#x27;),
+            class: &#x27;compact fluid ui dropdown flexberry-dropdown selection&#x27;
+          };
+        }
+
+        break;
+      }
+    }
+
+    return cellComponent;
+  },
+
+  /**
+    Rollback dirty hasMany relationships in the &#x60;model&#x60; recursively.
+    This method invokes by &#x60;resetController&#x60; in the &#x60;edit-form&#x60; route.
+
+    @method rollbackHasManyRelationships
+    @param {DS.Model} model Record with hasMany relationships.
+    @deprecated Use &#x60;rollbackHasMany&#x60; from model.
+  */
+  rollbackHasManyRelationships(model) {
+    deprecate(&#x60;This method deprecated, use &#x27;rollbackHasMany&#x27; from model.&#x60;);
+    model.rollbackHasMany();
+  },
+
+  /**
+    Rollback current model.
+    @method rollbackAll
+  */
+  rollbackAll() {
+    this.get(&#x27;model&#x27;).rollbackAll();
+  },
+
+  /**
+    Service that lets interact between agregator&#x27;s and detail&#x27;s form.
+
+    @property flexberryDetailInteractionService
+    @type Service
+    @readOnly
+    @private
+  */
+  _flexberryDetailInteractionService: injectService(&#x27;detail-interaction&#x27;),
+
+  /**
+    Save dirty hasMany relationships in the &#x60;model&#x60; recursively.
+    This method invokes by &#x60;save&#x60; method.
+
+    @method _saveHasManyRelationships
+    @param {DS.Model} model Record with hasMany relationships.
+    @return {Promise} A promise that will be resolved to array of saved records.
+    @private
+  */
+  _saveHasManyRelationships(model) {
+    let promises = A();
+    model.eachRelationship((name, desc) =&gt; {
+      if (desc.kind === &#x27;hasMany&#x27;) {
+        model.get(name).filterBy(&#x27;hasDirtyAttributes&#x27;, true).forEach((record) =&gt; {
+          let promise = record.save().then((record) =&gt; {
+            return this._saveHasManyRelationships(record).then((result) =&gt; {
+              if (result &amp;&amp; isArray(result) &amp;&amp; result.length &gt; 0) {
+                let arrayWrapper = A();
+                arrayWrapper.addObjects(result);
+                let errors = arrayWrapper.filterBy(&#x27;state&#x27;, &#x27;rejected&#x27;);
+                return errors.length &gt; 0 ? RSVP.reject(errors) : record;
+              } else {
+                return record;
+              }
+            });
+          });
+
+          promises.pushObject(promise);
+        });
+      }
+    });
+
+    return RSVP.allSettled(promises);
+  },
+
+  /**
+    Returns an array with the model and all its &#x60;hasMany&#x60; relationships, obtained recursively, for each model.
+
+    @method _getModelWithHasMany
+    @param {DS.Model} model The object model.
+    @return {Ember.NativeArray} An array with the model and all its &#x60;hasMany&#x60; relationships.
+  */
+  _getModelWithHasMany(model) {
+    const models = A([model]);
+
+    model.eachRelationship((name, desc) =&gt; {
+      if (desc.kind === &#x27;hasMany&#x27;) {
+        const hasMany = model.get(name);
+        models.addObjects(hasMany);
+        hasMany.map(this._getModelWithHasMany, this).forEach((hasMany) =&gt; {
+          models.addObjects(hasMany);
+        });
+      }
+    });
+
+    return models;
+  },
+
+  /**
+    Destroy (delete and save) all hasMany relationships in the &#x60;model&#x60; recursively.
+    This method invokes by &#x60;delete&#x60; method.
+
+    @method _destroyHasManyRelationships
+    @param {DS.Model} model Record with hasMany relationships.
+    @return {Promise} A promise that will be resolved to array of destroyed records.
+  */
+  _destroyHasManyRelationships(model) {
+    let promises = A();
+    model.eachRelationship((name, desc) =&gt; {
+      if (desc.kind === &#x27;hasMany&#x27;) {
+        model.get(name).forEach((record) =&gt; {
+          let promise = this._destroyHasManyRelationships(record).then(() =&gt; {
+            return record.destroyRecord();
+          });
+
+          promises.pushObject(promise);
+        });
+      }
+    });
+
+    return RSVP.allSettled(promises);
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

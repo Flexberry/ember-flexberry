@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/controllers/lookup-dialog.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/controllers/lookup-dialog.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import { inject as service } from &#x27;@ember/service&#x27;;
+import { isBlank } from &#x27;@ember/utils&#x27;;
+import { deprecate } from &#x27;@ember/debug&#x27;;
+import { observer, get } from &#x27;@ember/object&#x27;;
+import { scheduleOnce } from &#x27;@ember/runloop&#x27;;
+import ListFormController from &#x27;../controllers/list-form&#x27;;
+import SortableRouteMixin from &#x27;../mixins/sortable-route&#x27;;
+import PredicateFromFiltersMixin from &#x27;../mixins/predicate-from-filters&#x27;;
+import deserializeSortingParam from &#x27;../utils/deserialize-sorting-param&#x27;;
+
+/**
+  Controller to support a modal windows in FlexberryLookup component.
+
+  @class LookupDialogController
+  @extends ListFormController
+  @uses SortableRouteMixin
+*/
+export default ListFormController.extend(SortableRouteMixin, PredicateFromFiltersMixin, {
+  /**
+    Current open a modal window.
+
+    @property _openedModalDialog
+    @type JQuery
+    @private
+  */
+  _openedModalDialog: undefined,
+
+  /**
+    Title for modal window.
+
+    @property title
+    @type String
+  */
+  title: undefined,
+
+  /**
+    Flag which indicates that several rows were selected.
+    Shows whether multiselect in groupedit is available.
+  */
+  isPullUpActive: false,
+
+  /**
+    Current lookup selected record.
+    It is used to highlight selected record.
+
+    @property currentLookupRow
+    @type DS.Model
+  */
+  currentLookupRow: undefined,
+
+  /**
+    Set of properties to set for list commponent.
+
+    @property customPropertiesData
+    @type Object
+  */
+  customPropertiesData: undefined,
+
+  /**
+    Type of current loaded data.
+
+    @property modelType
+    @type String
+  */
+  modelType: undefined,
+
+  /**
+    Name of projection data were loaded by.
+
+    @property projectionName
+    @type String
+  */
+  projectionName: undefined,
+
+  /**
+    Predicate to limit loaded data by.
+
+    @property predicate
+    @type BasePredicate
+  */
+  predicate: undefined,
+
+  /**
+    Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
+
+    @property reloadDataHandler
+    @type Function
+  */
+  reloadDataHandler: undefined,
+
+  /**
+    Context for handler of data reloading call.
+
+    @property reloadContext
+    @type Object
+    @default undefined
+  */
+  reloadContext: undefined,
+
+  /**
+    Flag indicates whether to observe query parameters or they are not still initiated..
+
+    @property reloadObserverIsActive
+    @type Boolean
+    @default false
+  */
+  reloadObserverIsActive: false,
+
+  /**
+    Flag indicates whether to show hierarchical button if hierarchy is available.
+
+    @property disableHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  disableHierarchicalMode: false,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: service(&#x27;lookup-events&#x27;),
+
+  init() {
+    this._super(...arguments);
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvRowSelected&#x27;, this, this._rowSelected);
+  },
+
+  willDestroy() {
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvRowSelected&#x27;, this, this._rowSelected);
+
+    this._super(...arguments);
+  },
+
+  _rowSelected() {
+    const multi = this.get(&#x27;objectlistviewEventsService&#x27;).getMultiSelectedRecords(this.get(&#x27;folvComponentName&#x27;));
+    let isPullUpActive = multi &amp;&amp; multi.size;
+    this.set(&#x27;isPullUpActive&#x27;, isPullUpActive);
+  },
+
+  actions: {
+    /**
+      Handlers OLV row click, Save selected row to object master property and close modal window.
+
+      @method actions.objectListViewRowClick
+      @param {Object} record Selected row.
+    */
+    objectListViewRowClick(record) {
+      this._selectMaster(record);
+      this.closeModalDialog();
+    },
+
+    /**
+      Handlers create modal window action. Save created window, to have opportunity to close it later.
+
+      @method actions.createdModalDialog
+      @param {JQuery} modalDialog Created modal window.
+    */
+    createdModalDialog(modalDialog) {
+      this.set(&#x27;_openedModalDialog&#x27;, modalDialog);
+      this.get(&#x27;lookupEventsService&#x27;).lookupDialogOnVisibleTrigger(this.get(&#x27;componentName&#x27;), modalDialog);
+    },
+
+    removeModalDialog() {
+      scheduleOnce(&#x27;afterRender&#x27;, () =&gt; this.get(&#x27;objectlistviewEventsService&#x27;).clearMultiSelectedRecords());
+      return true;
+    },
+
+    pullUpLookupValues() {
+      const currentLookupRow = this.get(&#x27;currentLookupRow&#x27;);
+      let selected = this.get(&#x27;objectlistviewEventsService&#x27;).getMultiSelectedRecords(this.get(&#x27;folvComponentName&#x27;));
+      const contextModel = this.get(&#x27;reloadContext.model&#x27;);
+      const lookupModelName = this.get(&#x27;saveTo.model.constructor.modelName&#x27;);
+      const relName = get(contextModel.constructor, &#x27;relationships&#x27;).get(lookupModelName)[0].name;
+      let detail = contextModel.get(relName);
+      if (selected) {
+        if (currentLookupRow) {
+          selected.forEach(({ data }) =&gt; detail.pushObject(this.store.createRecord(lookupModelName, {
+            [this.saveTo.propName]: data
+          })));
+        } else {
+          let rowValueToUpdate = [];
+          selected.forEach(({ data }) =&gt; rowValueToUpdate.push(data) );
+          this._selectMaster(rowValueToUpdate[0])
+
+          for (let i = 1; i &lt; rowValueToUpdate.length; i++) {
+            detail.pushObject(this.store.createRecord(lookupModelName, {
+              [this.saveTo.propName]: rowValueToUpdate[i]
+            }))
+          }
+        }
+      }
+  
+      this.get(&#x27;objectlistviewEventsService&#x27;).clearMultiSelectedRecords();
+      this._closeModalDialog();
+    },
+
+    /**
+      Handlers correcponding route&#x27;s willTransition action.
+      It closes modal window if it is opened (if Ember uses hash location type, modal window won&#x27;t be closed automatically).
+
+      @method actions.routeWillTransition
+    */
+    routeWillTransition() {
+      this._closeModalDialog();
+    },
+
+    /**
+      Save filters and refresh list.
+
+      @method actions.applyFilters
+      @param {Object} filters
+    */
+    applyFilters(filters) {
+      this.set(&#x27;filters&#x27;, filters);
+      this.send(&#x27;refreshList&#x27;);
+    },
+
+    /**
+      Reset filters and refresh list.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      this.set(&#x27;filters&#x27;, null);
+      this.send(&#x27;refreshList&#x27;);
+    },
+
+    /**
+      Refresh list with actual parameters.
+
+      @method actions.refreshList
+    */
+    refreshList() {
+      let reloadDataHandler = this.get(&#x27;reloadDataHandler&#x27;);
+      if (!reloadDataHandler) {
+        throw new Error(&#x27;No reload handler was defined.&#x27;);
+      }
+
+      let sorting = deserializeSortingParam(this.get(&#x27;sort&#x27;));
+      let reloadData = {
+        relatedToType: this.get(&#x27;modelType&#x27;),
+        projectionName: this.get(&#x27;projectionName&#x27;),
+
+        perPage: this.get(&#x27;perPage&#x27;),
+        page: this.get(&#x27;page&#x27;),
+        sorting: sorting,
+        filters: this._filtersPredicate(),
+        filter: this.get(&#x27;filter&#x27;),
+        filterCondition: this.get(&#x27;filterCondition&#x27;),
+        filterProjectionName: this.get(&#x27;filterProjectionName&#x27;),
+        predicate: this.get(&#x27;predicate&#x27;),
+        hierarchicalAttribute: this.get(&#x27;hierarchicalAttribute&#x27;),
+        hierarchyPaging: this.get(&#x27;hierarchyPaging&#x27;),
+
+        title: this.get(&#x27;title&#x27;),
+        saveTo: this.get(&#x27;saveTo&#x27;),
+        currentLookupRow: this.get(&#x27;currentLookupRow&#x27;),
+        customPropertiesData: this.get(&#x27;customPropertiesData&#x27;),
+        componentName: this.get(&#x27;componentName&#x27;),
+        folvComponentName: this.get(&#x27;folvComponentName&#x27;),
+        modalDialogSettings: {
+          lookupSettings: this.get(&#x27;modalDialogSettings.lookupSettings&#x27;),
+        }
+      };
+
+      if (reloadData.customPropertiesData) {
+        reloadData.customPropertiesData.inHierarchicalMode = this.get(&#x27;inHierarchicalMode&#x27;);
+      }
+
+      let folvComponentName = this.get(&#x27;folvComponentName&#x27;);
+      if (folvComponentName) {
+        let userSettingsParams = {
+          sort: this.get(&#x27;sort&#x27;),
+        };
+
+        let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+        userSettingsService.setCurrentParams(folvComponentName, userSettingsParams);
+      }
+
+      reloadDataHandler(this.get(&#x27;reloadContext&#x27;), reloadData);
+    },
+
+    /**
+      Redirect actions into route.
+
+      @method actions.loadRecords
+      @param {String} id Record ID.
+      @param {ObjectListViewRowComponent} target Instance of {{#crossLink &quot;ObjectListViewRowComponent&quot;}}{{/crossLink}}.
+      @param {String} property Property name into {{#crossLink &quot;ObjectListViewRowComponent&quot;}}{{/crossLink}}.
+      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
+    */
+    loadRecords(id, target, property, firstRunMode) {
+      let params = {};
+      params.hierarchicalAttribute = this.get(&#x27;hierarchicalAttribute&#x27;);
+      params.modelName = this.get(&#x27;customPropertiesData.modelName&#x27;);
+      params.projectionName = this.get(&#x27;customPropertiesData.modelProjection&#x27;);
+      this.send(&#x27;loadRecordsById&#x27;, id, target, property, firstRunMode, params);
+    },
+  },
+
+  /**
+    It observes query parameters changing.
+    If query parameter (filter, current page, etc.) is changed then displayed data are reloaded.
+
+    @method queryParametersChanged
+  */
+  queryParametersChanged: observer(&#x27;filter&#x27;, &#x27;page&#x27;, &#x27;perPage&#x27;, &#x27;sort&#x27;, function() {
+    if (this.get(&#x27;reloadObserverIsActive&#x27;)) {
+      this.send(&#x27;refreshList&#x27;);
+    }
+  }),
+
+  /**
+    It clears current controller.
+    It has to be done before each use.
+
+    @method clear
+    @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
+  */
+  clear: function (initialClear) {
+    this.set(&#x27;reloadObserverIsActive&#x27;, false);
+
+    if (initialClear) {
+      this.set(&#x27;_openedModalDialog&#x27;, undefined);
+      this.set(&#x27;modelProjection&#x27;, undefined);
+      this.set(&#x27;reloadContext&#x27;, undefined);
+      this.set(&#x27;reloadDataHandler&#x27;, undefined);
+
+      this.set(&#x27;perPage&#x27;, undefined);
+      this.set(&#x27;page&#x27;, undefined);
+      this.set(&#x27;sort&#x27;, undefined);
+      this.set(&#x27;filters&#x27;, undefined);
+      this.set(&#x27;filter&#x27;, undefined);
+      this.set(&#x27;filterProjectionName&#x27;, undefined);
+      this.set(&#x27;filterCondition&#x27;, undefined);
+      this.set(&#x27;predicate&#x27;, undefined);
+
+      this.set(&#x27;modalDialogSettings&#x27;, undefined);
+    }
+
+    this.set(&#x27;saveTo&#x27;, undefined);
+    this.set(&#x27;currentLookupRow&#x27;, undefined);
+    this.set(&#x27;customPropertiesData&#x27;, undefined);
+    this.set(&#x27;modelType&#x27;, undefined);
+    this.set(&#x27;projectionName&#x27;, undefined);
+    return this;
+  },
+
+  /**
+    Set master to corresponding property of editing object.
+
+    @method _selectMaster
+    @param {Object} master Selected master for editing property.
+    @private
+  */
+  _selectMaster(master) {
+    let saveTo = this.get(&#x27;saveTo&#x27;);
+    if (!saveTo) {
+      throw new Error(&#x27;Don\&#x27;t know where to save - no saveTo data defined.&#x27;);
+    }
+
+    const updateLookupAction = saveTo.updateLookupAction;
+    const componentContext = saveTo.componentContext;
+    const componentName = this.get(&#x27;componentName&#x27;);
+    if (!isBlank(updateLookupAction)) {
+      componentContext.send(updateLookupAction,
+        {
+          relationName: saveTo.propName,
+          modelToLookup: saveTo.model,
+          newRelationValue: master,
+          componentName: componentName
+        });
+    } else {
+      deprecate(&#x60;You need to send updateLookupAction name to saveTo object in lookup choose parameters&#x60;, false, {
+        id: &#x27;ember-flexberry.controllers.lookup-dialog&#x27;,
+        until: &#x27;4.0&#x27;,
+      });
+
+      saveTo.model.set(saveTo.propName, master);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      saveTo.model.makeDirty();
+      this.get(&#x27;lookupEventsService&#x27;).lookupOnChangeTrigger(componentName, master);
+    }
+  },
+
+  /**
+    Close current modal window if it exists.
+
+    @method _closeModalDialog
+    @private
+  */
+  _closeModalDialog() {
+    let openedDialog = this.get(&#x27;_openedModalDialog&#x27;);
+    if (openedDialog) {
+      openedDialog.modal(&#x27;hide&#x27;);
+      this.set(&#x27;_openedModalDialog&#x27;, undefined);
+    }
+
+    this.get(&#x27;lookupEventsService&#x27;).lookupDialogOnHiddenTrigger(this.get(&#x27;componentName&#x27;));
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

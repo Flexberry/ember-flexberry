@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/services/user-settings.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/services/user-settings.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Service, { inject as service } from &#x27;@ember/service&#x27;;
+import RSVP from &#x27;rsvp&#x27;;
+import { getOwner } from &#x27;@ember/application&#x27;;
+import { isArray } from &#x27;@ember/array&#x27;;
+import { assert } from &#x27;@ember/debug&#x27;;
+import { merge } from &#x27;@ember/polyfills&#x27;;
+import Builder from &#x27;ember-flexberry-data/query/builder&#x27;;
+import { SimplePredicate } from &#x27;ember-flexberry-data/query/predicate&#x27;;
+import { ComplexPredicate } from &#x27;ember-flexberry-data/query/predicate&#x27;;
+import { isNone } from &#x27;@ember/utils&#x27;;
+import { A } from &#x27;@ember/array&#x27;;
+import deserializeSortingParam from &#x27;../utils/deserialize-sorting-param&#x27;;
+import serializeSortingParam from &#x27;../utils/serialize-sorting-param&#x27;;
+
+const defaultSettingName = &#x27;DEFAULT&#x27;;
+
+/**
+  Service to store/read user settings to/from application storage.
+
+  @class UserSettingsService
+  @extends &lt;a href=&quot;https://emberjs.com/api/ember/release/classes/Service&quot;&gt;Service&lt;/a&gt;
+*/
+export default Service.extend({
+  /**
+    Ember data store.
+
+    @property _store
+    @type DS.Store
+    @private
+  */
+  _store: service(&#x27;store&#x27;),
+
+  /**
+    Flag: indicates whether to use user settings service (if &#x60;true&#x60;) or not (if &#x60;false&#x60;).
+    This flag is readed from config setting &#x60;APP.useUserSettingsService&#x60; and can be changed programatically later.
+
+    @property isUserSettingsServiceEnabled
+    @type Boolean
+    @default false
+  */
+  isUserSettingsServiceEnabled: false,
+
+  /**
+    User settings for all pages defined by developer
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default {}
+   */
+  defaultDeveloperUserSettings: undefined,
+
+  /**
+    Current Application name.
+
+    @property appName
+    @type String
+    @default &#x27;&#x27;
+    */
+  appName: &#x27;&#x27;,
+
+  /**
+    Current WEB page.
+
+    @property currentWebPage
+    @type String
+    @default &#x27;&#x27;
+    */
+  currentWebPage: &#x27;&#x27;,
+
+  /**
+    Current App page.
+
+    @property currentAppPage
+    @type String
+    @default &#x27;&#x27;
+    */
+  currentAppPage: &#x27;&#x27;,
+
+  /**
+    User settings for all pages defined by developer
+
+    @property developerUserSettings
+    @type Object
+    @default {}
+   */
+  developerUserSettings: undefined,
+
+  /**
+    User settings for all pages before params applying.
+
+    @property beforeParamUserSettings
+    @type Object
+    @default {}
+    */
+  beforeParamUserSettings: undefined,
+
+  /**
+    Current user settings for all pages
+
+    @property currentUserSettings
+    @type Object
+    @default {}
+    */
+  currentUserSettings: undefined,
+
+  init() {
+    this._super(...arguments);
+    let appConfig = getOwner(this).factoryFor(&#x27;config:environment&#x27;).class;
+    if (!isNone(appConfig.APP.useUserSettingsService)) {
+      this.set(&#x27;isUserSettingsServiceEnabled&#x27;, appConfig.APP.useUserSettingsService);
+    }
+
+    this.set(&#x27;defaultDeveloperUserSettings&#x27;, {});
+    this.set(&#x27;developerUserSettings&#x27;, {});
+    this.set(&#x27;beforeParamUserSettings&#x27;, {});
+    this.set(&#x27;currentUserSettings&#x27;, {});
+  },
+
+  /**
+   Set current Web Page.
+
+   @method setCurrentWebPage
+   @param {String} webPage.
+   */
+  setCurrentWebPage(webPage) {
+    this.currentWebPage = webPage;
+    this.currentAppPage = webPage + &#x27;@&#x27; + this.appName;
+  },
+
+  /**
+   Get current Web Page.
+
+   @method getCurrentWebPage
+   @return {String}
+   */
+  getCurrentWebPage() {
+    return this.currentWebPage;
+  },
+
+  /**
+   Get current App Page.
+
+   @method getCurrentAppPage
+   @return {String}
+   */
+  getCurrentAppPage() {
+    return this.currentAppPage;
+  },
+
+  /**
+   Get current App Name.
+
+   @method getCurrentAppName
+   @return {String}
+   */
+  getCurrentAppName() {
+    return this.currentAppPage;
+  },
+
+  /**
+    Set initial userSetting for current webPage, defined by application developer
+    Structure of developerUserSettings:
+    {
+    &lt;componentName&gt;: {
+      &lt;settingName&gt;: {
+          colsOrder: [ { propName :&lt;colName&gt;, hide: true|false }, ... ],
+          sorting: [{ propName: &lt;colName&gt;, direction: &quot;asc&quot;|&quot;desc&quot; }, ... ],
+          colsWidths: [ &lt;colName&gt;:&lt;colWidth&gt;, ... ],
+        },
+        ...
+      },
+      ...
+    }
+    For default userSetting use empty name (&#x27;&#x27;).
+    &lt;componentName&gt; may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+
+    @method setDeveloperUserSettings
+    @param {Object} developerUserSettings.
+   */
+  setDeveloperUserSettings(developerUserSettings) {
+    for (let componentName in developerUserSettings) {
+      let componentSettings = developerUserSettings[componentName];
+      for (let settingName in componentSettings) {
+        if (!(&#x27;sorting&#x27; in componentSettings[settingName])) {
+          componentSettings[settingName].sorting = [];
+        }
+      }
+
+      if (!(defaultSettingName in componentSettings)) {
+        componentSettings[defaultSettingName] = { sorting: [] };
+      }
+    }
+
+    let appPage = this.currentAppPage;
+    if (!(appPage in this.currentUserSettings)) {
+      this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+      this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
+      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+      if (this.isUserSettingsServiceEnabled) {
+        return this._getUserSettings().then(
+          foundRecords =&gt; {
+            let ret = {};
+            if (foundRecords) {
+              for (let i = 0; i &lt; foundRecords.length; i++) {
+                let foundRecord = foundRecords[i];
+                let userSettingValue = foundRecord.get(&#x27;txtVal&#x27;);
+                let settName = foundRecord.get(&#x27;settName&#x27;);
+                let componentName = foundRecord.get(&#x27;moduleName&#x27;);
+                if (!settName) {
+                  settName = defaultSettingName;
+                }
+
+                if (userSettingValue) {
+                  if (!(componentName in ret)) {
+                    ret[componentName] = {};
+                  }
+
+                  ret[componentName][settName] = JSON.parse(userSettingValue);
+                }
+              }
+            }
+
+            return ret;
+          }
+        ).then(
+          appPageUserSettings =&gt; {
+            return this._setCurrentUserSettings(appPageUserSettings);
+          }
+        );
+      }
+
+    }
+
+    return new RSVP.Promise(function (resolve) {
+      resolve(undefined);
+    });
+  },
+
+  /**
+    Set initial userSetting for current webPage, defined by application developer
+
+    @method setDefaultDeveloperUserSettings
+    @param {Object} developerUserSettings.
+   */
+  setDefaultDeveloperUserSettings(developerUserSettings) {
+    for (let componentName in developerUserSettings) {
+      let componentSettings = developerUserSettings[componentName];
+      for (let settingName in componentSettings) {
+        if (!(&#x27;sorting&#x27; in componentSettings[settingName])) {
+          componentSettings[settingName].sorting = [];
+        }
+      }
+
+      if (!(defaultSettingName in componentSettings)) {
+        componentSettings[defaultSettingName] = { sorting: [] };
+      }
+    }
+
+    let appPage = this.currentAppPage;
+    this.defaultDeveloperUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+  },
+
+  /**
+   Get list components Names.
+
+   @method getListComponentNames
+   @return {Ember.NativeArray}
+   */
+  getListComponentNames() {
+    let ret = A();
+    let appPage = this.currentAppPage;
+    if (appPage in this.currentUserSettings) {
+      for (let componentName in this.currentUserSettings[appPage]) {
+        ret.pushObject(componentName);
+      }
+    }
+
+    return ret;
+  },
+
+  /**
+   Implements current URL-params to currentUserSettings
+
+   @method setCurrentParams
+   @param {Object} params
+   @return {String} URL params
+   */
+  setCurrentParams(componentName, params) {
+    let appPage = this.currentAppPage;
+    if (params.sort === null) {
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    } else {
+      let sorting;
+      if (&#x27;sort&#x27; in params &amp;&amp; params.sort) {
+        sorting = deserializeSortingParam(params.sort);
+      } else if (this.beforeParamUserSettings[appPage] &amp;&amp; this.beforeParamUserSettings[appPage][componentName]) {
+        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
+
+      let userSetting = this.getCurrentUserSetting(componentName);
+      userSetting.sorting = sorting;
+      this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    }
+  },
+
+  /**
+    Returns  true if userSettings for current appPage exists.
+
+    @method exists
+    @return {Boolean}
+   */
+  exists() {
+    let ret = this.currentAppPage in this.currentUserSettings;
+    return ret;
+  },
+
+  /**
+    Returns  true if default userSettings for current appPage exists.
+
+    @method exists
+    @return {Boolean}
+   */
+  haveDefaultUserSetting(componentName) {
+    let ret = this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage] &amp;&amp;
+      defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName];
+    return ret;
+  },
+
+  /**
+    Creates default user setting if setting for specified component isn&#x27;t exists.
+
+    @method createDefaultUserSetting
+    @param {String} componentName
+   */
+   createDefaultUserSetting(componentName) {
+     if (!(this.exists())) {
+       this.currentUserSettings[this.currentAppPage] = {};
+     }
+
+     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+       this.currentUserSettings[this.currentAppPage][componentName] = {};
+     }
+
+     if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+       this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
+     }
+   },
+
+  /**
+   *   Returns current list of userSetting.
+   *
+   *   @method getListCurrentUserSetting
+   *   @return {String}
+   */
+  getListCurrentUserSetting(componentName, isExportExcel) {
+    let ret = {};
+    if (this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage]
+    ) {
+      let sets = this.currentUserSettings[this.currentAppPage][componentName];
+
+      for (let settingName in sets) {
+        let settingNameSplit = settingName.split(&#x27;/&#x27;);
+        if (isExportExcel &amp;&amp; settingNameSplit[0] === &#x27;ExportExcel&#x27;) {
+          ret[settingName] = sets[settingName];
+        }
+
+        if (!isExportExcel &amp;&amp; settingNameSplit[0] !== &#x27;ExportExcel&#x27;) {
+          ret[settingName] = sets[settingName];
+        }
+      }
+    }
+
+    return ret;
+  },
+
+  /**
+    Returns current list of named userSetting.
+
+    @method getListCurrentNamedUserSetting
+    @return {String}
+  */
+  getListCurrentNamedUserSetting(componentName, isExportExcel) {
+    let ret = {};
+    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName, isExportExcel);
+    for (let settingName in listCurrentUserSetting) {
+      if (settingName === defaultSettingName) {
+        continue;
+      }
+
+      ret[settingName] = listCurrentUserSetting[settingName];
+    }
+
+    return ret;
+  },
+
+  /**
+   Returns current userSetting.
+
+   @method getCurrentUserSetting
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {String}
+   */
+  getCurrentUserSetting(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let ret;
+    if (this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage] &amp;&amp;
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
+    return ret;
+  },
+
+  /**
+   Returns default developer user settings for component.
+
+   @method getDefaultDeveloperUserSetting
+   @param {String} componentName Name of component.
+   @return {Object}
+   */
+  getDefaultDeveloperUserSetting(componentName) {
+    let settingName = defaultSettingName;
+
+    let ret;
+    if (this.currentAppPage in this.defaultDeveloperUserSettings &amp;&amp;
+      componentName in this.defaultDeveloperUserSettings[this.currentAppPage] &amp;&amp;
+      settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
+    ) {
+      ret = this.defaultDeveloperUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
+    return ret;
+  },
+
+  /**
+   Returns current sorting .
+
+   @method getCurrentSorting
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentSorting(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting &amp;&amp; &#x27;sorting&#x27; in currentUserSetting ? currentUserSetting.sorting : A();
+  },
+
+  /**
+   Returns current perPageValue .
+
+   @method getCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentPerPage(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration(&#x27;config:environment&#x27;);
+    let defaultPerPage;
+
+    try{
+      defaultPerPage = configEnvironmentSettings.APP.components.flexberryObjectlistview.defaultPerPage;
+      if(!defaultPerPage)
+        throw new TypeError(&#x27;configEnvironmentSettings returned invalid value&#x27;);
+    }
+    catch(error){
+      console.error(error.name + &#x27;: &#x27; + error.message);
+      defaultPerPage = 5;
+    }
+
+    return currentUserSetting &amp;&amp; &#x27;perPage&#x27; in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : defaultPerPage;
+  },
+
+  /**
+   Returns current colsOrder .
+
+   @method getCurrentColsOrder
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentColsOrder(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting &amp;&amp; &#x27;colsOrder&#x27; in currentUserSetting ? currentUserSetting.colsOrder : undefined;
+  },
+
+  /**
+   Returns current columnWidths.
+
+   @method getCurrentColumnWidths
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentColumnWidths(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting &amp;&amp; &#x27;columnWidths&#x27; in currentUserSetting ? currentUserSetting.columnWidths : undefined;
+  },
+
+  /**
+   Returns current detSeparateCols.
+
+   @method getDetSeparateCols
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateCols(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting &amp;&amp; &#x27;detSeparateCols&#x27; in currentUserSetting ? currentUserSetting.detSeparateCols : false;
+  },
+
+  /**
+   Returns current detSeparateRows.
+
+   @method getDetSeparateRows
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateRows(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting &amp;&amp; &#x27;detSeparateRows&#x27; in currentUserSetting ? currentUserSetting.detSeparateRows : false;
+  },
+
+  /**
+   Set current columnWidths.
+
+   @method setCurrentColumnWidths
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @param {Array} columnWidths List columns width.
+   */
+  setCurrentColumnWidths(componentName, settingName, columnWidths) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let userSetting;
+    if (this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage] &amp;&amp;
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.columnWidths = columnWidths;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Set current perPage.
+
+   @method setCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @param {Int} perPageValue Per page value.
+   */
+  setCurrentPerPage(componentName, settingName, perPageValue) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let userSetting;
+    if (this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage] &amp;&amp;
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.perPage = perPageValue;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Set toggler status
+
+   @method setTogglerStatus
+   @param {String} componentName Name of component.
+   @param {Boolean} togglerStatus Status to save.
+   */
+  setTogglerStatus(componentName, settingName, togglerStatus) {
+    let userSetting;
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (this.exists() &amp;&amp;
+      componentName in this.currentUserSettings[this.currentAppPage] &amp;&amp;
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.togglerStatus = togglerStatus;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Returns toggler status from user service.
+
+   @method getTogglerStatus
+   @param {String} componentName component Name to search by.
+   @return {Boolean} Saved status.
+   */
+  getTogglerStatus(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+
+    return currentUserSetting &amp;&amp; &#x27;togglerStatus&#x27; in currentUserSetting ? currentUserSetting.togglerStatus : null;
+  },
+
+  /**
+   Deletes given user setting from storage.
+
+   @method deleteUserSetting
+   @param {Object} [options] Parameters for user setting getting.
+   @param {String} componentName component Name to search by.
+   @param {String} settingName Setting name to search by.
+   @return {&lt;a href=&quot;http://emberjs.com/api/classes/RSVP.Promise.html&quot;&gt;Promise&lt;/a&gt;[]} Promises array
+   */
+  deleteUserSetting(componentName, settingName, isExportExcel) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = &#x27;ExportExcel/&#x27; + settingName;
+    }
+
+    assert(&#x27;deleteUserSetting:: componentName name is not defined for user setting getting.&#x27;, componentName);
+    assert(&#x27;deleteUserSetting:: Setting name is not defined for user setting getting.&#x27;, settingName);
+
+    let appPage = this.currentAppPage;
+    if (appPage in this.developerUserSettings &amp;&amp;
+      componentName in this.developerUserSettings[appPage] &amp;&amp;
+      settingName in this.developerUserSettings[appPage][componentName]) {
+      this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
+    } else {
+      if (settingName in this.currentUserSettings[appPage][componentName]) {
+        delete this.currentUserSettings[appPage][componentName][settingName];
+      }
+    }
+
+    if (!this.get(&#x27;isUserSettingsServiceEnabled&#x27;)) {
+      return new RSVP.Promise(function (resolve) {
+        resolve(undefined);
+      });
+    }
+
+    return this._deleteExistingRecord(componentName, settingName);
+  },
+
+  /**
+   Saves given user setting to storage.
+
+   @method saveUserSetting
+   @param {String} componentName Name of module for what setting is saved.
+   @param {String} settingName Setting name to save as.
+   @param {String} userSetting User setting data to save.
+   @return {&lt;a href=&quot;http://emberjs.com/api/classes/RSVP.Promise.html&quot;&gt;Promise&lt;/a&gt;} Save operation promise.
+   */
+  saveUserSetting(componentName, settingName, userSetting, isExportExcel) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = &#x27;ExportExcel/&#x27; + settingName;
+    }
+
+    assert(&#x27;saveUserSetting:: componentName is not defined for user setting saving.&#x27;, componentName);
+    assert(&#x27;saveUserSetting:: User setting data are not defined for user setting saving.&#x27;, userSetting);
+    assert(&#x27;saveUserSetting:: Setting name is not defined for user setting saving.&#x27;, settingName !== undefined);
+
+    if (!(this.exists())) {
+      this.currentUserSettings[this.currentAppPage] = {};
+    }
+
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      this.currentUserSettings[this.currentAppPage][componentName] = {};
+    }
+
+    this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
+    this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
+    /* eslint-disable no-unused-vars */
+    if (!this.get(&#x27;isUserSettingsServiceEnabled&#x27;)) {
+      return new RSVP.Promise((resolve, reject) =&gt; { resolve(); });
+    }
+    /* eslint-enable no-unused-vars */
+
+    let store = this.get(&#x27;_store&#x27;);
+    let _this = this;
+    let ret = this._getExistingRecord(componentName, settingName).then(
+      (foundRecord) =&gt; {
+        if (foundRecord) {
+          let prevUserSetting = JSON.parse(foundRecord.get(&#x27;txtVal&#x27;));
+          if (!prevUserSetting) {
+            prevUserSetting = {};
+          }
+
+          for (let settingName in prevUserSetting) {
+            if (isNone(userSetting[settingName])) {
+              delete prevUserSetting[settingName];
+            }
+          }
+
+          for (let settingName in userSetting) {
+            prevUserSetting[settingName] = userSetting[settingName];
+          }
+
+          foundRecord.set(&#x27;txtVal&#x27;, JSON.stringify(prevUserSetting));
+        } else {
+          let userService = getOwner(_this).lookup(&#x27;service:user&#x27;);
+          let currentUserName = userService.getCurrentUserName();
+          foundRecord = store.createRecord(&#x27;new-platform-flexberry-flexberry-user-setting&#x27;);
+          foundRecord.set(&#x27;userName&#x27;, currentUserName);
+          foundRecord.set(&#x27;appName&#x27;, this.currentAppPage);
+          foundRecord.set(&#x27;moduleName&#x27;, componentName);
+          foundRecord.set(&#x27;settName&#x27;, settingName);
+          foundRecord.set(&#x27;txtVal&#x27;, JSON.stringify(userSetting));
+        }
+
+        return foundRecord.save();
+      });
+    return ret;
+  },
+
+  /**
+    Returns  user setting for current appPage from storage.
+
+    @method _getUserSettings
+    @return {Object}
+   */
+  _getUserSettings() {
+    if (!this.get(&#x27;isUserSettingsServiceEnabled&#x27;)) {
+      return {};
+    }
+
+    let settingsPromise = this._getExistingSettings();
+
+    return settingsPromise;
+  },
+
+  /**
+    Merge current developerUserSettings with appPageUserSettings
+
+    @method _setCurrentUserSettings
+    @param {Object} appPageUserSettings merged userSettings
+    @return {Object}
+   */
+  _setCurrentUserSettings(appPageUserSettings) {
+    let appPage = this.currentAppPage;
+    if (!(appPage in this.developerUserSettings)) {
+      return undefined;
+    }
+
+    for (let componentName in this.developerUserSettings[appPage]) {
+      let namedSettings = this.developerUserSettings[appPage][componentName];
+      let settings = appPageUserSettings[componentName];
+      for (let settingName in namedSettings) {
+        if (componentName in appPageUserSettings &amp;&amp; settingName in settings) {
+          this.currentUserSettings[appPage][componentName][settingName] = this._mergeSettings(namedSettings[settingName], settings[settingName]);
+          delete settings[settingName];
+        }
+      }
+
+      for (let settingName in settings) {
+        this.currentUserSettings[appPage][componentName][settingName] = settings[settingName];
+      }
+
+      delete appPageUserSettings[componentName];
+    }
+
+    for (let componentName in appPageUserSettings) {
+      this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
+    }
+
+    this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
+    return this.currentUserSettings[appPage];
+  },
+
+  /**
+   Merge two settings.
+
+   @method _mergeSettings
+   @param {Object} setting1 base settings.
+   @param {Object} setting2 additions settings.
+   @return {Object} merged settings.
+   @private
+   */
+  _mergeSettings(setting1, setting2) {
+    let ret = {};
+    let addSettings = JSON.parse(JSON.stringify(setting2));
+    for (let settingProperty in setting1) {
+      if (settingProperty in addSettings) {
+        ret[settingProperty] = (typeof (setting1[settingProperty]) === &#x27;object&#x27;) ?
+        merge(setting1[settingProperty], addSettings[settingProperty]) :
+        addSettings[settingProperty];
+      } else {
+        ret[settingProperty] = setting1[settingProperty];
+      }
+
+      delete addSettings[settingProperty];
+    }
+
+    for (let settingProperty in addSettings) {
+      ret[settingProperty] = addSettings[settingProperty];
+    }
+
+    return ret;
+  },
+
+  /**
+   Deletes user settings record.
+
+   @method _deleteExistingRecord
+   @param {Object} componentName Module name of looked for record.
+   @param {String} settingName Setting name of looked for record.
+   @return {&lt;a href=&quot;http://emberjs.com/api/classes/RSVP.Promise.html&quot;&gt;Promise&lt;/a&gt;[]} Promises array.
+   @private
+   */
+  _deleteExistingRecord: function (componentName, settingName) {
+    // TODO: add search by username.
+    let cp = this._getSearchPredicate(componentName, settingName);
+    let store = this.get(&#x27;_store&#x27;);
+    let modelName = &#x27;new-platform-flexberry-flexberry-user-setting&#x27;;
+    let builder = new Builder(store)
+      .from(modelName)
+      .selectByProjection(&#x27;FlexberryUserSettingE&#x27;)
+      .where(cp);
+
+    return store.query(modelName, builder.build()).then((result) =&gt; {
+      if (result) {
+        let delPromises = [];
+        let foundRecords = result.toArray();
+        if (isArray(foundRecords) &amp;&amp; foundRecords.length &gt; 0) {
+          for (let i = 0; i &lt; foundRecords.length; i++) {
+            delPromises[delPromises.length] = foundRecords[i].destroyRecord();
+          }
+
+          return RSVP.Promise.all(delPromises).then(
+            result =&gt; { return result; }
+          );
+        }
+      }
+
+      return undefined;
+    });
+  },
+
+  /**
+   Looks for already created user settings record.
+
+   @method _getExistingRecord
+   @param {Object} componentName Module name of looked for record.
+   @param {String} settingName Setting name of looked for record.
+   @return {&lt;a href=&quot;http://emberjs.com/api/classes/RSVP.Promise.html&quot;&gt;Promise&lt;/a&gt;} A promise that returns founded record
+   or &#x60;undefined&#x60; if there is no such setting.
+   @private
+   */
+  _getExistingRecord(componentName, settingName) {
+    // TODO: add search by username.
+    let cp = this._getSearchPredicate(componentName, settingName);
+    let store = this.get(&#x27;_store&#x27;);
+    let modelName = &#x27;new-platform-flexberry-flexberry-user-setting&#x27;;
+    let builder = new Builder(store)
+      .from(modelName)
+      .selectByProjection(&#x27;FlexberryUserSettingE&#x27;)
+      .orderBy(&#x27;settLastAccessTime desc&#x27;)
+      .where(cp);
+    return store.query(modelName, builder.build()).then((result) =&gt; {
+      if (result) {
+        let foundRecords = result.toArray();
+        if (isArray(foundRecords) &amp;&amp; foundRecords.length &gt; 0) {
+          for (let i = 1; i &lt; foundRecords.length; i++) {
+            foundRecords[i].destroyRecord();
+          }
+
+          return foundRecords[0];
+        }
+      }
+
+      return undefined;
+    });
+  },
+
+  /**
+   Looks for all created user settings records.
+
+   @method _getExistingSettings
+   @param {String} componentName Component name of looked for record.
+   @param {String} settingName Setting name of looked for record.
+   @return {Promise} A promise that returns found record or &#x60;undefined&#x60; if there is no such setting.
+   @private
+   */
+  _getExistingSettings(componentName, settingName) {
+    // TODO: add search by username.
+    let cp = this._getSearchPredicate(componentName, settingName);
+    let store = this.get(&#x27;_store&#x27;);
+    let modelName = &#x27;new-platform-flexberry-flexberry-user-setting&#x27;;
+    let builder = new Builder(store)
+      .from(modelName)
+      .selectByProjection(&#x27;FlexberryUserSettingE&#x27;)
+      .where(cp);
+
+    return store.query(modelName, builder.build()).then((result) =&gt; {
+      let foundRecords = [];
+      if (result) {
+        foundRecords = result.toArray();
+        if (!isArray(foundRecords)) {
+          foundRecords = [];
+        }
+
+        return foundRecords;
+      }
+    });
+  },
+
+  _getSearchPredicate(componentName, settingName) {
+    let ret;
+    let userService = getOwner(this).lookup(&#x27;service:user&#x27;);
+    let currentUserName = userService.getCurrentUserName();
+    let p1 = new SimplePredicate(&#x27;appName&#x27;, &#x27;eq&#x27;, this.currentAppPage);
+    let p2 = new SimplePredicate(&#x27;userName&#x27;, &#x27;eq&#x27;, currentUserName);
+    if (componentName !== undefined) {
+      let p3 = new SimplePredicate(&#x27;moduleName&#x27;, &#x27;eq&#x27;, componentName);
+      if (settingName !== undefined) {
+        let p4 = new SimplePredicate(&#x27;settName&#x27;, &#x27;eq&#x27;, settingName);
+        ret = new ComplexPredicate(&#x27;and&#x27;, p1, p2, p3, p4);
+      } else {
+        ret = new ComplexPredicate(&#x27;and&#x27;, p1, p2, p3);
+      }
+    } else {
+      assert(&#x27;Find settingName of undefined componentName&#x27;, settingName === undefined);
+      ret = new ComplexPredicate(&#x27;and&#x27;, p1, p2);
+    }
+
+    return ret;
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

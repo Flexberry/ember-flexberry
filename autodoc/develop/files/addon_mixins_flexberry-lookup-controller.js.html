@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/mixins/flexberry-lookup-controller.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/mixins/flexberry-lookup-controller.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Mixin from &#x27;@ember/object/mixin&#x27;;
+import $ from &#x27;jquery&#x27;;
+import { getOwner } from &#x27;@ember/application&#x27;;
+import { merge } from &#x27;@ember/polyfills&#x27;;
+import EmberObject, { get } from &#x27;@ember/object&#x27;;
+import { assert, debug } from &#x27;@ember/debug&#x27;;
+import { isNone, isEmpty } from &#x27;@ember/utils&#x27;;
+import { guidFor } from &#x27;@ember/object/internals&#x27;;
+import { inject as service } from &#x27;@ember/service&#x27;;
+import ReloadListMixin from &#x27;../mixins/reload-list-mixin&#x27;;
+import { BasePredicate } from &#x27;ember-flexberry-data/query/predicate&#x27;;
+import serializeSortingParam from &#x27;../utils/serialize-sorting-param&#x27;;
+
+/**
+  Mixin for {{#crossLink &quot;DS.Controller&quot;}}Controller{{/crossLink}} to support work with modal windows at lookups.
+
+  @class FlexberryLookupMixin
+  @uses &lt;a href=&quot;https://www.emberjs.com/api/ember/release/classes/Mixin&quot;&gt;Mixin&lt;/a&gt;
+  @uses ReloadListMixin
+*/
+export default Mixin.create(ReloadListMixin, {
+  /**
+    Lookup settings for modal window.
+    It has to be overriden on controller where this mixin is used.
+
+    @property lookupSettings
+    @type Object
+  */
+  lookupSettings: {
+    /**
+      Name of controller that handles modal window.
+      Controller with the same name has to be injected to property &#x60;lookupController&#x60;.
+
+      @property controllerName
+      @type String
+    */
+    controllerName: undefined,
+
+    /**
+      Name of template for modal window itself (not content of modal window).
+
+      @property template
+      @type String
+    */
+    template: undefined,
+
+    /**
+      Name of template for content of modal window.
+
+      @property contentTemplate
+      @type String
+    */
+    contentTemplate: undefined,
+
+    /**
+      Name of template for content of loading modal window.
+
+      @property loaderTemplate
+      @type String
+    */
+    loaderTemplate: undefined,
+
+    /**
+      Object with settings for modal window.
+
+      @property modalDialogSettings
+      @type Object
+    */
+    modalDialogSettings: {
+
+      /**
+        Modal detachable param.
+        If set to false will prevent the modal from being moved to inside the dimmer.
+
+        @property detachable
+        @type Boolean
+        @default false
+      */
+      detachable: false,
+
+      /**
+        Modal context param.
+        Selector or jquery object specifying the area to dim.
+
+        @property context
+        @type String
+        @default &#x27;.ember-application &gt; .ember-view&#x27;
+      */
+      context: &#x27;.ember-application &gt; .ember-view&#x27;
+    }
+  },
+
+  /**
+    Controller to show modal window.
+
+    @property lookupController
+    @type Controller
+  */
+  lookupController: undefined,
+
+  /**
+    Default number of records per page on lookup window list.
+
+    @property lookupModalWindowPerPage
+    @type Number
+    @default 5
+  */
+  lookupModalWindowPerPage: 5,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: service(&#x27;lookup-events&#x27;),
+
+  actions: {
+    /**
+      Handles action from lookup choose action.
+      It opens modal window where availible values are shown.
+
+      In order to customize content of all lookup modal window there is such a way:
+      1. Create template with necessary content and set unique name for it (for example &#x27;customlookupform.hbs&#x27;);
+      2. Override lookup setting &#x60;lookupSettings.contentTemplate&#x60; on controller level (for example &#x27;customlookupform&#x27;);
+      3. If there has to be specific logic or properties on controller for template,
+         current lookup controller can be overriden (it is &#x27;lookup-dialog&#x27; for edit forms),
+         new name can be set on lookup setting &#x60;lookupSettings.controllerName&#x60;
+         and new controller can be injected as &#x60;lookupController&#x60;
+         (if the controller was extended and not reopened).
+
+      @method actions.showLookupDialog
+      @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
+    */
+    showLookupDialog(chooseData) {
+      this.set(&#x27;lookupController.inHierarchicalMode&#x27;, chooseData.inHierarchicalMode);
+
+      let options = $.extend(true, {
+        projection: undefined,
+        relationName: undefined,
+        title: undefined,
+        predicate: undefined,
+        modelToLookup: undefined,
+        lookupWindowCustomPropertiesData: undefined,
+        componentName: undefined,
+        folvComponentName: undefined,
+        notUseUserSettings: undefined,
+        perPage: this.get(&#x27;lookupModalWindowPerPage&#x27;),
+        sorting: undefined,
+        hierarchicalAttribute: undefined,
+        updateLookupAction: undefined,
+        componentContext: undefined
+      }, chooseData);
+
+      let lookupController = this.get(&#x27;lookupController&#x27;);
+      let disableHierarchy = get(options, &#x27;lookupWindowCustomPropertiesData.disableHierarchicalMode&#x27;);
+      lookupController.set(&#x27;disableHierarchicalMode&#x27;, !isNone(disableHierarchy));
+
+      let customInHierarchicalMode = get(options, &#x27;lookupWindowCustomPropertiesData.inHierarchicalMode&#x27;);
+      lookupController.set(&#x27;inHierarchicalMode&#x27;, customInHierarchicalMode);
+
+      lookupController.set(&#x27;developerUserSettings&#x27;, this.get(&#x27;developerUserSettings&#x27;));
+
+      let projectionName = options.projection;
+      assert(&#x27;ProjectionName is undefined.&#x27;, projectionName);
+
+      let limitPredicate = options.predicate;
+      if (limitPredicate &amp;&amp; !(limitPredicate instanceof BasePredicate)) {
+        throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+
+      let relationName = options.relationName;
+      let title = options.title;
+      let modelToLookup = options.modelToLookup;
+      let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
+      let componentName = options.componentName;
+      let folvComponentName = options.folvComponentName;
+      let customHierarchicalAttribute = get(options, &#x27;lookupWindowCustomPropertiesData.hierarchicalAttribute&#x27;);
+      let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = get(options, &#x27;lookupWindowCustomPropertiesData.hierarchyPaging&#x27;);
+      const updateLookupAction = options.updateLookupAction;
+      const componentContext = options.componentContext;
+
+      let model = modelToLookup ? modelToLookup : this.get(&#x27;model&#x27;);
+
+      // Get ember static function to get relation by name.
+      let relationshipsByName = get(model.constructor, &#x27;relationshipsByName&#x27;);
+
+      let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
+      let userSettings;
+
+      if (options.notUseUserSettings === true) {
+        userSettings = lookupController.get(&#x27;developerUserSettings&#x27;);
+        userSettings = userSettings ? userSettings[folvComponentName] : undefined;
+        userSettings = userSettings ? userSettings.DEFAULT : undefined;
+      } else {
+        userSettings = userSettingsService.getCurrentUserSetting(folvComponentName);
+      }
+
+      // Get relation property from model.
+      let relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(&#x60;No relation with &#x27;${relationName}&#x27; name defined in &#x27;${model.constructor.modelName}&#x27; model.&#x60;);
+      }
+
+      // Get property type name.
+      let relatedToType = relation.type;
+
+      if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
+        const userSettingValue = getOwner(this).lookup(&#x27;default-user-setting:&#x27; + relatedToType);
+        if (!isNone(userSettingValue)) {
+          userSettings = userSettingValue.DEFAULT
+        }
+      }
+
+      let sorting = userSettings.sorting || options.sorting || [];
+      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+
+      // Lookup
+      let lookupSettings = this.get(&#x27;lookupSettings&#x27;);
+      assert(&#x27;Lookup settings are undefined.&#x27;, lookupSettings);
+
+      let reloadData = {
+        initialLoad: true,
+        relatedToType: relatedToType,
+        projectionName: projectionName,
+
+        perPage: perPage,
+        page: 1,
+        sorting: sorting,
+        filter: undefined,
+        predicate: limitPredicate,
+        hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
+
+        title: title,
+        saveTo: {
+          model: model,
+          propName: relationName,
+          updateLookupAction: updateLookupAction,
+          componentContext: componentContext
+        },
+        currentLookupRow: model.get(relationName),
+        customPropertiesData: lookupWindowCustomPropertiesData,
+        componentName: componentName,
+        folvComponentName: folvComponentName,
+        notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
+      };
+
+      this._reloadModalData(this, reloadData);
+    },
+
+    showLookupMultiSelectDialog(chooseData) {
+      let lookupController = this.get(&#x27;lookupController&#x27;);
+      let options = $.extend(true, {
+        projection: undefined,
+        relationName: undefined,
+        title: undefined,
+        predicate: undefined,
+        modelToLookup: undefined,
+        lookupWindowCustomPropertiesData: undefined,
+        componentName: undefined,
+        folvComponentName: undefined,
+        notUseUserSettings: undefined,
+        perPage: this.get(&#x27;lookupModalWindowPerPage&#x27;),
+        sorting: undefined,
+        hierarchicalAttribute: lookupController.get(&#x27;hierarchicalAttribute&#x27;),
+        updateLookupAction: undefined
+      }, chooseData);
+
+      const disableHierarchy = get(options, &#x27;lookupWindowCustomPropertiesData.disableHierarchicalMode&#x27;);
+      lookupController.set(&#x27;disableHierarchicalMode&#x27;, !isNone(disableHierarchy));
+
+      const customInHierarchicalMode = get(options, &#x27;lookupWindowCustomPropertiesData.inHierarchicalMode&#x27;);
+      lookupController.set(&#x27;inHierarchicalMode&#x27;, customInHierarchicalMode);
+
+      const projectionName = options.projection;
+      assert(&#x27;ProjectionName is undefined.&#x27;, projectionName);
+
+      const limitPredicate = options.predicate;
+      if (limitPredicate &amp;&amp; !(limitPredicate instanceof BasePredicate)) {
+        throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+      }
+
+      const relationName = options.relationName;
+      const title = options.title;
+      const modelToLookup = options.modelToLookup;
+      const lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
+      const componentName = options.componentName;
+      const folvComponentName = options.folvComponentName;
+      const customHierarchicalAttribute = get(options, &#x27;lookupWindowCustomPropertiesData.hierarchicalAttribute&#x27;);
+      const hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      const hierarchyPaging = get(options, &#x27;lookupWindowCustomPropertiesData.hierarchyPaging&#x27;);
+      const updateLookupAction = options.updateLookupAction;
+
+      const userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
+      const model = modelToLookup ? modelToLookup : this.get(&#x27;model&#x27;);
+      const sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
+      const perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+
+      // Get ember static function to get relation by name.
+      const relationshipsByName = get(model.constructor, &#x27;relationshipsByName&#x27;);
+
+      // Get relation property from model.
+      const relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(&#x60;No relation with &#x27;${relationName}&#x27; name defined in &#x27;${model.constructor.modelName}&#x27; model.&#x60;);
+      }
+
+      const relationModelName = get(this.get(&#x27;model&#x27;).constructor, &#x27;relationships&#x27;).get(model.constructor.modelName)[0].name;
+      this.get(&#x27;model.&#x27; + relationModelName).forEach(m =&gt; {
+        const relationModel = m.get(relationName);
+        let recordWithKey = EmberObject.create({});
+        recordWithKey.set(&#x27;key&#x27;, guidFor(relationModel));
+        recordWithKey.set(&#x27;data&#x27;, relationModel);
+        this.get(&#x27;objectlistviewEventsService&#x27;).rowSelectedTrigger(folvComponentName, relationModel, 1, true, recordWithKey);
+      });
+
+      // Get property type name.
+      const relatedToType = relation.type;
+
+      // Lookup
+      const lookupSettings = this.get(&#x27;lookupMultiGESettings&#x27;);
+      assert(&#x27;Lookup settings are undefined.&#x27;, lookupSettings);
+
+      let reloadData = {
+        initialLoad: true,
+        relatedToType: relatedToType,
+        projectionName: projectionName,
+
+        perPage: perPage,
+        page: 1,
+        sorting: sorting,
+        filter: undefined,
+        predicate: limitPredicate,
+        hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
+
+        title: title,
+        saveTo: {
+          model: model,
+          propName: relationName,
+          updateLookupAction: updateLookupAction
+        },
+        currentLookupRow: model.get(relationName),
+        customPropertiesData: lookupWindowCustomPropertiesData,
+        componentName: componentName,
+        folvComponentName: folvComponentName,
+        notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
+      };
+
+      reloadData.modalDialogSettings.lookupSettings = lookupSettings;
+
+      this._reloadModalData(this, reloadData);
+    },
+
+    /**
+      Handlers corresponding route&#x27;s willTransition action.
+      It sends message about transition to showing lookup modal window controller.
+
+      @method actions.routeWillTransition
+    */
+    routeWillTransition() {
+      this.get(&#x27;lookupController&#x27;).send(&#x27;routeWillTransition&#x27;);
+    },
+
+    /**
+      Handlers action from FlexberryLookup remove action.
+
+      @method actions.removeLookupValue
+      @param {Object} removeData Lookup parameters: { relationName, modelToLookup }.
+    */
+    removeLookupValue(removeData) {
+      let options = $.extend(true, {
+        relationName: undefined,
+        modelToLookup: undefined,
+        componentName: undefined
+      }, removeData);
+      const componentName = options.componentName;
+      let relationName = options.relationName;
+      let modelToLookup = options.modelToLookup;
+
+      let model = modelToLookup ? modelToLookup : this.get(&#x27;model&#x27;);
+      model.set(relationName, undefined);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
+      this.get(&#x27;lookupEventsService&#x27;).lookupOnChangeTrigger(componentName);
+    },
+
+    /**
+      Handlers action from FlexberryLookup preview action.
+
+      @method actions.previewLookupValue
+      @param {Object} previewData Lookup parameters: { recordId, transitionRoute, transitionOptions, showInSeparateRoute, projection, modelName, controller }.
+    */
+    previewLookupValue(previewData) {
+      let options = $.extend(true, {
+        recordId: undefined,
+        transitionRoute: undefined,
+        transitionOptions: undefined,
+        showInSeparateRoute: undefined,
+        modelName: undefined,
+        controller: undefined,
+        projection: undefined
+      }, previewData);
+      let recordId = options.recordId;
+      let transitionRoute = options.transitionRoute;
+
+      if (options.showInSeparateRoute) {
+        let transitionOptions = options.transitionOptions || {};
+        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+      } else {
+        let routeName = options.controller || transitionRoute;
+        let modelName = options.modelName;
+
+        let controller = getOwner(this).lookup(&#x60;controller:${routeName}&#x60;);
+        if (isNone(controller)) {
+          throw new Error(&#x60;Controller with &#x27;${routeName}&#x27; name does not exist.&#x60;);
+        }
+
+        let route = getOwner(this).lookup(&#x60;route:${transitionRoute}&#x60;);
+        let projectionName = options.projection || (route ? route.get(&#x27;modelProjection&#x27;) : undefined);
+        if (isNone(projectionName)) {
+          throw new Error(&#x27;&#x60;previewFormProjection&#x60; is undefined.&#x27;);
+        }
+
+        let modelConstructor = this.store.modelFor(modelName);
+        let projection = get(modelConstructor, &#x60;projections.${projectionName}&#x60;);
+        if (!projection) {
+          throw new Error(
+            &#x60;No projection with &#x27;${projectionName}&#x27; name defined in &#x27;${modelName}&#x27; model.&#x60;);
+        }
+
+        controller.setProperties({
+          readonly: true,
+          routeName: routeName,
+          modelProjection: projection
+        });
+
+        const modalDialogSettings = merge({ sizeClass: &#x27;small preview-model&#x27; }, options.modalDialogSettings);
+        const lookupController = this.get(&#x27;lookupController&#x27;);
+        lookupController.setProperties({
+          title: this.get(&#x27;i18n&#x27;).t(&#x27;components.flexberry-lookup.preview-button-text&#x27;),
+          modalDialogSettings: modalDialogSettings,
+        });
+
+        let lookupSettings = this.get(&#x27;lookupSettings&#x27;);
+        this.send(&#x27;showModalDialog&#x27;, lookupSettings.template);
+
+        let loadingParams = {
+          view: lookupSettings.template,
+          outlet: &#x27;modal-content&#x27;
+        };
+
+        this.send(&#x27;showModalDialog&#x27;, lookupSettings.loaderTemplate, null, loadingParams);
+
+        this.store.findRecord(modelName, recordId).then(data =&gt; {
+          this.send(&#x27;removeModalDialog&#x27;, loadingParams);
+          this.send(&#x27;showModalDialog&#x27;, transitionRoute, {
+            controller: controller,
+            model: data
+          }, loadingParams);
+        });
+      }
+    },
+
+    /**
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData Lookup parameters to update data at model: { relationName, newRelationValue, modelToLookup }.
+    */
+    updateLookupValue(updateData) {
+      let options = $.extend(true, {
+        relationName: undefined,
+        newRelationValue: undefined,
+        modelToLookup: undefined,
+        componentName: undefined
+      }, updateData);
+      const componentName = options.componentName;
+      const modelToLookup = options.modelToLookup;
+      const model = modelToLookup ? modelToLookup : this.get(&#x27;model&#x27;);
+
+      debug(&#x60;Flexberry Lookup Mixin::updateLookupValue ${options.relationName}&#x60;);
+      model.set(options.relationName, options.newRelationValue);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
+      this.get(&#x27;lookupEventsService&#x27;).lookupOnChangeTrigger(componentName, options.newRelationValue);
+    },
+  },
+
+  /**
+    This method refreshes displayed data on lookup modal window.
+
+    It reloads current lookup modal window in order to show loading image.
+    Then proper request to load data is formed (it considers current page, filter, etc).
+    After the data loading data are displayed on lookup modal window.
+
+    This method is called during the first data loading
+    and after each change of request parameters (current page, filter, etc) on lookup modal window controller
+    (it is implemented by sending handler on this method to lookup modal window controller).
+
+    @method _reloadModalData
+    @private
+
+    @param {String} currentContext Current execution context of this method.
+    @param {Object} options Parameters to load proper data and to tune modal lookup window outlook.
+    @param {String} [options.relatedToType] Type of records to load.
+    @param {String} [options.projectionName] Projection name to load data by.
+    @param {String} [options.perPage] Number of records to display on page.
+    @param {String} [options.page] Current page to display on lookup window.
+    @param {String} [options.sorting] Current sorting.
+    @param {String} [options.filter] Current filter.
+    @param {String} [options.filterCondition] Current filter condition.
+    @param {String} [options.predicate] Current limit predicate.
+    @param {String} [options.title] Title of modal lookup window.
+    @param {String} [options.saveTo] Options to save selected lookup value.
+    @param {String} [options.currentLookupRow] Current lookup value.
+    @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
+    @param {String} [options.componentName] Component name of lookup component.
+    @param {Boolean} [options.notUseUserSettings] Not use user settings in the list component on lookup window.
+  */
+  _reloadModalData(currentContext, options) {
+    let lookupSettings = get(options, &#x27;modalDialogSettings.lookupSettings&#x27;) || currentContext.get(&#x27;lookupSettings&#x27;);
+    assert(&#x27;Lookup settings are undefined.&#x27;, lookupSettings);
+    assert(&#x27;Lookup template is undefined.&#x27;, lookupSettings.template);
+    assert(&#x27;Lookup content template is undefined.&#x27;, lookupSettings.contentTemplate);
+    assert(&#x27;Lookup loader template is undefined.&#x27;, lookupSettings.loaderTemplate);
+
+    let reloadData = merge({
+      initialLoad: false,
+      relatedToType: undefined,
+      projectionName: undefined,
+
+      perPage: undefined,
+      page: undefined,
+      sorting: undefined,
+      filters: undefined,
+      filter: undefined,
+      filterCondition: undefined,
+      predicate: undefined,
+      hierarchicalAttribute: undefined,
+      hierarchyPaging: false,
+
+      title: undefined,
+      saveTo: undefined,
+      currentLookupRow: undefined,
+      customPropertiesData: undefined,
+      componentName: undefined,
+      folvComponentName: undefined,
+      notUseUserSettings: undefined,
+      lookupSettings
+    }, options);
+
+    assert(&#x27;Reload data are not defined fully.&#x27;,
+      reloadData.relatedToType ||
+      reloadData.projectionName ||
+      reloadData.projection ||
+      reloadData.saveTo);
+
+    let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
+    let projection = get(modelConstructor, &#x60;projections.${reloadData.projectionName}&#x60;);
+    if (!projection) {
+      throw new Error(
+        &#x60;No projection with &#x27;${reloadData.projectionName}&#x27; name defined in &#x27;${reloadData.relatedToType}&#x27; model.&#x60;);
+    }
+
+    let limitPredicate = reloadData.predicate;
+    if (limitPredicate &amp;&amp; !(limitPredicate instanceof BasePredicate)) {
+      throw new Error(&#x27;Limit predicate is not correct. It has to be instance of BasePredicate.&#x27;);
+    }
+
+    let controller = currentContext.get(&#x27;lookupController&#x27;);
+    let queryParameters = {
+      componentName: reloadData.componentName,
+      modelName: reloadData.relatedToType,
+      projectionName: reloadData.projectionName,
+      perPage: reloadData.perPage ? reloadData.perPage : this.get(&#x27;lookupModalWindowPerPage&#x27;),
+      page: reloadData.page ? reloadData.page : 1,
+      sorting: reloadData.sorting ? reloadData.sorting : [],
+      filters: reloadData.filters,
+      filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
+      predicate: limitPredicate,
+      hierarchicalAttribute: controller.get(&#x27;inHierarchicalMode&#x27;) ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging
+    };
+
+    controller.clear(reloadData.initialLoad);
+
+    const modalDialogSettings = controller.get(&#x27;modalDialogSettings&#x27;) || merge(merge({}, reloadData.modalDialogSettings), {
+      lookupSettings,
+      settings: merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings.settings),
+    });
+
+    controller.setProperties({
+      modelProjection: projection,
+      title: reloadData.title,
+      saveTo: reloadData.saveTo,
+      currentLookupRow: reloadData.currentLookupRow,
+      customPropertiesData: reloadData.customPropertiesData,
+      componentName: reloadData.componentName,
+      folvComponentName: reloadData.folvComponentName,
+      notUseUserSettings: reloadData.notUseUserSettings,
+      modelName: reloadData.relatedToType,
+
+      perPage: queryParameters.perPage,
+      page: queryParameters.page,
+      sort: serializeSortingParam(queryParameters.sorting, controller.get(&#x27;sortDefaultValue&#x27;)),
+      filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
+      predicate: limitPredicate,
+      hierarchicalAttribute: controller.get(&#x27;inHierarchicalMode&#x27;) ? reloadData.hierarchicalAttribute : undefined,
+      hierarchyPaging: reloadData.hierarchyPaging,
+
+      modelType: reloadData.relatedToType,
+      projectionName: reloadData.projectionName,
+      reloadContext: currentContext,
+      reloadDataHandler: currentContext._reloadModalData,
+      modalDialogSettings: modalDialogSettings,
+    });
+
+    if (reloadData.initialLoad) {
+      currentContext.send(&#x27;showModalDialog&#x27;, lookupSettings.template);
+    }
+
+    controller.set(&#x27;reloadObserverIsActive&#x27;, true);
+
+    let loadingParams = {
+      view: lookupSettings.template,
+      outlet: &#x27;modal-content&#x27;
+    };
+    currentContext.send(&#x27;showModalDialog&#x27;, lookupSettings.loaderTemplate, null, loadingParams);
+
+    currentContext.reloadList(queryParameters).then(data =&gt; {
+      currentContext.get(&#x27;lookupEventsService&#x27;).lookupDialogOnDataLoadedTrigger(queryParameters.componentName, data, reloadData.initialLoad);
+      if (!isNone(currentContext.get(&#x27;objectlistviewEventsService&#x27;))) {
+        currentContext.get(&#x27;objectlistviewEventsService&#x27;).setLoadingState(&#x27;&#x27;);
+      }
+
+      data.set(&#x27;sorting&#x27;, queryParameters.sorting);
+      currentContext.send(&#x27;removeModalDialog&#x27;, loadingParams);
+      currentContext.send(&#x27;showModalDialog&#x27;, lookupSettings.contentTemplate, {
+        controller: controller,
+        model: data
+      }, loadingParams);
+    });
+  },
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

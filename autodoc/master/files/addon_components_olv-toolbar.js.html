@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>addon/components/olv-toolbar.js - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>master</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDatePicker", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropDown", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySimpledatetime", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessage", "classes/FlexberryValidationsummary", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDatePicker.html">FlexberryDatePicker</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropDown.html">FlexberryDropDown</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessage.html">FlexberryValidationmessage</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummary.html">FlexberryValidationsummary</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>addon/components/olv-toolbar.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+  @module ember-flexberry
+*/
+
+import Ember from &#x27;ember&#x27;;
+import FlexberryBaseComponent from &#x27;./flexberry-base-component&#x27;;
+import serializeSortingParam from &#x27;../utils/serialize-sorting-param&#x27;;
+const { getOwner } = Ember;
+
+/**
+  @class OlvToolbar
+  @extends FlexberryBaseComponent
+*/
+export default FlexberryBaseComponent.extend({
+  /**
+    Controller for model.
+
+    @property modelController
+    @type Object
+  */
+  modelController: null,
+
+  /**
+    Route for edit form by click row.
+
+    @property editFormRoute
+    @type String
+  */
+  editFormRoute: undefined,
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service(&#x27;objectlistview-events&#x27;),
+
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: Ember.inject.service(),
+
+  /**
+    Flag to use creation button at toolbar.
+
+    @property createNewButton
+    @type Boolean
+    @default false
+  */
+  createNewButton: false,
+
+  /**
+    Flag to specify whether the create button is enabled.
+
+    @property enableCreateNewButton
+    @type Boolean
+    @default true
+  */
+  enableCreateNewButton: true,
+
+  /**
+    Flag to use refresh button at toolbar.
+
+    @property refreshButton
+    @type Boolean
+    @default false
+  */
+  refreshButton: false,
+
+  /**
+    Flag to use delete button at toolbar.
+
+    @property deleteButton
+    @type Boolean
+    @default false
+  */
+  deleteButton: false,
+
+  /**
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  colsConfigButton: true,
+
+  /**
+    Flag to use advLimitButton button at toolbar.
+
+    @property advLimitButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  advLimitButton: false,
+
+  /**
+    Flag indicates whether to show exportExcelButton button at toolbar.
+
+    @property exportExcelButton
+    @type Boolean
+    @default false
+  */
+  exportExcelButton: false,
+
+  /**
+    Flag to use filter button at toolbar.
+
+    @property filterButton
+    @type Boolean
+    @default false
+  */
+  filterButton: false,
+
+  /**
+    Used to specify default &#x27;filter by any match&#x27; field text.
+
+    @property filterText
+    @type String
+    @default null
+  */
+  filterText: null,
+
+  /**
+    Indicates that the &#x60;flexberry-objectlistview&#x60; component is used for the &#x60;flexberry-lookup&#x60; component.
+
+    @property inLookup
+    @type Boolean
+    @default false
+  */
+  inLookup: false,
+
+  /**
+    Used to link to objectListView with same componentName.
+
+    @property componentName
+    @type String
+    @default &#x27;&#x27;
+  */
+  componentName: &#x27;&#x27;,
+
+  /**
+    The name of the &#x60;flexberry-lookup&#x60; component for which the &#x60;flexberry-objectlistview&#x60; component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
+
+  /**
+    The flag to specify whether the delete button is enabled.
+
+    @property enableDeleteButton
+    @type Boolean
+    @default true
+  */
+  enableDeleteButton: true,
+
+  /**
+  The flag to specify whether the select all button is on.
+
+    @property selectAll
+    @type Boolean
+    @default true
+  */
+  allSelect: false,
+
+  /**
+    Name of action to send out, action triggered by click on user button.
+
+    @property customButtonAction
+    @type String
+    @default &#x27;customButtonAction&#x27;
+  */
+  customButtonAction: &#x27;customButtonAction&#x27;,
+
+  /**
+    See {{#crossLink &quot;FlexberryObjectlistviewComponent/customButtons:property&quot;}}{{/crossLink}}.
+
+    @property customButtons
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
+    @property listNamedUserSettings
+  */
+  listNamedUserSettings: undefined,
+
+  /**
+    Current store. Used for loading data for autocomplete and for dropdown.
+
+    @property store
+    @type Projection.OnlineStore
+    @readOnly
+  */
+  store: Ember.inject.service(&#x27;store&#x27;),
+
+  _listNamedUserSettings: Ember.observer(&#x27;listNamedUserSettings&#x27;, function() {
+    let listNamedUserSettings = this.get(&#x27;listNamedUserSettings&#x27;);
+    for (let namedSetting in listNamedUserSettings) {
+      this._addNamedSetting(namedSetting, this.get(&#x27;componentName&#x27;));
+    }
+
+    this._sortNamedSetting();
+  }),
+
+  /**
+    @property listNamedExportSettings
+  */
+  listNamedExportSettings: undefined,
+
+  _listNamedExportSettings: Ember.observer(&#x27;listNamedExportSettings&#x27;, function() {
+    let listNamedExportSettings = this.get(&#x27;listNamedExportSettings&#x27;);
+    for (let namedSetting in listNamedExportSettings) {
+      let settName = namedSetting.split(&#x27;/&#x27;);
+      settName.shift();
+      settName = settName.join(&#x27;/&#x27;);
+      this._addNamedSetting(settName, this.get(&#x27;componentName&#x27;), true);
+    }
+
+    this._sortNamedSetting(true);
+  }),
+
+  /**
+    Current adv limits.
+
+    @property namedAdvLimits
+    @type Object
+  */
+  namedAdvLimits: undefined,
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    @property menus
+    @readOnly
+  */
+  menus: Ember.computed(() =&gt; Ember.A([
+    { name: &#x27;use&#x27;, icon: &#x27;checkmark box&#x27; },
+    { name: &#x27;edit&#x27;, icon: &#x27;setting&#x27; },
+    { name: &#x27;remove&#x27;, icon: &#x27;remove&#x27; }
+  ])).readOnly(),
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems: Ember.computed(&#x27;i18n.locale&#x27;, &#x27;userSettingsService.isUserSettingsServiceEnabled&#x27;, function() {
+      let i18n = this.get(&#x27;i18n&#x27;);
+      let menus = [
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.use-setting-title&#x27;,
+          items: []
+        },
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.edit-setting-title&#x27;,
+          items: []
+        },
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.remove-setting-title&#x27;,
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: &#x27;dropdown icon&#x27;,
+        iconAlignment: &#x27;right&#x27;,
+        title: &#x27;&#x27;,
+        items: [],
+        localeKey: &#x27;&#x27;
+      };
+      let createSettitingItem = {
+        icon: &#x27;table icon&#x27;,
+        iconAlignment: &#x27;left&#x27;,
+        title: i18n.t(&#x27;components.olv-toolbar.create-setting-title&#x27;),
+        localeKey: &#x27;components.olv-toolbar.create-setting-title&#x27;
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
+
+      let setDefaultItem = {
+        icon: &#x27;remove circle icon&#x27;,
+        iconAlignment: &#x27;left&#x27;,
+        title: i18n.t(&#x27;components.olv-toolbar.set-default-setting-title&#x27;),
+        localeKey: &#x27;components.olv-toolbar.set-default-setting-title&#x27;
+      };
+      rootItem.items[rootItem.items.length] = setDefaultItem;
+      if (this.get(&#x27;colsConfigMenu&#x27;).environment &amp;&amp; this.get(&#x27;colsConfigMenu&#x27;).environment === &#x27;development&#x27;) {
+        let showDefaultItem = {
+          icon: &#x27;unhide icon&#x27;,
+          iconAlignment: &#x27;left&#x27;,
+          title: i18n.t(&#x27;components.olv-toolbar.show-default-setting-title&#x27;),
+          localeKey: &#x27;components.olv-toolbar.show-default-setting-title&#x27;
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
+
+      return this.get(&#x27;userSettingsService&#x27;).isUserSettingsServiceEnabled ? [rootItem] : [];
+    }
+  ),
+
+  /**
+    @property advLimitItems
+    @readOnly
+  */
+  advLimitItems: Ember.computed(&#x27;i18n.locale&#x27;, &#x27;advLimit.isAdvLimitServiceEnabled&#x27;, &#x27;namedAdvLimits&#x27;, function() {
+    const i18n = this.get(&#x27;i18n&#x27;);
+    const rootItem = {
+      icon: &#x27;dropdown icon&#x27;,
+      iconAlignment: &#x27;right&#x27;,
+      title: &#x27;&#x27;,
+      items: Ember.A(),
+      localeKey: &#x27;&#x27;
+    };
+    const createLimitItem = {
+      icon: &#x27;flask icon&#x27;,
+      iconAlignment: &#x27;left&#x27;,
+      title: i18n.t(&#x27;components.olv-toolbar.create-limit-title&#x27;),
+      localeKey: &#x27;components.olv-toolbar.create-limit-title&#x27;
+    };
+    rootItem.items.addObject(createLimitItem);
+
+    const limitItems = this.get(&#x27;namedAdvLimits&#x27;);
+    const menus = this.get(&#x27;menus&#x27;);
+    const editMenus = Ember.A();
+    menus.forEach(menu =&gt; {
+      const menuSubitem = this._createMenuSubitems(limitItems, menu.icon + &#x27; icon&#x27;);
+      if (menuSubitem.length &gt; 0) {
+        editMenus.addObject({
+          icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x60;components.olv-toolbar.${menu.name}-limit-title&#x60;,
+          items: menuSubitem
+        });
+      }
+    }, this);
+
+    if (editMenus.length &gt; 0) {
+      rootItem.items.addObjects(editMenus);
+    }
+
+    const setDefaultItem = {
+      icon: &#x27;remove circle icon&#x27;,
+      iconAlignment: &#x27;left&#x27;,
+      title: i18n.t(&#x27;components.olv-toolbar.set-default-limit-title&#x27;),
+      localeKey: &#x27;components.olv-toolbar.set-default-limit-title&#x27;
+    };
+    rootItem.items.addObject(setDefaultItem);
+
+    return this.get(&#x27;advLimit.isAdvLimitServiceEnabled&#x27;) ? Ember.A([rootItem]) : Ember.A();
+  }),
+
+  _colsSettingsItems: Ember.observer(&#x27;colsSettingsItems&#x27;, function() {
+    this._updateListNamedUserSettings(this.get(&#x27;componentName&#x27;));
+  }),
+
+  /**
+    @property exportExcelItems
+    @readOnly
+  */
+  exportExcelItems:  Ember.computed(function() {
+      let i18n = this.get(&#x27;i18n&#x27;);
+      let menus = [
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.export-title&#x27;,
+          items: []
+        },
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.edit-setting-title&#x27;,
+          items: []
+        },
+        { icon: &#x27;angle right icon&#x27;,
+          iconAlignment: &#x27;right&#x27;,
+          localeKey: &#x27;components.olv-toolbar.remove-setting-title&#x27;,
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: &#x27;dropdown icon&#x27;,
+        iconAlignment: &#x27;right&#x27;,
+        title: &#x27;&#x27;,
+        items: [],
+        localeKey: &#x27;&#x27;
+      };
+      let createSettitingItem = {
+        icon: &#x27;file excel outline icon&#x27;,
+        iconAlignment: &#x27;left&#x27;,
+        title: i18n.t(&#x27;components.olv-toolbar.create-setting-title&#x27;),
+        localeKey: &#x27;components.olv-toolbar.create-setting-title&#x27;
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
+
+      return [rootItem];
+    }
+  ),
+
+  /**
+    Flag shows enable-state of delete button.
+    If there are selected rows button is enabled. Otherwise - not.
+
+    @property isDeleteButtonEnabled
+    @type Boolean
+    @default false
+  */
+  isDeleteButtonEnabled: false,
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  showFiltersInModal: false,
+
+  /**
+    Stores the text from &quot;Filter by any match&quot; input field.
+
+    @property filterByAnyMatchText
+    @type String
+  */
+  filterByAnyMatchText: Ember.computed.oneWay(&#x27;filterText&#x27;),
+
+  /**
+    Caption to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogCaption
+    @type String
+    @default &#x27;&#x27;
+    @private
+  */
+  _infoModalDialogCaption: &#x27;&#x27;,
+
+  /**
+    Content to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogContent
+    @type String
+    @default &#x27;&#x27;
+    @private
+  */
+  _infoModalDialogContent: &#x27;&#x27;,
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type &lt;a href=&quot;http://api.jquery.com/Types/#jQuery&quot;&gt;JQueryObject&lt;/a&gt;
+    @default null
+    @private
+  */
+  _infoModalDialog: null,
+
+  /**
+    The name of the component for themodal window.
+    If the &#x60;flexberry-objectlistview&#x60; component is used for the &#x60;flexberry-lookup&#x60; component, we must pass the name of the &#x60;flexberry-lookup&#x60; component to the modal window.
+
+    @private
+    @property _componentNameForModalWindow
+    @type String
+  */
+  _componentNameForModalWindow: Ember.computed(&#x27;inLookup&#x27;, &#x27;componentName&#x27;, &#x27;lookupComponentName&#x27;, function () {
+    return this.get(&#x27;inLookup&#x27;) ? this.get(&#x27;lookupComponentName&#x27;) : this.get(&#x27;componentName&#x27;);
+  }),
+
+  /**
+   Shows info modal dialog.
+
+   @method showInfoModalDialog
+   @param {String} infoCaption Info caption (window header caption).
+   @param {String} infoContent Info content (window body content).
+   @returns {String} Info content.
+   */
+  showInfoModalDialog(infoCaption, infoContent) {
+    let infoModalDialog = this.get(&#x27;_infoModalDialog&#x27;);
+    if (infoModalDialog &amp;&amp; infoModalDialog.modal) {
+      this.set(&#x27;_infoModalDialogCaption&#x27;, infoCaption);
+      this.set(&#x27;_infoModalDialogContent&#x27;, infoContent);
+      infoModalDialog.modal(&#x27;show&#x27;);
+    }
+
+    let oLVToolbarInfoCopyButton = infoModalDialog.find(&#x27;.olv-toolbar-info-modal-dialog-copy-button&#x27;);
+    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get(&#x27;i18n&#x27;).t(&#x27;components.olv-toolbar.copy&#x27;);
+    oLVToolbarInfoCopyButton.removeClass(&#x27;disabled&#x27;);
+    return infoContent;
+  },
+
+  actions: {
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.refresh
+      @public
+    */
+    refresh() {
+      this.get(&#x27;objectlistviewEventsService&#x27;).refreshListTrigger(this.get(&#x27;componentName&#x27;));
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.createNew
+      @public
+    */
+    createNew() {
+      let editFormRoute = this.get(&#x27;editFormRoute&#x27;);
+      Ember.assert(&#x27;Property editFormRoute is not defined in controller&#x27;, editFormRoute);
+      let modelController = this.get(&#x27;modelController&#x27;);
+      this.get(&#x27;objectlistviewEventsService&#x27;).setLoadingState(&#x27;loading&#x27;);
+      let appController = getOwner(this).lookup(&#x27;controller:application&#x27;);
+      let thisRouteName = appController.get(&#x27;currentRouteName&#x27;);
+      let thisRecordId = modelController.get(&#x27;model.id&#x27;);
+      let transitionOptions = {
+        queryParams: {
+          parentParameters: {
+            parentRoute: thisRouteName,
+            parentRouteRecordId: thisRecordId
+          }
+        }
+      };
+
+      Ember.run.later((function() {
+        modelController.transitionToRoute(editFormRoute + &#x27;.new&#x27;, transitionOptions);
+      }), 50);
+    },
+
+    /**
+      Delete selected rows.
+
+      @method actions.delete
+      @public
+    */
+    delete() {
+      let confirmDeleteRows = this.get(&#x27;confirmDeleteRows&#x27;);
+      let possiblePromise = null;
+
+      if (confirmDeleteRows) {
+        Ember.assert(&#x27;Error: confirmDeleteRows must be a function.&#x27;, typeof confirmDeleteRows === &#x27;function&#x27;);
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
+          return;
+        }
+      }
+
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() =&gt; {
+          this._confirmDeleteRows();
+        });
+      } else {
+        this._confirmDeleteRows();
+      }
+    },
+
+    /**
+      Filters the content by &quot;Filter by any match&quot; field value.
+
+      @method actions.filterByAnyMatch
+      @public
+    */
+    filterByAnyMatch() {
+      let componentName = this.get(&#x27;componentName&#x27;);
+      this.get(&#x27;objectlistviewEventsService&#x27;).filterByAnyMatchTrigger(componentName, this.get(&#x27;filterByAnyMatchText&#x27;));
+    },
+
+    /**
+      Checks if &quot;Enter&quot; button was pressed.
+      If &quot;Enter&quot; button was pressed then filters the content by &quot;Filter by any match&quot; field value.
+
+      @method actions.keyDownFilterAction
+      @public
+    */
+    keyDownFilterAction(currentValue, e) {
+      if (e.keyCode === 13) {
+        this.send(&#x27;filterByAnyMatch&#x27;);
+        e.preventDefault();
+        return false;
+      }
+    },
+
+    /**
+      Remove filter from url.
+
+      @method actions.removeFilter
+      @public
+    */
+    removeFilter() {
+      let _this = this;
+
+      Ember.run.later((function() {
+        _this.set(&#x27;filterByAnyMatchText&#x27;, null);
+        let componentName = _this.get(&#x27;componentName&#x27;);
+        _this.get(&#x27;objectlistviewEventsService&#x27;).filterByAnyMatchTrigger(componentName, null);
+      }), 50);
+    },
+
+    /**
+      Action for custom button.
+
+      @method actions.customButtonAction
+      @public
+      @param {Function|String} action The action or name of action.
+    */
+    customButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === &#x27;function&#x27;) {
+        action();
+      } else if (actionType === &#x27;string&#x27;) {
+        this.sendAction(&#x27;customButtonAction&#x27;, action);
+      } else {
+        throw new Error(&#x27;Unsupported action type for custom buttons.&#x27;);
+      }
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog(settingName) {
+      Ember.assert(&#x27;showConfigDialog:: componentName is not defined in flexberry-objectlistview component&#x27;, this.componentName);
+      this.get(&#x27;modelController&#x27;).send(&#x27;showConfigDialog&#x27;, this.get(&#x27;_componentNameForModalWindow&#x27;), settingName);
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showAdvLimitDialog(settingName) {
+      Ember.assert(&#x27;showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component&#x27;, this.componentName);
+      this.get(&#x27;modelController&#x27;).send(&#x27;showAdvLimitDialog&#x27;, this.get(&#x27;_componentNameForModalWindow&#x27;), settingName);
+    },
+
+    /**
+      Action to show filters tool.
+
+      @method actions.showFiltersTool
+      @public
+    */
+    showFiltersTool() {
+      const showFiltersInModal = this.get(&#x27;showFiltersInModal&#x27;);
+
+      if (showFiltersInModal) {
+        const componentName = this.get(&#x27;componentName&#x27;);
+        const columns = this.get(&#x27;objectlistviewEventsService&#x27;).getOlvFilterColumnsArray(componentName);
+
+        this.get(&#x27;modelController&#x27;).send(&#x27;showFiltersDialog&#x27;, componentName, columns);
+      } else {
+        this.sendAction(&#x27;toggleStateFilters&#x27;);
+      }
+    },
+
+    /**
+      Action to show export dialog.
+
+      @method actions.showExportDialog
+      @public
+    */
+    showExportDialog(settingName, immediateExport) {
+      let settName = settingName ? &#x27;ExportExcel/&#x27; + settingName : settingName;
+      Ember.assert(&#x27;showExportDialog:: componentName is not defined in flexberry-objectlistview component&#x27;, this.componentName);
+      this.get(&#x27;modelController&#x27;).send(&#x27;showConfigDialog&#x27;, this.get(&#x27;_componentNameForModalWindow&#x27;), settName, true, immediateExport);
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find(&#x27;i&#x27;);
+      let namedSettingSpans = Ember.$(e.currentTarget).find(&#x27;span&#x27;);
+      if (iTags.length &lt;= 0 || namedSettingSpans.length &lt;= 0) {
+        return;
+      }
+
+      let router = getOwner(this).lookup(&#x27;router:main&#x27;);
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName = this.get(&#x27;componentName&#x27;);
+      let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+
+      switch (className) {
+        case &#x27;table icon&#x27;:
+          this.send(&#x27;showConfigDialog&#x27;);
+          break;
+        case &#x27;checkmark box icon&#x27;:
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listNamedUserSettings[namedSetting];
+          userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
+            then(record =&gt; {
+              let currentController = this.get(&#x27;currentController&#x27;);
+              let userSettingsApplyFunction = currentController.get(&#x27;userSettingsApply&#x27;);
+              if (userSettingsApplyFunction instanceof Function) {
+                userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
+              } else {
+                let sort = serializeSortingParam(colsConfig.sorting);
+                router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              }
+            });
+          break;
+        case &#x27;setting icon&#x27;:
+          this.send(&#x27;showConfigDialog&#x27;, namedSetting);
+          break;
+        case &#x27;remove icon&#x27;:
+          userSettingsService.deleteUserSetting(componentName, namedSetting)
+          .then(result =&gt; {
+            this.get(&#x27;colsConfigMenu&#x27;).deleteNamedSettingTrigger(namedSetting, componentName);
+            alert(&#x27;Настройка &#x27; + namedSetting + &#x27; удалена&#x27;);
+          });
+          break;
+        case &#x27;remove circle icon&#x27;:
+          if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+            alert(&#x27;No default usersettings&#x27;);
+            break;
+          }
+
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
+          .then(record =&gt; {
+            let currentController = this.get(&#x27;currentController&#x27;);
+            let userSettingsApplyFunction = currentController.get(&#x27;userSettingsApply&#x27;);
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
+            } else {
+              let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            }
+          });
+          break;
+        case &#x27;unhide icon&#x27;:
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(componentName);
+          let caption = this.get(&#x27;i18n&#x27;).t(&#x27;components.olv-toolbar.show-setting-caption&#x27;) + router.currentPath + &#x27;.js&#x27;;
+          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, &#x27;  &#x27;));
+          break;
+      }
+    },
+
+    /**
+      Handler click on flexberry-menu of advLimits.
+
+      @method actions.onLimitMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onLimitMenuItemClick(e) {
+      const iTags = Ember.$(e.currentTarget).find(&#x27;i&#x27;);
+      const namedLimitSpans = Ember.$(e.currentTarget).find(&#x27;span&#x27;);
+      if (iTags.length &lt;= 0 || namedLimitSpans.length &lt;= 0) {
+        return;
+      }
+
+      const className = iTags.get(0).className;
+      const advLimitName = namedLimitSpans.get(0).innerText;
+      const componentName = this.get(&#x27;componentName&#x27;);
+      const advLimitService = this.get(&#x27;advLimit&#x27;);
+
+      switch (className) {
+        case &#x27;flask icon&#x27;:
+          this.send(&#x27;showAdvLimitDialog&#x27;);
+          break;
+        case &#x27;checkmark box icon&#x27;:
+          const advLimit = this.get(&#x60;namedAdvLimits.${advLimitName}&#x60;);
+          advLimitService.saveAdvLimit(advLimit, componentName).
+            then(() =&gt; {
+              this.send(&#x27;refresh&#x27;);
+            });
+          break;
+        case &#x27;setting icon&#x27;:
+          this.send(&#x27;showAdvLimitDialog&#x27;, advLimitName);
+          break;
+        case &#x27;remove icon&#x27;:
+          advLimitService.deleteAdvLimit(componentName, advLimitName)
+          .then(() =&gt; {
+            this.get(&#x27;colsConfigMenu&#x27;).updateNamedAdvLimitTrigger(componentName);
+            alert(
+              this.get(&#x27;i18n&#x27;).t(&#x27;components.advlimit-dialog-content.limit&#x27;) +
+              &#x27;&quot;&#x27; + advLimitName + &#x27;&quot;&#x27; +
+              this.get(&#x27;i18n&#x27;).t(&#x27;components.advlimit-dialog-content.is-deleted&#x27;)
+            );
+          });
+          break;
+        case &#x27;remove circle icon&#x27;:
+          advLimitService.saveAdvLimit(&#x27;&#x27;, componentName)
+          .then(() =&gt; {
+            this.send(&#x27;refresh&#x27;);
+          });
+          break;
+      }
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onExportMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onExportMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find(&#x27;i&#x27;);
+      let namedSettingSpans = Ember.$(e.currentTarget).find(&#x27;span&#x27;);
+      if (iTags.length &lt;= 0 || namedSettingSpans.length &lt;= 0) {
+        return;
+      }
+
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName = this.get(&#x27;componentName&#x27;);
+      let userSettingsService = this.get(&#x27;userSettingsService&#x27;);
+
+      switch (className) {
+        case &#x27;file excel outline icon&#x27;:
+          this.send(&#x27;showExportDialog&#x27;);
+          break;
+        case &#x27;checkmark box icon&#x27;:
+          this.send(&#x27;showExportDialog&#x27;, namedSetting, true);
+          break;
+        case &#x27;setting icon&#x27;:
+          this.send(&#x27;showExportDialog&#x27;, namedSetting);
+          break;
+        case &#x27;remove icon&#x27;:
+          userSettingsService.deleteUserSetting(componentName, namedSetting, true)
+          .then(result =&gt; {
+            this.get(&#x27;colsConfigMenu&#x27;).deleteNamedSettingTrigger(namedSetting, componentName);
+            alert(&#x27;Настройка &#x27; + namedSetting + &#x27; удалена&#x27;);
+          });
+          break;
+      }
+    },
+
+    copyJSONContent(event) {
+      let infoModalDialog = this.get(&#x27;_infoModalDialog&#x27;);
+      infoModalDialog.find(&#x27;.olv-toolbar-info-modal-dialog-content textarea&#x27;).select();
+      let copied = document.execCommand(&#x27;copy&#x27;);
+      let oLVToolbarInfoCopyButton = infoModalDialog.find(&#x27;.olv-toolbar-info-modal-dialog-copy-button&#x27;);
+      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get(&#x27;i18n&#x27;).t(copied ? &#x27;components.olv-toolbar.copied&#x27; : &#x27;components.olv-toolbar.ctrlc&#x27;);
+      oLVToolbarInfoCopyButton.addClass(&#x27;disabled&#x27;);
+    }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
+    this._super(...arguments);
+
+    let componentName = this.get(&#x27;componentName&#x27;);
+    if (this.get(&#x27;deleteButton&#x27;) === true &amp;&amp; !componentName) {
+      throw new Error(&#x27;Name of flexberry-objectlictview component was not defined.&#x27;);
+    }
+
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvRowSelected&#x27;, this, this._rowSelected);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;olvRowsDeleted&#x27;, this, this._rowsDeleted);
+    this.get(&#x27;objectlistviewEventsService&#x27;).on(&#x27;updateSelectAll&#x27;, this, this._selectAll);
+
+    this.get(&#x27;colsConfigMenu&#x27;).on(&#x27;updateNamedSetting&#x27;, this, this._updateListNamedUserSettings);
+    this.get(&#x27;colsConfigMenu&#x27;).on(&#x27;addNamedSetting&#x27;, this, this._addNamedSetting);
+    this.get(&#x27;colsConfigMenu&#x27;).on(&#x27;deleteNamedSetting&#x27;, this, this._deleteNamedSetting);
+    this.get(&#x27;colsConfigMenu&#x27;).on(&#x27;updateNamedAdvLimit&#x27;, this, this._updateNamedAdvLimits);
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    // Initialize SemanticUI modal dialog, and remember it in a component property,
+    // because after call to infoModalDialog.modal its html will disappear from DOM.
+    let infoModalDialog = this.$(&#x27;.olv-toolbar-info-modal-dialog&#x27;);
+    infoModalDialog.modal(&#x27;setting&#x27;, &#x27;closable&#x27;, true);
+    this.set(&#x27;_infoModalDialog&#x27;, infoModalDialog);
+    let modelController = this.get(&#x27;modelController&#x27;);
+    if (Ember.isNone(modelController)) {
+      this.set(&#x27;modelController&#x27;, this.get(&#x27;currentController&#x27;));
+    }
+
+    this._updateListNamedUserSettings(this.get(&#x27;componentName&#x27;));
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvRowSelected&#x27;, this, this._rowSelected);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;olvRowsDeleted&#x27;, this, this._rowsDeleted);
+    this.get(&#x27;objectlistviewEventsService&#x27;).off(&#x27;updateSelectAll&#x27;, this, this._selectAll);
+    this.get(&#x27;colsConfigMenu&#x27;).off(&#x27;updateNamedSetting&#x27;, this, this._updateListNamedUserSettings);
+    this.get(&#x27;colsConfigMenu&#x27;).off(&#x27;addNamedSetting&#x27;, this, this._addNamedSetting);
+    this.get(&#x27;colsConfigMenu&#x27;).off(&#x27;deleteNamedSetting&#x27;, this, this._deleteNamedSetting);
+    this.get(&#x27;colsConfigMenu&#x27;).off(&#x27;updateNamedAdvLimit&#x27;, this, this._updateNamedAdvLimits);
+    this._super(...arguments);
+  },
+
+  /**
+    Event handler for &quot;row has been selected&quot; event in objectlistview.
+
+    @method _rowSelected
+    @private
+
+    @param {String} componentName The name of objectlistview component
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
+    @param {Number} count Count of selected rows in objectlistview
+    @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
+  */
+  _rowSelected(componentName, record, count, checked, recordWithKey) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      this.set(&#x27;isDeleteButtonEnabled&#x27;, count &gt; 0 &amp;&amp; this.get(&#x27;enableDeleteButton&#x27;));
+    }
+  },
+
+  /**
+    Handler for &quot;Olv rows deleted&quot; event in objectlistview.
+
+    @method _rowsDeleted
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} count Number of deleted records
+  */
+  _rowsDeleted(componentName, count) {
+    if (this.get(&#x27;allSelect&#x27;)) {
+      this.get(&#x27;objectlistviewEventsService&#x27;).updateSelectAllTrigger(this.get(&#x27;componentName&#x27;), false);
+    }
+
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      this.set(&#x27;isDeleteButtonEnabled&#x27;, false);
+    }
+  },
+
+  _updateListNamedUserSettings(componentName) {
+    if (!(this.get(&#x27;userSettingsService&#x27;).isUserSettingsServiceEnabled &amp;&amp; componentName === this.get(&#x27;componentName&#x27;))) {
+      return;
+    }
+
+    this._resetNamedUserSettings();
+    Ember.set(this, &#x27;listNamedUserSettings&#x27;, this.get(&#x27;userSettingsService&#x27;).getListCurrentNamedUserSetting(this.componentName));
+    Ember.set(this, &#x27;listNamedExportSettings&#x27;, this.get(&#x27;userSettingsService&#x27;).getListCurrentNamedUserSetting(this.componentName, true));
+  },
+
+  _resetNamedUserSettings() {
+    let menus = this.get(&#x27;menus&#x27;);
+    for (let i = 0; i &lt; menus.length; i++) {
+      Ember.set(this.get(&#x27;colsSettingsItems&#x27;)[0].items[i + 1], &#x27;items&#x27;, []);
+      Ember.set(this.get(&#x27;exportExcelItems&#x27;)[0].items[i + 1], &#x27;items&#x27;, []);
+    }
+  },
+
+  _addNamedSetting(namedSetting, componentName, isExportExcel) {
+    if (componentName !== this.get(&#x27;componentName&#x27;)) {
+      return;
+    }
+
+    let menus = this.get(&#x27;menus&#x27;);
+    for (let i = 0; i &lt; menus.length; i++) {
+      let icon = menus[i].icon + &#x27; icon&#x27;;
+      let subItems = isExportExcel ? this.get(&#x27;exportExcelItems&#x27;)[0].items[i + 1].items :
+        this.get(&#x27;colsSettingsItems&#x27;)[0].items[i + 1].items;
+      let newSubItems = [];
+      let exist = false;
+      for (let j = 0; j &lt; subItems.length; j++) {
+        newSubItems[j] = subItems[j];
+        if (subItems[j].title === namedSetting) {
+          exist = true;
+        }
+      }
+
+      if (!exist) {
+        newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: &#x27;left&#x27; };
+      }
+
+      if (isExportExcel) {
+        Ember.set(this.get(&#x27;exportExcelItems&#x27;)[0].items[i + 1], &#x27;items&#x27;, newSubItems);
+      } else {
+        Ember.set(this.get(&#x27;colsSettingsItems&#x27;)[0].items[i + 1], &#x27;items&#x27;, newSubItems);
+      }
+    }
+
+    this._sortNamedSetting(isExportExcel);
+  },
+
+  _deleteNamedSetting(namedSetting, componentName) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      this._updateListNamedUserSettings(componentName);
+    }
+  },
+
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
+    if (componentName === this.get(&#x27;componentName&#x27;)) {
+      this.set(&#x27;allSelect&#x27;, selectAllParameter);
+      this.set(&#x27;isDeleteButtonEnabled&#x27;, selectAllParameter);
+    }
+  },
+
+  _sortNamedSetting(isExportExcel) {
+    for (let i = 0; i &lt; this.menus.length; i++) {
+      if (isExportExcel) {
+        this.get(&#x27;exportExcelItems&#x27;)[0].items[i + 1].items.sort((a, b) =&gt; a.title &gt; b.title);
+      } else {
+        this.get(&#x27;colsSettingsItems&#x27;)[0].items[i + 1].items.sort((a, b) =&gt; a.title &gt; b.title);
+      }
+    }
+  },
+
+  /**
+    Refresh current adv limits list.
+
+    @method _updateNamedAdvLimits
+
+    @param {String} componentName The name of objectlistview component
+  */
+  _updateNamedAdvLimits(componentName) {
+    const advLimitService = this.get(&#x27;advLimit&#x27;);
+    const thisComponentName = this.get(&#x27;componentName&#x27;);
+    if (!(advLimitService.get(&#x27;isAdvLimitServiceEnabled&#x27;) &amp;&amp; componentName === thisComponentName)) {
+      return;
+    }
+
+    this.set(&#x27;namedAdvLimits&#x27;, advLimitService.getNamedAdvLimits(thisComponentName));
+  },
+
+  /**
+    Creating menu subitems.
+
+    @method _createMenuSubitems
+
+    @param {Object} itemsNameList Object with items names as keys.
+    @param {String} icon Icon class for menu items.
+  */
+  _createMenuSubitems(itemsNameList, icon) {
+    if (Ember.isNone(itemsNameList)) {
+      return Ember.A();
+    }
+
+    const itemsNames = Ember.A(Object.keys(itemsNameList)).sortBy(&#x27;name&#x27;);
+    return itemsNames.map(name =&gt; { return { title: name, icon: icon, iconAlignment: &#x27;left&#x27; }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get(&#x27;componentName&#x27;);
+
+    if (!this.get(&#x27;allSelect&#x27;))
+    {
+      this.get(&#x27;objectlistviewEventsService&#x27;).deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get(&#x27;modelController.modelProjection.modelName&#x27;);
+
+      let filterQuery = {
+        predicate: this.get(&#x27;currentController.filtersPredicate&#x27;),
+        modelName: modelName
+      };
+
+      this.get(&#x27;objectlistviewEventsService&#x27;).deleteAllRowsTrigger(componentName, filterQuery);
+    }
+  }
+});
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

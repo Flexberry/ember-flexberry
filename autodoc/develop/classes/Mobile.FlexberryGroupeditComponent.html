@@ -1,0 +1,3236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mobile.FlexberryGroupeditComponent - Flexberry Documentation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="Flexberry Documentation" src="../assets/css/logo.png" style="max-height: 65%;" title="Flexberry Documentation">
+            Flexberry Documentation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>develop</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/AdvLimitDialogContentComponent", "classes/AdvLimitService", "classes/ApplicationInitializer", "classes/ApplicationInstanceInitializer", "classes/AppStateService", "classes/ArrayHelper", "classes/ColsconfigDialogContentComponent", "classes/ColsConfigMenuService", "classes/CompatibilityValidationsService", "classes/DetailEditFormController", "classes/DetailInterationService", "classes/DeviceService", "classes/DomActionsMixin", "classes/DynamicActionObject", "classes/DynamicActionsMixin", "classes/DynamicPropertiesMixin", "classes/EditFormController", "classes/EditFormControllerOperationsIndicationMixin", "classes/EditFormNewRoute", "classes/EditFormRoute", "classes/EditFormRouteOperationsIndicationMixin", "classes/EditrecordDialog", "classes/EnumCaptionHelper", "classes/ErrorableControllerMixin", "classes/ErrorableRouteMixin", "classes/FiltersDialogContentComponent", "classes/FixableComponentMixin", "classes/FlexberryAdvLimitModel", "classes/FlexberryAdvLimitSerializer", "classes/FlexberryBaseComponent", "classes/FlexberryButtonComponent", "classes/FlexberryCheckboxComponent", "classes/FlexberryColorpickerComponent", "classes/FlexberryDdauCheckboxActionsHandlerMixin", "classes/FlexberryDdauCheckboxComponent", "classes/FlexberryDdauSliderActionsHandlerMixin", "classes/FlexberryDdauSliderComponent", "classes/FlexberryDialogComponent", "classes/FlexberryDropdownComponent", "classes/FlexberryErrorComponent", "classes/FlexberryField", "classes/FlexberryFileCompatibleComponentMixin", "classes/FlexberryFileComponent", "classes/FlexberryFileControllerMixin", "classes/FlexberryFileViewDialogController", "classes/FlexberryGroupeditComponent", "classes/FlexberryGroupeditRouteMixin", "classes/FlexberryIconComponent", "classes/FlexberryJsonareaComponent", "classes/FlexberryLookup", "classes/FlexberryLookupCompatibleComponent", "classes/FlexberryLookupMixin", "classes/FlexberryMenu", "classes/FlexberryMenuitem", "classes/FlexberryObjectlistviewComponent", "classes/FlexberryObjectlistviewHierarchicalControllerMixin", "classes/FlexberryObjectlistviewHierarchicalRouteMixin", "classes/FlexberryObjectlistviewOnEditFormControllerMixin", "classes/FlexberryObjectlistviewRouteMixin", "classes/FlexberrySidebarComponent", "classes/FlexberrySimpledatetime", "classes/FlexberrySitemapComponent", "classes/FlexberrySitemapGuidelineComponent", "classes/FlexberryTabBarComponent", "classes/FlexberryTextarea", "classes/FlexberryTextbox", "classes/FlexberryToggler", "classes/FlexberryTreeComponent", "classes/FlexberryTreenodeActionsHandlerMixin", "classes/FlexberryTreenodeComponent", "classes/FlexberryValidationmessageComponent", "classes/FlexberryValidationsummaryComponent", "classes/FormLoadTimeTrackerComponent", "classes/FormLoadTimeTrackerService", "classes/GetWithDynamicActionsHelper", "classes/GroupEditToolbarComponent", "classes/IISCaseberryLoggingObjectsApplicationLogEController", "classes/IISCaseberryLoggingObjectsApplicationLogERoute", "classes/IISCaseberryLoggingObjectsApplicationLogLController", "classes/IISCaseberryLoggingObjectsApplicationLogLRoute", "classes/IISCaseberryLoggingObjectsApplicationLogModel", "classes/IISCaseberryLoggingObjectsApplicationLogSerializer", "classes/IncreaseNumberHelper", "classes/LimitedController", "classes/LimitedRouteMixin", "classes/ListFormController", "classes/ListFormRoute", "classes/LockRouteMixin", "classes/LogService", "classes/LookupDialogController", "classes/LookupEvents", "classes/Mobile.FlexberryFileComponent", "classes/Mobile.FlexberryGroupeditComponent", "classes/Mobile.FlexberryObjectlistview", "classes/Mobile.ObjectListViewComponent", "classes/Mobile.ObjectListViewRowComponent", "classes/ModalApplicationRoute", "classes/ModalDialog", "classes/MultiListModelEditMixin", "classes/NewPlatformFlexberryFlexberryUserSettingModel", "classes/NewPlatformFlexberryFlexberryUserSettingSerializer", "classes/NewPlatformFlexberryServicesLockListController", "classes/NewPlatformFlexberryServicesLockListRoute", "classes/NewPlatformFlexberryServicesLockModel", "classes/NewPlatformFlexberryServicesLockSerializer", "classes/ObjectListViewCell", "classes/ObjectListViewComponent", "classes/ObjectlistviewEvents", "classes/ObjectListViewRowComponent", "classes/ObjectListViewSingleColumnCellComponent", "classes/OlvToolbar", "classes/PaginatedController", "classes/PredicateFromFiltersMixin", "classes/ProjectedModelForm", "classes/ReadonlyCellHelper", "classes/ReloadListMixin", "classes/RequiredActionsMixin", "classes/Resolver", "classes/SortableColumn", "classes/SortableControllerMixin", "classes/SortableRoute", "classes/TreeNodeObject", "classes/UIMessage", "classes/UserSettingsService", "classes/Utils", "classes/Utils.Layers", "classes/ValidationDataObject", "modules/ember-flexberry"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/AdvLimitDialogContentComponent.html">AdvLimitDialogContentComponent</a></li>
+	                            <li><a href="../classes/AdvLimitService.html">AdvLimitService</a></li>
+	                            <li><a href="../classes/ApplicationInitializer.html">ApplicationInitializer</a></li>
+	                            <li><a href="../classes/ApplicationInstanceInitializer.html">ApplicationInstanceInitializer</a></li>
+	                            <li><a href="../classes/AppStateService.html">AppStateService</a></li>
+	                            <li><a href="../classes/ArrayHelper.html">ArrayHelper</a></li>
+	                            <li><a href="../classes/ColsconfigDialogContentComponent.html">ColsconfigDialogContentComponent</a></li>
+	                            <li><a href="../classes/ColsConfigMenuService.html">ColsConfigMenuService</a></li>
+	                            <li><a href="../classes/CompatibilityValidationsService.html">CompatibilityValidationsService</a></li>
+	                            <li><a href="../classes/DetailEditFormController.html">DetailEditFormController</a></li>
+	                            <li><a href="../classes/DetailInterationService.html">DetailInterationService</a></li>
+	                            <li><a href="../classes/DeviceService.html">DeviceService</a></li>
+	                            <li><a href="../classes/DomActionsMixin.html">DomActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicActionObject.html">DynamicActionObject</a></li>
+	                            <li><a href="../classes/DynamicActionsMixin.html">DynamicActionsMixin</a></li>
+	                            <li><a href="../classes/DynamicPropertiesMixin.html">DynamicPropertiesMixin</a></li>
+	                            <li><a href="../classes/EditFormController.html">EditFormController</a></li>
+	                            <li><a href="../classes/EditFormControllerOperationsIndicationMixin.html">EditFormControllerOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditFormNewRoute.html">EditFormNewRoute</a></li>
+	                            <li><a href="../classes/EditFormRoute.html">EditFormRoute</a></li>
+	                            <li><a href="../classes/EditFormRouteOperationsIndicationMixin.html">EditFormRouteOperationsIndicationMixin</a></li>
+	                            <li><a href="../classes/EditrecordDialog.html">EditrecordDialog</a></li>
+	                            <li><a href="../classes/EnumCaptionHelper.html">EnumCaptionHelper</a></li>
+	                            <li><a href="../classes/ErrorableControllerMixin.html">ErrorableControllerMixin</a></li>
+	                            <li><a href="../classes/ErrorableRouteMixin.html">ErrorableRouteMixin</a></li>
+	                            <li><a href="../classes/FiltersDialogContentComponent.html">FiltersDialogContentComponent</a></li>
+	                            <li><a href="../classes/FixableComponentMixin.html">FixableComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitModel.html">FlexberryAdvLimitModel</a></li>
+	                            <li><a href="../classes/FlexberryAdvLimitSerializer.html">FlexberryAdvLimitSerializer</a></li>
+	                            <li><a href="../classes/FlexberryBaseComponent.html">FlexberryBaseComponent</a></li>
+	                            <li><a href="../classes/FlexberryButtonComponent.html">FlexberryButtonComponent</a></li>
+	                            <li><a href="../classes/FlexberryCheckboxComponent.html">FlexberryCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryColorpickerComponent.html">FlexberryColorpickerComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxActionsHandlerMixin.html">FlexberryDdauCheckboxActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauCheckboxComponent.html">FlexberryDdauCheckboxComponent</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderActionsHandlerMixin.html">FlexberryDdauSliderActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryDdauSliderComponent.html">FlexberryDdauSliderComponent</a></li>
+	                            <li><a href="../classes/FlexberryDialogComponent.html">FlexberryDialogComponent</a></li>
+	                            <li><a href="../classes/FlexberryDropdownComponent.html">FlexberryDropdownComponent</a></li>
+	                            <li><a href="../classes/FlexberryErrorComponent.html">FlexberryErrorComponent</a></li>
+	                            <li><a href="../classes/FlexberryField.html">FlexberryField</a></li>
+	                            <li><a href="../classes/FlexberryFileCompatibleComponentMixin.html">FlexberryFileCompatibleComponentMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileComponent.html">FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/FlexberryFileControllerMixin.html">FlexberryFileControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryFileViewDialogController.html">FlexberryFileViewDialogController</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditComponent.html">FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/FlexberryGroupeditRouteMixin.html">FlexberryGroupeditRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryIconComponent.html">FlexberryIconComponent</a></li>
+	                            <li><a href="../classes/FlexberryJsonareaComponent.html">FlexberryJsonareaComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookup.html">FlexberryLookup</a></li>
+	                            <li><a href="../classes/FlexberryLookupCompatibleComponent.html">FlexberryLookupCompatibleComponent</a></li>
+	                            <li><a href="../classes/FlexberryLookupMixin.html">FlexberryLookupMixin</a></li>
+	                            <li><a href="../classes/FlexberryMenu.html">FlexberryMenu</a></li>
+	                            <li><a href="../classes/FlexberryMenuitem.html">FlexberryMenuitem</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewComponent.html">FlexberryObjectlistviewComponent</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalControllerMixin.html">FlexberryObjectlistviewHierarchicalControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewHierarchicalRouteMixin.html">FlexberryObjectlistviewHierarchicalRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewOnEditFormControllerMixin.html">FlexberryObjectlistviewOnEditFormControllerMixin</a></li>
+	                            <li><a href="../classes/FlexberryObjectlistviewRouteMixin.html">FlexberryObjectlistviewRouteMixin</a></li>
+	                            <li><a href="../classes/FlexberrySidebarComponent.html">FlexberrySidebarComponent</a></li>
+	                            <li><a href="../classes/FlexberrySimpledatetime.html">FlexberrySimpledatetime</a></li>
+	                            <li><a href="../classes/FlexberrySitemapComponent.html">FlexberrySitemapComponent</a></li>
+	                            <li><a href="../classes/FlexberrySitemapGuidelineComponent.html">FlexberrySitemapGuidelineComponent</a></li>
+	                            <li><a href="../classes/FlexberryTabBarComponent.html">FlexberryTabBarComponent</a></li>
+	                            <li><a href="../classes/FlexberryTextarea.html">FlexberryTextarea</a></li>
+	                            <li><a href="../classes/FlexberryTextbox.html">FlexberryTextbox</a></li>
+	                            <li><a href="../classes/FlexberryToggler.html">FlexberryToggler</a></li>
+	                            <li><a href="../classes/FlexberryTreeComponent.html">FlexberryTreeComponent</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeActionsHandlerMixin.html">FlexberryTreenodeActionsHandlerMixin</a></li>
+	                            <li><a href="../classes/FlexberryTreenodeComponent.html">FlexberryTreenodeComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationmessageComponent.html">FlexberryValidationmessageComponent</a></li>
+	                            <li><a href="../classes/FlexberryValidationsummaryComponent.html">FlexberryValidationsummaryComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerComponent.html">FormLoadTimeTrackerComponent</a></li>
+	                            <li><a href="../classes/FormLoadTimeTrackerService.html">FormLoadTimeTrackerService</a></li>
+	                            <li><a href="../classes/GetWithDynamicActionsHelper.html">GetWithDynamicActionsHelper</a></li>
+	                            <li><a href="../classes/GroupEditToolbarComponent.html">GroupEditToolbarComponent</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogEController.html">IISCaseberryLoggingObjectsApplicationLogEController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogERoute.html">IISCaseberryLoggingObjectsApplicationLogERoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLController.html">IISCaseberryLoggingObjectsApplicationLogLController</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html">IISCaseberryLoggingObjectsApplicationLogLRoute</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogModel.html">IISCaseberryLoggingObjectsApplicationLogModel</a></li>
+	                            <li><a href="../classes/IISCaseberryLoggingObjectsApplicationLogSerializer.html">IISCaseberryLoggingObjectsApplicationLogSerializer</a></li>
+	                            <li><a href="../classes/IncreaseNumberHelper.html">IncreaseNumberHelper</a></li>
+	                            <li><a href="../classes/LimitedController.html">LimitedController</a></li>
+	                            <li><a href="../classes/LimitedRouteMixin.html">LimitedRouteMixin</a></li>
+	                            <li><a href="../classes/ListFormController.html">ListFormController</a></li>
+	                            <li><a href="../classes/ListFormRoute.html">ListFormRoute</a></li>
+	                            <li><a href="../classes/LockRouteMixin.html">LockRouteMixin</a></li>
+	                            <li><a href="../classes/LogService.html">LogService</a></li>
+	                            <li><a href="../classes/LookupDialogController.html">LookupDialogController</a></li>
+	                            <li><a href="../classes/LookupEvents.html">LookupEvents</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryFileComponent.html">Mobile.FlexberryFileComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryGroupeditComponent.html">Mobile.FlexberryGroupeditComponent</a></li>
+	                            <li><a href="../classes/Mobile.FlexberryObjectlistview.html">Mobile.FlexberryObjectlistview</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewComponent.html">Mobile.ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/Mobile.ObjectListViewRowComponent.html">Mobile.ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ModalApplicationRoute.html">ModalApplicationRoute</a></li>
+	                            <li><a href="../classes/ModalDialog.html">ModalDialog</a></li>
+	                            <li><a href="../classes/MultiListModelEditMixin.html">MultiListModelEditMixin</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingModel.html">NewPlatformFlexberryFlexberryUserSettingModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryFlexberryUserSettingSerializer.html">NewPlatformFlexberryFlexberryUserSettingSerializer</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListController.html">NewPlatformFlexberryServicesLockListController</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockListRoute.html">NewPlatformFlexberryServicesLockListRoute</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockModel.html">NewPlatformFlexberryServicesLockModel</a></li>
+	                            <li><a href="../classes/NewPlatformFlexberryServicesLockSerializer.html">NewPlatformFlexberryServicesLockSerializer</a></li>
+	                            <li><a href="../classes/ObjectListViewCell.html">ObjectListViewCell</a></li>
+	                            <li><a href="../classes/ObjectListViewComponent.html">ObjectListViewComponent</a></li>
+	                            <li><a href="../classes/ObjectlistviewEvents.html">ObjectlistviewEvents</a></li>
+	                            <li><a href="../classes/ObjectListViewRowComponent.html">ObjectListViewRowComponent</a></li>
+	                            <li><a href="../classes/ObjectListViewSingleColumnCellComponent.html">ObjectListViewSingleColumnCellComponent</a></li>
+	                            <li><a href="../classes/OlvToolbar.html">OlvToolbar</a></li>
+	                            <li><a href="../classes/PaginatedController.html">PaginatedController</a></li>
+	                            <li><a href="../classes/PredicateFromFiltersMixin.html">PredicateFromFiltersMixin</a></li>
+	                            <li><a href="../classes/ProjectedModelForm.html">ProjectedModelForm</a></li>
+	                            <li><a href="../classes/ReadonlyCellHelper.html">ReadonlyCellHelper</a></li>
+	                            <li><a href="../classes/ReloadListMixin.html">ReloadListMixin</a></li>
+	                            <li><a href="../classes/RequiredActionsMixin.html">RequiredActionsMixin</a></li>
+	                            <li><a href="../classes/Resolver.html">Resolver</a></li>
+	                            <li><a href="../classes/SortableColumn.html">SortableColumn</a></li>
+	                            <li><a href="../classes/SortableControllerMixin.html">SortableControllerMixin</a></li>
+	                            <li><a href="../classes/SortableRoute.html">SortableRoute</a></li>
+	                            <li><a href="../classes/TreeNodeObject.html">TreeNodeObject</a></li>
+	                            <li><a href="../classes/UIMessage.html">UIMessage</a></li>
+	                            <li><a href="../classes/UserSettingsService.html">UserSettingsService</a></li>
+	                            <li><a href="../classes/Utils.html">Utils</a></li>
+	                            <li><a href="../classes/Utils.Layers.html">Utils.Layers</a></li>
+	                            <li><a href="../classes/ValidationDataObject.html">ValidationDataObject</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/ember-flexberry.html">ember-flexberry</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>Mobile.FlexberryGroupeditComponent <small>Class</small></h1>
+</div>
+
+<div class="well well-small">
+
+        <div class="extends">
+            Extends <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a>
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l11"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:11</code></a>
+        </div>
+
+            Module: <a href="../modules/ember-flexberry.html">ember-flexberry</a>
+
+</div>
+
+
+<div class="well well-small">
+    <p>Mobile version of <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> (with mobile-specific defaults).</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_Mobile.FlexberryGroupeditComponent" class="method item">
+            <h3 class="name"><code>Mobile.FlexberryGroupeditComponent</code></h3>
+        
+                <span class="paren">()</span>
+        
+        
+        
+        
+        
+        
+        
+        
+            <div class="meta">
+                        <p>
+                        Defined in
+                <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l11"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:11</code></a>
+                </p>
+        
+        
+        
+            </div>
+        
+            <div class="description">
+                
+            </div>
+        
+        
+        
+        </div>
+    </div>
+
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
+
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.addColumnToSorting" data-tablink="actions.addColumnToSorting">actions.addColumnToSorting</a>
+
+                            </li>
+                            <li class="index-item method public inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.customButtonAction" data-tablink="actions.customButtonAction">actions.customButtonAction</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.customButtonInRowAction" data-tablink="actions.customButtonInRowAction">actions.customButtonInRowAction</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.groupEditRowClick" data-tablink="actions.groupEditRowClick">actions.groupEditRowClick</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.sendMenuItemAction" data-tablink="actions.sendMenuItemAction">actions.sendMenuItemAction</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_actions.sortByColumn" data-tablink="actions.sortByColumn">actions.sortByColumn</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_beforeDeleteRecord" data-tablink="beforeDeleteRecord">beforeDeleteRecord</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_confirmDeleteRow" data-tablink="confirmDeleteRow">confirmDeleteRow</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_confirmDeleteRows" data-tablink="confirmDeleteRows">confirmDeleteRows</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_getTargetObjectByCondition." data-tablink="getTargetObjectByCondition.">getTargetObjectByCondition.</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_initProperty" data-tablink="initProperty">initProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_setDefaultColNames" data-tablink="setDefaultColNames">setDefaultColNames</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_setSorting" data-tablink="setSorting">setSorting</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_sortingFunction" data-tablink="sortingFunction">sortingFunction</a>
+
+                            </li>
+                            <li class="index-item method inherited">
+                                <a href="#" data-tabid="#methods" data-anchor="#method_sortRecords" data-tablink="sortRecords">sortRecords</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__currentSortingArray" data-tablink="_currentSortingArray">_currentSortingArray</a>
+
+                            </li>
+                            <li class="index-item property private inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__groupEditEventsService" data-tablink="_groupEditEventsService">_groupEditEventsService</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__mobileSortingSettingsCaption" data-tablink="_mobileSortingSettingsCaption">_mobileSortingSettingsCaption</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#" data-tabid="#properties" data-anchor="#property__mobileSortingSettingsIcon" data-tablink="_mobileSortingSettingsIcon">_mobileSortingSettingsIcon</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_action" data-tablink="action">action</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_allowColumnResize" data-tablink="allowColumnResize">allowColumnResize</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfig" data-tablink="appConfig">appConfig</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettings" data-tablink="appConfigSettings">appConfigSettings</a>
+
+                            </li>
+                            <li class="index-item property inherited inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_appConfigSettingsPath" data-tablink="appConfigSettingsPath">appConfigSettingsPath</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_buttonClass" data-tablink="buttonClass">buttonClass</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_cellComponent" data-tablink="cellComponent">cellComponent</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_colDescs" data-tablink="colDescs">colDescs</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_columnsWidthAutoresize" data-tablink="columnsWidthAutoresize">columnsWidthAutoresize</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_componentName" data-tablink="componentName">componentName</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_content" data-tablink="content">content</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_createNewButton" data-tablink="createNewButton">createNewButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_currentController" data-tablink="currentController">currentController</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_currentSortings" data-tablink="currentSortings">currentSortings</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_customButtons" data-tablink="customButtons">customButtons</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_customTableClass" data-tablink="customTableClass">customTableClass</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_defaultSettingsButton" data-tablink="defaultSettingsButton">defaultSettingsButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_defaultSortingButton" data-tablink="defaultSortingButton">defaultSortingButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_deleteButton" data-tablink="deleteButton">deleteButton</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_dynamicProperties" data-tablink="dynamicProperties">dynamicProperties</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_editFormRoute" data-tablink="editFormRoute">editFormRoute</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_editOnSeparateRoute" data-tablink="editOnSeparateRoute">editOnSeparateRoute</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_fixedHeader" data-tablink="fixedHeader">fixedHeader</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_mainModelProjection" data-tablink="mainModelProjection">mainModelProjection</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_menuInRowAdditionalItems" data-tablink="menuInRowAdditionalItems">menuInRowAdditionalItems</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_minAutoColumnWidth" data-tablink="minAutoColumnWidth">minAutoColumnWidth</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_modelProjection" data-tablink="modelProjection">modelProjection</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_orderable" data-tablink="orderable">orderable</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_orderedProperty" data-tablink="orderedProperty">orderedProperty</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_overflowedComponents" data-tablink="overflowedComponents">overflowedComponents</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_placeholder" data-tablink="placeholder">placeholder</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonly" data-tablink="readonly">readonly</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_readonlyAttr" data-tablink="readonlyAttr">readonlyAttr</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_relatedModel" data-tablink="relatedModel">relatedModel</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_required" data-tablink="required">required</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_rowClickable" data-tablink="rowClickable">rowClickable</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_saveBeforeRouteLeave" data-tablink="saveBeforeRouteLeave">saveBeforeRouteLeave</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_searchForContentChange" data-tablink="searchForContentChange">searchForContentChange</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showAsteriskInRow" data-tablink="showAsteriskInRow">showAsteriskInRow</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showCheckBoxInRow" data-tablink="showCheckBoxInRow">showCheckBoxInRow</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showDeleteButtonInRow" data-tablink="showDeleteButtonInRow">showDeleteButtonInRow</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showDeleteMenuItemInRow" data-tablink="showDeleteMenuItemInRow">showDeleteMenuItemInRow</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showEditMenuItemInRow" data-tablink="showEditMenuItemInRow">showEditMenuItemInRow</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_showValidationMessages" data-tablink="showValidationMessages">showValidationMessages</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_singleColumnCellComponent" data-tablink="singleColumnCellComponent">singleColumnCellComponent</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_singleColumnHeaderTitle" data-tablink="singleColumnHeaderTitle">singleColumnHeaderTitle</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_sorting" data-tablink="sorting">sorting</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_store" data-tablink="store">store</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_tableStriped" data-tablink="tableStriped">tableStriped</a>
+
+                            </li>
+                            <li class="index-item property inherited">
+                                <a href="#" data-tabid="#properties" data-anchor="#property_useSidePageMode" data-tablink="useSidePageMode">useSidePageMode</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="tab-pane">
+                <h2 class="off-left">Methods</h2>
+
+                    <div id="method_actions.addColumnToSorting" class="method item inherited">
+                        <h3 class="name"><code>actions.addColumnToSorting</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>column</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.addColumnToSorting">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l499"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:499</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles action from object-list-view when no handler for this component is defined.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">column</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Column to add sorting by.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.customButtonAction" class="method item public inherited">
+                        <h3 class="name"><code>actions.customButtonAction</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>actionName</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                            <span class="flag public">public</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.customButtonAction">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l583"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:583</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handler to get user button's actions and send action to corresponding controllers's handler.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">actionName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            The name of action
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.customButtonInRowAction" class="method item inherited">
+                        <h3 class="name"><code>actions.customButtonInRowAction</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>actionName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>model</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.customButtonInRowAction">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l597"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:597</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">actionName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            The name of action.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">model</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Model in row.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.groupEditRowClick" class="method item inherited">
+                        <h3 class="name"><code>actions.groupEditRowClick</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.groupEditRowClick">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l552"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:552</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles click on row of component.
+                    Sends primary action out of component.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Clicked record.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Different parameters to handle action.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.sendMenuItemAction" class="method item inherited">
+                        <h3 class="name"><code>actions.sendMenuItemAction</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>actionName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.sendMenuItemAction">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l572"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:572</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Send action with <code>actionName</code> into controller.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">actionName</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                             
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_actions.sortByColumn" class="method item inherited">
+                        <h3 class="name"><code>actions.sortByColumn</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>column</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_actions.sortByColumn">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l473"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:473</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Handles action from object-list-view when no handler for this component is defined.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">column</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Column to sort by.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_beforeDeleteRecord" class="method item inherited">
+                        <h3 class="name"><code>beforeDeleteRecord</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>data</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_beforeDeleteRecord">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l869"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:869</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Hook that executes before deleting the record.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Deleting record.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">data</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Metadata.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name optional">[cancel=false]</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Flag for canceling deletion.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name optional">[immediately]</code>
+                                                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+                                                    <div class="param-description">
+                                                        <p>See ObjectListView/immediateDelete:property property for details.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-handlebars">&lt;!-- app/templates/employees.hbs --&gt;
+                    {{flexberry-groupedit
+                      ...
+                      beforeDeleteRecord=(action 'beforeDeleteRecord')
+                      ...
+                    }}
+                    </code></pre>
+                    <pre class="code prettyprint"><code class="language-javascript">// app/controllers/employees.js
+                    import ListFormController from './list-form';
+                    
+                    export default ListFormController.extend({
+                      actions: {
+                        beforeDeleteRecord(record, data) {
+                          if (record.get('myProperty')) {
+                            data.cancel = true;
+                          }
+                        }
+                      }
+                    });
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_confirmDeleteRow" class="method item inherited">
+                        <h3 class="name"><code>confirmDeleteRow</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>record</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_confirmDeleteRow">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l794"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:794</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Hook that can be used to confirm delete row.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">record</code>
+                                            <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            The record to be deleted.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                        If <code>true</code>, then delete row, if <code>Promise</code>, then delete row after successful resolve, else cancel.
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/controllers/example.js
+                    ...
+                    actions: {
+                      ...
+                      confirmDeleteRow(record) {
+                        return new Promise((resolve, reject) =&gt; {
+                          this.showConfirmDialg({
+                            title: <code>Delete an object with the ID &#x27;${record.get(&#x27;id&#x27;)}&#x27;?</code>,
+                            onApprove: resolve,
+                            onDeny: reject,
+                          });
+                        });
+                      }
+                      ...
+                    }
+                    ...
+                    </code></pre>
+                    <pre class="code prettyprint"><code class="language-handlebars">&lt;!-- app/templates/example.hbs --&gt;
+                    {{flexberry-objectlistview
+                      ...
+                      confirmDeleteRow=(action "confirmDeleteRow")
+                      ...
+                    }}
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_confirmDeleteRows" class="method item inherited">
+                        <h3 class="name"><code>confirmDeleteRows</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_confirmDeleteRows">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l832"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:832</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Hook that can be used to confirm delete rows.
+                        </div>
+                    
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="crosslink external" target="_blank">Promise</a></span>:
+                                        If <code>true</code>, then delete row, if <code>Promise</code>, then delete row after successful resolve, else cancel.
+                                </div>
+                            </div>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/controllers/example.js
+                    ...
+                    actions: {
+                      ...
+                      confirmDeleteRows() {
+                        return new Promise((resolve, reject) =&gt; {
+                          this.showConfirmDialg({
+                            title: 'Delete all selected records?',
+                            onApprove: resolve,
+                            onDeny: reject,
+                          });
+                        });
+                      }
+                      ...
+                    }
+                    ...
+                    </code></pre>
+                    <pre class="code prettyprint"><code class="language-handlebars">&lt;!-- app/templates/example.hbs --&gt;
+                    {{flexberry-objectlistview
+                      ...
+                      confirmDeleteRows=(action "confirmDeleteRows")
+                      ...
+                    }}
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    </div>
+                    <div id="method_getTargetObjectByCondition." class="method item inherited">
+                        <h3 class="name"><code>getTargetObjectByCondition.</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>condition</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type">Null | Component | Controller</span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_getTargetObjectByCondition.">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l225"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:225</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Returns that 'targetObject' (from 'targetObject's hierarchy) which satisfies a given condition.
+                    
+                    <code>&#x60;</code>javascript
+                    let controller = this.getTargetObjectByCondition((targetObject) => {
+                      return targetObject instanceof Controller;
+                    });
+                    <code>&#x60;</code>
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">condition</code>
+                                            <span class="type"><a href="http://emberjs.com/api/classes/Function.html" class="crosslink external" target="_blank">Function</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type">Null | Component | Controller</span>:
+                                        Target object which satisfies a given condition or null.
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="method_initProperty" class="method item inherited">
+                        <h3 class="name"><code>initProperty</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>options</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#method_initProperty">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l153"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:153</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Initializes component's property with recpect to following priority:
+                    1 - template-defined parameters,
+                    2 - applicaion configuration-defined parameters (JSON from ./config/environment by path defined in 'appConfigSettingsPath' property),
+                    3 - component-defined defaults.
+                    Note! It is important to be declared as undefined for those component properties, which will be initialized through 'initProperty' call.
+                    
+                    <code>&#x60;</code>javascript
+                    // ./config/environment.js.
+                    module.exports = function(environment) {
+                      var ENV = {
+                        APP: {
+                          components: {
+                            myComponent: {
+                              myComponentProperty: 'myComponentProperty config-defined default value',
+                            }
+                          }
+                        }
+                      };
+                      return ENV;
+                    };
+                    <code>&#x60;</code>
+                    
+                    <code>&#x60;</code>javascript
+                    // /components/my-component.js
+                    import FlexberryBaseComponent from 'ember-flexberry/flexberry-base-component';
+                    
+                    export default FlexberryBaseComponent.extend({
+                      appConfigSettingsPath: 'APP.components.myComponent',
+                    
+                      myComponentProperty: undefined,
+                    
+                      init() {
+                        this._super.apply(this, arguments);
+                        this.initProperty({ propertyName: 'myComponentProperty', defaultValue: 'myComponentProperty default value' });
+                      }
+                    });
+                    <code>&#x60;</code>
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">options</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Method options.
+                                        </div>
+                    
+                                            <ul class="params-list">
+                                                <li class="param">
+                                                        <code class="param-name">propertyName</code>
+                                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property name.</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                                <li class="param">
+                                                        <code class="param-name">defaultValue</code>
+                                                        <span class="type"></span>
+                    
+                                                    <div class="param-description">
+                                                        <p>Component's property default value (from component defined default's).</p>
+                    
+                                                    </div>
+                    
+                                                </li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_setDefaultColNames" class="method item">
+                        <h3 class="name"><code>setDefaultColNames</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>colDescs</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l179"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:179</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Set column names at default sortings.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">colDescs</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Columns description.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_setSorting" class="method item">
+                        <h3 class="name"><code>setSorting</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>componentName</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>sorting</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>colDescs</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l165"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:165</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Set new sorting.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">componentName</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Component name.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">sorting</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>New sorting.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">colDescs</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            <p>Columns description.</p>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+                    <div id="method_sortingFunction" class="method item inherited">
+                        <h3 class="name"><code>sortingFunction</code></h3>
+                    
+                            <span class="paren">()</span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_sortingFunction">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l654"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:654</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Sorting records and trigger <code>geSortApply</code> action.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="method_sortRecords" class="method item inherited">
+                        <h3 class="name"><code>sortRecords</code></h3>
+                    
+                            <div class="args">
+                                <span class="paren">(</span><ul class="args-list inline commas">
+                                    <li class="arg">
+                                            <code>records</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>sortDef</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>start</code>
+                                    </li>
+                                    <li class="arg">
+                                            <code>end</code>
+                                    </li>
+                                </ul><span class="paren">)</span>
+                            </div>
+                    
+                            <span class="returns-inline">
+                                <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                            </span>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#method_sortRecords">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l694"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:694</code></a>
+                            </p>
+                    
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Client-side sorting for groupEdit content.
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Parameters:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">records</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Records for sorting.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">sortDef</code>
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                                        <div class="param-description">
+                                            Sorting definition.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">start</code>
+                                            <span class="type">Int</span>
+                    
+                    
+                                        <div class="param-description">
+                                            First index in records.
+                                        </div>
+                    
+                                    </li>
+                                    <li class="param">
+                                            <code class="param-name">end</code>
+                                            <span class="type">Int</span>
+                    
+                    
+                                        <div class="param-description">
+                                            Last index in records.
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                            <div class="returns">
+                                <h4>Returns:</h4>
+                    
+                                <div class="returns-description">
+                                            <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
+                                        Sorted records.
+                                </div>
+                            </div>
+                    
+                    </div>
+            </div>
+
+            <div id="properties" class="tab-pane">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property__currentSortingArray" class="property item private">
+                        <h3 class="name"><code>_currentSortingArray</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l189"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:189</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Convert array of object sorting to array.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__groupEditEventsService" class="property item private">
+                        <h3 class="name"><code>_groupEditEventsService</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property__groupEditEventsService">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l32"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:32</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Service that triggers <a href="../classes/FlexberryGroupeditComponent.html" class="crosslink">FlexberryGroupeditComponent</a> events.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__mobileSortingSettingsCaption" class="property item private">
+                        <h3 class="name"><code>_mobileSortingSettingsCaption</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l246"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:246</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Mobile sort text.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property__mobileSortingSettingsIcon" class="property item private">
+                        <h3 class="name"><code>_mobileSortingSettingsIcon</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l219"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:219</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Class icons for sorting.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_action" class="property item inherited">
+                        <h3 class="name"><code>action</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_action">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l55"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:55</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Name of action to handle row click.
+                    Action will be send out of the component.
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;groupEditRowClick&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_allowColumnResize" class="property item">
+                        <h3 class="name"><code>allowColumnResize</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_allowColumnResize">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l19"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:19</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether allow to resize columns (if <code>true</code>) or not (if <code>false</code>).</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_allowColumnResize" class="crosslink">allowColumnResize</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfig" class="property item inherited">
+                        <h3 class="name"><code>appConfig</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfig">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l88"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:88</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Application configuration (JSON from ./config/environment.js).
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettings" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettings">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l97"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:97</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component settings object from application configuration (part of JSON from ./config/environment.js).
+                    Part of appConfig related to appConfigSettingsPath.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_appConfigSettingsPath" class="property item inherited">
+                        <h3 class="name"><code>appConfigSettingsPath</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryBaseComponent.html#property_appConfigSettingsPath">
+                                    FlexberryBaseComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l363"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:363</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Path to component's settings in application configuration (JSON from ./config/environment.js).
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;APP.components.flexberryGroupedit&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_buttonClass" class="property item inherited">
+                        <h3 class="name"><code>buttonClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_buttonClass">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l76"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:76</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Classes for buttons (both toolbar and inrow buttons).
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_cellComponent" class="property item inherited">
+                        <h3 class="name"><code>cellComponent</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_cellComponent">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l84"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:84</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Default cell component that will be used to display values in columns cells.
+                        </div>
+                    
+                    
+                    
+                            <h4>Sub-properties:</h4>
+                    
+                            <ul class="params-list">
+                                <li class="param">
+                                        <code class="param-name optional">[componentName=undefined]</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                        <span class="flag optional" title="This property is optional.">optional</span>
+                    
+                                    <div class="param-description">
+                                         
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name optional">[componentProperties=null]</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                        <span class="flag optional" title="This property is optional.">optional</span>
+                    
+                                    <div class="param-description">
+                                         
+                                    </div>
+                    
+                                </li>
+                            </ul>
+                    </div>
+                    <div id="property_colDescs" class="property item">
+                        <h3 class="name"><code>colDescs</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l149"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:149</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Columns descriptions.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_columnsWidthAutoresize" class="property item inherited">
+                        <h3 class="name"><code>columnsWidthAutoresize</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_columnsWidthAutoresize">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l445"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:445</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Indicates whether or not autoresize columns for fit the page width.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_componentName" class="property item inherited">
+                        <h3 class="name"><code>componentName</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_componentName">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l49"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:49</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Unique name of the component.
+                    TODO: use guidFor from 'ember-metal/utils'
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_content" class="property item inherited">
+                        <h3 class="name"><code>content</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/data/classes/DS.ManyArray.html" class="crosslink external" target="_blank">DS.ManyArray</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_content">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l93"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:93</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Content to be displayed (models collection).
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_createNewButton" class="property item inherited">
+                        <h3 class="name"><code>createNewButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_createNewButton">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l102"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:102</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show creation button at toolbar.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_currentController" class="property item inherited">
+                        <h3 class="name"><code>currentController</code></h3>
+                        <span class="type">Controller</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_currentController">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l107"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:107</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Current controller.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_currentSortings" class="property item">
+                        <h3 class="name"><code>currentSortings</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" class="crosslink external" target="_blank">Map</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l157"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:157</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Existing GE sortings.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_customButtons" class="property item inherited">
+                        <h3 class="name"><code>customButtons</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_customButtons">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l111"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:111</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+                        </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code>{
+                      buttonName: '...', // Button displayed name.
+                      buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+                      buttonClasses: '...', // Css classes for button.
+                      buttonTitle: '...', // Button title.
+                      iconClasses: '' // Css classes for icon.
+                      disabled: true, // The state of the button is disabled if <code>true</code> or enabled if <code>false</code>.
+                    }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_customTableClass" class="property item inherited">
+                        <h3 class="name"><code>customTableClass</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_customTableClass">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l131"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:131</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Custom classes for table.
+                        </div>
+                    
+                            <p><strong>Default:</strong> &#x27;&#x27;</p>
+                    
+                    
+                    </div>
+                    <div id="property_defaultSettingsButton" class="property item inherited">
+                        <h3 class="name"><code>defaultSettingsButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_defaultSettingsButton">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l149"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:149</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show default settings button at toolbar.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_defaultSortingButton" class="property item inherited">
+                        <h3 class="name"><code>defaultSortingButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_defaultSortingButton">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l158"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:158</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag indicates whether to show button fo default sorting set.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_deleteButton" class="property item inherited">
+                        <h3 class="name"><code>deleteButton</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_deleteButton">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l140"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:140</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show delete button at toolbar.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_dynamicProperties" class="property item inherited">
+                        <h3 class="name"><code>dynamicProperties</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_dynamicProperties">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l58"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:58</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Component dynamic properties ({ componentPropertyName: value }).
+                    Used when component renders dynamically with ember {{component}} helper:
+                    {{component 'my-component' value=value dynamicProperties=myConponentProperties}}.
+                    In the end of component initialization its properties values will be replaced with values from this object.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_editFormRoute" class="property item inherited">
+                        <h3 class="name"><code>editFormRoute</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_editFormRoute">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l167"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:167</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Route of edit form.
+                        </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <p>This form is opened after row click
+                    if flag <a href="../classes/FlexberryGroupeditComponent.html#property_editOnSeparateRoute" class="crosslink">editOnSeparateRoute</a> is enabled.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_editOnSeparateRoute" class="property item inherited">
+                        <h3 class="name"><code>editOnSeparateRoute</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_editOnSeparateRoute">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l179"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:179</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether records should be edited on separate route.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <p>In order to enable properly editing in separate route following properties have to be defined:</p>
+                    <ul>
+                    <li><a href="../classes/FlexberryGroupeditComponent.html#property_editOnSeparateRoute" class="crosslink">editOnSeparateRoute</a> has to be set as true,</li>
+                    <li><a href="../classes/FlexberryGroupeditComponent.html#property_rowClickable" class="crosslink">rowClickable</a> has to be set as true,</li>
+                    <li><a href="../classes/FlexberryGroupeditComponent.html#property_editFormRoute" class="crosslink">editFormRoute</a> has to be set,</li>
+                    <li><a href="../classes/FlexberryGroupeditComponent.html#property_saveBeforeRouteLeave" class="crosslink">saveBeforeRouteLeave</a> can be set.</li>
+                    </ul>
+                    <pre class="code prettyprint"><code class="language-handlebars">{ {flexberry-groupedit
+                      ...
+                      editOnSeparateRoute=true
+                      rowClickable=true
+                      rowClick='rowClick'
+                      editFormRoute=commentsEditRoute
+                      saveBeforeRouteLeave=needSaveBeforeRouteLeave
+                      ...
+                    } }
+                    </code></pre>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_fixedHeader" class="property item inherited">
+                        <h3 class="name"><code>fixedHeader</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_fixedHeader">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l463"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:463</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag indicates whether to fix the table head (if <code>true</code>) or not (if <code>false</code>).
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_mainModelProjection" class="property item inherited">
+                        <h3 class="name"><code>mainModelProjection</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_mainModelProjection">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l264"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:264</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Main model projection. Accepts object projections.
+                    Needs for support locales of captions.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_menuInRowAdditionalItems" class="property item inherited">
+                        <h3 class="name"><code>menuInRowAdditionalItems</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_menuInRowAdditionalItems">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l207"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:207</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Additional menu items for dropdown menu in last column of every row.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <pre class="code prettyprint"><code class="language-javascript">// app/controllers/exapmle.js
+                    ...
+                    menuItems: [{
+                      icon: 'spy icon',
+                      title: 'Recruit it',
+                      actionName: 'recruit',
+                    }],
+                    ...
+                    actions: {
+                      ...
+                      recruit(record) {
+                        record.set('isSpy', true);
+                      },
+                      ...
+                    },
+                    ...
+                    </code></pre>
+                    <p>Note: For every action in component you need to pass an additional parameter in the form of <code>actionName="actionName"</code>.</p>
+                    <pre class="code prettyprint"><code class="language-javascript">// app/templates/example.hbs
+                    ...
+                    {{flexberry-groupedit
+                      ...
+                      menuInRowAdditionalItems=menuItems
+                      recruit="recruit"
+                      ...
+                    }}
+                    ...
+                    </code></pre>
+                    <p>For in-row menu following properties are used:</p>
+                    <ul>
+                    <li>{{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},</li>
+                    <li>{{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},</li>
+                    <li>{{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.</li>
+                    </ul>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_minAutoColumnWidth" class="property item inherited">
+                        <h3 class="name"><code>minAutoColumnWidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_minAutoColumnWidth">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l436"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:436</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Minimum column width, if width isn't defined in userSettings.
+                        </div>
+                    
+                            <p><strong>Default:</strong> 100</p>
+                    
+                    
+                    </div>
+                    <div id="property_modelProjection" class="property item inherited">
+                        <h3 class="name"><code>modelProjection</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_modelProjection">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l254"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:254</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Model projection which should be used to display given content.
+                    Properties of objects by model projection are displayed on component.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_orderable" class="property item">
+                        <h3 class="name"><code>orderable</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_orderable">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l41"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:41</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether ordering by clicking on column headers is allowed.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_orderable" class="crosslink">orderable</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_orderedProperty" class="property item inherited">
+                        <h3 class="name"><code>orderedProperty</code></h3>
+                        <span class="type">Computed</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_orderedProperty">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l617"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:617</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Check in view order property.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_overflowedComponents" class="property item inherited">
+                        <h3 class="name"><code>overflowedComponents</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_overflowedComponents">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l454"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:454</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            List of component names, which can overflow table cell.
+                        </div>
+                    
+                            <p><strong>Default:</strong> A([&#x27;flexberry-dropdown&#x27;, &#x27;flexberry-lookup&#x27;])</p>
+                    
+                    
+                    </div>
+                    <div id="property_placeholder" class="property item inherited">
+                        <h3 class="name"><code>placeholder</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_placeholder">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l293"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:293</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Text to be displayed in table body, if content is not defined or empty.
+                        </div>
+                    
+                            <p><strong>Default:</strong> t(&#x27;components.flexberry-groupedit.placeholder&#x27;)</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonly" class="property item inherited">
+                        <h3 class="name"><code>readonly</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonly">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l20"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:20</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component is readonly.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_readonlyAttr" class="property item inherited">
+                        <h3 class="name"><code>readonlyAttr</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a> | Undefined</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_readonlyAttr">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l29"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:29</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Readonly HTML attribute following to the <code>readonly</code> query param. According to the W3C standard, returns 'readonly' if <code>readonly</code> is <code>true</code> and <code>undefined</code> otherwise.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_relatedModel" class="property item inherited">
+                        <h3 class="name"><code>relatedModel</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/data/classes/DS.Model.html" class="crosslink external" target="_blank">DS.Model</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_relatedModel">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l70"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:70</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Model to which current component's value is related.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_required" class="property item inherited">
+                        <h3 class="name"><code>required</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryBaseComponent.html#property_required">FlexberryBaseComponent</a>:
+                            <a href="../files/addon_components_flexberry-base-component.js.html#l40"><code>addon&#x2F;components&#x2F;flexberry-base-component.js:40</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether component is required.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_rowClickable" class="property item">
+                        <h3 class="name"><code>rowClickable</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_rowClickable">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l54"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:54</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether table rows are clickable.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_rowClickable" class="crosslink">rowClickable</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_saveBeforeRouteLeave" class="property item inherited">
+                        <h3 class="name"><code>saveBeforeRouteLeave</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_saveBeforeRouteLeave">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l311"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:311</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag indicates whether to save current model before going to the detail's route.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <p>This flag is used when flag <a href="../classes/FlexberryGroupeditComponent.html#property_editOnSeparateRoute" class="crosslink">editOnSeparateRoute</a> is enabled.</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_searchForContentChange" class="property item inherited">
+                        <h3 class="name"><code>searchForContentChange</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_searchForContentChange">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l323"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:323</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
+                    
+                    If flag is enabled component compares current detail array with used on component,
+                    removes deleted and marked as deleted on model level records, adds created on model level records.
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showAsteriskInRow" class="property item">
+                        <h3 class="name"><code>showAsteriskInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_showAsteriskInRow">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l67"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:67</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show asterisk icon in first column of every changed row.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_showAsteriskInRow" class="crosslink">showAsteriskInRow</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showCheckBoxInRow" class="property item">
+                        <h3 class="name"><code>showCheckBoxInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_showCheckBoxInRow">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l80"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:80</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show checkbox in first column of every row.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_showCheckBoxInRow" class="crosslink">showCheckBoxInRow</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showDeleteButtonInRow" class="property item">
+                        <h3 class="name"><code>showDeleteButtonInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_showDeleteButtonInRow">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l93"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:93</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show delete button in first column of every row.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_showDeleteButtonInRow" class="crosslink">showDeleteButtonInRow</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> true</p>
+                    
+                    
+                    </div>
+                    <div id="property_showDeleteMenuItemInRow" class="property item">
+                        <h3 class="name"><code>showDeleteMenuItemInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_showDeleteMenuItemInRow">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l106"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:106</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show dropdown menu with delete menu item, in last column of every row.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_showDeleteMenuItemInRow" class="crosslink">showDeleteMenuItemInRow</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showEditMenuItemInRow" class="property item">
+                        <h3 class="name"><code>showEditMenuItemInRow</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                <p>Inherited from
+                                <a href="../classes/FlexberryGroupeditComponent.html#property_showEditMenuItemInRow">
+                                    FlexberryGroupeditComponent
+                                </a>
+                                but overwritten in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l119"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:119</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Flag: indicates whether to show dropdown menu with edit menu item, in last column of every row.</p>
+                    <p>It overrides default value of
+                    <a href="../classes/FlexberryGroupeditComponent.html#property_showEditMenuItemInRow" class="crosslink">showEditMenuItemInRow</a>
+                    of base component.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_showValidationMessages" class="property item inherited">
+                        <h3 class="name"><code>showValidationMessages</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_showValidationMessages">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l335"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:335</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether to show validation messages in every row or not.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_singleColumnCellComponent" class="property item">
+                        <h3 class="name"><code>singleColumnCellComponent</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l132"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:132</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Default cell component that will be used to display values in single column.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                            <h4>Sub-properties:</h4>
+                    
+                            <ul class="params-list">
+                                <li class="param">
+                                        <code class="param-name optional">[componentName=&#x27;object-list-view-single-column-cell&#x27;]</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                        <span class="flag optional" title="This property is optional.">optional</span>
+                    
+                                    <div class="param-description">
+                                         
+                                    </div>
+                    
+                                </li>
+                                <li class="param">
+                                        <code class="param-name optional">[componentProperties=null]</code>
+                                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                                        <span class="flag optional" title="This property is optional.">optional</span>
+                    
+                                    <div class="param-description">
+                                         
+                                    </div>
+                    
+                                </li>
+                            </ul>
+                    </div>
+                    <div id="property_singleColumnHeaderTitle" class="property item">
+                        <h3 class="name"><code>singleColumnHeaderTitle</code></h3>
+                        <span class="type"><a href="http://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/addon_components_mobile_flexberry-groupedit.js.html#l141"><code>addon&#x2F;components&#x2F;mobile&#x2F;flexberry-groupedit.js:141</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Header title of single column.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_sorting" class="property item inherited">
+                        <h3 class="name"><code>sorting</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_sorting">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l418"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:418</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Array with sorting data.
+                        </div>
+                    
+                            <p><strong>Default:</strong> null</p>
+                    
+                    
+                    </div>
+                    <div id="property_store" class="property item inherited">
+                        <h3 class="name"><code>store</code></h3>
+                        <span class="type">Service</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_store">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l38"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:38</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Ember data store.
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_tableStriped" class="property item inherited">
+                        <h3 class="name"><code>tableStriped</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_tableStriped">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l427"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:427</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            Flag: indicates whether table are striped.
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+                    <div id="property_useSidePageMode" class="property item inherited">
+                        <h3 class="name"><code>useSidePageMode</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>Inherited from
+                                    <a href="../classes/FlexberryGroupeditComponent.html#property_useSidePageMode">FlexberryGroupeditComponent</a>:
+                            <a href="../files/addon_components_flexberry-groupedit.js.html#l344"><code>addon&#x2F;components&#x2F;flexberry-groupedit.js:344</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+                    It can be configured through the configuration file (<code>config&#x2F;environment.js</code>).
+                        </div>
+                    
+                            <p><strong>Default:</strong> false</p>
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

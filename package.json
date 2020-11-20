@@ -31,9 +31,9 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint",
-    "*.ts": "eslint --ext .ts --env node",
-    "*.hbs": "ember-template-lint"
+    "*.js": "eslint --no-ignore",
+    "*.ts": "eslint --no-ignore --ext .ts --env node",
+    "*.hbs": "ember-template-lint --config '{ \"extends\": [\"recommended\", \"stylistic\"], \"rules\": { \"no-bare-strings\": true } }'"
   },
   "engines": {
     "node": ">= 0.10.0"

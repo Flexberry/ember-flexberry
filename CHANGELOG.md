@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.1] - 2020-11-15
+### Added
+* The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.
+* The `validationObject` property, `validate` and `saveModel` methods for `edit-form` controller.
+
+### Fixed
+* Show save notifications on the edit form.
+
 ## [2.6.0-beta.0] - 2020-10-06
 ### Added
 * The `lookupOnChange` event in the `LookupEvents` service, called when the value in the `flexberry-lookup` component changes.

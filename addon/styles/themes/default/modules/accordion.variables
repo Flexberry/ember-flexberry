@@ -97,4 +97,3 @@
 
 /* Inverted */
 @invertedTitleColor: @invertedTextColor;
-

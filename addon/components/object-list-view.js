@@ -1228,10 +1228,19 @@ export default FlexberryBaseComponent.extend(
         let relationships = Ember.get(model, 'relationships');
         let hierarchicalrelationships = relationships.get(modelName);
         if (hierarchicalrelationships.length > 0) {
+          let hierarchicalAttribute;
           let hierarchyAttribute = this.get('hierarchyAttribute');
-          let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
-          let hierarchicalAttribute = !Ember.isNone(hierarchyAttribute) && !Ember.isNone(hierarchyAttributeExist) ?
-            hierarchyAttribute : hierarchicalrelationships[0].name;
+          if (!Ember.isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+            if (!Ember.isNone(hierarchyAttributeExist)) {
+              hierarchicalAttribute = hierarchyAttribute;
+            } else {
+              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
+            }
+          } else {
+            hierarchicalAttribute = hierarchicalrelationships[0].name;
+          }
+
           this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
         }
       }

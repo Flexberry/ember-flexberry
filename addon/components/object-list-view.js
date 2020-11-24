@@ -1227,8 +1227,11 @@ export default FlexberryBaseComponent.extend(
         let model = this.get('store').modelFor(modelName);
         let relationships = Ember.get(model, 'relationships');
         let hierarchicalrelationships = relationships.get(modelName);
-        if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
+        if (hierarchicalrelationships.length > 0) {
+          let hierarchyAttribute = this.get('hierarchyAttribute');
+          let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+          let hierarchicalAttribute = !Ember.isNone(hierarchyAttribute) && !Ember.isNone(hierarchyAttributeExist) ?
+            hierarchyAttribute : hierarchicalrelationships[0].name;
           this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
         }
       }

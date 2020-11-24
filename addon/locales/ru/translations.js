@@ -26,6 +26,10 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
+    },
+
+    'loading': {
+      caption: 'Загрузка...',
     }
   },
 
@@ -164,7 +168,8 @@ export default {
         'empty': 'Не заполнен',
         'between': 'В интервале',
       },
-      'filter-condition': 'Условие'
+      'filter-condition': 'Условие',
+      'clear-filter-in-column': 'Сбросить фильтр в этой колонке',
     },
 
     'olv-filter-interval': {

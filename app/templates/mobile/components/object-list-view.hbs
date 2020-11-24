@@ -38,7 +38,7 @@
                 </div>
               {{/if}}
               {{#if column.filter.component.name}}
-                <div class="filter-value">
+                <div class="fluid action input ui filter-value">
                   {{component column.filter.component.name
                     value=column.filter.pattern
                     readonly=(or
@@ -47,6 +47,14 @@
                     )
                     dynamicProperties=column.filter.component.properties
                   }}
+                  <button
+                    type="button"
+                    class="ui clear-filter button"
+                    title={{t "components.object-list-view.clear-filter-in-column"}}
+                    {{action "clearFilterForColumn" column.filter}}
+                  >
+                    <i class="remove icon"></i>
+                  </button>
                 </div>
               {{/if}}
             </div>

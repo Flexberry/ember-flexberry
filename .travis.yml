@@ -4,7 +4,7 @@ sudo: required
 language: node_js
 
 node_js:
-  - "8"
+  - "10"
 
 services:
   - docker
@@ -49,6 +49,7 @@ install:
   - bower install
 
 script:
+  - yarn run lint
   - ember try $EMBER_TRY_SCENARIO test
   - bash ./scripts/test-generator.sh
 
@@ -64,4 +65,7 @@ after_script:
     && test $TRAVIS_PULL_REQUEST == "false"
     && (test $TRAVIS_BRANCH == "dummy-test" || test $TRAVIS_BRANCH == "dummy-test-2" || test $TRAVIS_BRANCH == "dummy-test-3")
     && ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+    && bash scripts/deploy-to-gh-pages.sh no-doc
+  - test $TRAVIS_PULL_REQUEST != "false"
+    && ember build --gh-pages --gh-pages-branch=pull/$TRAVIS_PULL_REQUEST
     && bash scripts/deploy-to-gh-pages.sh no-doc

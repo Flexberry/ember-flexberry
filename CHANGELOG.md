@@ -4,6 +4,43 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.1] - 2020-11-15
+### Added
+* The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.
+* The `validationObject` property, `validate` and `saveModel` methods for `edit-form` controller.
+
+### Fixed
+* Show save notifications on the edit form.
+
+## [2.6.0-beta.0] - 2020-10-06
+### Added
+* The `lookupOnChange` event in the `LookupEvents` service, called when the value in the `flexberry-lookup` component changes.
+* Support for the `flexberry-lookup` component block form, which was previously only available in the mobile version.
+* The localization of the `loading` template.
+* Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
+* Default test selector for `flexberry-objectlistview` component.
+
+### Fixed
+* The `updateLookupAction` action in the `flexberry-lookup` component is not called when a value is selected in a modal window.
+* The `index` route is no longer generated in the `flexberry-application` blueprint. Because of this, some of the application regeneration methods did not work.
+* In the row click handler, in the `flexberry-objectlistview` component, async operations outside the ember run loop were used. Now you can just do `click(row)` in your tests.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.0`.
+* Now the `flexberry-objectlistview` component is generated with the `showCheckBoxInRow` option set to `true` value on the list form.
+* The `flexberry-acceptance-test` blueprint:
+    * An `[AGAT]` tag is added to the name of each test module, which can be used to run the desired test suite. For example `ember test --filter="AGAT"`.
+    * Tests are now generated in the `acceptance\flexberry` directory and are overwritten by default on every generation.
+    * Now the generated test covers several more scenarios.
+
+### Deprecated
+* The `run.after` method, which is added by the `ember-run-after` initializer.
+
+### Breaking changes
+* The `flexberry-lookup` component:
+    * Removed mobile template.
+    * An exception will be thrown when trying to use the block form of the component with `autocomplete` or `dropdown` options.
+
 ## [2.5.0] - 2020-09-10
 ### Added
 * The `flexberry-file` component:

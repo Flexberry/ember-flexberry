@@ -26,6 +26,10 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 
@@ -163,7 +167,8 @@ export default {
         'nempty': 'Not empty',
         'between': 'Between',
       },
-      'filter-condition': 'Condition'
+      'filter-condition': 'Condition',
+      'clear-filter-in-column': 'Clear the filter in this column',
     },
 
     'olv-filter-interval': {

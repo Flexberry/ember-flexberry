@@ -1251,8 +1251,6 @@ export default FlexberryBaseComponent.extend(
             } else {
               throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
             }
-          } else {
-            throw new Error(`Property 'hierarchyAttribute' is not defined.`);
           }
         }
       }

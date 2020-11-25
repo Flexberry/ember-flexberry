@@ -26,6 +26,10 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
+    },
+
+    'loading': {
+      caption: 'Загрузка...',
     }
   },
 
@@ -79,10 +83,16 @@ export default {
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Предпросмотр не может быть загружен',
+      'error-dialog-size-unit-bt': 'Байт',
+      'error-dialog-size-unit-kb': 'Килобайт',
+      'error-dialog-size-unit-mb': 'Мегабайт',
+      'error-dialog-size-unit-gb': 'Гигабайт',
 
       'add-file-error-caption': 'Ошибка добавления файла',
-      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
-        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} байт.',
+      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} {{sizeUnit}}. ' +
+        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Выбранный файл \'{{fileName}}\' имеет недопустимое расширение.',
 
       'upload-file-error-caption': 'Ошибка отправки файла',
       'upload-file-error-message': 'Отправка файла \'{{fileName}}\' не удалась. {{errorMessage}}',
@@ -115,7 +125,10 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'without-sorting': 'Без сортировки',
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {
@@ -144,6 +157,24 @@ export default {
         'plus-button-title': 'Раскрыть',
         'minus-button-title': 'Свернуть',
       },
+      'filters': {
+        'eq': 'Равно',
+        'neq': 'Не равно',
+        'le': 'Меньше',
+        'ge': 'Больше',
+        'like': 'Содержит',
+        'nlike': 'Не содержит',
+        'nempty': 'Заполнен',
+        'empty': 'Не заполнен',
+        'between': 'В интервале',
+      },
+      'filter-condition': 'Условие',
+      'clear-filter-in-column': 'Сбросить фильтр в этой колонке',
+    },
+
+    'olv-filter-interval': {
+      'from': '(от)',
+      'to': '(до)'
     },
 
     'olv-toolbar': {
@@ -177,9 +208,12 @@ export default {
       'copy': 'Копировать',
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования',
-      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
-      'check-all-button-text': 'Отметить все на всех страницах',
-      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
+      'check-all-at-page-button-text': 'Выбрать все на странице',
+      'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
+      'check-all-button-text': 'Выбрать все на всех страницах',
+      'uncheck-all-button-text': 'Отменить выбор на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию',
+      'clear-select-button-text': 'Отмена выделения'
     },
 
     'groupedit-toolbar': {
@@ -199,23 +233,29 @@ export default {
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
+      'sort-direction-caption': 'Сортировка',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'sort-priority-caption': 'Приоритет',
       'column-width': 'Ширина столбца',
+      'column-width-caption': 'Ширина',
       'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
-      'enter-setting-name': 'Введите название настройки',
+      'enter-setting-name': 'Название настройки',
       'use': 'Применить',
       'export': 'Выгрузить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
-      'save': 'Сохранить',
+      'save': 'Сохранить настройку',
       'have-errors': 'При сохранении настройки возникли ошибки: ',
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
-      'col-width-on': 'Включить настройку ширины столбцов',
+      'col-width-on': 'Настройка ширины столбцов',
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
-      'unresizable': 'Фиксированная ширина'
+      'unresizable': 'Фиксированная ширина',
+      'sort-direction-none': 'Нет',
+      'sort-direction-asc': 'По возрастанию',
+      'sort-direction-desc': 'По убыванию',
     },
 
     'advlimit-dialog-content': {
@@ -231,6 +271,13 @@ export default {
       'is-deleted': ' удалено',
       'is-correct': 'Текущая строка ограничения корректна',
       'check': 'Проверить'
+    },
+
+    'filters-dialog-content': {
+      'clear-this-filter': 'Сбросить этот фильтр',
+      'title': 'Настройка фильтрации записей',
+      'clear': 'Сбросить фильтр',
+      'apply': 'Применить'
     },
 
     'form-load-time-tracker': {

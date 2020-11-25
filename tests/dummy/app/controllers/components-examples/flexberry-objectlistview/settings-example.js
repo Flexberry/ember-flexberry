@@ -148,6 +148,15 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showFiltersInModal' mode or not.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: false,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
 
     @property enableFilters
@@ -305,6 +314,14 @@ export default ListFormController.extend({
   fixedHeader: false,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'advLimitButton' property.
+
+    @property fixedHeader
+    @type Boolean
+   */
+  advLimitButton: false,
+
+  /**
     Current records.
 
     @property _records
@@ -337,6 +354,7 @@ export default ListFormController.extend({
     '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
+    '  showFiltersInModal=showFiltersInModal<br>' +
     '  enableFilters=enableFilters<br>' +
     '  filters=filters<br>' +
     '  applyFilters=(action "applyFilters")<br>' +
@@ -371,6 +389,7 @@ export default ListFormController.extend({
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
     '  fixedHeader=fixedHeader<br>' +
+    '  advLimitButton=advLimitButton<br>' +
     '}}'),
 
   /**
@@ -473,6 +492,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'deleteButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showFiltersInModal',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showFiltersInModal'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'enableFilters',
@@ -587,6 +612,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'fixedHeader'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'advLimitButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'advLimitButton'
     });
 
     return componentSettingsMetadata;

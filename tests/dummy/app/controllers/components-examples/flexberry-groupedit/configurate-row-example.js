@@ -1,7 +1,10 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import { translationMacro as t } from 'ember-i18n';
 
 export default EditFormController.extend({
+
+  title: t('forms.application.delete-rows-modal-dialog.delete-rows-caption'),
 
   /**
     Configurate rows 'flexberry-groupedit' component by address.
@@ -34,6 +37,31 @@ export default EditFormController.extend({
         Ember.set(rowConfig, 'canBeDeleted', false);
       }
     },
-  },
 
+    /**
+      Confirm delete rows.
+
+      @param {Object} data Row data.
+    */
+    confirmDeleteRows(data) {
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        this.set('approveDeleting', resolve);
+        this.set('denyDeleting', reject);
+
+        this.send('showModalDialog', 'delete-rows-modal-dialog', {
+          controller: 'components-examples/flexberry-groupedit/configurate-row-example'
+        });
+      });
+    },
+
+    /**
+      Close modal dialog and clear actions.
+    */
+    closeModalDialog() {
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
+
+      this.send('removeModalDialog');
+    },
+  }
 });

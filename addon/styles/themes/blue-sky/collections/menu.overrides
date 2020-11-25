@@ -58,3 +58,41 @@ div.ui.secondary.menu.no-margin.nav-bar {
         justify-content: flex-end;
     }
 }
+
+div.ui.secondary.menu.no-margin.nav-bar .right.menu {
+    flex-basis: 0px;
+    flex-grow: 1;
+}
+
+
+.menu .flexberry-menuitem.item {
+  &.dividing:after {
+    content: '';
+    height: @itemDividingHeight;
+    width: @itemDividingWidth;
+    position: @itemDividingPosition;
+    left: @itemDividingLeft;
+    bottom: @itemDividingBottom;
+    background-color: @itemDividingBackground;
+  }
+  .ui.button.icon {
+    padding: @itemButtonPadding;
+    line-height: @itemButtonLineHeight;
+    border: @itemButtonBorder;
+    height: @itemButtonHeight;
+    margin: @itemButtonMargin;
+    float: @itemButtonFloat;
+    width: auto;
+    &:hover {
+      background-color: @itemButtonHoverBackground;
+    }
+  }
+}
+
+.flexberry-menu.ui.dropdown .menu > .item .ui.button.icon > .icon:not(.dropdown) {
+    margin: 0;
+}
+
+.mobile div.ui.secondary.menu.no-margin.nav-bar .right.menu {
+    flex-wrap: nowrap;
+}

@@ -1,6 +1,7 @@
 <div class="ui secondary menu no-margin ">
   {{#if refreshButton}}
     <button
+      type="button"
       class="ui refresh-button {{buttonClass}} button"
       title={{t "components.olv-toolbar.refresh-button-text"}}
       {{action "refresh"}}>
@@ -11,6 +12,7 @@
   {{#if createNewButton}}
     {{#if (or readonly (not enableCreateNewButton))}}
       <button
+        type="button"
         class="ui create-button {{buttonClass}} disabled button"
         title={{t "components.olv-toolbar.add-button-text"}}
         disabled="disabled"
@@ -19,6 +21,7 @@
       </button>
     {{else}}
       <button
+        type="button"
         class="ui create-button {{buttonClass}} button"
         title={{t "components.olv-toolbar.add-button-text"}}
         {{action "createNew"}}>
@@ -29,6 +32,7 @@
   {{#if deleteButton}}
     {{#if (or readonly (not isDeleteButtonEnabled))}}
       <button
+        type="button"
         class="ui delete-button {{buttonClass}} disabled button"
         title={{t "components.olv-toolbar.delete-button-text"}}
         disabled="disabled"
@@ -38,6 +42,7 @@
       </button>
     {{else}}
       <button
+        type="button"
         class="ui delete-button {{buttonClass}} button"
         title={{t "components.olv-toolbar.delete-button-text"}}
         {{action "delete"}}>
@@ -48,6 +53,7 @@
   {{/if}}
   {{#if availableHierarchicalMode}}
     <button
+      type="button"
       class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
       title={{t "components.olv-toolbar.hierarchy-button-text"}}
       {{action "switchHierarchicalMode"}}>
@@ -57,6 +63,7 @@
   {{#if enableFilters}}
     <div class="ui icon buttons filter-active">
       <button
+        type="button"
         class="ui button {{buttonClass}} {{if showFilters "active"}}"
         title={{t "components.olv-toolbar.filter-button-text"}}
         {{action "toggleStateFilters"}}>
@@ -65,6 +72,7 @@
       {{#if filters}}
         <div class="or" data-text="&bull;"></div>
         <button
+          type="button"
           class="ui button removeFilter-button {{buttonClass}}"
           title={{t "components.olv-toolbar.remove-filter-button-text"}}
           {{action "resetFilters" this.attrs.resetFilters}}>
@@ -84,12 +92,14 @@
         />
       </div>
       <button
+        type="button"
         class="ui {{buttonClass}} icon button search-button"
         title={{t "components.olv-toolbar.search-button-text"}}
         {{action "filterByAnyMatch"}}>
           <i class="search icon"></i>
       </button>
       <button
+        type="button"
         class="ui {{buttonClass}} icon button clear-search-button"
         title={{t "components.olv-toolbar.clear-search-button-text"}}
         {{action "removeFilter"}}>
@@ -100,6 +110,7 @@
   {{#if exportExcelButton}}
     <div class="ui buttons export-config">
       <button
+        type="button"
         class="ui button icon export-button {{buttonClass}}"
         title={{t "components.olv-toolbar.export-excel-button-text"}}
         {{action "showExportDialog"}}>
@@ -114,6 +125,7 @@
   {{#if colsConfigButton}}
     <div class="ui buttons cols-config">
       <button
+        type="button"
         class="ui icon button config-button"
         title={{t "components.colsconfig-dialog-content.title"}}
         {{action "showConfigDialog"}}>
@@ -129,11 +141,19 @@
   {{/if}}
   {{#each customButtons as |customButton|}}
     <button
-      class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+      type="button"
+      class="ui {{if customButton.buttonClasses customButton.buttonClasses}} button"
       title={{if customButton.buttonTitle customButton.buttonTitle}}
       disabled={{customButton.disabled}}
       {{action "customButtonAction" customButton.buttonAction}}>
-      {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
+      {{#if customButton.iconClasses}}
+        <i class={{customButton.iconClasses}}></i>
+        {{customButton.buttonName}}
+      {{else if customButton.buttonName}}
+        {{customButton.buttonName}}
+      {{else}}
+        {{t "components.olv-toolbar.custom-button-text"}}
+      {{/if}}
     </button>
   {{/each}}
   <div class="olv-toolbar-info-modal-dialog ui small basic modal">
@@ -143,6 +163,7 @@
     </div>
     <div class="center aligned ui grid">
     <button
+      type="button"
       class="ui icon button olv-toolbar-info-modal-dialog-copy-button"
       title={{t "components.olv-toolbar.copy"}}
       {{action "copyJSONContent"}}>
@@ -173,6 +194,7 @@
             {{#if showCheckBoxInRow }}
               {{#if (or readonly allSelect)}}
                 <button
+                  type="button"
                   class="ui check-all-at-page-button {{buttonClass}} disabled button"
                   title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                   disabled="disabled"
@@ -181,6 +203,7 @@
                 </button>
               {{else}}
                 <button
+                  type="button"
                   class="ui check-all-at-page-button {{buttonClass}} button"
                   title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                   {{action "checkAllAtPage"}}>
@@ -189,6 +212,7 @@
               {{/if}}
               {{#if readonly}}
                 <button
+                  type="button"
                   class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
                   title={{t "components.olv-toolbar.check-all-button-text"}}
                   disabled="disabled"
@@ -197,6 +221,7 @@
                 </button>
               {{else}}
                 <button
+                  type="button"
                   class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
                   title={{t "components.olv-toolbar.check-all-button-text"}}
                   {{action "checkAll"}}>
@@ -205,6 +230,7 @@
               {{/if}}
               {{#if defaultSortingButton}}
                 <button
+                  type="button"
                   class="ui clear-sorting-button {{buttonClass}} button"
                   title={{t "components.olv-toolbar.clear-sorting-button-text"}}
                   {{action "clearSorting"}}>
@@ -257,12 +283,14 @@
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}} class="overflowed-cell">
                 {{#if column.filter.conditions}}
-                  {{component "flexberry-dropdown"
+                  {{flexberry-dropdown
                     value=column.filter.condition
                     items=column.filter.conditions
+                    displayCaptions=(not (is-array column.filter.conditions))
                     class="compact fluid"
-                    placeholder=""
+                    placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false
+                    onChange=(action "filterConditionChanged" column.filter)
                   }}
                 {{/if}}
               </td>
@@ -272,7 +300,7 @@
             <td rowspan="1"></td>
           {{/if}}
         </tr>
-        <tr class="object-list-view-filters">
+        <tr class="object-list-view-filters" onkeydown={{action "applyFiltersByEnter"}}>
           {{#if showHelperColumn}}
             <td rowspan="1"></td>
           {{/if}}
@@ -280,10 +308,24 @@
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
-                  {{component column.filter.component.name
-                    value=column.filter.pattern
-                    dynamicProperties=column.filter.component.properties
-                  }}
+                  <div class="fluid action input ui">
+                    {{component column.filter.component.name
+                      value=column.filter.pattern
+                      readonly=(or
+                        (eq column.filter.condition "empty")
+                        (eq column.filter.condition "nempty")
+                      )
+                      dynamicProperties=column.filter.component.properties
+                    }}
+                    <button
+                      type="button"
+                      class="ui clear-filter button"
+                      title={{t "components.object-list-view.clear-filter-in-column"}}
+                      {{action "clearFilterForColumn" column.filter}}
+                    >
+                      <i class="remove icon"></i>
+                    </button>
+                  </div>
                 {{/if}}
               </td>
             {{/unless}}
@@ -324,6 +366,7 @@
                       <div class="cell">
                         {{#if (or readonly (not record.rowConfig.canBeDeleted))}}
                           <button
+                            type="button"
                             class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} disabled button"
                             title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
                             disabled="disabled"
@@ -332,6 +375,7 @@
                           </button>
                         {{else}}
                           <button
+                            type="button"
                             class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} button"
                             title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
                             {{action "deleteRow" record}}>
@@ -344,6 +388,7 @@
                       <div class="cell">
                         {{#if readonly}}
                           <button
+                            type="button"
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} disabled button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                             disabled="disabled"
@@ -352,6 +397,7 @@
                           </button>
                         {{else}}
                           <button
+                            type="button"
                             class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} button"
                             title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                             {{action "objectListViewRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
@@ -416,10 +462,10 @@
 <div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
     {{#if hasPreviousPage}}
-      <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
+      <button type="button" class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
       </button>
     {{else}}
-      <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
+      <button type="button" class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
       </button>
     {{/if}}
     {{#each pages as |page|}}
@@ -429,15 +475,15 @@
         {{#if page.isCurrent}}
           <div class="ui active button">{{page.number}}</div>
         {{else}}
-          <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
+          <button type="button" class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
         {{/if}}
       {{/if}}
     {{/each}}
     {{#if hasNextPage}}
-      <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
+      <button type="button" class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
       </button>
     {{else}}
-      <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
+      <button type="button" class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
       </button>
     {{/if}}
   </div>

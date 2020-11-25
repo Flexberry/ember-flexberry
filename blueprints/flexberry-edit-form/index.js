@@ -14,7 +14,7 @@ const skipConfirmationFunc = require('../utils/skip-confirmation');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
-    { name: "flexberry-datepicker", types: ["date"] },
+    { name: "flexberry-simpledatetime", types: ["date"] },
     { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 module.exports = {
@@ -49,14 +49,14 @@ module.exports = {
         }
     },
 
-    processFiles(intoDir, templateVariables) {
-        let skipConfirmation = this.options.skipConfirmation;
-        if (skipConfirmation) {
-            return skipConfirmationFunc(this, intoDir, templateVariables);
-        }
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
-    },
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+  },
 
     /**
      * Blueprint Hook locals.
@@ -162,6 +162,8 @@ var EditFormBlueprint = /** @class */ (function () {
             var attr = this.findAttr(model, projAttr.name);
             projAttr.readonly = "readonly";
             projAttr.type = attr.type;
+            projAttr.entityName = this.options.entity.name;
+            projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
             this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
         }
         this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -176,6 +178,8 @@ var EditFormBlueprint = /** @class */ (function () {
             if (propertyLookup) {
                 belongsTo.projection = propertyLookup.projection;
                 belongsTo.readonly = "readonly";
+                belongsTo.entityName = this.options.entity.name;
+                belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
                 this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
             }
         }
@@ -184,6 +188,8 @@ var EditFormBlueprint = /** @class */ (function () {
         for (var _d = 0, _e = proj.hasMany; _d < _e.length; _d++) {
             hasMany = _e[_d];
             hasMany.readonly = "readonly";
+            hasMany.entityName = this.options.entity.name;
+            hasMany.dashedName = (hasMany.name || '').replace(/\./g, '-');
             this.locales.setupEditFormAttribute(hasMany);
             this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
         }
@@ -204,6 +210,8 @@ var EditFormBlueprint = /** @class */ (function () {
                 belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
+                belongsToAttr.entityName = this.options.entity.name;
+                belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
                 this.locales.setupEditFormAttribute(belongsToAttr);
                 this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
             }

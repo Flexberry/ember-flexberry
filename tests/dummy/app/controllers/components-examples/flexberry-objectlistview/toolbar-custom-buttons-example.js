@@ -44,6 +44,7 @@ export default ListFormController.extend({
       buttonName: hiButtonText,
       buttonAction: 'userButtonActionTest',
       buttonClasses: 'test-click-button',
+      iconClasses: 'paw icon',
       buttonTitle: hiButtonText,
       disabled: hiButtonState,
     }, {

@@ -258,6 +258,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'parent': {
+            __caption__: 'Parent'
+          },
+        },
       }
     },
   },
@@ -276,7 +287,6 @@ Ember.$.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Menu'
           },
           'user-settings-service-checkbox': {
@@ -291,6 +301,10 @@ Ember.$.extend(true, translations, {
           'language-dropdown': {
             'caption': 'Application language',
             'placeholder': 'Choose language'
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'login': {
@@ -299,6 +313,13 @@ Ember.$.extend(true, translations, {
         'logout': {
           'caption': 'Logout'
         }
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-row-caption': 'Delete row ?',
+        'delete-rows-caption': 'Delete selected rows ?',
       },
 
       'footer': {
@@ -486,6 +507,10 @@ Ember.$.extend(true, translations, {
             },
             'compute-autocomplete': {
               'caption': 'Example lookup with compute autocomplete',
+              'title': ''
+            },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -780,6 +805,17 @@ Ember.$.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Suggestion files',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Suggestion file',
+      'suggestion': 'Suggestion',
+      'order': 'Order',
+      'file': 'File',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Master',
       'toggler-example-master-property-caption': 'Master property',
@@ -914,7 +950,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Configurate rows'
+          'caption': 'Flexberry-groupedit. Configurate rows',
+          'confirm': 'Are you sure ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',
@@ -932,6 +969,10 @@ Ember.$.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Example lookup with compute autocomplete',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
@@ -954,11 +995,7 @@ Ember.$.extend(true, translations, {
           'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
-          'caption': 'Flexberry-lookup. Lookup block form example',
-          'message': 'This test only works on the mobile site. To start a mobile version should be:',
-          'paragraph1': 'Go to developer mode (press "F12").',
-          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
-          'paragraph3': 'Refresh page (press "F5")'
+          'caption': 'Flexberry-lookup. Lookup block form example'
         },
         'lookup-in-modal': {
           'caption': 'Flexberry-lookup. Lookup in modal window',
@@ -985,7 +1022,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-menu. Settings example',
           'titleIcon1': 'Left side aligned icon',
           'titleIcon2': 'Right side aligned icon',
-          'titleIcon3': 'Submenu'
+          'titleIcon3': 'Submenu',
+          'titleIcon4': 'Row buttons'
         }
       },
       'flexberry-objectlistview': {
@@ -1081,7 +1119,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
         },
         'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Custom filter'
+          'caption': 'Flexberry-simpleolv. Custom filter',
+          'addObjects-button': 'Add objects'
         },
         'configurate-rows': {
           'caption': 'Flexberry-simpleolv. Configurate rows'

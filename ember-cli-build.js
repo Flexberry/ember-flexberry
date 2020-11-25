@@ -1,19 +1,14 @@
-/*jshint node:true*/
 /* global require, module */
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
-    jscsOptions: {
-      enabled: true,
-      esnext: true,
-      configPath: './.jscsrc'
-    },
     lessOptions: {
       paths: [
         'bower_components/semantic-ui'
       ]
     },
+
     SemanticUI: {
       import: {
         css: false,
@@ -21,6 +16,10 @@ module.exports = function(defaults) {
         images: false,
         fonts: true
       }
+    },
+
+    'ember-cli-qunit': {
+      useLintTree: false
     }
   });
 

@@ -85,15 +85,13 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("transform-test");
         this.promise = this.emberGenerateFlexberryGroup("controller-test");
         this.promise = this.emberGenerateFlexberryGroup("route-test");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-acceptance-test");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-        if (!(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon")) {
-            this.promise = this.emberGenerate("route", "index");
-        }
         this.promise = this.emberGenerate("flexberry-common", "app");
         this.promise = this.emberGenerate("flexberry-core", "app");
         this.promise = this.promise

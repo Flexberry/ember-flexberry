@@ -248,6 +248,17 @@ Ember.$.extend(true, translations, {
             __caption__: 'editor'
           }
         },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
+        },
       }
     },
     'ember-flexberry-dummy-comment': {
@@ -270,6 +281,21 @@ Ember.$.extend(true, translations, {
         }
       }
     },
+    'ember-flexberry-dummy-suggestion-file': {
+      'projections': {
+        'SuggestionFileL': {
+          'order': {
+            __caption__: 'Порядок'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'suggestion': {
+            __caption__: 'Предложение'
+          },
+        }
+      }
+    },
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',
@@ -286,7 +312,6 @@ Ember.$.extend(true, translations, {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
@@ -309,6 +334,13 @@ Ember.$.extend(true, translations, {
         'logout': {
           'caption': 'Выход'
         }
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
       },
 
       'footer': {
@@ -357,6 +389,10 @@ Ember.$.extend(true, translations, {
           },
           'multi': {
             'caption': 'Несколько списков',
+            'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Файлы предложения',
             'title': ''
           }
         },
@@ -496,6 +532,10 @@ Ember.$.extend(true, translations, {
             },
             'compute-autocomplete': {
               'caption': 'Пример лукапа с вычислимым автокомплитом',
+              'title': ''
+            },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -790,6 +830,17 @@ Ember.$.extend(true, translations, {
       'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
     },
 
+    'ember-flexberry-dummy-suggestion-file-list': {
+      'header': 'Файлы предложения',
+    },
+
+    'ember-flexberry-dummy-suggestion-file-edit': {
+      'header': 'Файл предложения',
+      'suggestion': 'Предложение',
+      'order': 'Номер',
+      'file': 'Файл',
+    },
+
     'ember-flexberry-dummy-toggler-example-master-e': {
       'caption': 'Мастер',
       'toggler-example-master-property-caption': 'Свойство мастера',
@@ -925,7 +976,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',
@@ -943,6 +995,10 @@ Ember.$.extend(true, translations, {
         },
         'compute-autocomplete': {
           'caption': 'Пример лукапа с вычислимым автокомплитом',
+          'title': ''
+        },
+        'numeric-autocomplete': {
+          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
@@ -965,11 +1021,7 @@ Ember.$.extend(true, translations, {
           'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'lookup-block-form-example': {
-          'caption': 'Flexberry-lookup. Лукап в блочной форме',
-          'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
-          'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
-          'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
-          'paragraph3': 'Обновить страницу (нажать “F5”)'
+          'caption': 'Flexberry-lookup. Лукап в блочной форме'
         },
         'lookup-in-modal': {
           'caption': 'Flexberry-lookup. Лукап в модальном окне',
@@ -996,7 +1048,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-menu. Пример работы с настройками',
           'titleIcon1': 'Значок выравнен по левому краю',
           'titleIcon2': 'Значок выравнен по правому краю',
-          'titleIcon3': 'Подменю'
+          'titleIcon3': 'Подменю',
+          'titleIcon4': 'Кнопки в строке'
         }
       },
       'flexberry-objectlistview': {
@@ -1092,7 +1145,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
         },
         'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Настройка фильтра'
+          'caption': 'Flexberry-simpleolv. Настройка фильтра',
+          'addObjects-button': 'Добавить объекты'
         },
         'configurate-rows': {
           'caption': 'Flexberry-simpleolv. Раскраска строк'
@@ -1173,7 +1227,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration examples. Валидация',
+          'caption': 'Примеры интеграции. Валидация',
           'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',

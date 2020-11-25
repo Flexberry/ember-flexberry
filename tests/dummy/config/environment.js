@@ -5,7 +5,7 @@ module.exports = function(environment) {
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
-    backendUrl = 'http://stands-backend.flexberry.net';
+    backendUrl = 'http://localhost:6501';
   }
 
   var ENV = {
@@ -130,10 +130,10 @@ module.exports = function(environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
-    ENV.locationType = 'auto';
+    ENV.locationType = 'none';
 
     // URL of the backend running in docker.
-    backendUrl = 'http://stands-backend.flexberry.net';
+    backendUrl = 'http://localhost:6500';
     ENV.APP.backendUrl = backendUrl;
     ENV.APP.backendUrls.root = backendUrl;
     ENV.APP.backendUrls.api = backendUrl + '/odata';

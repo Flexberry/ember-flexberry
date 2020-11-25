@@ -126,6 +126,16 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   filterText: null,
+
+  /**
+    Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.
+
+    @property inLookup
+    @type Boolean
+    @default false
+  */
+  inLookup: false,
+
   /**
     Used to link to objectListView with same componentName.
 
@@ -134,6 +144,14 @@ export default FlexberryBaseComponent.extend({
     @default ''
   */
   componentName: '',
+
+  /**
+    The name of the `flexberry-lookup` component for which the `flexberry-objectlistview` component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
 
   /**
     The flag to specify whether the delete button is enabled.
@@ -163,19 +181,9 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    See {{#crossLink "FlexberryObjectlistviewComponent/customButtons:property"}}{{/crossLink}}.
 
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsArray
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -413,6 +421,16 @@ export default FlexberryBaseComponent.extend({
   isDeleteButtonEnabled: false,
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  showFiltersInModal: false,
+
+  /**
     Stores the text from "Filter by any match" input field.
 
     @property filterByAnyMatchText
@@ -451,6 +469,18 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _infoModalDialog: null,
+
+  /**
+    The name of the component for themodal window.
+    If the `flexberry-objectlistview` component is used for the `flexberry-lookup` component, we must pass the name of the `flexberry-lookup` component to the modal window.
+
+    @private
+    @property _componentNameForModalWindow
+    @type String
+  */
+  _componentNameForModalWindow: Ember.computed('inLookup', 'componentName', 'lookupComponentName', function () {
+    return this.get('inLookup') ? this.get('lookupComponentName') : this.get('componentName');
+  }),
 
   /**
    Shows info modal dialog.
@@ -521,27 +551,24 @@ export default FlexberryBaseComponent.extend({
     */
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let modelName = this.get('modelController.modelProjection.modelName');
-
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: modelName
-        };
-
-        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -613,7 +640,7 @@ export default FlexberryBaseComponent.extend({
     */
     showConfigDialog(settingName) {
       Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName);
     },
 
     /**
@@ -624,7 +651,26 @@ export default FlexberryBaseComponent.extend({
     */
     showAdvLimitDialog(settingName) {
       Ember.assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showAdvLimitDialog', this.componentName, settingName);
+      this.get('modelController').send('showAdvLimitDialog', this.get('_componentNameForModalWindow'), settingName);
+    },
+
+    /**
+      Action to show filters tool.
+
+      @method actions.showFiltersTool
+      @public
+    */
+    showFiltersTool() {
+      const showFiltersInModal = this.get('showFiltersInModal');
+
+      if (showFiltersInModal) {
+        const componentName = this.get('componentName');
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
+
+        this.get('modelController').send('showFiltersDialog', componentName, columns);
+      } else {
+        this.sendAction('toggleStateFilters');
+      }
     },
 
     /**
@@ -636,7 +682,7 @@ export default FlexberryBaseComponent.extend({
     showExportDialog(settingName, immediateExport) {
       let settName = settingName ? 'ExportExcel/' + settingName : settingName;
       Ember.assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settName, true, immediateExport);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, true, immediateExport);
     },
 
     /**
@@ -1013,5 +1059,29 @@ export default FlexberryBaseComponent.extend({
 
     const itemsNames = Ember.A(Object.keys(itemsNameList)).sortBy('name');
     return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect'))
+    {
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get('modelController.modelProjection.modelName');
+
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: modelName
+      };
+
+      this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+    }
   }
 });

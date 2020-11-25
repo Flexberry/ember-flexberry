@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "2.2.0-beta.15",
+  "version": "2.6.0-beta.1",
   "dependencies": {
     "ember": "~2.4.3",
     "ember-cli-shims": "0.1.1",
@@ -14,7 +14,7 @@
     "blueimp-file-upload": "9.11.2",
     "flatpickr-calendar": "2.6.3",
     "seiyria-bootstrap-slider": "6.0.6",
-    "jquery-minicolors": "2.2.6",
+    "jquery-minicolors": "2.3.4",
     "js-beautify": "1.6.4"
   },
   "resolutions": {

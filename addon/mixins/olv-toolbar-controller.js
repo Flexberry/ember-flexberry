@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
@@ -12,6 +13,15 @@ export default Ember.Mixin.create({
     @default Ember.inject.controller('advlimit-dialog')
   */
   advLimitController: Ember.inject.controller('advlimit-dialog'),
+
+  /**
+    Controller to show filters modal window.
+
+    @property filtersDialogController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('filters-dialog')
+  */
+  filtersDialogController: Ember.inject.controller('filters-dialog'),
 
   /**
     Service for managing advLimits for lists.
@@ -52,6 +62,31 @@ export default Ember.Mixin.create({
     */
     showConfigDialog(componentName, settingName, isExportExcel = false, immediateExport = false) {
       this._showConfigDialog(componentName, settingName, this, isExportExcel, immediateExport);
+    },
+
+    /**
+      Show filters dialog.
+
+      @method actions.showFiltersDialog
+      @param componentName Component name.
+      @param filterColumns columns with available filters.
+    */
+    showFiltersDialog(componentName, filterColumns) {
+      let controller = this.get('filtersDialogController');
+      controller.set('mainControler', this);
+
+      let loadingParams = {
+        view: 'application',
+        outlet: 'modal'
+      };
+      this.send('showModalDialog', 'filters-dialog');
+
+      loadingParams = {
+        view: 'filters-dialog',
+        outlet: 'modal-content'
+      };
+      this.send('showModalDialog', 'filters-dialog-content',
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName } }, loadingParams);
     },
 
     /**
@@ -337,9 +372,9 @@ export default Ember.Mixin.create({
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;

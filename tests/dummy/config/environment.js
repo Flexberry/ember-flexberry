@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 module.exports = function(environment) {
   var backendUrl = 'http://stands-backend.flexberry.net';
 
@@ -51,6 +49,7 @@ module.exports = function(environment) {
         storeDeprecationMessages: true,
         storePromiseErrors: true,
         showPromiseErrors: true,
+        errorMessageFilterActive: true,
       },
 
       perf: {

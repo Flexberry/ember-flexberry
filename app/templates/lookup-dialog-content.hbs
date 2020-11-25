@@ -4,8 +4,10 @@
     modelProjection=modelProjection
     content=model
     selectedRecord=currentLookupRow
-    componentMode='lookupform'
+    componentMode="lookupform"
     componentName=folvComponentName
+    lookupComponentName=componentName
+    modelName=modelName
 
     showEditMenuItemInRow=false
     createNewButton=false
@@ -38,5 +40,6 @@
     addColumnToSorting=(action "addColumnToSorting")
     notUseUserSettings=notUseUserSettings
     beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    data-test-lookup-olv=true
   }}
 </div>

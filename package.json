@@ -25,6 +25,11 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.js": "eslint --no-ignore",
     "*.ts": "eslint --no-ignore --ext .ts --env node",

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add isDesktop, isMobile function to control device service.
 
 ## [2.6.0-beta.1] - 2020-11-15
 ### Added

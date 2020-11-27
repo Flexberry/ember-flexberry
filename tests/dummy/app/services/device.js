@@ -9,6 +9,6 @@ export default Device.extend({
     @return {Boolean} Returns true, if device is phone.
   */
   isMobile() {
-    return this.mobile() && Ember.$(window).width() < 480;
+    return Ember.$(window).width() < 480;
   }
 });

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import DeviceService from 'ember-flexberry/services/device';
 
-/* eslint-disable-next-line qunit/no-global-module-test */
+/* eslint-disable-next-line qunit/no-global-module-test */ // https://github.com/platinumazure/eslint-plugin-qunit/issues/75
 module('Unit | Service | device', {
   beforeEach() {
     sinon.stub(Ember, 'getOwner').returns({ application: { deviceService: {} } });

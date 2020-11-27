@@ -113,7 +113,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @return {Boolean} Returns true, if device is phone.
   */
   isMobile() {
-    return this.mobile() || this.tablet();
+    return this.mobile();
   },
 
   /**

@@ -195,10 +195,7 @@ tests/acceptance/components/flexberry-lookup/flexberry-lookup-actions-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-en-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-ru-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autofill-by-limit-test.js
-tests/acceptance/components/flexberry-lookup/flexberry-lookup-default-user-setting-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-limit-function-test.js
-tests/acceptance/components/flexberry-lookup/flexberry-lookup-prefer-developer-to-default-user-setting-test.js
-tests/acceptance/components/flexberry-lookup/flexberry-lookup-prefer-stored-to-default-user-setting-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js

@@ -573,6 +573,10 @@ Ember.$.extend(true, translations, {
             'autocomplete-order-example': {
               'caption': 'Пример сортировки при автокомплите',
               'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Пример настройки OLV модального окна',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -1042,6 +1046,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Пример сортировки при автокомплите',
           'titleLookup': 'Мастер'
         },
+        'user-settings-example': {
+          'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
+          'clear-user-setting': 'Сбросить настройки пользователя'
+        }
       },
       'flexberry-menu': {
         'settings-example': {

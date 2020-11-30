@@ -533,6 +533,7 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     'updateLookupAction',
+    'notUseUserSettings',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {

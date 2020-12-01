@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get install docker-compose 
+    - run: sudo apt-get install docker-compose curl
     - run: |
         docker pull flexberry/ember-flexberry-stand-backend:latest
         docker pull flexberry/ember-flexberry-stand-postgres:latest

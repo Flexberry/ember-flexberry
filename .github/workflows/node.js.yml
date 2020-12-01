@@ -27,6 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: sudo apt-get install docker-compose curl
     - run: |
+        set -x
         docker pull flexberry/ember-flexberry-stand-backend:latest
         docker pull flexberry/ember-flexberry-stand-postgres:latest
         curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml

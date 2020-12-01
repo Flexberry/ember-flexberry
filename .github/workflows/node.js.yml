@@ -16,7 +16,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x]
+        #node-version: [10.x, 12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +25,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get install docker-compose yarn
+    - run: sudo apt-get install docker-compose 
+    - run: |
+        docker pull flexberry/ember-flexberry-stand-backend:latest
+        docker pull flexberry/ember-flexberry-stand-postgres:latest
+        curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+        docker-compose -f ember-flexberry-stand-postgres.yml EmberFlexberryStand up -d
+        
+    - run: |
+        docker-compose  -f ember-flexberry-stand-postgres.yml EmberFlexberryStand down    
     #- run: npm ci
     #- run: npm run build --if-present
     #- run: npm test

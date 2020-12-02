@@ -30,8 +30,8 @@ jobs:
         set -x
         docker pull flexberry/ember-flexberry-stand-backend:latest
         docker pull flexberry/ember-flexberry-stand-postgres:latest
-        curl -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
-        docker-compose -f ember-flexberry-stand-postgres.yml EmberFlexberryStand up -d
+        curl  -o docker-compose.yml -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+        docker-compose up -d
         
     - run: |
         docker-compose  -f ember-flexberry-stand-postgres.yml EmberFlexberryStand down    

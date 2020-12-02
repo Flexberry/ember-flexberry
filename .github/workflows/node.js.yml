@@ -36,7 +36,8 @@ jobs:
         docker-compose up -d
         
     - name: Run google
-       run: google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost & 
+      run: google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost & 
+      
     - name: yarn init
       run: |
        yarn global add ember-cli@2.4.3

@@ -27,7 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install packages
-      run: sudo apt-get install docker-compose curl bower
+      run: sudo apt-get install docker-compose curl
       
     - name: StartUp docker services
       run: |

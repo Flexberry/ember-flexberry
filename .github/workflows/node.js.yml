@@ -37,7 +37,11 @@ jobs:
         docker-compose up -d
         
     - name: Run google
-      run: google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost & 
+      run: |
+        sudo find / -name chrome-sandbox
+        sudo chown root /opt/google/chrome/chrome-sandbox
+        sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+        google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost & 
       
     - name: yarn init
       run: |
@@ -45,7 +49,6 @@ jobs:
        yarn global add bower
        yarn install
        npm install -g bower
-       find /usr -name 'bower*'
        bower install
        
     - name: Run script   

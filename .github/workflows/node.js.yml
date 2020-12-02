@@ -53,8 +53,9 @@ jobs:
        
     - name: Run script   
       run: |
+        set -x
         yarn run lint
-        ember try $EMBER_TRY_SCENARIO test
+        ember try default test
         bash ./scripts/test-generator.sh
         
     - name: Shutdown services

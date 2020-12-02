@@ -27,7 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install packages
-      run: sudo apt-get install docker-compose curl
+      run: sudo apt-get install docker-compose curl bower
+      
     - name: StartUp docker services
       run: |
         docker pull flexberry/ember-flexberry-stand-backend:latest
@@ -43,6 +44,7 @@ jobs:
        yarn global add ember-cli@2.4.3
        yarn global add bower
        yarn install
+       find / -name 'bower*'
        bower install
        
     - name: Run script   

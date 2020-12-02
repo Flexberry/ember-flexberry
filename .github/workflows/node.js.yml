@@ -62,6 +62,8 @@ jobs:
         ember try default test
         
     - name: Run test generator     
+      run: |
+        set -x
         bash ./scripts/test-generator.sh
         
     - name: Shutdown services

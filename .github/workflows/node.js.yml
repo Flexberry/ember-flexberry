@@ -49,8 +49,7 @@ jobs:
        yarn global add bower
        yarn install
        npm install -g bower
-       npm install -g ember-cli
-       npm install -g phantomjs
+       npm install -g ember-cli@2.4.3
        bower install
        
     - name: Yarn Lint

@@ -25,21 +25,7 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-    - name : Generate documentation
-      run: |
-        set -x
-        ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done; TRAVIS_BRANCH=$1
-        if [ "$GITHUB_EVENT_NAME" = 'push' ] && 
-          ( [ "$TRAVIS_BRANCH" = 'master' ]  || 
-            [ "$TRAVIS_BRANCH" = 'develop' ] || 
-            [ "$TRAVIS_BRANCH" = 'feature-ember-update' ]                 
-          ) 
-        then
-          ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
-          bash scripts/deploy-to-gh-pages.sh
-        fi
-          
+        node-version: ${{ matrix.node-version }
     - name: Install packages
       run: sudo apt-get install docker-compose curl
       
@@ -82,6 +68,26 @@ jobs:
     - name: Shutdown services
       run: |
         docker-compose   down    
+        
+    - name : Generate documentation
+      run: |
+        set -x
+        ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done; TRAVIS_BRANCH=$1
+        if [ "$GITHUB_EVENT_NAME" = 'push' ]
+        then
+          case "$TRAVIS_BRANCH" in
+            master | develop | feature-ember-update )
+              ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+              bash scripts/deploy-to-gh-pages.sh
+            break;;
+            dummy-test | dummy-test-2 | dummy-test-3 )
+              ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
+              bash scripts/deploy-to-gh-pages.sh no-doc
+              break;;
+          esac
+        fi
+        
+        
     #- run: npm ci
     #- run: npm run build --if-present
     #- run: npm test

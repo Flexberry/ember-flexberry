@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Replace test models localization with separated classes.
 
 ## [2.6.0-beta.1] - 2020-11-15
 ### Added

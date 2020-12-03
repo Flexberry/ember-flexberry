@@ -75,6 +75,7 @@ jobs:
         set -x
         ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done; 
         export TRAVIS_BRANCH=$1
+        export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
         if [ "$GITHUB_EVENT_NAME" = 'push' ]
         then
           case "$TRAVIS_BRANCH" in

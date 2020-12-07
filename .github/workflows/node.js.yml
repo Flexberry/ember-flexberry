@@ -34,7 +34,9 @@ jobs:
         export TRAVIS_BRANCH=$1
         export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
         yarn global add ember-cli@2.4.3
+        yarn global add bower
         yarn install
+        npm install -g bower
         npm install -g ember-cli@2.4.3
         ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
         bash -x scripts/deploy-to-gh-pages.sh

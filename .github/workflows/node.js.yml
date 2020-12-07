@@ -38,6 +38,7 @@ jobs:
         yarn install
         npm install -g bower
         npm install -g ember-cli@2.4.3
+        bower install
         ember build --gh-pages --gh-pages-branch=$TRAVIS_BRANCH
         bash -x scripts/deploy-to-gh-pages.sh
       

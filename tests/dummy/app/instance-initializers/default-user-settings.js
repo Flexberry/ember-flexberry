@@ -1,13 +1,11 @@
-import SuggestionTypeDefaultUserSettings from '../default-user-settings/suggestion-type';
-
 /**
- * Initializes default user settings for models
+ * Registry options for default user settings
  *
  * @param applicationInstance
  */
 export function initialize(applicationInstance) {
 
-  applicationInstance.register('user-setting:ember-flexberry-dummy-suggestion-type', SuggestionTypeDefaultUserSettings.DEFAULT, { instantiate: false });
+  applicationInstance.registerOptionsForType('user-setting', { instantiate: false });
 }
 
 export default {

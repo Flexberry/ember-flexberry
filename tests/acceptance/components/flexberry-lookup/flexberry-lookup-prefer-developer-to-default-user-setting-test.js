@@ -1,6 +1,6 @@
 /* eslint-disable ember/use-ember-get-and-set */
 /* eslint-disable ember/no-test-import-export */
-/* eslint-disable no-undef */
+/* global visit, andThen, currentURL */
 /* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';
@@ -13,7 +13,6 @@ executeTest('flexberry-lookup prefer developer to default user setting test', (s
   andThen(function () {
     assert.equal(currentURL(), 'components-examples/flexberry-lookup/user-settings-example');
 
-    // eslint-disable-next-line ember/no-jquery
     let $lookupButtouChoose = Ember.$('.ui-change');
 
     // Click choose button.
@@ -25,7 +24,6 @@ executeTest('flexberry-lookup prefer developer to default user setting test', (s
       var done = assert.async();
       setTimeout(function () {
 
-        // eslint-disable-next-line ember/no-jquery
         let $lookupSearch = Ember.$('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');
@@ -40,7 +38,7 @@ executeTest('flexberry-lookup prefer developer to default user setting test', (s
   });
 }, (app) => {
   const suggestionTypeDefaultUserSetting =
-  `{
+  {
     "colsOrder": [
       {
         "propName": "name"
@@ -49,12 +47,12 @@ executeTest('flexberry-lookup prefer developer to default user setting test', (s
         "propName": "moderated"
       }
     ]
-  }`;
+  };
   app.register('user-setting:ember-flexberry-dummy-suggestion-type', suggestionTypeDefaultUserSetting, { instantiate: false });
-  const controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-projection');
+  const controller = app.__container__.lookup('controller:components-examples/flexberry-lookup/user-settings-example');
   controller.set('notUseUserSettings', true);
 
-  const route = app.__container__.lookup('route:components-acceptance-tests/flexberry-lookup/settings-example-projection');
+  const route = app.__container__.lookup('route:components-examples/flexberry-lookup/user-settings-example');
   route.set('developerUserSettings', {
     SuggestionTypeObjectlistView: {
       DEFAULT: {

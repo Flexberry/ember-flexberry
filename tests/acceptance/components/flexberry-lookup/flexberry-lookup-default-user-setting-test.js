@@ -1,5 +1,5 @@
 /* eslint-disable ember/no-test-import-export */
-/* eslint-disable no-undef */
+/* global visit, andThen, currentURL */
 /* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';
@@ -12,7 +12,6 @@ executeTest('flexberry-lookup render olv with default user setting test', (store
   andThen(function () {
     assert.equal(currentURL(), 'components-examples/flexberry-lookup/user-settings-example');
 
-    // eslint-disable-next-line ember/no-jquery
     let $lookupButtouChoose = Ember.$('.ui-change');
 
     // Click choose button.
@@ -24,7 +23,6 @@ executeTest('flexberry-lookup render olv with default user setting test', (store
       var done = assert.async();
       setTimeout(function () {
 
-        // eslint-disable-next-line ember/no-jquery
         let $lookupSearch = Ember.$('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');

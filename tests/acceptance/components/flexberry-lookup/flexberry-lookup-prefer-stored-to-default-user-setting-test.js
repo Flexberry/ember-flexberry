@@ -1,5 +1,5 @@
 /* eslint-disable ember/no-test-import-export */
-/* eslint-disable no-undef */
+/* global visit, andThen, currentURL */
 /* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';
@@ -12,7 +12,6 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
   andThen(function () {
     assert.equal(currentURL(), 'components-examples/flexberry-lookup/user-settings-example');
 
-    // eslint-disable-next-line ember/no-jquery
     let $lookupButtouChoose = Ember.$('.ui-change');
 
     // Click choose button.
@@ -24,7 +23,6 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
       var done = assert.async();
       setTimeout(function () {
 
-        // eslint-disable-next-line ember/no-jquery
         let $lookupSearch = Ember.$('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');
@@ -39,7 +37,7 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
   });
 }, (app) => {
   const suggestionTypeDefaultUserSetting =
-    `{
+    {
     "colsOrder": [
       {
         "propName": "name"
@@ -48,7 +46,7 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
         "propName": "moderated"
       }
     ]
-  }`;
+  };
   app.register('user-setting:ember-flexberry-dummy-suggestion-type', suggestionTypeDefaultUserSetting, { instantiate: false });
 
   const service = app.__container__.lookup('service:user-settings');

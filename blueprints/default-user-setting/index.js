@@ -8,7 +8,7 @@ module.exports = {
 
   availableOptions: [
     {
-      name: "with-initializer",
+      name: "with-index-default-user-setting",
       type: Boolean,
       default: false
     }
@@ -19,32 +19,23 @@ module.exports = {
 
     return {
       modelName: modelName,
-      withInitializer: options.withInitializer
+      withIndexDefaultUserSetting: options.withIndexDefaultUserSetting
     };
   },
 
-  getUpperCaseName(name) {
-    name = name[0].toUpperCase() + name.slice(1, name.length);
-    while (name.indexOf('-') >= 0) {
-      const i = name.indexOf('-');
-      name = name.slice(0, i) + name[i + 1].toUpperCase() + name.slice(i + 2, name.length);
-    }
-    return name;
-  },
-
   beforeInstall(options) {
-    this.withInitializer = options.withInitializer;
+    this.withIndexDefaultUserSetting = options.withIndexDefaultUserSetting;
   },
 
   beforeUninstall(options) {
-    this.withInitializer = options.withInitializer;
+    this.withIndexDefaultUserSetting = options.withIndexDefaultUserSetting;
   },
 
   files() {
     let files = this._super.files.apply(this, arguments);
 
-    if (this.withInitializer === false) {
-      const index = files.indexOf('__root__/instance-initializers/default-user-settings.js');
+    if (this.withIndexDefaultUserSetting === false) {
+      const index = files.indexOf('__root__/default-user-settings/index.js');
       if (index !== -1) {
         files.splice(index, 1);
       }
@@ -57,26 +48,25 @@ module.exports = {
     const dasherizedName = stringUtils.dasherize(options.entity.name);
     options.path = dasherizedName;
 
-    const initializerComponentPath = 'app/instance-initializers/default-user-settings.js';
-    const upperCaseModelName = this.getUpperCaseName(dasherizedName);
-    const importString = `import ${upperCaseModelName} from './default-user-settings/${dasherizedName}';`;
-    const registerString =
-    `  applicationInstance.register('user-setting:${dasherizedName}', ${upperCaseModelName}.DEFAULT, { instantiate: false });`;
+    const initializerComponentPath = 'addon/default-user-settings/index.js';
+    const appPath = 'app/app.js';
+    const upperCaseModelName = stringUtils.classify(dasherizedName);
+    const importString = `import ${upperCaseModelName} from './${dasherizedName}';\n`;
+    const importIndexString = `import './default-user-settings/index';`
 
     return this.insertIntoFile(
       initializerComponentPath,
-      importString,
-      {
-        before: '/**'
-      }
+      importString
     ).then(() => {
-      return this.insertIntoFile(
-        initializerComponentPath,
-        registerString,
-        {
-          after: 'export function initialize(applicationInstance) {\n'
-        }
-      );
+      if (this.withIndexDefaultUserSetting) {
+        return this.insertIntoFile(
+          appPath,
+          importIndexString,
+          {
+            before: '\nlet App;'
+          }
+        );
+      }
     });
   },
 };

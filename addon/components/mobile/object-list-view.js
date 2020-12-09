@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import ObjectListViewComponent from '../object-list-view';
+import checkConfirmDeleteRows from '../utils/check-function-when-delete-rows-and-records';
 
 /**
   Mobile version of {{#crossLink "ObjectListViewComponent"}}{{/crossLink}} (with mobile-specific defaults).
@@ -152,26 +153,13 @@ export default ObjectListViewComponent.extend({
       @method actions.deleteSelectedRow
     */
     deleteSelectedRow() {
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRows'));
 
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRows();
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this._confirmDeleteRows();
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
         this._confirmDeleteRows();
-      }
+      });
     },
 
     /**

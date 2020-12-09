@@ -726,6 +726,7 @@ export default FlexberryBaseComponent.extend({
     @method confirmDeleteRow
     @param {DS.Model} record The record to be deleted.
     @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
+    @deprecated Use `confirmDeleteRows`.
   */
   confirmDeleteRow: undefined,
 

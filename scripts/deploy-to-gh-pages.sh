@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+set
 # Exit with nonzero exit code if anything fails.
 set -e
 
@@ -86,8 +87,28 @@ echo "Commit & push changes."
 git add --all
 git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deployFolder}' folder."
 
+if [ -n "$GITHUB_ACTIONS" ] // GitHub Action environment
+then
+  //Recover private key
+  ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}
+  openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa
+  // Setup SSH agent
+  export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+  mkdir -p ~/.ssh
+  ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+  ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+  chmod 0600 .github/workflows/secrets/id_rsa
+  ssh-add .github/workflows/secrets/id_rsa
+fi
+
 # Redirect any output to /dev/null to hide any sensitive credential data that might otherwise be exposed.
 git push --force --quiet "git@github.com:${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1
+
+if [ -n "$GITHUB_ACTIONS" ] // GitHub Action environment
+then
+  ssh-add -D
+fi
 
 # Add deploy status.
 # if [ "${TRAVIS_PULL_REQUEST}" != "false" ]]

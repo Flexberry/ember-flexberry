@@ -2,7 +2,7 @@
 
 set -x
 set
-
+echo "ENCRYPTION_KEY=$ENCRYPTION_KEY"
 # Exit with nonzero exit code if anything fails.
 set -e
 
@@ -91,7 +91,6 @@ git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deploy
 if [ -n "$GITHUB_ACTIONS" ] # GitHub Action environment
 then
   #  Recover private key
-  ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}
   openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa
   # Setup SSH agent
   export SSH_AUTH_SOCK=/tmp/ssh_agent.sock

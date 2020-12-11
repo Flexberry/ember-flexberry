@@ -497,11 +497,7 @@ export default FlexberryBaseComponent.extend(
     }
 
     if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
-      let userSettingValue = Ember.getOwner(this).lookup('user-setting:' + this.get('modelName'));
-      if (typeof userSettingValue === 'string') {
-        userSettingValue = JSON.parse(userSettingValue);
-      }
-      userSettings = userSettingValue;
+      userSettings = Ember.getOwner(this).lookup('default-user-setting:' + this.get('modelName')).DEFAULT;
     }
 
     let onEditForm = this.get('onEditForm');

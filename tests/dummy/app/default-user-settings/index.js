@@ -1,1 +1,1 @@
-import './suggestion-type';
+import './ember-flexberry-dummy-suggestion-type';

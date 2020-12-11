@@ -87,12 +87,12 @@ echo "Commit & push changes."
 git add --all
 git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deployFolder}' folder."
 
-if [ -n "$GITHUB_ACTIONS" ] // GitHub Action environment
+if [ -n "$GITHUB_ACTIONS" ] # GitHub Action environment
 then
-  //Recover private key
+  #  Recover private key
   ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}
   openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa
-  // Setup SSH agent
+  # Setup SSH agent
   export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
   mkdir -p ~/.ssh
   ssh-keyscan github.com >> ~/.ssh/known_hosts

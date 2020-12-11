@@ -17,9 +17,11 @@ then
   mkdir -p ~/.ssh
   ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-  ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+  ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
   chmod 0600 .github/workflows/secrets/id_rsa
   ssh-add .github/workflows/secrets/id_rsa
+  ls -la /home/runner
+  ls -la .github/workflows/secrets/  ~/.ssh
 fi
 
 

@@ -37,17 +37,17 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
   });
 }, (app) => {
   const suggestionTypeDefaultUserSetting =
-    {
-    "colsOrder": [
+  {
+    colsOrder: [
       {
-        "propName": "name"
+        propName: "name"
       },
       {
-        "propName": "moderated"
+        propName: "moderated"
       }
     ]
   };
-  app.register('user-setting:ember-flexberry-dummy-suggestion-type', suggestionTypeDefaultUserSetting, { instantiate: false });
+  app.register('default-user-setting:ember-flexberry-dummy-suggestion-type', suggestionTypeDefaultUserSetting, { instantiate: false });
 
   const service = app.__container__.lookup('service:user-settings');
   service.getCurrentUserSetting = () => Ember.Object.create({

@@ -2,6 +2,7 @@
 
 set -x
 set
+
 # Exit with nonzero exit code if anything fails.
 set -e
 

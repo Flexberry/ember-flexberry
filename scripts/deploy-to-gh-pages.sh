@@ -11,7 +11,7 @@ then
   pwd
   ls -la
   #  Recover private key
-  openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa
+  openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
   # Setup SSH agent
   export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
   mkdir -p ~/.ssh

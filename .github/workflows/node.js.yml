@@ -58,15 +58,15 @@ jobs:
         #sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
         #google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
-    #- name: yarn init
-      #run: |
-       #set -x
-       #yarn global add ember-cli@2.4.3
-       #yarn global add bower
-       #yarn install
-       #npm install -g bower
-       #npm install -g ember-cli@2.4.3
-       #bower install
+    - name: yarn init
+      run: |
+       set -x
+       yarn global add ember-cli@2.4.3
+       yarn global add bower
+       yarn install
+       npm install -g bower
+       npm install -g ember-cli@2.4.3
+       bower install
 
     #- name: Yarn Lint
       #run: yarn run lint

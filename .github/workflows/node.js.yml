@@ -1,0 +1,71 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+        #node-version: [10.x, 12.x, 14.x]
+
+    steps:
+    
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Install packages
+      run: sudo apt-get install docker-compose curl
+      
+    - name: StartUp docker services
+      run: |
+        docker pull flexberry/ember-flexberry-stand-backend:latest
+        docker pull flexberry/ember-flexberry-stand-postgres:latest
+        curl  -o docker-compose.yml -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+        docker-compose up -d
+        
+    - name: Run google
+      run: |
+        sudo chown root /opt/google/chrome/chrome-sandbox
+        sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+        google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost & 
+      
+    - name: yarn init
+      run: |
+       set -x 
+       yarn global add ember-cli@2.4.3
+       yarn global add bower
+       yarn install
+       npm install -g bower
+       npm install -g ember-cli@2.4.3
+       bower install
+       
+    - name: Yarn Lint
+      run: yarn run lint  
+       
+    - name: Run ember   
+      run: |
+        set -x
+        ember try default test
+        
+    - name: Run test generator     
+      run: |
+        set -x
+        bash ./scripts/test-generator.sh
+        
+    - name: Shutdown services
+      run: |
+        docker-compose   down    

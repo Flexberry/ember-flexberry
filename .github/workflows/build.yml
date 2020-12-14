@@ -59,8 +59,8 @@ jobs:
         npm install -g bower
         npm install -g ember-cli@2.4.3
         bower install
-        ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
-        bash -x scripts/deploy-to-gh-pages.sh
+        # ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
+        # bash -x scripts/deploy-to-gh-pages.sh
 
     - name: Install packages
       run: sudo apt-get install docker-compose curl

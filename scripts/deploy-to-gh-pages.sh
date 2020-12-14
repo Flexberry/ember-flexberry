@@ -92,7 +92,7 @@ git push --force --quiet "git@github.com:${repositoryRelativeGitHubAddress}.git"
 
 # Add deploy status.
 # if [ "${TRAVIS_PULL_REQUEST}" != "false" ]]
-if [ "$GITHUB_EVENT_NAME" = 'pull_request' ]
+if [ "$GITHUB_EVENT_NAME" = 'pull_request' -o $GITHUB_EVENT_NAME = 'push']
 then
   deployments=$(curl --silent --show-error https://api.github.com/repos/${repositoryRelativeGitHubAddress}/deployments?ref=${GITHUB_BRANCH})
   deploymentId=$(node -pe "(JSON.parse(process.argv[1])[0] || {}).id || 'undefined'" "${deployments}")

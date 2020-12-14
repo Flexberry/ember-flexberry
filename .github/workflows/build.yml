@@ -98,14 +98,12 @@ jobs:
 
     - name : Generate documentation
       env:
-          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         set -x
         ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;
         export GITHUB_BRANCH=$1
         export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        export ENCRYPTION_KEY
         export SSH_AUTH_SOCK       
         # Build GH-PAGES
         if [ "$GITHUB_EVENT_NAME" = 'push' -o  "$GITHUB_EVENT_NAME" = 'pull_request' ]

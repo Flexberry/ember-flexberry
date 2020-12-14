@@ -115,9 +115,11 @@ jobs:
             master | develop | feature-ember-update )
               ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
               bash -x scripts/deploy-to-gh-pages.sh
+              ;;
             dummy-test | dummy-test-2 | dummy-test-3 )
               ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
               bash -x scripts/deploy-to-gh-pages.sh no-doc
+              ;;
           esac
         fi
         exit 0

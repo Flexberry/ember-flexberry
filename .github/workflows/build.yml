@@ -100,6 +100,7 @@ jobs:
     - name : Generate documentation
       env:
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         set -x
         ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;

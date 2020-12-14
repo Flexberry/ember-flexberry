@@ -59,8 +59,11 @@ jobs:
         #google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
     - name: yarn init
+      env:
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
       run: |
        set -x
+       echo ENCRYPTION_KEY="$ENCRYPTION_KEY";
        yarn global add ember-cli@2.4.3
        yarn global add bower
        yarn install
@@ -86,8 +89,12 @@ jobs:
         #docker-compose   down
 
     - name : Generate documentation
+      env:
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
       run: |
         set -x
+        export ENCRYPTION_KEY
+        echo ENCRYPTION_KEY="$ENCRYPTION_KEY";
         ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;
         export GITHUB_BRANCH=$1
         #export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}

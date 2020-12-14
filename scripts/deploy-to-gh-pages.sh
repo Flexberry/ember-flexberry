@@ -6,23 +6,23 @@ echo "ENCRYPTION_KEY=$ENCRYPTION_KEY"
 # Exit with nonzero exit code if anything fails.
 set -e
 
-if [ -n "$GITHUB_ACTIONS" ] # GitHub Action environment
-then
-  pwd
-  ls -la
-  #  Recover private key
-  openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
-  # Setup SSH agent
-  export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
-  mkdir -p ~/.ssh
-  ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-  ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
-  chmod 0600 .github/workflows/secrets/id_rsa
-  ssh-add .github/workflows/secrets/id_rsa
-  ls -la /home/runner
-  ls -la .github/workflows/secrets/  ~/.ssh
-fi
+# if [ -n "$GITHUB_ACTIONS" ] # GitHub Action environment
+# then
+#   pwd
+#   ls -la
+#   #  Recover private key
+#   openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
+#   # Setup SSH agent
+#   export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+#   mkdir -p ~/.ssh
+#   ssh-keyscan github.com >> ~/.ssh/known_hosts
+#
+#   ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
+#   chmod 0600 .github/workflows/secrets/id_rsa
+#   ssh-add .github/workflows/secrets/id_rsa
+#   ls -la /home/runner
+#   ls -la .github/workflows/secrets/  ~/.ssh
+# fi
 
 
 # Define repository relative GitHub address.

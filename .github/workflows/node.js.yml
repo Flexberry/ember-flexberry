@@ -97,7 +97,19 @@ jobs:
         echo ENCRYPTION_KEY="$ENCRYPTION_KEY";
         ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;
         export GITHUB_BRANCH=$1
-        #export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        #  Recover private key
+        openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
+        # Setup SSH agent
+        export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        # start ssh agent
+        ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
+        chmod 0600 .github/workflows/secrets/id_rsa
+        ssh-add .github/workflows/secrets/id_rsa
+        ls -la /home/runner
+        ls -la .github/workflows/secrets/  ~/.ssh
         if [ "$GITHUB_EVENT_NAME" = 'push' -o  "$GITHUB_EVENT_NAME" = 'pull_request' ]
         then
           case "$GITHUB_BRANCH" in
@@ -113,3 +125,10 @@ jobs:
         fi
         exit 0
 
+    - name: Cleanup
+      if: always()
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        ssh-add -D
+        rm -Rf *

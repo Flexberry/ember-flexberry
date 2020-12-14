@@ -2,28 +2,8 @@
 
 set -x
 set
-echo "ENCRYPTION_KEY=$ENCRYPTION_KEY"
 # Exit with nonzero exit code if anything fails.
 set -e
-
-# if [ -n "$GITHUB_ACTIONS" ] # GitHub Action environment
-# then
-#   pwd
-#   ls -la
-#   #  Recover private key
-#   openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
-#   # Setup SSH agent
-#   export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
-#   mkdir -p ~/.ssh
-#   ssh-keyscan github.com >> ~/.ssh/known_hosts
-#
-#   ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
-#   chmod 0600 .github/workflows/secrets/id_rsa
-#   ssh-add .github/workflows/secrets/id_rsa
-#   ls -la /home/runner
-#   ls -la .github/workflows/secrets/  ~/.ssh
-# fi
-
 
 # Define repository relative GitHub address.
 repositoryRelativeGitHubAddress="kafnevod/ember-flexberry"
@@ -109,11 +89,6 @@ git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deploy
 
 # Redirect any output to /dev/null to hide any sensitive credential data that might otherwise be exposed.
 git push --force --quiet "git@github.com:${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1
-
-if [ -n "$GITHUB_ACTIONS" ] // GitHub Action environment
-then
-  ssh-add -D
-fi
 
 # Add deploy status.
 # if [ "${TRAVIS_PULL_REQUEST}" != "false" ]]

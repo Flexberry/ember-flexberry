@@ -26,6 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
      
+    - name: Install packages
+      run: sudo apt-get install docker-compose curl     
+     
     - name: Tune ssh-keys
       env:
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}      
@@ -61,9 +64,6 @@ jobs:
         bower install
         # ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
         # bash -x scripts/deploy-to-gh-pages.sh
-
-    - name: Install packages
-      run: sudo apt-get install docker-compose curl
 
     - name: StartUp docker services
       run: |

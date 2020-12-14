@@ -18,7 +18,6 @@ cd emberFlexberryRepository
 cd dummy
 
 if [ "$GITHUB_EVENT_NAME" = 'pull_request' ]
-
 then
   deployFolder="pull/${GITHUB_ACTION}"
 else
@@ -86,7 +85,6 @@ git commit --quiet --amend -m "Update gh-pages branch" -m "Deploy into '${deploy
 git push --force --quiet "git@github.com:${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1
 
 # Add deploy status.
-# if [ "${TRAVIS_PULL_REQUEST}" != "false" ]]
 if [ "$GITHUB_EVENT_NAME" = 'pull_request' -o $GITHUB_EVENT_NAME = 'push' ]
 then
   deployments=$(curl --silent --show-error https://api.github.com/repos/${repositoryRelativeGitHubAddress}/deployments?ref=${GITHUB_BRANCH})

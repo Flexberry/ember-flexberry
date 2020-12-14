@@ -1,7 +1,6 @@
 #!/bin/bash
+# set -x
 
-set -x
-set
 # Exit with nonzero exit code if anything fails.
 set -e
 
@@ -18,14 +17,11 @@ cd emberFlexberryRepository
 # Navigate into dummy deploy directory.
 cd dummy
 
-#if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]
 if [ "$GITHUB_EVENT_NAME" = 'pull_request' ]
 
 then
-#   deployFolder="pull/${TRAVIS_PULL_REQUEST}"
   deployFolder="pull/${GITHUB_ACTION}"
 else
-#   deployFolder="${BRANCH}"
   deployFolder="$GITHUB_BRANCH"
 fi
 
@@ -78,7 +74,6 @@ then
 fi
 
 cd ..
-pwd
 # Configure git.
 git config user.name "Flexberry-man"
 git config user.email "mail@flexberry.net"

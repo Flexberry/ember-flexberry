@@ -2,7 +2,6 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require("path");
@@ -144,10 +143,12 @@ var ModelBlueprint = /** @class */ (function () {
                         options.push("defaultValue: " + attr.defaultValue);
                         break;
                     case 'date':
-                        if (attr.defaultValue === 'Now') {
+                        // The UTC handling policy depends solely on backend configuration.
+                        if (attr.defaultValue === 'Now' || attr.defaultValue === 'UtcNow') {
                             options.push("defaultValue() { return new Date(); }");
                             break;
                         }
+                        throw new Error("The default '" + attr.defaultValue + "' value for '" + attr.name + "' attribute of 'date' type is not supported.");
                     default:
                         if (this.enums.hasOwnProperty(attr.type)) {
                             var enumName = this.enums[attr.type].className + "Enum";
@@ -364,5 +365,6 @@ var ModelBlueprint = /** @class */ (function () {
     };
     return ModelBlueprint;
 }());
+exports.__esModule = true;
 exports.default = ModelBlueprint;
 //# sourceMappingURL=ModelBlueprint.js.map

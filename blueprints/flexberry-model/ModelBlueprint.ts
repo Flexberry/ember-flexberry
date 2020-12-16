@@ -165,10 +165,12 @@ export default class ModelBlueprint {
             options.push(`defaultValue: ${attr.defaultValue}`);
             break;
           case 'date':
-            if (attr.defaultValue === 'Now') {
+            // The UTC handling policy depends solely on backend configuration.
+            if (attr.defaultValue === 'Now' || attr.defaultValue === 'UtcNow') {
               options.push(`defaultValue() { return new Date(); }`);
               break;
             }
+            throw new Error(`The default '${attr.defaultValue}' value for '${attr.name}' attribute of 'date' type is not supported.`);
           default:
             if (this.enums.hasOwnProperty(attr.type)) {
               let enumName = `${this.enums[attr.type].className}Enum`;

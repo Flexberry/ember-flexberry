@@ -43,7 +43,7 @@ var ModelBlueprint = /** @class */ (function () {
         var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
-    }
+        }
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
         var modelFile = path.join(modelsDir, modelFileName);
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
@@ -224,7 +224,7 @@ var ModelBlueprint = /** @class */ (function () {
             TAB + TAB + "this._super.apply(this, arguments);\n" +
             TAB + "}";
         attrs.push(validationsFunc, initFunction);
-        return TAB + attrs.join(",\n" + TAB);
+        return attrs.length ? "\n" + (TAB + attrs.join(",\n" + TAB)) + "\n" : '';
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -252,7 +252,7 @@ var ModelBlueprint = /** @class */ (function () {
                 attrsStr = "";
                 indentStr = "";
             }
-            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": Projection.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
+            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
         }
         return new SortedPair(Number.MAX_VALUE, "");
     };
@@ -273,10 +273,10 @@ var ModelBlueprint = /** @class */ (function () {
         }
         else {
             if (belongsTo.lookupValueField) {
-              hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
+                hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
             }
             else {
-              hiddenStr = ", { index: " + belongsTo.index + " }";
+                hiddenStr = ", { index: " + belongsTo.index + " }";
             }
         }
         var indent = [];
@@ -297,7 +297,7 @@ var ModelBlueprint = /** @class */ (function () {
             if (index == -1)
                 index = Number.MAX_VALUE;
         }
-        return new SortedPair(index, belongsTo.name + ": Projection.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
+        return new SortedPair(index, belongsTo.name + ": belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
@@ -307,7 +307,7 @@ var ModelBlueprint = /** @class */ (function () {
         else {
             hiddenStr = ", { index: " + attr.index + " }";
         }
-        return new SortedPair(attr.index, attr.name + ": Projection.attr('" + attr.caption + "'" + hiddenStr + ")");
+        return new SortedPair(attr.index, attr.name + ": attr('" + attr.caption + "'" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
         var projections = [];
@@ -348,13 +348,13 @@ var ModelBlueprint = /** @class */ (function () {
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n      ");
-                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Projection.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
             projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
-        return "\n" + projections.join("\n") + "\n";
+        return "\n" + projections.join("\n\n") + "\n";
     };
     ModelBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";

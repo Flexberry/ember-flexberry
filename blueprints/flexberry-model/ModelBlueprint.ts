@@ -244,7 +244,7 @@ export default class ModelBlueprint {
       TAB + TAB + "this._super.apply(this, arguments);\n" +
       TAB + "}";
     attrs.push(validationsFunc, initFunction);
-    return TAB + attrs.join(",\n" + TAB);
+    return attrs.length ? `\n${TAB + attrs.join(`,\n${TAB}`)}\n` : '';
   }
 
   joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
@@ -271,7 +271,7 @@ export default class ModelBlueprint {
         attrsStr = "";
         indentStr = "";
       }
-      return new SortedPair(Number.MAX_VALUE,`${detailHasMany.name}: Projection.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`);
+      return new SortedPair(Number.MAX_VALUE,`${detailHasMany.name}: hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`);
     }
     return new SortedPair(Number.MAX_VALUE,"");
   }
@@ -312,7 +312,7 @@ export default class ModelBlueprint {
       if(index==-1)
         index=Number.MAX_VALUE;
     }
-    return new SortedPair(index,`${belongsTo.name}: Projection.belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`);
+    return new SortedPair(index,`${belongsTo.name}: belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`);
   }
 
   declareProjAttr(attr: metadata.ProjAttr): SortedPair {
@@ -322,7 +322,7 @@ export default class ModelBlueprint {
     } else {
       hiddenStr = `, { index: ${attr.index} }`;
     }
-    return new SortedPair(attr.index, `${attr.name}: Projection.attr('${attr.caption}'${hiddenStr})`);
+    return new SortedPair(attr.index, `${attr.name}: attr('${attr.caption}'${hiddenStr})`);
   }
 
   getJSForProjections(model: metadata.Model, modelsDir: string): string {
@@ -359,13 +359,13 @@ export default class ModelBlueprint {
         hasManyAttrs=lodash.sortBy(hasManyAttrs,["index"]);
         let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n      ");
 
-        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: Projection.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
+        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
       projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
-    return `\n${projections.join("\n")}\n`;
+    return `\n${projections.join("\n\n")}\n`;
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {

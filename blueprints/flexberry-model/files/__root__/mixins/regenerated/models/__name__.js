@@ -1,25 +1,38 @@
-import Ember from 'ember';
-import DS from 'ember-data';
-<% if (projections) { %>import { Projection } from 'ember-flexberry-data';<% }
+import Ember from 'ember';<%
+
+if (model) { %>
+import DS from 'ember-data';<%
+}
+
+if (projections) { %>
+import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';<%
+}
+
 for (let enumName in enumImports) { %>
 import <%= enumName %> from '../../../enums/<%= enumImports[enumName] %>';<%
 } %>
-export let Model = Ember.Mixin.create({
-<%= model %>
-});
-<% if (namespace) { %>
-export function defineNamespace(modelClass) {
+
+export let Model = Ember.Mixin.create({<%= model %>});<%
+
+if (namespace) { %>
+
+export let defineNamespace = function (modelClass) {
   modelClass.reopenClass({
     namespace: '<%= namespace %>',
   });
+};<%
 }
-<% }
-if(parentModelName) {%>
+
+if (parentModelName) { %>
+
 export let defineBaseModel = function (modelClass) {
   modelClass.reopenClass({
     _parentModelName: '<%= parentModelName %>'
   });
-};
-<%}%>
-<%if(projections) {%>export let defineProjections = function (modelClass) {<%}%><%= projections %><%if(projections) {%>};
-<%}%>
+};<%
+}
+
+if (projections) { %>
+
+export let defineProjections = function (modelClass) {<%= projections %>};<%
+} %>

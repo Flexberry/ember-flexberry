@@ -5,7 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-import checkConfirmDeleteRows from '../utils/check-function-when-delete-rows-and-records';
+import { checkConfirmDeleteRows } from '../utils/check-function-when-delete-rows-and-records';
 const { getOwner } = Ember;
 
 /**

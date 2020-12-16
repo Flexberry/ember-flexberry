@@ -6,7 +6,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
-import checkBeforeDeleteRecord from '../utils/check-function-when-delete-rows-and-records';
+import { checkConfirmDeleteRows, checkBeforeDeleteRecord } from '../utils/check-function-when-delete-rows-and-records';
 const { getOwner } = Ember;
 
 /**
@@ -865,26 +865,13 @@ export default folv.extend(
         return;
       }
 
-      let confirmDeleteRow = this.get('confirmDeleteRow');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRow'));
 
-      if (confirmDeleteRow) {
-        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRow(recordWithKey.data);
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
         this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-      }
+      });
     },
 
     /**

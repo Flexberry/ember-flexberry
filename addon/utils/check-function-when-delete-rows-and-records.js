@@ -12,14 +12,12 @@ import Ember from 'ember';
   @return {RSVP.Promise} Retriveved object from path
 */
 let checkConfirmDeleteRows = function (confirmDeleteRowsFunction) {
-    let possiblePromise = null;
+    let possiblePromise = Ember.RSVP.resolve();
 
     if (confirmDeleteRowsFunction) {
       Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRowsFunction === 'function');
       possiblePromise = confirmDeleteRowsFunction();
-      possiblePromise = (possiblePromise instanceof Ember.RSVP.Promise) ? possiblePromise : null;
-    } else {
-      possiblePromise = Ember.RSVP.resolve();
+      possiblePromise = (possiblePromise && (possiblePromise instanceof Ember.RSVP.Promise)) ? possiblePromise : null;
     }
 
     return possiblePromise;
@@ -35,15 +33,14 @@ let checkConfirmDeleteRows = function (confirmDeleteRowsFunction) {
   @return {RSVP.Promise} Retriveved object from path
 */
 let checkBeforeDeleteRecord = function (beforeDeleteRecordFunction, record, data) {
-  let possiblePromise = null;
+  let possiblePromise = Ember.RSVP.resolve();
 
   if (beforeDeleteRecordFunction) {
-    Ember.assert('Error: beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
-    possiblePromise = beforeDeleteRecordFunction(record, data);
-    possiblePromise = (possiblePromise instanceof Ember.RSVP.Promise && !data.cancel) ? possiblePromise : null;
-  } else {
-    possiblePromise = Ember.RSVP.resolve();
-  }
+    Ember.assert('Error: beforeDeleteRecord must be a function', typeof beforeDeleteRecordFunction === 'function');
+    let promis = beforeDeleteRecordFunction(record, data);
+    possiblePromise = (promis && (promis instanceof Ember.RSVP.Promise)) ? promis : possiblePromise;
+    possiblePromise = (data.cancel) ? null : possiblePromise;
+  } 
 
   return possiblePromise;
 };

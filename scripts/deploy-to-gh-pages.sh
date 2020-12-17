@@ -5,7 +5,7 @@
 set -e
 
 # Define repository relative GitHub address.
-repositoryRelativeGitHubAddress="kafnevod/ember-flexberry"
+repositoryRelativeGitHubAddress=$GITHUB_REPOSITORY
 
 # Clone project into 'repository' subdirectory && move to it.
 echo "Prepare for deploy to gh-pages."
@@ -41,7 +41,7 @@ then
   npm install -g yuidocjs
 
   # Define yuidoc theme repository relative GitHub address.
-  repositoryYuidocTheme="kafnevod/flexberry-yuidoc-theme"
+  repositoryYuidocTheme="$(GITHUB_REPOSITORY_OWNER)/flexberry-yuidoc-theme"
 
   # Clone project into 'repositoryYuidocTheme' subdirectory && move to it.
   echo "Prepare for deploy to gh-pages."

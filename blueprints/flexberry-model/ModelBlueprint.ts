@@ -31,6 +31,8 @@ export default class ModelBlueprint {
   className: string;
   namespace: string;
   projections: string;
+  hasCpValidations: boolean;
+  validations: string;
   name: string;
   needsAllModels: string;
   needsAllEnums: string;
@@ -65,6 +67,14 @@ export default class ModelBlueprint {
     let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru", localePathTemplate);
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
+    this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
+    if (this.hasCpValidations) {
+      this.validations = this.getValidations(model);
+    }
+  }
+
+  static checkCpValidations(blueprint): boolean {
+    return 'ember-cp-validations' in blueprint.project.dependencies();
   }
 
   static loadModel(modelsDir: string, modelFileName: string): metadata.Model {
@@ -188,7 +198,7 @@ export default class ModelBlueprint {
           optionsStr = ", { " + options.join(', ') + ' }';
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${optionsStr})`);
-      if (attr.notNull) {
+      if (!this.hasCpValidations && attr.notNull) {
         if (attr.type === "date") {
           validations.push(attr.name + ": { datetime: true }");
         } else {
@@ -220,30 +230,33 @@ export default class ModelBlueprint {
     }
     let belongsTo: metadata.DSbelongsTo;
     for (belongsTo of model.belongsTo) {
-      if (belongsTo.presence)
+      if (!this.hasCpValidations && belongsTo.presence) {
         validations.push(belongsTo.name + ": { presence: true }");
+      }
       attrs.push(templateBelongsTo(belongsTo));
     }
     for (let hasMany of model.hasMany) {
       attrs.push(templateHasMany(hasMany));
     }
-    let validationsFunc=TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-    if(validations.length===0){
-      validationsFunc="";
+    if (!this.hasCpValidations) {
+      let validationsFunc=TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
+      if(validations.length===0){
+        validationsFunc="";
+      }
+      validationsFunc =
+        "getValidations: function () {\n" +
+        TAB + TAB + "let parentValidations = this._super();\n" +
+        TAB + TAB + "let thisValidations = {\n" +
+        validationsFunc + TAB + TAB + "};\n" +
+        TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+        TAB + "}";
+      let initFunction =
+        "init: function () {\n" +
+        TAB + TAB + "this.set('validations', this.getValidations());\n" +
+        TAB + TAB + "this._super.apply(this, arguments);\n" +
+        TAB + "}";
+      attrs.push(validationsFunc, initFunction);
     }
-    validationsFunc =
-      "getValidations: function () {\n" +
-      TAB + TAB + "let parentValidations = this._super();\n" +
-      TAB + TAB + "let thisValidations = {\n" +
-      validationsFunc + TAB + TAB + "};\n" +
-      TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-      TAB + "}";
-    let initFunction =
-      "init: function () {\n" +
-      TAB + TAB + "this.set('validations', this.getValidations());\n" +
-      TAB + TAB + "this._super.apply(this, arguments);\n" +
-      TAB + "}";
-    attrs.push(validationsFunc, initFunction);
     return attrs.length ? `\n${TAB + attrs.join(`,\n${TAB}`)}\n` : '';
   }
 
@@ -366,6 +379,57 @@ export default class ModelBlueprint {
       projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return `\n${projections.join("\n\n")}\n`;
+  }
+
+  getValidations(model: metadata.Model): string {
+    let validators = {};
+    for (let attr of model.attrs) {
+      validators[attr.name] = [`validator('ds-error'),`];
+      switch (attr.type) {
+        case 'date':
+          validators[attr.name].push(`validator('date'),`);
+          if (attr.notNull) {
+            validators[attr.name].push(`validator('presence', true),`);
+          }
+          break;
+
+        case 'string':
+        case 'boolean':
+          if (attr.notNull) {
+            validators[attr.name].push(`validator('presence', true),`);
+          }
+          break;
+
+        case 'number':
+        case 'decimal':
+          let options = 'allowString: true';
+          options += attr.notNull ? '' : ', allowBlank: true';
+          options += attr.type === 'number' ? ', integer: true' : '';
+
+          validators[attr.name].push(`validator('number', { ${options} }),`);
+          break;
+      }
+    }
+
+    for (let belongsTo of model.belongsTo) {
+      validators[belongsTo.name] = [`validator('ds-error'),`];
+      if (belongsTo.presence) {
+        validators[belongsTo.name].push(`validator('presence', true),`);
+      }
+    }
+
+    for (let hasMany of model.hasMany) {
+      validators[hasMany.name] = [`validator('ds-error'),`, `validator('has-many'),`];
+    }
+
+    let validations = [];
+    for (let validationKey in validators) {
+      let descriptionKey = `descriptionKey: 'models.${model.modelName}.validations.${validationKey}.__caption__',`;
+      let _validators = `validators: [\n${TAB + TAB + TAB + validators[validationKey].join(`\n${TAB + TAB + TAB}`)}\n${TAB + TAB}],`;
+      validations.push(`${TAB + validationKey}: {\n${TAB + TAB + descriptionKey}\n${TAB + TAB + _validators}\n${TAB}}`);
+    }
+
+    return validations.length ? `\n${validations.join(',\n')},\n` : '';
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {

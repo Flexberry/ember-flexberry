@@ -41,7 +41,7 @@ then
   npm install -g yuidocjs
 
   # Define yuidoc theme repository relative GitHub address.
-  repositoryYuidocTheme="$(GITHUB_REPOSITORY_OWNER)/flexberry-yuidoc-theme"
+  repositoryYuidocTheme="${GITHUB_REPOSITORY_OWNER}/flexberry-yuidoc-theme"
 
   # Clone project into 'repositoryYuidocTheme' subdirectory && move to it.
   echo "Prepare for deploy to gh-pages."

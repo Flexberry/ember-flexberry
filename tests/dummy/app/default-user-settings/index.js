@@ -1,1 +1,1 @@
-import './ember-flexberry-dummy-suggestion-type';
+import './ember-flexberry-dummy-application-user';

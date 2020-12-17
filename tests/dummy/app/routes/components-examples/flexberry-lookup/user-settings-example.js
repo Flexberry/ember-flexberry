@@ -33,7 +33,7 @@ export default EditFormRoute.extend({
 
   init() {
     Ember.set(this, 'developerUserSettings', {
-      SuggestionTypeObjectlistView: {
+      ApplicationUserObjectlistView: {
         DEFAULT: {
           colsOrder: [
             {
@@ -41,14 +41,14 @@ export default EditFormRoute.extend({
               name: "Name"
             },
             {
-              propName: "moderated",
+              propName: "activated",
               hide: true,
-              name: "Moderated"
+              name: "Activated"
             },
             {
-              propName: "parent.name",
+              propName: "gender",
               hide: true,
-              name: "Parent"
+              name: "Gender"
             }
           ]
         }

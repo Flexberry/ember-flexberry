@@ -7,13 +7,13 @@ UserSetting.DEFAULT = {
         name: "Name"
       },
       {
-        propName: "moderated",
-        name: "Moderated"
+        propName: "activated",
+        name: "Activated"
       },
       {
-        propName: "parent.name",
+        propName: "gender",
         hide: true,
-        name: "Parent"
+        name: "Gender"
       }
     ]
   };

@@ -22,7 +22,7 @@ export default EditFormController.extend({
     },
 
     clearUserSetting() {
-      Ember.get(this, 'userSettings').deleteUserSetting('SuggestionTypeObjectlistView');
+      Ember.get(this, 'userSettings').deleteUserSetting('ApplicationUserObjectlistView');
     }
   }
 });

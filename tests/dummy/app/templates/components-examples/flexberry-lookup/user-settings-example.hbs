@@ -2,13 +2,13 @@
   <div class="field">
     {{flexberry-lookup
       componentName="UserSettingsExample"
-      folvComponentName="SuggestionTypeObjectlistView"
+      folvComponentName="ApplicationUserObjectlistView"
       readonly=readonly
-      value=model.type
-      projection="SuggestionTypeE"
+      value=model.author
+      projection="ApplicationUserL"
       displayAttributeName="name"
       relatedModel=model
-      relationName="type"
+      relationName="author"
       choose="showLookupDialog"
       remove="removeLookupValue"
       notUseUserSettings=notUseUserSettings

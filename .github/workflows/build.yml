@@ -68,7 +68,7 @@ jobs:
     - name: Yarn Lint
       run: yarn run lint
 
-    - name: Run ember
+    - name: Run ember try default test
       run: |
         set -x
         ember try default test

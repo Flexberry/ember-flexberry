@@ -37,19 +37,6 @@ executeTest('flexberry-lookup render olv with default user setting test', (store
     });
   });
 }, (app) => {
-  const suggestionTypeDefaultUserSetting =
-  {
-    colsOrder: [
-      {
-        propName: "name"
-      },
-      {
-        propName: "moderated"
-      }
-    ]
-  };
-  app.register('default-user-setting:ember-flexberry-dummy-suggestion-type', suggestionTypeDefaultUserSetting, { instantiate: false });
-
   const service = app.__container__.lookup('service:user-settings');
   service.getCurrentUserSetting = () => Ember.Object.create({});
 });

@@ -1,0 +1,113 @@
+name: Node.js CI
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+     
+    - name: Install  docker-compose and curl packages
+      run: sudo apt-get install docker-compose curl     
+     
+    - name: Tune ssh-keys
+      env:
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}      
+      run: |
+        set -x
+        export ENCRYPTION_KEY
+        #  Recover private key
+        openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
+        # Setup SSH agent
+        export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        # Start ssh agent
+        ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
+        chmod 0600 .github/workflows/secrets/id_rsa
+        ssh-add .github/workflows/secrets/id_rsa        
+         
+    - name: StartUp backend and postgres docker services
+      run: |
+        docker pull flexberry/ember-flexberry-stand-backend:latest
+        docker pull flexberry/ember-flexberry-stand-postgres:latest
+        curl  -o docker-compose.yml -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+        docker-compose up -d
+
+    - name: Start google chrome
+      run: |
+        sudo chown root /opt/google/chrome/chrome-sandbox
+        sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+        google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
+
+    - name: Install ember and bower
+      run: |
+        set -x
+        yarn global add ember-cli@2.4.3
+        yarn global add bower
+        yarn install
+        npm install -g bower
+        npm install -g ember-cli@2.4.3
+        bower install
+
+    - name: Yarn Lint
+      run: yarn run lint
+
+    - name: Run ember try default test
+      run: |
+        set -x
+        ember try default test
+
+    - name: Run test generator
+      run: |
+        set -x
+        bash ./scripts/test-generator.sh
+
+    - name: Shutdown services
+      run: |
+        docker-compose down
+
+    - name : Generate documentation
+      env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        set -x
+        ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;
+        export GITHUB_BRANCH=$1
+        export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        export SSH_AUTH_SOCK       
+        # Build GH-PAGES
+        if [ "$GITHUB_EVENT_NAME" = 'push' -o  "$GITHUB_EVENT_NAME" = 'pull_request' ]
+        then
+          case "$GITHUB_BRANCH" in
+            master | develop | feature-ember-update )
+              ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
+              bash -x scripts/deploy-to-gh-pages.sh
+              ;;
+            dummy-test | dummy-test-2 | dummy-test-3 )
+              ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
+              bash -x scripts/deploy-to-gh-pages.sh no-doc
+              ;;
+          esac
+        fi
+        exit 0
+
+    - name: Cleanup
+      if: always()
+      run: |
+        rm -Rf .ssh .github *

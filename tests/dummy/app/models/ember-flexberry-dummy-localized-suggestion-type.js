@@ -1,46 +1,25 @@
-import DS from 'ember-data';
+import Ember from 'ember';
+import { Model as LocalizedSuggestionTypeMixin, defineNamespace, defineProjections } from
+  '../mixins/regenerated/models/ember-flexberry-dummy-localized-suggestion-type';
 import { Projection } from 'ember-flexberry-data';
+import { Offline } from 'ember-flexberry-data';
+let Model = Projection.Model.extend(Offline.ModelMixin, LocalizedSuggestionTypeMixin, {
+  detailComputedFieldCompute: function() {
+    let name = this.get('name');
+    let localizationName = this.get('localization.name');
+    let result = (localizationName) ? name + ':' + localizationName : name;
+    this.set('detailComputedField', result);
+  },
 
-var Model = Projection.Model.extend({
-  // Inversed relationship for ember-flexberry-dummy-suggestion-type.localizedTypes.
-  // It's not a property for flexberry-lookup component.
-  suggestionType: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
-    inverse: 'localizedTypes',
-    async: false
-  }),
-  name: DS.attr('string'),
+  detailComputedFieldChanged: Ember.on('init', Ember.observer('name', function() {
+    Ember.run.once(this, 'detailComputedFieldCompute');
+  })),
 
-  // This property is for flexberry-lookup component. No inverse relationship here.
-  localization: DS.belongsTo('ember-flexberry-dummy-localization', {
-    inverse: null,
-    async: false
-  }),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    localization: {
-      presence: {
-        message: 'Localization is required'
-      }
-    }
-  }
+  localizationChanged: Ember.on('init', Ember.observer('localization', function() {
+    Ember.run.once(this, 'detailComputedFieldCompute');
+  })),
 });
 
-// Edit form projection.
-Model.defineProjection('LocalizedSuggestionTypeE', 'ember-flexberry-dummy-localized-suggestion-type', {
-  name: Projection.attr('Name'),
-  localization: Projection.belongsTo('ember-flexberry-dummy-localization', 'Localization', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  })
-});
-
+defineNamespace(Model);
+defineProjections(Model);
 export default Model;

@@ -44,6 +44,13 @@
       "notNull": true,
       "defaultValue": "",
       "stored": true
+    },
+    {
+      "name": "detailComputedField",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
     }
   ],
   "belongsTo": [
@@ -73,6 +80,12 @@
           "caption": "Name",
           "hidden": false,
           "index": 0
+        },
+        {
+          "name": "detailComputedField",
+          "caption": "",
+          "hidden": false,
+          "index": 1
         }
       ],
       "belongsTo": [
@@ -139,6 +152,67 @@
           "hidden": true,
           "attrs": [],
           "index": 3,
+          "caption": "",
+          "name": "suggestionType",
+          "relatedTo": "ember-flexberry-dummy-suggestion-type",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
+    {
+      "name": "LocalizedSuggestionTypeEWithComputedField",
+      "modelName": "ember-flexberry-dummy-localized-suggestion-type",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "detailComputedField",
+          "caption": "",
+          "hidden": false,
+          "index": 1
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Localization",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "",
+              "hidden": false,
+              "index": 3
+            }, {
+              "name": "detailComputedField",
+              "caption": "",
+              "hidden": false,
+              "index": 3
+            }
+          ],
+          "index": 2,
+          "type": "default",
+          "caption": "",
+          "name": "localization",
+          "relatedTo": "ember-flexberry-dummy-localization",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "SuggestionType",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [],
+          "index": 4,
+          "type": "default",
           "caption": "",
           "name": "suggestionType",
           "relatedTo": "ember-flexberry-dummy-suggestion-type",

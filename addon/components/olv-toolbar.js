@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import { checkConfirmDeleteRows } from '../utils/check-function-when-delete-rows-and-records';
 const { getOwner } = Ember;
 
 /**
@@ -550,26 +551,13 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     delete() {
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRows'));
 
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRows();
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this._confirmDeleteRows();
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
         this._confirmDeleteRows();
-      }
+      });
     },
 
     /**

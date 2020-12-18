@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { checkConfirmDeleteRows } from '../utils/check-function-when-delete-rows-and-records';
 
 /**
   Toolbar component for {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -136,27 +137,14 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRow'));
 
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRows();
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      let componentName = this.get('componentName');
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
+        let componentName = this.get('componentName');
         this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
-      }
+      });
     },
 
     /**

@@ -6,6 +6,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
+import { checkConfirmDeleteRows, checkBeforeDeleteRecord } from '../utils/check-function-when-delete-rows-and-records';
 const { getOwner } = Ember;
 
 /**
@@ -864,26 +865,13 @@ export default folv.extend(
         return;
       }
 
-      let confirmDeleteRow = this.get('confirmDeleteRow');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRow'));
 
-      if (confirmDeleteRow) {
-        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRow(recordWithKey.data);
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
         this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-      }
+      });
     },
 
     /**
@@ -2468,32 +2456,18 @@ export default folv.extend(
     @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
   */
   _deleteRecord(record, immediately) {
-    let beforeDeleteRecord = this.get('beforeDeleteRecord');
-    let possiblePromise = null;
     let data = {
       immediately: immediately,
       cancel: false
     };
 
-    if (beforeDeleteRecord) {
-      Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
+    let checkBeforeDeleteRecordResult = checkBeforeDeleteRecord(this.get('beforeDeleteRecord'), record, data);
 
-      possiblePromise = beforeDeleteRecord(record, data);
+    if (!checkBeforeDeleteRecordResult) return;
 
-      if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
-        return;
-      }
-    }
-
-    if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-      possiblePromise.then(() => {
-        if (!data.cancel) {
-          this._actualDeleteRecord(record, data.immediately);
-        }
-      });
-    } else {
+    checkBeforeDeleteRecordResult.then(() => {
       this._actualDeleteRecord(record, data.immediately);
-    }
+    });
   },
 
   /**

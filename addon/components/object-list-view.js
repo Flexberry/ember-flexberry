@@ -12,6 +12,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import getProjectionByName from '../utils/get-projection-by-name';
 import runAfter from '../utils/run-after';
+import { checkConfirmDeleteRows, checkBeforeDeleteRecord } from '../utils/check-function-when-delete-rows-and-records';
 
 /**
   Object list view component.
@@ -992,26 +993,13 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      let confirmDeleteRow = this.get('confirmDeleteRow');
-      let possiblePromise = null;
+      let checkConfirmDeleteRowsResult = checkConfirmDeleteRows(this.get('confirmDeleteRow'));
 
-      if (confirmDeleteRow) {
-        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+      if (!checkConfirmDeleteRowsResult) return;
 
-        possiblePromise = confirmDeleteRow(recordWithKey.data);
-
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
-          return;
-        }
-      }
-
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-        possiblePromise.then(() => {
-          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-        });
-      } else {
+      checkConfirmDeleteRowsResult.then(() => {
         this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
-      }
+      });
     },
 
     /**
@@ -2435,32 +2423,18 @@ export default FlexberryBaseComponent.extend(
   _deleteRecord(record, immediately) {
     let currentController = this.get('currentController');
     currentController.onDeleteActionStarted();
-    let beforeDeleteRecord = this.get('beforeDeleteRecord');
-    let possiblePromise = null;
     let data = {
       immediately: immediately,
       cancel: false
     };
 
-    if (beforeDeleteRecord) {
-      Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
+    let checkBeforeDeleteRecordResult = checkBeforeDeleteRecord(this.get('beforeDeleteRecord'), record, data);
 
-      possiblePromise = beforeDeleteRecord(record, data);
+    if (!checkBeforeDeleteRecordResult) return;
 
-      if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
-        return;
-      }
-    }
-
-    if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
-      possiblePromise.then(() => {
-        if (!data.cancel) {
-          this._actualDeleteRecord(record, data.immediately);
-        }
-      });
-    } else {
+    checkBeforeDeleteRecordResult.then(() => {
       this._actualDeleteRecord(record, data.immediately);
-    }
+    });
   },
 
   /**

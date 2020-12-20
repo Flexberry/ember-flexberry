@@ -3,8 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.6.0-beta.2] - 2020-12-20
 ### Added
-* Add isDesktop, isMobile function to control device service.
+* The `isDesktop` and `isMobile` methods for `device` service.
+* The `hierarchyAttribute` property for `flexberry-objectlistview` component.
+* Ability to define default user settings for the type of models to be used in the lists.
 
 ## [2.6.0-beta.1] - 2020-11-15
 ### Added

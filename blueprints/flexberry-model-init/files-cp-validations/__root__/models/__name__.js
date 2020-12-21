@@ -1,5 +1,6 @@
 import {
-  <% if (parentModelName) { %>defineBaseModel,
+  <% if (namespace) { %>defineNamespace,
+  <% } if (parentModelName) { %>defineBaseModel,
   <% } if (projections) { %>defineProjections,
   <% } %>ValidationRules,
   Model as <%= className %>Mixin
@@ -23,10 +24,13 @@ const Validations = buildValidations(<%= parentModelName ? 'Ember.$.extend({}, P
 let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= !parentModelName ? 'OfflineModelMixin, ' : '' %><%= className %>Mixin, Validations, {
 });<%
 
-if (parentModelName || projections) { %>
+if (namespace || parentModelName || projections) { %>
 <%
 }
 
+if (namespace) { %>
+defineNamespace(Model);<%
+}
 if (parentModelName) { %>
 defineBaseModel(Model);<%
 }

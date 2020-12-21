@@ -20,6 +20,15 @@ export let Model = Ember.Mixin.create({<%= model %>});
 
 export let ValidationRules = {<%= validations %>};<%
 
+if (namespace) { %>
+
+export let defineNamespace = function (modelClass) {
+  modelClass.reopenClass({
+    namespace: '<%= namespace %>',
+  });
+};<%
+}
+
 if (parentModelName) { %>
 
 export let defineBaseModel = function (modelClass) {

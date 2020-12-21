@@ -496,6 +496,13 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
+    if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
+      if (!Ember.isNone(userSettingValue)) {
+        userSettings = userSettingValue.DEFAULT
+      }
+    }
+
     let onEditForm = this.get('onEditForm');
 
     // TODO: add userSettings support on edit form.

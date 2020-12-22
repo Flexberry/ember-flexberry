@@ -48,7 +48,7 @@ module.exports = {
     const dasherizedName = stringUtils.dasherize(options.entity.name);
     options.path = dasherizedName;
 
-    const initializerComponentPath = 'addon/default-user-settings/index.js';
+    const initializerComponentPath = 'app/default-user-settings/index.js';
     const appPath = 'app/app.js';
     const upperCaseModelName = stringUtils.classify(dasherizedName);
     const importString = `import ${upperCaseModelName} from './${dasherizedName}';\n`;

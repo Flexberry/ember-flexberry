@@ -1,4 +1,5 @@
 import ModelBlueprint from '../flexberry-model/ModelBlueprint';
+import path = require('path');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 
 module.exports = {
@@ -58,7 +59,7 @@ module.exports = {
    * @return {String} Overridden files directory.
    */
   filesPath: function (options) {
-    const filesPathSuffix = ModelBlueprint.checkCpValidations(this) ? '-cp-validations' : '';
-    return this._super.filesPath.apply(this, [ options ]) + filesPathSuffix;
+    const filesSubDir = ModelBlueprint.checkCpValidations(this) ? 'files-cp-validations' : 'files-ember-validations';
+    return path.join(this._super.filesPath.apply(this, [ options ]), filesSubDir);
   }
 };

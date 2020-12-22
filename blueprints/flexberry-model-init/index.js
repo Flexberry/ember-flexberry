@@ -1,5 +1,6 @@
 "use strict";
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
+var path = require("path");
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
@@ -55,8 +56,8 @@ module.exports = {
      * @return {String} Overridden files directory.
      */
     filesPath: function (options) {
-        const filesPathSuffix = ModelBlueprint_1["default"].checkCpValidations(this) ? '-cp-validations' : '';
-        return this._super.filesPath.apply(this, [options]) + filesPathSuffix;
+        const filesSubDir = ModelBlueprint_1.default.checkCpValidations(this) ? 'files-cp-validations' : 'files-ember-validations';
+        return path.join(this._super.filesPath.apply(this, [ options ]), filesSubDir);
     }
 };
 //# sourceMappingURL=index.js.map

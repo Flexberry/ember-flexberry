@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.2] - 2020-12-20
+### Added
+* The `isDesktop` and `isMobile` methods for `device` service.
+* The `hierarchyAttribute` property for `flexberry-objectlistview` component.
+* Ability to define default user settings for the type of models to be used in the lists.
+
 ## [2.6.0-beta.1] - 2020-11-15
 ### Added
 * The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.

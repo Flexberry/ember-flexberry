@@ -38,14 +38,12 @@ jobs:
         sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
         google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
-    - name: Install ember and bower
+    - name: Install dependencies
       run: |
         set -x
-        yarn global add ember-cli@2.4.3
-        yarn global add bower
-        yarn install
-        npm install -g bower
         npm install -g ember-cli@2.4.3
+        npm install -g bower
+        yarn install
         bower install
 
     - name: Yarn Lint

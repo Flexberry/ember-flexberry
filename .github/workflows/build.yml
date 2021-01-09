@@ -1,4 +1,3 @@
-name: Node.js CI
 on:
   push:
     branches: [ develop ]
@@ -6,21 +5,16 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
-
+  test-addon:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x]
-
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '10.x'
 
     - name: Install dependencies
       run: |
@@ -33,15 +27,37 @@ jobs:
     - name: Setup test environment
       uses: ./.github/actions/setup-test-environment
 
-    - name: Yarn Lint
+    - name: Run linters
       run: yarn run lint
 
-    - name: Run ember try default test
+    - name: Test addon
       run: |
         set -x
         ember try default test
 
-    - name: Run test generator
+  test-generator:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install dependencies
+      run: |
+        set -x
+        npm install -g ember-cli@2.4.3
+        npm install -g bower
+        yarn install
+        bower install
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-environment
+
+    - name: Test generator
       run: |
         set -x
         bash ./scripts/test-generator.sh

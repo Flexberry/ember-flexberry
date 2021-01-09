@@ -22,22 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install  docker-compose and curl packages
-      run: sudo apt-get install docker-compose curl
-
-    - name: StartUp backend and postgres docker services
-      run: |
-        docker pull flexberry/ember-flexberry-stand-backend:latest
-        docker pull flexberry/ember-flexberry-stand-postgres:latest
-        curl  -o docker-compose.yml -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
-        docker-compose up -d
-
-    - name: Start google chrome
-      run: |
-        sudo chown root /opt/google/chrome/chrome-sandbox
-        sudo sudo chmod 4755 /opt/google/chrome/chrome-sandbox
-        google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
-
     - name: Install dependencies
       run: |
         set -x
@@ -45,6 +29,9 @@ jobs:
         npm install -g bower
         yarn install
         bower install
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-environment
 
     - name: Yarn Lint
       run: yarn run lint
@@ -58,7 +45,3 @@ jobs:
       run: |
         set -x
         bash ./scripts/test-generator.sh
-
-    - name: Shutdown services
-      run: |
-        docker-compose down

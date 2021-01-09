@@ -1,4 +1,15 @@
-on: push
+name: DEPLOY
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature-ember-update
+      - dummy-test
+      - dummy-test-2
+      - dummy-test-3
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

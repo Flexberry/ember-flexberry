@@ -258,6 +258,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-checkbox/three-state-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.title'),
+            children: null
           }]
         }, {
           link: null,

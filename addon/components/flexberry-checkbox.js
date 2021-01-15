@@ -83,7 +83,12 @@ export default FlexberryBaseComponent.extend({
   isNullable: false,
 
   valueObserver: Ember.observer('value', function() {
-    let value = this.get('value');
+    const value = this.get('value');
+    if (this.get('isNullable') && Ember.isNone(this.get('value'))) {
+      this.$().checkbox('set indeterminate');
+      return;
+    }
+
     this.$('.flexberry-checkbox-input').prop('checked', value);
   }),
 

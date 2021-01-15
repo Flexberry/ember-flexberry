@@ -76,11 +76,11 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag: indicates whether value can be null.
 
-    @property isNullableBoolean
+    @property isNullable
     @type Boolean
     @default false
   */
-  isNullableBoolean: false,
+  isNullable: false,
 
   valueObserver: Ember.observer('value', function() {
     let value = this.get('value');
@@ -109,7 +109,7 @@ export default FlexberryBaseComponent.extend({
       }
     });
 
-    if (this.get('isNullableBoolean') && Ember.isNone(this.get('value'))) {
+    if (this.get('isNullable') && Ember.isNone(this.get('value'))) {
       this.$().checkbox('set indeterminate');
       return;
     }

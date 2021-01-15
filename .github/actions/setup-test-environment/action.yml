@@ -1,0 +1,23 @@
+name: Setup test environment
+description: It launches browser and backend of dummy-app for tests.
+runs:
+  using: composite
+  steps:
+    - name: Install docker-compose and curl packages
+      run: sudo apt-get install docker-compose curl
+      shell: bash
+
+    - name: Start dummy-app backend
+      run: |
+        docker pull flexberry/ember-flexberry-stand-backend:latest
+        docker pull flexberry/ember-flexberry-stand-postgres:latest
+        curl -o docker-compose.yml -O https://raw.githubusercontent.com/Flexberry/FlexberryEmberTestStand.ODataBackend/master/Docker/ember-flexberry-stand-postgres.yml
+        docker-compose up -d
+      shell: bash
+
+    - name: Start Google Chrome
+      run: |
+        sudo chown root /opt/google/chrome/chrome-sandbox
+        sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+        google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
+      shell: bash

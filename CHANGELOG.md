@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.
 
 ## [2.6.0-beta.2] - 2020-12-20
 ### Added

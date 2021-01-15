@@ -433,6 +433,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Пример с тремя состояниями',
+              'title': ''
             }
           },
           'flexberry-ddau-checkbox': {
@@ -923,6 +927,10 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
+        },
+        'three-state-example': {
+          'caption': 'Пример с тремя состояниями',
+          'indeterminate-button': 'Выставить пустое значение'
         }
       },
       'flexberry-ddau-checkbox': {

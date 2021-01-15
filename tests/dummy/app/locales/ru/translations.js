@@ -930,6 +930,7 @@ Ember.$.extend(true, translations, {
         },
         'three-state-example': {
           'caption': 'Пример с тремя состояниями',
+          'indeterminate-button': 'Выставить пустое значение'
         }
       },
       'flexberry-ddau-checkbox': {

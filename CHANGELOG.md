@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.4] - 2021-01-15
+### Added
+* The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.
+
+### Fixed
+* The `default-user-setting` blueprint:
+    * Fixed init component path.
+
+## [2.6.0-beta.3] - 2021-01-13
+### Fixed
+* The `flexberry-objectlitview` component:
+    * Add ability to on and off hierarchical mode when component is in hierarchical mode initially.
+
 ## [2.6.0-beta.2] - 2020-12-20
 ### Added
 * The `isDesktop` and `isMobile` methods for `device` service.

@@ -275,7 +275,6 @@ module.exports = {
       "moduleId": "app/templates/components/flexberry-simpleolv",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "quotes",
         "self-closing-void-elements",
@@ -380,7 +379,6 @@ module.exports = {
       "moduleId": "app/templates/components/object-list-view-row",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "no-invalid-interactive",
         "no-unbound"
@@ -397,7 +395,6 @@ module.exports = {
       "moduleId": "app/templates/components/object-list-view",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "quotes",
         "no-inline-styles",
@@ -485,7 +482,6 @@ module.exports = {
       "moduleId": "app/templates/mobile/components/flexberry-simpleolv",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "quotes",
         "self-closing-void-elements",
@@ -499,7 +495,6 @@ module.exports = {
     {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
-        "eol-last",
         "no-unnecessary-concat",
         "no-inline-styles",
         "no-invalid-interactive",
@@ -511,7 +506,6 @@ module.exports = {
       "moduleId": "app/templates/mobile/components/object-list-view",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "quotes",
         "no-inline-styles",

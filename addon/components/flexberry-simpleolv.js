@@ -3170,7 +3170,6 @@ export default folv.extend(
 
           selectedRecords.removeObject(recordWithKey.data);
           recordWithKey.set('selected', selectAllParameter);
-          recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
         }
       }
 

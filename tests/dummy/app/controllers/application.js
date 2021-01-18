@@ -258,6 +258,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-checkbox/three-state-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -432,6 +437,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/user-settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
             children: null
           }]
         }, {

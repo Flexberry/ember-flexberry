@@ -433,6 +433,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Пример с тремя состояниями',
+              'title': ''
             }
           },
           'flexberry-ddau-checkbox': {
@@ -572,6 +576,10 @@ Ember.$.extend(true, translations, {
             },
             'autocomplete-order-example': {
               'caption': 'Пример сортировки при автокомплите',
+              'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Пример настройки OLV модального окна',
               'title': ''
             }
           },
@@ -919,6 +927,10 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
+        },
+        'three-state-example': {
+          'caption': 'Пример с тремя состояниями',
+          'indeterminate-button': 'Выставить пустое значение'
         }
       },
       'flexberry-ddau-checkbox': {
@@ -1042,6 +1054,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Пример сортировки при автокомплите',
           'titleLookup': 'Мастер'
         },
+        'user-settings-example': {
+          'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
+          'clear-user-setting': 'Сбросить настройки пользователя'
+        }
       },
       'flexberry-menu': {
         'settings-example': {

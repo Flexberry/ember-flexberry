@@ -155,6 +155,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let customInHierarchicalMode = Ember.get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
       lookupController.set('inHierarchicalMode', customInHierarchicalMode);
 
+      lookupController.set('developerUserSettings', this.get('developerUserSettings'));
+
       let projectionName = options.projection;
       Ember.assert('ProjectionName is undefined.', projectionName);
 

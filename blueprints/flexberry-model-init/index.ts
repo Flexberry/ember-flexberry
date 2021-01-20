@@ -1,6 +1,6 @@
-import ModelBlueprint from '../flexberry-model/ModelBlueprint';
-import path = require('path');
-const skipConfirmationFunc = require('../utils/skip-confirmation');
+import ModelBlueprint from "../flexberry-model/ModelBlueprint";
+const path = require("path");
+const skipConfirmationFunc = require("../utils/skip-confirmation");
 
 module.exports = {
 

@@ -1,7 +1,7 @@
 "use strict";
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
-var path = require("path");
-const skipConfirmationFunc = require('../utils/skip-confirmation');
+const path = require("path");
+const skipConfirmationFunc = require("../utils/skip-confirmation");
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [

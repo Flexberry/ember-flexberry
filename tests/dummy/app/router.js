@@ -56,6 +56,7 @@ Router.map(function() {
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');
+  this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
   this.route('components-examples/flexberry-datepicker/settings-example');
@@ -85,6 +86,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
+  this.route('components-examples/flexberry-lookup/user-settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');

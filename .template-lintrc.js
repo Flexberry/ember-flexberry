@@ -78,13 +78,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog-content",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "app/templates/lookup-dialog",
       "only": [
         "eol-last",
@@ -860,12 +853,6 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-preview",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-projection",
       "only": [
         "eol-last"
       ]

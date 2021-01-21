@@ -2,27 +2,23 @@
   {{flexberry-objectlistview
     class="ui bottom attached"
     modelProjection=modelProjection
+    modelName=modelName
     content=model
     selectedRecord=currentLookupRow
     componentMode="lookupform"
     componentName=folvComponentName
     lookupComponentName=componentName
-    modelName=modelName
-
     showEditMenuItemInRow=false
     createNewButton=false
     showCheckBoxInRow=false
     colsConfigButton=false
     columnsWidthAutoresize=true
-
-    filterByAnyMatch=(action 'filterByAnyMatch')
+    filterByAnyMatch=(action "filterByAnyMatch")
     filterText=filter
     filters=filters
     applyFilters=(action "applyFilters")
     resetFilters=(action "resetFilters")
-
     customProperties=customPropertiesData
-
     pages=pages
     perPageValue=perPageValue
     perPageValues=perPageValues
@@ -32,7 +28,6 @@
     previousPage=(action "previousPage")
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
-
     disableHierarchicalMode=disableHierarchicalMode
     sorting=computedSorting
     orderable=true

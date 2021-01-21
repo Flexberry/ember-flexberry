@@ -1,0 +1,63 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test-addon:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install dependencies
+      run: |
+        set -x
+        npm install -g ember-cli@2.4.3
+        npm install -g bower
+        yarn install
+        bower install
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-environment
+
+    - name: Run linters
+      id: linting
+      run: yarn run lint
+
+    - name: Test addon
+      if: ${{ success() || steps.linting.conclusion == 'failure' }}
+      run: |
+        set -x
+        ember try default test
+
+  test-generator:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install dependencies
+      run: |
+        set -x
+        npm install -g ember-cli@2.4.3
+        npm install -g bower
+        yarn install
+        bower install
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-environment
+
+    - name: Test generator
+      run: |
+        set -x
+        bash ./scripts/test-generator.sh

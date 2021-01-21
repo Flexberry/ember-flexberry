@@ -308,6 +308,10 @@ Ember.$.extend(true, translations, {
             'autocomplete-order-example': {
               'caption': 'Example for autocomplete with order',
               'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Example for modal dialog olv user settiings',
+              'title': ''
             }
           },
           'flexberry-menu': {

@@ -52,6 +52,7 @@ i.icon.hand.paper:before {
 div.ui.secondary.menu.no-margin.nav-bar {
     .ui.basic.buttons {
         align-self: flex-start;
+        display:inline;
     }
     .right.menu {
         flex-wrap: wrap-reverse;

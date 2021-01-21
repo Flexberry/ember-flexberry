@@ -91,5 +91,5 @@
 @navbarSortingMobileOverflow: hidden;
 @navbarSortingMobileTextOverflow: ellipsis;
 @navbarSortingMobilePaddind: 0.5em;
-@navbarSearchPageInputWidth: 100px;
-@navbarSearchPageInputWidthMobile: 50px;
+@navbarSearchPageInputWidth: 160px;
+@navbarSearchPageInputWidthMobile: 85px;

@@ -588,6 +588,11 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
     }
 }
 
+.ui.input.nav-bar-search-page input:not(.hidden) {
+    text-align: center;
+    max-width: @navbarSearchPageInputWidthMobile;
+}
+
 /******************************************
       Positive/negative buttons section
 *******************************************/

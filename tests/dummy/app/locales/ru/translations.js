@@ -671,6 +671,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-tab-bar': {
+            'caption': 'flexberry-tab-bar',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-text-cell': {
             'caption': 'flexberry-text-cell',
             'title': '',
@@ -1174,6 +1182,22 @@ Ember.$.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
+        }
+      },
+      'flexberry-tab-bar': {
+        'settings-example': {
+          'caption': 'Flexberry-tab-bar. Пример работы с настройками',
+          'tab_1': 'Вкладка №1',
+          'tab_2': 'Вкладка №2',
+          'tab_3': 'Вкладка №3',
+          'tab_4': 'Вкладка №4',
+          'tab_5': 'Вкладка №5',
+          'tab_6': 'Вкладка №6',
+          'tab_7': 'Вкладка №7',
+          'tab_8': 'Вкладка №8',
+          'tab_9': 'Вкладка №9',
+          'tab_10': 'Вкладка №10',
+          'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },
       'flexberry-text-cell': {

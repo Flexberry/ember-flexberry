@@ -151,6 +151,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-simpleolv/configurate-rows');
   this.route('components-examples/flexberry-simpleolv/selected-rows');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-tab-bar/settings-example');
   this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

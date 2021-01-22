@@ -61,7 +61,7 @@ export default {
         __caption__: 'Текст'
       },
       date: {
-        __caption__: 'Дата'
+        __caption__: 'Date'
       },
       votes: {
         __caption__: 'Голоса'

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* The `edit-form-new` route:
+    * Fixed return promise in model.
 
 ## [2.6.0-beta.4] - 2021-01-15
 ### Added

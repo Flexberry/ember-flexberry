@@ -285,7 +285,7 @@ export default {
     SuggestionMainModelProjectionTest: {
       userVotes: {
         voteType: {
-          __caption__: 'Тип голосования'
+          __caption__: 'Vote type'
         },
       },
     },

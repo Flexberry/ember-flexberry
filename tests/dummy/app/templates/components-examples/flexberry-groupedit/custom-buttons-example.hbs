@@ -1,6 +1,25 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-groupedit.custom-buttons-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
+    {{edit-panel
+      showCloseButton=true
+      deepMount=false
+      buttons=(array
+      (hash
+          type="button"
+          class="test-click-button"
+          text=(t "forms.components-examples.flexberry-groupedit.custom-buttons-example.custom-button-name")
+          action="customButtonActionTest"
+          )
+      (hash
+          type="button"
+          class="toggle-hi-button"
+          text=(t "forms.components-examples.flexberry-groupedit.custom-buttons-example.enable-button-name")
+          action="toggleHideCustomButton"
+          ))
+    }}
+  </div>
+  <div class="field">
     {{flexberry-groupedit
         componentName="aggregatorDetailsGroupedit"
         content=model.details

@@ -61,7 +61,7 @@ export default {
         __caption__: 'Text'
       },
       date: {
-        __caption__: 'Data'
+        __caption__: 'Date'
       },
       votes: {
         __caption__: 'Votes'

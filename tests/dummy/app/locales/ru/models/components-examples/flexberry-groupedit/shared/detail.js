@@ -2,22 +2,22 @@ export default {
   projections: {
     undefined: {
       flag: {
-        __caption__: 'Флаг'
+        __caption__: 'Flag'
       },
       text: {
-        __caption__: 'Текст'
+        __caption__: 'Text'
       },
       date: {
-        __caption__: 'Дата'
+        __caption__: 'Date'
       },
       file: {
-        __caption__: 'Файл',
+        __caption__: 'File',
       },
       enumeration: {
-        __caption__: 'Перечисление',
+        __caption__: 'Enumeration',
       },
       master: {
-        __caption__: 'Мастер',
+        __caption__: 'Master',
       },
     }
   }

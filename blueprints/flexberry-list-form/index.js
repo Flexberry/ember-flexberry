@@ -49,7 +49,7 @@ module.exports = {
 
         return this._super.processFiles.apply(this, [intoDir, templateVariables]);
     },
-
+   
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -67,7 +67,11 @@ module.exports = {
             formName: listFormBlueprint.listForm.name,
             modelName: listFormBlueprint.listForm.projections[0].modelName,
             modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,
-            caption: listFormBlueprint.listForm.caption // for use in files\__root__\templates\__name__.hbs
+            caption: listFormBlueprint.listForm.caption, // for use in files\__root__\templates\__name__.hbs
+            importFormRouteName: listFormBlueprint.importFormRouteName,
+            importFormRoutePath: listFormBlueprint.importFormRoutePath,
+            importFormControllerName: listFormBlueprint.importFormControllerName,
+            importFormControllerPath: listFormBlueprint.importFormControllerPath,
         }, listFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -84,6 +88,35 @@ var ListFormBlueprint = /** @class */ (function () {
         var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
         this.listForm = JSON.parse(content);
         this.locales.setupForm(this.listForm);
+
+        var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (fs.existsSync(configsFile)) {
+            var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+            if (configs.listForms == undefined) {
+                this.importFormRouteName = 'ListFormRoute';
+                this.importFormRoutePath = 'ember-flexberry/routes/list-form';
+                this.importFormControllerName = 'ListFormController';
+                this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
+            } else {
+                if (configs.listForms[options.entity.name] != undefined) {
+                    this.importFormRouteName = configs.listForms[options.entity.name].baseRoute.name;
+                    this.importFormRoutePath = configs.listForms[options.entity.name].baseRoute.path;
+                    this.importFormControllerName = configs.listForms[options.entity.name].baseController.name;
+                    this.importFormControllerPath = configs.listForms[options.entity.name].baseController.path;
+                }
+                else if (configs.listForms.defaultForm != undefined) {
+                    this.importFormRouteName = configs.listForms.defaultForm.baseRoute.name;
+                    this.importFormRoutePath = configs.listForms.defaultForm.baseRoute.path;
+                    this.importFormControllerName = configs.listForms.defaultForm.baseController.name;
+                    this.importFormControllerPath = configs.listForms.defaultForm.baseController.path;
+                };
+            };
+        } else {
+            this.importFormRouteName = 'ListFormRoute';
+            this.importFormRoutePath = 'ember-flexberry/routes/list-form';
+            this.importFormControllerName = 'ListFormController';
+            this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
+        };
     }
     ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";
@@ -91,7 +124,7 @@ var ListFormBlueprint = /** @class */ (function () {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
-    };
+    };    
     return ListFormBlueprint;
 }());
 //# sourceMappingURL=index.js.map

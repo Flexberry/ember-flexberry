@@ -1,4 +1,4 @@
-import ListFormRoute from 'ember-flexberry/routes/list-form';
+import <%=importFormRouteName%> from '<%=importFormRoutePath%>';
 
 export default ListFormRoute.extend({
   /**

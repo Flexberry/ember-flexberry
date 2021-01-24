@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add ability to set up base objects for forms generation.
+
 ### Changed
 * Replace test models localization with separated classes.
 

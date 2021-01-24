@@ -1,305 +1,39 @@
 import Ember from 'ember';
+
 import emberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
+
+import emberFlexberryDummySuggestionModel from './models/ember-flexberry-dummy-suggestion';
+import emberFlexberryDummySuggestionTypeModel from './models/ember-flexberry-dummy-suggestion-type';
+import emberFlexberryDummyApplicationUserModel from './models/ember-flexberry-dummy-application-user';
+import emberFlexberryDummyLocalizationModel from './models/ember-flexberry-dummy-localization';
+import emberFlexberryDummyCommentModel from './models/ember-flexberry-dummy-comment';
+import emberFlexberryDummySuggestionFileModel from './models/ember-flexberry-dummy-suggestion-file';
+import componentsExampleGroupeditDetailModel from './models/components-examples/flexberry-groupedit/shared/detail';
+import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
 
 const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
-  'models': {
-    'ember-flexberry-dummy-suggestion': {
-      'projections': {
-        'SuggestionL': {
-          'address': {
-            __caption__: 'Адрес'
-          },
-          'text': {
-            __caption__: 'Текст'
-          },
-          'date': {
-            __caption__: 'Дата'
-          },
-          'votes': {
-            __caption__: 'Голоса'
-          },
-          'author': {
-            __caption__: 'Автор',
-            'eMail': {
-              __caption__: 'Почта'
-            }
-          },
-          'editor1': {
-            __caption__: 'Редактор',
-            'eMail': {
-              __caption__: 'Почта'
-            }
-          },
-          'moderated': {
-            __caption__: 'Одобрено'
-          },
-          'type': {
-            __caption__: 'Тип предложения'
-          },
-          'commentsCount': {
-            __caption__: 'Количество комментариев'
-          },
-          'comments': {
-            __caption__: 'Комментарии'
-          },
-        },
-        'SuggestionE': {
-          'address': {
-            __caption__: 'Адрес'
-          },
-          'userVotes': {
-            'name': {
-              __caption__: 'Наименование'
-            },
-            'voteType': {
-              __caption__: 'Тип голосования'
-            },
-            'author': {
-              __caption__: 'Пользователь приложения',
-              'eMail': {
-                __caption__: 'Почта'
-              }
-            }
-          },
-          'files': {
-            'order': {
-              __caption__: 'Номер'
-            },
-            'file': {
-              __caption__: 'Файл',
-            }
-          },
-          'comments': {
-            'name': {
-              __caption__: 'Наименование'
-            },
-            'text': {
-              __caption__: 'Текст'
-            },
-            'votes': {
-              __caption__: 'Голоса',
-            },
-            'moderated': {
-              __caption__: 'Одобрено',
-            },
-            'author': {
-              __caption__: 'Пользователь приложения',
-              'eMail': {
-                __caption__: 'Почта'
-              }
-            }
-          }
-        },
-        SuggestionEWithComputedField: {
-          address: {
-            __caption__: 'Адрес'
-          },
-          text: {
-            __caption__: 'Текст'
-          },
-          date: {
-            __caption__: 'Дата'
-          },
-          votes: {
-            __caption__: 'Голоса'
-          },
-          moderated: {
-            __caption__: 'Одобрено'
-          },
-          author: {
-            __caption__: 'Пользователь приложения',
-            name: {
-              __caption__: 'Наименование'
-            }
-          },
-          type: {
-            __caption__: 'Тип предложения',
-            name: {
-              __caption__: 'Наименование'
-            },
-            moderated: {
-              __caption__: 'Одобрено'
-            },
-            computedField: {
-              __caption__: 'Вычислимое поле'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          editor1: {
-            __caption__: 'Редактор',
-            name: {
-              __caption__: 'Имя'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-      }
-    },
-    'ember-flexberry-dummy-application-user': {
-      'projections': {
-        'ApplicationUserL': {
-          'name': {
-            __caption__: 'Имя'
-          },
-          'eMail': {
-            __caption__: 'Почта'
-          },
-          'activated': {
-            __caption__: 'Учетная запись активирована'
-          },
-          'birthday': {
-            __caption__: 'Дата рождения'
-          },
-          'gender': {
-            __caption__: 'Пол'
-          },
-          'karma': {
-            __caption__: 'Карма'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-localization': {
-      'projections': {
-        'LocalizationL': {
-          'name': {
-            __caption__: 'Наименование'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-suggestion-type': {
-      'projections': {
-        'SuggestionTypeL': {
-          'name': {
-            __caption__: 'Наименование'
-          },
-          'moderated': {
-            __caption__: 'Одобрено'
-          },
-          'parent': {
-            __caption__: 'Иерархия'
-          },
-        },
-        'SuggestionTypeE': {
-          'localizedTypes': {
-            'name': {
-              __caption__: 'Наименование'
-            },
-            'localization': {
-              __caption__: 'Локализация',
-              'name': {
-                __caption__: 'Наименование'
-              }
-            }
-          },
-        },
-        SuggestionTypeEWithComputedField: {
-          name: {
-            __caption__: 'Имя'
-          },
-          moderated: {
-            __caption__: 'Одобрено'
-          },
-          computedField: {
-            __caption__: 'Вычислимое поле'
-          },
-          parent: {
-            __caption__: 'Иерархия',
-            name: {
-              __caption__: 'Наименование'
-            },
-            moderated: {
-              __caption__: 'Одобрено'
-            },
-            computedField: {
-              __caption__: 'Вычислимое поле'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-        CustomizeLookupWindowExampleView: {
-          'name': {
-            __caption__: 'Наименование'
-          },
-          'moderated': {
-            __caption__: 'Одобрено'
-          },
-          'parent': {
-            __caption__: 'Иерархия'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-comment': {
-      'projections': {
-        'CommentE': {
-          'text': {
-            __caption__: 'Текст комментария'
-          },
-          'userVotes': {
-            'voteType': {
-              __caption__: 'Тип голосования'
-            },
-            'applicationUser': {
-              __caption__: 'Пользователь',
-              'name': {
-                __caption__: 'Наименование'
-              }
-            }
-          },
-        }
-      }
-    },
-    'ember-flexberry-dummy-suggestion-file': {
-      'projections': {
-        'SuggestionFileL': {
-          'order': {
-            __caption__: 'Порядок'
-          },
-          'file': {
-            __caption__: 'Файл'
-          },
-          'suggestion': {
-            __caption__: 'Предложение'
-          },
-        }
-      }
-    },
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+  models: {
+    'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
+    'ember-flexberry-dummy-suggestion-type': emberFlexberryDummySuggestionTypeModel,
+    'components-examples/flexberry-groupedit/shared/detail': componentsExampleGroupeditDetailModel,
+    'components-examples/edit-form/readonly-mode/detail': componentsExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/readonly-mode/detail': integrationExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/validation/base': integrationExampleEditFormValidationBaseModel,
+    'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
+    'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
+    'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'forms': {
     'loading': {
       'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
@@ -954,7 +688,7 @@ Ember.$.extend(true, translations, {
             '{{pageTemplate}}' +
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
+            'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \'Semantic-UI\' и прочих ошибок.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Пример dropdown-а с пустым значением',
@@ -1265,7 +999,7 @@ Ember.$.extend(true, translations, {
       }
     },
   },
-
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'components': {
     'settings-example': {
       'component-template-caption': 'Шаблон компонента',

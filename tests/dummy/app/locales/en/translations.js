@@ -1,343 +1,46 @@
 import Ember from 'ember';
+
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
+
+import emberFlexberryDummySuggestionModel from './models/ember-flexberry-dummy-suggestion';
+import emberFlexberryDummySuggestionTypeModel from './models/ember-flexberry-dummy-suggestion-type';
+import emberFlexberryDummyApplicationUserModel from './models/ember-flexberry-dummy-application-user';
+import emberFlexberryDummyLocalizationModel from './models/ember-flexberry-dummy-localization';
+import emberFlexberryDummyCommentModel from './models/ember-flexberry-dummy-comment';
+import emberFlexberryDummySuggestionFileModel from './models/ember-flexberry-dummy-suggestion-file';
+import componentsExampleGroupeditDetailModel from './models/components-examples/flexberry-groupedit/shared/detail';
+import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
+import emberFlexberryDummyDepartamentModel from './models/ember-flexberry-dummy-departament';
+import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-sotrudnik';
+import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
-  'models': {
-    'ember-flexberry-dummy-suggestion': {
-      'projections': {
-        'SuggestionL': {
-          'address': {
-            __caption__: 'Address'
-          },
-          'text': {
-            __caption__: 'Text'
-          },
-          'date': {
-            __caption__: 'Date'
-          },
-          'votes': {
-            __caption__: 'Votes'
-          },
-          'author': {
-            __caption__: 'Author',
-            'eMail': {
-              __caption__: 'Email'
-            }
-          },
-          'editor1': {
-            __caption__: 'Editor',
-            'eMail': {
-              __caption__: 'Email'
-            }
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          },
-          'type': {
-            __caption__: 'Type'
-          },
-          'commentsCount': {
-            __caption__: 'Comments count'
-          },
-          'comments': {
-            __caption__: 'Comments'
-          },
-        },
-        'SuggestionE': {
-          'address': {
-            __caption__: 'Address'
-          },
-          'userVotes': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'voteType': {
-              __caption__: 'Vote type'
-            },
-            'author': {
-              __caption__: 'Application User',
-              'eMail': {
-                __caption__: 'Email'
-              }
-            }
-          },
-          'files': {
-            'order': {
-              __caption__: 'Order'
-            },
-            'file': {
-              __caption__: 'File',
-            }
-          },
-          'comments': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'text': {
-              __caption__: 'Text'
-            },
-            'votes': {
-              __caption__: 'Votes',
-            },
-            'moderated': {
-              __caption__: 'Moderated',
-            },
-            'author': {
-              __caption__: 'Application User',
-              'eMail': {
-                __caption__: 'Mail'
-              }
-            }
-          }
-        },
-        SuggestionEWithComputedField: {
-          address: {
-            __caption__: 'address'
-          },
-          text: {
-            __caption__: 'text'
-          },
-          date: {
-            __caption__: 'date'
-          },
-          votes: {
-            __caption__: 'votes'
-          },
-          moderated: {
-            __caption__: 'moderated'
-          },
-          author: {
-            __caption__: 'author',
-            name: {
-              __caption__: 'name'
-            }
-          },
-          type: {
-            __caption__: 'type',
-            name: {
-              __caption__: 'name'
-            },
-            moderated: {
-              __caption__: 'moderated'
-            },
-            computedField: {
-              __caption__: 'computedField'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          editor1: {
-            __caption__: 'editor1',
-            name: {
-              __caption__: 'name'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-        'SuggestionMainModelProjectionTest': {
-          'userVotes': {
-            'voteType': {
-              'caption': 'Temp text for test'
-            }
-          }
-        }
-      }
-    },
-    'ember-flexberry-dummy-application-user': {
-      'projections': {
-        'ApplicationUserL': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'eMail': {
-            __caption__: 'E-mail'
-          },
-          'activated': {
-            __caption__: 'Activated'
-          },
-          'birthday': {
-            __caption__: 'Birthday'
-          },
-          'gender': {
-            __caption__: 'Gender'
-          },
-          'karma': {
-            __caption__: 'Karma'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-localization': {
-      'projections': {
-        'LocalizationL': {
-          'name': {
-            __caption__: 'Name'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-suggestion-type': {
-      'projections': {
-        'SuggestionTypeL': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          },
-          'parent': {
-            __caption__: 'Parent'
-          },
-        },
-        'SuggestionTypeE': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'localizedTypes': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'localization': {
-              __caption__: 'Localization',
-              'name': {
-                __caption__: 'Name'
-              }
-            }
-          },
-        },
-        SuggestionTypeEWithComputedField: {
-          name: {
-            __caption__: 'name'
-          },
-          moderated: {
-            __caption__: 'moderated'
-          },
-          computedField: {
-            __caption__: 'computedField'
-          },
-          parent: {
-            __caption__: 'parent',
-            name: {
-              __caption__: 'name'
-            },
-            moderated: {
-              __caption__: 'moderated'
-            },
-            computedField: {
-              __caption__: 'computedField'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-        CustomizeLookupWindowExampleView: {
-          'name': {
-            __caption__: 'Name'
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          },
-          'parent': {
-            __caption__: 'Parent'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-departament': {
-      projections: {
-        DepartamentE: {
-          name: {
-            __caption__: 'name'
-          },
-          vid: {
-            __caption__: 'vid'
-          }
-        },
-        DepartamentL: {
-          name: {
-            __caption__: 'name'
-          }
-        }
-      }
-    },
-    'ember-flexberry-dummy-sotrudnik': {
-      projections: {
-        SotrudnikE: {
-          familiia: {
-            __caption__: 'familiia'
-          },
-          name: {
-            __caption__: 'name'
-          },
-          dataRozhdeniia: {
-            __caption__: 'dataRozhdeniia'
-          },
-          departament: {
-            __caption__: 'departament',
-            vid: {
-              __caption__: 'vid'
-            }
-          }
-        },
-        SotrudnikL: {
-          familiia: {
-            __caption__: 'familiia'
-          },
-          name: {
-            __caption__: 'name'
-          },
-          dataRozhdeniia: {
-            __caption__: 'dataRozhdeniia'
-          }
-        }
-      }
-    },
-    'ember-flexberry-dummy-vid-departamenta': {
-      projections: {
-        VidDepartamentaE: {
-          name: {
-            __caption__: 'name'
-          }
-        },
-        VidDepartamentaL: {
-          name: {
-            __caption__: 'name'
-          }
-        }
-      }
-    },
+
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+  models: {
+    'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
+    'ember-flexberry-dummy-suggestion-type': emberFlexberryDummySuggestionTypeModel,
+    'components-examples/flexberry-groupedit/shared/detail': componentsExampleGroupeditDetailModel,
+    'components-examples/edit-form/readonly-mode/detail': componentsExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/readonly-mode/detail': integrationExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/validation/base': integrationExampleEditFormValidationBaseModel,
+    'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
+    'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
+    'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel,
+    'ember-flexberry-dummy-departament': emberFlexberryDummyDepartamentModel,
+    'ember-flexberry-dummy-sotrudnik': emberFlexberryDummySotrudnikModel,
+    'ember-flexberry-dummy-vid-departamenta': emberFlexberryDummyVidDepartamentaModel
   },
 
   'application-name': 'Test stand for ember-flexberry',
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'forms': {
     'loading': {
       'spinner-caption': 'Loading stuff, please have a cold beer...'
@@ -1003,7 +706,7 @@ Ember.$.extend(true, translations, {
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+            'after that check browser\'s console, it must be free from \'Semantic-UI\' and other errors.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Example dropdown with empty value',
@@ -1346,6 +1049,7 @@ Ember.$.extend(true, translations, {
     }
   },
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'components': {
     'settings-example': {
       'component-template-caption': 'Component template',

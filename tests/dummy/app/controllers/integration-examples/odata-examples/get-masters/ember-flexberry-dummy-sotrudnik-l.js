@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -27,7 +26,7 @@ export default ListFormController.extend({
         modelProjection: 'SotrudnikE'
       };
 
-      const cachedData = adapter.callFunction(args)
+      adapter.callFunction(args)
         .then(sotrudniks => {
           if (!Ember.isEmpty(sotrudniks)) {
             this.set('dataReceived', true);

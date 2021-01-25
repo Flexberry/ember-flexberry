@@ -271,6 +271,69 @@ Ember.$.extend(true, translations, {
         },
       }
     },
+    'ember-flexberry-dummy-departament': {
+      projections: {
+        DepartamentE: {
+          name: {
+            __caption__: 'name'
+          },
+          vid: {
+            __caption__: 'vid'
+          }
+        },
+        DepartamentL: {
+          name: {
+            __caption__: 'name'
+          }
+        }
+      }
+    },
+    'ember-flexberry-dummy-sotrudnik': {
+      projections: {
+        SotrudnikE: {
+          familiia: {
+            __caption__: 'familiia'
+          },
+          name: {
+            __caption__: 'name'
+          },
+          dataRozhdeniia: {
+            __caption__: 'dataRozhdeniia'
+          },
+          departament: {
+            __caption__: 'departament',
+            vid: {
+              __caption__: 'vid'
+            }
+          }
+        },
+        SotrudnikL: {
+          familiia: {
+            __caption__: 'familiia'
+          },
+          name: {
+            __caption__: 'name'
+          },
+          dataRozhdeniia: {
+            __caption__: 'dataRozhdeniia'
+          }
+        }
+      }
+    },
+    'ember-flexberry-dummy-vid-departamenta': {
+      projections: {
+        VidDepartamentaE: {
+          name: {
+            __caption__: 'name'
+          }
+        },
+        VidDepartamentaL: {
+          name: {
+            __caption__: 'name'
+          }
+        }
+      }
+    },
   },
 
   'application-name': 'Test stand for ember-flexberry',
@@ -712,7 +775,27 @@ Ember.$.extend(true, translations, {
               'caption': 'Validation',
               'title': ''
             }
-          }
+          },
+          'odata-examples': {
+            'caption': 'Work with OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Get master from oData function',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Sotrudnik',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Departament',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Vid departamenta',
+                'title': ''
+              }
+            },
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -1216,6 +1299,41 @@ Ember.$.extend(true, translations, {
           'file-caption': 'File',
           'master-caption': 'Master',
           'details-caption': 'Details'
+        }
+      },
+      'odata-examples': {
+        'get-masters': {
+          'ember-flexberry-dummy-departament-e': {
+            caption: 'EmberFlexberryDummyDepartamentE',
+            'name-caption': 'name',
+            'vid-caption': 'vid'
+          },
+          'ember-flexberry-dummy-departament-l': {
+            caption: 'EmberFlexberryDummyDepartamentL'
+          },
+          'ember-flexberry-dummy-sotrudnik-e': {
+            caption: 'EmberFlexberryDummySotrudnikE',
+            'familiia-caption': 'familiia',
+            'name-caption': 'name',
+            'dataRozhdeniia-caption': 'dataRozhdeniia',
+            'departament-caption': 'departament'
+          },
+          'ember-flexberry-dummy-sotrudnik-l': {
+            caption: 'EmberFlexberryDummySotrudnikL',
+            'doOdataFunction': 'Do Odata function',
+            'dataReceived': 'Objects loaded',
+            'receivedMasters': 'Masters loaded',
+            'receivedMastersError': 'Error loading masters',
+            'receivedMasterMasters': 'Master masters loaded',
+            'receivedMasterMastersError': 'Error loading masters from masters'
+          },
+          'ember-flexberry-dummy-vid-departamenta-e': {
+            caption: 'EmberFlexberryDummyVidDepartamentaE',
+            'name-caption': 'name'
+          },
+          'ember-flexberry-dummy-vid-departamenta-l': {
+            caption: 'EmberFlexberryDummyVidDepartamentaL'
+          },
         }
       }
     },

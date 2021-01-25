@@ -1,0 +1,57 @@
+{{flexberry-error error=error}}
+<h3>{{t 'forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.caption'}}</h3>
+<div class="row">
+  {{flexberry-objectlistview
+    modelName=modelName
+    modelProjection=modelProjection
+    editFormRoute=editFormRoute
+    content=model
+    createNewButton=true
+    refreshButton=true
+    sorting=computedSorting
+    orderable=true
+    showCheckBoxInRow=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="EmberFlexberryDummySotrudnikL"
+  }}
+</div>
+<br>
+<button class="ui button" {{action 'doOdataFunction' on="click"}}>
+  {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.doOdataFunction"}}
+</button>
+
+{{#if dataReceived}}
+  <div class="field">
+    {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.dataReceived"}}
+  </div>
+
+  {{#if receivedMasters}}
+    <div class="field">
+      {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.receivedMasters"}}
+    </div>
+    {{#if receivedMasterMasters}}
+      <div class="field">
+        {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.receivedMasterMasters"}}
+      </div>
+    {{else}}
+      <div class="field">
+        {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.receivedMasterMastersError"}}
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="field">
+      {{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-l.receivedMastersError"}}
+    </div>
+  {{/if}}
+{{/if}}

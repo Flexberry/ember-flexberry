@@ -107,6 +107,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Get current device is tablet.
+
+    @method isTablet
+    @return {Boolean} Returns true, if device is tablet.
+  */
+  isTablet() {
+    return this.tablet();
+  },
+
+  /**
     Get current device is phone.
 
     @method isMobile
@@ -256,7 +266,7 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     // Path prefix with common type only: 'mobile' for both tablets and phones etc.
-    let pathPrefixCommon = this.isMobile() ? 'mobile' : '';
+    let pathPrefixCommon = this.isMobile() || this.isTablet() ? 'mobile' : '';
 
     // Path prefixes without orientation.
     let pathPrefixesWithoutOrientation = [

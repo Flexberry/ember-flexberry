@@ -46,6 +46,6 @@ export default ListFormRoute.extend({
   developerUserSettings: Ember.computed(function() {
     return {
       EmberFlexberryDummyVidDepartamentaL: {}
-    },
+    };
   })
 });

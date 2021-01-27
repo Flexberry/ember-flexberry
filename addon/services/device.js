@@ -127,6 +127,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Get current device is phone.
+
+    @method isMobile
+    @return {Boolean} Returns true, if device is phone.
+  */
+  isTv() {
+    return this.tv();
+  },
+
+  /**
     Destroys service.
   */
   willDestroy() {
@@ -205,9 +215,9 @@ export default Ember.Service.extend(Ember.Evented, {
       type = 'desktop';
     } else if (this.isMobile()) {
       type = 'phone';
-    } else if (this.tablet()) {
+    } else if (this.isTablet()) {
       type = 'tablet';
-    } else if (this.tv()) {
+    } else if (this.isTv()) {
       type = 'tv';
     } else {
       type = '';

@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Replace test models localization with separated classes.
 
+### Fixed
+* Getting path prefixes logic for `device` service.
+
 ## [2.6.0-beta.4] - 2021-01-15
 ### Added
 * The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.

@@ -101,3 +101,91 @@ img.item-minus {
 .ui.sidebar.menu .menu .item-menu {
     padding-left: 25px;
 }
+
+.sitemap-searchbar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+input.sitemap-search-input {
+  align-self: center;
+  background: transparent;
+  height: @searchbarHeight;
+  text-indent: @searchbarTextIndent;
+  width: @searchbarWidth;
+}
+
+.sitemap-search-results-list {
+    align-self: center;
+    background:@white;
+    border-bottom-left-radius: @resultsListBorderRadius;
+    border-bottom-right-radius: @resultsListBorderRadius;
+    box-shadow: @resultsListShadow;
+    display: block;
+    font-size: @resultsListFontSize;
+    font-weight: @resultsListFontWeight;
+    line-height: @resultsListLineHeight;
+    margin-top: @resultsListMarginTop;
+    max-height: @resultsListMaxHeight;
+    overflow-y: auto;
+    position: absolute;
+    scrollbar-width: thin;
+    width: @searchbarWidth;
+    z-index: 30121997;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #ddd;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #666;
+    }
+}
+
+.sitemap-search-results-list .match-card a {
+  color: @matchCardLinkColor;
+  margin-left: @matchCardLinkMarginLeft;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    color: @matchCardLinkHoverColor;
+  }
+}
+
+.match-card {
+    padding: 0.5rem;
+}
+
+.sitemap-search-results-list .match-card .flexberry-toggler .title {
+  display: flex;
+  color: @matchCardTitleColor;
+  font-size: @resultsListFontSize;
+  line-height: @resultsListLineHeight;
+}
+
+.sitemap-search-results-list .match-card .flexberry-toggler.ui.accordion.fluid .content.flexberry-toggler-content div {
+    margin-bottom: 5px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.sitemap-search-results-list .match-card .flexberry-toggler {
+    padding-left: 0.5em;
+    
+}
+
+.sitemap-search-results-list .ui.message {
+    box-shadow: none;
+}
+
+.sitemap-search-results-list .ui.message .header {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

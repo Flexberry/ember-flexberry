@@ -305,6 +305,13 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-searchbar': {
+      'placeholder': 'Найти раздел...',
+      'errMsgOne': 'По запросу ',
+      'errMsgTwo': ' ничего не найдено.',
+      'suggestion': 'Попробуйте изменить запрос.'
+    },
+
   },
 
   'models': {

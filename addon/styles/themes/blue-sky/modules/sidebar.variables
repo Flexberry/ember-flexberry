@@ -8,3 +8,24 @@
 
 @textMenuColor: @white;
 @textMenuHideColor: #91a7cd;
+
+@searchbarHeight: 30px;
+@searchbarWidth: 86%;
+@searchbarTextIndent: 20px;
+
+@resultsListBorderRadius: 4px;
+@resultsListShadow: 0px 4px 12px rgba(95, 95, 95, 0.153646);
+@resultsListFontSize: 12px;
+@resultsListFontWeight: 400;
+@resultsListLineHeight: 20px;
+@resultsListMarginTop: 2rem;
+@resultsListMaxHeight: 700px;
+
+@matchCardLinkColor: #3B4256;
+@matchCardLinkHoverColor: #0C49CD;
+
+@matchCardLinkMarginLeft: 20px;
+
+@matchCardTitleColor:  #848e99;
+
+@matchCardPadding: 0.5rem;

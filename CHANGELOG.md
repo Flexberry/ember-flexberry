@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add ability to exclude localization on generation.
 
 ## [2.6.0-beta.5] - 2021-01-27
 ### Changed

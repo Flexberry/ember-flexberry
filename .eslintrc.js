@@ -28,7 +28,7 @@ module.exports = {
   rules: {
     'ember/new-module-imports': 'off',
     'ember/no-get': 'off',
-    'ember/use-ember-get-and-set': 'error',
+    'ember/use-ember-get-and-set': 'off',
     'ember/no-jquery': 'warn',
     'ember/no-observers': 'warn',
     'ember/no-mixins': 'warn',

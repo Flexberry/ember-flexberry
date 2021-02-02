@@ -46,6 +46,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   lookupDynamicProperties: Ember.computed(function() {
     let lookupLimitPredicate;
     let lookupAdditionalLimitFunction;
+    let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
     let fieldvalue = this.get('fieldvalue');
     if (fieldvalue) {
       lookupLimitPredicate = new StringPredicate('name').contains(fieldvalue);
@@ -66,6 +67,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       readonly: this.get('checkboxValue'),
       lookupLimitPredicate,
       lookupAdditionalLimitFunction,
+      updateLookupValue: updateLookupValue
     };
   }).readOnly(),
 
@@ -83,6 +85,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = this.get('lookupDynamicProperties');
@@ -97,6 +100,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 

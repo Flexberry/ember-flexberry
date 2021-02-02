@@ -96,6 +96,7 @@
       readonly=readonly
       direction="upward"
       componentName="SuggestionEditType"
+      updateLookupValue=(action 'updateLookupValue')
     }}
     {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>
@@ -117,6 +118,7 @@
       lookupWindowCustomProperties=(action 'getLookupFolvProperties')
       readonly=readonly
       componentName="SuggestionEditAuthor"
+      updateLookupValue=(action 'updateLookupValue')
     }}
     {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
@@ -136,6 +138,7 @@
       preview=(action "previewLookupValue")
       readonly=readonly
       componentName="SuggestionEditEditor1"
+      updateLookupValue=(action 'updateLookupValue')
     }}
     {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>

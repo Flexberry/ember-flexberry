@@ -75,6 +75,7 @@
       title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action 'updateLookupValue')
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}

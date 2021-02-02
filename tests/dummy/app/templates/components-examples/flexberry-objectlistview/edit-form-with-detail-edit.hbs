@@ -66,6 +66,7 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action 'updateLookupValue')
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}

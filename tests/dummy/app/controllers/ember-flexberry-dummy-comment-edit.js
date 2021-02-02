@@ -27,13 +27,15 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
 
     if (attr.kind === 'belongsTo') {
       if (model.modelName === 'ember-flexberry-dummy-comment-vote' && bindingPath === 'applicationUser') {
+        let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
         cellComponent.componentProperties = {
           projection: 'ApplicationUserL',
           displayAttributeName: 'name',
           title: 'Application user',
           relationName: 'applicationUser',
           choose: 'showLookupDialog',
-          remove: 'removeLookupValue'
+          remove: 'removeLookupValue',
+          updateLookupValue: updateLookupValue,
         };
       }
     }

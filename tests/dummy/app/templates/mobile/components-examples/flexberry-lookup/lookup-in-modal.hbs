@@ -19,6 +19,7 @@
           readonly=readonly
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
+          updateLookupValue=(action 'updateLookupValue')
         }}
       </div>
       <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
@@ -39,6 +40,7 @@
           relationName="type"
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
+          updateLookupValue=(action 'updateLookupValue')
           readonly=readonly
         }}
       </div>

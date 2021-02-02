@@ -551,6 +551,7 @@ export default FlexberryBaseComponent.extend({
         folvComponentName: this.get('folvComponentName'),
         modalDialogSettings: this.get('_modalDialogSettings'),
         updateLookupAction: this.get('updateLookupAction'),
+        componentContext: this
       };
     }),
 
@@ -860,6 +861,16 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
         this.set('displayValue', null);
       }
+    },
+
+    /**
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData
+    */
+    updateLookupValue(updateData) {
+      this.sendAction(this.get('updateLookupAction'), updateData);
     }
   },
 
@@ -1182,7 +1193,7 @@ export default FlexberryBaseComponent.extend({
             Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
             _this.set('value', result.instance);
-            _this.get('currentController').send(_this.get('updateLookupAction'),
+            _this.send(_this.get('updateLookupAction'),
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
@@ -1245,7 +1256,7 @@ export default FlexberryBaseComponent.extend({
                     _this.sendAction('remove', _this.get('removeData'));
                   } else {
                     _this.set('value', record);
-                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                    _this.send(_this.get('updateLookupAction'),
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
@@ -1370,7 +1381,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
-        _this.get('currentController').send(_this.get('updateLookupAction'),
+        _this.send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,
@@ -1568,7 +1579,7 @@ export default FlexberryBaseComponent.extend({
       if (Ember.get(records, 'length') === 1) {
         let record = records.objectAt(0);
         _this.set('value', record);
-        _this.get('currentController').send(_this.get('updateLookupAction'),
+        _this.send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

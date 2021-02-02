@@ -176,7 +176,7 @@
     }}
   </div>
   <hr/>
-    <h3>{{t 'forms.ember-flexberry-dummy-multi-list.caption'}}</h3>
+    <h3>{{t "forms.ember-flexberry-dummy-multi-list.caption"}}</h3>
     <div class="row">
       {{#with multiListSettings.MultiUserListOnEdit as |settings|}}
         {{flexberry-objectlistview
@@ -241,7 +241,7 @@
           enableFilters=true
           filters=settings.filters
           filterButton=true
-          filterByAnyMatch=(action 'filterByAnyMatch')
+          filterByAnyMatch=(action "filterByAnyMatch")
           filterText=settings.filter
           refreshButton=true
           exportExcelButton=true

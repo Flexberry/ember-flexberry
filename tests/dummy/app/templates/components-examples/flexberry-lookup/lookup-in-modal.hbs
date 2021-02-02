@@ -1,8 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.caption"}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
-  <button class="ui button" {{action 'modalWindow' "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
-  <button class="ui button" {{action 'modalWindowDouble' "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
+  <button class="ui button" {{action "modalWindow" "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
+  <button class="ui button" {{action "modalWindowDouble" "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
 </form>
 
 {{#ui-modal id="repeat-window"}}
@@ -19,10 +19,10 @@
           readonly=readonly
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
-          updateLookupValue=(action 'updateLookupValue')
+          updateLookupValue=(action "updateLookupValue")
         }}
       </div>
-      <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button" {{action "logOut"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}
@@ -40,11 +40,11 @@
           relationName="type"
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
-          updateLookupValue=(action 'updateLookupValue')
+          updateLookupValue=(action "updateLookupValue")
           readonly=readonly
         }}
       </div>
-      <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button" {{action "logOutDouble"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}

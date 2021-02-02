@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t 'forms.ember-flexberry-dummy-comment-vote-edit.caption'}}</h3>
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-comment-vote-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -27,25 +27,25 @@
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui button save-button" {{action 'save'}}>
+        <button type="submit" class="ui button save-button" {{action "save"}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
-          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>
             {{t "forms.edit-form.delete-button-text"}}
           </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>
+      <button type="submit" class="ui button close-button" {{action "close"}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
     </div>
   </div>
   <div class="field">
-  <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.voteType-caption'}}</label>
+  <label>{{t "forms.ember-flexberry-dummy-comment-vote-edit.voteType-caption"}}</label>
   {{
     flexberry-dropdown
-    items=(flexberry-enum 'ember-flexberry-dummy-vote-type')
+    items=(flexberry-enum "ember-flexberry-dummy-vote-type")
     value=model.voteType
     readonly=readonly
   }}
@@ -53,16 +53,16 @@
 </div>
 
 <div class="field">
-  <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption'}}</label>
+  <label>{{t "forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption"}}</label>
   {{
     flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
+    choose="showLookupDialog"
+    remove="removeLookupValue"
     value=model.applicationUser
-    displayAttributeName='name'
-    relationName='applicationUser'
-    projection='ApplicationUserL'
-    title=(t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption')
+    displayAttributeName="name"
+    relationName="applicationUser"
+    projection="ApplicationUserL"
+    title=(t "forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption")
     readonly=readonly
   }}
   {{flexberry-validationmessage error=model.errors.applicationUser pointing="pointing"}}

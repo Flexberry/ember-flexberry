@@ -1,3 +1,6 @@
+/* eslint-disable ember/no-test-import-export */
+/* global visit, andThen, currentURL */
+/* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import sinon from 'sinon';
 
@@ -38,7 +41,7 @@ executeTest('flexberry-lookup events test', (store, assert, app) => {
       // Сomparison data from spy and olv table.
       for (let i = 0; i < lookupRecordCount; i++) {
         let suggestionTypeName = dataLoaded.content[i].record.get('name');
-        let $cellText = $($lookupRows[3 * i + 1]).children('div').text().trim();
+        let $cellText = Ember.$($lookupRows[3 * i + 1]).children('div').text().trim();
 
         assert.strictEqual($cellText, suggestionTypeName);
       }

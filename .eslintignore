@@ -274,6 +274,7 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/setting
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-dropdown.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-limit-function.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-events.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
@@ -394,6 +395,7 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-exa
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-dropdown.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-limit-function.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-events.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-relation-name.js

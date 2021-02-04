@@ -759,6 +759,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
         },
+        'event-example': {
+          'caption': 'Flexberry-lookup. События',
+          'titleLookup': 'Мастер'
+        },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
           'titleLookup': 'Мастер',

@@ -84,6 +84,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
 
   /**
     This property is used in order to cache last value
+    of autocomplete input.
+
+    @private
+    @property _lastAutocompleteValue
+    @type String
+  */
+  _lastAutocompleteValue: undefined,
+
+  /**
+    This property is used in order to cache last value
     of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
     in order to let init this mode afrer re-render only once if flag was enabled.
 
@@ -102,15 +112,6 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   _pageInResultsForAutocomplete: 1,
 
   /**
-    Path to component's settings in application configuration (JSON from ./config/environment.js).
-
-    @property appConfigSettingsPath
-    @type String
-    @default 'APP.components.flexberryLookup'
-  */
-  appConfigSettingsPath: 'APP.components.flexberryLookup',
-
-  /**
     Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
 
     @private
@@ -124,6 +125,25 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       useSidePageMode: this.get('useSidePageMode'),
     }, this.get('modalDialogSettings'));
   }),
+
+  /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryLookup'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryLookup',
 
   /**
     Text to be displayed in field, if value not selected.
@@ -569,6 +589,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'updateLookupAction',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     'inHierarchicalMode',
@@ -589,6 +610,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         inHierarchicalMode: this.get('inHierarchicalMode'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         modalDialogSettings: this.get('_modalDialogSettings'),
+        updateLookupAction: this.get('updateLookupAction'),
       };
     }),
 
@@ -901,7 +923,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       @method actions.onInputFocusOut
     */
     onInputFocusOut() {
-      if (!this.get('value') && !this.get('autocompletePersistValue')) {
+      if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
         this.set('displayValue', null);
       }
     }
@@ -969,6 +991,17 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   },
 
   /**
+    Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
+  */
+  _hasBlockSetter: computed(function() {
+    // eslint-disable-next-line ember/no-side-effects
+    this.set('_hasBlock', true);
+  }),
+
+  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
@@ -981,6 +1014,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
+    }
+
+    let hasBlock = this.get('_hasBlock');
+
+    if (isDropdown && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and the block form definition.');
+    }
+
+    if (isAutocomplete && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and the block form definition.');
     }
 
     let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
@@ -1140,6 +1183,12 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
             return;
           }
 
+          // Set default page to value change.
+          if (_this.get('_lastAutocompleteValue') !== settings.urlData.query) {
+            _this.set('_pageInResultsForAutocomplete', 1);
+            _this.set('_lastAutocompleteValue', settings.urlData.query);
+          }
+
           let autocompleteProjection = _this.get('autocompleteProjection');
           let autocompleteOrder = _this.get('autocompleteOrder');
 
@@ -1212,30 +1261,33 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
-                newRelationValue: result.instance
+                newRelationValue: result.instance,
+                componentName: _this.get('componentName')
               });
           });
-        } else if (_this.get('usePaginationForAutocomplete')) {
-          state = 'loading';
-          if (result.nextPage) {
-            _this.incrementProperty('_pageInResultsForAutocomplete');
-          }
+        } else {
+          if (_this.get('usePaginationForAutocomplete')) {
+            state = 'loading';
+            if (result.nextPage) {
+              _this.incrementProperty('_pageInResultsForAutocomplete');
+            }
 
-          if (result.prevPage) {
-            _this.decrementProperty('_pageInResultsForAutocomplete');
-          }
+            if (result.prevPage) {
+              _this.decrementProperty('_pageInResultsForAutocomplete');
+            }
 
-          // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
-          // This function allows us to start the search again, thanks to the `searchOnFocus` option.
-          later(() => {
-            _this.$().search('add results', '');
-            _this.$('input').focus();
-          }, 500);
+            // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
+            // This function allows us to start the search again, thanks to the `searchOnFocus` option.
+            later(() => {
+              _this.$().search('add results', '');
+              _this.$('input').focus();
+            }, 500);
+          } else {
+            return false;
+          }
 
           // In the used version of `Semantic UI`, 2.2.14 now, is no longer needed.
           // return false;
-        } else {
-          return false;
         }
       },
 
@@ -1275,7 +1327,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
-                        newRelationValue: record
+                        newRelationValue: record,
+                        componentName: _this.get('componentName')
                       });
                   }
                 });
@@ -1386,7 +1439,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         {
           relationName: relationName,
           modelToLookup: relatedModel,
-          newRelationValue: newValue
+            newRelationValue: newValue,
+            componentName: _this.get('componentName')
         });
       },
       onHide() {
@@ -1589,7 +1643,8 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: record
+            newRelationValue: record,
+            componentName: _this.get('componentName')
           });
       }
     });

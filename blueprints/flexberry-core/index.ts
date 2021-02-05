@@ -77,7 +77,7 @@ module.exports = {
     if (this.project.isEmberCLIAddon() || this.options.dummy) {
         lodash.remove(this._files, function (v) { return v === "public/assets/images/cat.gif" || v === "public/assets/images/favicon.ico" || v === "public/assets/images/flexberry-logo.png"; });
     } else {
-        lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
+        lodash.remove(this._files, function (fileName: string) { return fileName.indexOf("tests/dummy/") === 0; });
     }
     this._excludeIfExists();
     return this._files;
@@ -113,6 +113,7 @@ module.exports = {
 
     let coreBlueprint = new CoreBlueprint(this, options);
     return lodash.defaults({
+      projectName: this.project.pkg.name,// for use in files\tests\dummy\app\locales\**\translations.js
       children: coreBlueprint.children,// for use in files\__root__\controllers\application.js
       routes: coreBlueprint.routes,// for use in files\__root__\router.js
       importProperties: coreBlueprint.importProperties,// for use in files\__root__\locales\**\translations.js

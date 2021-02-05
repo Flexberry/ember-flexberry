@@ -32,6 +32,17 @@ import FlexberryBaseComponent from './flexberry-base-component';
         icon: 'trash icon',
         title: 'Delete',
       }],
+    }, {
+      title: 'Item',
+      buttons: [{
+        title: 'edit',
+        buttonClasses: 'icon',
+        iconClass: 'edit icon',
+        disabled: false,
+        buttonAction: () => {
+          window.alert('clicked edit button');
+        }
+      }]
     }],
     ...
     actions: {
@@ -60,6 +71,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    See comment on using this.
+
+    @private
+    @property _skipDropdownInit
+    @type Boolean
+    @default false
+  */
+  _skipDropdownInit: false,
+
+  /**
     Flag: indicates whether to call 'items.[].onClick' callbacks or not.
 
     @property callItemsOnClickCallbacks
@@ -87,12 +108,12 @@ export default FlexberryBaseComponent.extend({
   items: null,
 
   /**
-    See [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings).
+    Settings for the dropdown, see [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings) for more info.
 
     @property settings
     @type Object
   */
- settings: undefined,
+  settings: undefined,
 
   /**
     Array CSS class names.
@@ -165,8 +186,12 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on(this.get('onlyClickHandler') ? 'click' : 'click touchstart', onClickHandler);
-    this.$().dropdown(this.get('settings'));
-    this._getActionForMenu(this.get('collapseMenuOnItemClick'));
+
+    // The dropdown is also initialized in the root flexberry-menuitem component, which can cause various problems.
+    // I haven't found a way to fix this without breaking anything.
+    if (!this.get('_skipDropdownInit')) {
+      this.$().dropdown(this.get('settings'));
+    }
   },
 
   /**
@@ -227,6 +252,11 @@ export default FlexberryBaseComponent.extend({
   _onClickHandler(e) {
     // Find clicked menu item element.
     let itemElement = $(e.target);
+
+    if (itemElement.parent().is('button') || itemElement.is('button')) {
+      return;
+    }
+
     if (!itemElement.hasClass('flexberry-menuitem')) {
       itemElement = itemElement.parents('.flexberry-menuitem');
     }

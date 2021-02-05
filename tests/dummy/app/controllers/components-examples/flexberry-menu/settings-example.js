@@ -132,6 +132,24 @@ export default Controller.extend({
         title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
         items: null
       }, {
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon4'),
+        buttons: [{
+          buttonClasses: 'icon',
+          iconClass: 'delete icon',
+          disabled: false,
+          buttonAction: () => {
+            window.alert('btn1');
+          },
+        }, {
+          buttonClasses: 'icon',
+          iconClass: 'edit icon',
+          disabled: false,
+          buttonAction: () => {
+            window.alert('btn2');
+          },
+        }],
+        items: null
+      }, {
         icon: 'setting icon',
         iconAlignment: 'right',
         title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),

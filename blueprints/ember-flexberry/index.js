@@ -47,6 +47,10 @@ module.exports = {
       '      }\n' +
       '    }\n';
 
+    var appEnvironment = 'config/environment.js';
+    var addonEnvironment = 'tests/dummy/config/environment.js';
+
+    var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
       '  var backendUrl = \'http://localhost:6500\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
@@ -54,8 +58,10 @@ module.exports = {
       '    backendUrl = \'http://localhost:6500\';\n' +
       '  }\n\n';
 
-    var env2 = '      LOG_STACKTRACE_ON_DEPRECATION:false,\n';
+    var env2after = 'EmberENV: {\n';
+    var env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';
 
+    var env3after = 'APP: {\n';
     var env3 ='      // Application name. Used in `user-settings` service.\n' +
       '      name: \'ember-app\',\n\n' +
       '      backendUrl: backendUrl,\n\n' +
@@ -122,6 +128,7 @@ module.exports = {
       '        }\n' +
       '      },\n';
 
+    var env4before = '\n  if (environment === \'development\') {\n';
     var env4 ='\n  // Read more about CSP:\n' +
       '  // http://www.ember-cli.com/#content-security-policy\n' +
       '  // https://github.com/rwjblue/ember-cli-content-security-policy\n' +
@@ -214,69 +221,21 @@ module.exports = {
         }
       );
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env1,
-        {
-          after: 'module.exports = function(environment) {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env2,
-        {
-          after: 'EmberENV: {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env3,
-        {
-          after: 'APP: {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env2, { after: env2after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env4,
-        {
-          before: '\n  if (environment === \'development\') {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env2, { after: env2after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env1,
-        {
-          after: 'module.exports = function(environment) {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env3, { after: env3after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env2,
-        {
-          after: 'EmberENV: {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env3, { after: env3after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env3,
-        {
-          after: 'APP: {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env4, { before: env4before });
     }).then(function() {
-      return _this.insertIntoFile(
-        'tests/dummy/config/environment.js',
-        env4,
-        {
-          before: '\n  if (environment === \'development\') {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
         { name: 'devicejs', target: '0.2.7' },

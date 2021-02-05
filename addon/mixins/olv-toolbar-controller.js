@@ -9,6 +9,7 @@ import { isArray, A } from '@ember/array';
 import { capitalize } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 export default Mixin.create({
   _userSettingsService: service('user-settings'),
@@ -79,7 +80,7 @@ export default Mixin.create({
       @param componentName Component name.
       @param filterColumns columns with available filters.
     */
-    showFiltersDialog(componentName, filterColumns) {
+    showFiltersDialog(componentName, filterColumns, useSidePageMode) {
       let controller = this.get('filtersDialogController');
       controller.set('mainControler', this);
 
@@ -94,7 +95,7 @@ export default Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'filters-dialog-content',
-        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName } }, loadingParams);
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName, useSidePageMode: useSidePageMode } }, loadingParams);
     },
 
     /**
@@ -383,9 +384,9 @@ export default Mixin.create({
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;

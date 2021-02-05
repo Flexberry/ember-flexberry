@@ -2,9 +2,9 @@
     {{flexberry-field
       readonly=<%= readonly %>
       value=model.<%= name %>
-      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+      class=(if (v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
       label=(<%= caption %>)
       data-test-<%= entityName %>-<%= dashedName %>=true
     }}
-    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+    {{flexberry-validationmessage error=(v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "message")}}
   </div>

@@ -46,10 +46,6 @@ export default Controller.extend({
       sidebar.toggleClass('sidebar-mini');
 
       $('.full.height').toggleClass('content-opened');
-      $('.full.height').css({
-        transition: 'width 0.35s ease-in-out 0s',
-        width: `calc(100% - ${sidebar.width()}px)`,
-      });
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
@@ -676,6 +672,11 @@ export default Controller.extend({
             link: 'integration-examples/edit-form/validation',
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
+            children: null
+          }, {
+            link: 'integration-examples/edit-form/theming-components',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.title'),
             children: null
           }]
         }]

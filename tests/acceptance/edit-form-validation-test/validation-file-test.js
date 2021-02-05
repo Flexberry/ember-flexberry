@@ -11,7 +11,7 @@ executeTest('check operation file', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldFile = $($('.field.error')[6]);
+    let $validationFieldFile = $($('.field')[7]);
     let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
 
     // Check default validationmessage text.

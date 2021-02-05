@@ -408,14 +408,6 @@ $.extend(true, translations, {
             __caption__: 'Moderated'
           }
         },
-        'CustomizeLookupWindowExampleView': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          }
-        },
         'LookupWithLimitFunctionExampleView': {
           'name': {
             __caption__: 'Name'
@@ -469,6 +461,17 @@ $.extend(true, translations, {
           'editor': {
             __caption__: 'editor'
           }
+        },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'parent': {
+            __caption__: 'Parent'
+          },
         },
       }
     },
@@ -589,6 +592,13 @@ $.extend(true, translations, {
         'cancel-button-caption': 'Cancel',
         'delete-at-listform-question-caption': 'Are you sure you want to delete the selected entries?',
         'delete-at-editform-question-caption': 'Are you sure you want to delete entries?',
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-row-caption': 'Delete row ?',
+        'delete-rows-caption': 'Delete selected rows ?',
       },
 
       'footer': {
@@ -972,6 +982,10 @@ $.extend(true, translations, {
             'validation': {
               'caption': 'Validation',
               'title': ''
+            },
+            'theming-components': {
+              'caption': 'Theming',
+              'title': ''
             }
           }
         },
@@ -1230,7 +1244,8 @@ $.extend(true, translations, {
           'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Configurate rows'
+          'caption': 'Flexberry-groupedit. Configurate rows',
+          'confirm': 'Are you sure ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',
@@ -1274,11 +1289,7 @@ $.extend(true, translations, {
           'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
-          'caption': 'Flexberry-lookup. Lookup block form example',
-          'message': 'This test only works on the mobile site. To start a mobile version should be:',
-          'paragraph1': 'Go to developer mode (press "F12").',
-          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
-          'paragraph3': 'Refresh page (press "F5")'
+          'caption': 'Flexberry-lookup. Lookup block form example'
         },
         'lookup-in-modal': {
           'caption': 'Flexberry-lookup. Lookup in modal window',
@@ -1305,7 +1316,8 @@ $.extend(true, translations, {
           'caption': 'Flexberry-menu. Settings example',
           'titleIcon1': 'Left side aligned icon',
           'titleIcon2': 'Right side aligned icon',
-          'titleIcon3': 'Submenu'
+          'titleIcon3': 'Submenu',
+          'titleIcon4': 'Row buttons'
         }
       },
       'flexberry-objectlistview': {

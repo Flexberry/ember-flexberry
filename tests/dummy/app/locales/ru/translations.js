@@ -408,14 +408,6 @@ $.extend(true, translations, {
             __caption__: 'Одобрено'
           }
         },
-        'CustomizeLookupWindowExampleView': {
-          'name': {
-            __caption__: 'Наименование'
-          },
-          'moderated': {
-            __caption__: 'Одобрено'
-          }
-        },
         'LookupWithLimitFunctionExampleView': {
           'name': {
             __caption__: 'Наименование'
@@ -469,6 +461,17 @@ $.extend(true, translations, {
           'editor': {
             __caption__: 'editor'
           }
+        },
+        CustomizeLookupWindowExampleView: {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
         },
       }
     },
@@ -620,6 +623,13 @@ $.extend(true, translations, {
         'cancel-button-caption': 'Отмена',
         'delete-at-listform-question-caption': 'Вы уверены, что хотите удалить выбранные записи?',
         'delete-at-editform-question-caption': 'Вы уверены, что хотите удалить запись?',
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
       },
 
       'footer': {
@@ -1007,6 +1017,10 @@ $.extend(true, translations, {
             'validation': {
               'caption': 'Валидация',
               'title': ''
+            },
+            'theming-components': {
+              'caption': 'Темизация',
+              'title': ''
             }
           }
         },
@@ -1266,7 +1280,8 @@ $.extend(true, translations, {
           'enable-button-name': 'Включить соседнюю кнопку',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка строк'
+          'caption': 'Flexberry-groupedit. Настройка строк',
+          'confirm': 'Вы уверены ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',
@@ -1310,11 +1325,7 @@ $.extend(true, translations, {
           'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'lookup-block-form-example': {
-          'caption': 'Flexberry-lookup. Лукап в блочной форме',
-          'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
-          'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
-          'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
-          'paragraph3': 'Обновить страницу (нажать “F5”)'
+          'caption': 'Flexberry-lookup. Лукап в блочной форме'
         },
         'lookup-in-modal': {
           'caption': 'Flexberry-lookup. Лукап в модальном окне',
@@ -1341,7 +1352,8 @@ $.extend(true, translations, {
           'caption': 'Flexberry-menu. Пример работы с настройками',
           'titleIcon1': 'Значок выравнен по левому краю',
           'titleIcon2': 'Значок выравнен по правому краю',
-          'titleIcon3': 'Подменю'
+          'titleIcon3': 'Подменю',
+          'titleIcon4': 'Кнопки в строке'
         }
       },
       'flexberry-objectlistview': {
@@ -1503,7 +1515,7 @@ $.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration examples. Валидация',
+          'caption': 'Примеры интеграции. Валидация',
           'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',

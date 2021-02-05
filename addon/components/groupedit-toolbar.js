@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
@@ -140,15 +141,26 @@ export default FlexberryBaseComponent.extend({
       }
 
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise))) {
           return;
         }
       }
 
       let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+        });
+      } else {
+        this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      }
     },
 
     /**

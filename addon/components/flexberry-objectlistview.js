@@ -48,24 +48,6 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: service(),
 
   /**
-    Flag used to display filters in modal.
-
-    @property showFiltersInModal
-    @type Boolean
-    @default false
-  */
-  showFiltersInModal: false,
-
-  /**
-    Path to component's settings in application configuration (JSON from ./config/environment.js).
-
-    @property appConfigSettingsPath
-    @type String
-    @default 'APP.components.flexberryLookup'
-  */
-  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
-
-  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -94,6 +76,16 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _switchExpandMode: 'switchExpandMode',
+
+  /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default 'saveHierarchicalAttribute'
+    @private
+  */
+  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
 
   /**
     Flag indicate when available the hierarchical mode.
@@ -131,6 +123,16 @@ export default FlexberryBaseComponent.extend({
       return value;
     },
   }),
+
+  /**
+    The name of a property in the model that determines whether any record is the parent of other records.
+    If a property value with this name is defined (not `undefined`), the button to display child records will be shown immediately, and the records will be loaded only when the button is clicked.
+
+    @property isParentRecordPropertyName
+    @type String
+    @default 'isParentRecord'
+  */
+  isParentRecordPropertyName: 'isParentRecord',
 
   /**
     Flag indicate when component is in the hierarchical mode.
@@ -184,6 +186,43 @@ export default FlexberryBaseComponent.extend({
   hierarchicalIndent: undefined,
 
   /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
+    Using `ember-test-selectors`, creates `[data-test-component=flexberry-objectlistview]` selector for this component.
+
+    @property data-test-component
+    @type String
+    @default 'flexberry-objectlistview'
+  */
+  'data-test-component': 'flexberry-objectlistview',
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryObjectlistview'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
+
+  /**
     Flag used for disable the hierarchical mode.
 
     @property disableHierarchicalMode
@@ -202,6 +241,16 @@ export default FlexberryBaseComponent.extend({
   defaultLeftPadding: 10,
 
   /**
+    The passed pages as Ember array.
+
+    @property _pages
+    @type Ember.Array
+  */
+  _pages: computed('pages', function () {
+    return A(this.get('pages'));
+  }),
+
+  /**
     Number page for search.
 
     @property searchPageValue
@@ -210,19 +259,19 @@ export default FlexberryBaseComponent.extend({
   searchPageValue: undefined,
 
   /**
-    Flag used for disable searchPageButton.
+    Flag used for disabling searchPageButton.
 
     @property searchPageButtonReadonly
     @type Boolean
   */
-  searchPageButtonReadonly: computed('searchPageValue', function() {
+  searchPageButtonReadonly: computed('searchPageValue', '_pages.@each.isCurrent', function() {
     const searchPageValue = this.get('searchPageValue');
     const searchPage = parseInt(searchPageValue, 10);
     if (isNaN(searchPage)) {
       return true;
     }
 
-    const pages = A(this.get('pages'));
+    const pages = this.get('_pages');
     const firstPage = pages.get('firstObject.number');
     const lastPage = pages.get('lastObject.number');
     const currentPage = pages.findBy('isCurrent').number;
@@ -1127,10 +1176,8 @@ export default FlexberryBaseComponent.extend({
       let transitionOptions = {
         queryParams: {
           prototypeId: prototypeId,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
         }
       };
 
@@ -1259,15 +1306,15 @@ export default FlexberryBaseComponent.extend({
       Action search and open page.
 
       @method actions.searchPageButtonAction
-      @public
-      @param {Action} action Action go to page.
-      @param {Number} pageNumber Number of page to go to.
+      @param {Function} action The `goToPage` action from controller.
     */
-    searchPageButtonAction(action, componentName) {
+    searchPageButtonAction(action) {
       let searchPageValue = this.get('searchPageValue');
       let searchPageNumber = parseInt(searchPageValue, 10);
 
-      this.send('gotoPage', action, searchPageNumber, componentName);
+      if (searchPageNumber) {
+        this.send('gotoPage', action, searchPageNumber);
+      }
     }
   },
 
@@ -1275,30 +1322,37 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete row.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
-        confirmDeleteRow() {
-          return confirm('You sure?');
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: `Delete an object with the ID '${record.get('id')}'?`,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action "confirmDeleteRow")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRow
-    @return {Boolean} If `true` then delete row, else cancel.
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRow: undefined,
 
@@ -1306,30 +1360,36 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete rows.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
         confirmDeleteRows() {
-          return confirm('You sure?');
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: 'Delete all selected records?',
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action "confirmDeleteRows")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRows
-    @return {Boolean} If `true` then delete selected rows, else cancel.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRows: undefined,
 
@@ -1447,6 +1507,7 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showFiltersInModal', defaultValue: false });
   },
 
   /**

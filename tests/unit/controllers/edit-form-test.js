@@ -19,6 +19,7 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
     'service:user-settings',
     'service:app-state',
     'service:adv-limit',
+    'service:lookup-events',
   ],
 
   beforeEach: function() {

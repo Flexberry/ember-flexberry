@@ -1,8 +1,5 @@
-import $ from 'jquery';
 import { inject as service } from '@ember/service';
-import { isNone } from '@ember/utils';
-import { set } from '@ember/object';
-import { A } from '@ember/array';
+import { get, set } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -22,15 +19,6 @@ export default FlexberryBaseComponent.extend({
   objectlistviewEvents: service(),
 
   /**
-    Filter columns without Enter key press event.
-
-    @property _filterColumnsWithoutEnter
-    @type Array
-    @private
-  */
-  _filterColumnsWithoutEnter: A(),
-
-  /**
     Columns with available filters.
 
     @property filterColumns
@@ -46,24 +34,6 @@ export default FlexberryBaseComponent.extend({
   */
   componentName: undefined,
 
-  didInsertElement: function() {
-    this._super(...arguments);
-
-    let columnsWithoutEvent = A();
-    let originFilterColumns = this.get('filterColumns');
-
-    $.extend(true, columnsWithoutEvent, originFilterColumns);
-
-    // Disable key-down action, which was set in object-list-view.
-    columnsWithoutEvent.forEach((column) => {
-      if (!isNone(column.filter.component.properties.keyDown)) {
-        column.filter.component.properties.keyDown = undefined;
-      }
-    });
-
-    this.set('_filterColumnsWithoutEnter', columnsWithoutEvent);
-  },
-
   actions: {
     /**
      Apply filters for current list.
@@ -71,19 +41,6 @@ export default FlexberryBaseComponent.extend({
      @method actions.applyFilters
     */
     applyFilters() {
-      const filterColumnsOrigin = this.get('filterColumns');
-      const filterColumnsWithoutEnter = this.get('_filterColumnsWithoutEnter');
-
-      filterColumnsWithoutEnter.forEach((column) => {
-        let filterColumnOrigin = filterColumnsOrigin.find(obj => obj.filter.name === column.filter.name);
-
-        if (!isNone(filterColumnOrigin)) {
-          set(filterColumnOrigin.filter, 'pattern', column.filter.pattern);
-          set(filterColumnOrigin.filter, 'condition', column.filter.condition);
-        }
-      });
-
-      this.set('filterColumns', filterColumnsOrigin);
       this.get('objectlistviewEvents').refreshListTrigger(this.get('componentName'));
       this.get('close')();
     },
@@ -94,13 +51,35 @@ export default FlexberryBaseComponent.extend({
      @method actions.clearFiltersFields
     */
     clearFiltersFields() {
-      const columns = this.get('_filterColumnsWithoutEnter');
-
-      columns.forEach(column => {
-        const emptyPatternValue = (typeof column.filter.pattern === 'string') ? '' : undefined;
-        set(column.filter, 'pattern', emptyPatternValue);
-        set(column.filter, 'condition', undefined);
+      this.get('filterColumns').forEach((column) => {
+        this.send('clearFilterField', column.filter);
       });
+
+      this.send('applyFilters');
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterField
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterField(filter) {
+      set(filter, 'component.name', get(filter, 'component._defaultComponent'));
+      set(filter, 'condition', undefined);
+      set(filter, 'pattern', undefined);
+    },
+
+    /**
+      Called when filter condition in any column was changed by user.
+
+      @method actions.filterConditionChanged
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
+    */
+    filterConditionChanged(filter, newCondition, oldCondition) {
+      this.get('objectlistviewEvents').filterConditionChangedTrigger(this.get('componentName'), filter, newCondition, oldCondition);
     },
   }
 });

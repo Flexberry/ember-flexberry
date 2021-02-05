@@ -38,7 +38,7 @@
                 </div>
               {{/if}}
               {{#if column.filter.component.name}}
-                <div class="filter-value">
+                <div class="fluid action input ui filter-value">
                   {{component column.filter.component.name
                     value=column.filter.pattern
                     readonly=(or
@@ -47,6 +47,14 @@
                     )
                     dynamicProperties=column.filter.component.properties
                   }}
+                  <button
+                    type="button"
+                    class="ui clear-filter button"
+                    title={{t "components.object-list-view.clear-filter-in-column"}}
+                    {{action "clearFilterForColumn" column.filter}}
+                  >
+                    <i class="remove icon"></i>
+                  </button>
                 </div>
               {{/if}}
             </div>
@@ -82,6 +90,7 @@
           showEditButtonInRow=showEditButtonInRow
           showPrototypeButtonInRow=showPrototypeButtonInRow
           inExpandMode=inExpandMode
+          isParentRecordPropertyName=isParentRecordPropertyName
           hierarchicalIndent=hierarchicalIndent
           inHierarchicalMode=inHierarchicalMode
           singleColumnCellComponent=singleColumnCellComponent
@@ -111,18 +120,17 @@
 {{#if (and _selectedMobileMenu showCheckBoxInRow)}}
   <div class="check-rows-container">
     {{#if (not-eq class "groupedit-container")}}
-      <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
-        <i class="check-square-o icon"></i>
-        {{flexberry-menu
-          items=checkRowsSettingsItems
-          settings=(hash direction="upward")
-          onItemClick=(action "onCheckRowMenuItemClick")
-          onlyClickHandler=true
-        }}
-      </div>
+      {{flexberry-menu
+        _skipDropdownInit=true
+        onlyClickHandler=true
+        items=_checkRowsSettingsItems
+        settings=(hash direction="upward")
+        onItemClick=(action "onCheckRowMenuItemClick")
+      }}
     {{else}}
       <button
-        class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
+        type="button"
+        class="ui check-all-at-page-button icon {{buttonClass}} {{if readonly "disabled"}} button"
         title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
         {{action "checkAllAtPage"}}>
           <i class="check-square-o icon"></i>
@@ -132,11 +140,13 @@
     <label class="count-selected-rows">{{_selectedCountMobileMenu}}</label>
 
     <button
-      class="ui delete-button {{buttonClass}}{{if readonly ' disabled'}} button large"
+      type="button"
+      class="ui delete-button {{buttonClass}}{{if readonly " disabled"}} button large"
       title={{t "components.olv-toolbar.delete-button-text"}}
       disabled={{readonly}}
       {{action "deleteSelectedRow"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
     </button>
     {{#if (and (eq class "groupedit-container") arrowsButtons)}}
       <button
@@ -153,7 +163,9 @@
       </button>
     {{/if}}
 
-    <button class="ui clear-select-button {{buttonClass}} circular icon button"
+    <button
+      type="button"
+      class="ui clear-select-button {{buttonClass}} circular icon button"
       title={{t "components.olv-toolbar.clear-select-button-text"}}
       {{action "clearSelectedRecords"}}>
       <i class="remove icon"></i>

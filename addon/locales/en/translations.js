@@ -26,6 +26,10 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 
@@ -79,10 +83,16 @@ export default {
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Preview can not be loaded',
+      'error-dialog-size-unit-bt': 'Bytes',
+      'error-dialog-size-unit-kb': 'Kilobytes',
+      'error-dialog-size-unit-mb': 'Magabytes',
+      'error-dialog-size-unit-gb': 'Gigabytes',
 
       'add-file-error-caption': 'Add file error',
-      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
-        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} {{sizeUnit}}. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Selected file \'{{fileName}}\' has unavailable extension.',
 
       'upload-file-error-caption': 'File upload error',
       'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
@@ -108,7 +118,6 @@ export default {
         }
       }
     },
-
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
@@ -116,6 +125,7 @@ export default {
         'of': ' of ',
         'entries': ' entries'
       },
+      'without-sorting': 'Without sorting',
       'search-page-placeholder': '№ page',
       'search-button-text': 'Go to page'
     },
@@ -157,7 +167,8 @@ export default {
         'nempty': 'Not empty',
         'between': 'Between',
       },
-      'filter-condition': 'Condition'
+      'filter-condition': 'Condition',
+      'clear-filter-in-column': 'Clear the filter in this column',
     },
 
     'olv-filter-interval': {
@@ -261,12 +272,10 @@ export default {
     },
 
     'filters-dialog-content': {
-      'title': 'Сolumns filtering',
-      'column-name': 'Filter column',
-      'column-condition': 'Condition',
-      'column-value': 'Value',
-      'clear': 'Clear filters',
-      'apply': 'Apply filters'
+      'clear-this-filter': 'Reset this filter',
+      'title': 'Configuring record filtering',
+      'clear': 'Reset filter',
+      'apply': 'Apply'
     },
 
     'form-load-time-tracker': {

@@ -16,6 +16,7 @@ import { once, schedule, scheduleOnce } from '@ember/runloop';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
@@ -578,7 +579,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
-    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(ret);
+    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(this.get('componentName'), ret);
     return ret;
   }),
 
@@ -1068,14 +1069,25 @@ export default FlexberryBaseComponent.extend(
       }
 
       let confirmDeleteRow = this.get('confirmDeleteRow');
+      let possiblePromise = null;
+
       if (confirmDeleteRow) {
         assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow()) {
+
+        possiblePromise = confirmDeleteRow(recordWithKey.data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise))) {
           return;
         }
       }
 
-      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+        });
+      } else {
+        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      }
     },
     /* eslint-enable no-unused-vars */
 
@@ -1088,18 +1100,26 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
-      let selectedRecords = this.get('selectedRecords');
+      const selectedRecords = this.get('selectedRecords');
+
+      const record = recordWithKey.data;
+
       recordWithKey.selected = e.checked;
       if (e.checked) {
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
+        if (selectedRecords.indexOf(record) === -1) {
+          selectedRecords.pushObject(record);
         }
       } else {
-        selectedRecords.removeObject(recordWithKey.data);
+        selectedRecords.removeObject(record);
       }
 
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
+      const componentName = this.get('componentName');
+      const olvEventsService = this.get('objectlistviewEventsService');
+
+      // With this trigger, the `flexberry-groupedit` component implements the disabling of the rows moving buttons.
+      // The implementation uses the `active` class, since its update was moved to the template, the trigger must be called after updating the template.
+      // TODO: Make it better!
+      schedule('afterRender', olvEventsService, olvEventsService.rowSelectedTrigger, componentName, record, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**
@@ -1174,7 +1194,6 @@ export default FlexberryBaseComponent.extend(
       Handler click on flexberry-menu.
 
       @method actions.onCheckRowMenuItemClick
-      @public
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onCheckRowMenuItemClick(e) {
@@ -1187,16 +1206,19 @@ export default FlexberryBaseComponent.extend(
       let namedSetting = namedItemSpans.get(0).innerText;
 
       let isUncheckAllAtPage = this.get('allSelectAtPage');
-      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') : i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') :
+      i18n.t('components.olv-toolbar.check-all-at-page-button-text');
 
       let isUncheckAll = this.get('allSelect');
-      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') : i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') :
+      i18n.t('components.olv-toolbar.check-all-button-text');
 
       switch (namedSetting) {
         case checkAllAtPageTitle.toString(): {
           this.send('checkAllAtPage');
           break;
         }
+
         case checkAllTitle.toString(): {
           this.send('checkAll');
           break;
@@ -1254,9 +1276,9 @@ export default FlexberryBaseComponent.extend(
       Called when filter condition in any column was changed by user.
 
       @method actions.filterConditionChanged
-      @param {Object} filter
-      @param {String} newCondition
-      @param {String} oldCondition
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
     */
     filterConditionChanged(filter, newCondition, oldCondition) {
       if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
@@ -1271,7 +1293,19 @@ export default FlexberryBaseComponent.extend(
       }
 
       setProperties(filter.component, options);
-    }
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterForColumn
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterForColumn(filter) {
+      set(filter, 'component.name', get(filter, 'component._defaultComponent'));
+      set(filter, 'condition', null);
+      set(filter, 'pattern', null);
+    },
   },
 
   /**
@@ -1310,6 +1344,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').on('filterConditionChanged', this, this._filterConditionChanged);
     this.get('_contentObserver').apply(this);
     this.get('selectedRowsChanged').apply(this);
   },
@@ -1400,8 +1435,7 @@ export default FlexberryBaseComponent.extend(
 
           if (renderedRowIndex >= contentLength) {
             // The last menu needs will be up.
-            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
-            this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
             this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
             // Remove long loading spinners.
@@ -1451,8 +1485,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       // The last menu needs will be up.
-      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom');
-      this.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
 
@@ -1493,6 +1526,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').off('filterConditionChanged', this, this._filterConditionChanged);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1652,7 +1686,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
-      $table.css('cssText', `width: ${columnsWidthAutoresize ? containerWidth : tableWidth}px !important` );
+      $table.css({ width: `${columnsWidthAutoresize ? containerWidth : tableWidth}px` });
       if (this.get('eventsBus')) {
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }
@@ -1760,6 +1794,8 @@ export default FlexberryBaseComponent.extend(
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
+            column.relationshipPath = currentRelationshipPath.slice(0, -1);
+            column.attrName = attrName;
 
             if (column.cellComponent.componentName === undefined) {
               if (attr.options.displayMemberPath) {
@@ -1784,6 +1820,8 @@ export default FlexberryBaseComponent.extend(
 
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
+          column.relationshipPath = currentRelationshipPath.slice(0, -1);
+          column.attrName = attrName;
           columnsBuf.pushObject(column);
           break;
         }
@@ -1842,9 +1880,9 @@ export default FlexberryBaseComponent.extend(
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;
@@ -1966,6 +2004,9 @@ export default FlexberryBaseComponent.extend(
 
     $.extend(true, component, options);
 
+    // Hack to restore component when clearing filter for one column.
+    component._defaultComponent = component.name;
+
     column.filter = { name, type, pattern, condition, conditions, component };
   },
 
@@ -2064,21 +2105,20 @@ export default FlexberryBaseComponent.extend(
       case 'string':
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean': {
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact fluid',
+          class: 'compact',
         };
         break;
       }
 
       case 'date': {
         component.name = 'flexberry-simpledatetime';
-        component.properties = { type: 'date' };
+        component.properties = { type: 'date', removeButton: false };
         break;
       }
 
@@ -2089,7 +2129,7 @@ export default FlexberryBaseComponent.extend(
           component.name = 'flexberry-dropdown';
           component.properties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid',
+            class: 'compact',
           };
         }
 
@@ -2606,7 +2646,7 @@ export default FlexberryBaseComponent.extend(
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
   _rowsChanged: observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && !(content instanceof RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
+    if (isArray(content) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }
@@ -2953,6 +2993,22 @@ export default FlexberryBaseComponent.extend(
           contentForRender.replace(newIndex, 0, temp);
         }
       });
+    }
+  },
+
+  /**
+    Calls the `filterConditionChanged` action when filters are displayed in the modal window.
+
+    @private
+    @method _filterConditionChanged
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  _filterConditionChanged(componentName, filter, newValue, oldValue) {
+    if (this.get('componentName') === componentName) {
+      this.send('filterConditionChanged', filter, newValue, oldValue);
     }
   },
 });

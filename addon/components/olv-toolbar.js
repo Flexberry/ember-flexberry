@@ -3,6 +3,7 @@
 */
 
 import $ from 'jquery';
+import { Promise } from 'rsvp';
 import { assert } from '@ember/debug';
 import { set, computed, observer } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
@@ -529,10 +530,8 @@ export default FlexberryBaseComponent.extend({
       let thisRecordId = modelController.get('model.id');
       let transitionOptions = {
         queryParams: {
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
         }
       };
 
@@ -549,27 +548,24 @@ export default FlexberryBaseComponent.extend({
     */
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let modelName = this.get('modelController.modelProjection.modelName');
-
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: modelName
-        };
-
-        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -666,9 +662,10 @@ export default FlexberryBaseComponent.extend({
 
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
-        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray();
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
+        const useSidePageMode = this.get('useSidePageMode');
 
-        this.get('modelController').send('showFiltersDialog', componentName, columns);
+        this.get('modelController').send('showFiltersDialog', componentName, columns, useSidePageMode);
       } else {
         this.sendAction('toggleStateFilters');
       }
@@ -1095,5 +1092,29 @@ export default FlexberryBaseComponent.extend({
 
     const itemsNames = A(Object.keys(itemsNameList)).sortBy('name');
     return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect'))
+    {
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get('modelController.modelProjection.modelName');
+
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: modelName
+      };
+
+      this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+    }
   }
 });

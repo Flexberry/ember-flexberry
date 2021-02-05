@@ -13,6 +13,7 @@ import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { getSizeInUnits } from '../utils/file-size-units-converter';
 
 /**
   Flexberry file component.
@@ -26,6 +27,20 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Available file size units with its captions.
+
+    @property _fileSizeUnits
+    @type Object
+    @private
+  */
+  _fileSizeUnits: computed(() => ({
+    Bt: t('components.flexberry-file.error-dialog-size-unit-bt'),
+    Kb: t('components.flexberry-file.error-dialog-size-unit-kb'),
+    Mb: t('components.flexberry-file.error-dialog-size-unit-mb'),
+    Gb: t('components.flexberry-file.error-dialog-size-unit-gb')
+  })),
+
   /**
     Selected file content. It can be used as source for image tag in order to view preview.
 
@@ -103,7 +118,7 @@ export default FlexberryBaseComponent.extend({
   _fileName: computed('_jsonValue.fileName', function() {
     let fileName = this.get('_jsonValue.fileName');
     if (isNone(fileName)) {
-      return null;
+      return '';
     }
 
     return fileName;
@@ -459,6 +474,15 @@ export default FlexberryBaseComponent.extend({
   maxUploadFileSize: undefined,
 
   /**
+    Maximum file size unit. May be 'Bt' 'Kb' 'Mb' or 'Gb'.
+
+    @property maxUploadFileSizeUnit
+    @type String
+    @default 'Bt'
+  */
+  maxUploadFileSizeUnit: 'Bt',
+
+  /**
     Text to be displayed instead of file name, if file has not been selected.
 
     @property placeholder
@@ -511,6 +535,25 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   previewSettings: null,
+
+  /**
+    Available file extensions for upload. In MIME type format.
+    See [the documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) for more details.
+
+    @property accept
+    @type String
+    @default undefined
+  */
+  accept: undefined,
+
+  /**
+    Function with custom check for type of uploaded file.
+
+    @property isValidTypeFileCustom
+    @type Function
+    @default null
+  */
+  isValidTypeFileCustom: null,
 
   /**
     External Base64 string
@@ -658,6 +701,16 @@ export default FlexberryBaseComponent.extend({
     // jQuery fileupload 'add' callback.
     let onFileAdd = (e, uploadData) => {
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
+
+      const accept = this.get('accept');
+      const fileType = selectedFile.type;
+      const fileName = selectedFile.name;
+
+      if (!this._isValidTypeFile(fileType, accept)) {
+        this.showFileExtensionErrorModalDialog(fileName);
+        return;
+      }
+
       let maxUploadFileSize = this.get('maxUploadFileSize');
 
       if (!isNone(maxUploadFileSize)) {
@@ -665,9 +718,18 @@ export default FlexberryBaseComponent.extend({
           `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
           ` Allowed value is a number >= 0.`, typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
 
+        let sizeUnit = this.get('maxUploadFileSizeUnit');
+        if (!(sizeUnit in this.get('_fileSizeUnits'))) {
+          // eslint-disable-next-line no-console
+          console.log('Flexberry-file error, file max size wrong units assigned');
+          sizeUnit = Object.keys(this.get('_fileSizeUnits'))[0];
+        }
+
+        let fileSizeInUnits = getSizeInUnits(selectedFile.size, sizeUnit);
+
         // Prevent files greater then maxUploadFileSize.
-        if (selectedFile.size > maxUploadFileSize) {
-          this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+        if (fileSizeInUnits > maxUploadFileSize) {
+          this.showFileSizeErrorModalDialog(selectedFile.name, fileSizeInUnits, maxUploadFileSize, sizeUnit);
 
           // Break file upload.
           return;
@@ -905,15 +967,37 @@ export default FlexberryBaseComponent.extend({
     @param {String} fileName Added file name.
     @param {String} actualFileSize Actual size of added file.
     @param {String} maxFileSize Max file size allowed.
+    @param {String} sizeUnit Max file size unit.
     @returns {String} Error content.
   */
-  showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize) {
+  showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize, sizeUnit) {
     let i18n = this.get('i18n');
+    let actualFileSizeRoundedString = actualFileSize.toFixed(1);
     let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
     let errorContent = i18n.t('components.flexberry-file.file-too-big-error-message', {
       fileName: fileName,
-      actualFileSize: actualFileSize,
+      actualFileSize: actualFileSizeRoundedString,
       maxFileSize: maxFileSize,
+      sizeUnit: sizeUnit
+    });
+
+    this.showErrorModalDialog(errorCaption, errorContent);
+
+    return errorContent;
+  },
+
+  /**
+    Shows file extension errors if there were some.
+
+    @method showFileExtensionErrorModalDialog
+    @param {String} fileName Added file name.
+    @returns {String} Error content.
+  */
+  showFileExtensionErrorModalDialog(fileName) {
+    let i18n = this.get('i18n');
+    let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
+    let errorContent = i18n.t('components.flexberry-file.file-extension-error-message', {
+      fileName: fileName,
     });
 
     this.showErrorModalDialog(errorCaption, errorContent);
@@ -1011,6 +1095,11 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _unsubscribeFromRelatedModelPresaveEvent() {
+    let uploadOnModelPreSave = this.get('uploadOnModelPreSave');
+    if (!uploadOnModelPreSave) {
+      return;
+    }
+
     let relatedModelOffPropertyType = typeOf(this.get('relatedModel.off'));
     assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
       relatedModelOffPropertyType === 'function');
@@ -1020,16 +1109,42 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Defines valid of file type.
+
+    @method _isValidTypeFile
+    @param {String} fileType file type as MIME TYPES.
+    @param {String} accept available MIME TYPES.
+    @private
+  */
+  _isValidTypeFile(fileType, accept) {
+    const isValidTypeFileCustom = this.get('isValidTypeFileCustom');
+
+    if (isValidTypeFileCustom && (typeof isValidTypeFileCustom === 'function')) {
+      return isValidTypeFileCustom(fileType, accept);
+    }
+
+    const isFileTypeUndefined = fileType === '';
+    const isFileTypeAvailable = !accept || (accept.indexOf(fileType) !== -1 && !isFileTypeUndefined);
+
+    return isFileTypeAvailable;
+  },
+
+  /**
     Value change handler.
 
     @method _valueDidChange
     @private
   */
   _valueDidChange: observer('value', function() {
+    const value = this.get('value');
+    if (!value) {
+      this.removeFile();
+    }
+
     if(!isNone(this.get('fileChange'))){
       this.get('fileChange')({
         uploadData: this.get('_uploadData'),
-        value: this.get('value')
+        value: value
       });
     }
   }),

@@ -340,6 +340,7 @@ tests/dummy/app/controllers/components-examples/flexberry-tree/settings-example.
 tests/dummy/app/controllers/ember-flexberry-dummy-suggestion-edit.js
 tests/dummy/app/controllers/integration-examples/edit-form/readonly-mode.js
 tests/dummy/app/controllers/integration-examples/edit-form/validation.js
+tests/dummy/app/controllers/integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l.js
 tests/dummy/app/controllers/log-service-examples/clear-log-form.js
 tests/dummy/app/controllers/log-service-examples/settings-example.js
 tests/dummy/app/controllers/new-platform-flexberry-services-lock-list.js

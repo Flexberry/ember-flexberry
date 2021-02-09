@@ -18,10 +18,10 @@ export default ListFormController.extend({
 
   actions: {
     doOdataFunction() {
-      const adapter = this.get('store').adapterFor('application');
+      const adapter = Ember.get(this, 'store').adapterFor('application');
       let args = {
         functionName: 'GetMastersForTest',
-        store: this.get('store'),
+        store: Ember.get(this, 'store'),
         modelName: 'ember-flexberry-dummy-sotrudnik',
         modelProjection: 'SotrudnikE'
       };
@@ -29,15 +29,15 @@ export default ListFormController.extend({
       adapter.callFunction(args)
         .then(sotrudniks => {
           if (!Ember.isEmpty(sotrudniks)) {
-            this.set('dataReceived', true);
-            let departaments = sotrudniks.map((a) => a.get('departament'));
-            let departamentsIsNull = sotrudniks.find((a) => Ember.isNone(a.get('departament')));
+            Ember.set(this, 'dataReceived', true);
+            let departaments = sotrudniks.map((a) => Ember.get(a, 'departament'));
+            let departamentsIsNull = sotrudniks.find((a) => Ember.isNone(Ember.get(a, 'departament')));
             if (!Ember.isEmpty(departaments) && Ember.isNone(departamentsIsNull)) {
-              this.set('receivedMasters', true);
-              let vid = departaments.map((a) => a.get('vid'));
-              let vidIsNull = departaments.find((a) => Ember.isNone(a.get('vid')));
+              Ember.set(this, 'receivedMasters', true);
+              let vid = departaments.map((a) => Ember.get(a, 'vid'));
+              let vidIsNull = departaments.find((a) => Ember.isNone(Ember.get(a, 'vid')));
               if (!Ember.isEmpty(vid) && Ember.isNone(vidIsNull)) {
-                this.set('receivedMasterMasters', true);
+                Ember.set(this, 'receivedMasterMasters', true);
               }
             }
           }

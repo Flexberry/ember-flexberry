@@ -12,6 +12,9 @@ import componentsExampleGroupeditDetailModel from './models/components-examples/
 import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
+import emberFlexberryDummyDepartamentModel from './models/ember-flexberry-dummy-departament';
+import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-sotrudnik';
+import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
@@ -28,7 +31,10 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
     'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
     'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
-    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel,
+    'ember-flexberry-dummy-departament': emberFlexberryDummyDepartamentModel,
+    'ember-flexberry-dummy-sotrudnik': emberFlexberryDummySotrudnikModel,
+    'ember-flexberry-dummy-vid-departamenta': emberFlexberryDummyVidDepartamentaModel
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',
@@ -475,7 +481,27 @@ Ember.$.extend(true, translations, {
               'caption': 'Валидация',
               'title': ''
             }
-          }
+          },
+          'odata-examples': {
+            'caption': 'Работа с OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Вычитка мастеров через OData-функцию',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Сотрудник',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Департамент',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Вид департамента',
+                'title': ''
+              }
+            },
+          },
         },
         'user-setting-forms': {
           'caption': 'Пользовательские настройки',
@@ -618,7 +644,6 @@ Ember.$.extend(true, translations, {
       'caption': 'Несколько списков на форме',
       'multi-edit-form': 'Несколько списков на эдитформе'
     },
-
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',
@@ -988,6 +1013,41 @@ Ember.$.extend(true, translations, {
           'file-caption': 'Файл',
           'master-caption': 'Мастер',
           'details-caption': 'Детейлы'
+        }
+      },
+      'odata-examples': {
+        'get-masters': {
+          'ember-flexberry-dummy-departament-e': {
+            caption: 'Департамент',
+            'name-caption': 'Название',
+            'vid-caption': 'Вид'
+          },
+          'ember-flexberry-dummy-departament-l': {
+            caption: 'Департаменты'
+          },
+          'ember-flexberry-dummy-sotrudnik-e': {
+            caption: 'Сотрудник',
+            'familiia-caption': 'Фамилия',
+            'name-caption': 'Имя',
+            'dataRozhdeniia-caption': 'Дата',
+            'departament-caption': 'Департамент'
+          },
+          'ember-flexberry-dummy-sotrudnik-l': {
+            caption: 'Сотрудники',
+            'doOdataFunction': 'Выполнить Odata функцию',
+            'dataReceived': 'Объекты загружены',
+            'receivedMasters': 'Мастера загружены',
+            'receivedMastersError': 'Ошибка загрузки мастеров',
+            'receivedMasterMasters': 'Мастера мастеров загружены',
+            'receivedMasterMastersError': 'Ошибка загрузки мастеров у мастеров'
+          },
+          'ember-flexberry-dummy-vid-departamenta-e': {
+            caption: 'Вид департамента',
+            'name-caption': 'Название'
+          },
+          'ember-flexberry-dummy-vid-departamenta-l': {
+            caption: 'Виды департаментов'
+          },
         }
       }
     },

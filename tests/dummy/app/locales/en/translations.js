@@ -12,6 +12,9 @@ import componentsExampleGroupeditDetailModel from './models/components-examples/
 import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
+import emberFlexberryDummyDepartamentModel from './models/ember-flexberry-dummy-departament';
+import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-sotrudnik';
+import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
@@ -29,7 +32,10 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
     'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
     'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
-    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel,
+    'ember-flexberry-dummy-departament': emberFlexberryDummyDepartamentModel,
+    'ember-flexberry-dummy-sotrudnik': emberFlexberryDummySotrudnikModel,
+    'ember-flexberry-dummy-vid-departamenta': emberFlexberryDummyVidDepartamentaModel
   },
 
   'application-name': 'Test stand for ember-flexberry',
@@ -472,7 +478,27 @@ Ember.$.extend(true, translations, {
               'caption': 'Validation',
               'title': ''
             }
-          }
+          },
+          'odata-examples': {
+            'caption': 'Work with OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Get master from oData function',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Sotrudnik',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Departament',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Vid departamenta',
+                'title': ''
+              }
+            },
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -976,6 +1002,41 @@ Ember.$.extend(true, translations, {
           'file-caption': 'File',
           'master-caption': 'Master',
           'details-caption': 'Details'
+        }
+      },
+      'odata-examples': {
+        'get-masters': {
+          'ember-flexberry-dummy-departament-e': {
+            caption: 'EmberFlexberryDummyDepartamentE',
+            'name-caption': 'name',
+            'vid-caption': 'vid'
+          },
+          'ember-flexberry-dummy-departament-l': {
+            caption: 'EmberFlexberryDummyDepartamentL'
+          },
+          'ember-flexberry-dummy-sotrudnik-e': {
+            caption: 'EmberFlexberryDummySotrudnikE',
+            'familiia-caption': 'familiia',
+            'name-caption': 'name',
+            'dataRozhdeniia-caption': 'dataRozhdeniia',
+            'departament-caption': 'departament'
+          },
+          'ember-flexberry-dummy-sotrudnik-l': {
+            caption: 'EmberFlexberryDummySotrudnikL',
+            'doOdataFunction': 'Do Odata function',
+            'dataReceived': 'Objects loaded',
+            'receivedMasters': 'Masters loaded',
+            'receivedMastersError': 'Error loading masters',
+            'receivedMasterMasters': 'Master masters loaded',
+            'receivedMasterMastersError': 'Error loading masters from masters'
+          },
+          'ember-flexberry-dummy-vid-departamenta-e': {
+            caption: 'EmberFlexberryDummyVidDepartamentaE',
+            'name-caption': 'name'
+          },
+          'ember-flexberry-dummy-vid-departamenta-l': {
+            caption: 'EmberFlexberryDummyVidDepartamentaL'
+          },
         }
       }
     },

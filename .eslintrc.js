@@ -27,6 +27,7 @@ module.exports = {
   },
   rules: {
     'ember/new-module-imports': 'off',
+    'ember/use-ember-data-rfc-395-imports': 'off',
     'ember/no-get': 'off',
     'ember/use-ember-get-and-set': 'error',
     'ember/no-jquery': 'warn',

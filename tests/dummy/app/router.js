@@ -41,6 +41,24 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/new' });
+
   this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
   this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
 

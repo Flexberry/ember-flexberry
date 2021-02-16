@@ -53,8 +53,7 @@ export default EditFormRoute.extend({
     let prototypeId = transition.queryParams.prototypeId;
     let store = this.get('store');
 
-    if (Ember.isNone(prototypeId))
-    {
+    if (Ember.isNone(prototypeId)) {
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
       let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
       let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
@@ -95,9 +94,7 @@ export default EditFormRoute.extend({
     @param {Object} model
    */
   returnNewModel(value) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      resolve(value);
-    });
+    return new Ember.RSVP.resolve(value);
   },
 
   /**

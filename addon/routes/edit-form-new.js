@@ -53,8 +53,7 @@ export default EditFormRoute.extend({
     let prototypeId = transition.queryParams.prototypeId;
     let store = this.get('store');
 
-    if (Ember.isNone(prototypeId))
-    {
+    if (Ember.isNone(prototypeId)) {
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
       let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
       let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
@@ -62,14 +61,16 @@ export default EditFormRoute.extend({
       flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
 
       if (modelCurrentNotSaved) {
-        return modelCurrentNotSaved;
+        return this.returnNewModel(modelCurrentNotSaved);
       }
 
       if (modelSelectedDetail) {
-        return modelSelectedDetail;
+        return this.returnNewModel(modelSelectedDetail);
       }
 
-      return store.createRecord(modelName, { id: generateUniqueId() });
+      let model = store.createRecord(modelName, { id: generateUniqueId() });
+
+      return this.returnNewModel(model);
     }
 
     // Get the copyable instance.
@@ -84,6 +85,16 @@ export default EditFormRoute.extend({
 
       return record;
     });
+  },
+
+  /**
+    Return model as Primese.
+
+    @method returnNewModel
+    @param {Object} model
+   */
+  returnNewModel(value) {
+    return new Ember.RSVP.resolve(value);
   },
 
   /**

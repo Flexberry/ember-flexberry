@@ -152,7 +152,7 @@ export default FlexberryGroupeditComponent.extend({
         transition = 'slide left';
       }
       $(`.ui.modal.${this.get('componentName')}`)
-        .modal({transition: transition})
+        .modal({transition: transition, context: '.ember-application > .ember-view > .ui.main.container'})
         .modal('attach events', '.close.icon', 'hide')
         .modal('show');
     }

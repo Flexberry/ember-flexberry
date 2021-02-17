@@ -1,6 +1,7 @@
+/* eslint-disable ember/use-ember-get-and-set */
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import startApp from '../../../helpers/start-app';
+import startApp from './start-app';
 
 let dataForDestroy = Ember.A();
 let app;
@@ -9,6 +10,7 @@ export function executeTest(testName, callback) {
   let store;
   let userSettingsService;
 
+  /* eslint-disable-next-line qunit/no-global-module-test */
   module('Acceptance | flexberry-objectlistview | ' + testName, {
     beforeEach() {
       Ember.run(() => {
@@ -16,11 +18,11 @@ export function executeTest(testName, callback) {
         app = startApp();
 
         // Just take it and turn it off...
-        app.__container__.lookup('service:log').set('enabled', false);
+        Ember.set(app.__container__.lookup('service:log'), 'enabled', false);
 
         // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
         let applicationController = app.__container__.lookup('controller:application');
-        applicationController.set('isInAcceptanceTestMode', true);
+        Ember.set(applicationController, 'isInAcceptanceTestMode', true);
         store = app.__container__.lookup('service:store');
 
         userSettingsService = app.__container__.lookup('service:user-settings');
@@ -28,7 +30,7 @@ export function executeTest(testName, callback) {
           return 5;
         };
 
-        userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
+        Ember.set(userSettingsService, 'getCurrentPerPage', getCurrentPerPage);
       });
     },
 
@@ -43,6 +45,7 @@ export function executeTest(testName, callback) {
     }
   });
 
+  /* eslint-disable-next-line qunit/no-global-module-test */
   test(testName, (assert) => callback(store, assert, app));
 }
 

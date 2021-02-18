@@ -3,9 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.6.0-beta.6] - 2021-02-18
 ### Fixed
 * The `flexberry-objectlitview` and `flexberry-simpleolv` components:
-    * Fixed ckeck all rows with respect to `rowConfig.canBeSelected` option.
+    * Fixed check all rows with respect to `rowConfig.canBeSelected` option.
 
 * The `edit-form-new` route:
     * Fixed return promise in model.

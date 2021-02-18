@@ -4,6 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.6] - 2021-02-18
+### Fixed
+* The `flexberry-objectlitview` and `flexberry-simpleolv` components:
+    * Fixed check all rows with respect to `rowConfig.canBeSelected` option.
+
+* The `edit-form-new` route:
+    * Fixed return promise in model.
+
+## [2.6.0-beta.5] - 2021-01-27
+### Changed
+* Replace test models localization with separated classes.
+
+### Fixed
+* Getting path prefixes logic for `device` service.
+
 ## [2.6.0-beta.4] - 2021-01-15
 ### Added
 * The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.

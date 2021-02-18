@@ -40,7 +40,7 @@ executeTest('flexberry-lookup events test', (store, assert, app) => {
 
       // Сomparison data from spy and olv table.
       for (let i = 0; i < lookupRecordCount; i++) {
-        let suggestionTypeName = dataLoaded.content[i].record.get('name');
+        let suggestionTypeName = Ember.get(dataLoaded.content[i].record, 'name');
         let $cellText = Ember.$($lookupRows[3 * i + 1]).children('div').text().trim();
 
         assert.strictEqual($cellText, suggestionTypeName);

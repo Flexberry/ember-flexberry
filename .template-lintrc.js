@@ -189,14 +189,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-dropdown",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-error",
       "only": [
         "eol-last"

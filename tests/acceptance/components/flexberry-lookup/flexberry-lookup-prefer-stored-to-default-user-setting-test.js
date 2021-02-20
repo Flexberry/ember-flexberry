@@ -1,5 +1,5 @@
 /* eslint-disable ember/no-test-import-export */
-/* global visit, andThen, currentURL */
+/* global currentURL */
 /* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';

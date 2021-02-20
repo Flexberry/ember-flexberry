@@ -258,13 +258,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-objectlistview",
-      "only": [
-        "quotes",
-        "no-attrs-in-components"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-simpledatetime",
       "only": [
         "eol-last",

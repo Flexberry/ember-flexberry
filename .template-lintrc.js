@@ -845,14 +845,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-events",
-      "only": [
-        "eol-last",
-        "quotes",
-        "require-button-type"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-preview-page",
       "only": [
         "eol-last",

@@ -4,6 +4,8 @@
 
 import Component from '@ember/component';
 import $ from 'jquery';
+import { translationMacro as t } from 'ember-i18n';
+import { inject as service } from '@ember/service';
 
 /**
   Component for sitemap render from the object with links.
@@ -80,6 +82,25 @@ export default Component.extend({
   isDropDown: false,
 
   /**
+    Component's parent menu caption.
+
+    @property parent
+    @type String
+    @default t('components.flexberry-sitemap-guideline.main-menu-caption')
+  */
+  parent: t('components.flexberry-sitemap-guideline.main-menu-caption'),
+
+  sidebarFull: undefined,
+
+  /**
+    Service for listening to media query matches.
+
+    @property media
+    @type MediaService
+  */
+  media: service(),
+
+  /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
     [More info](https://emberjs.com/api/ember/release/classes/Component#event_didInsertElement).
 
@@ -87,17 +108,51 @@ export default Component.extend({
   */
   didInsertElement() {
     this._super(...arguments);
-    if (this.isDropDown) {
+
+    this.reInitComponent();
+  },
+
+  didUpdateAttrs() {
+    this.reInitComponent();
+  },
+
+  reInitComponent() {
+    if (this.get('isDropDown')) {
+      let sidebarFull = this.get('sidebarFull');
+      let transition = sidebarFull ? 'fade left' : 'slide right';
+      let onEvent = sidebarFull ? 'click' : 'hover';
+
       $(this.element).dropdown({
-        on: 'hover',
-        transition: 'slide right',
+        on: onEvent,
+        transition: transition,
         maxSelections: 1,
-        onChange: () => {
+        direction: 'rightward',
+        // toggleSubMenusOn: 'click',
+        onChange: (value, text, choice) => {
           let selectedItem = $(this.element).closest('.main.menu').find('.active.selected');
           if (selectedItem.length > 0) {
             selectedItem.removeClass('active selected');
           }
-          $(this.element).dropdown('hide');
+
+          const media = this.get('media');
+          const isTablet = media.get('isTablet');
+
+          if (!$(choice.get(0)).hasClass('menu-back')) {
+            Ember.run.later(this, function() {
+              $(this.element).dropdown('hide');
+              if (sidebarFull) {
+                $('.ui.sidebar.main.menu').sidebar('hide');
+                let sidebar = $('.ui.sidebar.main.menu');
+                if (isTablet && sidebar.hasClass('mobile')) {
+                  let pusher = $('.ui.sidebar.main.menu ~ .pusher');
+
+                  sidebar.toggleClass('mobile');
+                  sidebar.toggleClass('sidebar-mini');
+                  pusher.toggleClass('mobile');
+                }
+              }
+            }, 500);
+          }
         }
       });
     }
@@ -112,6 +167,20 @@ export default Component.extend({
     menuToggle() {
       this.$('.subMenu:first').toggleClass('hidden');
       this.set('nodeIsOpen', !this.get('nodeIsOpen'));
+    },
+
+    /**
+      Back in menu.
+
+      @method actions.menuBack
+    */
+    menuBack() {
+      if (this.get('isDropDown')) {
+        $(this.element).dropdown('hide');
+      } else {
+        // this.$('> .menu.visible', this.element).transition();
+        this.$('> .menu.visible', this.element).transition('fade left');
+      }
     }
   },
 });

@@ -1,29 +1,37 @@
 {{#if sitemap.link}}
   {{#link-to sitemap.link title=sitemap.title}}
     <div class="title-item-menu">
-      {{#if sitemap.icon}}
+      {{#if (or sidebarFull sitemap.icon)}}
         <i class="icon {{sitemap.icon}}"></i>
       {{/if}}
       {{sitemap.caption}}
     </div>
   {{/link-to}}
 {{else if sitemap.caption}}
-    <i class="dropdown icon"></i>
-    <div class="title-item-menu">
-      {{#if sitemap.icon}}
-        <i class="icon {{sitemap.icon}}"></i>
-      {{/if}}
-      {{sitemap.caption}}
-    </div>
-    {{#if sitemap.children.length}}
-      <div class="menu">
-        {{#each sitemap.children as |child|}}
-          {{flexberry-sitemap-guideline sitemap=child isDropDown=false classNames="item"}}
-        {{/each}}
-      </div>
+  <i class="dropdown icon"></i>
+  <div class="title-item-menu">
+    {{#if (or sitemap.icon sidebarFull)}}
+      <i class="icon {{sitemap.icon}}"></i>
     {{/if}}
+    <span>{{sitemap.caption}}</span>
+  </div>
+  {{#if sitemap.children.length}}
+    <div class="menu">
+      {{#if sidebarFull}}
+        <div class="item menu-back" {{action "menuBack"}}>
+          <i class="icon-guideline-arrow-long-left icon"></i>
+          <div class="title-item-menu">
+            {{parent}}
+          </div>
+        </div>
+      {{/if}}
+      {{#each sitemap.children as |child|}}
+        {{flexberry-sitemap-guideline sidebarFull=sidebarFull device=device sitemap=child isDropDown=false classNames="item" parent=sitemap.caption}}
+      {{/each}}
+    </div>
+  {{/if}}
 {{else if sitemap.nodes}}
   {{#each sitemap.nodes as |node|}}
-    {{flexberry-sitemap-guideline sitemap=node isDropDown=true}}
+    {{flexberry-sitemap-guideline sidebarFull=sidebarFull device=device sitemap=node isDropDown=true}}
   {{/each}}
 {{/if}}

@@ -3,13 +3,13 @@
   {{outlet "modal"}}
 {{else}}
 {{#flexberry-sidebar
-  class="mobile inverted vertical main menu"
+  class="mobile inverted vertical main menu flexberry-main-menu"
   settings=(hash
     onShow=(action "updateWidth")
     onHidden=(action "updateWidth")
   )
 }}
-  {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+  {{flexberry-sitemap-guideline sitemap=sitemap isTablet=isTablet class="flexberry-sitemap"}}
   <div class="sitebar-footer">
     <a class="item"
       href={{addonVersionHref}}

@@ -5,6 +5,8 @@ import { A } from '@ember/array';
 import config from '../config/environment';
 import { isNone } from '@ember/utils';
 import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { isBlank } from '@ember/utils';
 
 const version = config.APP.version;
 
@@ -25,6 +27,47 @@ export default Controller.extend({
   */
   appState: service(),
 
+  /**
+    Service for listening to media query matches.
+
+    @property media
+    @type MediaService
+  */
+  media: service(),
+
+  setSidebarState() {
+    const media = this.get('media');
+    const mediaMatches = this.get('media.matches');
+    if (isBlank(mediaMatches) || mediaMatches.length > 1) {
+      return;
+    }
+    const isSidebarVisible = this.get('isSidebarVisible');
+
+    let isMobile = media.get('isMobile');
+    let isTablet = media.get('isTablet');
+    this.set('sidebarFull', isTablet || isMobile);
+
+    let sidebar = $('.ui.sidebar.main.menu');
+    // Rлассы нужно менять так, тк семантик добавляет свои классы, и если менять в компоненте, то все ломается
+    sidebar.removeClass('mobile sidebar-mini submenu-full');
+
+    if (isMobile) {
+      sidebar.addClass('mobile');
+    } else if (isTablet) {
+      sidebar.addClass('sidebar-mini submenu-full');
+      if (isSidebarVisible) {
+        sidebar.removeClass('visible');
+      }
+    }
+    else if (isSidebarVisible) {
+      sidebar.addClass('visible');
+    } else {
+      sidebar.addClass('sidebar-mini');
+    }
+  },
+
+  isSidebarVisible: true,
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -41,19 +84,38 @@ export default Controller.extend({
       @method actions.toggleSidebar
     */
     toggleSidebar() {
+      var media = this.get('media');
       let sidebar = $('.ui.sidebar.main.menu');
+      this.set('isSidebarVisible', !sidebar.hasClass('visible'));
+      if (media.get('isTablet')) {
+        this.send('toggleSidebarTablet');
+      } else if (media.get('isMobile')) {
+        this.send('toggleSidebarMobile');
+      } else {
+        sidebar.sidebar('toggle');
+        sidebar.toggleClass('sidebar-mini');
+  
+        $('.sidebar.icon .text_menu').toggleClass('hidden');
+        $('.sidebar.icon').toggleClass('text-menu-show');
+        $('.sidebar.icon').toggleClass('text-menu-hide');
+        $('.bgw-opacity').toggleClass('hidden');
+      }
+    },
+
+    /**
+      Toggles application sitemap's side bar in tablet view.
+
+      @method actions.toggleSidebarTablet
+    */
+    toggleSidebarTablet() {
+      let sidebar = $('.ui.sidebar.main.menu');
+      let pusher = $('.ui.sidebar.main.menu ~ .pusher');
+
       sidebar.sidebar('toggle');
+
+      sidebar.toggleClass('mobile');
       sidebar.toggleClass('sidebar-mini');
-
-      $('.full.height').toggleClass('content-opened');
-
-      $('.sidebar.icon .text_menu').toggleClass('hidden');
-      $('.sidebar.icon').toggleClass('text-menu-show');
-      $('.sidebar.icon').toggleClass('text-menu-hide');
-      $('.bgw-opacity').toggleClass('hidden');
-
-      // For reinit overflowed tabs.
-      $(window).trigger('resize');
+      pusher.toggleClass('mobile');
     },
 
     /**
@@ -166,6 +228,16 @@ export default Controller.extend({
   }),
 
   /**
+    Handles changes in media.matches.
+
+    @method _mediaObserver
+    @private
+  */
+  _mediaObserver: observer('media.matches.@each', function(){
+    this.setSidebarState();
+  }),
+
+  /**
     Initializes controller.
   */
   init() {
@@ -191,6 +263,13 @@ export default Controller.extend({
     } else {
       i18n.set('locale', shortCurrentLocale);
     }
+
+    var media = this.get('media');
+    this.set('sidebarFull', media.get('isTablet') || media.get('isMobile'));
+
+    run.next(this, function() {
+      this.setSidebarState();
+    })
   },
 
   /**

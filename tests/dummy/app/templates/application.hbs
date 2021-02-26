@@ -3,7 +3,7 @@
   {{outlet "modal"}}
 {{else}}
   {{#flexberry-sidebar
-    class="inverted vertical main menu visible"
+    class="inverted vertical main menu visible flexberry-main-menu"
     settings=(hash
       closable=false
       dimPage=false
@@ -12,7 +12,7 @@
     )
   }}
 
-    {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+    {{flexberry-sitemap-guideline sitemap=sitemap sidebarFull=sidebarFull device=device class="flexberry-sitemap"}}
     <div class="sitebar-footer">
       <a class="item"
         href={{addonVersionHref}}
@@ -24,8 +24,8 @@
     </div>
 
   {{/flexberry-sidebar}}
-  <div class="bgw-fix">
-    <div class="background-logo">
+  <div class="bgw-fix{{if media.isMobile ' mobile'}}">
+    <div class="background-logo{{if (or media.isMobile media.isTablet) ' mobile'}}" >
       <div class="ui top attached">
         <div class="ui attached menu">
           <div class="ui container flex-container">
@@ -86,10 +86,10 @@
       </div>
     </div>
   </div>
-  <div id="example" class="pusher">
+  <div id="example" class="pusher{{if media.isMobile ' mobile'}}">
     <div class="ui form {{appState.state}}">
       <div class="bgw-opacity hidden"></div>
-      <div class="full height">
+      <div class="full height{{if (or media.isTablet (and (or media.isDesktop media.isJumbo) (not isSidebarVisible))) " content-opened"}}">
         <div class="flexberry-content ui attached segment">
           <div class="ui main container">
             <div class="stackable grid container">

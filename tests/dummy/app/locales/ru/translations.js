@@ -20,6 +20,7 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   models: {
     'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
@@ -644,6 +645,7 @@ Ember.$.extend(true, translations, {
       'caption': 'Несколько списков на форме',
       'multi-edit-form': 'Несколько списков на эдитформе'
     },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',

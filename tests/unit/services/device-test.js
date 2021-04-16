@@ -48,7 +48,7 @@ test('device service isTablet work', function (assert) {
 test('device service isTv work', function (assert) {
   const service = DeviceService.create();
   const fakeTv = sinon.fake.returns(true);
-  service.tv = fakeTv;
+  service.television = fakeTv;
 
   assert.ok(service.isTv());
   assert.ok(fakeTv.called);

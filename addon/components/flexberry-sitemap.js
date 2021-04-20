@@ -60,6 +60,13 @@ export default Component.extend({
   */
   nodeIsOpen: false,
 
+  init(){
+    if (!this.get('sitemap.nodes') && this.get('isHomeSitemap')) {
+      this.set('tagName', '');
+    }
+    this._super.apply(this, arguments);
+  },
+
   actions: {
     /**
       Show or hide menu.

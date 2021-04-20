@@ -259,6 +259,15 @@ var SitemapItemExt = /** @class */ (function () {
         else {
             translationName = this.baseItem.link;
         }
+
+        var nodeIcon;
+        if (this.baseItem.link !== null) {
+            var icons = ['list', 'archive', 'phone', 'address card', 'book', 'calendar', 'building',
+                'briefcase', 'chart bar', 'chart line', 'edit', 'file', 'folder', 'paperclip', 'folder open', 'suitcase', 'tasks', 'tags', 'table'];
+            var randomIndex = Math.floor(Math.random() * (icons.length + 1));
+            nodeIcon = icons[randomIndex];
+        }
+
         translationProp = parentTranslationProp + "." + translationName;
         var childrenTranslation = [];
         var childrenTranslationOtherLocales = [];
@@ -297,6 +306,7 @@ var SitemapItemExt = /** @class */ (function () {
             (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
             ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
             ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
+            (nodeIcon === undefined ? '' : ("" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(nodeIcon) + ",\n")) +
             ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");
     };
     SitemapItemExt.prototype.escapeValue = function (value) {

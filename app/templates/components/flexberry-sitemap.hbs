@@ -1,25 +1,40 @@
 {{#if sitemap.link}}
-  {{#link-to sitemap.link class="item" title=sitemap.title}}
-    <div class="title-item-menu" {{action "menuToggle"}}>{{sitemap.caption}}</div>
-  {{/link-to}}
+  {{#if isHomeSitemap}}
+    {{#link-to sitemap.link class="aligned column" title=sitemap.title}}
+      <i class="{{if sitemap.icon sitemap.icon}} icon"></i>
+      <div>{{sitemap.caption}}</div>
+    {{/link-to}}
+  {{else}}
+    {{#link-to sitemap.link class="item" title=sitemap.title}}
+      <div class="title-item-menu" {{action "menuToggle"}}>{{sitemap.caption}}</div>
+    {{/link-to}}
+  {{/if}}
 {{else if sitemap.caption}}
-  <div class="item item-menu">
-    <div class="title-item-menu" {{action "menuToggle"}}>
-      {{#if sitemap.children.length}}
-        <i class="{{if nodeIsOpen "minus" "plus"}} square outline icon"></i>
-      {{/if}}
-      {{sitemap.caption}}
-    </div>
+  {{#if isHomeSitemap}}
     {{#if sitemap.children.length}}
-      <div class="menu subMenu hidden">
-        {{#each sitemap.children as |child|}}
-          {{flexberry-sitemap sitemap=child}}
-        {{/each}}
-      </div>
+      {{#each sitemap.children as |child|}}
+        {{flexberry-sitemap sitemap=child isHomeSitemap=isHomeSitemap}}
+      {{/each}}
     {{/if}}
-  </div>
+  {{else}}
+    <div class="item item-menu">
+      <div class="title-item-menu" {{action "menuToggle"}}>
+        {{#if sitemap.children.length}}
+          <i class="{{if nodeIsOpen "minus" "plus"}} square outline icon"></i>
+        {{/if}}
+        {{sitemap.caption}}
+      </div>
+      {{#if sitemap.children.length}}
+        <div class="menu subMenu hidden">
+          {{#each sitemap.children as |child|}}
+            {{flexberry-sitemap sitemap=child}}
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
 {{else if sitemap.nodes}}
   {{#each sitemap.nodes as |node|}}
-    {{flexberry-sitemap sitemap=node}}
+    {{flexberry-sitemap sitemap=node isHomeSitemap=isHomeSitemap}}
   {{/each}}
 {{/if}}

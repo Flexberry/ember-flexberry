@@ -47,7 +47,36 @@ export default Ember.Component.extend({
     @property messages
     @type Ember.A
   */
-  messages: undefined,
+  messages: Ember.computed('_messages', '_errorsListChanged', function() {
+    var errors = Ember.get(this, 'errors');
+    var validationProperties = Ember.get(this, 'validationProperties');
+    var actualValidationProperties = new Ember.A();
+    var needActualizeValidationProperties = false;
+
+    validationProperties.forEach(propertyName => {
+      needActualizeValidationProperties = needActualizeValidationProperties
+          || (!errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName));
+    });
+
+    for (let propertyName in errors) {
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName)) {
+        actualValidationProperties.push(propertyName);
+        needActualizeValidationProperties = needActualizeValidationProperties || !validationProperties.includes(propertyName);
+      }
+    }
+
+    if (needActualizeValidationProperties) {
+      Ember.set(this, 'validationProperties', actualValidationProperties);
+      Ember.defineProperty( // TODO: defineProperty?
+        this,
+        "_messages",
+        Ember.computed(this._getMessageComputingKey(actualValidationProperties), Ember.get(this, '_recomputeMessage')));
+    }
+
+    var realMessages =  Ember.get(this, '_messages');
+    Ember.set(this, 'isVisible', !!realMessages.length);
+    return realMessages;
+  }),
 
   /**
     Header of validationsummary
@@ -56,6 +85,12 @@ export default Ember.Component.extend({
     @type String
   */
   headerText: undefined,
+
+  _errorsListChanged: false,
+
+  _wrongErrorsPropertiesList: ['toString', '_super', 'setUnknownProperty'],
+
+  _messages: undefined,
 
   /**
     An overridable method called when objects are instantiated.
@@ -70,48 +105,61 @@ export default Ember.Component.extend({
       throw new Error('Errors property for flexberry-validationsummary component must be set');
     }
 
-    this.set('validationProperties', new Ember.A());
+    let validationProperties = new Ember.A();
 
     for (let propertyName in errors) {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (errors.hasOwnProperty(propertyName) && propertyName !== 'toString') {
-        this.get('validationProperties').push(propertyName);
-        errors.addObserver(propertyName + '.[]', this, 'changeMessages');
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName)) {
+        validationProperties.push(propertyName);
       }
     }
 
-    this.get('classNames').push(this.get('color'));
-    this.changeMessages();
-  },
+    Ember.set(this, 'validationProperties', validationProperties);
+    Ember.get(this, 'classNames').push(this.get('color'));
 
-  /**
-    Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
-  */
-  willDestroy() {
-    let errors = this.get('errors');
-    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
-    this._super(...arguments);
+    let self = this;
+    errors.reopen({
+      setUnknownProperty: function(key, value) {
+        Ember.defineProperty(this, key, null, value); // TODO: defineProperty?
+        this.notifyPropertyChange(key);
+        Ember.set(self, '_errorsListChanged', !Ember.get(self, '_errorsListChanged'));
+      }
+    });
+
+    Ember.defineProperty( // TODO: defineProperty?
+      this,
+      "_messages",
+      Ember.computed(this._getMessageComputingKey(validationProperties), Ember.get(this, '_recomputeMessage')));
   },
 
   /**
     Push validation errors to messages array
     and change component visibility if no errors occurred.
   */
-  changeMessages() {
+  _recomputeMessage: function() {
     let messages = new Ember.A();
 
     this.get('validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (property !== 'toString') {
-        let errorMessages = this.get('errors.' + property);
+      if (!Ember.get(this, '_wrongErrorsPropertiesList').includes(property)) {
+        let errorMessages = Ember.get(this, 'errors.' + property);
         errorMessages.forEach((errorMessage) => {
           messages.pushObject(errorMessage);
         });
       }
     });
 
-    this.set('isVisible', !!messages.length);
-    this.set('messages', messages);
-  }
+    return messages;
+  },
+
+  _getMessageComputingKey: function(validationProperties) {
+    var computingKey = ``;
+    validationProperties.forEach(propertyName => {
+      computingKey = (computingKey !== '' ? `${computingKey},` : '') + `${propertyName}.[]`;
+    });
+
+    computingKey = computingKey !== '' ? `errors.{${computingKey}}` : 'errors';
+
+    return computingKey;
+  },
 });

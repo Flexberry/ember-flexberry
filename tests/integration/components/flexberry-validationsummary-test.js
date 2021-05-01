@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Errors from 'ember-validations/errors';
+import Ember from 'ember';
 
 moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry validationsummary', {
   integration: true
@@ -55,4 +56,28 @@ test('it should be visible if errors presence', function (assert) {
 
   this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
   assert.equal(this.$(':first-child').is(':visible'), true);
+});
+
+test('it renders changing error list', function (assert) {
+  let errors = Errors.create();
+  errors.set('testProperty', ['error1']);
+  this.set('errors', errors);
+
+  // Initialize by errors property.
+  this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
+  assert.equal(this.$().text().trim(), 'error1');
+
+  Ember.run(() => {
+    // Now change errors property, component should also change it's view.
+    errors.set('testProperty', ['error11', 'error12']);
+  });
+
+  assert.equal(this.$().text().replace(/\n|\s/g, ""), 'error11error12');
+
+  Ember.run(() => {
+    // Now add errors property, component should also change it's view.
+    errors.set('testProperty2', ['error2']);
+  });
+  
+  assert.equal(this.$().text().replace(/\n|\s/g, ""), 'error11error12error2');
 });

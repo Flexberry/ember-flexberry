@@ -42,7 +42,7 @@ export default Ember.Component.extend({
   validationProperties: undefined,
 
   /**
-    Current errors messages
+    Current errors messages.
 
     @property messages
     @type Ember.A
@@ -67,7 +67,7 @@ export default Ember.Component.extend({
 
     if (needActualizeValidationProperties) {
       Ember.set(this, 'validationProperties', actualValidationProperties);
-      Ember.defineProperty( // TODO: defineProperty?
+      Ember.set(
         this,
         "_messages",
         Ember.computed(this._getMessageComputingKey(actualValidationProperties), Ember.get(this, '_recomputeMessage')));
@@ -86,10 +86,31 @@ export default Ember.Component.extend({
   */
   headerText: undefined,
 
+  /**
+    Flag indicating that there is added a new property to errors object.
+
+    @property _errorsListChanged
+    @type Boolean
+    @private
+  */
   _errorsListChanged: false,
 
+  /**
+    A list of properties that should not be observed.
+
+    @property _wrongErrorsPropertiesList
+    @type Array
+    @private
+  */
   _wrongErrorsPropertiesList: ['toString', '_super', 'setUnknownProperty'],
 
+  /**
+   Current errors messages
+
+    @property _messages
+    @type Ember.A
+    @private
+  */
   _messages: undefined,
 
   /**
@@ -99,7 +120,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    let errors = this.get('errors');
+    let errors = Ember.get(this, 'errors');
 
     if (!errors) {
       throw new Error('Errors property for flexberry-validationsummary component must be set');
@@ -115,31 +136,38 @@ export default Ember.Component.extend({
     }
 
     Ember.set(this, 'validationProperties', validationProperties);
-    Ember.get(this, 'classNames').push(this.get('color'));
+    Ember.get(this, 'classNames').push(Ember.get(this, 'color'));
 
     let self = this;
     errors.reopen({
       setUnknownProperty: function(key, value) {
-        Ember.defineProperty(this, key, null, value); // TODO: defineProperty?
+        // There is no call of _super(), because Ember only auto-defines a property when there is no implementation of setUnknownProperty(),
+        // as opposed to making defineProperty the default implementation.
+        Ember.defineProperty(this, key, null, value);
         this.notifyPropertyChange(key);
         Ember.set(self, '_errorsListChanged', !Ember.get(self, '_errorsListChanged'));
+        return value;
       }
     });
 
-    Ember.defineProperty( // TODO: defineProperty?
+    Ember.set(
       this,
       "_messages",
       Ember.computed(this._getMessageComputingKey(validationProperties), Ember.get(this, '_recomputeMessage')));
   },
 
   /**
-    Push validation errors to messages array
-    and change component visibility if no errors occurred.
+    This method returns validation error messages.
+    
+    @method _recomputeMessage
+    @private
+
+    @return {Ember.A} Validation error messages.
   */
   _recomputeMessage: function() {
     let messages = new Ember.A();
 
-    this.get('validationProperties').forEach((property) => {
+    Ember.get(this, 'validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.
       if (!Ember.get(this, '_wrongErrorsPropertiesList').includes(property)) {
         let errorMessages = Ember.get(this, 'errors.' + property);
@@ -152,6 +180,16 @@ export default Ember.Component.extend({
     return messages;
   },
 
+  /**
+    This method returns key forcreated in runtime computed property.
+    This computed property observes changes in arrays that are kept in properties of errors object.
+
+    @method _getMessageComputingKey
+    @private
+
+    @param {Ember.A} validationProperties List of properties computed property should observe for.
+    @return {String} Key for compo.
+  */
   _getMessageComputingKey: function(validationProperties) {
     var computingKey = ``;
     validationProperties.forEach(propertyName => {

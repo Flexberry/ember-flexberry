@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Support of `errors` property change for `flexberry-validationsummary`.
 
 ## [2.6.0-beta.10] - 2021-04-22
 ### Changed

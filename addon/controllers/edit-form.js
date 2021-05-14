@@ -398,8 +398,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
+    this.onSaveActionStarted();
+
     return this.validate().then(() => {
-      this.onSaveActionStarted();
       this.get('appState').loading();
 
       const afterSaveModelFunction = () => {
@@ -437,8 +438,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         this.onSaveActionAlways(data);
       });
     }).catch((errorData) => {
-      this.send('error', new Error(errorData.get('message')));
       this.get('appState').error();
+      this.onSaveActionRejected(errorData);
       return Ember.RSVP.reject(errorData);
     });
   },

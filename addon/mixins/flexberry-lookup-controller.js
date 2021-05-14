@@ -146,7 +146,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
         hierarchicalAttribute: lookupController.get('hierarchicalAttribute'),
-        updateLookupAction: undefined
+        updateLookupAction: undefined,
+        componentContext: undefined
       }, chooseData);
 
       let disableHierarchy = Ember.get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
@@ -175,6 +176,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
       let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
+      const componentContext = options.componentContext;
 
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
@@ -216,7 +218,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         saveTo: {
           model: model,
           propName: relationName,
-          updateLookupAction: updateLookupAction
+          updateLookupAction: updateLookupAction,
+          componentContext: componentContext
         },
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,

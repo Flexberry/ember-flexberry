@@ -9,13 +9,14 @@
       relationName="type"
       choose="showLookupDialog"
       remove="removeLookupValue"
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       autocomplete=true
       dynamicProperties=dynamicProperties
     }}
   </div>
   <br>
-  <button class="ui button limitFunction" {{action 'limitFunction' on="click"}}>
+  <button class="ui button limitFunction" {{action "limitFunction" on="click"}}>
     {{concat (t "forms.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.captionFirstLimitFunction") ": " limitType}}
   </button>
 </form>

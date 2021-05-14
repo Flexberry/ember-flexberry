@@ -37,7 +37,7 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field {{if model.errors.address "error" ""}}">
@@ -96,6 +96,7 @@
       readonly=readonly
       direction="upward"
       componentName="SuggestionEditType"
+      updateLookupValue=(action "updateLookupValue")
     }}
     {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>
@@ -114,9 +115,10 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       preview=(action "previewLookupValue")
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       readonly=readonly
       componentName="SuggestionEditAuthor"
+      updateLookupValue=(action "updateLookupValue")
     }}
     {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
@@ -136,6 +138,7 @@
       preview=(action "previewLookupValue")
       readonly=readonly
       componentName="SuggestionEditEditor1"
+      updateLookupValue=(action "updateLookupValue")
     }}
     {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>

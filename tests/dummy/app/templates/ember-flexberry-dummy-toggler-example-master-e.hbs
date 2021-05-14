@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.caption'}}</h3>
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-toggler-example-master-e.caption"}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
@@ -10,25 +10,25 @@
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui button save-button" {{action 'save'}}>
+        <button type="submit" class="ui button save-button" {{action "save"}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
-          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>
             {{t "forms.edit-form.delete-button-text"}}
           </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>
+      <button type="submit" class="ui button close-button" {{action "close"}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
     </div>
   </div>
   <div class="field">
-  <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-master-property-caption'}}</label>
+  <label>{{t "forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-master-property-caption"}}</label>
   {{
     flexberry-field
-    placeholder=(t 'components.flexberry-field.placeholder')
+    placeholder=(t "components.flexberry-field.placeholder")
     readonly=readonly
     required=true
     value=model.togglerExampleMasterProperty
@@ -37,7 +37,7 @@
 </div>
 {{#flexberry-toggler}}
   <div class="field {{if model.errors.togglerExampleDetail "error" ""}}">
-    <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption'}}</label>
+    <label>{{t "forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption"}}</label>
     {{flexberry-groupedit
       componentName="togglerExampleDetailGroupEdit"
       content=model.togglerExampleDetail

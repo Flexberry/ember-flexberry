@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Property `autocompleteDirection` for `flexberry-lookup` to set direction of autocomplete window.
 
 ## [2.6.0-beta.11] - 2021-05-14
 ### Added

@@ -37,6 +37,11 @@
     outline: none;
 }
 
+.flexberry-lookup div.results.upward {
+    top: auto;
+    bottom: 100%;
+}
+
 .flexberry-simpledatetime .ui.fluid.action.input {
     border: none;
     border-bottom: 1px solid @inputBorderColor;

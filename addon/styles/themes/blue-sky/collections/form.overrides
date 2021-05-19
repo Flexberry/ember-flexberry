@@ -244,3 +244,10 @@ option {
         }
     }
 }
+
+.flexberry-file.mobile .ui.button.flexberry-file-add-button {
+    height: auto;
+    min-height: 35px;
+    padding: 0.7em;
+    align-self: start;
+}

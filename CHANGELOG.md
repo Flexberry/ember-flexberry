@@ -3,8 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.6.0-beta.12] - 2021-05-21
 ### Added
 * Property `autocompleteDirection` for `flexberry-lookup` to set direction of autocomplete window.
+* The `flexberry-file` component:
+    * Added upload/download file options for mobile component's menu.
+
+### Fixed
+* The `device` service:
+    * Fixed `isTv` method.
 
 ## [2.6.0-beta.11] - 2021-05-14
 ### Added

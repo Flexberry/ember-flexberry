@@ -133,7 +133,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @return {Boolean} Returns true, if device is phone.
   */
   isTv() {
-    return this.tv();
+    return this.television();
   },
 
   /**

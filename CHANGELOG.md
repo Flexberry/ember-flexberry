@@ -4,6 +4,32 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.12] - 2021-05-21
+### Added
+* Property `autocompleteDirection` for `flexberry-lookup` to set direction of autocomplete window.
+* The `flexberry-file` component:
+    * Added upload/download file options for mobile component's menu.
+
+### Fixed
+* The `device` service:
+    * Fixed `isTv` method.
+
+## [2.6.0-beta.11] - 2021-05-14
+### Added
+* Support of `errors` property change for `flexberry-validationsummary`.
+
+## [2.6.0-beta.10] - 2021-04-22
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.4`.
+
+## [2.6.0-beta.9] - 2021-04-06
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.3`.
+
+## [2.6.0-beta.8] - 2021-03-29
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.2`.
+
 ## [2.6.0-beta.7] - 2021-02-18
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `2.6.0-beta.1`.

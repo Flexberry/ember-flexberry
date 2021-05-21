@@ -68,10 +68,6 @@ Ember.$.extend(true, translations, {
             'caption': 'Application language',
             'placeholder': 'Choose language'
           },
-          'suggestion-file': {
-            'caption': 'Suggestion file',
-            'title': ''
-          }
         },
         'login': {
           'caption': 'Login'
@@ -135,6 +131,10 @@ Ember.$.extend(true, translations, {
           'multi': {
             'caption': 'Multi list',
             'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -173,6 +173,10 @@ Ember.$.extend(true, translations, {
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
+              'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Three-state example',
               'title': ''
             }
           },
@@ -684,6 +688,10 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        },
+        'three-state-example': {
+          'caption': 'Three-state example',
+          'indeterminate-button': 'Set blank'
         }
       },
       'flexberry-ddau-checkbox': {

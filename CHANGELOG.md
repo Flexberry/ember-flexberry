@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0-beta.13] - 2021-05-24
+### Fixed
+* Fixed `flexberry-validationsummary` component for IE.
+
 ## [2.6.0-beta.12] - 2021-05-21
 ### Added
 * Property `autocompleteDirection` for `flexberry-lookup` to set direction of autocomplete window.

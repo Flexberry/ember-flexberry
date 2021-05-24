@@ -55,13 +55,13 @@ export default Ember.Component.extend({
 
     validationProperties.forEach(propertyName => {
       needActualizeValidationProperties = needActualizeValidationProperties
-          || (!errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName));
+          || (!errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName));
     });
 
     for (let propertyName in errors) {
-      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName)) {
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName)) {
         actualValidationProperties.push(propertyName);
-        needActualizeValidationProperties = needActualizeValidationProperties || !validationProperties.includes(propertyName);
+        needActualizeValidationProperties = needActualizeValidationProperties || !validationProperties.contains(propertyName);
       }
     }
 
@@ -102,7 +102,7 @@ export default Ember.Component.extend({
     @type Array
     @private
   */
-  _wrongErrorsPropertiesList: ['toString', '_super', 'setUnknownProperty'],
+  _wrongErrorsPropertiesList: Ember.A(['toString', '_super', 'setUnknownProperty']),
 
   /**
    Current errors messages
@@ -130,7 +130,7 @@ export default Ember.Component.extend({
 
     for (let propertyName in errors) {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').includes(propertyName)) {
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName)) {
         validationProperties.push(propertyName);
       }
     }
@@ -158,7 +158,7 @@ export default Ember.Component.extend({
 
   /**
     This method returns validation error messages.
-    
+
     @method _recomputeMessage
     @private
 
@@ -169,7 +169,7 @@ export default Ember.Component.extend({
 
     Ember.get(this, 'validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (!Ember.get(this, '_wrongErrorsPropertiesList').includes(property)) {
+      if (!Ember.get(this, '_wrongErrorsPropertiesList').contains(property)) {
         let errorMessages = Ember.get(this, 'errors.' + property);
         errorMessages.forEach((errorMessage) => {
           messages.pushObject(errorMessage);

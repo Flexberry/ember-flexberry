@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fixed `flexberry-validationsummary` component for IE.
 
 ## [2.6.0-beta.12] - 2021-05-21
 ### Added

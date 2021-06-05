@@ -90,6 +90,11 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
+        },
+        // Settings for `flexberryOlv` component.
+        flexberryOlv: {
+          // Default number of records on the list page
+          defaultPerPage: 5
         }
       },
     }

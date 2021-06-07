@@ -33,13 +33,13 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
+      development: 'bower_components/daterangepicker/daterangepicker.js',
+      production:  'bower_components/daterangepicker/daterangepicker.js'
     });
 
     app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.css',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
+      development: 'bower_components/daterangepicker/daterangepicker.css',
+      production:  'bower_components/daterangepicker/daterangepicker.css'
     });
 
     app.import({

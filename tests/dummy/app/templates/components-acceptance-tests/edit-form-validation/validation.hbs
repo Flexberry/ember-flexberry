@@ -33,15 +33,16 @@
     }}
     {{flexberry-validationmessage error=model.errors.longText pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.date "error" ""}}">
+  {{!--<div class="field {{if model.errors.date "error" ""}}">
     <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
     <div class="inline fields">
     {{flexberry-validationmessage error=model.errors.date pointing="right pointing"}}
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       value=model.date
     }}
     </div>
-  </div>
+  </div>--}}
   <div class="field {{if model.errors.enumeration "error" ""}}">
     <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>
     {{flexberry-dropdown

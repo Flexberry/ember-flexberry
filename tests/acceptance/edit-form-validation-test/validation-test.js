@@ -11,7 +11,8 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationDataField = Ember.$('.calendar.link.icon');
+    // Create simpledatetime test.
+    /*let $validationDataField = Ember.$('.calendar.link.icon');
 
     Ember.run(() => {
       // Open datepicker calendar.
@@ -21,7 +22,7 @@ executeTest('check complete all tests', (store, assert, app) => {
       // Select date.
       Ember.$($validationDateButton[15]).click();
       Ember.$($validationDateButton[16]).click();
-    });
+    });*/
 
     let $validationFlexberryLookupButtons = Ember.$('.ui.button');
     let $validationFlexberryLookupButton = Ember.$($validationFlexberryLookupButtons[2]);

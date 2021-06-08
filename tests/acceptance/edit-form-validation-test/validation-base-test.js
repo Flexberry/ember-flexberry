@@ -16,7 +16,7 @@ executeTest('check default value', (store, assert, app) => {
     let $validationLi = $validationSixteenWide.children('li');
 
     // Сounting the number of validationmessage.
-    assert.equal($validationLablesContainer.length, 10, 'All components have default value');
-    assert.equal($validationLi.length, 16, 'All components have default value in sixteenWide');
+    assert.equal($validationLablesContainer.length, 11, 'All components have default value');
+    assert.equal($validationLi.length, 17, 'All components have default value in sixteenWide');
   });
 });

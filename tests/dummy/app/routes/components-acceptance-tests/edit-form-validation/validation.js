@@ -1,4 +1,3 @@
-import moment from 'moment';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -34,7 +33,6 @@ export default EditFormRoute.extend({
     // Create detail & add to base model.
     let detail1 = store.createRecord('integration-examples/edit-form/validation/detail', {});
     base.get('details').pushObject(detail1);
-    base.set('date', moment());
 
     return base;
   }

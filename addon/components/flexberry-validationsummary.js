@@ -15,6 +15,15 @@ const { get, set, computed } = Ember;
 */
 export default Ember.Component.extend({
   /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+    @type Array
+    @default ['color']
+  */
+  classNameBindings: ['color'],
+
+  /**
     Default classes for component wrapper.
   */
   classNames: ['ui', 'message'],
@@ -138,8 +147,7 @@ export default Ember.Component.extend({
       }
     }
 
-    Ember.set(this, 'validationProperties', validationProperties);
-    Ember.get(this, 'classNames').push(Ember.get(this, 'color'));
+    set(this, 'validationProperties', validationProperties);
 
     if (errors instanceof Errors) {
       errors.on('errorListChanged', this, this._onErrorListChanged);

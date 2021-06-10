@@ -3,8 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import Errors from 'ember-validations/errors';
 import Ember from 'ember';
 
-moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry validationsummary', {
-  integration: true
+import EmberValidationsInitializer from 'dummy/initializers/ember-validations';
+
+moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry-validationsummary', {
+  integration: true,
+  setup() {
+    EmberValidationsInitializer.initialize();
+  },
 });
 
 test('it renders', function(assert) {

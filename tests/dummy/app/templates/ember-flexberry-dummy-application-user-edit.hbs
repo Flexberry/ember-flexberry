@@ -56,6 +56,13 @@
     }}
     {{flexberry-validationmessage error=model.errors.eMail pointing="pointing"}}
   </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.phone1-required-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.phone1IsRequired
+      readonly=readonly
+    }}
+  </div>
   <div class="field {{if model.errors.phone1 "error" ""}}">
     {{flexberry-field
       value=model.phone1

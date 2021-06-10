@@ -129,7 +129,6 @@ module.exports = {
       "only": [
         "block-indentation",
         "eol-last",
-        "no-trailing-spaces",
         "no-unnecessary-concat",
         "quotes",
         "link-href-attributes",

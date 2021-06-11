@@ -3,6 +3,9 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
+
+const { get, set, computed } = Ember;
 
 /**
   ValidationSummary component for Semantic UI.
@@ -11,6 +14,15 @@ import Ember from 'ember';
   @extends Ember.Component
 */
 export default Ember.Component.extend({
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+    @type Array
+    @default ['color']
+  */
+  classNameBindings: ['color'],
+
   /**
     Default classes for component wrapper.
   */
@@ -135,25 +147,24 @@ export default Ember.Component.extend({
       }
     }
 
-    Ember.set(this, 'validationProperties', validationProperties);
-    Ember.get(this, 'classNames').push(Ember.get(this, 'color'));
+    set(this, 'validationProperties', validationProperties);
 
-    let self = this;
-    errors.reopen({
-      setUnknownProperty: function(key, value) {
-        // There is no call of _super(), because Ember only auto-defines a property when there is no implementation of setUnknownProperty(),
-        // as opposed to making defineProperty the default implementation.
-        Ember.defineProperty(this, key, null, value);
-        this.notifyPropertyChange(key);
-        Ember.set(self, '_errorsListChanged', !Ember.get(self, '_errorsListChanged'));
-        return value;
-      }
-    });
+    if (errors instanceof Errors) {
+      errors.on('errorListChanged', this, this._onErrorListChanged);
+    }
 
-    Ember.set(
-      this,
-      "_messages",
-      Ember.computed(this._getMessageComputingKey(validationProperties), Ember.get(this, '_recomputeMessage')));
+    set(this, '_messages', computed(this._getMessageComputingKey(validationProperties), this._recomputeMessage));
+  },
+
+  willDestroy() {
+    const errors = get(this, 'errors');
+    if (errors instanceof Errors) {
+      errors.off('errorListChanged', this, this._onErrorListChanged);
+    }
+  },
+
+  _onErrorListChanged() {
+    set(this, '_errorsListChanged', !get(this, '_errorsListChanged'));
   },
 
   /**

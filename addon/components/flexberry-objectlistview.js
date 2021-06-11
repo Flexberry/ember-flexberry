@@ -235,6 +235,15 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
+
+  /**
     Number page for search.
 
     @property searchPageValue

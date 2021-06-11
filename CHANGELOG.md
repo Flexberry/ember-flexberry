@@ -90,6 +90,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The localization of the `loading` template.
 * Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
 * Default test selector for `flexberry-objectlistview` component.
+* The `flexberry-objectlistview` pagination has been moved to a separate component.
+* Added `bottomPagination` flag to indicate pagination position.
 
 ### Fixed
 * The `updateLookupAction` action in the `flexberry-lookup` component is not called when a value is selected in a modal window.

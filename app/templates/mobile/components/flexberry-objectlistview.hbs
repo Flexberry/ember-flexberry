@@ -35,45 +35,30 @@
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
 }}
-{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
-  <div class="ui secondary menu no-margin nav-bar">
-    <button
-      type="button"
-      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button"
-      title={{_mobileSortingSettingsCaption}}
-      disabled={{not colsConfigButton}}
-      {{action "showConfigDialog"}} >
-        <i class={{_mobileSortingSettingsIcon}}></i>
-        {{_mobileSortingSettingsCaption}}
-    </button>
-    <div class="right menu">
-      <div class="ui basic buttons">
-        {{#each _mobilePages as |page|}}
-          {{#if (not page.isEllipsis)}}
-            {{#if page.isCurrent}}
-              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
-            {{else}}
-              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
-            {{/if}}
-          {{/if}}
-        {{/each}}
-      </div>
-      {{#if (gt _mobilePages.length 4)}}
-        <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
-          {{input
-            type="number"
-            min=_pages.firstObject.number
-            max=_pages.lastObject.number
-            placeholder=_mobilePages.lastObject.number
-            enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
-            value=searchPageValue
-          }}
-          {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
-          {{input classNames=(array "hidden")}}
-        </div>
-      {{/if}}
-    </div>
-  </div>
+{{#if (not bottomPagination)}}
+  {{olv-pagination
+    inHierarchicalMode=inHierarchicalMode
+    hierarchyPaging=hierarchyPaging
+    pages=pages
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    gotoPage=(action "gotoPage" this.attrs.gotoPage)
+    searchPageButtonAction=(action "searchPageButtonAction" this.attrs.gotoPage)
+    perPageClick=(action "perPageClick")
+    showConfigDialog=(action "showConfigDialog")
+    componentName=componentName
+    searchPageValue=searchPageValue
+    searchPageButtonReadonly=searchPageButtonReadonly
+    showShowingEntries=showShowingEntries
+    currentIntervalRecords=currentIntervalRecords
+    recordsTotalCount=recordsTotalCount
+    perPageValues=perPageValues
+    perPageValue=perPageValue
+    _mobileSortingSettingsCaption=_mobileSortingSettingsCaption
+    colsConfigButton=colsConfigButton
+    _mobileSortingSettingsIcon=_mobileSortingSettingsIcon
+    _mobilePages=_mobilePages
+  }}
 {{/if}}
 {{object-list-view
   placeholder=placeholder
@@ -147,3 +132,28 @@
   fixedHeader=fixedHeader
   recordsTotalCount=recordsTotalCount
 }}
+{{#if bottomPagination}}
+  {{olv-pagination
+    inHierarchicalMode=inHierarchicalMode
+    hierarchyPaging=hierarchyPaging
+    pages=pages
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    gotoPage=(action "gotoPage" this.attrs.gotoPage)
+    searchPageButtonAction=(action "searchPageButtonAction" this.attrs.gotoPage)
+    perPageClick=(action "perPageClick")
+    showConfigDialog=(action "showConfigDialog")
+    componentName=componentName
+    searchPageValue=searchPageValue
+    searchPageButtonReadonly=searchPageButtonReadonly
+    showShowingEntries=showShowingEntries
+    currentIntervalRecords=currentIntervalRecords
+    recordsTotalCount=recordsTotalCount
+    perPageValues=perPageValues
+    perPageValue=perPageValue
+    _mobileSortingSettingsCaption=_mobileSortingSettingsCaption
+    colsConfigButton=colsConfigButton
+    _mobileSortingSettingsIcon=_mobileSortingSettingsIcon
+    _mobilePages=_mobilePages
+  }}
+{{/if}}

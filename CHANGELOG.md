@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ## [2.6.0-beta.13] - 2021-05-24
+### Changed
+* Change `semantic-ui-daterangepicker` dependency to `daterangepicker` 3.0.5.
+
 ### Fixed
 * Fixed `flexberry-validationsummary` component for IE.
 

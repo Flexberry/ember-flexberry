@@ -119,10 +119,10 @@ module.exports = {
       '          showModalDialogOnDownloadError: true,\n' +
       '        },\n' +
       '        // Settings for `flexberryOlv` component.\n' +
-      '          flexberryOlv: {\n' +
-      '        // Default number of records on the list page.\n'+
+      '        flexberryOlv: {\n' +
+      '          // Default number of records on the list page.\n'+
       '          defaultPerPage: 5\n' +
-      '        }\n'
+      '        }\n'+
       '      },\n';
 
     var env4before = '\n  if (environment === \'development\') {\n';
@@ -146,6 +146,8 @@ module.exports = {
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
+     
+
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:

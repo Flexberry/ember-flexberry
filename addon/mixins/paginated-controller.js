@@ -123,7 +123,7 @@ export default Ember.Mixin.create({
     @type Number
     @readOnly
   */
-  recordsTotalCount: Ember.computed('model', function() {
+  recordsTotalCount: Ember.computed('model', 'model.meta.count', function() {
     return this.get('model.meta.count');
   }),
 

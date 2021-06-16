@@ -6,7 +6,7 @@ import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
 executeTest('check delete button in row', (store, assert, app) => {
-  assert.expect(4);
+  assert.expect(6);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
   let howAddRec = 1;
@@ -41,6 +41,12 @@ executeTest('check delete button in row', (store, assert, app) => {
 
           assert.equal(recordIsForDeleting, howAddRec, howAddRec + ' record added');
 
+          // Check paging before deleting.
+          let pagingClass = 'div.showing-entries';
+          let $pagingPhrase = Ember.$(pagingClass);
+          let currentCount = result.meta.count;
+          assert.ok($pagingPhrase.text().includes(currentCount), 'Proper total count on paging before deleting.');
+
           $rows().forEach(function(element, i, arr)  {
             let nameRecord = Ember.$.trim(element.children[1].innerText);
             if (nameRecord.indexOf(uuid) >= 0) {
@@ -56,6 +62,9 @@ executeTest('check delete button in row', (store, assert, app) => {
           });
 
           assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
+
+          // Check paging after deleting.
+          assert.ok($pagingPhrase.text().includes(currentCount - 1), 'Total count on paging decremented after records had been deleted.');
 
           // Check that the records have been removed into store.
           let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();

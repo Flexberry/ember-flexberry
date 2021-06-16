@@ -2226,6 +2226,15 @@ export default FlexberryBaseComponent.extend(
     if (itemToRemove) {
       this.get('contentWithKeys').removeObject(itemToRemove);
 
+      // We need to decrement total counter of objects (it is for proper paging).
+      let currentContent = Ember.get(this, 'content');
+      if (currentContent) {
+        let curentTotalCounter = Ember.get(currentContent, 'meta.count');
+        if (curentTotalCounter) {
+          currentContent.decrementProperty('meta.count');
+        }
+      }
+
       let orderedProperty = this.get('orderedProperty');
       if (!Ember.isNone(orderedProperty)) {
         let valueOrder = itemToRemove.get(`data.${orderedProperty}`);

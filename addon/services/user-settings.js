@@ -458,10 +458,20 @@ export default Ember.Service.extend({
    */
   getCurrentPerPage(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration('config:environment');
+    let defaultPerPage;
     
-    let defaultPerPage = Ember.getOwner(this).resolveRegistration('config:environment').APP.components.flexberryOlv.defaultPerPage;
+    try{
+      defaultPerPage = configEnvironmentSettings.APP.components.flexberryObjectlistview.defaultPerPage;
+      if(!defaultPerPage)
+        throw new TypeError('configEnvironmentSettings returned invalid value');
+    }
+    catch(error){
+      console.error(error.name + ': ' + error.message);
+      defaultPerPage = 5;
+    }
 
-    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : parseInt(defaultPerPage, 10);
+    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : defaultPerPage;
   },
 
   /**

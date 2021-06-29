@@ -29,6 +29,30 @@ export default EditFormController.extend({
       }
   
       return undefined;
+    },
+
+    /**
+      This method returns custom properties for lookup window.
+      @method getLookupFolvPropertiesForAuthor
+
+      @param {Object} options Parameters of lookup that called this method.
+      @param {String} [options.projection] Lookup projection.
+      @param {String} [options.relationName] Lookup relation name.
+      @return {Object} Set of options for lookup window.
+     */
+    getLookupFolvPropertiesForAuthor: function(options) {
+      let methodArgs = Ember.merge({
+        projection: undefined,
+        relationName: undefined
+      }, options);
+  
+      if (methodArgs.relationName === 'author') {
+        return {
+          filterButton: true
+        };
+      }
+  
+      return undefined;
     }
   }
 });

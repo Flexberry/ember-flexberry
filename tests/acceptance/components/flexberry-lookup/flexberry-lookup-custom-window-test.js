@@ -7,11 +7,14 @@ const { SimplePredicate, ComplexPredicate } = Query;
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup custom window test', (store, assert, app) => {
+  // Test that filter projection name is properly applied to flexberry-lookup window.
   visit('components-acceptance-tests/flexberry-lookup/settings-example-custom-window');
 
   andThen(function() {
     let modelName = 'ember-flexberry-dummy-application-user';
     let waitTime = 2000;
+    let nameEtalone;
+    let eMailEtalone;
 
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-custom-window');
 
@@ -30,11 +33,10 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
       assert.notEqual(nameEtalone, eMailEtalone);
     }).then(function() {
       let $lookupChooseButton = Ember.$('.ui-change');
-      assert.equal($lookupChooseButton.length, 1);
-      assert.notOk($lookupChooseButton.hasClass('disabled'));
+      assert.equal($lookupChooseButton.length, 2);
 
       Ember.run(() => {
-        $lookupChooseButton.click();
+        $lookupChooseButton[0].click();
       });
 
       let done = assert.async();
@@ -58,7 +60,8 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
             let currentModel = Ember.get(lookupController, 'model');
             let filteredByCommonProjectionCountN = Ember.get(currentModel, 'meta.count');
             assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${nameEtalone}".`);
-  
+            
+            // Close for proper initiation of filter projection name.
             let $closeIcon = Ember.$('i.close');
             Ember.run(() => {
               $closeIcon.click();
@@ -74,7 +77,7 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
               });
 
               Ember.run(() => {
-                $lookupChooseButton.click();
+                $lookupChooseButton[0].click();
               });
 
               let done4 = assert.async();
@@ -110,17 +113,45 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
                     let filteredByFilterProjectionCount2 = Ember.get(currentModel, 'meta.count');
                     assert.ok(filteredByCommonProjectionCountN > filteredByFilterProjectionCount2, `Found ${filteredByFilterProjectionCount2} records by filter projection filtered by "${nameEtalone}".`);
 
+                    // 4) Open another lookup and check that filter projection name is not used and controller is clear from old options.
+                    $closeIcon = Ember.$('i.close');
+                    Ember.run(() => {
+                      $closeIcon.click();
+                    });
+                    let done7 = assert.async();
+                    setTimeout(function() {
+                      Ember.run(() => {
+                        $lookupChooseButton[1].click();
+                      });
+                      let done8 = assert.async();
+                      setTimeout(function() {
+                        $filterElementOnToolbar = Ember.$('div.olv-search');
+                        assert.equal($filterElementOnToolbar.length, 1, 'Another lookup window has filter element on toolbar.');
+                        $filterInput = Ember.$('div.olv-search input');
+                        $filterApplyButton = Ember.$('div.olv-search button.search-button');
+                        Ember.run(() => {
+                          fillIn($filterInput, nameEtalone);
+                        });
+                        $filterApplyButton.click();
+                        let done9 = assert.async();
+                        setTimeout(function() {
+                          currentModel = Ember.get(lookupController, 'model');
+                          let filteredInAnotherLookup = Ember.get(currentModel, 'meta.count');
+                          assert.equal(filteredInAnotherLookup, filteredByCommonProjectionCountN, `Found ${filteredInAnotherLookup} records in another lookup filtered by "${nameEtalone}".`);
+                          done9();
+                        }, waitTime);
+                        done8();
+                      }, waitTime);
+                      done7();
+                    }, waitTime);
                     done6();
                   }, waitTime);
                   done5();
                 }, waitTime);
-
                 done4();
               }, waitTime);
-
               done3();
             }, waitTime);
-
             done2();
           }, waitTime);
           done();

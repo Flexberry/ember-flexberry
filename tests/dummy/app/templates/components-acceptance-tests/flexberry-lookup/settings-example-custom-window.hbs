@@ -11,8 +11,23 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       componentName="SuggestionEditor1ForLookupCustomWindowTest"
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-lookup
+      value=model.author
+      relatedModel=model
+      projection=projectionName
+      displayAttributeName="name"
+      title=(t "forms.components-examples.flexberry-lookup.customizing-window-example.titleLookup")
+      relationName="author"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      lookupWindowCustomProperties=(action "getLookupFolvPropertiesForAuthor")
+      componentName="SuggestionAuthorForLookupCustomWindowTest"
     }}
   </div>
 </form>

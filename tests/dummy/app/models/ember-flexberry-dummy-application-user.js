@@ -71,4 +71,9 @@ Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-application-
   name: Projection.attr('Name'),
 });
 
+// Projection for lookup test with custom window.
+Model.defineProjection('TestLookupCustomWindow', 'ember-flexberry-dummy-application-user', {
+  eMail: Projection.attr('E-mail')
+});
+
 export default Model;

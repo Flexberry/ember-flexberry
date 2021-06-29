@@ -20,8 +20,8 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
     let sp2 = new SimplePredicate('type.name', FilterOperator.Neq, '');
     let cp = new ComplexPredicate(Condition.And, sp1, sp2);
 
-    let builder2 = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where(cp).top(1);
-    store.query(modelName, builder2.build()).then((result) => {
+    let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where(cp).top(1);
+    store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       adressEtalone = arr.objectAt(0).get('address');
       typeNameEtalone = arr.objectAt(0).get('type.name');

@@ -27,8 +27,17 @@ export default EditFormRoute.extend({
    */
   model() {
     let store = Ember.get(this, 'store');
-    return store.createRecord('ember-flexberry-dummy-suggestion', {
+    let suggestion = store.createRecord('ember-flexberry-dummy-suggestion', {
       name: 'TestSuggestionName'
-    })
+    });
+    store.createRecord('ember-flexberry-dummy-vote', {
+      suggestion: suggestion
+    });
+    store.createRecord('ember-flexberry-dummy-comment', {
+      suggestion: suggestion,
+      text: 'Test comment'
+    });
+
+    return suggestion;
   }
 });

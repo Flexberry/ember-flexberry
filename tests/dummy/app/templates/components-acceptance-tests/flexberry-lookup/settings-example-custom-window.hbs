@@ -30,4 +30,26 @@
       componentName="SuggestionAuthorForLookupCustomWindowTest"
     }}
   </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionUserVotesGroupEditForLookupCustomWindowTest"
+      content=model.userVotes
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.userVotes
+      orderable=true
+      readonly=readonly
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionCommentsGroupEditForLookupCustomWindowTest"
+      content=model.comments
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.comments
+      orderable=true
+      readonly=readonly
+    }}
+  </div>
 </form>

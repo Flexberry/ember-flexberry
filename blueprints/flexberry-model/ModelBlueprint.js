@@ -29,6 +29,7 @@ var ModelBlueprint = /** @class */ (function () {
             var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
             this.parentExternal = parentModel.external;
         }
+        this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
         this.enums = ModelBlueprint.loadEnums(options.metadataDir);
         this.className = model.className;
         this.namespace = model.nameSpace;
@@ -43,7 +44,6 @@ var ModelBlueprint = /** @class */ (function () {
         var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
-        this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
         if (this.hasCpValidations) {
             this.validations = this.getValidations(model);
         }

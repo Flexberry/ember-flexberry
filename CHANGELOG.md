@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0`.
+
 ## [2.6.0] - 2021-06-16
 ### Added
 * The `flexberry-file` component:

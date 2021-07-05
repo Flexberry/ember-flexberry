@@ -355,6 +355,7 @@ export default FlexberryBaseComponent.extend({
       },
       onClose: () => {
         this.set('canClick', true);
+        this.$('.custom-flatpickr').blur();
       },
     };
 

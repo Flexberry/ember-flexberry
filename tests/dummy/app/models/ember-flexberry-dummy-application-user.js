@@ -16,6 +16,8 @@ var Model = Projection.Model.extend({
   vip: DS.attr('boolean'),
   karma: DS.attr('decimal'),
 
+  phone1IsRequired: false,
+
   // Model validation rules.
   validations: {
     name: {
@@ -27,7 +29,13 @@ var Model = Projection.Model.extend({
       presence: {
         message: 'User email is required'
       }
-    }
+    },
+    phone1: {
+      presence: {
+        'if': 'phone1IsRequired',
+        message: 'Phone is required',
+      }
+    },
   }
 });
 

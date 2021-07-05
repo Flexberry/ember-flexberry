@@ -20,6 +20,7 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   models: {
     'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
@@ -552,7 +553,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Карма',
       'name-validation-message-caption': 'Заполните поле "Имя"',
-      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"',
+      'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -644,6 +646,7 @@ Ember.$.extend(true, translations, {
       'caption': 'Несколько списков на форме',
       'multi-edit-form': 'Несколько списков на эдитформе'
     },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',

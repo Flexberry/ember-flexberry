@@ -22,10 +22,23 @@
   },
   "scripts": {
     "build": "ember build",
-    "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "lint:ts": "eslint --ext .ts --env node .",
     "start": "ember serve",
     "test": "ember try:each",
     "test:all": "ember try:each"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --no-ignore",
+    "*.ts": "eslint --no-ignore --ext .ts --env node",
+    "*.hbs": "ember-template-lint --config '{ \"extends\": [\"recommended\", \"stylistic\"], \"rules\": { \"no-bare-strings\": true } }'"
   },
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
@@ -41,6 +54,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
+    "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^2.4.5",
     "dexie": "^2.0.2",
     "ember-ajax": "^3.0.0",
@@ -71,19 +85,26 @@
     "ember-moment": "7.7.0",
     "ember-prop-types": "4.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-sinon": "1.0.1",
+    "ember-sinon": "^2.2.0",
     "ember-source": "~3.1.0",
     "ember-source-channel-url": "^1.0.1",
+    "ember-template-lint": "^2.14.0",
     "ember-try": "^0.2.23",
     "ember-welcome-page": "^3.0.0",
-    "eslint": "^4.19.1",
-    "eslint-plugin-ember": "^5.0.0",
-    "eslint-plugin-node": "^6.0.1",
+    "eslint": "^7.13.0",
+    "eslint-plugin-ember": "^9.6.0",
+    "eslint-plugin-hbs": "^1.0.0",
+    "eslint-plugin-jsdoc": "^30.7.8",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-qunit": "^5.0.0",
+    "husky": "^4.3.0",
     "inflection": "^1.12.0",
+    "lint-staged": "^10.5.1",
     "loader.js": "^4.2.3",
     "moment": "~2.22.0",
     "moment-timezone": "0.5.14",
     "node-uuid": "^1.4.7",
+    "npm-run-all": "^4.1.5",
     "ui-ember-slider": "0.5.0"
   },
   "resolutions": {

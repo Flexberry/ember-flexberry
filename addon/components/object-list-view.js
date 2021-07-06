@@ -54,8 +54,9 @@ export default FlexberryBaseComponent.extend(
       let checked = this.get('allSelect');
 
       contentWithKeys.forEach((item) => {
-        item.set('selected', checked);
-        item.set('rowConfig.canBeSelected', !checked);
+        if (item.get('rowConfig.canBeSelected')) {
+          item.set('selected', checked);
+        }
       });
     }
   }),
@@ -513,6 +514,13 @@ export default FlexberryBaseComponent.extend(
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
+    }
+
+    if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
+      if (!Ember.isNone(userSettingValue)) {
+        userSettings = userSettingValue.DEFAULT
+      }
     }
 
     let onEditForm = this.get('onEditForm');
@@ -1132,35 +1140,38 @@ export default FlexberryBaseComponent.extend(
       let checked = false;
 
       for (let i = 0; i < contentWithKeys.length; i++) {
-        if (!contentWithKeys[i].get('selected')) {
+        if (!contentWithKeys[i].get('selected') && contentWithKeys[i].get('rowConfig.canBeSelected')) {
           checked = true;
         }
       }
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (checked) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
           }
 
-          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-            selectedRecords.pushObject(recordWithKey.data);
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+          recordWithKey.set('selected', checked);
 
-          selectedRecords.removeObject(recordWithKey.data);
+          let componentName = this.get('componentName');
+          this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
         }
-
-        recordWithKey.set('selected', checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
     /* eslint-enable no-unused-vars */
@@ -1319,6 +1330,28 @@ export default FlexberryBaseComponent.extend(
     });
     if (isNone(this.get('customParameters'))) {
       this.set('customParameters', {});
+    }
+
+    if (!this.get('disableHierarchicalMode')) {
+      let modelName = this.get('modelName');
+      if (modelName) {
+        let model = this.get('store').modelFor(modelName);
+        let relationships = Ember.get(model, 'relationships');
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          this.sendAction('availableHierarchicalMode', hierarchicalrelationships[0].name);
+        } else if (hierarchicalrelationships.length > 1) {
+          let hierarchyAttribute = this.get('hierarchyAttribute');
+          if (!Ember.isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+            if (!Ember.isNone(hierarchyAttributeExist)) {
+              this.sendAction('availableHierarchicalMode', hierarchyAttribute);
+            } else {
+              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
+            }
+          }
+        }
+      }
     }
 
     let searchForContentChange = this.get('searchForContentChange');
@@ -2799,21 +2832,23 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (selectAllParameter) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
           }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set('selected', selectAllParameter);
         }
 
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', selectAllParameter);
-        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
       if (!skipConfugureRows) {

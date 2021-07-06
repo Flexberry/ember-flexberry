@@ -183,6 +183,7 @@ export default EditFormController.extend({
       '  remove=(action "removeLookupValue")<br>' +
       '  autocomplete=autocomplete<br>' +
       '  autocompletePersistValue=autocompletePersistValue<br>' +
+      '  autocompleteDirection=autocompleteDirection<br>' +
       '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
       '  maxResults=maxResults<br>' +
       '  displayValue=model.lookupDisplayValue<br>' +
@@ -241,6 +242,13 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'usePaginationForAutocomplete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'autocompleteDirection',
+      settingType: 'enumeration',
+      settingDefaultValue: 'downward',
+      settingAvailableItems: ['downward', 'upward', 'auto'],
+      bindedControllerPropertieName: 'autocompleteDirection'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'maxResults',

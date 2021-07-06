@@ -590,6 +590,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     'lookupLimitPredicate',
     'relatedModel',
     'updateLookupAction',
+    'notUseUserSettings',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     'inHierarchicalMode',
@@ -678,6 +679,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @default null
   */
   autocompleteOrder: null,
+
+  /**
+    Direction of list for autocomplete values.
+    Availible values: 'upward', 'downward', 'auto'.
+
+    @property autocompleteDirection
+    @type String
+    @default downward
+  */
+  autocompleteDirection: 'downward',
 
   /**
     Projection name for autocomplete query.
@@ -1228,7 +1239,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
 
       /**
        * Handles opening of the autocomplete list.
-       * Sets current state (taht autocomplete list is opened) for future purposes.
+       * Sets current state (that autocomplete list is opened).
        */
       onResultsOpen() {
         state = 'opened';
@@ -1240,6 +1251,22 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         run.next(() => {
           _this.onShowHide();
         });
+
+        let autocompleteDirection = Ember.get(_this, 'autocompleteDirection');
+        if (autocompleteDirection == 'auto')
+        {
+          const { height, left, width, bottom } = _this.element.getBoundingClientRect();
+          let elementHeight = _this.$('div.results').outerHeight();
+          let upward = window.innerHeight - bottom < elementHeight;
+          autocompleteDirection = upward ? 'upward' : 'downward';
+        }
+
+        if (autocompleteDirection == 'upward') {
+          _this.$('div.results').addClass('upward');
+        }
+        else {
+          _this.$('div.results').removeClass('upward');
+        }
       },
 
       /**

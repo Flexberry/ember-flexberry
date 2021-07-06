@@ -11,7 +11,6 @@ export default Base.extend({
   */
   init() {
     this._super(...arguments);
-    /*jshint expr:true*/
     if (this.options === true) {
       set(this, 'options', { allowBlank: false });
     }

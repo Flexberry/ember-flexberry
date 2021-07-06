@@ -1,0 +1,34 @@
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-lookup
+      componentName="UserSettingsExample"
+      folvComponentName="ApplicationUserObjectlistView"
+      readonly=readonly
+      value=model.author
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      relatedModel=model
+      relationName="author"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      notUseUserSettings=notUseUserSettings
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
+      disableHierarchicalMode=true
+    }}
+  </div>
+
+  <div class="field">
+    <button type="button" class="ui button" {{action "clearUserSetting"}}>
+      {{t
+        "forms.components-examples.flexberry-lookup.user-settings-example.clear-user-setting"
+      }}
+    </button>
+    {{flexberry-checkbox
+      value=notUseUserSettings
+      label=(t
+        "forms.components-examples.flexberry-lookup.user-settings-example.not-user-user-setting-caption"
+      )
+      readonly=readonly
+    }}
+  </div>
+</form>

@@ -1,4 +1,3 @@
-/*jshint node:true*/
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates common entities for flexberry.',

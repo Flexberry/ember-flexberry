@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { A } from '@ember/array';
 import startApp from '../../../helpers/start-app';
 
-export function executeTest(testName, callback) {
+export function executeTest(testName, callback, additionalBeforeEachSettings) {
   let app;
   let store;
   let latestReceivedRecords = A();
@@ -31,6 +31,10 @@ export function executeTest(testName, callback) {
           return records;
         });
       };
+
+      if (!Ember.isNone(additionalBeforeEachSettings) && typeof additionalBeforeEachSettings === 'function') {
+        additionalBeforeEachSettings(app, store);
+      }
     },
 
     afterEach() {

@@ -34,6 +34,24 @@ export default Component.extend({
   expanded: false,
 
   /**
+    If true - a solid border appears for toggler container. If false - border doesn't appear.
+
+    @property hasBorder
+    @type Boolean
+    @default false
+  */
+  hasBorder: false,
+
+  /**
+    If true - border with a subtle shadow appears for toggler container. If false - shadow doesn't appear.
+
+    @property hasShadow
+    @type Boolean
+    @default false
+  */
+  hasShadow: false,
+
+  /**
     Common caption in the component header.
     Used when appropriate sate-related caption ({{#crossLink "FlexberryToggler/expandedCaption:property"}}{{/crossLink}}
     or {{#crossLink "FlexberryToggler/collapsedCaption:property"}}{{/crossLink}}) is not specified.
@@ -87,6 +105,15 @@ export default Component.extend({
     @readOnly
   */
   classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
+
+  /**
+    Array CSS class names bindings.
+    [More info](https://guides.emberjs.com/v3.1.0/components/customizing-a-components-element/).
+
+    @property classNameBindings
+    @type Array
+  */
+  classNameBindings: ['hasBorder:has-border', 'hasShadow:has-shadow'],
 
   /**
     CSS clasess for i tag.

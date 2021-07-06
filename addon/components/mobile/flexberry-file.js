@@ -31,7 +31,7 @@ export default FlexberryFile.extend({
     @type Object[]
     @private
   */
-  _menuItems: computed('showPreview', 'readonly', 'i18n.locale', function() {
+  _menuItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', '_uploadButtonIsVisible', '_downloadButtonIsVisible', function() {
     let menuSubItems = [];
     if (this.get('showPreview')) {
       menuSubItems.push({
@@ -56,7 +56,20 @@ export default FlexberryFile.extend({
         isDeleteItem: true
       });
     }
-
+    if (this.get('_uploadButtonIsVisible')) {
+      menuSubItems.push({
+        icon: 'upload outline icon',
+        title: this.get('i18n').t('components.flexberry-file.upload-button-title'),
+        isUploadItem: true
+      });
+    }
+    if (this.get('_downloadButtonIsVisible')) {
+      menuSubItems.push({
+        icon: 'download outline icon',
+        title: this.get('i18n').t('components.flexberry-file.download-button-title'),
+        isDownloadItem: true
+      });
+    }
     return [{
       icon: 'list layout icon',
       itemsAlignment: undefined,
@@ -93,6 +106,18 @@ export default FlexberryFile.extend({
 
       if (e.item.isDeleteItem) {
         this.removeFile();
+
+        return;
+      }
+
+      if (e.item.isDownloadItem) {
+        this.downloadFile();
+
+        return;
+      }
+
+      if (e.item.isUploadItem){
+        this.uploadFile();
 
         return;
       }

@@ -55,13 +55,15 @@ export default Mixin.create({
           }
         }
 
-        /* eslint-disable no-unused-vars */
-        let recordsArrayinPromise = new RSVP.Promise((resolve, reject) => {
-          resolve(sortRecordsArray);
-        });
-        /* eslint-enable no-unused-vars */
+        if (sortRecordsArray.length === 0) {
+          this.send('loadRecordsById', id, target, property, true, recordParams);
+        } else {
+          let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            resolve(sortRecordsArray);
+          });
 
-        set(target, property, recordsArrayinPromise);
+          Ember.set(target, property, recordsArrayinPromise);
+        }
       }
     },
 

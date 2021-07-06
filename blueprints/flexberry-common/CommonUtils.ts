@@ -34,7 +34,10 @@ export default class CommonUtils {
   }
 
   static getFilesForGeneration(blueprint, exclusiveFunction: Function = null) {
-    let files = Blueprint.prototype.files.call(blueprint);
+    blueprint._super._files = null;
+    blueprint._super.path = blueprint.path;
+    let files = blueprint._super.files.apply(blueprint);
+    blueprint._super._files = null;
     if (exclusiveFunction!=null) {
       lodash.remove(files, exclusiveFunction);
     }

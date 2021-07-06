@@ -93,4 +93,13 @@ export default EditFormController.extend({
     @default 'olive'
   */
   removeButtonClass: '',
+
+  /**
+    Flag indicates whether 'flexberry-lookup' component use user settings or not.
+
+    @property removeButtonClass
+    @type String
+    @default 'olive'
+  */
+  notUseUserSettings: false,
 });

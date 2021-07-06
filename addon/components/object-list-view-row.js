@@ -158,7 +158,9 @@ export default FlexberryBaseComponent.extend({
           this.get('_records').pushObject(newRecord);
         });
       }).finally(() => {
-        this.set('_recordsIsLoading', false);
+        if (!this.get('isDestroyed')) {
+          this.set('_recordsIsLoading', false);
+        }
       });
 
       return this.get('records');

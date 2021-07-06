@@ -304,6 +304,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-checkbox/three-state-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -468,6 +473,11 @@ export default Controller.extend({
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/user-settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
             children: null
           }]
         }, {
@@ -678,6 +688,31 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.title'),
             children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.title'),
+          children: [{
+            link: null,
+            caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.title'),
+            children: [{
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.title'),
+              children: null
+            }]
           }]
         }]
       }, {

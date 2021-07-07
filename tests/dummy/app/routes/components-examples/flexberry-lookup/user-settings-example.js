@@ -41,16 +41,6 @@ export default EditFormRoute.extend({
               propName: "name",
               name: "Name"
             },
-            {
-              propName: "activated",
-              hide: true,
-              name: "Activated"
-            },
-            {
-              propName: "gender",
-              hide: true,
-              name: "Gender"
-            }
           ]
         }
       }

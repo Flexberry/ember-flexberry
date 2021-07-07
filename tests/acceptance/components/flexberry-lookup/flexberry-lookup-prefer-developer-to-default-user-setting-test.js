@@ -38,20 +38,4 @@ executeTest('flexberry-lookup prefer developer to default user setting test', (s
       }, 1000);
     });
   });
-}, (app) => {
-  const controller = app.__container__.lookup('controller:components-examples/flexberry-lookup/user-settings-example');
-  controller.set('notUseUserSettings', true);
-
-  const route = app.__container__.lookup('route:components-examples/flexberry-lookup/user-settings-example');
-  route.set('developerUserSettings', {
-    ApplicationUserObjectlistView: {
-      DEFAULT: {
-        colsOrder: [
-          {
-            propName: 'name'
-          }
-        ]
-      }
-    }
-  });
 });

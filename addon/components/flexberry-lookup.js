@@ -1252,10 +1252,10 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           _this.onShowHide();
         });
 
-        let autocompleteDirection = Ember.get(_this, 'autocompleteDirection');
+        let autocompleteDirection = get(_this, 'autocompleteDirection');
         if (autocompleteDirection == 'auto')
         {
-          const { height, left, width, bottom } = _this.element.getBoundingClientRect();
+          const { bottom } = _this.element.getBoundingClientRect();
           let elementHeight = _this.$('div.results').outerHeight();
           let upward = window.innerHeight - bottom < elementHeight;
           autocompleteDirection = upward ? 'upward' : 'downward';

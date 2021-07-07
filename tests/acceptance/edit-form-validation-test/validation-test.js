@@ -1,7 +1,6 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
-import { click } from '@ember/test-helpers';
 
 /* eslint-disable no-unused-vars */
 executeTest('check complete all tests', (store, assert, app) => {
@@ -14,7 +13,7 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFlexberryLookupButton = Ember.$('.ui.button.ui-change')[0];
+    let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
 
     // Click lookup button.
     run(() => {

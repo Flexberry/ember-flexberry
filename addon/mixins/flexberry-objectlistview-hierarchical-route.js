@@ -58,11 +58,11 @@ export default Mixin.create({
         if (sortRecordsArray.length === 0) {
           this.send('loadRecordsById', id, target, property, true, recordParams);
         } else {
-          let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+          let recordsArrayinPromise = new RSVP.Promise((resolve) => {
             resolve(sortRecordsArray);
           });
 
-          Ember.set(target, property, recordsArrayinPromise);
+          set(target, property, recordsArrayinPromise);
         }
       }
     },

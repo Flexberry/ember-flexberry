@@ -8,7 +8,7 @@ import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { A, isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
-import { typeOf, isBlank, isNone } from '@ember/utils';
+import { typeOf, isBlank, isNone, isEmpty } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
 import { once, schedule, scheduleOnce } from '@ember/runloop';
@@ -516,9 +516,9 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
-    if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
-      const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
-      if (!Ember.isNone(userSettingValue)) {
+    if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
+      if (!isNone(userSettingValue)) {
         userSettings = userSettingValue.DEFAULT
       }
     }
@@ -1330,28 +1330,6 @@ export default FlexberryBaseComponent.extend(
     });
     if (isNone(this.get('customParameters'))) {
       this.set('customParameters', {});
-    }
-
-    if (!this.get('disableHierarchicalMode')) {
-      let modelName = this.get('modelName');
-      if (modelName) {
-        let model = this.get('store').modelFor(modelName);
-        let relationships = Ember.get(model, 'relationships');
-        let hierarchicalrelationships = relationships.get(modelName);
-        if (hierarchicalrelationships.length === 1) {
-          this.sendAction('availableHierarchicalMode', hierarchicalrelationships[0].name);
-        } else if (hierarchicalrelationships.length > 1) {
-          let hierarchyAttribute = this.get('hierarchyAttribute');
-          if (!Ember.isNone(hierarchyAttribute)) {
-            let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
-            if (!Ember.isNone(hierarchyAttributeExist)) {
-              this.sendAction('availableHierarchicalMode', hierarchyAttribute);
-            } else {
-              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
-            }
-          }
-        }
-      }
     }
 
     let searchForContentChange = this.get('searchForContentChange');

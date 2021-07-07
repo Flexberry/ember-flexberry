@@ -17,7 +17,7 @@ executeTest('check operation file', (store, assert, app) => {
     // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), 'File is required', 'Flexberry file have default value');
 
-    let $validationFlexberryLookupButton = Ember.$('.ui.button.ui-change')[0];
+    let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
 
     // Click lookup button.
     run(() => {

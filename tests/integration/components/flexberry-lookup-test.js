@@ -4,6 +4,7 @@ import RSVP from 'rsvp';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { run, later } from '@ember/runloop';
+import { set } from '@ember/object';
 import { isNone } from '@ember/utils';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
@@ -362,8 +363,8 @@ test('preview with readonly renders properly', function(assert) {
 test('autocompleteDirection adds no css-class if autocompleteDirection is not defined', function(assert) {
   let store = app.__container__.lookup('service:store');
 
-  Ember.run(() => {
-    Ember.set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
       name: 'TestTypeName'
     }));
 
@@ -387,7 +388,7 @@ test('autocompleteDirection adds no css-class if autocompleteDirection is not de
   fillIn($lookupField, 'g');
 
   let asyncOperationsCompleted = assert.async();
-    Ember.run.later(function() {
+    later(function() {
       asyncOperationsCompleted();
       assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
       assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')
@@ -397,12 +398,12 @@ test('autocompleteDirection adds no css-class if autocompleteDirection is not de
 test('autocompleteDirection adds css-class if autocompleteDirection is defined as upward', function(assert) {
   let store = app.__container__.lookup('service:store');
 
-  Ember.run(() => {
-    Ember.set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
       name: 'TestTypeName'
     }));
 
-    Ember.set(this, 'autocompleteDirection', undefined);
+    set(this, 'autocompleteDirection', undefined);
     this.render(hbs`{{flexberry-lookup
       value=model.type
       relationName="parent"
@@ -424,7 +425,7 @@ test('autocompleteDirection adds css-class if autocompleteDirection is defined a
   fillIn($lookupField, 'g');
 
   let asyncOperationsCompleted = assert.async();
-    Ember.run.later(function() {
+    later(function() {
       asyncOperationsCompleted();
       assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
       assert.equal($resultAutocomplete.hasClass('upward'), true, 'Autocomplete window has extra class.')
@@ -434,8 +435,8 @@ test('autocompleteDirection adds css-class if autocompleteDirection is defined a
 test('autocompleteDirection adds no css-class if autocompleteDirection is defined as downward', function(assert) {
   let store = app.__container__.lookup('service:store');
 
-  Ember.run(() => {
-    Ember.set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
       name: 'TestTypeName'
     }));
 
@@ -460,7 +461,7 @@ test('autocompleteDirection adds no css-class if autocompleteDirection is define
   fillIn($lookupField, 'g');
 
   let asyncOperationsCompleted = assert.async();
-    Ember.run.later(function() {
+    later(function() {
       asyncOperationsCompleted();
       assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
       assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')

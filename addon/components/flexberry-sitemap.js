@@ -3,6 +3,7 @@
 */
 
 import Component from '@ember/component';
+import { get, set } from '@ember/object';
 
 /**
   Component for sitemap render from the object with links.
@@ -61,10 +62,11 @@ export default Component.extend({
   nodeIsOpen: false,
 
   init(){
-    if (!this.get('sitemap.nodes') && this.get('isHomeSitemap')) {
-      this.set('tagName', '');
+    if (!get(this, 'sitemap.nodes') && get(this, 'isHomeSitemap')) {
+      set(this, 'tagName', '');
     }
-    this._super.apply(this, arguments);
+
+    this._super(...arguments);
   },
 
   actions: {
@@ -75,7 +77,7 @@ export default Component.extend({
     */
     menuToggle() {
       this.$('.subMenu:first').toggleClass('hidden');
-      this.set('nodeIsOpen', !this.get('nodeIsOpen'));
+      set(this, 'nodeIsOpen', !get(this, 'nodeIsOpen'));
     }
   },
 });

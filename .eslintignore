@@ -20,6 +20,7 @@ addon-test-support/check-close-edit-form.js
 addon-test-support/check-delete-record-from-e-form.js
 addon-test-support/check-delete-record-from-olv.js
 addon-test-support/check-lock-edit-form.js
+addon-test-support/check-lookup-dialogs.js
 addon-test-support/check-olv-config.js
 addon-test-support/check-olv-sort-for-each-column.js
 addon-test-support/check-olv-sort-on-all-columns.js
@@ -124,6 +125,7 @@ addon/mixins/required-actions.js
 addon/mixins/sortable-column.js
 addon/mixins/sortable-controller.js
 addon/mixins/sortable-route.js
+addon/mixins/fixable-component.js
 addon/models/flexberry-adv-limit.js
 addon/models/i-i-s-caseberry-logging-objects-application-log.js
 addon/models/new-platform-flexberry-flexberry-user-setting.js
@@ -170,6 +172,7 @@ blueprints/flexberry-edit-form/snippets/getCellComponent-flexberry-lookup.js
 blueprints/flexberry-edit-form/snippets/getCellComponent-function.js
 blueprints/flexberry-enum/index.js
 blueprints/flexberry-group/index.js
+blueprints/flexberry-install-new-theme/index.js
 blueprints/flexberry-list-form/index.js
 blueprints/flexberry-model-init/index.js
 blueprints/flexberry-model-offline/index.js
@@ -183,6 +186,7 @@ blueprints/utils/skip-confirmation.js
 
 ember-cli-build.js
 
+tests/acceptance/components/base-flexberry-lookup-test.js
 tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-conditional-render-test.js
 tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-empty-value-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js
@@ -195,7 +199,10 @@ tests/acceptance/components/flexberry-lookup/flexberry-lookup-actions-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-en-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-ru-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autofill-by-limit-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-default-user-setting-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-limit-function-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-prefer-developer-to-default-user-setting-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-prefer-stored-to-default-user-setting-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js
@@ -511,7 +518,9 @@ tests/integration/components/flexberry-error-test.js
 tests/integration/components/flexberry-field-test.js
 tests/integration/components/flexberry-groupedit-test.js
 tests/integration/components/flexberry-lookup-test.js
+tests/integration/components/flexberry-sidebar-test.js
 tests/integration/components/flexberry-simpledatetime-test.js
+tests/integration/components/flexberry-sitemap-test.js
 tests/integration/components/flexberry-textarea-test.js
 tests/integration/components/flexberry-textbox-test.js
 tests/integration/components/flexberry-toggler-test.js

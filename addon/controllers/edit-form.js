@@ -449,14 +449,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
         this.get('appState').error();
         this.onSaveActionRejected(errorData);
-        return Ember.RSVP.reject(errorData);
+        return reject(errorData);
       }).finally((data) => {
         this.onSaveActionAlways(data);
       });
     }).catch((errorData) => {
       this.get('appState').error();
       this.onSaveActionRejected(errorData);
-      return Ember.RSVP.reject(errorData);
+      return reject(errorData);
     });
   },
 
@@ -473,9 +473,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     const agragatorModel = getCurrentAgregator.call(this);
     if (needSaveCurrentAgregator.call(this, agragatorModel)) {
       return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
-        const errors = Ember.A(result || []).filterBy('state', 'rejected');
-        if (!Ember.isEmpty(errors)) {
-          return Ember.RSVP.reject(errors);
+        const errors = A(result || []).filterBy('state', 'rejected');
+        if (!isEmpty(errors)) {
+          return reject(errors);
         }
 
         return agragatorModel.save();

@@ -10,6 +10,7 @@ module('Unit | Service | device', {
     sinon.stub(Ember, 'getOwner').returns({ application: { deviceService: {} } });
   },
   afterEach() {
+    // eslint-disable-next-line ember/new-module-imports
     Ember.getOwner.restore();
   }
 });

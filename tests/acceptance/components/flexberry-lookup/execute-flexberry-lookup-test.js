@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { isNone } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { A } from '@ember/array';
@@ -32,7 +33,7 @@ export function executeTest(testName, callback, additionalBeforeEachSettings) {
         });
       };
 
-      if (!Ember.isNone(additionalBeforeEachSettings) && typeof additionalBeforeEachSettings === 'function') {
+      if (!isNone(additionalBeforeEachSettings) && typeof additionalBeforeEachSettings === 'function') {
         additionalBeforeEachSettings(app, store);
       }
     },

@@ -4,6 +4,7 @@
 
 import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
+import { resolve } from 'rsvp';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import EditFormRoute from './edit-form';
@@ -96,7 +97,7 @@ export default EditFormRoute.extend({
     @param {Object} model
    */
   returnNewModel(value) {
-    return new Ember.RSVP.resolve(value);
+    return resolve(value);
   },
 
   /**

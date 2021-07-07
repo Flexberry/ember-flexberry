@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import Device from 'ember-flexberry/services/device';
-import Ember from 'ember';
 
 export default Device.extend({
   /**
@@ -9,6 +9,6 @@ export default Device.extend({
     @return {Boolean} Returns true, if device is phone.
   */
   isMobile() {
-    return Ember.$(window).width() < 480;
+    return $(window).width() < 480;
   }
 });

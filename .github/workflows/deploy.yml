@@ -42,7 +42,7 @@ jobs:
     - name: Install dependencies
       run: |
         set -x
-        npm install -g ember-cli@2.4.3
+        npm install -g ember-cli@3.1.4
         npm install -g bower
         yarn install
         bower install

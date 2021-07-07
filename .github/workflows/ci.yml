@@ -33,7 +33,7 @@ jobs:
       if: ${{ success() || steps.linting.conclusion == 'failure' }}
       run: |
         set -x
-        ember try default test
+        ember try:one ember-default --skip-cleanup
 
   test-generator:
     runs-on: ubuntu-latest

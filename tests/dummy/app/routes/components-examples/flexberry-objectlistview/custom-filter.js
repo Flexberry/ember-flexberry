@@ -1,8 +1,7 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
-import { Query } from 'ember-flexberry-data';
-
-const { SimplePredicate } = Query;
+import { computed } from '@ember/object';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 export default ListFormRoute.extend({
   /**
@@ -41,9 +40,12 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: { FOLVCustomFilterObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return {
+      FOLVCustomFilterObjectListView: { }
+    }
+  }),
 
   predicateForFilter(filter) {
     if (filter.type === 'string' && filter.condition === 'empty') {
@@ -59,7 +61,7 @@ export default ListFormRoute.extend({
 
   predicateForAttribute(attribute, filter) {
     switch (attribute.type) {
-      case 'boolean':
+      case 'boolean': {
         let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
         let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
 
@@ -72,9 +74,11 @@ export default ListFormRoute.extend({
         }
 
         return null;
+      }
 
-      default:
+      default: {
         return this._super(...arguments);
+      }
     }
   },
 });

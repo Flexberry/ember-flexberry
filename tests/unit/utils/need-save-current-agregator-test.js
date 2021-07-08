@@ -1,25 +1,26 @@
-import needSaveCurrentAgregator from 'dummy/utils/need-save-current-agregator';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import startApp from '../../helpers/start-app';
-import Ember from 'ember';
+import startApp from 'dummy/tests/helpers/start-app';
+import needSaveCurrentAgregator from 'dummy/utils/need-save-current-agregator';
 
 let App;
 
 module('Unit | Utility | need save current agregator', {
-  setup: function() {
+  beforeEach() {
     App = startApp();
     let offlineGlobals = App.__container__.lookup('service:offline-globals');
     offlineGlobals.setOnlineAvailable(false);
   },
-  teardown: function() {
-    Ember.run(App, 'destroy');
-  }
+
+  afterEach() {
+    run(App, 'destroy');
+  },
 });
 
 // Replace this with your real tests.
 test('it works', function(assert) {
   let agregator;
-  Ember.run(function () {
+  run(function () {
     agregator = App.__container__.lookup('service:store').createRecord('ember-flexberry-dummy-localization', { name: 'Localization' });
   });
 

@@ -2,7 +2,8 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 
 /**
   Mixin for controller, that pagination support.
@@ -10,17 +11,17 @@ import Ember from 'ember';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
-    export default Ember.Controller.extend(PaginatedController, {
+    export default Controller.extend(PaginatedController, {
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
-    export default Ember.Route.extend(PaginatedRoute, {
+    export default Route.extend(PaginatedRoute, {
     });
     ```
 
@@ -44,9 +45,9 @@ import Ember from 'ember';
     ```
 
   @class PaginatedController
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Start page.
 
@@ -80,7 +81,8 @@ export default Ember.Mixin.create({
     @property perPageValue
     @type Number
   */
-  perPageValue: Ember.computed('perPage', {
+  perPageValue: computed('perPage', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       let perPage = this.get('perPage');
       /*let perPageValues = this.get('perPageValues');
@@ -114,6 +116,7 @@ export default Ember.Mixin.create({
 
       return perPage;
     }
+    /* eslint-enable no-unused-vars */
   }),
 
   /**
@@ -123,7 +126,7 @@ export default Ember.Mixin.create({
     @type Number
     @readOnly
   */
-  recordsTotalCount: Ember.computed('model', function() {
+  recordsTotalCount: computed('model', function() {
     return this.get('model.meta.count');
   }),
 
@@ -134,7 +137,7 @@ export default Ember.Mixin.create({
     @type Boolean
     @readOnly
   */
-  hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+  hasNextPage: computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
     return page < lastPage;
@@ -147,7 +150,7 @@ export default Ember.Mixin.create({
     @type Boolean
     @readOnly
   */
-  hasPreviousPage: Ember.computed('page', function() {
+  hasPreviousPage: computed('page', function() {
     return this.get('page') > 1;
   }),
 
@@ -163,7 +166,7 @@ export default Ember.Mixin.create({
     @type Array
     @readOnly
   */
-  pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+  pages: computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
 
@@ -225,7 +228,7 @@ export default Ember.Mixin.create({
   }),
 
   /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array

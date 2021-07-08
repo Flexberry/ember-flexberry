@@ -2,18 +2,18 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 
 /**
   Class for object describing dynamic action, which can be binded to component,
   consuming it's inner structure as [JSON-object](http://www.json.org/)
-  or [Ember-object](http://emberjs.com/api/classes/Ember.Object.html), if component
+  or [Ember-object](https://emberjs.com/api/ember/release/classes/EmberObject), if component
   uses {{#crossLink "DynamicActionsMixin"}}dynamic-actions mixin{{/crossLink}}.
 
   @class DynamicActionObject
-  @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/EmberObject">EmberObject</a>
 */
-export default Ember.Object.extend({
+export default EmberObject.extend({
   /**
     Name of component's action which will play a trigger role
     for the specified {{#crossLink "DynamicActionObject/actionHandler:property"}}handler{{/crossLink}},

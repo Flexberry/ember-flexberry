@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     'flexberry-text-cell' component's 'value' property.
 
@@ -31,12 +34,17 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-text-cell<br>' +
-    '  value=value<br>' +
-    '  maxTextLength=maxTextLength<br>' +
-    '  cutBySpaces=cutBySpaces<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-text-cell<br>' +
+      '  value=value<br>' +
+      '  maxTextLength=maxTextLength<br>' +
+      '  cutBySpaces=cutBySpaces<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -44,8 +52,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
   */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',

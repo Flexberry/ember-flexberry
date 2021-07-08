@@ -2,10 +2,10 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import ColsconfigDialogController from '../mixins/colsconfig-dialog-controller';
 
-export default Ember.Controller.extend(ColsconfigDialogController, {
+export default Controller.extend(ColsconfigDialogController, {
   /**
    * Current opened modal window.
    *

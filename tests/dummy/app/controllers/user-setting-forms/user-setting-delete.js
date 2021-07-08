@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -8,7 +9,7 @@ export default ListFormController.extend({
     @property customButtons
     @type Array
    */
-  customButtons: Ember.computed('i18n.locale', function() {
+  customButtons: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
     return [{
       buttonName: i18n.t('forms.user-setting-forms.user-setting-delete.all-del-button-name'),
@@ -21,7 +22,7 @@ export default ListFormController.extend({
     /**
       Handler for click on custom user button.
 
-      @method userButtonActionTest
+      @method allDelButtonAction
      */
     allDelButtonAction: function() {
       let proms = [];
@@ -31,7 +32,7 @@ export default ListFormController.extend({
           proms.push(setting.destroyRecord());
         });
       }).then(() => {
-        Ember.RSVP.all(proms).then(() => {
+        RSVP.all(proms).then(() => {
           this.get('target').router.refresh();
         });
       });

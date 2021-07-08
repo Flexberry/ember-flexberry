@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { set } from '@ember/object';
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup actions test', (store, assert, app) => {
@@ -8,7 +10,7 @@ executeTest('flexberry-lookup actions test', (store, assert, app) => {
 
   // Remap remove action.
   let $onRemoveData;
-  Ember.set(controller, 'actions.externalRemoveAction', (actual) => {
+  set(controller, 'actions.externalRemoveAction', (actual) => {
     $onRemoveData = actual;
     assert.notEqual($onRemoveData, undefined, 'Component sends \'remove\' action after first click');
     assert.strictEqual($onRemoveData.relationName, 'type', 'Component sends \'remove\' with actual relationName');
@@ -16,7 +18,7 @@ executeTest('flexberry-lookup actions test', (store, assert, app) => {
 
   // Remap chose action.
   let $onChooseData;
-  Ember.set(controller, 'actions.externalChooseAction', (actual) => {
+  set(controller, 'actions.externalChooseAction', (actual) => {
     $onChooseData = actual;
     assert.notEqual($onChooseData, undefined, 'Component sends \'choose\' action after first click');
     assert.strictEqual($onChooseData.componentName, 'flexberry-lookup',
@@ -27,10 +29,10 @@ executeTest('flexberry-lookup actions test', (store, assert, app) => {
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   andThen(function() {
-    let $lookupButtouChoose = Ember.$('.ui-change');
-    let $lookupButtouRemove = Ember.$('.ui-clear');
+    let $lookupButtouChoose = $('.ui-change');
+    let $lookupButtouRemove = $('.ui-clear');
 
-    Ember.run(() => {
+    run(() => {
       $lookupButtouChoose.click();
       $lookupButtouRemove.click();
     });

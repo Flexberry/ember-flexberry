@@ -1,5 +1,5 @@
 import OfflineGlobals from 'ember-flexberry/services/offline-globals';
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 
 export default OfflineGlobals.extend({
   init() {
@@ -8,7 +8,7 @@ export default OfflineGlobals.extend({
   },
   getOfflineSchema() {
     let parentSchema = this._super(...arguments);
-    let returnedSchema = Ember.merge(parentSchema, {
+    let returnedSchema = merge(parentSchema, {
       <%= offlineSchema %>
     });
 

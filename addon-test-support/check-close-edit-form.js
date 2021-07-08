@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { registerAsyncHelper } from '@ember/test';
+import { registerWaiter, unregisterWaiter } from '@ember/test';
 
-Ember.Test.registerAsyncHelper('checkCloseEditForm',
+registerAsyncHelper('checkCloseEditForm',
   function(app, olvSelector, context, assert, path) {
     const helpers = app.testHelpers;
     const olv = helpers.findWithAssert(olvSelector, context);
@@ -14,20 +16,20 @@ Ember.Test.registerAsyncHelper('checkCloseEditForm',
     assert.notEqual(0, helperColumn.length);
 
     const controller = app.__container__.lookup(`controller:${path}`);
-    const editFormRoute = Ember.get(controller, 'editFormRoute');
-    const waiterFunction = () => { return currentPath() === editFormRoute };
+    const editFormRoute = get(controller, 'editFormRoute');
+    const waiterFunction = () => { return helpers.currentPath() === editFormRoute };
 
-    Ember.Test.registerWaiter(waiterFunction);
-    click(cell);
-    andThen(() => {
+    registerWaiter(waiterFunction);
+    helpers.click(cell);
+    helpers.andThen(() => {
       const deleteButton = helpers.find('.flexberry-edit-panel .close-button');
 
-      assert.equal(currentPath(), editFormRoute);
+      assert.equal(helpers.currentPath(), editFormRoute);
 
-      Ember.Test.unregisterWaiter(waiterFunction);
-      click(deleteButton);
-      andThen(() => {
-        assert.equal(currentPath(), path);
+      unregisterWaiter(waiterFunction);
+      helpers.click(deleteButton);
+      helpers.andThen(() => {
+        assert.equal(helpers.currentPath(), path);
       });
     });
   }

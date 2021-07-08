@@ -1,21 +1,23 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
 
 // Function for waiting list loading.
 export function loadingList($ctrlForClick, list, records) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
     let timeout = 10000;
 
-    Ember.run(() => {
+    run(() => {
       $ctrlForClick.click();
     });
 
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
-        let $list = Ember.$(list);
-        let $records = Ember.$(records, $list);
+        let $list = $(list);
+        let $records = $(records, $list);
         if ($records.length === 0) {
 
           // Data isn't loaded yet.
@@ -31,7 +33,7 @@ export function loadingList($ctrlForClick, list, records) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;
@@ -48,15 +50,15 @@ export function loadingList($ctrlForClick, list, records) {
 
 // Function for waiting loading list.
 export function loadingLocales(locale, app) {
-  return new Ember.RSVP.Promise((resolve) => {
+  return new RSVP.Promise((resolve) => {
     let i18n = app.__container__.lookup('service:i18n');
 
-    Ember.run(() => {
+    run(() => {
       i18n.set('locale', locale);
     });
 
     let timeout = 500;
-    Ember.run.later((() => {
+    run.later((() => {
       resolve({ msg: 'ok' });
     }), timeout);
   });

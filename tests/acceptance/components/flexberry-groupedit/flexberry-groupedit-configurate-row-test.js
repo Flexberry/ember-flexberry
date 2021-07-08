@@ -1,6 +1,7 @@
-import Ember from 'ember';
 import { module, test } from 'qunit';
+import { run } from '@ember/runloop';
 import startApp from '../../../helpers/start-app';
+import $ from 'jquery';
 
 let app;
 const path = 'components-examples/flexberry-groupedit/configurate-row-example';
@@ -18,7 +19,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     }
   });
 
@@ -28,12 +29,12 @@ test(testName, (assert) => {
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path, 'Path is correctly');
-    let $folvRows = Ember.$('.object-list-view-container tbody tr');
+    let $folvRows = $('.object-list-view-container tbody tr');
 
     for (let i = 0; i < $folvRows.length; i++) {
       let $row = $folvRows[i];
-      let $deleteButton = Ember.$('.object-list-view-row-delete-button', $row);
-      let $flagField = Ember.$('.field .flexberry-checkbox', $row);
+      let $deleteButton = $('.object-list-view-row-delete-button', $row);
+      let $flagField = $('.field .flexberry-checkbox', $row);
 
       if (i % 2 === 0)
       {
@@ -44,7 +45,7 @@ test(testName, (assert) => {
         assert.equal($flagField.hasClass('checked'), false, 'CheckBox in an even row isn\'t checked');
       }
 
-      let $textField = Ember.$('.field .flexberry-textbox input', $row);
+      let $textField = $('.field .flexberry-textbox input', $row);
       assert.equal($textField[0].value, i + 1 + 'test', 'TextBox have currect text');
     }
   });

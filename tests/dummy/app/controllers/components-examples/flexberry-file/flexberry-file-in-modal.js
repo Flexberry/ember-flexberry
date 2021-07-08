@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
+import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import config from 'dummy/config/environment';
 
@@ -10,7 +12,7 @@ export default EditFormController.extend({
     @type String
     @default #example
   */
-  _style:'#example',
+  _style: '#example',
 
   /**
     File upload URL for 'flexberry-file' component 'uploadUrl' property.
@@ -50,23 +52,24 @@ export default EditFormController.extend({
     @property previewSettings
     @type Object
   */
-  previewSettings: {
+  previewSettings: computed(() => ({
     detachable: true,
     context: 'body',
-  },
+  })),
 
   actions: {
     modalWindow(style) {
-      if (!Ember.isNone(style)) {
+      if (!isNone(style)) {
         this.set('_style', style);
       }
 
-      let repeatWindow = Ember.$('#repeat-window').modal({
-        closable: false,
-        autofocus: false,
-        detachable: true,
-        allowMultiple: true,
-      });
+      let repeatWindow = $('.repeat-window').modal({
+          closable: false,
+          autofocus: false,
+          detachable: true,
+          allowMultiple: true,
+          context: 'body',
+        });
 
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');

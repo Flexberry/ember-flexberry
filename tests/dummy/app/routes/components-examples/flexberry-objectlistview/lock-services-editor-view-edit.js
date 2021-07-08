@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 import LockServicesMixineRoute from 'ember-flexberry/mixins/lock-route';
@@ -30,42 +31,43 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Lock
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: {
-    suggestionUserVotesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'voteType', 'width': 133 },
-          { 'propName': 'author', 'width': 348 },
-          { 'propName': 'author.eMail', 'width': 531 }
-        ],
-        'sorting': [{ 'propName': 'author', 'direction': 'asc', 'attributePath': 'author.name' }]
-      }
-    },
-    filesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'order', 'width': 140 },
-          { 'propName': 'file', 'width': 893 }
-        ],
-        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
-        'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
-      }
-    },
-    suggestionCommentsGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
-        'sorting': [
-          { 'propName': 'votes', 'direction': 'asc' },
-          { 'propName': 'moderated', 'direction': 'desc' },
-          { 'propName': 'text', 'direction': 'asc' }
-        ],
+  developerUserSettings: computed(function() {
+    return {
+      suggestionUserVotesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'voteType', 'width': 133 },
+            { 'propName': 'author', 'width': 348 },
+            { 'propName': 'author.eMail', 'width': 531 }
+          ],
+          'sorting': [{ 'propName': 'author', 'direction': 'asc', 'attributePath': 'author.name' }]
+        }
+      },
+      filesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'order', 'width': 140 },
+            { 'propName': 'file', 'width': 893 }
+          ],
+          'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
+          'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
+        }
+      },
+      suggestionCommentsGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
+          'sorting': [
+            { 'propName': 'votes', 'direction': 'asc' },
+            { 'propName': 'moderated', 'direction': 'desc' },
+            { 'propName': 'text', 'direction': 'asc' }
+          ],
+        }
       }
     }
-  },
+  }),
 
   /**
     Name of model to be used as form's record type.
@@ -104,9 +106,11 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Lock
     this.set('controller.blockedByUser', this.get('blockedByUser'));
   },
 
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExiting, transition) {
     this._super(...arguments);
 
     this.set('blockedByUser', undefined);
   }
+  /* eslint-enable no-unused-vars */
 });

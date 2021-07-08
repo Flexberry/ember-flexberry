@@ -1,0 +1,35 @@
+{{#if sitemap.link}}
+  {{#link-to sitemap.link title=sitemap.title}}
+    <div class="title-item-menu">
+      <i class="icon {{sitemap.icon}}"></i>
+      {{sitemap.caption}}
+    </div>
+  {{/link-to}}
+{{else if sitemap.caption}}
+  <i class="dropdown icon"></i>
+  <div class="title-item-menu">
+    <i class="icon {{sitemap.icon}}"></i>
+    {{sitemap.caption}}
+  </div>
+  {{#if sitemap.children.length}}
+    <div class="menu slide left">
+      <div class="item menu-back" {{action "menuBack"}}>
+        <i class="icon-guideline-arrow-long-left icon"></i>
+        <div class="title-item-menu">
+          {{parent}}
+        </div>
+      </div>
+      {{#each sitemap.children as |child|}}
+        {{flexberry-sitemap-guideline sitemap=child isDropDown=false classNames="item" parent=sitemap.caption}}
+      {{/each}}
+    </div>
+  {{/if}}
+{{else if sitemap.nodes}}
+  {{#each sitemap.nodes as |node|}}
+    {{#if node.children.length}}
+      {{flexberry-sitemap-guideline sitemap=node isDropDown=true}}
+    {{else}}
+      {{flexberry-sitemap-guideline sitemap=node classNames="item" isDropDown=false}}
+    {{/if}}
+  {{/each}}
+{{/if}}

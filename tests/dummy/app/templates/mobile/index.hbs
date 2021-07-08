@@ -1,0 +1,103 @@
+<div class="flexberry-container">
+  <div class="ui stackable doubling grid">
+    <div class="row">
+      <div class="eight wide middle computer four wide large screen four wide widescreen column need-pd-computer">
+        <div class="ui card">
+          <div class="content">
+            <i class="paperclip icon card-icon" ></i>
+            <div class="header">{{t "forms.index.components"}}</div>
+            <div class="description">
+              <ul>
+                <li>{{#link-to 'components-examples/flexberry-field/settings-example'}}Flexberry-field{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-checkbox/settings-example'}}Flexberry-checkbox{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-button/settings-example'}}Flexberry-button{{/link-to}}</li>
+                <li>{{#link-to 'components-examples/flexberry-dropdown/settings-example'}}Flexberry-dropdown{{/link-to}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eight wide middle computer four wide large screen four wide widescreen column need-pd-computer">
+        <div class="ui card">
+          <div class="content">
+            <i class="icon lock card-icon" ></i>
+            <div class="header">{{t "forms.index.log-service.title"}}</div>
+            <div class="description">
+              <ul>
+                <li>{{#link-to 'i-i-s-caseberry-logging-objects-application-log-l'}}{{t "forms.index.log-service.app-log"}}{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/settings-example'}}{{t "forms.index.log-service.settings-example"}}{{/link-to}}</li>
+                <li>{{#link-to 'log-service-examples/clear-log-form'}}{{t "forms.index.log-service.log-cleaning"}}{{/link-to}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sixteen wide middle computer eight wide large screen eight wide widescreen column">
+        <div class="ui two column grid stackable">
+          <div class="column">
+            {{#link-to 'ember-flexberry-dummy-application-user-list' class='ui card'}}
+              <div class="content">
+                <i class="icon user outline card-icon" ></i>
+                <div class="header">{{t "forms.index.users"}}</div>
+              </div>
+            {{/link-to}}
+          </div>
+          <div class="column">
+            {{#link-to 'ember-flexberry-dummy-localization-list' class='ui card'}}
+              <div class="content">
+                <i class="icon comment outline card-icon" ></i>
+                <div class="header">{{t "forms.index.localization"}}</div>
+              </div>
+            {{/link-to}}
+          </div>
+
+          <div class="column">
+            {{#link-to 'i-i-s-caseberry-logging-objects-application-log-l' class='ui card'}}
+              <div class="content">
+                <i class="icon clock outline card-icon" ></i>
+                <div class="header">{{t "forms.index.log"}}</div>
+              </div>
+            {{/link-to}}
+          </div>
+          <div class="column">
+            {{#link-to 'new-platform-flexberry-services-lock-list' class='ui card'}}
+              <div class="content">
+                <i class="icon lock card-icon" ></i>
+                <div class="header">{{t "forms.index.blocking"}}</div>
+              </div>
+            {{/link-to}}
+          </div>
+          <div class="column">
+             <a class='ui card'>
+              <div class="content">
+                <div class="header"> {{t "forms.application.header.menu.language-dropdown.caption"}} </div>
+                {{flexberry-dropdown
+                  items=(array "ru" "en")
+                  value=i18n.locale
+                  placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+                }}
+                <i class="icon language card-icon" ></i>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="sixteen wide computer eight wide large screen eight wide widescreen column">
+        <div class="ui card">
+          <div class="content">
+            <div class="header">{{t "forms.index.search.title"}}</div>
+            <form class="ui form">
+              {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.field-placeholder")}}
+              {{flexberry-field label=(t "forms.index.search.field-label") placeholder=(t "forms.index.search.date-field-placeholder")}}
+              <button class="ui primary large button">{{t "forms.index.search.button-caption"}}</button>
+              {{flexberry-checkbox label=(t "forms.index.search.checkbox-label")}}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

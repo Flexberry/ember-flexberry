@@ -1,6 +1,6 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 import ListFormRouteOperationsIndicationMixin from '../mixins/list-form-route-operations-indication';
-
 export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
   /**
     Name of model projection to be used as record's properties limitation.
@@ -30,15 +30,16 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: {
-    applicationUserObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+  developerUserSettings: computed(function() {
+    return {
+      applicationUserObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+        }
       }
     }
-  },
+  }),
 
   /**
     Name of model to be used as list's records types.

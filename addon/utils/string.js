@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { typeOf} from '@ember/utils';
+import { get } from '@ember/object';
+import { copy } from '@ember/object/internals';
+import { merge } from '@ember/polyfills';
 
 /**
   Renders strings containing some templates inside.
@@ -36,24 +39,24 @@ import Ember from 'ember';
   ```
 */
 let render = function(stringWithTemplates, options) {
-  if (Ember.typeOf(stringWithTemplates) !== 'string') {
+  if (typeOf(stringWithTemplates) !== 'string') {
     return null;
   }
 
-  options = Ember.merge({
+  options = merge({
     context: {},
     delimiters: ['{{', '}}']
   }, options || {});
 
-  let context = Ember.get(options, 'context') || {};
-  let delimiters = Ember.get(options, 'delimiters');
+  let context = get(options, 'context') || {};
+  let delimiters = get(options, 'delimiters');
   let [leftDelimiter, rightDelimiter] = delimiters;
 
-  let renderedString = Ember.copy(stringWithTemplates);
+  let renderedString = copy(stringWithTemplates);
   let keyWords = Object.keys(context);
   for (let i = 0, len = keyWords.length; i < len; i++) {
     let keyWord = keyWords[i];
-    let replacement = Ember.get(context, keyWord);
+    let replacement = get(context, keyWord);
 
     renderedString = renderedString.replace(
       new RegExp(leftDelimiter + '\\s*' + keyWord + '\\s*' + rightDelimiter, 'g'),

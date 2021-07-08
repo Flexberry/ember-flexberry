@@ -2,16 +2,17 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
 
 /**
  * Service to work with column configuration menu
  *
  * @class ColsConfigMenuService
- * @extends Ember.Service
+ * @extends Service
  * @public
  */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   addNamedSettingTrigger(namedSetting, componentName) {
     this.trigger('addNamedSetting', namedSetting, componentName);
   },

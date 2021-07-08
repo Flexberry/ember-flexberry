@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed  } from '@ember/object';
 import ObjectListViewRowComponent from '../object-list-view-row';
 
 /**
@@ -29,7 +29,7 @@ export default ObjectListViewRowComponent.extend({
     @type Number
     @default 10
   */
-  hierarchicalIndent: Ember.computed({
+  hierarchicalIndent: computed({
     get() {
       return (this.get('_currentLevel') + 1) * this.get('_hierarchicalIndent');
     },

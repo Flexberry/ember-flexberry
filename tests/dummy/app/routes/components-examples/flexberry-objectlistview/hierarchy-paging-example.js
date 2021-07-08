@@ -1,4 +1,5 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
+import { computed } from '@ember/object';
 
 export default ListFormRoute.extend({
   /**
@@ -30,7 +31,11 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { HiearchyExampleObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return {
+      HiearchyExampleObjectListView: { }
+    }
+  }),
 
   /**
     Name of model to be used as list's records types.

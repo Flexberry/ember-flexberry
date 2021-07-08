@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
+import { Promise } from 'rsvp';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -22,7 +23,12 @@ export default EditFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+  },
 
   actions: {
     /**
@@ -33,9 +39,7 @@ export default EditFormController.extend({
         this.get('records').push(record);
       }
 
-      if (record.get('flag') === this.get('configurateRowByFlag')) {
-        Ember.set(rowConfig, 'canBeDeleted', false);
-      }
+      set(rowConfig, 'canBeDeleted', record.get('flag') !== this.get('configurateRowByFlag'));
     },
 
     /**
@@ -43,8 +47,8 @@ export default EditFormController.extend({
 
       @param {Object} data Row data.
     */
-    confirmDeleteRows(data) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+    confirmDeleteRows() {
+      return new Promise((resolve, reject) => {
         this.set('approveDeleting', resolve);
         this.set('denyDeleting', reject);
 

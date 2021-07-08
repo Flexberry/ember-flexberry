@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { computed } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import NewPlatformFlexberryServicesLockListController from 'ember-flexberry/controllers/new-platform-flexberry-services-lock-list';
 
@@ -27,7 +28,7 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     @property customButtons
     @type Array
   */
-  customButtons: Ember.computed('i18n.locale', 'openReadOnly', 'unlockObject', function() {
+  customButtons: computed('i18n.locale', 'openReadOnly', 'unlockObject', function() {
     let i18n = this.get('i18n');
     let baseClasses = 'floated tiny compact';
     let openReadOnly = this.get('openReadOnly') ? 'positive' : 'negative';
@@ -55,7 +56,7 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     */
     changeUserName() {
       let i18n = this.get('i18n');
-      let userService = Ember.getOwner(this).lookup('service:user');
+      let userService = getOwner(this).lookup('service:user');
       let currentUserName = userService.getCurrentUserName();
       let newUserName = window.prompt(i18n.t('forms.new-platform-flexberry-services-lock-list.enter-new-user-name'), currentUserName);
       if (typeof newUserName === 'string') {
@@ -90,7 +91,7 @@ export default NewPlatformFlexberryServicesLockListController.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_init).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/init?anchor=init).
 
     @method init
   */

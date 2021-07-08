@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
 
 /**
   Casts given value into string.
@@ -9,7 +9,7 @@ import Ember from 'ember';
   @param {*} value Value to be casted into string.
   @public
 */
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute: function ([value]) {
     return '' + value;
   }

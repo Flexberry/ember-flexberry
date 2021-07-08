@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import Service from '@ember/service';
+import { inject as service } from '@ember/service';
 
 import I18nService from 'ember-i18n/services/i18n';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const formLoadTimeTracker = Ember.Service.extend({
+const formLoadTimeTracker = Service.extend({
   loadTime: 1.0000,
   renderTime: 2.0000,
 });
@@ -17,8 +19,8 @@ moduleForComponent('form-load-time-tracker', 'Integration | Component | form loa
     this.register('service:i18n', I18nService);
 
     this.inject.service('i18n', { as: 'i18n' });
-    Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+    Component.reopen({
+      i18n: service('i18n')
     });
 
     this.inject.service('form-load-time-tracker', { as: 'formLoadTimeTracker' });

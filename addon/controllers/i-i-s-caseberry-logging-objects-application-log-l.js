@@ -27,6 +27,7 @@ export default ListFormController.extend({
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
   */
+  /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, modelClass) {
     let cellComponent = this._super(...arguments);
     cellComponent.componentProperties = {
@@ -35,4 +36,5 @@ export default ListFormController.extend({
 
     return cellComponent;
   }
+  /* eslint-enable no-unused-vars */
 });

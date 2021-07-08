@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Text for 'flexberry-togggler' component 'caption' property.
 
@@ -81,28 +84,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{#flexberry-toggler<br>' +
-    '  caption=caption<br>' +
-    '  expandedCaption=expandedCaption<br>' +
-    '  collapsedCaption=collapsedCaption<br>' +
-    '  expanded=expanded<br>' +
-    '  iconClass=iconClass<br>' +
-    '  componentName="myToggler"<br>' +
-    '}}<br>' +
-    '  {{t "forms.components-examples.flexberry-toggler.settings-example-inner.togglerContent"}}<br>' +
-    '  {{#flexberry-toggler<br>' +
-    '    caption=innerCaption<br>' +
-    '    expandedCaption=expandedInnerCaption<br>' +
-    '    collapsedCaption=collapsedInnerCaption<br>' +
-    '    expanded=innerExpanded<br>' +
-    '    iconClass=iconClass<br>' +
-    '    componentName="myInnerToggler"<br>' +
-    '  }}<br>' +
-    '    {{t "forms.components-examples.flexberry-toggler.settings-example-inner.innerTogglerContent"}}<br>' +
-    '  {{/flexberry-toggler}}<br>' +
-    '{{/flexberry-toggler}}'
-  ),
+  componentTemplateText: '',
 
   /**
     Component settings metadata.
@@ -110,8 +92,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed(function() {
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'caption',
       settingType: 'string',
@@ -168,5 +150,31 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{#flexberry-toggler<br>' +
+      '  caption=caption<br>' +
+      '  expandedCaption=expandedCaption<br>' +
+      '  collapsedCaption=collapsedCaption<br>' +
+      '  expanded=expanded<br>' +
+      '  iconClass=iconClass<br>' +
+      '  componentName="myToggler"<br>' +
+      '}}<br>' +
+      '  {{t "forms.components-examples.flexberry-toggler.settings-example-inner.togglerContent"}}<br>' +
+      '  {{#flexberry-toggler<br>' +
+      '    caption=innerCaption<br>' +
+      '    expandedCaption=expandedInnerCaption<br>' +
+      '    collapsedCaption=collapsedInnerCaption<br>' +
+      '    expanded=innerExpanded<br>' +
+      '    iconClass=iconClass<br>' +
+      '    componentName="myInnerToggler"<br>' +
+      '  }}<br>' +
+      '    {{t "forms.components-examples.flexberry-toggler.settings-example-inner.innerTogglerContent"}}<br>' +
+      '  {{/flexberry-toggler}}<br>' +
+      '{{/flexberry-toggler}}'
+    ));
+  }
 });

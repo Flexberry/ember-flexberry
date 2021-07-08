@@ -38,11 +38,13 @@ export default ListFormController.extend({
     }
   },
 
+  /* eslint-disable no-unused-vars */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.get('componentName')) {
       this.set('allSelect', selectAllParameter);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   init: function() {
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 import OfflineGlobals from 'ember-flexberry-data/services/offline-globals';
 
 export default OfflineGlobals.extend({
@@ -19,6 +19,6 @@ export default OfflineGlobals.extend({
       'new-platform-flexberry-services-lock': 'id,lockKey,userName,lockDate'
     };
 
-    return Ember.merge(dataOfflineSchema, offlineSchema);
+    return merge(dataOfflineSchema, offlineSchema);
   },
 });

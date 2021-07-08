@@ -1,6 +1,7 @@
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-const { StringPredicate } = Query;
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 import { executeTest } from './execute-flexberry-lookup-test';
 
@@ -10,10 +11,10 @@ executeTest('flexberry-lookup limit function test', (store, assert, app) => {
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 
-    let $limitFunctionButton = Ember.$('.limitFunction');
-    let $lookupChouseButton = Ember.$('.ui-change');
+    let $limitFunctionButton = $('.limitFunction');
+    let $lookupChouseButton = $('.ui-change');
 
-    Ember.run(() => {
+    run(() => {
       $limitFunctionButton.click();
       $lookupChouseButton.click();
     });
@@ -24,7 +25,7 @@ executeTest('flexberry-lookup limit function test', (store, assert, app) => {
     let queryPredicate = new StringPredicate('name').contains(limitType);
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new QueryBuilder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView')
       .where(queryPredicate);
@@ -37,9 +38,9 @@ executeTest('flexberry-lookup limit function test', (store, assert, app) => {
 
       let done = assert.async();
 
-      Ember.run(() => {
+      run(() => {
         setTimeout(function() {
-          let $lookupSearch = Ember.$('.content table.object-list-view');
+          let $lookupSearch = $('.content table.object-list-view');
           let $lookupSearchThead = $lookupSearch.children('tbody');
           let $lookupSearchTr = $lookupSearchThead.children('tr');
           let $lookupRows = $lookupSearchTr.children('td');

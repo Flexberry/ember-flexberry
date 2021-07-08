@@ -1,7 +1,7 @@
 /**
   @module ember-flexberry
 */
-import { Serializer } from 'ember-flexberry-data';
+import OdataSerializer from 'ember-flexberry-data/serializers/odata';
 
 /**
   Serializer for {{#crossLink "FlexberryAdvLimitModel"}}model{{/crossLink}}
@@ -9,7 +9,7 @@ import { Serializer } from 'ember-flexberry-data';
   @class FlexberryAdvLimitSerializer
   @extends Serializer.Odata
 */
-export default Serializer.Odata.extend({
+export default OdataSerializer.extend({
   attrs: { },
 
   primaryKey: '__PrimaryKey'

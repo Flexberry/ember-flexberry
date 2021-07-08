@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
@@ -64,21 +64,21 @@ const flexberryClassNames = {
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import FlexberryDdauSliderActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-slider-actions-handler';
 
-  export default Ember.Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
+  export default Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
   });
   ```
 
   @class FlexberryDdauSliderComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryDdauSliderComponent = Ember.Component.extend(
+let FlexberryDdauSliderComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -93,7 +93,7 @@ let FlexberryDdauSliderComponent = Ember.Component.extend(
       @type String[]
       @default ['change']
     */
-    _requiredActionNames: ['change'],
+    _requiredActionNames: undefined,
 
     /**
       Reference to component's CSS-classes names.
@@ -190,7 +190,7 @@ let FlexberryDdauSliderComponent = Ember.Component.extend(
         let value = e.value.newValue;
 
         // Invoke component's custom 'change' action.
-        this.sendAction('change', {
+        this.sendDynamicAction('change', {
           newValue: value,
           originalEvent: e
         });
@@ -199,6 +199,14 @@ let FlexberryDdauSliderComponent = Ember.Component.extend(
         // otherwise component's outer 'change' action handler will be called twice.
         return false;
       }
+    },
+
+    /**
+      An overridable method called when objects are instantiated.
+    */
+    init() {
+      this._super(...arguments);
+      this.set('_requiredActionNames', ['change']);
     },
 
     /**

@@ -8,7 +8,7 @@
 
   @for ApplicationInitializer
   @method log.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application.
+  @param {<a href="https://www.emberjs.com/api/ember/release/classes/Application">Application</a>} application Ember application.
 */
 export function initialize(application) {
   [

@@ -21,6 +21,7 @@ export default EditFormController.extend({
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
+  /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
 
@@ -34,7 +35,20 @@ export default EditFormController.extend({
         remove: 'removeLookupValue'
       };
     }
+    
+    if (attr.kind === 'belongsTo' && bindingPath === 'masterDropdown') {
+      cellComponent.componentProperties = {
+        projection: 'MasterDropdownL',
+        displayAttributeName: 'text',
+        dropdown: true,
+        title: 'Master dropdown',
+        relationName: 'masterDropdown',
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue'
+      };
+    }
 
     return cellComponent;
   }
+  /* eslint-enable no-unused-vars */
 });

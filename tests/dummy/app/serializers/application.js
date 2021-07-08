@@ -1,3 +1,3 @@
-import { Serializer } from 'ember-flexberry-data';
+import OdataSerializer from 'ember-flexberry-data/serializers/odata';
 
-export default Serializer.Odata.extend({});
+export default OdataSerializer.extend({});

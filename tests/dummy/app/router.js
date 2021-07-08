@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
-  location: config.locationType
+const Router = EmberRouter.extend({
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
 Router.map(function() {
@@ -77,7 +78,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
-  this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-dropdown/empty-value-example');
@@ -160,14 +160,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
   this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
-  this.route('components-examples/flexberry-simpleolv/settings-example');
-  this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
-  this.route('components-examples/flexberry-simpleolv/limit-function-example');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form/user', { path: 'components-examples/flexberry-simpleolv/on-edit-form/user/:id' });
-  this.route('components-examples/flexberry-simpleolv/custom-filter');
-  this.route('components-examples/flexberry-simpleolv/configurate-rows');
-  this.route('components-examples/flexberry-simpleolv/selected-rows');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
@@ -176,10 +168,14 @@ Router.map(function() {
   this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
+  this.route('components-examples/modal-dialog', function () {
+    this.route('index', { path: '/' });
+  });
   this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
+  this.route('integration-examples/edit-form/theming-components');
   this.route('integration-examples/edit-form/validation');
 
   // User-setting forms.
@@ -207,6 +203,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
+  this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',
@@ -221,6 +218,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox.new',
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 
+  this.route('login');
 });
 
 export default Router;

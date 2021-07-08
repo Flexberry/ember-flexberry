@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -43,7 +43,7 @@ export default ListFormRoute.extend({
     @type Object
     @default {}
   */
-  developerUserSettings: Ember.computed(function() {
+  developerUserSettings: computed(function() {
     return {
       EmberFlexberryDummyDepartamentL: {}
     }

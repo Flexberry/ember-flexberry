@@ -19,6 +19,12 @@ module.exports = {
   },
 
   locals(options) {
-    return Blueprint.lookup('acceptance-test').locals(options);
+    const blueprint = Blueprint.lookup('acceptance-test', {
+      paths: options.project.blueprintLookupPaths(),
+    });
+
+    blueprint.project = options.project;
+
+    return blueprint.locals(options);
   }
 };

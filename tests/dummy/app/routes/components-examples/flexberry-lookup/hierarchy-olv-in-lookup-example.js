@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import { Query } from 'ember-flexberry-data';
-const { Builder } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
 
 export default EditFormRoute.extend({
   /**
@@ -27,11 +26,13 @@ export default EditFormRoute.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     let store = this.get('store');
     let base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;
   },
+  /* eslint-enable no-unused-vars */
 
   actions: {
     loadRecordsById(id, target, property) {
@@ -43,7 +44,7 @@ export default EditFormRoute.extend({
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);
 
-      Ember.set(target, property, this.store.query(modelName, builder.build()));
+      set(target, property, this.store.query(modelName, builder.build()));
     },
   }
 });

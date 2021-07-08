@@ -3,18 +3,19 @@
 */
 
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
-let Model = Projection.Model.extend({
+let Model = EmberFlexberryDataModel.extend({
   lockKey: DS.attr('string'),
   userName: DS.attr('string'),
   lockDate: DS.attr('date'),
 });
 
 Model.defineProjection('LockL', 'new-platform-flexberry-services-lock', {
-  lockKey: Projection.attr('Lock key'),
-  userName: Projection.attr('User name'),
-  lockDate: Projection.attr('Lock date'),
+  lockKey: attr('Lock key'),
+  userName: attr('User name'),
+  lockDate: attr('Lock date'),
 });
 Model.defineIdType('string');
 

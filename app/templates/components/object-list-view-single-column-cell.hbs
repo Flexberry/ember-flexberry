@@ -1,6 +1,6 @@
 {{#each columns as |column|}}
-  <div class="field {{if (and showValidationMessages (get model (concat "errors." column.propName ".length"))) "error"}}">
-    <label>{{column.header}}:</label>
+  <div class="field {{if (and showValidationMessages (v-get model column.propName "isInvalid")) "error"}}">
+    <label>{{if column.keyLocale (t column.keyLocale) column.header}}</label>
     <div class="inline fields {{if (not hasEditableValues) "readonly"}}">
       {{#if column.cellComponent.componentName}}
         {{component column.cellComponent.componentName
@@ -15,12 +15,12 @@
           {{get-formatted model column.propName
             dateFormat=dateFormat
             moment=moment
-          }}
+          }}&nbsp;
         </div>
       {{/if}}
       {{#if showValidationMessages}}
         {{flexberry-validationmessage
-          error=(get model (concat "errors." column.propName))
+          error=(v-get model column.propName "messages")
           pointing="left pointing"
         }}
       {{/if}}

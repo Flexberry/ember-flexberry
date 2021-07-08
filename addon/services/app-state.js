@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { readOnly } from '@ember/object/computed';
 
 /**
   Service for managing the state of the application.
@@ -54,7 +55,7 @@ import Ember from 'ember';
   @class AppStateService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     @private
     @property state
@@ -70,7 +71,7 @@ export default Ember.Service.extend({
     @readOnly
     @type String
   */
-  state: Ember.computed.readOnly('_state'),
+  state: readOnly('_state'),
 
   /**
     Sets the application state as `loading`.

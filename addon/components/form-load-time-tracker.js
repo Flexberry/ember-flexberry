@@ -2,22 +2,24 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { computed} from '@ember/object';
 
 /**
   Component for view data from {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
 
   @class FormLoadTimeTrackerComponent
-  @extends Ember.Component
+  @extends Component
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
 
     @property formLoadTimeTracker
     @type FormLoadTimeTrackerService
   */
-  formLoadTimeTracker: Ember.inject.service(),
+  formLoadTimeTracker: service(),
 
   /**
     Load time with round.
@@ -26,7 +28,7 @@ export default Ember.Component.extend({
     @type Number
     @readonly
   */
-  loadTime: Ember.computed('formLoadTimeTracker.loadTime', function() {
+  loadTime: computed('formLoadTimeTracker.loadTime', function() {
     return Math.round(this.get('formLoadTimeTracker.loadTime'));
   }).readOnly(),
 
@@ -37,7 +39,7 @@ export default Ember.Component.extend({
     @type Number
     @readonly
   */
-  renderTime: Ember.computed('formLoadTimeTracker.renderTime', function() {
+  renderTime: computed('formLoadTimeTracker.renderTime', function() {
     return Math.round(this.get('formLoadTimeTracker.renderTime'));
   }).readOnly(),
 });

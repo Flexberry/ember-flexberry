@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { inject as service} from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -12,16 +14,16 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
-    export default Ember.Controller.extend(SortableController, {
+    export default Controller.extend(SortableController, {
     });
     ```
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-    export default Ember.Route.extend(SortableRoute, {
+    export default Route.extend(SortableRoute, {
     });
     ```
     ```handlebars
@@ -38,13 +40,13 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
     ```
 
   @class SortableControllerMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Defines which query parameters the controller accepts.
-    [More info](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    [More info](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array
@@ -68,7 +70,7 @@ export default Ember.Mixin.create({
   */
   sort: null,
 
-  _userSettingsService: Ember.inject.service('user-settings'),
+  _userSettingsService: service('user-settings'),
 
   /**
     Dictionary with sorting data related to properties.
@@ -77,7 +79,7 @@ export default Ember.Mixin.create({
     @type Object
     @readOnly
   */
-  computedSorting: Ember.computed('model.sorting', function() {
+  computedSorting: computed('model.sorting', function() {
     let sorting = this.get('model.sorting');
     let result = {};
 

@@ -1,12 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import Ember from 'ember';
+import { registerWaiter } from '@ember/test';
 
 moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
   integration: true,
 
-  setup: function () {
+  beforeEach() {
     // detachable need for jquery can do select child components
     this.set('settings', {
       detachable: false
@@ -17,11 +17,11 @@ moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
       this.set('created', true);
     });
 
-    Ember.Test.registerWaiter(this, () => this.get('created'));
+    registerWaiter(this, () => this.get('created'));
   },
 
-  teardown: function() {
-    this.$().modal('hide dimmer');
+  afterEach() {
+    this.$('.flexberry-modal').modal('hide dimmer');
   }
 });
 
@@ -33,7 +33,7 @@ test('it renders', function (assert) {
   `);
 
   return wait().then(() => {
-    assert.equal(this.$('.description').text().trim(), 'template block text');
+    assert.equal(this.$('.content').text().trim(), 'template block text');
   });
 });
 

@@ -1,9 +1,10 @@
+import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
-import Ember from 'ember';
 
 export default EditFormController.extend({
 
-  userSettings: Ember.inject.service(),
+  userSettings: service(),
 
   /**
     Flag indicates whether 'flexberry-lookup' component use user settings or not.
@@ -22,7 +23,7 @@ export default EditFormController.extend({
     },
 
     clearUserSetting() {
-      Ember.get(this, 'userSettings').deleteUserSetting('ApplicationUserObjectlistView');
+      get(this, 'userSettings').deleteUserSetting('ApplicationUserObjectlistView');
     }
   }
 });

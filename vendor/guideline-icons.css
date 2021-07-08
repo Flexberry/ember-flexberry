@@ -1,0 +1,192 @@
+@font-face {
+  font-family: 'guideline-icons';
+  src:  url('fonts/guideline-icons/guideline-icons.eot?g0yyp8');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?g0yyp8#iefix') format('embedded-opentype'),
+    url('fonts/guideline-icons/guideline-icons.ttf?g0yyp8') format('truetype'),
+    url('fonts/guideline-icons/guideline-icons.woff?g0yyp8') format('woff'),
+    url('fonts/guideline-icons/guideline-icons.svg?g0yyp8#guideline-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-guideline-"], [class*=" icon-guideline-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'guideline-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-guideline-check-menu:before {
+  content: "\e932";
+}
+.icon-guideline-flask:before {
+  content: "\e930";
+}
+.icon-guideline-copy:before {
+  content: "\e931";
+}
+.icon-guideline-arrow-long-down:before {
+  content: "\e900";
+}
+.icon-guideline-arrow-long-left:before {
+  content: "\e901";
+}
+.icon-guideline-arrow-long-right:before {
+  content: "\e902";
+}
+.icon-guideline-arrow-long-up:before {
+  content: "\e903";
+}
+.icon-guideline-arrow-short-down:before {
+  content: "\e904";
+}
+.icon-guideline-arrow-short-down-filled:before {
+  content: "\e905";
+}
+.icon-guideline-arrow-short-left:before {
+  content: "\e906";
+}
+.icon-guideline-arrow-short-right-l:before {
+  content: "\e907";
+}
+.icon-guideline-arrow-short-right-m:before {
+  content: "\e908";
+}
+.icon-guideline-arrow-short-right-xl:before {
+  content: "\e909";
+}
+.icon-guideline-arrow-short-up:before {
+  content: "\e90a";
+}
+.icon-guideline-arrow-up-right:before {
+  content: "\e90b";
+}
+.icon-guideline-cloud:before {
+  content: "\e90c";
+}
+.icon-guideline-columns:before {
+  content: "\e90d";
+}
+.icon-guideline-cross:before {
+  content: "\e90e";
+}
+.icon-guideline-date:before {
+  content: "\e90f";
+}
+.icon-guideline-datetime:before {
+  content: "\e910";
+}
+.icon-guideline-delete:before {
+  content: "\e911";
+}
+.icon-guideline-download:before {
+  content: "\e912";
+}
+.icon-guideline-drag-and-drop:before {
+  content: "\e913";
+}
+.icon-guideline-edit:before {
+  content: "\e914";
+}
+.icon-guideline-excel:before {
+  content: "\e916";
+}
+.icon-guideline-eye:before {
+  content: "\e917";
+}
+.icon-guideline-eye-closed:before {
+  content: "\e918";
+}
+.icon-guideline-file:before {
+  content: "\e919";
+}
+.icon-guideline-filter:before {
+  content: "\e91a";
+}
+.icon-guideline-filter-active:before {
+  content: "\e91b";
+}
+.icon-guideline-like:before {
+  content: "\e91c";
+}
+.icon-guideline-list:before {
+  content: "\e91d";
+}
+.icon-guideline-mail:before {
+  content: "\e91e";
+}
+.icon-guideline-menu-ellipsis-horizontal:before {
+  content: "\e91f";
+}
+.icon-guideline-menu-hamburger:before {
+  content: "\e920";
+}
+.icon-guideline-photo:before {
+  content: "\e921";
+}
+.icon-guideline-play:before {
+  content: "\e922";
+}
+.icon-guideline-plus:before {
+  content: "\e923";
+}
+.icon-guideline-minus:before {
+  content: "\e934";
+}
+.icon-guideline-profile:before {
+  content: "\e924";
+}
+.icon-guideline-refresh:before {
+  content: "\e925";
+}
+.icon-guideline-sad:before {
+  content: "\e926";
+}
+.icon-guideline-search:before {
+  content: "\e927";
+}
+.icon-guideline-select-all:before {
+  content: "\e928";
+}
+.icon-guideline-setting:before {
+  content: "\e929";
+}
+.icon-guideline-sort-ascend:before {
+  content: "\e92a";
+}
+.icon-guideline-sort-clear:before {
+  content: "\e92b";
+}
+.icon-guideline-sort-descend:before {
+  content: "\e92c";
+}
+.icon-guideline-success:before {
+  content: "\e92d";
+}
+.icon-guideline-upload:before {
+  content: "\e92e";
+}
+.icon-guideline-warning:before {
+  content: "\e92f";
+}
+.icon-guideline-error:before {
+  content: "\e915";
+}
+.icon-guideline-menu-ellipsis-vertical:before {
+  content: "\e933";
+}
+.icon-guideline-gear:before {
+  content: "\e935";
+}
+.icon-guideline-save:before {
+  content: "\e936";
+}

@@ -3,9 +3,10 @@
 */
 
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
-let Model = Projection.Model.extend({
+let Model = EmberFlexberryDataModel.extend({
   user: DS.attr('string'),
   module: DS.attr('string'),
   name: DS.attr('string'),
@@ -13,10 +14,10 @@ let Model = Projection.Model.extend({
 });
 
 Model.defineProjection('AdvLimitE', 'flexberry-adv-limit', {
-  user: Projection.attr('string'),
-  module: Projection.attr('string'),
-  name: Projection.attr('string'),
-  value: Projection.attr('string'),
+  user: attr('string'),
+  module: attr('string'),
+  name: attr('string'),
+  value: attr('string'),
 });
 
 /**

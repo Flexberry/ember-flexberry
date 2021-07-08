@@ -1,9 +1,0 @@
-/*******************************
-         Theme Overrides
-*******************************/
-
-.ui.form .flexberry-colsconfig {
-  .success.message, .warning.message, .error.message {
-    display: block;
-  }
-}

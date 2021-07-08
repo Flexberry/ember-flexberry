@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -19,7 +20,9 @@ export default EditFormRoute.extend({
   @default {}
   */
 
-  developerUserSettings: { listOnEditform: { } },
+  developerUserSettings: computed(function() {
+    return { listOnEditform: { } };
+  }),
 
   /**
     Name of model to be used as form's record type.

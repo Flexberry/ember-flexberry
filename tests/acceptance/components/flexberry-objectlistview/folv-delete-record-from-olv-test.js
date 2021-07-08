@@ -1,6 +1,6 @@
 import { executeTest } from './execute-folv-test';
 
-executeTest('check delete record from olv', (store, assert, app) => {
+executeTest('check delete record from olv', (store, assert) => {
   assert.expect(1);
   const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);

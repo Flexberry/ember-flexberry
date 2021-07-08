@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { executeTest } from './execute-flexberry-lookup-test';
 import { loadingLocales } from './lookup-test-functions';
+import { fillIn } from '@ember/test-helpers';
 
 executeTest('flexberry-lookup autocomplete message ru', (store, assert, app) => {
   assert.expect(4);
@@ -11,15 +13,15 @@ executeTest('flexberry-lookup autocomplete message ru', (store, assert, app) => 
     assert.equal(currentPath(), path);
 
     loadingLocales('ru', app).then(() => {
-      let textbox = Ember.$('.ember-text-field');
+      let textbox = $('.ember-text-field')[0];
       fillIn(textbox, 'gfhfkjglkhlh');
     });
 
     let asyncOperationsCompleted = assert.async();
-    Ember.run.later(function() {
+    run.later(function() {
       asyncOperationsCompleted();
 
-      let $message = Ember.$('.message');
+      let $message = $('.message');
       assert.strictEqual($message.hasClass('empty'), true, 'Component\'s wrapper has message');
 
       let $messageHeader = $message.children('.header');

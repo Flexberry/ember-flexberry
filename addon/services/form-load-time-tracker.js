@@ -2,15 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { computed } from '@ember/object';
 
 /**
   Service for store time load and render.
 
   @class FormLoadTimeTrackerService
-  @extends Ember.Service
+  @extends Service
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Start time of load data.
 
@@ -54,7 +55,7 @@ export default Ember.Service.extend({
     @type Number
     @readonly
   */
-  loadTime: Ember.computed('startLoadTime', 'endLoadTime', function() {
+  loadTime: computed('startLoadTime', 'endLoadTime', function() {
     return this.get('endLoadTime') - this.get('startLoadTime');
   }).readOnly(),
 
@@ -65,7 +66,7 @@ export default Ember.Service.extend({
     @type Number
     @readonly
   */
-  renderTime: Ember.computed('startRenderTime', 'endRenderTime', function() {
+  renderTime: computed('startRenderTime', 'endRenderTime', function() {
     return this.get('endRenderTime') - this.get('startRenderTime');
   }).readOnly(),
 });

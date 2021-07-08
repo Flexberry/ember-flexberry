@@ -6,7 +6,7 @@ module('Unit | Utility | get projection by name');
 // Replace this with your real tests.
 test('it works', function(assert) {
   let store = {};
-  store.modelFor = function(modelName) {
+  store.modelFor = function() {
     return { projections: { testProjection: { success: true } } };
   };
 

@@ -2,6 +2,7 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import MultiListModelEdit from 'ember-flexberry/mixins/multi-list-model-edit';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
+import { computed } from '@ember/object';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
 export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditFormRouteOperationsIndicationMixin, {
@@ -74,44 +75,47 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, EditForm
   @type Object
   @default {}
   */
-  developerUserSettings: {
-    suggestionUserVotesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'voteType', 'width': 133 },
-          { 'propName': 'author', 'width': 348 },
-          { 'propName': 'author.eMail', 'width': 531 }
-        ],
-        'sorting': [{ 'propName': 'author', 'direction': 'asc', 'attributePath': 'author.name' }]
-      }
-    },
-    filesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [
-          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
-          { 'propName': 'order', 'width': 140 },
-          { 'propName': 'file', 'width': 893 }
-        ],
-        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
-        'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
-      }
-    },
-    suggestionCommentsGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
-        'sorting': [
-          { 'propName': 'votes', 'direction': 'asc' },
-          { 'propName': 'moderated', 'direction': 'desc' },
-          { 'propName': 'text', 'direction': 'asc' }
-        ],
-      }
-    },
-    MultiUserList: {},
-    MultiUserList2: {},
-    MultiSuggestionList: {},
-    MultiHierarchyList: {},
-  },
+
+  developerUserSettings: computed(function() {
+    return {
+      suggestionUserVotesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'voteType', 'width': 133 },
+            { 'propName': 'author', 'width': 348 },
+            { 'propName': 'author.eMail', 'width': 531 }
+          ],
+          'sorting': [{ 'propName': 'author', 'direction': 'asc', 'attributePath': 'author.name' }]
+        }
+      },
+      filesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [
+            { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+            { 'propName': 'order', 'width': 140 },
+            { 'propName': 'file', 'width': 893 }
+          ],
+          'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
+          'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
+        }
+      },
+      suggestionCommentsGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
+          'sorting': [
+            { 'propName': 'votes', 'direction': 'asc' },
+            { 'propName': 'moderated', 'direction': 'desc' },
+            { 'propName': 'text', 'direction': 'asc' }
+          ],
+        }
+      },
+      MultiUserList: {},
+      MultiUserList2: {},
+      MultiSuggestionList: {},
+      MultiHierarchyList: {},
+    }
+  }),
 
   /**
     Name of model to be used as form's record type.

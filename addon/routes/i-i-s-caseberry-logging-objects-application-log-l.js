@@ -2,6 +2,7 @@
   @module ember-flexberry
  */
 
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 /**
@@ -43,200 +44,202 @@ export default ListFormRoute.extend({
 
   @property developerUserSettings
   @type Object
-  @default {}
   */
-  developerUserSettings: { IISLoggingObjectListView: `
-    {
-      "DEFAULT": {
-        "colsOrder": [
-        {
-          "propName": "timestamp",
-          "hide": false
+  developerUserSettings: computed(function() {
+    return {
+      IISLoggingObjectListView: `
+      {
+        "DEFAULT": {
+          "colsOrder": [
+            {
+              "propName": "timestamp",
+              "hide": false
+            },
+            {
+              "propName": "category"
+            },
+            {
+              "propName": "machineName"
+            },
+            {
+              "propName": "appDomainName"
+            },
+            {
+              "propName": "processId"
+            },
+            {
+              "propName": "message"
+            },
+            {
+              "propName": "processName",
+              "hide": true
+            },
+            {
+              "propName": "formattedMessage",
+              "hide": true
+            },
+            {
+              "propName": "eventId",
+              "hide": true
+            },
+            {
+              "propName": "priority",
+              "hide": true
+            },
+            {
+              "propName": "severity",
+              "hide": true
+            },
+            {
+              "propName": "title",
+              "hide": true
+            },
+            {
+              "propName": "threadName",
+              "hide": true
+            },
+            {
+              "propName": "win32ThreadId",
+              "hide": true
+            }
+          ],
+          "sorting": [
+            {
+              "propName": "timestamp",
+              "direction": "desc",
+              "sortPriority": 1
+            }
+          ]
         },
-        {
-          "propName": "category"
+        "Message": {
+          "colsOrder": [
+            {
+              "propName": "timestamp",
+              "hide": false
+            },
+            {
+              "propName": "category"
+            },
+            {
+              "propName": "machineName"
+            },
+            {
+              "propName": "appDomainName"
+            },
+            {
+              "propName": "processId"
+            },
+            {
+              "propName": "message"
+            },
+            {
+              "propName": "processName",
+              "hide": true
+            },
+            {
+              "propName": "formattedMessage",
+              "hide": true
+            },
+            {
+              "propName": "eventId",
+              "hide": true
+            },
+            {
+              "propName": "priority",
+              "hide": true
+            },
+            {
+              "propName": "severity",
+              "hide": true
+            },
+            {
+              "propName": "title",
+              "hide": true
+            },
+            {
+              "propName": "threadName",
+              "hide": true
+            },
+            {
+              "propName": "win32ThreadId",
+              "hide": true
+            }
+          ],
+          "sorting": [
+            {
+              "propName": "timestamp",
+              "direction": "desc",
+              "sortPriority": 1
+            }
+          ]
         },
-        {
-          "propName": "machineName"
-        },
-        {
-          "propName": "appDomainName"
-        },
-        {
-          "propName": "processId"
-        },
-        {
-          "propName": "message"
-        },
-        {
-          "propName": "processName",
-          "hide": true
-        },
-        {
-          "propName": "formattedMessage",
-          "hide": true
-        },
-        {
-          "propName": "eventId",
-          "hide": true
-        },
-        {
-          "propName": "priority",
-          "hide": true
-        },
-        {
-          "propName": "severity",
-          "hide": true
-        },
-        {
-          "propName": "title",
-          "hide": true
-        },
-        {
-          "propName": "threadName",
-          "hide": true
-        },
-        {
-          "propName": "win32ThreadId",
-          "hide": true
+        "FormattedMessage": {
+          "colsOrder": [
+            {
+              "propName": "timestamp",
+              "hide": false
+            },
+            {
+              "propName": "category"
+            },
+            {
+              "propName": "machineName"
+            },
+            {
+              "propName": "appDomainName"
+            },
+            {
+              "propName": "processId"
+            },
+            {
+              "propName": "formattedMessage",
+              "hide": false
+            },
+            {
+              "propName": "message",
+              "hide": true
+            },
+            {
+              "propName": "processName",
+              "hide": true
+            },
+            {
+              "propName": "eventId",
+              "hide": true
+            },
+            {
+              "propName": "priority",
+              "hide": true
+            },
+            {
+              "propName": "severity",
+              "hide": true
+            },
+            {
+              "propName": "title",
+              "hide": true
+            },
+            {
+              "propName": "threadName",
+              "hide": true
+            },
+            {
+              "propName": "win32ThreadId",
+              "hide": true
+            }
+          ],
+          "sorting": [
+            {
+              "propName": "timestamp",
+              "direction": "desc",
+              "sortPriority": 1
+            }
+          ]
         }
-        ],
-        "sorting": [
-        {
-          "propName": "timestamp",
-          "direction": "desc",
-          "sortPriority": 1
-        }
-        ]
-      },
-      "Message": {
-        "colsOrder": [
-        {
-          "propName": "timestamp",
-          "hide": false
-        },
-        {
-          "propName": "category"
-        },
-        {
-          "propName": "machineName"
-        },
-        {
-          "propName": "appDomainName"
-        },
-        {
-          "propName": "processId"
-        },
-        {
-          "propName": "message"
-        },
-        {
-          "propName": "processName",
-          "hide": true
-        },
-        {
-          "propName": "formattedMessage",
-          "hide": true
-        },
-        {
-          "propName": "eventId",
-          "hide": true
-        },
-        {
-          "propName": "priority",
-          "hide": true
-        },
-        {
-          "propName": "severity",
-          "hide": true
-        },
-        {
-          "propName": "title",
-          "hide": true
-        },
-        {
-          "propName": "threadName",
-          "hide": true
-        },
-        {
-          "propName": "win32ThreadId",
-          "hide": true
-        }
-        ],
-        "sorting": [
-        {
-          "propName": "timestamp",
-          "direction": "desc",
-          "sortPriority": 1
-        }
-        ]
-      },
-      "FormattedMessage": {
-        "colsOrder": [
-        {
-          "propName": "timestamp",
-          "hide": false
-        },
-        {
-          "propName": "category"
-        },
-        {
-          "propName": "machineName"
-        },
-        {
-          "propName": "appDomainName"
-        },
-        {
-          "propName": "processId"
-        },
-        {
-          "propName": "formattedMessage",
-          "hide": false
-        },
-        {
-          "propName": "message",
-          "hide": true
-        },
-        {
-          "propName": "processName",
-          "hide": true
-        },
-        {
-          "propName": "eventId",
-          "hide": true
-        },
-        {
-          "propName": "priority",
-          "hide": true
-        },
-        {
-          "propName": "severity",
-          "hide": true
-        },
-        {
-          "propName": "title",
-          "hide": true
-        },
-        {
-          "propName": "threadName",
-          "hide": true
-        },
-        {
-          "propName": "win32ThreadId",
-          "hide": true
-        }
-        ],
-        "sorting": [
-        {
-          "propName": "timestamp",
-          "direction": "desc",
-          "sortPriority": 1
-        }
-        ]
       }
+      `
     }
-    `
-  },
+  }),
 
   /**
     Model name.

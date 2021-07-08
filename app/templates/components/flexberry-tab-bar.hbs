@@ -1,9 +1,9 @@
-{{#each tabs as |item|}}
-  <a class="{{concat flexberryClassNames.tab " " "tab" " " "item" " " item.class}}"
+{{#each items as |item|}}
+  <a class="{{concat flexberryClassNames.tab " tab item " item.class (if item.active " active")}}"
     title="{{item.caption}}"
     data-tab="{{item.selector}}"
-    {{action "change" item.selector on="click"}}>
-    {{#if item._hasIcon}}
+    {{action "change" item on="click"}}>
+    {{#if item.iconClass}}
       <i class="{{concat flexberryClassNames.tabIcon " " item.iconClass}}"></i>
     {{else}}
       {{item.caption}}

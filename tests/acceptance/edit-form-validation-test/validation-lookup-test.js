@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation lookup', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -11,16 +13,16 @@ executeTest('check operation lookup', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[7]);
+    let $validationField = $($('.field')[8]);
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Master is required', 'Lookup have default value');
 
-    let $validationFlexberryLookupButton = Ember.$('.ui.button.ui-change')[0];
+    let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
 
     // Click lookup button.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryLookupButton.click();
     });
 
@@ -33,3 +35,4 @@ executeTest('check operation lookup', (store, assert, app) => {
     }, 1000);
   });
 });
+/* eslint-enable no-unused-vars */

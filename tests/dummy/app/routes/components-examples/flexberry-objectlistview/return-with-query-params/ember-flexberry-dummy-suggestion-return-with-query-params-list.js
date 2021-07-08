@@ -30,15 +30,9 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
 
   @property developerUserSettings
   @type Object
-  @default {}
+  @default null
   */
-  developerUserSettings: {
-    SuggestionObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 86 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
-      }
-    }
-  },
+  developerUserSettings: null,
 
   /**
     Name of model to be used as list's records types.
@@ -54,9 +48,19 @@ export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
     regardless of load promise's state (was it fulfilled or rejected).
 
     @method onModelLoadingAlways.
-    @param {Object} data Data about completed load operation.
    */
-  onModelLoadingAlways(data) {
+  init() {
+    this._super();
+    this.set('developerUserSettings', {
+      SuggestionObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 86 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+        }
+      }
+    });
+  },
+
+  onModelLoadingAlways() {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },

@@ -25,7 +25,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
     @method model
    */
-  model(params) {
+  model() {
     let store = this.get('store');
     let base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;

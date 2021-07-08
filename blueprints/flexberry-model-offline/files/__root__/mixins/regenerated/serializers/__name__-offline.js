@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Mixin from '@ember/object/mixin';
 
-export let OfflineSerializer = Ember.Mixin.create({
+export let OfflineSerializer = Mixin.create({
   getAttrs: function () {
     let parentAttrs = this._super();
     let attrs = {
 <%= offlineSerializerAttrs %>
     };
 
-    return Ember.$.extend(true, {}, parentAttrs, attrs);
+    return $.extend(true, {}, parentAttrs, attrs);
   },
   init: function () {
     this.set('attrs', this.getAttrs());

@@ -24,6 +24,7 @@ export default EditFormRoute.extend({
 
     @method model
   */
+  /* eslint-disable no-unused-vars */
   model(params) {
     var store = this.get('store');
 
@@ -40,4 +41,5 @@ export default EditFormRoute.extend({
     let aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', { details: arrRec });
     return aggregator;
   },
+  /* eslint-enable no-unused-vars */
 });

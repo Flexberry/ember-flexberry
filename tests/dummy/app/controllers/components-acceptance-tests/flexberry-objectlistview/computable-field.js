@@ -154,5 +154,13 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: []
+  records: undefined,
+
+  /**
+    An overridable method called when objects are instantiated.
+  */
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+  },
 });

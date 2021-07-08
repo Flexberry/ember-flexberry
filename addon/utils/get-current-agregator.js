@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 
 export default function getCurrentAgregator() {
-  let detailInteractionService = Ember.getOwner(this).lookup('service:detail-interaction');
+  let detailInteractionService = getOwner(this).lookup('service:detail-interaction');
   let agragatorModel = detailInteractionService.getLastValue('modelCurrentAgregators');
   return agragatorModel;
 }

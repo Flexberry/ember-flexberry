@@ -8,7 +8,7 @@
 
   @for ApplicationInstanceInitializer
   @method device.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
+  @param {<a href="https://www.emberjs.com/api/ember/release/classes/ApplicationInstance">ApplicationInstance</a>} applicationInstance Ember application instance.
 */
 export function initialize(applicationInstance) {
   // Inject device detection service into application parts.
@@ -29,7 +29,7 @@ export function initialize(applicationInstance) {
   // 2. We can't inject device detection service into resolver through call to
   // application.inject('resolver:main, 'device', 'service:device'), it will inject service into future resolver's instances,
   // but it will not inject service into already instantiated resolver.
-  // 3. We also can't inject device detection service through call to Ember.inject.servie('device')
+  // 3. We also can't inject device detection service through call to inject('device')
   // inside resolver's class, because resolver is not instantiated via container, and ember will throw an error:
   // 'Attempting to lookup an injected property on an object without a container...'.
   // 4. So the the most appropriate way to inject device detection service into application resolver

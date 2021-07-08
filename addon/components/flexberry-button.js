@@ -2,9 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { typeOf } from '@ember/utils';
+import { htmlSafe, isHTMLSafe } from '@ember/string';
+import { get, computed  } from '@ember/object';
+import $ from 'jquery';
 import RequiredActionsMixin from '../mixins/required-actions';
-import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 
@@ -49,15 +52,13 @@ const flexberryClassNames = {
   ```
 
   @class FlexberryButtonComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
-  @uses DomActionsMixin
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryButtonComponent = Ember.Component.extend(
+let FlexberryButtonComponent = Component.extend(
   RequiredActionsMixin,
-  DomActionsMixin,
   DynamicActionsMixin,
   DynamicPropertiesMixin, {
 
@@ -69,11 +70,11 @@ let FlexberryButtonComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasCaption: Ember.computed('caption', function () {
+    _hasCaption: computed('caption', function () {
       let caption = this.get('caption');
-      return Ember.typeOf(caption) === 'string' && Ember.$.trim(caption) !== '' ||
-        Ember.typeOf(Ember.String.isHTMLSafe) === 'function' && Ember.String.isHTMLSafe(caption) && Ember.$.trim(Ember.get(caption, 'string')) !== '' ||
-        caption instanceof Ember.Handlebars.SafeString && Ember.$.trim(Ember.get(caption, 'string')) !== '';
+      return typeOf(caption) === 'string' && $.trim(caption) !== '' ||
+        typeOf(isHTMLSafe) === 'function' && isHTMLSafe(caption) && $.trim(get(caption, 'string')) !== '' ||
+        caption instanceof htmlSafe && $.trim(get(caption, 'string')) !== '';
     }),
 
     /**
@@ -84,9 +85,9 @@ let FlexberryButtonComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasIcon: Ember.computed('iconClass', function () {
+    _hasIcon: computed('iconClass', function () {
       let iconClass = this.get('iconClass');
-      return Ember.typeOf(iconClass) === 'string' && Ember.$.trim(iconClass) !== '';
+      return typeOf(iconClass) === 'string' && $.trim(iconClass) !== '';
     }),
 
     /**
@@ -97,7 +98,7 @@ let FlexberryButtonComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasIconOnly: Ember.computed('_hasIcon', '_hasCaption', function () {
+    _hasIconOnly: computed('_hasIcon', '_hasCaption', function () {
       return this.get('_hasIcon') && !this.get('_hasCaption');
     }),
 
@@ -108,7 +109,7 @@ let FlexberryButtonComponent = Ember.Component.extend(
     flexberryClassNames,
 
     /**
-      Overridden ['tagName'](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+      Overridden ['tagName'](https://emberjs.com/api/ember/release/classes/Component/properties/tagName?anchor=tagName)
       to force <label> to be a component's wrapping element.
 
       @property tagName

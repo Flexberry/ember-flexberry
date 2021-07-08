@@ -1,7 +1,16 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+});
+
+var Model = EmberFlexberryDataModel.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-suggestion.userVotes.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
@@ -12,22 +21,13 @@ var Model = Projection.Model.extend({
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
-
-  // Model validation rules.
-  validations: {
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.
 Model.defineProjection('VoteE', 'ember-flexberry-dummy-vote', {
-  voteType: Projection.attr('Vote type'),
-  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
+  voteType: attr('Vote type'),
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
       hidden: true
     })
   }, {

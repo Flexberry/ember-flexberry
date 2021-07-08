@@ -1,35 +1,37 @@
-<h1 class="ui header">{{t "forms.error-form.caption"}}</h1>
-<h2 class="ui header">
-  {{#if model.nameLocaleKey}}
-    {{t model.nameLocaleKey}}:
-  {{else if model.name}}
-    {{model.name}}:
-  {{/if}}
-  {{#if model.messageLocaleKey}}
-    {{t model.messageLocaleKey}}
-  {{else if model.message}}
-    {{model.message}}
-  {{/if}}
-</h2>
-{{#if model.stack}}
-  {{#flexberry-toggler
-    caption=(t "forms.error-form.show-more")
-  }}
-    <pre>{{model.stack}}</pre>
-  {{/flexberry-toggler}}
-{{/if}}
-{{#if model.retryRoute}}
-  {{#if model.id}}
-    {{link-to (t "forms.error-form.retry") model.retryRoute model.id
-      tagName="button"
-      activeClass=""
-      class="ui button"
+<h3 class="ui header">{{t "forms.error-form.caption"}}</h3>
+<div class="ui form flexberry-vertical-form">
+  <h2 class="ui header">
+    {{#if model.nameLocaleKey}}
+      {{t model.nameLocaleKey}}:
+    {{else if model.name}}
+      {{model.name}}:
+    {{/if}}
+    {{#if model.messageLocaleKey}}
+      {{t model.messageLocaleKey}}
+    {{else if model.message}}
+      {{model.message}}
+    {{/if}}
+  </h2>
+  {{#if model.stack}}
+    {{#flexberry-toggler
+      caption=(t "forms.error-form.show-more")
     }}
-  {{else}}
-    {{link-to (t "forms.error-form.retry") model.retryRoute
-      tagName="button"
-      activeClass=""
-      class="ui button"
-    }}
+      <pre>{{model.stack}}</pre>
+    {{/flexberry-toggler}}
   {{/if}}
-{{/if}}
+  {{#if model.retryRoute}}
+    {{#if model.id}}
+      {{link-to (t "forms.error-form.retry") model.retryRoute model.id
+        tagName="button"
+        activeClass=""
+        class="ui button"
+      }}
+    {{else}}
+      {{link-to (t "forms.error-form.retry") model.retryRoute
+        tagName="button"
+        activeClass=""
+        class="ui button"
+      }}
+    {{/if}}
+  {{/if}}
+</div>

@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { get } from '@ember/object';
 
-export default Ember.Route.extend({
+export default Route.extend({
   /**
    * Returns model related to current route.
    *
@@ -8,7 +9,7 @@ export default Ember.Route.extend({
    * @function model
    */
   model() {
-    var store = Ember.get(this, 'store');
+    var store = get(this, 'store');
 
     var base = store.createRecord('components-examples/flexberry-checkbox/settings-example/base', { flag : null });
 

@@ -2,10 +2,10 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
    * Current opened modal window.
    *

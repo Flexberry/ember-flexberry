@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -32,7 +34,8 @@ test('size renders properly', function(assert) {
   let $component = this.$().children();
 
   // Check component's syze's types.
-  let sizeTypes = Ember.A(['small', 'large', 'huge', 'massive']);
+  let sizeTypes = A(['small', 'large', 'huge', 'massive']);
+  /* eslint-disable no-unused-vars */
   sizeTypes.forEach((sizeCssClassName, index) => {
     this.set('size', sizeCssClassName);
     assert.strictEqual(
@@ -40,14 +43,17 @@ test('size renders properly', function(assert) {
       true,
       'Component\'s wrapper has size css-class \'' + sizeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('size', '');
+  /* eslint-disable no-unused-vars */
   sizeTypes.forEach((sizeCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(sizeCssClassName),
       false,
       'Component\'s wrapper hasn\'t size css-class \'' + sizeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('type renders properly', function(assert) {
@@ -62,7 +68,8 @@ test('type renders properly', function(assert) {
   let $component = this.$().children();
 
   // Check component's type's CSS-classes.
-  let typeCssClasses = Ember.A(['warning', 'info', 'positive', 'success', 'negative', 'error']);
+  let typeCssClasses = A(['warning', 'info', 'positive', 'success', 'negative', 'error']);
+  /* eslint-disable no-unused-vars */
   typeCssClasses.forEach((typeCssClassName, index) => {
     this.set('type', typeCssClassName);
     assert.strictEqual(
@@ -70,14 +77,17 @@ test('type renders properly', function(assert) {
       true,
       'Component\'s wrapper has type css-class \'' + typeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('type', '');
+  /* eslint-disable no-unused-vars */
   typeCssClasses.forEach((typeCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(typeCssClassName),
       false,
       'Component\'s wrapper hasn\'t type css-class \'' + typeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('color renders properly', function(assert) {
@@ -92,7 +102,8 @@ test('color renders properly', function(assert) {
   let $component = this.$().children();
 
   // Check component's color's CSS-classes.
-  let colorCssClasses = Ember.A(['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'black']);
+  let colorCssClasses = A(['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'black']);
+  /* eslint-disable no-unused-vars */
   colorCssClasses.forEach((colorCssClassName, index) => {
     this.set('color', colorCssClassName);
     assert.strictEqual(
@@ -100,14 +111,17 @@ test('color renders properly', function(assert) {
       true,
       'Component\'s wrapper has color css-class \'' + colorCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('color', '');
+  /* eslint-disable no-unused-vars */
   colorCssClasses.forEach((colorCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(colorCssClassName),
       false,
       'Component\'s wrapper hasn\'t color css-class \'' + colorCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('floating renders properly', function(assert) {
@@ -169,7 +183,7 @@ test('visible renders properly', function(assert) {
   assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css-class \'hidden\'');
 
   // The component is hidden by the Close button.
-  Ember.run(() => {
+  run(() => {
     $closeableIcon.click();
   });
 
@@ -211,8 +225,8 @@ test('caption & massage renders properly', function(assert) {
   let $massageText = $component.children('p');
 
   assert.strictEqual($captionText.hasClass('header'), true, 'Component\'s caption block has \'header\' css-class');
-  assert.strictEqual(Ember.$.trim($captionText.text()), 'My caption', 'Component\'s caption is right');
-  assert.strictEqual(Ember.$.trim($massageText.text()), 'My message', 'Component\'s message is right');
+  assert.strictEqual($.trim($captionText.text()), 'My caption', 'Component\'s caption is right');
+  assert.strictEqual($.trim($massageText.text()), 'My message', 'Component\'s message is right');
 });
 
 test('icon renders properly', function(assert) {
@@ -237,8 +251,8 @@ test('icon renders properly', function(assert) {
   assert.strictEqual($messageIcon.hasClass('icon'), true, 'Component\'s icon has \'icon\' css-class');
   assert.strictEqual($captionDiv.hasClass('content'), true, 'Component\'s content block has \'content\' css-class');
   assert.strictEqual($captionText.hasClass('header'), true, 'Component\'s caption block has \'header\' css-class');
-  assert.strictEqual(Ember.$.trim($captionText.text()), 'My caption', 'Component\'s caption is right');
-  assert.strictEqual(Ember.$.trim($massageText.text()), 'My message', 'Component\'s message is right');
+  assert.strictEqual($.trim($captionText.text()), 'My caption', 'Component\'s caption is right');
+  assert.strictEqual($.trim($massageText.text()), 'My message', 'Component\'s message is right');
 });
 
 test('component sends \'onHide\' action', function(assert) {
@@ -263,7 +277,7 @@ test('component sends \'onHide\' action', function(assert) {
   assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper has\'t css-class \'hidden\'');
 
   // The component is hidden by the Close button.
-  Ember.run(() => {
+  run(() => {
     let done = assert.async();
     $closeableIcon.click();
     setTimeout(() => {

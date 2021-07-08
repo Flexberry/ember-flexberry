@@ -2,8 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { observer } from '@ember/object';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
+import { isEmpty, isNone } from '@ember/utils';
 
 /**
   Flexberry checkbox component with [Semantic UI checkbox](http://semantic-ui.com/modules/checkbox.html) style.
@@ -82,9 +83,9 @@ export default FlexberryBaseComponent.extend({
   */
   isNullable: false,
 
-  valueObserver: Ember.observer('value', function() {
+  valueObserver: observer('value', function() {
     const value = this.get('value');
-    if (this.get('isNullable') && Ember.isNone(this.get('value'))) {
+    if (this.get('isNullable') && isNone(this.get('value'))) {
       this.$().checkbox('set indeterminate');
       return;
     }
@@ -102,19 +103,23 @@ export default FlexberryBaseComponent.extend({
     this.$().checkbox({
       onChecked: () => {
         this.set('value', true);
-        this.sendAction('onChange', {
-          checked: true
-        });
+        if (!isEmpty(this.get('onChange'))) {
+          this.get('onChange')({
+            checked: true
+          });
+        }
       },
       onUnchecked: () => {
         this.set('value', false);
-        this.sendAction('onChange', {
-          checked: false
-        });
+        if (!isEmpty(this.get('onChange'))) {
+          this.get('onChange')({
+            checked: false
+          });
+        }
       }
     });
 
-    if (this.get('isNullable') && Ember.isNone(this.get('value'))) {
+    if (this.get('isNullable') && isNone(this.get('value'))) {
       this.$().checkbox('set indeterminate');
       return;
     }

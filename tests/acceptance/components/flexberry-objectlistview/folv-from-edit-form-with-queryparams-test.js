@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import { executeTest } from './execute-folv-test';
 import { openEditFormByFunction, refreshListByFunction } from './folv-tests-functions';
 
@@ -11,13 +11,13 @@ executeTest('check return from editForm with queryParam', (store, assert, app) =
 
     // Open editFirn function.
     let openEditFormFunction =  function() {
-      let editButtonInRow = Ember.$('.object-list-view-row-edit-button')[0];
+      let editButtonInRow = $('.object-list-view-row-edit-button')[0];
       editButtonInRow.click();
     };
 
     // Return to listform  function.
     let returnToListFormFunction =  function() {
-      let returnToListFormButton = Ember.$('.return-to-list-form')[0];
+      let returnToListFormButton = $('.return-to-list-form')[0];
       returnToListFormButton.click();
     };
 

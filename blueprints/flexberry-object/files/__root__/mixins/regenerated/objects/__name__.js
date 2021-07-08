@@ -1,5 +1,5 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
-export let ObjectMix = Ember.Mixin.create({
+export let ObjectMix = Mixin.create({
 <%= attrs %>
 });

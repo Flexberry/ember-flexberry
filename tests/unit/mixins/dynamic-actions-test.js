@@ -1,45 +1,35 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import Controller from '@ember/controller';
+import { A } from '@ember/array';
+import { typeOf } from '@ember/utils';
 import DynamicActionsMixin from 'ember-flexberry/mixins/dynamic-actions';
 import DynamicActionObject from 'ember-flexberry/objects/dynamic-action';
 import { module, test } from 'qunit';
 
-let ClassWithDynamicActionsMixin = Ember.Object.extend(DynamicActionsMixin, {});
-let ComponentWithDynamicActionsMixin = Ember.Component.extend(DynamicActionsMixin, {});
+let ComponentWithDynamicActionsMixin = Component.extend(DynamicActionsMixin, {});
 
 module('Unit | Mixin | dynamic-actions mixin');
 
-test('Mixin throws assertion failed exception if it\'s owner hasn\'t \'sendAction\' method', function (assert) {
-  assert.expect(1);
-
-  try {
-    ClassWithDynamicActionsMixin.create({ dynamicActions: [] });
-  } catch (ex) {
-    assert.strictEqual(
-      (/wrong\s*type\s*of\s*.*sendAction.*/gi).test(ex.message),
-      true,
-      'Throws assertion failed exception if owner hasn\'t \'sendAction\' method');
-  }
-});
-
 test('Mixin throws assertion failed exception if specified \'dynamicActions\' is not array', function (assert) {
-  let wrongDynamicActionsArray = Ember.A([1, true, false, 'some string', {}, function() {}, new Date(), new RegExp()]);
+  let wrongDynamicActionsArray = A([1, true, false, 'some string', {}, function() {}, new Date(), new RegExp()]);
 
   assert.expect(wrongDynamicActionsArray.length);
 
   wrongDynamicActionsArray.forEach((wrongDynamicActions) => {
     let component = ComponentWithDynamicActionsMixin.create({
       attrs: {},
-      dynamicActions: wrongDynamicActions
+      dynamicActions: wrongDynamicActions,
+      renderer: {}
     });
 
     try {
-      component.sendAction('someAction');
+      component.sendDynamicAction('someAction');
     } catch (ex) {
       assert.strictEqual(
         (/wrong\s*type\s*of\s*.*dynamicActions.*/gi).test(ex.message),
         true,
         'Throws assertion failed exception if specified \'dynamicActions\' property is \'' +
-        Ember.typeOf(wrongDynamicActions) +
+        typeOf(wrongDynamicActions) +
         '\'');
     }
   });
@@ -48,30 +38,31 @@ test('Mixin throws assertion failed exception if specified \'dynamicActions\' is
 test(
   'Mixin throws assertion failed exception if one of specified \'dynamicActions\' has wrong \'on\' property',
   function (assert) {
-    let wrongOnPropertiesArray = Ember.A([1, true, false, {}, [], function() {}, new Date(), new RegExp()]);
+    let wrongOnPropertiesArray = A([1, true, false, {}, [], function() {}, new Date(), new RegExp()]);
 
     assert.expect(wrongOnPropertiesArray.length);
 
     wrongOnPropertiesArray.forEach((wrongOnProperty) => {
       let component = ComponentWithDynamicActionsMixin.create({
         attrs: {},
-        dynamicActions: Ember.A([DynamicActionObject.create({
+        dynamicActions: A([DynamicActionObject.create({
           on: wrongOnProperty,
           actionHandler: null,
           actionName: null,
           actionContext: null,
           actionArguments: null
-        })])
+        })]),
+        renderer: {}
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*on.*/gi).test(ex.message),
           true,
           'Throws assertion failed exception if one of specified \'dynamicActions\' has \'on\' property of wrong type \'' +
-          Ember.typeOf(wrongOnProperty) + '\'');
+          typeOf(wrongOnProperty) + '\'');
       }
     });
   }
@@ -80,30 +71,31 @@ test(
 test(
   'Mixin throws assertion failed exception if one of specified \'dynamicActions\' has wrong \'actionHandler\' property',
   function (assert) {
-    let wrongActionHandlersArray = Ember.A([1, true, false, 'some string', {}, [], new Date(), new RegExp()]);
+    let wrongActionHandlersArray = A([1, true, false, 'some string', {}, [], new Date(), new RegExp()]);
 
     assert.expect(wrongActionHandlersArray.length);
 
     wrongActionHandlersArray.forEach((wrongActionHandler) => {
       let component = ComponentWithDynamicActionsMixin.create({
         attrs: {},
-        dynamicActions: Ember.A([DynamicActionObject.create({
+        dynamicActions: A([DynamicActionObject.create({
           on: 'someAction',
           actionHandler: wrongActionHandler,
           actionName: null,
           actionContext: null,
           actionArguments: null
-        })])
+        })]),
+        renderer: {}
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionHandler.*/gi).test(ex.message),
           true,
           'Throws assertion failed exception if one of specified \'dynamicActions\' has \'actionHandler\' property of wrong type \'' +
-          Ember.typeOf(wrongActionHandler) + '\'');
+          typeOf(wrongActionHandler) + '\'');
       }
     });
   }
@@ -112,30 +104,31 @@ test(
 test(
   'Mixin throws assertion failed exception if one of specified \'dynamicActions\' has wrong \'actionName\' property',
   function (assert) {
-    let wrongActionNamesArray = Ember.A([1, true, false, {}, [], function() {}, new Date(), new RegExp()]);
+    let wrongActionNamesArray = A([1, true, false, {}, [], function() {}, new Date(), new RegExp()]);
 
     assert.expect(wrongActionNamesArray.length);
 
     wrongActionNamesArray.forEach((wrongActionName) => {
       let component = ComponentWithDynamicActionsMixin.create({
         attrs: {},
-        dynamicActions: Ember.A([DynamicActionObject.create({
+        dynamicActions: A([DynamicActionObject.create({
           on: 'someAction',
           actionHandler: null,
           actionName: wrongActionName,
           actionContext: null,
           actionArguments: null
-        })])
+        })]),
+        renderer: {}
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionName.*/gi).test(ex.message),
           true,
           'Throws assertion failed exception if one of specified \'dynamicActions\' has \'actionName\' property of wrong type \'' +
-          Ember.typeOf(wrongActionName) + '\'');
+          typeOf(wrongActionName) + '\'');
       }
     });
   }
@@ -145,7 +138,7 @@ test(
   'Mixin throws assertion failed exception if one of specified \'dynamicActions\' has defined \'actionName\', but' +
   ' wrong \'actionContext\' property (without \'send\' method)',
   function (assert) {
-    let wrongActionContextsArray = Ember.A([null, 1, true, false, {}, [], function() {}, new Date(), new RegExp(), { send: function() {} }]);
+    let wrongActionContextsArray = A([null, 1, true, false, {}, [], function() {}, new Date(), new RegExp(), { send: function() {} }]);
 
     // Assertion shouldn't be send for last object containing 'send' method,
     // that's why length - 1.
@@ -154,17 +147,18 @@ test(
     wrongActionContextsArray.forEach((wrongActionContext) => {
       let component = ComponentWithDynamicActionsMixin.create({
         attrs: {},
-        dynamicActions: Ember.A([DynamicActionObject.create({
+        dynamicActions: A([DynamicActionObject.create({
           on: 'someAction',
           actionHandler: null,
           actionName: 'onSomeAction',
           actionContext: wrongActionContext,
           actionArguments: null
-        })])
+        })]),
+        renderer: {}
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/method\s*.*send.*\s*.*actionContext.*/gi).test(ex.message),
@@ -179,30 +173,31 @@ test(
 test(
   'Mixin throws assertion failed exception if one of specified \'dynamicActions\' has wrong \'actionArguments\' property',
   function (assert) {
-    let wrongActionArgumentsArray = Ember.A([1, true, false, 'some string', {}, function() {}, new Date(), new RegExp()]);
+    let wrongActionArgumentsArray = A([1, true, false, 'some string', {}, function() {}, new Date(), new RegExp()]);
 
     assert.expect(wrongActionArgumentsArray.length);
 
     wrongActionArgumentsArray.forEach((wrongActionArguments) => {
       let component = ComponentWithDynamicActionsMixin.create({
         attrs: {},
-        dynamicActions: Ember.A([DynamicActionObject.create({
+        dynamicActions: A([DynamicActionObject.create({
           on: 'someAction',
           actionHandler: null,
           actionName: null,
           actionContext: null,
           actionArguments: wrongActionArguments
-        })])
+        })]),
+        renderer: {}
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionArguments.*/gi).test(ex.message),
           true,
           'Throws assertion failed exception if one of specified \'dynamicActions\' has \'actionArguments\' property of wrong type \'' +
-          Ember.typeOf(wrongActionArguments) + '\'');
+          typeOf(wrongActionArguments) + '\'');
       }
     });
   }
@@ -213,13 +208,14 @@ test('Mixin does\'t break it\'s owner\'s standard \'sendAction\' logic', functio
 
   let component = ComponentWithDynamicActionsMixin.create({
     attrs: {},
-    dynamicActions: Ember.A([DynamicActionObject.create({
+    dynamicActions: A([DynamicActionObject.create({
       on: 'someAction',
       actionHandler: null,
       actionName: null,
       actionContext: null,
       actionArguments: null
-    })])
+    })]),
+    renderer: {}
   });
 
   let someActionHandlerHasBeenCalled = false;
@@ -227,7 +223,7 @@ test('Mixin does\'t break it\'s owner\'s standard \'sendAction\' logic', functio
     someActionHandlerHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
 
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
@@ -247,7 +243,7 @@ test(
 
     let component = ComponentWithDynamicActionsMixin.create({
       attrs: {},
-      dynamicActions: Ember.A([DynamicActionObject.create({
+      dynamicActions: A([DynamicActionObject.create({
         on: 'someAction',
         actionHandler: function() {
           someActionDynamicHandlerHasBeenCalled = true;
@@ -271,7 +267,8 @@ test(
         actionName: null,
         actionContext: null,
         actionArguments: null
-      })])
+      })]),
+      renderer: {}
     });
 
     let someActionHandlerHasBeenCalled = false;
@@ -284,7 +281,7 @@ test(
       someAnotherActionHandlerHasBeenCalled = true;
     };
 
-    component.sendAction('someAction');
+    component.sendDynamicAction('someAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       true,
@@ -314,7 +311,7 @@ test(
     someActionDynamicHandlerHasBeenCalled = false;
     someActionAgainDynamicHandlerHasBeenCalled = false;
 
-    component.sendAction('someAnotherAction');
+    component.sendDynamicAction('someAnotherAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       false,
@@ -354,7 +351,7 @@ test(
     let someActionAgainControllersHandlerHasBeenCalled = false;
     let someActionAgainControllersHandlerContext = null;
 
-    let controller = Ember.Controller.extend({
+    let controller = Controller.extend({
       actions: {
         onSomeAction: function() {
           someActionControllersHandlerHasBeenCalled = true;
@@ -384,7 +381,7 @@ test(
 
     let component = ComponentWithDynamicActionsMixin.create({
       attrs: {},
-      dynamicActions: Ember.A([DynamicActionObject.create({
+      dynamicActions: A([DynamicActionObject.create({
         on: 'someAction',
         actionHandler: function() {
           someActionDynamicHandlerHasBeenCalled = true;
@@ -411,7 +408,8 @@ test(
         actionName: 'onSomeActionAgain',
         actionContext: controller,
         actionArguments: null
-      })])
+      })]),
+      renderer: {}
     });
 
     let someActionHandlerHasBeenCalled = false;
@@ -424,7 +422,7 @@ test(
       someAnotherActionHandlerHasBeenCalled = true;
     };
 
-    component.sendAction('someAction');
+    component.sendDynamicAction('someAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       true,
@@ -503,7 +501,7 @@ test(
     someActionAgainControllersHandlerHasBeenCalled = false;
     someActionAgainControllersHandlerContext = null;
 
-    component.sendAction('someAnotherAction');
+    component.sendDynamicAction('someAnotherAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       false,
@@ -561,16 +559,17 @@ test('Mixin works properly with \'dynamicActions\' added/removed after component
   assert.expect(8);
 
   // Define component without any dynamic actions.
-  let dynamicActions = Ember.A();
+  let dynamicActions = A();
   let component = ComponentWithDynamicActionsMixin.create({
     attrs: {},
-    dynamicActions: dynamicActions
+    dynamicActions: dynamicActions,
+    renderer: {}
   });
 
   // Define controller.
   let someActionControllersHandlerHasBeenCalled = false;
   let someActionControllersHandlerContext = null;
-  let controller = Ember.Controller.extend({
+  let controller = Controller.extend({
     actions: {
       onSomeAction: function() {
         someActionControllersHandlerHasBeenCalled = true;
@@ -602,7 +601,7 @@ test('Mixin works properly with \'dynamicActions\' added/removed after component
   dynamicActions.pushObject(someDynamicAction);
 
   // Check that all handlers were called with expected context.
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
     true,
@@ -635,7 +634,7 @@ test('Mixin works properly with \'dynamicActions\' added/removed after component
 
   // Remove defined dynamic action to a component after it has been already initialized.
   dynamicActions.removeObject(someDynamicAction);
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
     true,
@@ -656,40 +655,41 @@ test(
   function (assert) {
     assert.expect(3);
 
-    let dynamicActionArguments = Ember.A(['firstDynamicArgument', 'secondDynamicArgument']);
+    let dynamicActionArguments = A(['firstDynamicArgument', 'secondDynamicArgument']);
 
     let someActionHandlerArguments = null;
     let someActionDynamicHandlerArguments = null;
     let someActionDynamicControllersHandlerArguments = null;
 
-    let controller = Ember.Controller.extend({
+    let controller = Controller.extend({
       actions: {
         onSomeAction: function(...args) {
-          someActionDynamicControllersHandlerArguments = Ember.A(args);
+          someActionDynamicControllersHandlerArguments = A(args);
         }
       }
     }).create();
 
     let component = ComponentWithDynamicActionsMixin.create({
       attrs: {},
-      dynamicActions: Ember.A([DynamicActionObject.create({
+      dynamicActions: A([DynamicActionObject.create({
         on: 'someAction',
         actionHandler: function(...args) {
-          someActionDynamicHandlerArguments = Ember.A(args);
+          someActionDynamicHandlerArguments = A(args);
         },
         actionName: 'onSomeAction',
         actionContext: controller,
         actionArguments: dynamicActionArguments
-      })])
+      })]),
+      renderer: {}
     });
 
     component.attrs.someAction = function(...args) {
-      someActionHandlerArguments = Ember.A(args);
+      someActionHandlerArguments = A(args);
     };
 
     // Check that all handlers were called with expected arguments.
-    let originalActionArguments = Ember.A(['firstOriginalArgument', 'secondOriginalArgument']);
-    component.sendAction('someAction', ...originalActionArguments);
+    let originalActionArguments = A(['firstOriginalArgument', 'secondOriginalArgument']);
+    component.sendDynamicAction('someAction', ...originalActionArguments);
     assert.strictEqual(
       someActionHandlerArguments[0] === originalActionArguments[0] &&
       someActionHandlerArguments[1] === originalActionArguments[1],
@@ -716,7 +716,8 @@ test('Mixin doesn\'t trigger component\'s inner method if outer action handler i
   assert.expect(2);
 
   let component = ComponentWithDynamicActionsMixin.create({
-    attrs: {}
+    attrs: {},
+    renderer: {}
   });
 
   let innerSomeActionHasBeenCalled = false;
@@ -724,7 +725,7 @@ test('Mixin doesn\'t trigger component\'s inner method if outer action handler i
     innerSomeActionHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     innerSomeActionHasBeenCalled,
     false,
@@ -735,7 +736,7 @@ test('Mixin doesn\'t trigger component\'s inner method if outer action handler i
     outerSomeActionHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     outerSomeActionHasBeenCalled && !innerSomeActionHasBeenCalled,
     true,

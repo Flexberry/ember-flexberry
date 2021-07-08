@@ -47,7 +47,7 @@ module.exports = {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+        return this._super(...arguments);
     },
 
     /**
@@ -65,6 +65,7 @@ module.exports = {
         return lodash.defaults({
             editForm: listFormBlueprint.listForm.editForm,
             formName: listFormBlueprint.listForm.name,
+            entityName: options.entity.name,
             modelName: listFormBlueprint.listForm.projections[0].modelName,
             modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,
             caption: listFormBlueprint.listForm.caption // for use in files\__root__\templates\__name__.hbs

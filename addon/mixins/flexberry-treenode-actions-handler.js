@@ -2,16 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Mixin containing handlers for
   {{#crossLink "FlexberryTreenodeComponent"}}flexberry-treenode component's{{/crossLink}} actions.
 
   @class FlexberryTreenodeActionsHandlerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.headerClick:method"}}flexberry-treenode component's 'headerClick' action{{/crossLink}}.
@@ -32,15 +32,17 @@ export default Ember.Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeHeaderClick(...args) {
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.beforeExpand:method"}}flexberry-treenode component's 'beforeExpand' action{{/crossLink}}.
@@ -61,15 +63,17 @@ export default Ember.Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeBeforeExpand(...args) {
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.beforeCollapse:method"}}flexberry-treenode component's 'beforeCollapse' action{{/crossLink}}.
@@ -90,14 +94,16 @@ export default Ember.Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeBeforeCollapse(...args) {
     }
+    /* eslint-enable no-unused-vars */
   }
 });

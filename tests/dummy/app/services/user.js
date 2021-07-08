@@ -1,6 +1,4 @@
-import { Security } from 'ember-flexberry-data';
-
-const { UserService } = Security;
+import UserService from 'ember-flexberry-data/services/user';
 
 export default UserService.extend({
   /**

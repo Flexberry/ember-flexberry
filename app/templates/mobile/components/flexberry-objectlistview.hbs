@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -21,7 +21,7 @@
   componentName=componentName
   lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
@@ -34,6 +34,7 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
@@ -42,7 +43,7 @@
       class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button"
       title={{_mobileSortingSettingsCaption}}
       disabled={{not colsConfigButton}}
-      {{action "showConfigDialog"}} >
+      {{action "showConfigDialog"}}>
         <i class={{_mobileSortingSettingsIcon}}></i>
         {{_mobileSortingSettingsCaption}}
     </button>
@@ -68,7 +69,7 @@
             enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
             value=searchPageValue
           }}
-          {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
+          {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
           {{input classNames=(array "hidden")}}
         </div>
       {{/if}}
@@ -122,13 +123,14 @@
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
+  confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
@@ -147,3 +149,4 @@
   fixedHeader=fixedHeader
   recordsTotalCount=recordsTotalCount
 }}
+

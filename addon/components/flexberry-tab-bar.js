@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, set } from '@ember/object';
+import { A, isArray } from '@ember/array';
 
 /**
   Component's CSS-classes names.
@@ -25,9 +27,9 @@ const flexberryClassNames = {
 /**
  * FlexberryTabBarComponent
  * Component to display semantic ui tabs
- * @extends Ember.Component
+ * @extends Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],
 
   /**
@@ -47,49 +49,6 @@ export default Ember.Component.extend({
   items: null,
 
   /**
-   * Contains items that will be displayed in tab bar
-   * @property tabs
-   * @type {Array}
-   */
-  tabs: Ember.computed('items.[]', 'items.@each.active', function () {
-    let active = false;
-    let items = this.get('items') || Ember.A();
-    let result = Ember.A();
-
-    items.forEach((item) => {
-      let itemIsActive = Ember.get(item, 'active');
-      if (itemIsActive) {
-        if (!active) {
-          active = true;
-
-          let itemClass = Ember.get(item, 'class') || '';
-          let regEx = /\sactive(\s|$)/;
-          if (!regEx.test(itemClass)) {
-            itemClass += ' active';
-          }
-
-          Ember.set(item, 'class', itemClass);
-
-          this.set('prevTab', item.selector);
-          this.$().tab('change tab', item.selector);
-        }
-      }
-
-      Ember.set(item, 'active', false);
-
-      if (Ember.get(item, 'iconClass')) {
-        Ember.set(item, '_hasIcon', true);
-      } else {
-        Ember.set(item, '_hasIcon', false);
-      }
-
-      result.pushObject(item);
-    });
-
-    return result;
-  }),
-
-  /**
    * Contains name of previous data-tab
    * @property prevTab
    */
@@ -104,17 +63,18 @@ export default Ember.Component.extend({
     */
     change(currentTab, event) {
       let prevTab = this.get('prevTab');
+      let tabName = currentTab.selector;
       let changed = false;
 
-      if (prevTab !== currentTab) {
-        this.set('prevTab', currentTab);
+      if (prevTab !== tabName) {
+        this.set('prevTab', tabName);
         changed = true;
       }
 
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        this.$('.item.active').removeClass('active');
+        set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -123,14 +83,37 @@ export default Ember.Component.extend({
       }
 
       let e = {
-        tabName: currentTab,
+        tabName: tabName,
         prevTab: prevTab,
         changed: changed,
         originalEvent: event
       };
 
-      this.sendAction('change', e);
+      this.get('change')(e);
     }
+  },
+
+  init() {
+    this._super(...arguments);
+
+    let items = this.get('items');
+    if (!isArray(items)) {
+      items = A(items)
+      this.set('items', items);
+    }
+
+    let active = false;
+    items.forEach((item) => {
+      let itemIsActive = get(item, 'active');
+      if (itemIsActive && !active) {
+        active = true;
+
+        this.set('prevTab', item.selector);
+        this.$().tab('change tab', item.selector);
+      } else {
+        set(item, 'active', false);
+      }
+    }, this);
   },
 
   /**

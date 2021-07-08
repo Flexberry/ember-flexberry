@@ -34,10 +34,6 @@ export default {
   },
 
   'components': {
-    'flexberry-simpledatetime': {
-      'scroll-caption-text': 'Scroll to increment',
-    },
-
     'flexberry-error': {
       caption: 'An error has occurred',
       'show-more': 'Show more',
@@ -49,6 +45,10 @@ export default {
     },
 
     'flexberry-textbox': {
+      placeholder: '(no value)'
+    },
+
+    'flexberry-simpledatetime': {
       placeholder: '(no value)'
     },
 
@@ -182,7 +182,8 @@ export default {
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
-      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'coll-expand-button-text':'Expand all hierarchies',
+      'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -300,6 +301,10 @@ export default {
 
     'flexberry-tree': {
       'placeholder': 'Tree nodes are not defined'
+    },
+
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Main menu'
     }
 
   },

@@ -1,13 +1,14 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   flag: DS.attr('boolean')
 });
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'components-examples/flexberry-checkbox/settings-example/base', {
-  flag: Projection.attr('Flag')
+  flag: attr('Flag')
 });
 
 export default Model;

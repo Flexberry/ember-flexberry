@@ -1,6 +1,8 @@
-{{headerText}}
+{{#if header}}
+  <div class="header">{{header}}</div>
+{{/if}}
 <ul class="list">
-  {{#each messages as |message|}}
-    <li>{{message}}</li>
+  {{#each errors as |error|}}
+    <li>{{error}}</li>
   {{/each}}
 </ul>

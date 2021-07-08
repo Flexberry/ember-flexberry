@@ -43,7 +43,7 @@
       readonly=readonly
       required=true
       value=model.name
-      class=(if model.errors.name "error" "")
+      class=(if (v-get validationObject "name" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
     }}
   </div>
@@ -55,7 +55,7 @@
       readonly=readonly
       required=true
       value=model.eMail
-      class=(if model.errors.eMail "error" "")
+      class=(if (v-get validationObject "eMail" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
     }}
   </div>
@@ -67,7 +67,7 @@
       readonly=readonly
       required=true
       value=model.phone1
-      class=(if model.errors.phone1 "error" "")
+      class=(if (v-get validationObject "phone1" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
     }}
   </div>
@@ -79,7 +79,7 @@
       readonly=readonly
       required=true
       value=model.phone2
-      class=(if model.errors.phone2 "error" "")
+      class=(if (v-get validationObject "phone2" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
     }}
   </div>
@@ -91,7 +91,7 @@
       readonly=readonly
       required=true
       value=model.phone3
-      class=(if model.errors.phone3 "error" "")
+      class=(if (v-get validationObject "phone3" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
     }}
   </div>
@@ -110,7 +110,7 @@
       readonly=readonly
       required=true
       value=model.vK
-      class=(if model.errors.vK "error" "")
+      class=(if (v-get validationObject "vK" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
     }}
   </div>
@@ -122,7 +122,7 @@
       readonly=readonly
       required=true
       value=model.facebook
-      class=(if model.errors.facebook "error" "")
+      class=(if (v-get validationObject "facebook" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
     }}
   </div>
@@ -134,7 +134,7 @@
       readonly=readonly
       required=true
       value=model.twitter
-      class=(if model.errors.twitter "error" "")
+      class=(if (v-get validationObject "twitter" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
     }}
   </div>
@@ -143,10 +143,11 @@
     {{#if model.errors.birthday}}
       <span style="color:red">{{model.errors.birthday}}</span>
     {{/if}}
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       readonly=readonly
       value=model.birthday
-      class=(if model.errors.birthday "error" "")
+      class=(if (v-get validationObject "birthday" "isInvalid") "error")
     }}
   </div>
   <div class="field">
@@ -171,7 +172,7 @@
       readonly=readonly
       required=true
       value=model.karma
-      class=(if model.errors.karma "error" "")
+      class=(if (v-get validationObject "karma" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
     }}
   </div>
@@ -212,7 +213,7 @@
       gotoPage=(action "gotoPage")
       nextPage=(action "nextPage")
       customButtons=customButtons
-      userButtonAddAction='userButtonAddAction'
+      userButtonAddAction=(action 'userButtonAddAction')
       disableHierarchicalMode=false
       hierarchicalIndent=50
       componentName="FOLVOnEditFormSuggestionsObjectListView"

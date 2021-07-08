@@ -29,7 +29,7 @@
             {{#if model.exportParams.isExportExcel}}{{input class=(if colDesc.hide "disabled") value=colDesc.name}}{{else}}{{colDesc.name}}{{/if}}
           </td>
           <td class="sort-direction-cell">
-            {{#ui-dropdown class=(concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled') (if colDesc.isHasMany ' hidden')) onChange=(action "setSortOrder" colDesc)}}
+            <div class="{{concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled') (if colDesc.isHasMany ' hidden')}}">
               <i class="dropdown icon"></i>
               <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
               <div class="menu">
@@ -37,7 +37,7 @@
                   <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
                   <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
               </div>
-            {{/ui-dropdown}}
+            </div>
           </td><td class="{{if colDesc.hide 'disabled'}}">
             <div class="ui input {{if colDesc.hide 'disabled'}}">
               {{input

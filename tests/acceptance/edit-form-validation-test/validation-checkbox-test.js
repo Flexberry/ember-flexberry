@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation checkbox', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -11,7 +13,7 @@ executeTest('check operation checkbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[0]);
+    let $validationField = $($('.field')[1]);
     let $validationFlexberryCheckbox = $validationField.children('.flexberry-checkbox');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
@@ -21,7 +23,7 @@ executeTest('check operation checkbox', (store, assert, app) => {
       'Flag is required,Flag must be \'true\' only',
       'Checkbox\'s label have default value by default');
 
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryCheckbox.click();
     });
 
@@ -31,7 +33,7 @@ executeTest('check operation checkbox', (store, assert, app) => {
       '',
       'Checkbox\'s label havn\'t value after first click');
 
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryCheckbox.click();
     });
 
@@ -42,3 +44,4 @@ executeTest('check operation checkbox', (store, assert, app) => {
       'Checkbox\'s label have value after second click');
   });
 });
+/* eslint-enable no-unused-vars */

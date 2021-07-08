@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
 
-let Model = Projection.Model.extend({
+let Model = EmberFlexberryDataModel.extend({
   flag: DS.attr('boolean'),
   number: DS.attr('number'),
   text: DS.attr('string'),
@@ -31,45 +32,45 @@ let Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('AggregatorE', 'integration-examples/edit-form/readonly-mode/aggregator', {
-  flag: Projection.attr('Flag'),
-  number: Projection.attr('Number'),
-  text: Projection.attr('Text'),
-  longText: Projection.attr('Long text'),
-  date: Projection.attr('Date'),
-  time: Projection.attr('Time'),
-  enumeration: Projection.attr('Enumeration'),
-  file: Projection.attr('File'),
-  master: Projection.belongsTo('integration-examples/edit-form/validation/master', 'Master', {
-    text: Projection.attr('Text', {
+  flag: attr('Flag'),
+  number: attr('Number'),
+  text: attr('Text'),
+  longText: attr('Long text'),
+  date: attr('Date'),
+  time: attr('Time'),
+  enumeration: attr('Enumeration'),
+  file: attr('File'),
+  master: belongsTo('integration-examples/edit-form/validation/master', 'Master', {
+    text: attr('Text', {
       hidden: true
     })
   }, {
     displayMemberPath: 'text'
   }),
-  masterDropdown: Projection.belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
-    text: Projection.attr('Text', {
+  masterDropdown: belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
+    text: attr('Text', {
       hidden: true
     })
   }, {
     displayMemberPath: 'text'
   }),
-  details: Projection.hasMany('integration-examples/edit-form/readonly-mode/detail', 'Details', {
-    flag: Projection.attr('Flag'),
-    text: Projection.attr('Text'),
-    longText: Projection.attr('Long text'),
-    date: Projection.attr('Date'),
-    time: Projection.attr('Time'),
-    enumeration: Projection.attr('Enumeration'),
-    file: Projection.attr('File'),
-    master: Projection.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
-      text: Projection.attr('Name', {
+  details: hasMany('integration-examples/edit-form/readonly-mode/detail', 'Details', {
+    flag: attr('Flag'),
+    text: attr('Text'),
+    longText: attr('Long text'),
+    date: attr('Date'),
+    time: attr('Time'),
+    enumeration: attr('Enumeration'),
+    file: attr('File'),
+    master: belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
+      text: attr('Name', {
         hidden: true
       })
     }, {
       displayMemberPath: 'name'
     }),
-    masterDropdown: Projection.belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
-    text: Projection.attr('Text', {
+    masterDropdown: belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
+    text: attr('Text', {
       hidden: true
     })
   }, {

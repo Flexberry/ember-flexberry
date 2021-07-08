@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { loadingList } from '../flexberry-objectlistview/folv-tests-functions';
 import startApp from '../../../helpers/start-app';
@@ -21,7 +22,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   },
 
   afterEach() {
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   }
 });
 
@@ -33,23 +34,23 @@ test(testName, (assert) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $olv = Ember.$('.object-list-view ');
-    let $thead = Ember.$('th.dt-head-left', $olv)[0];
+    let $olv = $('.object-list-view ');
+    let $thead = $('th.dt-head-left', $olv)[0];
 
-    Ember.run(() => {
+    run(() => {
       let done = assert.async();
       loadingList($thead, olvContainerClass, trTableClass).then(($list) => {
         assert.ok($list);
-        let $rows = Ember.$('.object-list-view-helper-column', $list);
+        let $rows = $('.object-list-view-helper-column', $list);
 
         click('.ui.check-all-at-page-button');
         andThen(() => {
-          let $checkCheckBox = Ember.$('.flexberry-checkbox.checked', $rows);
+          let $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
           assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
 
           click('.ui.check-all-at-page-button');
           andThen(() => {
-            $checkCheckBox = Ember.$('.flexberry-checkbox.checked', $rows);
+            $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
             assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
           });
         });

@@ -3,15 +3,16 @@
 */
 
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
 /**
   Model to work with user settings.
 
   @class NewPlatformFlexberryFlexberryUserSettingModel
-  @extends Projection.Model
+  @extends ember-flexberry-data/models/model
 */
-let Model = Projection.Model.extend({
+let Model = EmberFlexberryDataModel.extend({
   appName: DS.attr('string'),
   userName: DS.attr('string'),
   moduleName: DS.attr('string'),
@@ -21,12 +22,12 @@ let Model = Projection.Model.extend({
 });
 
 Model.defineProjection('FlexberryUserSettingE', 'new-platform-flexberry-flexberry-user-setting', {
-  appName: Projection.attr('Application page name'),
-  userName: Projection.attr('User name'),
-  moduleName: Projection.attr('Component name'),
-  settName: Projection.attr('Setting name'),
-  settLastAccessTime: Projection.attr('Modification time'),
-  txtVal: Projection.attr('Text value')
+  appName: attr('Application page name'),
+  userName: attr('User name'),
+  moduleName: attr('Component name'),
+  settName: attr('Setting name'),
+  settLastAccessTime: attr('Modification time'),
+  txtVal: attr('Text value')
 });
 
 export default Model;

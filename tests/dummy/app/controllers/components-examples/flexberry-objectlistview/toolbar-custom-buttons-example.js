@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -33,8 +33,8 @@ export default ListFormController.extend({
 
     @property customButtons
     @type Array
-  */
-  customButtons: Ember.computed('i18n.locale', 'hiButtonState', function() {
+   */
+  customButtons: computed('i18n.locale', 'hiButtonState', function() {
     let i18n = this.get('i18n');
     let hiButtonState = this.get('hiButtonState');
     let togglerButtonType = hiButtonState ? 'enable' : 'disable';
@@ -56,7 +56,7 @@ export default ListFormController.extend({
     }];
   }),
 
-  customButtonsInRow: Ember.computed('i18n.locale', function() {
+  customButtonsInRow: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
     return [{
       buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-row-button-name'),

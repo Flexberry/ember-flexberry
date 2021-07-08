@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { get, set } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -15,7 +16,7 @@ export default FlexberryBaseComponent.extend({
    @type {Class}
    @default Ember.inject.service()
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Columns with available filters.
@@ -41,7 +42,7 @@ export default FlexberryBaseComponent.extend({
     */
     applyFilters() {
       this.get('objectlistviewEvents').refreshListTrigger(this.get('componentName'));
-      this.sendAction('close');
+      this.get('close')();
     },
 
     /**
@@ -64,9 +65,9 @@ export default FlexberryBaseComponent.extend({
       @param {Object} filter Object with the filter description.
     */
     clearFilterField(filter) {
-      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
-      Ember.set(filter, 'condition', undefined);
-      Ember.set(filter, 'pattern', undefined);
+      set(filter, 'component.name', get(filter, 'component._defaultComponent'));
+      set(filter, 'condition', undefined);
+      set(filter, 'pattern', undefined);
     },
 
     /**

@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import MultiListModelEditMixin from 'ember-flexberry/mixins/multi-list-model-edit';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | multi list model edit');
 
 test('it works', function(assert) {
-  let MultiListModelEditObject = Ember.Object.extend(MultiListModelEditMixin);
+  let MultiListModelEditObject = EmberObject.extend(MultiListModelEditMixin);
   let subject = MultiListModelEditObject.create();
   assert.ok(subject);
 });

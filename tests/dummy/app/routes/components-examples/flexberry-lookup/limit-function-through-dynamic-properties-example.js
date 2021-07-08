@@ -1,4 +1,4 @@
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -43,10 +43,11 @@ export default EditFormRoute.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     let store = this.get('store');
 
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SuggestionTypeE').top(2);
 
@@ -60,6 +61,7 @@ export default EditFormRoute.extend({
     });
 
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Load limit accessible values for lookup.

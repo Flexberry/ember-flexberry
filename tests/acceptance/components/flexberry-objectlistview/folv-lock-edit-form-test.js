@@ -1,6 +1,6 @@
-import { executeTest } from './execute-folv-test';
+import { skip } from 'qunit';
 
-executeTest('check lock edit form', (store, assert, app) => {
+skip('check lock edit form', (store, assert) => {
   assert.expect(1);
   const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);

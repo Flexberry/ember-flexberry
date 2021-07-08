@@ -1,2 +1,2 @@
-import { Projection } from 'ember-flexberry-data';
-export default Projection.OnlineStore;
+import OnlineStore from 'ember-flexberry-data/stores/online-store';
+export default OnlineStore;

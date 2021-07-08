@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import { computed } from '@ember/object';
 import ListFormRoute from './list-form';
 
 /**
@@ -30,11 +31,13 @@ export default ListFormRoute.extend({
     @type Object
     @default { DEFAULT: {} }
   */
-  developerUserSettings: {
-    LockObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }]
+  developerUserSettings: computed(function() {
+    return {
+      LockObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }]
+        }
       }
     }
-  },
+  }),
 });

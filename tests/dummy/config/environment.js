@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(environment) {
   var backendUrl = 'http://stands-backend.flexberry.net';
 
@@ -6,17 +8,20 @@ module.exports = function(environment) {
     backendUrl = 'http://localhost:6501';
   }
 
-  var ENV = {
+  let ENV = {
     repositoryName: 'ember-flexberry/dummy',
     modulePrefix: 'dummy',
-    environment: environment,
-    baseURL: '/',
+    environment,
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
-      LOG_STACKTRACE_ON_DEPRECATION: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
       }
     },
 
@@ -90,6 +95,32 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
+        },
+
+        // For guideline theme
+        // Settings for flexberry-objectlistview component.
+        flexberryObjectlistview: {
+          // Flag indicates whether to side page or usually mode.
+          useSidePageMode: true,
+        },
+
+        // Settings for flexberry-lookup component.
+        flexberryLookup: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
+        },
+
+        flexberryGroupedit: {
+          // Flag: indicates whether to side page or usually mode.
+          useSidePageMode: true,
+
+          // Flag: indicates whether to show asterisk icon in first column of every changed row.
+          showAsteriskInRow: false,
+        },
+
+        flexberrySimpledatetime: {
+          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.
+          calendarContext: undefined
         }
       },
     }
@@ -115,7 +146,8 @@ module.exports = function(environment) {
   // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.
   // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).
   ENV.moment = {
-    outputFormat: 'L'
+    outputFormat: 'L',
+    includeLocales: ['ru']
   };
 
   if (environment === 'development') {
@@ -128,7 +160,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // URL of the backend running in docker.
@@ -142,10 +173,12 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
 
+    // here you can enable a production-specific feature
   }
 
   // Change paths to application assets if build has been started with the following parameters:
@@ -162,7 +195,7 @@ module.exports = function(environment) {
     });
 
     // Change base URL to force paths to application assets be relative.
-    ENV.baseURL = '/' + ENV.repositoryName + '/' + branch + '/';
+    ENV.rootURL = '/' + ENV.repositoryName + '/' + branch + '/';
     ENV.locationType = 'hash';
   }
 

@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import $ from 'jquery';
+import { A } from '@ember/array';
 import FlexberryDdauCheckboxComponent from 'ember-flexberry/components/flexberry-ddau-checkbox';
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -46,14 +48,14 @@ test('Component renders properly', function(assert) {
     true,
     'Component\'s inner <label> has \'' + flexberryClassNames.checkboxCaption + '\' css-class');
   assert.strictEqual(
-    Ember.$.trim($checkboxCaption.text()).length === 0,
+    $.trim($checkboxCaption.text()).length === 0,
     true,
     'Component\'s inner <label> is empty by default');
 
   let checkboxCaptionText = 'Checkbox caption';
   this.set('caption', checkboxCaptionText);
   assert.strictEqual(
-    Ember.$.trim($checkboxCaption.text()),
+    $.trim($checkboxCaption.text()),
     checkboxCaptionText,
     'Component\'s inner <label> text changes when component\'s \'caption\' property changes');
 
@@ -61,20 +63,24 @@ test('Component renders properly', function(assert) {
   let additioanlCssClasses = 'additional-css-class-name and-another-one';
   this.set('class', additioanlCssClasses);
 
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('Component invokes actions', function(assert) {
@@ -88,7 +94,7 @@ test('Component invokes actions', function(assert) {
   this.set('actions.onFlagChange', e => {
     latestEventObjects.change = e;
   });
-  this.render(hbs`{{flexberry-ddau-checkbox change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox change=(action \"onFlagChange\")}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -105,9 +111,9 @@ test('Component invokes actions', function(assert) {
   assert.notStrictEqual(latestEventObjects.change, null, 'Component\'s \'change\' action was invoked after second click');
 });
 
-test('Component doesn\'t change binded value (without \'change\' action handler)', function(assert) {
+test('Component changes binded value (without \'change\' action handler)', function(testAssert) {
   // Mock Ember.assert method.
-  let thrownExceptions = Ember.A();
+  let thrownExceptions = A();
   let originalEmberAssert = Ember.assert;
   Ember.assert = function(...args) {
     try {
@@ -117,7 +123,7 @@ test('Component doesn\'t change binded value (without \'change\' action handler)
     }
   };
 
-  assert.expect(4);
+  testAssert.expect(4);
 
   this.set('flag', false);
   this.render(hbs`{{flexberry-ddau-checkbox value=flag}}`);
@@ -127,24 +133,24 @@ test('Component doesn\'t change binded value (without \'change\' action handler)
   let $checkboxInput = $component.children('input');
 
   // Check component's initial state.
-  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+  testAssert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
 
   // Imitate click on component & check for exception.
   $component.click();
 
   // Check component's state after click (it should be changed).
-  assert.strictEqual(
+  testAssert.strictEqual(
     $checkboxInput.prop('checked'),
     true,
     'Component\'s inner checkbox <input> isn\'t checked after click (without \'change\' action handler)');
 
   // Check binded value state after click (it should be unchanged, because 'change' action handler is not defined).
-  assert.strictEqual(
+  testAssert.strictEqual(
     this.get('flag'),
-    false,
-    'Component doesn\'t change binded value (without \'change\' action handler)');
+    true,
+    'Component\'s binded value changed (without \'change\' action handler)');
 
-  assert.strictEqual(
+  testAssert.strictEqual(
     thrownExceptions.length === 1 && (/.*required.*change.*action.*not.*defined.*/gi).test(thrownExceptions[0].message),
     true,
     'Component throws single exception if \'change\' action handler is not defined');

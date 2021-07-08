@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
+import { isBlank } from '@ember/utils';
 
 /**
   Helper for get array captions of registered enum.
@@ -11,8 +12,8 @@ import Ember from 'ember';
   @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
   @public
 */
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute([element]) {
-    return Ember.isBlank(element);
+    return isBlank(element);
   }
 });

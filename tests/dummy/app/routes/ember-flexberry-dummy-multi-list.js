@@ -2,6 +2,7 @@ import ListFormRoute from 'ember-flexberry/routes/list-form';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import MultiListModel from 'ember-flexberry/mixins/multi-list-model';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
+import { computed } from '@ember/object';
 
 export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
   init() {
@@ -13,7 +14,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
       editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
-      advLimitButton: true
+      advLimitButton: false
     }));
 
     this.set('multiListSettings.MultiUserList2', new ListParameters({
@@ -22,7 +23,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
       modelName: 'ember-flexberry-dummy-application-user',
       projectionName: 'ApplicationUserL',
       editFormRoute: 'ember-flexberry-dummy-multi-list-user-edit',
-      advLimitButton: true
+      advLimitButton: false
     }));
 
     this.set('multiListSettings.MultiSuggestionList', new ListParameters({
@@ -69,5 +70,7 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
     @type Object
     @default {}
   */
-  developerUserSettings: { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} },
+  developerUserSettings: computed(function() {
+    return { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} }
+  }),
 });

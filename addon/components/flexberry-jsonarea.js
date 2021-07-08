@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isBlank, isNone } from '@ember/utils';
+import { observer } from '@ember/object';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -31,9 +33,9 @@ const flexberryClassNames = {
   Flexberry json area component with.
 
   @class FlexberryJsonareaComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
-let FlexberryJsonareaComponent = Ember.Component.extend({
+let FlexberryJsonareaComponent = Component.extend({
   /**
     Flag: indicates whether to show error message or not.
 
@@ -142,7 +144,7 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
       if (jsonMustBeSaved) {
         try {
           let text = this.get('_jsonText');
-          let value = Ember.isBlank(text) ? null : JSON.parse(text);
+          let value = isBlank(text) ? null : JSON.parse(text);
           this.set('value', value);
 
           this.set('_errorMessage', '');
@@ -167,6 +169,11 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
     }
   },
 
+  init() {
+    this._super(...arguments);
+    this.get('_valueDidChange').apply(this);
+  },
+
   /**
     Observes changes in value.
     Changes related stringified value.
@@ -174,9 +181,9 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
     @method _valueDidChange
     @private
   */
-  _valueDidChange: Ember.on('init', Ember.observer('value', function() {
+  _valueDidChange: observer('value', function() {
     let value = this.get('value');
-    if (Ember.isNone(value)) {
+    if (isNone(value)) {
       this.set('_jsonText', '');
       return;
     }
@@ -186,7 +193,7 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
         indent_size: 2
       }
     );
-  }))
+  })
 });
 
 // Add component's CSS-class names as component's class static constants

@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   /**
     Returns model related to current route.
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     return this.get('store').createRecord('components-examples/flexberry-file/settings-example/base', {});
   }
+  /* eslint-enable no-unused-vars */
 });

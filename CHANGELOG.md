@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.6.0-beta.1`.
+
 ## [2.6.1] - 2021-07-02
 ### Fixed
 * The `flexberry-model` blueprint generated wrong model mixin when project contains `ember-cp-validations` dependency.

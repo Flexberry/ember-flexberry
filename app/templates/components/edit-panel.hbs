@@ -1,0 +1,33 @@
+{{#unless readonly}}
+  {{#if panelButtonsSorted}}
+    {{#each panelButtonsSorted as |button|}}
+      {{#if (not button.disabled)}}
+        {{#if button.buttons}}
+          {{flexberry-button-dropdown
+            title=button.text
+            elementId=button.id
+            deepMount=deepMount
+            buttons=button.buttons
+          }}
+        {{else}}
+          <button id="{{button.id}}" type="{{if button.type button.type "button"}}" class="ui button {{button.class}}" {{action "sendButtonAction" button.action}} title="{{button.title}}">
+            {{button.text}}
+          </button>
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  {{/if}}
+
+  {{#if menuButtonsSorted}}
+    {{flexberry-button-dropdown
+      title=(t "forms.edit-form.more-button-text")
+      deepMount=deepMount
+      buttons=menuButtonsSorted
+      classNames="menu-buttons"
+    }}
+  {{/if}}
+{{/unless}}
+
+{{#if showCloseButton}}
+  <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+{{/if}}

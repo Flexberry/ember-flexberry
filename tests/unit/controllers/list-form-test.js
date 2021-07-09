@@ -5,6 +5,7 @@ moduleFor('controller:list-form', 'Unit | Controller | list form', {
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
     'controller:filters-dialog',
+    'controller:flexberry-menuitem-dialog',
     'service:objectlistview-events',
     'service:user-settings',
     'service:adv-limit',

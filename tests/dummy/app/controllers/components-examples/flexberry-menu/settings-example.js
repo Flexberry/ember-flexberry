@@ -1,10 +1,13 @@
 import $ from 'jquery';
-import Controller from '@ember/controller';
+import Controller, { inject as injectController } from '@ember/controller';
 import { computed, observer } from '@ember/object';
 import { A } from '@ember/array';
 import { htmlSafe } from '@ember/string';
 
 export default Controller.extend({
+
+  flexberryMenuitemDialogController: injectController('flexberry-menuitem-dialog'),
+
   actions: {
     onMenuItemClick(e) {
       let clickedMenu = $(e.delegateTarget);

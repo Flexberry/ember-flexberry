@@ -14,6 +14,7 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
     'controller:flexberry-file-view-dialog',
     'controller:lookup-dialog',
     'controller:filters-dialog',
+    'controller:flexberry-menuitem-dialog',
     'service:detail-interaction',
     'service:objectlistview-events',
     'service:user-settings',

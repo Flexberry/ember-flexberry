@@ -7,6 +7,7 @@ moduleFor('controller:lookup-dialog', 'Unit | Controller | lookup dialog', {
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
     'controller:filters-dialog',
+    'controller:flexberry-menuitem-dialog',
     'service:lookup-events',
     'service:objectlistview-events',
     'service:user-settings',

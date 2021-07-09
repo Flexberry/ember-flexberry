@@ -52,11 +52,20 @@ export default Controller.extend(PaginatedControllerMixin,
   /**
     Controller to show colsconfig modal window.
 
-    @property lookupController
+    @property colsconfigController
     @type <a href="https://www.emberjs.com/api/ember/release/functions/@ember%2Fcontroller/inject">Ember.InjectedProperty</a>
     @default controller('colsconfig-dialog')
   */
   colsconfigController: inject('colsconfig-dialog'),
+
+  /**
+    Controller to show flexberryMenuitemDialog modal window.
+
+    @property flexberryMenuitemDialogController
+    @type <a href="https://www.emberjs.com/api/ember/release/functions/@ember%2Fcontroller/inject">Ember.InjectedProperty</a>
+    @default controller('flexberry-menuitem-dialog')
+  */
+  flexberryMenuitemDialogController: inject('flexberry-menuitem-dialog'),
 
   /**
     Object with developer user settings.

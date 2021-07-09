@@ -198,6 +198,10 @@ export default ObjectListViewComponent.extend({
         });
       }
     },
+
+    _moveRow() {
+      this._super(...arguments);
+    }
   },
 
   /**

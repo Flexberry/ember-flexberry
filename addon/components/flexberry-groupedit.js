@@ -91,6 +91,13 @@ export default FlexberryBaseComponent.extend({
   cellComponent: undefined,
 
   /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['flexberry-groupedit'],
+
+  /**
     Content to be displayed (models collection).
 
     @property content

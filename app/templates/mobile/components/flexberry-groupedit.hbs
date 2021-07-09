@@ -1,0 +1,67 @@
+<div class="groupedit-open" onclick={{action 'groupeditModalShow'}}>
+  <h3><i class="icon-guideline-list icon"></i>{{caption}}</h3>
+</div>
+<div class="ui modal groupedit-modal{{if useSidePageMode ' flexberry-sidepage'}} {{componentName}}">
+  <div class="groupedit-modal-content">
+    <div class="header"><i class="close icon"></i><span>{{caption}}</span></div>
+    {{groupedit-toolbar
+      componentName=componentName
+      readonly=readonly
+      buttonClass=buttonClass
+      createNewButton=createNewButton
+      deleteButton=deleteButton
+      defaultSettingsButton=defaultSettingsButton
+      confirmDeleteRows=confirmDeleteRows
+      sorting=sorting
+      customButtonAction=(action 'customButtonAction')
+      customButtons=customButtons
+      orderedProperty=orderedProperty
+    }}
+    {{object-list-view
+      class="groupedit-container"
+      orderedProperty=orderedProperty
+      placeholder=placeholder
+      readonly=readonly
+      buttonClass=buttonClass
+      tableStriped=tableStriped
+      columnsWidthAutoresize=columnsWidthAutoresize
+      minAutoColumnWidth=minAutoColumnWidth
+      customTableClass=customTableClass
+      cellComponent=cellComponent
+      singleColumnCellComponent=singleColumnCellComponent
+      singleColumnHeaderTitle=singleColumnHeaderTitle
+      showValidationMessagesInRow=showValidationMessagesInRow
+      showAsteriskInRow=showAsteriskInRow
+      showCheckBoxInRow=showCheckBoxInRow
+      showDeleteButtonInRow=showDeleteButtonInRow
+      showEditMenuItemInRow=showEditMenuItemInRow
+      showDeleteMenuItemInRow=showDeleteMenuItemInRow
+      sendMenuItemAction=(action "sendMenuItemAction")
+      menuInRowAdditionalItems=menuInRowAdditionalItems
+      rowClickable=rowClickable
+      orderable=orderable
+      editOnSeparateRoute=editOnSeparateRoute
+      saveBeforeRouteLeave=saveBeforeRouteLeave
+      sorting=sorting
+      modelName=modelName
+      mainModelProjection=mainModelProjection
+      modelProjection=modelProjection
+      content=content
+      sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+      addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+      action=(action 'groupEditRowClick')
+      componentName=componentName
+      allowColumnResize=allowColumnResize
+      configurateRow=this.attrs.configurateRow
+      confirmDeleteRow=confirmDeleteRow
+      configurateSelectedRows=this.attrs.configurateSelectedRows
+      beforeDeleteRecord=beforeDeleteRecord
+      searchForContentChange=searchForContentChange
+      immediateDelete=false
+      notUseUserSettings=notUseUserSettings
+      defaultSortingButton=defaultSortingButton
+      overflowedComponents=overflowedComponents
+      fixedHeader=fixedHeader
+    }}
+  </div>
+</div>

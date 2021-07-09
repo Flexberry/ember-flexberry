@@ -13,16 +13,16 @@ import Evented from '@ember/object/evented';
  * @public
  */
 export default Service.extend(Evented, {
-  addNamedSettingTrigger(namedSetting, componentName) {
-    this.trigger('addNamedSetting', namedSetting, componentName);
+  addNamedSettingTrigger(namedSetting, componentName, isExportExcel) {
+    this.trigger('addNamedSetting', namedSetting, componentName, isExportExcel);
   },
 
-  deleteNamedSettingTrigger(namedSetting, componentName) {
-    this.trigger('deleteNamedSetting', namedSetting, componentName);
+  deleteNamedSettingTrigger(namedSetting, componentName, isExportExcel) {
+    this.trigger('deleteNamedSetting', namedSetting, componentName, isExportExcel);
   },
 
-  updateNamedSettingTrigger(componentName) {
-    this.trigger('updateNamedSetting', componentName);
+  updateNamedSettingTrigger(componentName, isExportExcel) {
+    this.trigger('updateNamedSetting', componentName, isExportExcel);
   },
 
   updateNamedAdvLimitTrigger(componentName) {

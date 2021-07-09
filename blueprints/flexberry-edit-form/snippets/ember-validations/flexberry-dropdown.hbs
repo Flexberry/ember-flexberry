@@ -1,8 +1,7 @@
 <div class="field" data-test-<%= entityName %>-<%= dashedName %>="true">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-dropdown
-    items=(flexberry-enum '<%= type %>')
+  {{flexberry-dropdown
+    items=(flexberry-enum "<%= type %>")
     value=model.<%= name %>
     readonly=<%= readonly %>
   }}

@@ -121,7 +121,8 @@
   </div>
   <div class="field {{if model.errors.birthday "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       value=model.birthday
       readonly=readonly
     }}

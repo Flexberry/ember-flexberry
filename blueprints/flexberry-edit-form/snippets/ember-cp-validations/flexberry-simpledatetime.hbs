@@ -2,7 +2,6 @@
     <label>{{<%= caption %>}}</label>
     {{flexberry-simpledatetime
       type="date"
-      placeholder=(t "components.flexberry-datepicker.placeholder")
       readonly=<%= readonly %>
       value=model.<%= name %>
       class=(if (v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")

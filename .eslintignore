@@ -34,7 +34,6 @@ addon/components/flexberry-base-component.js
 addon/components/flexberry-button.js
 addon/components/flexberry-checkbox.js
 addon/components/flexberry-colorpicker.js
-addon/components/flexberry-datepicker.js
 addon/components/flexberry-ddau-checkbox.js
 addon/components/flexberry-ddau-slider.js
 addon/components/flexberry-dialog.js
@@ -286,7 +285,6 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/folv-paging.js
 tests/dummy/app/controllers/components-examples/flexberry-button/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-checkbox/settings-example.js
-tests/dummy/app/controllers/components-examples/flexberry-datepicker/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-ddau-checkbox/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-dropdown/conditional-render-example.js
 tests/dummy/app/controllers/components-examples/flexberry-dropdown/items-example.js
@@ -353,7 +351,6 @@ tests/dummy/app/mixins/list-form-controller-operations-indication.js
 tests/dummy/app/mixins/list-form-route-operations-indication.js
 tests/dummy/app/models/aggregator.js
 tests/dummy/app/models/components-examples/flexberry-checkbox/settings-example/base.js
-tests/dummy/app/models/components-examples/flexberry-datepicker/settings-example/base.js
 tests/dummy/app/models/components-examples/flexberry-ddau-checkbox/settings-example/base.js
 tests/dummy/app/models/components-examples/flexberry-dropdown/conditional-render-example/base.js
 tests/dummy/app/models/components-examples/flexberry-dropdown/empty-value-example/base.js
@@ -408,7 +405,6 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/date
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/folv-filter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/folv-paging.js
 tests/dummy/app/routes/components-examples/flexberry-checkbox/settings-example.js
-tests/dummy/app/routes/components-examples/flexberry-datepicker/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-ddau-checkbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-dropdown/conditional-render-example.js
 tests/dummy/app/routes/components-examples/flexberry-dropdown/empty-value-example.js

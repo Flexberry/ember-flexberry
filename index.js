@@ -33,16 +33,6 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/daterangepicker/daterangepicker.js',
-      production:  'bower_components/daterangepicker/daterangepicker.js'
-    });
-
-    app.import({
-      development: 'bower_components/daterangepicker/daterangepicker.css',
-      production:  'bower_components/daterangepicker/daterangepicker.css'
-    });
-
-    app.import({
       development: 'bower_components/flatpickr-calendar/dist/flatpickr.js',
       production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
     });

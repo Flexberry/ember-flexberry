@@ -61,14 +61,6 @@ export default {
       'placeholder': '(нет значения)'
     },
 
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
-    },
-
     'flexberry-file': {
       placeholder: '(нет файла)',
 

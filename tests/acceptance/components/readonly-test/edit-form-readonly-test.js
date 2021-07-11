@@ -95,35 +95,6 @@ test('flexberry-textarea on readonly editform', (assert) => {
   });
 });
 
-test('flexberry-datepicker on readonly editform', (assert) => {
-  assert.expect(8);
-
-  visit(path);
-  andThen(() => {
-    const controller = app.__container__.lookup('controller:' + currentRouteName());
-    const $datepicker = find('[data-test-datepicker]');
-    const $datepickerInput = $datepicker.children('input');
-    assert.strictEqual(Ember.$.trim($datepickerInput.attr('readonly')), 'readonly', 'Time is readonly');
-    const $button = $datepicker.children('.calendar');
-    assert.strictEqual($button.hasClass('link'), false, 'Datepicker hasn\'t link');
-
-    const $datepickerFge = find('[data-test-groupedit] .flexberry-datepicker');
-    const $datepickerFgeInput = $datepickerFge.children('input');
-    assert.strictEqual(Ember.$.trim($datepickerFgeInput.attr('readonly')), 'readonly', 'Groupedit\'s datepicker is readonly');
-    const $buttonFge = $datepickerFge.children('.calendar');
-    assert.strictEqual($buttonFge.hasClass('link'), false, 'Groupedit\'s datepicker hasn\'t link');
-
-    controller.set('readonly', false);
-    Ember.run.scheduleOnce('afterRender', () => {
-      assert.strictEqual(Ember.$.trim($datepickerInput.attr('readonly')), '', 'Time don\'t readonly');
-      assert.strictEqual($button.hasClass('link'), true, 'Datepicker has link');
-
-      assert.strictEqual(Ember.$.trim($datepickerFgeInput.attr('readonly')), '', 'Groupedit\'s datepicker don\'t readonly');
-      assert.strictEqual($buttonFge.hasClass('link'), true, 'Groupedit\'s datepicker has link');
-    });
-  });
-});
-
 test('flexberry-simpledatetime on readonly editform', (assert) => {
   assert.expect(2);
 

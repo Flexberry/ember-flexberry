@@ -77,7 +77,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
-  this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-dropdown/empty-value-example');

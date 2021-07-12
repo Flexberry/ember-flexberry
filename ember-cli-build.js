@@ -27,6 +27,10 @@ module.exports = function(defaults) {
           }
         ]
       }
+    },
+
+    'ember-cli-qunit': {
+      useLintTree: false
     }
   });
 

@@ -2,8 +2,9 @@
   @module ember-flexberry
 */
 
-import Component from '@ember/component';
 import $ from 'jquery';
+import Component from '@ember/component';
+import { get, set } from '@ember/object';
 
 /**
   Component for sitemap render from the object with links.
@@ -111,7 +112,7 @@ export default Component.extend({
     */
     menuToggle() {
       this.$('.subMenu:first').toggleClass('hidden');
-      this.set('nodeIsOpen', !this.get('nodeIsOpen'));
+      set(this, 'nodeIsOpen', !get(this, 'nodeIsOpen'));
     }
   },
 });

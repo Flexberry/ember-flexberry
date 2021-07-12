@@ -16,24 +16,24 @@ moduleFor('controller:lookup-dialog', 'Unit | Controller | lookup dialog', {
 
 // Replace this with your real tests.
 test('it exists', function (assert) {
-  let controller = this.subject();
+  const controller = this.subject();
   assert.ok(controller);
 });
 
 test('it shold set selected record to saveTo.propName of saveTo.model', function (assert) {
-  let model = EmberObject.extend({ makeDirty: function() {} }).create();
-  let saveTo =
+  const model = EmberObject.extend({ makeDirty: function() {} }).create();
+  const saveTo =
   {
     model: model,
     propName: 'testProperty'
   };
 
-  let controller = this.subject();
+  const controller = this.subject();
   controller.set('saveTo', saveTo);
 
   sinon.stub(model, 'makeDirty');
   sinon.stub(controller, '_closeModalDialog');
-  let master = EmberObject.create();
+  const master = EmberObject.create();
 
   controller.send('objectListViewRowClick', master);
 

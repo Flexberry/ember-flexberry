@@ -2,9 +2,10 @@
   @module ember-flexberry
 */
 
-import FlexberrySitemapGuidelineComponent from '../flexberry-sitemap-guideline';
 import $ from 'jquery';
 import { translationMacro as t } from 'ember-i18n';
+import { get } from '@ember/object';
+import FlexberrySitemapGuidelineComponent from '../flexberry-sitemap-guideline';
 
 /**
   Component for sitemap render from the object with links.
@@ -58,7 +59,7 @@ export default FlexberrySitemapGuidelineComponent.extend({
       @method actions.menuBack
     */
     menuBack() {
-      if (this.get('isDropDown')) {
+      if (get(this, 'isDropDown')) {
         $(this.element).dropdown('hide');
       } else {
         this.$('> .menu.visible', this.element).transition('slide left');

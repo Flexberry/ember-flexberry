@@ -4,6 +4,7 @@
 
 import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
+import { resolve } from 'rsvp';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import EditFormRoute from './edit-form';
@@ -63,14 +64,16 @@ export default EditFormRoute.extend({
       flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
 
       if (modelCurrentNotSaved) {
-        return modelCurrentNotSaved;
+        return this.returnNewModel(modelCurrentNotSaved);
       }
 
       if (modelSelectedDetail) {
-        return modelSelectedDetail;
+        return this.returnNewModel(modelSelectedDetail);
       }
 
-      return store.createRecord(modelName, { id: generateUniqueId() });
+      let model = store.createRecord(modelName, { id: generateUniqueId() });
+
+      return this.returnNewModel(model);
     }
 
     // Get the copyable instance.
@@ -85,6 +88,16 @@ export default EditFormRoute.extend({
 
       return record;
     });
+  },
+
+  /**
+    Return model as Primese.
+
+    @method returnNewModel
+    @param {Object} model
+   */
+  returnNewModel(value) {
+    return resolve(value);
   },
 
   /**

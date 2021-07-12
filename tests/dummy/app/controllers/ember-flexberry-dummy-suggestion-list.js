@@ -1,7 +1,8 @@
+import RSVP from 'rsvp';
+import { get, set } from '@ember/object';
+import { translationMacro as t } from 'ember-i18n';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import ListFormControllerOperationsIndicationMixin from '../mixins/list-form-controller-operations-indication';
-import { translationMacro as t } from 'ember-i18n';
-import RSVP from 'rsvp';
 
 import { A } from '@ember/array';
 import { scheduleOnce } from '@ember/runloop';
@@ -30,13 +31,13 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
 
   actions: {
     approveDeleting() {
-      const promises = this.get('_promises');
+      const promises = get(this, '_promises');
       promises.forEach(p => p.resolve());
       promises.clear();
     },
 
     denyDeleting() {
-      const promises = this.get('_promises');
+      const promises = get(this, '_promises');
       promises.forEach(p => p.reject());
       promises.clear();
     },
@@ -55,7 +56,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     beforeDeleteRecord: function() {
       scheduleOnce('afterRender', this, this.showDeleteModalDialog);
       return new RSVP.Promise((resolve, reject) => {
-        this.get('_promises').pushObject({ resolve, reject });
+        get(this, '_promises').pushObject({ resolve, reject });
       });
     },
 
@@ -63,8 +64,8 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
       Close modal dialog and clear actions.
     */
     closeModalDialog() {
-      this.set('approveDeleting', null);
-      this.set('denyDeleting', null);
+      set(this, 'approveDeleting', null);
+      set(this, 'denyDeleting', null);
 
       this.send('removeModalDialog');
     },

@@ -42,6 +42,24 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/new' });
+
   this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
   this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
 
@@ -57,6 +75,7 @@ Router.map(function() {
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');
+  this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
@@ -85,6 +104,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
+  this.route('components-examples/flexberry-lookup/user-settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');

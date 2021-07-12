@@ -417,8 +417,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
+    this.onSaveActionStarted();
+
     return this.validate().then(() => {
-      this.onSaveActionStarted();
       this.get('appState').loading();
 
       const afterSaveModelFunction = () => {
@@ -445,45 +446,48 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         }
       };
 
-      let savePromise;
-      const model = this.get('model');
-
-      // This is possible when using offline mode.
-      const agragatorModel = getCurrentAgregator.call(this);
-      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        savePromise = model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
-          const errors = A(result || []).filterBy('state', 'rejected');
-          if (!isEmpty(errors)) {
-            return reject(errors);
-          }
-
-          return agragatorModel.save();
-        });
-      } else {
-        const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
-        if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
-          savePromise = this.get('store').batchUpdate(unsavedModels);
-        } else {
-          savePromise = model.save();
-        }
-      }
-
-      return savePromise.then(afterSaveModelFunction).catch((errorData) => {
+      return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
         this.get('appState').error();
         this.onSaveActionRejected(errorData);
-        return RSVP.reject(errorData);
+        return reject(errorData);
       }).finally((data) => {
         this.onSaveActionAlways(data);
-      }).catch((errorData) => {
-        this.get('appState').error();
-        this.onSaveActionRejected(errorData);
-        return RSVP.reject(errorData);
       });
-    }, (reason) => {
-      this.send('error', new Error(reason.get('message')));
+    }).catch((errorData) => {
       this.get('appState').error();
-      return RSVP.reject(reason);
+      this.onSaveActionRejected(errorData);
+      return reject(errorData);
     });
+  },
+
+  /**
+    The default save model logic implementation.
+
+    @method saveModel
+    @return {Promise}
+  */
+  saveModel() {
+    const model = this.get('model');
+
+    // This is possible when using offline mode.
+    const agragatorModel = getCurrentAgregator.call(this);
+    if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+      return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
+        const errors = A(result || []).filterBy('state', 'rejected');
+        if (!isEmpty(errors)) {
+          return reject(errors);
+        }
+
+        return agragatorModel.save();
+      });
+    } else {
+      const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
+      if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
+        return this.get('store').batchUpdate(unsavedModels);
+      }
+
+      return model.save();
+    }
   },
 
   /**

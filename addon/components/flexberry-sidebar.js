@@ -2,8 +2,9 @@
   @module ember-flexberry
 */
 
-import Component from '@ember/component';
 import $ from 'jquery';
+import Component from '@ember/component';
+import { get } from '@ember/object';
 
 /**
   Sidebar component based on Semantic UI Sidebar module.
@@ -38,7 +39,7 @@ export default Component.extend({
 
     let settings = $.extend({
       context: '.ember-application > .ember-view',
-    }, this.get('settings'));
+    }, get(this, 'settings'));
 
     this.$().sidebar(settings);
   },

@@ -337,14 +337,6 @@ export default FlexberryBaseComponent.extend({
   componentName: undefined,
 
   /**
-    The name of the `flexberry-lookup` component for which the `flexberry-objectlistview` component is used.
-
-    @property lookupComponentName
-    @type String
-  */
-  lookupComponentName: undefined,
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent

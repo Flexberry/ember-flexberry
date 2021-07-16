@@ -208,6 +208,7 @@ tests/acceptance/components/flexberry-objectlistview/filther/folv-empty-filter-t
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-by-enther-click-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-render-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-test.js
+tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-on-toolbar-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-ge-filter-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-le-filter-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-like-filter-test.js

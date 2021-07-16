@@ -141,15 +141,18 @@ export default Ember.Mixin.create({
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
       @param {String} filterCondition Condition for predicate, can be `or` or `and`.
+      @param {String} componentName Component name.
+      @param {String} filterProjectionName Name of model projection which should be used for filtering throught search-element on toolbar. Filtering is processed only by properties defined in this projection.
     */
-    filterByAnyMatch(pattern, filterCondition) {
+    filterByAnyMatch(pattern, filterCondition, componentName, filterProjectionName) {
       if (this.get('filter') !== pattern || this.get('filterCondition') !== filterCondition) {
         let _this = this;
         Ember.run.later((function() {
           _this.setProperties({
             filterCondition: filterCondition,
             filter: pattern,
-            page: 1
+            page: 1,
+            filterProjectionName: filterProjectionName
           });
         }), 50);
       }

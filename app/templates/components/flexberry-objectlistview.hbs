@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class="ui secondary menu no-margin"
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -12,7 +12,7 @@
   showFiltersInModal=showFiltersInModal
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters=(action "resetFilters" this.attrs.resetFilters)
+  resetFilters=(action "resetFilters" resetFilters)
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -21,7 +21,7 @@
   componentName=componentName
   lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction="customButtonAction"
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
@@ -65,8 +65,8 @@
   modelName=modelName
   modelProjection=modelProjection
   content=content
-  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
-  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  sortByColumn=(action (if sortByColumn sortByColumn "sortByColumn"))
+  addColumnToSorting=(action (if addColumnToSorting addColumnToSorting "addColumnToSorting"))
   enableFilters=enableFilters
   showFilters=_showFilters
   showFiltersInModal=showFiltersInModal
@@ -75,15 +75,15 @@
   componentForFilter=componentForFilter
   componentForFilterByCondition=componentForFilterByCondition
   conditionsByType=conditionsByType
-  filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
+  filterByAnyMatch=(action (if filterByAnyMatch filterByAnyMatch "filterByAnyMatch"))
   filterByAnyWord=filterByAnyWord
   filterByAllWords=filterByAllWords
-  configurateRow=this.attrs.configurateRow
-  configurateSelectedRows=this.attrs.configurateSelectedRows
+  configurateRow=configurateRow
+  configurateSelectedRows=configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
+  action="objectListViewRowClick"
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
@@ -114,7 +114,7 @@
         type="button"
         class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
         disabled={{not hasPreviousPage}}
-        {{action "previousPage" this.attrs.previousPage}}>
+        {{action "previousPage" previousPage}}>
       </button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
@@ -122,34 +122,34 @@
         {{else if page.isCurrent}}
           <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
         {{else}}
-          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+          <button type="button" class="ui button" {{action "gotoPage" gotoPage page.number}}>{{page.number}}</button>
         {{/if}}
       {{/each}}
       <button
         type="button"
         class="ui {{unless hasNextPage "disabled"}} button next-page-button"
         disabled={{not hasNextPage}}
-        {{action "nextPage" this.attrs.nextPage}}>
+        {{action "nextPage" nextPage}}>
       </button>
     </div>
-    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) "error" }}">
       {{input
         type="number"
         min=_pages.firstObject.number
         max=_pages.lastObject.number
         placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
         value=searchPageValue
-        enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
+        enter=(action "searchPageButtonAction" gotoPage)
       }}
       {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
       {{input classNames=(array "hidden")}}
       {{#if searchPageValue}}
         <button
           type="button"
-          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly "disabled" "primary"}} goto-page-button small"
           title={{t "components.flexberry-objectlistview.search-button-text"}}
           disabled={{searchPageButtonReadonly}}
-          {{action 'searchPageButtonAction' this.attrs.gotoPage}}>
+          {{action "searchPageButtonAction" gotoPage}}>
         </button>
       {{/if}}
     </div>
@@ -163,7 +163,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") direction="upward"}}
     </div>
   </div>
 {{/if}}

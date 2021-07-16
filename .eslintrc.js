@@ -65,5 +65,12 @@ module.exports = {
       plugins: ['node'],
       extends: ['plugin:node/recommended']
     }
-  ]
+  ],
+  globals: {
+    visit: true,
+    andThen: true,
+    currentPath: true,
+    currentRouteName: true,
+    click: true
+  }
 };

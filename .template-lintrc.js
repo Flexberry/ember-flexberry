@@ -188,14 +188,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-dropdown",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-error",
       "only": [
         "eol-last"
@@ -254,13 +246,6 @@ module.exports = {
         "no-unnecessary-concat",
         "no-negated-condition",
         "no-shadowed-elements"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-objectlistview",
-      "only": [
-        "quotes",
-        "no-attrs-in-components"
       ]
     },
     {

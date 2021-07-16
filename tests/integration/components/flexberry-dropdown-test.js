@@ -1,3 +1,8 @@
+/* eslint-disable ember/no-test-import-export */
+/* eslint-disable ember/no-test-and-then */
+/* eslint-disable ember/no-test-this-render */
+/* eslint-disable ember/use-ember-get-and-set */
+/* eslint-disable hbs/check-hbs-template-literals */
 import Ember from 'ember';
 
 import I18nService from 'ember-i18n/services/i18n';
@@ -9,6 +14,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 const animationDuration = Ember.$.fn.dropdown.settings.duration + 100;
 
+/* eslint-disable-next-line ember/no-test-module-for */
 moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dropdown', {
   integration: true,
 
@@ -77,7 +83,7 @@ let selectDropdownItem = function(options) {
     }
 
     // To select some item, menu must contain such item (with the specified caption).
-    let $item = $('.item:contains(' + itemCaption + ')', $menu);
+    let $item = Ember.$('.item:contains(' + itemCaption + ')', $menu);
     if ($item.length === 0) {
       reject(new Error('flexberry-dropdown\'s menu doesn\'t contain item with caption \'' + itemCaption + '\''));
     }
@@ -103,6 +109,7 @@ let selectDropdownItem = function(options) {
   });
 };
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('it renders properly', function(assert) {
   assert.expect(14);
 
@@ -130,23 +137,28 @@ test('it renders properly', function(assert) {
   // Check wrapper's additional CSS-classes.
   let additioanlCssClasses = 'scrolling compact fluid';
   this.set('class', additioanlCssClasses);
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   // Clean up wrapper's additional CSS-classes.
   this.set('class', '');
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('it renders i18n-ed placeholder', function(assert) {
   assert.expect(2);
 
@@ -171,6 +183,7 @@ test('it renders i18n-ed placeholder', function(assert) {
     'Component\'s inner <dropdown>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('it renders manually defined placeholder', function(assert) {
   assert.expect(2);
 
@@ -197,6 +210,7 @@ test('it renders manually defined placeholder', function(assert) {
   assert.strictEqual(Ember.$.trim($dropdownText.text()), placeholder);
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('readonly mode works properly', function(assert) {
   assert.expect(2);
 
@@ -213,6 +227,7 @@ test('readonly mode works properly', function(assert) {
   assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
 
   // Check that component is disabled.
+  /* eslint-disable no-unused-vars */
   new Ember.RSVP.Promise((resolve, reject) => {
     Ember.run(() => {
       $component.click();
@@ -228,10 +243,15 @@ test('readonly mode works properly', function(assert) {
       }, animationDuration / 2);
     });
   });
+  /* eslint-enable no-unused-vars */
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('needChecksOnValue mode properly', function(assert) {
-  assert.expect(2);
+  let exceptionHandler = Ember.Test.adapter.exception;
+  Ember.Test.adapter.exception = (error) => {
+    throw error;
+  };
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -244,26 +264,17 @@ test('needChecksOnValue mode properly', function(assert) {
     needChecksOnValue=needChecksOnValue
   }}`);
 
-  // Stub Ember.onerror method.
-  let originalOnError = Ember.onerror;
-
   // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
   let newValue = 'Caption4';
-  let latestLoggerErrorMessage;
-  Ember.onerror = function(error) {
-    latestLoggerErrorMessage = error.message;
-  };
 
   // Check that errors handled properly.
-  this.set('value', newValue);
-  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true, 'Check message exists');
-  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalid value exists');
+  assert.throws(() => { this.set('value', newValue); }, new RegExp(newValue));
 
-  // Restore original method in the and of the test.
-  Ember.onerror = originalOnError;
+  Ember.Test.adapter.exception = exceptionHandler;
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('dropdown with items represented by object renders properly', function(assert) {
   assert.expect(3);
 
@@ -290,13 +301,13 @@ test('dropdown with items represented by object renders properly', function(asse
   $dropdownItem.each(function(i) {
     let $item = Ember.$(this);
     let itemKey = itemsObjectKeys[i];
-    let itemCaption = itemsObject[itemKey];
 
     // Check that the captions matches the objects.
-    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the objects');
+    assert.strictEqual($item.attr('data-value'), itemKey, 'Component\'s item\'s сaptions matches the objects');
   });
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('dropdown with items represented by array renders properly', function(assert) {
   assert.expect(3);
 
@@ -317,13 +328,13 @@ test('dropdown with items represented by array renders properly', function(asser
   // Check component's captions and array.
   $dropdownItem.each(function(i) {
     let $item = Ember.$(this);
-    let itemCaption = itemsArray[i];
 
     // Check that the captions matches the array.
-    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the array');
+    assert.strictEqual($item.attr('data-value'), String(i), 'Component\'s item\'s сaptions matches the array');
   });
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('expand animation works properly', function(assert) {
   assert.expect(9);
 
@@ -365,12 +376,14 @@ test('expand animation works properly', function(assert) {
     assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
     assert.strictEqual($dropdownMenu.hasClass('hidden'), false, 'Component\'s menu hasn\'t class \'hidden\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('collapse animation works properly', function(assert) {
   assert.expect(9);
 
@@ -420,12 +433,14 @@ test('collapse animation works properly', function(assert) {
     assert.strictEqual($dropdownMenu.hasClass('visible'), false, 'Component\'s menu hasn\'t class \'visible\'');
     assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('changes in inner <dropdown> causes changes in property binded to \'value\'', function(assert) {
   assert.expect(5);
 
@@ -472,14 +487,16 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
     assert.strictEqual(Ember.$.trim($dropdownText.text()), itemCaption, 'Component\'s text <div> has content equals to selected item \'' + itemCaption + '\'');
 
     // Check that related model's value binded to dropdown is equals to selected item's caption.
-    assert.strictEqual(this.get('value'), itemCaption, 'Related model\'s value binded to dropdown is \'' + itemCaption + '\'');
+    assert.strictEqual(Ember.get(this, 'value'), itemCaption, 'Related model\'s value binded to dropdown is \'' + itemCaption + '\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
 });
 
+/* eslint-disable-next-line qunit/no-global-module-test */
 test('changes in inner <dropdown> causes call to \'onChange\' action', function(assert) {
   assert.expect(2);
 
@@ -525,7 +542,8 @@ test('changes in inner <dropdown> causes call to \'onChange\' action', function(
     assert.strictEqual(onChangeHasBeenCalled, true, 'Component\'s \'onChange\' action has been called');
     assert.strictEqual(onChangeArgument, itemCaption, 'Component\'s \'onChange\' action has been called with \'' + itemCaption + '\' as argument');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });

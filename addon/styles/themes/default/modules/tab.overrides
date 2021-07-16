@@ -2,9 +2,73 @@
          Tab Overrides
 *******************************/
 .flexberry-tab-bar {
-  float: right;
+  float: none;
+  grid-template-rows: @tabsContainerGridRows;
+  grid-template-columns: @tabsContainerGridColumns;
+  overflow: visible;
+  border: none;
+  background: @tabsContainerBackground;
+}
+
+.ui.tabular.menu.flexberry-tab-bar {
+  overflow: visible;
+}
+
+.ui.compact.attached.dropdown.link.item {
+  padding: 0;
+  &&.active {
+    background: @tabsContainerBackground;
+  }
+}
+
+.ui.tabular.menu .item {
+  color: @tabsContainerTextColor;
+  cursor: pointer;
+}
+
+.ui.top.attached.tabular.menu.dragscroll {
+  border: none;
+}
+
+.flexberry-tab-bar-tab.tab.item {
+  border: @tabsBorder;
+  border-bottom: none;
+
+  &&.active {
+    background: @tabsContainerBackground;
+    font-weight: @tabsActiveFontWeight;
+    border: none;
+    border-bottom: @tabsActiveBorderBottom;
+  }
+}
+
+.ui.compact.attached.dropdown.link.item > .menu.transition.visible {
+  background: @dropdownBackground;
+}
+
+.ui.compact.attached.dropdown.link.item .menu .item {
+  width: 100%;
+}
+
+@supports(display: grid) {
+  .ui.tabular.menu {
+    overflow-y: hidden;
+
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+    &&::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .ui.right.sidebar.tabbar {
   background: @rightSidebarTabbarBackground;
+}
+
+/* Icons */
+.clone.outline.icon::before {
+  content: @dropdownIcon;
 }

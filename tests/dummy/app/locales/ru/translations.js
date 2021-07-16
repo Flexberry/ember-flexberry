@@ -307,6 +307,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Лукап в модальном окне',
               'title': ''
             },
+            'lookup-in-modal-autocomplete': {
+              'caption': 'Лукап в модальном окне с автокомплитом',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -803,6 +807,14 @@ Ember.$.extend(true, translations, {
           'captionModalDouble': 'Кастомное модальное окно №2',
           'buttonModal': 'Модальное окно №1',
           'buttonModalDouble': 'Модальное окно №2',
+          'buttonClose': 'Закрыть'
+        },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
+          'captionModal': 'Кастомное модальное окно с ui-modal',
+          'captionModalDouble': 'Кастомное модальное с modal-dialog',
+          'buttonModal': 'Кастомное модальное окно с ui-modal',
+          'buttonModalDouble': 'Кастомное модальное окно с modal-dialog',
           'buttonClose': 'Закрыть'
         },
         'dropdown-mode-example': {

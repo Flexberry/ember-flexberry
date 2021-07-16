@@ -105,7 +105,8 @@ ErrorableRouteMixin, {
 
     let controller = this.controllerFor(this.routeName);
     this.get('appState').loading();
-
+    
+    let componentName;
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -120,9 +121,9 @@ ErrorableRouteMixin, {
     advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    userSettingsService.checkDeletedAtributes(this.get('store'), modelName, componentName);
 
     let nComponents = 0;
-    let componentName;
     for (componentName in developerUserSettings) {
       let componentDesc = developerUserSettings[componentName];
       switch (typeof componentDesc) {
@@ -148,6 +149,7 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
+
     Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
       .then(() => {
         if (this._invalidSorting(params.sort)) {

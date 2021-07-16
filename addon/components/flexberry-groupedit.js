@@ -458,8 +458,8 @@ export default FlexberryBaseComponent.extend({
       let columnName = column.propName;
       let attributePath = columnName;
       if (Ember.get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
-        let diplayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
-        attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
+        let displayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
+        attributePath += displayAttribute ? `.${displayAttribute}` : '';
       }
 
       if (Ember.isNone(sortAscending)) {

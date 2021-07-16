@@ -616,7 +616,6 @@ module.exports = {
       "only": [
         "eol-last",
         "quotes",
-        "simple-unless"
       ]
     },
     {

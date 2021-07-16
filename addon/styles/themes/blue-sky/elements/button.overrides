@@ -199,6 +199,10 @@ div.ui.secondary.menu.no-margin {
     }
 }
 
+.button-dropdown.menu-buttons {
+    display: inline-block;
+}
+
 /**************************************
       Edit panel buttons section
 ***************************************/

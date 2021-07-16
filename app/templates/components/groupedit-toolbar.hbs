@@ -1,3 +1,13 @@
+{{edit-panel
+  deepMount=true
+  buttons=(array
+    (hash
+      class=(concat buttonClass "ui-add")
+      title=(t "components.groupedit-toolbar.add-button-text")
+      icon="plus icon"
+      action=(action 'addRow')))
+}}
+
 {{#if createNewButton}}
   <button
     type="button"

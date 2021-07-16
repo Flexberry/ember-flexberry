@@ -64,7 +64,7 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     flex-grow: 1;
 }
 
-
+.ui.menu .ui.dropdown .menu > .item,
 .menu .flexberry-menuitem.item {
   &.dividing:after {
     content: '';
@@ -75,7 +75,8 @@ div.ui.secondary.menu.no-margin.nav-bar .right.menu {
     bottom: @itemDividingBottom;
     background-color: @itemDividingBackground;
   }
-  .ui.button.icon {
+  .ui.button.icon:not(.dropdown) {
+    background: @itemButtonBackground;
     padding: @itemButtonPadding;
     line-height: @itemButtonLineHeight;
     border: @itemButtonBorder;

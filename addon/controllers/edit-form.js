@@ -465,7 +465,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         return agragatorModel.save();
       });
     } else {
-      const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
+      const unsavedModels = this._getUnsavedModels(model);
       if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
         return this.get('store').batchUpdate(unsavedModels);
       }
@@ -817,7 +817,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
+        model.get(name).filterBy('hasDirtyAttributes').forEach((record) => {
           let promise = record.save().then((record) => {
             return this._saveHasManyRelationships(record).then((result) => {
               if (result && Ember.isArray(result) && result.length > 0) {
@@ -840,6 +840,18 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   },
 
   /**
+   * Returns an array of models that need to be saved
+   *
+   * @param {DS.Model} model
+   * @return {Ember.NativeArray}
+   */
+  _getUnsavedModels(model) {
+    return this._getModelWithHasMany(model).filter(x =>
+      x.get('hasDirtyAttributes') || x.hasChangedBelongsTo()
+    );
+  },
+
+  /**
     Returns an array with the model and all its `hasMany` relationships, obtained recursively, for each model.
 
     @method _getModelWithHasMany
@@ -853,6 +865,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       if (desc.kind === 'hasMany') {
         const hasMany = model.get(name);
         models.addObjects(hasMany);
+
         hasMany.map(this._getModelWithHasMany, this).forEach((hasMany) => {
           models.addObjects(hasMany);
         });

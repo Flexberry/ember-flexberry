@@ -57,6 +57,11 @@ let Model = Projection.Model.extend({
         messages: {
           tooShort: 'Text length must be >= 5'
         }
+      },
+      uniqueAttributes: {
+        secondProperty: 'date',
+        view: 'BaseE',
+        message: 'Combination of attributes (Text, Date) are not unique'
       }
     },
     longText: {

@@ -6,6 +6,8 @@ export default ListFormController.extend({
 
   filterByAllWords: false,
 
+  filterProjectionName: undefined,
+
   /**
     Cout of list loading.
 

@@ -105,6 +105,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     let sorting = this.get('sorting');
     let filter = this.get('filter');
     let filterCondition = this.get('filterCondition');
+    let filterProjectionName = this.get('filterProjectionName');
     let hierarchicalAttribute;
     if (this.get('inHierarchicalMode')) {
       hierarchicalAttribute = this.get('hierarchicalAttribute');
@@ -128,6 +129,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
         filter: filter,
         filterCondition: filterCondition,
         filters: filtersPredicate,
+        filterProjectionName: filterProjectionName,
         predicate: limitPredicate,
         hierarchicalAttribute: hierarchicalAttribute,
       };

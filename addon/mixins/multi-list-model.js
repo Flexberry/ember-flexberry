@@ -84,6 +84,7 @@ export default Ember.Mixin.create({
               filter: settings.filter,
               filterCondition: settings.filterCondition,
               filters: settings.filtersPredicate,
+              filterProjectionName: settings.filterProjectionName,
               predicate: limitPredicate,
               advLimit: advLimit,
               hierarchicalAttribute: settings.inHierarchicalMode ? settings.hierarchicalAttribute : null,

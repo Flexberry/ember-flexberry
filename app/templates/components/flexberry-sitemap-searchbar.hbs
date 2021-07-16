@@ -1,0 +1,35 @@
+<div class="sitemap-searchbar ui search">
+  {{input 
+  class="sitemap-search-input"
+  type="text"
+  input=(action "startSearch")
+  click=(action "toggleResultsList")
+  value=userQuery
+  placeholder=placeholder 
+  }}
+  {{#if isShowingResults}}
+    <div class="sitemap-search-results-list">
+      {{#each _results as |node|}}
+      {{searchbar-node
+      node=node
+      classNames="match-card"
+      }}
+      {{/each}}
+      {{!-- If search gets no hits, display error message instead --}}
+      {{#if noHits}} 
+      <div class="ui message">
+        <div class="header">
+          {{t "components.flexberry-sitemap-searchbar.errMsgOne"}}
+          <span>
+            {{userQuery}}
+          </span>
+          {{t "components.flexberry-sitemap-searchbar.errMsgTwo"}}
+        </div> 
+        <ul class="list">
+          <li>{{t "components.flexberry-sitemap-searchbar.suggestion"}}</li>
+        </ul>  
+      </div>
+    {{/if}}
+    </div>
+  {{/if}}
+</div>

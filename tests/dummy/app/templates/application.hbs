@@ -16,6 +16,8 @@
       title={{t "forms.application.sitemap.application-version.title"}}>
       {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
     </a>
+    {{flexberry-sitemap-searchbar
+    sitemap=sitemap.nodes}}
     {{render "sitemap" sitemap}}
   {{/ui-sidebar}}
   <div class="bgw-fix">

@@ -300,7 +300,14 @@ export default {
 
     'flexberry-tree': {
       'placeholder': 'Tree nodes are not defined'
-    }
+    },
+
+    'flexberry-sitemap-searchbar': {
+      'placeholder': 'Find section...',
+      'errMsgOne': 'Your search - ',
+      'errMsgTwo': ' did not match anything.',
+      'suggestion': 'Try changing your query.'
+    },
 
   },
 

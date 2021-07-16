@@ -1,6 +1,6 @@
 <div class="title-item-menu"onclick={{action 'subMenuEl' bubbles=false}}>{{model.caption}}</div>
 {{#if model.children.length}}
-  <div class="menu subMenu hidden" >
+  <div class="menu subMenu hidden">
     {{#each model.children as |child|}}
       {{render "sitemap-node" child}}
     {{/each}}

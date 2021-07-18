@@ -235,13 +235,13 @@ module.exports = {
       return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'daterangepicker', source: 'git://github.com/dangrossman/daterangepicker.git', target: '3.0.5' },
         { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.6.3' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.3.4' },
-        { name: 'js-beautify', target: '1.6.4' }
+        { name: 'js-beautify', target: '1.6.4' },
+        { name: 'moment', target: '^2.9.0' }
       ]);
     }).then(function() {
       return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');

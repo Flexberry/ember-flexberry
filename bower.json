@@ -8,14 +8,14 @@
     "ember-qunit-notifications": "0.1.0",
     "jquery-mockjax": "2.2.0",
     "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
-    "daterangepicker": "git://github.com/dangrossman/daterangepicker.git#3.0.5",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "blueimp-file-upload": "9.11.2",
     "flatpickr-calendar": "2.6.3",
     "seiyria-bootstrap-slider": "6.0.6",
     "jquery-minicolors": "2.3.4",
-    "js-beautify": "1.6.4"
+    "js-beautify": "1.6.4",
+    "moment": "^2.9.0"
   },
   "resolutions": {
     "ember": "2.4.3",

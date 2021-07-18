@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.0] - 2021-07-18
+### Added
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
+
+### Breaking changes
+* The `flexberry-datepicker` component was removed.
+* The `daterangepicker` `bower`-package was removed from dependencies.
+* The `moment` `bower`-package was added to dependencies.
+
 ## [2.6.1] - 2021-07-02
 ### Fixed
 * The `flexberry-model` blueprint generated wrong model mixin when project contains `ember-cp-validations` dependency.

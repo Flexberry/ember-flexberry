@@ -1,14 +1,13 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
+  {{flexberry-lookup
+    choose="showLookupDialog"
+    remove="removeLookupValue"
     value=model.<%= name %>
-    <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'
+    <%if(lookupValueField){%>displayAttributeName="<%= lookupValueField %>"
     autocomplete=true<%}else{%><%}%>
-    relationName='<%= name %>'
-    projection='<%= projection %>'
+    relationName="<%= name %>"
+    projection="<%= projection %>"
     title=(<%= caption %>)
     readonly=<%= readonly %>
     componentName="<%= name %>Lookup"

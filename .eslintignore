@@ -166,8 +166,10 @@ blueprints/flexberry-core-offline/index.js
 blueprints/flexberry-core/Locales.js
 blueprints/flexberry-core/index.js
 blueprints/flexberry-edit-form/index.js
-blueprints/flexberry-edit-form/snippets/getCellComponent-flexberry-lookup.js
-blueprints/flexberry-edit-form/snippets/getCellComponent-function.js
+blueprints/flexberry-edit-form/snippets/ember-cp-validations/getCellComponent-flexberry-lookup.js
+blueprints/flexberry-edit-form/snippets/ember-cp-validations/getCellComponent-function.js
+blueprints/flexberry-edit-form/snippets/ember-validations/getCellComponent-flexberry-lookup.js
+blueprints/flexberry-edit-form/snippets/ember-validations/getCellComponent-function.js
 blueprints/flexberry-enum/index.js
 blueprints/flexberry-group/index.js
 blueprints/flexberry-list-form/index.js

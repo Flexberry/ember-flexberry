@@ -1,11 +1,10 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-simpledatetime
-    placeholder=(t 'components.flexberry-datepicker.placeholder')
+  {{flexberry-simpledatetime
+    placeholder=(t "components.flexberry-datepicker.placeholder")
     readonly=<%= readonly %>
     value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if model.errors.<%= name %> "error")
     data-test-<%= entityName %>-<%= dashedName %>=true
   }}
   {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}

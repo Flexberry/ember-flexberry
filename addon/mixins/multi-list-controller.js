@@ -178,12 +178,13 @@ export default Mixin.create({
       @method actions.showConfigDialog
       @param {String} componentName Component name.
       @param {String} settingName Current usersetting name.
+      @param {Boolean} useSidePageMode Indicates when use side page mode.
       @param {Boolean} isExportExcel Indicates when it's export dialog.
       @param {Boolean} immediateExport Indicates when need export witout config dialog.
     */
-    showConfigDialog: function(componentName, settingName, useSidePgeMode, isExportExcel = false, immediateExport = false) {
+    showConfigDialog: function(componentName, settingName, useSidePageMode, isExportExcel = false, immediateExport = false) {
       let settingsSource = this.get(`multiListSettings.${componentName}`);
-      this._showConfigDialog(componentName, settingName, useSidePgeMode, settingsSource, isExportExcel, immediateExport);
+      this._showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel, immediateExport);
     },
 
     /**

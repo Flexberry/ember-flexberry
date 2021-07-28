@@ -230,7 +230,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     let settings = $.extend({
       action: 'select',
       onChange: (newValue) => {
-        run(() => {
+        run.next(() => {
           const currentValue = this.get('_value');
           if (currentValue !== newValue) {
             const oldValue = this.get('displayCaptions') ? currentValue : this.get('value');

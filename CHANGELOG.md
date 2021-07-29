@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* The `flexberry-lookup` component in dropdown mode wrong calculate position.
 
 ## [3.6.0-beta.2] - 2021-07-08
 ### Added

@@ -4,16 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.6.0-beta.3] - 2021-08-05
-### Fixed
-* The `flexberry-lookup` component in dropdown mode wrong calculate position.
-
-## [3.6.0-beta.2] - 2021-07-08
+## [3.6.0] - 2021-08-16
 ### Added
-- Changes from [`2.6.0`](#260---2021-06-16) and [`2.6.1`](#261---2021-07-02) versions.
+* Changes from [`2.6.0`](#260---2021-06-16) and [`2.6.1`](#261---2021-07-02) versions.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.6.0-beta.1`.
+* Update dependency on `ember-flexberry-data` to version `3.6.0`.
+* Add some improvements for UI of generated application.
+
+### Fixed
+* The `flexberry-lookup` component in dropdown mode wrong calculate position.
 
 ## [2.6.1] - 2021-07-02
 ### Fixed
@@ -73,17 +73,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-lookup` component:
     * Removed mobile template.
     * An exception will be thrown when trying to use the block form of the component with `autocomplete` or `dropdown` options.
-
-## [3.6.0-beta.1] - 2021-04-29
-### Changed
-- Add some improvements for UI of generated application.
-
-## [3.6.0-beta.0] - 2020-10-07
-### Added
-- Changes from [`2.6.0-beta.0`](#260-beta0---2020-10-06) version.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `3.6.0-beta.0`.
 
 ## [3.5.0] - 2020-09-17
 ### Added

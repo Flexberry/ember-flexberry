@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.6.1] - 2021-08-19
+### Fixed
+* The `adv-limit` service's `init` method.
+
 ## [3.6.0] - 2021-08-16
 ### Added
 * Changes from [`2.6.0`](#260---2021-06-16) and [`2.6.1`](#261---2021-07-02) versions.

@@ -78,7 +78,7 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-    const appConfig = getOwner(this).factoryFor('config:environment');
+    const appConfig = getOwner(this).factoryFor('config:environment').class;
     const useAdvLimitService = get(appConfig, 'class.APP.useAdvLimitService');
     if (!isNone(useAdvLimitService)) {
       this.set('isAdvLimitServiceEnabled', useAdvLimitService);

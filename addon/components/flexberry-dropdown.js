@@ -4,12 +4,13 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import FixableComponent from '../mixins/fixable-component';
 
 /**
   @class FlexberryDropDown
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   _items: Ember.computed('items.[]', function () {
     let items = this.get('items');
     let obj = null;
@@ -282,6 +283,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     onShowHide() {
+      this.showFixedElement({ top: -2, width: 1, });
       return !this.get('destroyHasBeenCalled');
     }
   },
@@ -299,8 +301,6 @@ export default FlexberryBaseComponent.extend({
     For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didInsertElement() {
-    this._super(...arguments);
-
     // We need to select and remember DOM-element representing ui-dropdown component,
     // but we can't just call to this.$('.flexberry-dropdown'), because ember will throw an error
     // "You cannot access this.$() on a component with tagName: ''.".
@@ -316,6 +316,8 @@ export default FlexberryBaseComponent.extend({
 
     let dropdownDomElement = !Ember.isNone(dropdownView) ? dropdownView.$() : null;
     this.set('dropdownDomElement', dropdownDomElement);
+
+    this._super(...arguments);
   },
 
   /**

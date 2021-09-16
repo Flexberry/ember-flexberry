@@ -76,16 +76,16 @@ export default Ember.Mixin.create({
   didInsertElement() {
     this._super(...arguments);
 
-    if (!this.get('canFixElement')) return;
+    if (!Ember.get(this, 'canFixElement')) return;
 
     const component = this.element || this.dropdownDomElement.context;
 
     if (isEmpty(component)) return Logger.warn(`Компонент не найден`);
 
-    const elementClass = this.get('fixedElementClass');
+    const elementClass = Ember.get(this, 'fixedElementClass');
     const elements = component.getElementsByClassName(elementClass);
-    const olv = $(component).closest(this.get('olvClasses')).get(0);
-    const modal = $(component).closest(this.get('modalClasses')).get(0);
+    const olv = $(component).closest(Ember.get(this, 'olvClasses')).get(0);
+    const modal = $(component).closest(Ember.get(this, 'modalClasses')).get(0);
 
     if (isEmpty(olv) && isEmpty(modal)) return Logger.warn(`Компонент находится вне спискового компонента или модального окна`);
     if (isEmpty(elements)) return Logger.warn(`Элемент с классом '${elementClass}' не найден`);
@@ -107,11 +107,11 @@ export default Ember.Mixin.create({
    * @param {Object} options Корректировка позиции фиксированного элемента и т.д...
    */
   showFixedElement(options = {}) {
-    if (!this.get('canFixElement')) return;
+    if (!Ember.get(this, 'canFixElement')) return;
     if (typeOf(options) !== 'object') return Logger.warn(`Параметр 'options' имеет неверный тип`);
 
-    const element = this.get('fixedElementRef');
-    const component = this.get('componentRef');
+    const element = Ember.get(this, 'fixedElementRef');
+    const component = Ember.get(this, 'componentRef');
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
     let parentComponent = $('body > .pushable > .pusher').get(0);
@@ -121,7 +121,7 @@ export default Ember.Mixin.create({
       let { top } = component.getBoundingClientRect();
       const optionWidth = options.width || 0;
 
-      if (this.get('isInsideOlv')) {
+      if (Ember.get(this, 'isInsideOlv')) {
         element.style.maxHeight = 'none';
         let elementHeight = $(element).outerHeight();
 
@@ -133,7 +133,7 @@ export default Ember.Mixin.create({
           element.style.overflowY = 'auto';
 
           if (elementHeight > top) {
-            let logoHeight = $(this.get('logoClass')).outerHeight();
+            let logoHeight = $(Ember.get(this, 'logoClass')).outerHeight();
             element.style.maxHeight = `${top - logoHeight}px`;
           }
 
@@ -152,7 +152,7 @@ export default Ember.Mixin.create({
         $(element).attr('style', function(i, s) { return (s || '') + `left: ${offsetLeft}px !important;` });
       }
 
-      if (this.get('isInsideModal')) element.style.left = 0;
+      if (Ember.get(this, 'isInsideModal')) element.style.left = 0;
 
       element.style.width = `${width + optionWidth}px`;
       element.style.position = 'fixed';
@@ -165,14 +165,14 @@ export default Ember.Mixin.create({
    * Скрывает фиксированный элемент.
    */
   hideFixedElement() {
-    if (!this.get('canFixElement')) return;
+    if (!Ember.get(this, 'canFixElement')) return;
 
-    const element = this.get('fixedElementRef');
+    const element = Ember.get(this, 'fixedElementRef');
     element.style.left = '-9999px';
     element.style.maxHeight = 'none';
     element.style.position = '';
 
-    const component = this.get('componentRef');
+    const component = Ember.get(this, 'componentRef');
     $(component).blur();
 
     this.removeScrollListeners();
@@ -184,14 +184,14 @@ export default Ember.Mixin.create({
   },
 
   addScrollListeners() {
-    if (this.get('isInsideOlv')) $(this.get('olvClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
-    if (this.get('isInsideModal')) $(this.get('modalClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
-    $(this.get('formClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
+    if (Ember.get(this, 'isInsideOlv')) $(Ember.get(this, 'olvClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
+    if (Ember.get(this, 'isInsideModal')) $(Ember.get(this, 'modalClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
+    $(Ember.get(this, 'formClasses')).on('scroll.flexberry-dropdown-custom', () => this.hideFixedElement());
   },
 
   removeScrollListeners() {
-    if (this.get('isInsideOlv')) $(this.get('olvClasses')).off('scroll.flexberry-dropdown-custom');
-    if (this.get('isInsideModal')) $(this.get('modalClasses')).off('scroll.flexberry-dropdown-custom');
-    $(this.get('formClasses')).off('scroll.flexberry-dropdown-custom');
+    if (Ember.get(this, 'isInsideOlv')) $(Ember.get(this, 'olvClasses')).off('scroll.flexberry-dropdown-custom');
+    if (Ember.get(this, 'isInsideModal')) $(Ember.get(this, 'modalClasses')).off('scroll.flexberry-dropdown-custom');
+    $(Ember.get(this, 'formClasses')).off('scroll.flexberry-dropdown-custom');
   }
 });

@@ -214,7 +214,6 @@ var CoreBlueprint = /** @class */ (function () {
         this.importProperties = importProperties.join("\n");
         this.formsImportedProperties = formsImportedProperties.join(",\n");
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
-        this.inflectorIrregular = inflectorIrregular.join("\n");
     }
     CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";

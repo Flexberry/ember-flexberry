@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.1] - 2021-09-20
+### Changed
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+
 ## [2.7.0-beta.0] - 2021-07-18
 ### Added
 * The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.

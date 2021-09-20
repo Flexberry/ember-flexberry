@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Breaking changes
+* Deleted `custom-inflector-rules`.
 
 ## [2.7.0-beta.1] - 2021-09-20
 ### Changed

@@ -10,6 +10,8 @@ import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
 import Information from 'ember-flexberry-data/utils/information';
 
+import FixableComponent from '../mixins/fixable-component';
+
 const {
   Builder,
   Condition,
@@ -54,7 +56,7 @@ const {
   @class FlexberryLookup
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     This property is used in order to cache loaded for dropdown mode values.
     Values are kept as array with master id as key and master object as value.
@@ -763,6 +765,13 @@ export default FlexberryBaseComponent.extend({
   transition: 'auto',
   duration: 200,
 
+  /**
+    @method onShowHide
+  */
+  onShowHide(fixedOnVisible = false) {
+    this.showFixedElement({ top: -1, fixedOnVisible: fixedOnVisible });
+  },
+
   actions: {
     /**
       Open window for select value.
@@ -1176,6 +1185,10 @@ export default FlexberryBaseComponent.extend({
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
 
+        Ember.run(() => {
+          _this.onShowHide();
+        });
+
         let autocompleteDirection = Ember.get(_this, 'autocompleteDirection');
         if (autocompleteDirection == 'auto')
         {
@@ -1293,6 +1306,10 @@ export default FlexberryBaseComponent.extend({
 
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
+
+        Ember.run(() => {
+          _this.onShowHide();
         });
       }
     });

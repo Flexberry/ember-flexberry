@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.2] - 2021-09-21
+### Fixed
+* The `flexberry-groupedit` component:
+    * Lookup's autocomplite and dropdown groupedit container overflow.
+
 ## [2.7.0-beta.1] - 2021-09-20
 ### Changed
 * The `flexberry-objectlistview` and `flexberry-groupedit` components:

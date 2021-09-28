@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.3] - 2021-09-28
+### Added
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+
 ## [2.7.0-beta.2] - 2021-09-21
 ### Fixed
 * The `flexberry-groupedit` component:

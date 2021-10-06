@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* The `flexberry-groupedit` component:
+    * Optimized sort function.
 
 ## [2.7.0-beta.3] - 2021-09-28
 ### Added

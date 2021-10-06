@@ -190,6 +190,7 @@ tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-empty-value-te
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js

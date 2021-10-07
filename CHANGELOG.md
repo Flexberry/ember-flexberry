@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-groupedit` component:
     * Optimized sort function.
 
+### Breaking changes
+* Deleted `custom-inflector-rules`.
+
 ## [2.7.0-beta.3] - 2021-09-28
 ### Added
 * The `fixable-component` mixin:

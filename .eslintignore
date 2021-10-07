@@ -94,6 +94,7 @@ addon/mixins/edit-form-controller-operations-indication.js
 addon/mixins/edit-form-route-operations-indication.js
 addon/mixins/errorable-controller.js
 addon/mixins/errorable-route.js
+addon/mixins/fixable-component.js
 addon/mixins/flexberry-ddau-checkbox-actions-handler.js
 addon/mixins/flexberry-ddau-slider-actions-handler.js
 addon/mixins/flexberry-file-compatible-component.js
@@ -189,6 +190,7 @@ tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-empty-value-te
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js

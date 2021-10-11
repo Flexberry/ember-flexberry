@@ -88,7 +88,7 @@ var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
-        this.isEmberCpValidationsUsed = ModelBlueprint_1.default.checkCpValidations(blueprint);
+        this.isEmberCpValidationsUsed = true;
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");

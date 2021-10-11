@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
+import flexberryGroupeditComponent from 'ember-flexberry/components/flexberry-groupedit';
 
 let app;
-let flexberryGroupeditComponent;
 let store;
 const testName = 'sort test';
 
@@ -14,7 +14,6 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   beforeEach() {
     // Start application.
     app = startApp();
-    flexberryGroupeditComponent = app.__container__.lookup('component:flexberry-groupedit');
     store = app.__container__.lookup('service:store');
   },
 
@@ -74,7 +73,7 @@ test(testName, (assert) => {
         moderated: true
       }));
   });
-  
+
   try {
     let sortResult = flexberryGroupeditComponent.sortRecords(
       recordArray, { propName: 'address', direction: 'asc'}, 0, 4);

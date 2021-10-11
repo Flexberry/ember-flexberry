@@ -154,7 +154,8 @@ module.exports = {
     {
       "moduleId": "app/templates/components/flexberry-dropdown",
       "only": [
-        "no-unnecessary-concat"
+        "no-unnecessary-concat",
+        "eol-last"
       ]
     },
     {

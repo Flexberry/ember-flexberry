@@ -214,7 +214,19 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type Any
     @default model
   */
-  validationObject: computed.alias('model'),
+  validationObject: computed.deprecatingAlias('validationModel', {
+    id: 'ember-flexberry.edit-form-controller.validation-object-property',
+    until: '4.0.0',
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: computed.alias('model'),
 
   actions: {
     /**

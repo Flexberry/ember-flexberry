@@ -87,6 +87,7 @@ module.exports = {
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
+      isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
       },
       editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
@@ -99,6 +100,8 @@ class EditFormBlueprint {
   parentRoute: string;
   flexberryComponents: string;
   functionGetCellComponent: string;
+  isEmberCpValidationsUsed: boolean;
+
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
   private modelsDir: string;
@@ -106,6 +109,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
+    this.isEmberCpValidationsUsed = ModelBlueprint.checkCpValidations(blueprint);
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
@@ -132,7 +136,8 @@ class EditFormBlueprint {
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {
-    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
+    let snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
   }
 
   readHbsSnippetFile(componentName: string): string {

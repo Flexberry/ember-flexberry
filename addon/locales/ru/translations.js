@@ -49,7 +49,8 @@ export default {
     },
 
     'flexberry-simpledatetime': {
-      placeholder: '(нет значения)'
+      placeholder: '(нет значения)',
+      'scroll-caption-text': 'Используйте скролл для перемотки',
     },
 
     'flexberry-textarea': {
@@ -58,14 +59,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(нет значения)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
     },
 
     'flexberry-file': {

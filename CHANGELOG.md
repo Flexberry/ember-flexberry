@@ -4,6 +4,42 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.4] - 2021-10-11
+### Fixed
+* The `flexberry-groupedit` component:
+    * Optimized sort function.
+
+### Breaking changes
+* Deleted `custom-inflector-rules`.
+
+## [2.7.0-beta.3] - 2021-09-28
+### Added
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+
+## [2.7.0-beta.2] - 2021-09-21
+### Fixed
+* The `flexberry-groupedit` component:
+    * Lookup's autocomplite and dropdown groupedit container overflow.
+
+## [2.7.0-beta.1] - 2021-09-20
+### Changed
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+
+## [2.7.0-beta.0] - 2021-07-18
+### Added
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
+
+### Breaking changes
+* The `flexberry-datepicker` component was removed.
+* The `daterangepicker` `bower`-package was removed from dependencies.
+* The `moment` `bower`-package was added to dependencies.
+
 ## [3.6.1] - 2021-08-19
 ### Fixed
 * The `adv-limit` service's `init` method.

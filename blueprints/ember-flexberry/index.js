@@ -125,7 +125,12 @@ module.exports = {
       '          showModalDialogOnUploadError: true,\n\n' +
       '          // Flag: indicates whether to show modal dialog on download errors or not.\n' +
       '          showModalDialogOnDownloadError: true,\n' +
-      '        }\n' +
+      '        },\n' +
+      '        // Settings for `flexberryObjectlistview` component.\n' +
+      '        flexberryObjectlistview: {\n' +
+      '          // Default number of records on the list page.\n'+
+      '          defaultPerPage: 5\n' +
+      '        }\n'+
       '      },\n';
 
     var env4before = '\n  if (environment === \'development\') {\n';

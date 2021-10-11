@@ -866,13 +866,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-datepicker/settings-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-ddau-checkbox/settings-example",
       "only": [
         "eol-last"

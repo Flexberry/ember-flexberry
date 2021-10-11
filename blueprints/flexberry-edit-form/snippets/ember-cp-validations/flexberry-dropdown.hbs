@@ -3,8 +3,8 @@
     {{flexberry-dropdown
       items=(flexberry-enum "<%= type %>")
       value=model.<%= name %>
-      class=(if (v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
+      class=(if (v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
       readonly=<%= readonly %>
     }}
-    {{flexberry-validationmessage error=(v-get validationObject<%= propertyMaster %> "<%= propertyName %>" "message")}}
+    {{flexberry-validationmessage error=(v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "message")}}
   </div>

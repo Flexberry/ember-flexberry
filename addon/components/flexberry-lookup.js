@@ -1252,6 +1252,10 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           _this.onShowHide();
         });
 
+        run(() => {
+          _this.onShowHide();
+        });
+
         let autocompleteDirection = get(_this, 'autocompleteDirection');
         if (autocompleteDirection == 'auto')
         {
@@ -1375,6 +1379,10 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         });
 
         run.next(() => {
+          _this.onShowHide();
+        });
+
+        run(() => {
           _this.onShowHide();
         });
       }

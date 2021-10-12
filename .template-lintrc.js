@@ -652,9 +652,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/log-service-examples/settings-example",
       "only": [
-        "block-indentation",
         "eol-last",
-        "quotes",
         "no-duplicate-attributes",
         "no-inline-styles",
         "no-bare-strings"

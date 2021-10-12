@@ -109,7 +109,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
-    this.isEmberCpValidationsUsed = ModelBlueprint.checkCpValidations(blueprint);
+    this.isEmberCpValidationsUsed = true;
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");

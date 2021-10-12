@@ -154,7 +154,8 @@ module.exports = {
     {
       "moduleId": "app/templates/components/flexberry-dropdown",
       "only": [
-        "no-unnecessary-concat"
+        "no-unnecessary-concat",
+        "eol-last"
       ]
     },
     {
@@ -651,9 +652,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/log-service-examples/settings-example",
       "only": [
-        "block-indentation",
         "eol-last",
-        "quotes",
         "no-duplicate-attributes",
         "no-inline-styles",
         "no-bare-strings"

@@ -14,8 +14,8 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   beforeEach() {
     // Start application.
     app = startApp();
-    flexberryGroupeditComponent = app.__container__.lookup('component:flexberry-groupedit');
-    store = app.__container__.lookup('service:store');
+    /*flexberryGroupeditComponent = app.__container__.lookup('component:flexberry-groupedit');
+    store = app.__container__.lookup('service:store');*/
   },
 
   afterEach() {

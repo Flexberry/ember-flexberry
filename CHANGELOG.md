@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.0] - 2021-10-12
+### Added
+* Changes from `2.7.0-beta.0` to `2.7.0-beta.4` versions.
+
 ## [2.7.0-beta.4] - 2021-10-11
 ### Fixed
 * The `flexberry-groupedit` component:

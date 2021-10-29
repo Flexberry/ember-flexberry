@@ -254,6 +254,7 @@ module.exports = {
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
+          { name: 'ember-get-config', target: '0.3.0' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '^1.5.4' },
           { name: 'ember-cp-validations', target: '~3.5.2' },
@@ -278,8 +279,7 @@ module.exports = {
       return _this.addAddonsToProject({
         packages: [
           { name: 'ember-data', target: '~3.1.1' },
-          { name: 'ember-block-slots', target: '1.1.11' },
-          { name: 'ember-get-config', target: '0.3.0' }
+          { name: 'ember-block-slots', target: '1.1.11' }
         ]
       });
     });

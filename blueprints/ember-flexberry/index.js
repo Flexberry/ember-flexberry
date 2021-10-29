@@ -254,11 +254,11 @@ module.exports = {
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-get-config', target: '0.3.0' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '^1.5.4' },
           { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
+          { name: 'ember-cli-moment-shim', target: '3.7.1' },
           { name: 'ember-moment', target: '7.7.0' },
           { name: 'ember-test-selectors', target: '2.1.0' }
         ]

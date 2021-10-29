@@ -270,7 +270,6 @@ module.exports = {
         { name: 'flatpickr', target: '4.6.1' },
         { name: 'autoprefixer', target: '^6' },
         { name: 'ember-flexberry-themes' },
-        { name: 'ember-get-config', target: '0.3.0' },
         { name: 'eslint-plugin-hbs', target: '1.0.0' }
       ]);
     }).then(function () {
@@ -279,7 +278,8 @@ module.exports = {
       return _this.addAddonsToProject({
         packages: [
           { name: 'ember-data', target: '~3.1.1' },
-          { name: 'ember-block-slots', target: '1.1.11' }
+          { name: 'ember-block-slots', target: '1.1.11' },
+          { name: 'ember-get-config', target: '0.3.0' }
         ]
       });
     });

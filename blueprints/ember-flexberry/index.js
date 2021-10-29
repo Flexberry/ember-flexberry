@@ -269,7 +269,9 @@ module.exports = {
         { name: 'node-uuid', target: '^1.4.7' },
         { name: 'flatpickr', target: '4.6.1' },
         { name: 'autoprefixer', target: '^6' },
-        { name: 'ember-flexberry-themes' }
+        { name: 'ember-flexberry-themes' },
+        { name: 'ember-get-config', target: '0.3.0' },
+        { name: 'eslint-plugin-hbs', target: '1.0.0' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

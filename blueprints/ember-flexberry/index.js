@@ -157,7 +157,7 @@ module.exports = {
 
       var resolutions ='\n' +
         '  "resolutions": {' +
-        '    "ember-get-config": "0.3.0"\n'
+        '    "ember-get-config": "0.3.0"\n' +
         '  },\n';
 
     /*

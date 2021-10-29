@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.1] - 2021-10-29
+### Changed
+* If not specified, default locale would be browser's or system locale.
+
 ## [3.7.0-beta.0] - 2021-10-12
 ### Added
 * Changes from `2.7.0-beta.0` to `2.7.0-beta.4` versions.

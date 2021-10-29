@@ -155,6 +155,11 @@ module.exports = {
       '    outputFormat: \'L\'\n' +
       '  };\n';
 
+      var resolutions ='\n' +
+        '  "resolutions": {' +
+        '    "ember-get-config": "0.3.0"\n'
+        '  },\n';
+
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
       `ember-browserify`, `dexie`.
@@ -226,6 +231,14 @@ module.exports = {
         }
       );
     }).then(function() {
+      return _this.insertIntoFile(
+        'package.json',
+        resolutions,
+        {
+          before: '  "engines": {'
+        }
+      );
+    }).then(function() {
       return _this.insertIntoFile(appEnvironment, env1, { after: env1after });
     }).then(function() {
       return _this.insertIntoFile(addonEnvironment, env1, { after: env1after });
@@ -258,7 +271,6 @@ module.exports = {
           { name: 'ember-cli-less', target: '^1.5.4' },
           { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
-          { name: 'ember-cli-moment-shim', target: '3.7.1' },
           { name: 'ember-moment', target: '7.7.0' },
           { name: 'ember-test-selectors', target: '2.1.0' }
         ]

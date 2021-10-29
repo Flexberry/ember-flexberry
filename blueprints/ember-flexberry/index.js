@@ -155,10 +155,9 @@ module.exports = {
       '    outputFormat: \'L\'\n' +
       '  };\n';
 
-      var resolutions ='\n' +
-        '  "resolutions": {' +
+      var resolutions = '  "resolutions": {\n' +
         '    "ember-get-config": "0.3.0"\n' +
-        '  },\n';
+        '  },';
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:

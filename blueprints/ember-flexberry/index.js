@@ -147,13 +147,17 @@ module.exports = {
       '  ENV.i18n = {\n' +
       '    // Should be defined to avoid ember-i18n deprecations.\n' +
       '    // Locale will be changed then to navigator current locale (in instance initializer).\n' +
-      '    defaultLocale: \'ru\'\n' +
+      '    defaultLocale: null\n' +
       '  };\n\n' +
       '  // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.\n' +
       '  // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).\n' +
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
+
+      var resolutions = '  "resolutions": {\n' +
+        '    "ember-get-config": "0.3.0"\n' +
+        '  },';
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
@@ -223,6 +227,14 @@ module.exports = {
         '    <link rel="icon" href="/assets/images/favicon.ico">\n',
         {
           after: '<link rel="stylesheet" href="assets/dummy.css">\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'package.json',
+        resolutions,
+        {
+          before: '  "engines": {'
         }
       );
     }).then(function() {

@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.2] - 2021-11-02
+### Changed
+* En locale generates from captions.
+
 ## [3.7.0-beta.1] - 2021-10-29
 ### Changed
 * If not specified, default locale would be browser's or system locale.

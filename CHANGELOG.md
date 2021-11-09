@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.3] - 2021-11-09
+### Fixed
+* En locale for application menu.
+
 ## [3.7.0-beta.2] - 2021-11-02
 ### Changed
 * En locale generates from captions.

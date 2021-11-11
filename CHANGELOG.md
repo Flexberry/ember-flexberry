@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.4] - 2021-11-11
+### Fixed
+* Filtering and sorting on list forms in generated application.
+* En locale for application caption and application title.
+
 ## [3.7.0-beta.3] - 2021-11-09
 ### Fixed
 * En locale for application menu.

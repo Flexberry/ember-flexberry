@@ -438,16 +438,15 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     const validationModel = this.get('validationModel');
     if (validationModel) {
       return validationModel.validate().then(({ validations }) => {
-        const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
-        if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
-          return Ember.RSVP.reject(validations);
+        if (validations instanceof ResultCollection && validations.get('isInvalid')) {
+          return RSVP.reject(validations);
         }
 
-        return Ember.RSVP.resolve();
+        return RSVP.resolve();
       });
     }
 
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   },
 
   /**
@@ -639,8 +638,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     $('.ui.form .full.height').scrollTop(0);
-    const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
-    if (!(errorData instanceof Errors) && (!resultCollection || !(errorData instanceof resultCollection))) {
+    if (!(errorData instanceof ResultCollection)) {
       this.send('handleError', errorData);
     }
   },

@@ -10,10 +10,8 @@ import RSVP from 'rsvp';
 import { isNone } from '@ember/utils';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { set } from '@ember/object';
+import { get, set } from '@ember/object';
 import Queue from 'ember-flexberry-data/utils/queue';
-
-const { getOwner, get } = Ember;
 
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
@@ -650,7 +648,7 @@ export default Service.extend(Evented, {
         error = new Error(error);
       }
 
-    const message = get(error, 'message') || error.toString();
+      const message = get(error, 'message') || error.toString();
 
       let formattedMessageBlank = {
         name: error && error.name ? error.name : null,

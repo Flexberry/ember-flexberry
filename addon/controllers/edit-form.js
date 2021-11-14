@@ -2,19 +2,21 @@
   @module ember-flexberry
 */
 
-import $ from 'jquery';
-import RSVP from 'rsvp';
-import Controller, { inject as injectController } from '@ember/controller';
-import Evented from '@ember/object/evented';
-import { inject as injectService} from '@ember/service';
-import { get, computed } from '@ember/object';
-import { A, isArray } from '@ember/array';
-import { assert } from '@ember/debug';
-import { isNone, isEmpty } from '@ember/utils';
-import { reject } from 'rsvp';
 import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/application/deprecations';
+import { A, isArray } from '@ember/array';
+import Controller, { inject as injectController } from '@ember/controller';
+import { assert } from '@ember/debug';
+import { get, computed } from '@ember/object';
+import Evented from '@ember/object/evented';
+import { inject as injectService} from '@ember/service';
+import { isNone, isEmpty } from '@ember/utils';
+
+import DS from 'ember-data';
 import ResultCollection from 'ember-cp-validations/validations/result-collection';
+import $ from 'jquery';
+import RSVP, { reject } from 'rsvp';
+
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -65,15 +67,6 @@ SortableControllerMixin,
 LimitedControllerMixin,
 FlexberryOlvToolbarMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin, {
-  /**
-   * @readonly
-   * @private
-   * @property _EmberCpValidationsResultCollectionClass
-   */
-  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
-    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
-  }).readOnly(),
-
   /**
     Controller to show colsconfig modal window.
 
@@ -638,7 +631,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     $('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof ResultCollection)) {
+    if (!(errorData instanceof ResultCollection) && !(errorData instanceof DS.Errors)) {
       this.send('handleError', errorData);
     }
   },

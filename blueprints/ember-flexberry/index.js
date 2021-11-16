@@ -144,7 +144,7 @@ module.exports = {
       '        },\n'+
       '        flexberrySimpledatetime: {\n'+
       '          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.\n'+
-      '          calendarContext: undefined\n'+
+      '          calendarContext: undefined,\n'+
       '        }\n'+
       '      },\n';
 

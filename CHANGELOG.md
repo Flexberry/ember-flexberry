@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.5] - 2021-11-16
+### Added
+* Lookup's sidepage mode in generated app.
+
 ## [3.7.0-beta.4] - 2021-11-11
 ### Fixed
 * Filtering and sorting on list forms in generated application.

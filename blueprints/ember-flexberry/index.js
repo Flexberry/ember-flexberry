@@ -129,7 +129,22 @@ module.exports = {
       '        // Settings for `flexberryObjectlistview` component.\n' +
       '        flexberryObjectlistview: {\n' +
       '          // Default number of records on the list page.\n'+
-      '          defaultPerPage: 5\n' +
+      '          defaultPerPage: 5,\n' +
+      '          // Flag indicates whether to use side page or usual mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '        },\n'+
+      '        // Settings for flexberry-lookup component.\n'+
+      '        flexberryLookup: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberryGroupedit: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberrySimpledatetime: {\n'+
+      '          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.\n'+
+      '          calendarContext: undefined\n'+
       '        }\n'+
       '      },\n';
 

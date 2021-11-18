@@ -254,6 +254,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-sorting-with-default-s
 tests/acceptance/components/flexberry-objectlistview/folv-tests-functions.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js
+tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js
 tests/acceptance/components/readonly-test/edit-form-readonly-test.js
 tests/acceptance/edit-form-validation-test/execute-validation-test.js

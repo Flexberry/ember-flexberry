@@ -8,6 +8,7 @@ let app;
 let store;
 let route;
 let path = 'components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list';
+let pathHelp = 'components-examples/flexberry-lookup/user-settings-example';
 let userService;
 
 module('Acceptance | flexberry-objectlistview | per page user settings on multi list', {
@@ -33,12 +34,12 @@ module('Acceptance | flexberry-objectlistview | per page user settings on multi 
 });
 
 test('check perPage developerUserSetting in multi list', function(assert) {
-  assert.expect(10);
+  assert.expect(28);
 
   let modelInfos = [
-    { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList', perPage: [9] },
-    { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList2', perPage: [10] },
-    { modelName: 'ember-flexberry-dummy-suggestion-type', uuid: generateUniqueId(), componentName: 'MultiSuggestionList', perPage: [11] }
+    { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList', perPage: [9, 12, 9, 15] },
+    { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList2', perPage: [10, 13, 13, 16] },
+    { modelName: 'ember-flexberry-dummy-suggestion-type', uuid: generateUniqueId(), componentName: 'MultiSuggestionList', perPage: [11, 14, 11, 17] }
   ];
 
   Ember.set(
@@ -62,19 +63,118 @@ test('check perPage developerUserSetting in multi list', function(assert) {
           assert.equal(currentPath(), path);
           let currentUrl = currentURL();
           assert.ok(true, "Текущий адрес: " + currentUrl);
-          checkPaging(assert, modelInfos, 0)
+          checkPaging(assert, modelInfos, 0);
+          Ember.set(
+            route,
+            'developerUserSettings',
+            { 
+              'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[1] } },
+              'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[1] } }, 
+              'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[1] } } 
+            });
+
+          let doneHelp = assert.async();
+          visit(pathHelp);
+          andThen(function() {
+            assert.equal(currentPath(), pathHelp);
+            let done1 = assert.async();
+            visit(path);
+            andThen(function() {
+              try {
+                assert.equal(currentPath(), path);
+                checkPaging(assert, modelInfos, 0);
+                
+                let done2 = assert.async();
+                click("div.folv-for-changing div.cols-config i.dropdown");
+                andThen(function() {
+                  try {
+                    let done3 = assert.async();
+                    click("div.folv-for-changing div.cols-config i.remove");
+                    andThen(function() {
+                      try {
+                        assert.ok(true, 'Произведён сброс настроек пользователя до developerUserSettings.');
+                        checkPaging(assert, modelInfos, 2);
+                        let done4 = assert.async();
+                        checkWithDisabledUserSettings(assert, done4, modelInfos);
+                      } catch (error) {
+                        clearAllData(assert, store, modelInfos);
+                        throw error;
+                      }
+                      finally {
+                        done3();
+                      }
+                    });
+                  } catch (error) {
+                    clearAllData(assert, store, modelInfos);
+                    throw error;
+                  }
+                  finally{
+                    done2();
+                  }
+                });
+              } catch(error) {
+                clearAllData(assert, store, modelInfos);
+                throw error;
+              } finally {
+                done1();
+              }
+            });
+            doneHelp();
+          });
         }
         catch(error) {
+          clearAllData(assert, store, modelInfos);
           throw error;
         } 
         finally {
-          clearAllData(assert, store, modelInfos);
           done();
         }
       });
     });
   });
 });
+
+function checkWithDisabledUserSettings(assert, asyncDone, modelInfos) {
+  try{
+    let doneHelp = assert.async();
+    visit(pathHelp);
+    andThen(function() {
+      assert.equal(currentPath(), pathHelp);
+      Ember.set(
+        route,
+        'developerUserSettings',
+        { 
+          'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[3] } },
+          'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[3] } }, 
+          'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[3] } } 
+        });
+      Ember.set(userService, 'isUserSettingsServiceEnabled', false);
+
+      // Remove current saved not in Database settings.
+      Ember.set(userService, 'currentUserSettings', {});
+
+      let done1 = assert.async();
+      visit(path);    
+      andThen(function() {
+        try {
+          assert.equal(currentPath(), path);
+          checkPaging(assert, modelInfos, 3);
+        } catch(error) {
+          throw error;
+        } finally {
+          clearAllData(assert, store, modelInfos);
+          done1();
+        }
+      });
+      doneHelp();
+    });
+  } catch(error) {
+    clearAllData(assert, store, modelInfos);
+    throw error;
+  } finally {
+    asyncDone();
+  }
+}
 
 // Function to check current perPage value on page.
 function checkPaging(assert, modelInfos, expectedIndex) {

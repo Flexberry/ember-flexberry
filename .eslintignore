@@ -409,6 +409,7 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/date
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/folv-filter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/folv-paging.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/folv-user-settings.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list.js
 tests/dummy/app/routes/components-examples/flexberry-checkbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-ddau-checkbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-dropdown/conditional-render-example.js

@@ -48,7 +48,8 @@ test('check saving of user settings', function(assert) {
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
       let done = assert.async();
-      visit(path + executeOnServer?"?perPage=28":"");
+      let realPath = path + (executeOnServer?'?perPage=28':'');
+      visit(realPath);
       andThen(function() {
         try {
           assert.equal(currentPath(), path);
@@ -62,7 +63,8 @@ test('check saving of user settings', function(assert) {
           andThen(function() {
             assert.equal(currentPath(), pathHelp);
             let done1 = assert.async();
-            visit(path + executeOnServer?"?perPage=28":"");
+            let realPath = path + (executeOnServer?'?perPage=28':'');
+            visit(realPath);
             andThen(function() {
               try {
                 assert.equal(currentPath(), path);
@@ -140,7 +142,8 @@ function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
       Ember.set(userService, 'currentUserSettings', {});
 
       let done1 = assert.async();
-      visit(path + executeOnServer?"?perPage=11":"");    
+      let realPath = path + (executeOnServer?'?perPage=11':'');
+      visit(realPath);   
       andThen(function() {
         try {
           assert.equal(currentPath(), path);

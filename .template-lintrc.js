@@ -908,9 +908,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list",
       "only": [
-        "eol-last",
-        "quotes",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {

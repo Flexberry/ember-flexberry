@@ -12,6 +12,9 @@ let pathHelp = 'components-examples/flexberry-lookup/user-settings-example';
 let modelName = 'ember-flexberry-dummy-suggestion-type';
 let userService;
 
+/* There is some problem with TransitionAborted on server, so for server there is variant without redirect.*/
+let executeOnServer = true;
+
 module('Acceptance | flexberry-objectlistview | per page user settings', {
   beforeEach() {
 
@@ -45,7 +48,7 @@ test('check saving of user settings', function(assert) {
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
       let done = assert.async();
-      visit(path);
+      visit(path + executeOnServer?"?perPage=28":"");
       andThen(function() {
         try {
           assert.equal(currentPath(), path);
@@ -59,15 +62,10 @@ test('check saving of user settings', function(assert) {
           andThen(function() {
             assert.equal(currentPath(), pathHelp);
             let done1 = assert.async();
-            visit(path);
+            visit(path + executeOnServer?"?perPage=28":"");
             andThen(function() {
               try {
                 assert.equal(currentPath(), path);
-                /* В настоящее время при тестировании наблюдается следующая бага: при переходе снова на visit(path)
-                  срабатывает комбобокс с вариантами количества элементов на странице и затирает нужное значение на 5 в настройке в БД.
-                  При тестировании в реальном окружении проходила корректная переадресация на perPage=28, которое уже сохранено в БД
-                  и более приоритетно, нежели 17, заданное в developerUserSettings. Поэтому переход осуществляется через visit(pathHelp).
-                */
                 let currentUrl = currentURL();
                 assert.ok(currentUrl.contains("perPage=28"), "Переадресация выполнена успешно (настройка взята из БД).");
                 checkPaging(assert, '28');
@@ -142,7 +140,7 @@ function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
       Ember.set(userService, 'currentUserSettings', {});
 
       let done1 = assert.async();
-      visit(path);    
+      visit(path + executeOnServer?"?perPage=11":"");    
       andThen(function() {
         try {
           assert.equal(currentPath(), path);

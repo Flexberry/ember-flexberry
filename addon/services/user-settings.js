@@ -207,9 +207,9 @@ export default Service.extend({
             if (foundRecords) {
               for (let i = 0; i < foundRecords.length; i++) {
                 let foundRecord = foundRecords[i];
-                let userSettingValue = foundRecord._record.get('txtVal');
-                let settName = foundRecord._record.get('settName');
-                let componentName = foundRecord._record.get('moduleName');
+                let userSettingValue = foundRecord.get('txtVal');
+                let settName = foundRecord.get('settName');
+                let componentName = foundRecord.get('moduleName');
                 if (!settName) {
                   settName = defaultSettingName;
                 }
@@ -472,7 +472,7 @@ export default Service.extend({
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
     let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration('config:environment');
     let defaultPerPage;
-    
+
     try{
       defaultPerPage = configEnvironmentSettings.APP.components.flexberryObjectlistview.defaultPerPage;
       if(!defaultPerPage)
@@ -865,10 +865,10 @@ export default Service.extend({
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let delPromises = [];
-        let foundRecords = result.get('content');
+        let foundRecords = result.toArray();
         if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 0; i < foundRecords.length; i++) {
-            delPromises[delPromises.length] = foundRecords[i]._record.destroyRecord();
+            delPromises[delPromises.length] = foundRecords[i].destroyRecord();
           }
 
           return RSVP.Promise.all(delPromises).then(
@@ -903,13 +903,13 @@ export default Service.extend({
       .where(cp);
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
-        let foundRecords = result.get('content');
+        let foundRecords = result.toArray();
         if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i]._record.destroyRecord();
+            foundRecords[i].destroyRecord();
           }
 
-          return foundRecords[0]._record;
+          return foundRecords[0];
         }
       }
 
@@ -939,7 +939,7 @@ export default Service.extend({
     return store.query(modelName, builder.build()).then((result) => {
       let foundRecords = [];
       if (result) {
-        foundRecords = result.get('content');
+        foundRecords = result.toArray();
         if (!isArray(foundRecords)) {
           foundRecords = [];
         }

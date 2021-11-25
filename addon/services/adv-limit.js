@@ -120,10 +120,9 @@ export default Service.extend({
           const ret = {};
           if (isArray(advLimits)) {
             advLimits.forEach(limit => {
-              const record = limit.getRecord();
-              const advLimitValue = record.get('value');
-              const advLimitName = record.get('name') || defaultSettingName;
-              const componentName = record.get('module').split('@')[1];
+              const advLimitValue = limit.get('value');
+              const advLimitName = limit.get('name') || defaultSettingName;
+              const componentName = limit.get('module').split('@')[1];
 
               if (advLimitValue) {
                 if (!(componentName in ret)) {
@@ -357,11 +356,10 @@ export default Service.extend({
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
         const delPromises = A();
-        const foundRecords = result.get('content');
+        const foundRecords = result.toArray();
         if (isArray(foundRecords) && foundRecords.length > 0) {
           foundRecords.forEach(limit => {
-            const record = limit.getRecord();
-            delPromises.addObject(record.destroyRecord());
+            delPromises.addObject(limit.destroyRecord());
           }, this);
 
           return all(delPromises);
@@ -385,13 +383,13 @@ export default Service.extend({
   _getExistingRecord(componentName, settingName) {
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        const foundRecords = result.get('content');
+        const foundRecords = result.toArray();
         if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i].getRecord().destroyRecord();
+            foundRecords[i].destroyRecord();
           }
 
-          return foundRecords[0].getRecord();
+          return foundRecords[0];
         }
       }
 
@@ -411,7 +409,7 @@ export default Service.extend({
   _getExistingLimits(componentName, settingName) {
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        let foundRecords = result.get('content');
+        let foundRecords = result.toArray();
         if (!isArray(foundRecords)) {
           foundRecords = A();
         }

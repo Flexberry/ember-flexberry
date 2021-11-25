@@ -1,4 +1,3 @@
-{{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-multi-list.caption"}}</h3>
 <div class="row">
   {{#with multiListSettings.MultiUserList as |settings|}}
@@ -27,33 +26,35 @@
       advLimitButton=settings.advLimitButton
     }}
   {{/with}}
-  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
-  {{#with multiListSettings.MultiUserList2 as |settings|}}
-    {{flexberry-objectlistview
-      modelName=settings.modelName
-      modelProjection=settings.modelProjection
-      editFormRoute=settings.editFormRoute
-      content=settings.model
-      createNewButton=true
-      refreshButton=true
-      sorting=settings.computedSorting
-      orderable=true
-      sortByColumn=(action "sortByColumn")
-      addColumnToSorting=(action "addColumnToSorting")
-      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-      pages=settings.pages
-      perPageValue=settings.perPageValue
-      perPageValues=settings.perPageValues
-      recordsTotalCount=settings.recordsTotalCount
-      hasPreviousPage=settings.hasPreviousPage
-      hasNextPage=settings.hasNextPage
-      previousPage=(action "previousPage")
-      gotoPage=(action "gotoPage")
-      nextPage=(action "nextPage")
-      componentName=settings.componentName
-      advLimitButton=settings.advLimitButton
-    }}
-  {{/with}}
+  <div class="folv-for-changing second-list">
+    <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
+    {{#with multiListSettings.MultiUserList2 as |settings|}}
+      {{flexberry-objectlistview
+        modelName=settings.modelName
+        modelProjection=settings.modelProjection
+        editFormRoute=settings.editFormRoute
+        content=settings.model
+        createNewButton=true
+        refreshButton=true
+        sorting=settings.computedSorting
+        orderable=true
+        sortByColumn=(action "sortByColumn")
+        addColumnToSorting=(action "addColumnToSorting")
+        beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+        pages=settings.pages
+        perPageValue=settings.perPageValue
+        perPageValues=settings.perPageValues
+        recordsTotalCount=settings.recordsTotalCount
+        hasPreviousPage=settings.hasPreviousPage
+        hasNextPage=settings.hasNextPage
+        previousPage=(action "previousPage")
+        gotoPage=(action "gotoPage")
+        nextPage=(action "nextPage")
+        componentName=settings.componentName
+        advLimitButton=settings.advLimitButton
+      }}
+    {{/with}}
+  </div>
   <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
   {{#with multiListSettings.MultiSuggestionList as |settings|}}
     {{flexberry-objectlistview
@@ -89,35 +90,6 @@
       componentName=settings.componentName
       showDeleteMenuItemInRow=true
       deleteButton=true
-    }}
-  {{/with}}
-  <h3>{{t "forms.ember-flexberry-dummy-multi-list.multi-edit-form"}}</h3>
-  {{#with multiListSettings.MultiHierarchyList as |settings|}}
-    {{flexberry-objectlistview
-      content=settings.model
-      modelName=settings.modelName
-      modelProjection=settings.modelProjection
-      editFormRoute=settings.editFormRoute
-      orderable=false
-      componentName=settings.componentName
-      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-      colsConfigButton=false
-      disableHierarchicalMode=false
-      showCheckBoxInRow=true
-      pages=settings.pages
-      perPageValue=settings.perPageValue
-      perPageValues=settings.perPageValues
-      recordsTotalCount=settings.recordsTotalCount
-      hasPreviousPage=settings.hasPreviousPage
-      hasNextPage=settings.hasNextPage
-      previousPage=(action "previousPage")
-      gotoPage=(action "gotoPage")
-      nextPage=(action "nextPage")
-      availableCollExpandMode=true
-      inHierarchicalMode=settings.inHierarchicalMode
-      hierarchicalAttribute=settings.hierarchicalAttribute
-      inExpandMode=settings.inExpandMode
-      hierarchyPaging=settings.hierarchyPaging
     }}
   {{/with}}
 </div>

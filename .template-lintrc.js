@@ -600,9 +600,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
       "only": [
-        "eol-last",
-        "quotes",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {
@@ -895,6 +893,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/folv-paging",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/folv-user-settings",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list",
       "only": [
         "eol-last"
       ]

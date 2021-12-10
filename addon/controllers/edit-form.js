@@ -422,7 +422,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   validateModel() {
     const validationModel = this.get('validationModel');
     if (validationModel) {
-      return validationModel.validate().then(({ validations }) => {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
         const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
         if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
           return Ember.RSVP.reject(validations);

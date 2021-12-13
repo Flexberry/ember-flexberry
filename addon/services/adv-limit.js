@@ -45,9 +45,9 @@ export default Service.extend({
 
     @property currentAppPage
     @type String
-    @default ''
+    @default undefined
   */
-  currentAppPage: '',
+  currentAppPage: undefined,
 
   /**
     Adv limit model name.
@@ -103,7 +103,11 @@ export default Service.extend({
   */
   getCurrentAppPage() {
     let currAppPage = this.get('currentAppPage');
-    currAppPage = currAppPage.replace('.', '/');
+	
+	if (currAppPage) {
+		currAppPage = currAppPage.replace('.', '/');
+	}
+
     return currAppPage;
   },
 

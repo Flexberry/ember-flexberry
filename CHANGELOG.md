@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.7.0-beta.7] - 2021-12-13
+## [3.7.0-beta.7] - 2021-12-14
 ### Fixed
 * Work with empty current app page in `adv-limit` services.
 

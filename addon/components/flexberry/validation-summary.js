@@ -2,17 +2,16 @@
   @module ember-flexberry
 */
 
-import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import Ember from 'ember';
 
-import DS from 'ember-data';
+const { Component, computed } = Ember;
 
 /**
   Component for output messages of validation errors as a [Semantic UI Message](https://semantic-ui.com/collections/message.html) collection.
 
   @example
     ```handlebars
-    {{flexberry-validationsummary
+    {{flexberry/validation-summary
       color="orange"
       header="Validation errors"
       errors=errors
@@ -23,15 +22,6 @@ import DS from 'ember-data';
   @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
-  /**
-   * @private
-   * @property _isEmberDataErrors
-   * @type Boolean
-   */
-  _isEmberDataErrors: computed('errors', function() {
-    return get(this, 'errors') instanceof DS.Errors;
-  }),
-
   /**
     See [EmberJS API](https://emberjs.com/api/).
 
@@ -48,7 +38,7 @@ export default Component.extend({
     @type Array
     @default ['ui', 'message']
   */
-  classNames: ['ui', 'message', 'flexberry-validationsummary'],
+  classNames: ['ui', 'message', 'flexberry/validation-summary'],
 
   /**
     See [EmberJS API](https://emberjs.com/api/).

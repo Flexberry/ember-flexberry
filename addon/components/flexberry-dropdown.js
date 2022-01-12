@@ -3,6 +3,7 @@
 */
 import $ from 'jquery';
 import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
 import { isArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -182,7 +183,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         }
       }
 
-      if (!value && this.get('_initialized')) {
+      if (isNone(value) && this.get('_initialized')) {
         this.$().dropdown('clear');
       }
 

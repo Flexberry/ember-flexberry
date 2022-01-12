@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Dropdown as enum with empty string element.
 
 ## [3.7.0-beta.7] - 2021-12-14
 ### Fixed

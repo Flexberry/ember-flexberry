@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Null content check in object-list-view.
 
 ## [3.7.0-beta.8] - 2022-01-13
 ### Added

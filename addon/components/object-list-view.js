@@ -2698,6 +2698,9 @@ export default FlexberryBaseComponent.extend(
     // Property changing displays automatically.
     let content = this.get('content');
     let contentWithKeys = this.get('contentWithKeys');
+
+    if (isNone(content) || isNone(contentWithKeys)) return;
+
     let componentName = this.get('componentName');
     let immediateDelete = this.get('immediateDelete');
     let selectedRecords = this.get('selectedRecords');

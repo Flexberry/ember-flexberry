@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.7.0-beta.5] - 2022-02-01
+### Added
+* Optional `ember-cp-validations` support.
+
 ### Fixed
 * The `flexberry-objectlistview` component:
-    * Fixed using of `perPage` setting at `developerUserSettings`.
+    * Using of `perPage` setting at `developerUserSettings`.
+* Validation for deleted records in `flexberry-groupedit` on `edit-form`.
 
 ## [2.7.0-beta.4] - 2021-10-11
 ### Fixed

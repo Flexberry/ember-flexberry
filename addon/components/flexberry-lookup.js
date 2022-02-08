@@ -766,6 +766,12 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   duration: 200,
 
   /**
+    Additional setting for dropdown.
+    Places autocomplete empty value at the end of values list.
+  */
+  emptyValueAtEnd: false,
+
+  /**
     @method onShowHide
   */
   onShowHide(fixedOnVisible = false) {
@@ -1390,7 +1396,12 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
               });
 
               if (!_this.get('required')) {
-                results.unshift({ name: _this.get('placeholder'), value: null });
+                if (_this.get('emptyValueAtEnd')) {
+                  results.push({ name: _this.get('placeholder'), value: null });
+                } else {
+                  results.unshift({ name: _this.get('placeholder'), value: null });
+                }
+
                 resultArray['null'] = null;
               }
 

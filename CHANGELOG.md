@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.7.0-beta.6] - 2022-02-08
+### Added
+* The `flexberry-lookup` component:
+    * Option `emptyValueAtEnd` for the dropdown mode.
+
 ## [2.7.0-beta.5] - 2022-02-01
 ### Added
 * Optional `ember-cp-validations` support.

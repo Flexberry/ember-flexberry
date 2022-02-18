@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>NewPlatform.Flexberry.Designer.EmberCache</id>
+    <version>3.7.0-beta09</version>
+    <title>Flexberry Designer Ember Cache</title>
+    <authors>New Platform Ltd</authors>
+    <owners>New Platform Ltd</owners>
+    <licenseUrl>https://flexberry.net</licenseUrl>
+    <projectUrl>https://flexberry.net</projectUrl>
+    <iconUrl>https://flexberry.net/img/logo-color.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Flexberry Designer Ember Cache package.</description>
+    <releaseNotes>
+      1. Release.
+    </releaseNotes>
+    <copyright>Copyright New Platform Ltd 2022</copyright>
+    <tags>EmberJS</tags>
+  </metadata>
+  <files>
+    <file src="bower_components\" target="content\bower_components\" />
+    <file src="node_modules\" target="content\node_modules\" />
+  </files>
+</package>

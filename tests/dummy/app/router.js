@@ -199,6 +199,7 @@ Router.map(function() {
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-user-settings');

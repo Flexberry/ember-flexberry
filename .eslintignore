@@ -283,6 +283,7 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/setting
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/base-operations.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/computable-field.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/custom-filter.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/date-format.js
@@ -404,6 +405,7 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-exa
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-relation-name.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/base-operations.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/computable-field.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/custom-filter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/date-format.js

@@ -68,6 +68,15 @@ LimitedControllerMixin,
 FlexberryOlvToolbarMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin, {
   /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
+  }).readOnly(),
+
+  /**
     Controller to show colsconfig modal window.
 
     @property lookupController
@@ -430,7 +439,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   validateModel() {
     const validationModel = this.get('validationModel');
     if (validationModel) {
-      return validationModel.validate().then(({ validations }) => {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
         if (validations instanceof ResultCollection && validations.get('isInvalid')) {
           return RSVP.reject(validations);
         }

@@ -47,15 +47,4 @@ export default ListFormRoute.extend({
    */
   modelName: 'ember-flexberry-dummy-suggestion',
 
-  /**
-    This method will be invoked always when load operation completed,
-    regardless of load promise's state (was it fulfilled or rejected).
-
-    @method onModelLoadingAlways.
-    @param {Object} data Data about completed load operation.
-   */
-  onModelLoadingAlways(data) {
-    let loadCount = this.get('controller.loadCount') + 1;
-    this.set('controller.loadCount', loadCount);
-  },
 });

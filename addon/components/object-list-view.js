@@ -2529,21 +2529,39 @@ export default FlexberryBaseComponent.extend(
     */
 
     let promises = Ember.A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return Ember.RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the `record` and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
     let store = this.get('store');
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        record.get(name).forEach((relRecord) => {
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i >= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
           if (immediately) {
             store.unloadRecord(relRecord);
           }
           else {
             promises.pushObject(relRecord.deleteRecord());
           }
-        });
+        }
       }
     });
-
-    return Ember.RSVP.all(promises);
   },
 
   /**

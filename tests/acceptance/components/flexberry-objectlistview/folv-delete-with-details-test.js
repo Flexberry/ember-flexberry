@@ -41,12 +41,17 @@ executeTest('check delete with details', (store, assert, app) => {
         )))
     };
 
-  let checkRecordsWereAdded = function(searchedRecord) {
+  let getRows = function(){
     let olvContainerClass = '.object-list-view-container';
     let trTableClass = 'table.object-list-view tbody tr';
 
     let $folvContainer = Ember.$(olvContainerClass);
     let $rows = () => { return Ember.$(trTableClass, $folvContainer).toArray(); };
+    return $rows;
+  }
+
+  let checkRecordsWereAdded = function(searchedRecord) {
+    let $rows = getRows();
 
     // Check that the records have been added.
     let recordIsForDeleting = $rows().reduce((sum, element) => {
@@ -56,6 +61,30 @@ executeTest('check delete with details', (store, assert, app) => {
     }, 0);
 
     return recordIsForDeleting;
+  };
+
+  let getDeleteButton = function(searchedRecord) {
+    let $rows = getRows();
+    let $deleteBtnInRow = undefined;
+    $rows().forEach(function(element, i, arr)  {
+      let nameRecord = Ember.$.trim(element.children[2].innerText);
+      if (nameRecord.indexOf(searchedRecord) >= 0) {
+        $deleteBtnInRow = Ember.$('.object-list-view-row-delete-button', element);
+      }
+    });
+
+    return $deleteBtnInRow;
+  };
+
+  let lookAtLocalStore = function(modelName, searchedField, searchedValue) {
+    let currentLoadedData = store.peekAll(modelName);
+    for (let i = 0; i < currentLoadedData.content.length; i++) {
+      if (currentLoadedData.content[i].record.get(searchedField) == searchedValue) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   // Add records for deleting.
@@ -72,42 +101,45 @@ executeTest('check delete with details', (store, assert, app) => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           controller.set('immediateDelete', true);
 
+          // Check records added.
           assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "0") > 0, true, 1 + ' record added');
           assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "1") > 0, true, 2 + ' record added');
           assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2") > 0, true, 3 + ' record added');
 
-          /*$rows().forEach(function(element, i, arr)  {
-            let nameRecord = Ember.$.trim(element.children[1].innerText);
-            if (nameRecord.indexOf(uuid) >= 0) {
-              let $deleteBtnInRow = Ember.$('.object-list-view-row-delete-button', element);
-              $deleteBtnInRow.click();
-            }
+          let $deleteButton1 = getDeleteButton(createdRecordsPrefix + "0");
+          let done2 = assert.async();
+          Ember.run(() => {
+            // An exception can be thrown to console due to observer on detail's count.
+            $deleteButton1.click();
           });
+          wait().then(() => {
+            assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "0"), 0, 1 + ' record deleted');
+            assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "1") > 0, true, 2 + ' still on OLV');
+            assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2") > 0, true, 3 + ' still on OLV');
+            
+            // Check local storage.
+            assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "0"), "1 suggestion deleted on store");
+            assert.ok(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "1"), "2 suggestion still on store");
+            assert.ok(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "2"), "3 suggestion still on store");
 
-          // Check that the records wasn't remove in beforeDeleteRecord.
-          let controller = app.__container__.lookup('controller:' + currentRouteName());
-          assert.ok(controller.recordWasNotDelete, 'Records wasn\'t remove in beforeDeleteRecord');
+            assert.notOk(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "0"), "1 comment deleted");
+            assert.notOk(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "1"), "2 comment deleted");
+            assert.ok(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "2"), "3 comment still on store");
+            assert.ok(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "3"), "4 comment still on store");
 
-          // Check that the records haven't been removed.
-          let recordsIsDeleteBtnInRow = $rows().every((element) => {
-            let nameRecord = Ember.$.trim(element.children[1].innerText);
-            return nameRecord.indexOf(uuid) < 0;
-          });
+            assert.notOk(lookAtLocalStore(commentVoteModelName, 'comment.text', createdRecordsPrefix + "0"), "Comment vote deleted");
+            assert.notOk(lookAtLocalStore(commentVoteModelName, 'comment.text', createdRecordsPrefix + "1"), "Comment vote deleted");
 
-          assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
-
-          // Check that the records have been removed into store.
-          let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();
-          let timeout = 500;
-          Ember.run.later((function() {
-            let done2 = assert.async();
-            store.query(modelName, builder2.build()).then((result) => {
-              assert.ok(result.meta.count, 'record \'' + uuid + '\'not found in store');
-              done2();
-            }).finally(() => {
-              newRecord.destroyRecord();
+            let builder = new QueryBuilder(store, modelName)
+              .where(new SimplePredicate(new AttributeParam('text'), FilterOperator.Eq, new ConstParam(createdRecordsPrefix + "0")));
+            let done3 = assert.async();
+            store.query(modelName, builder.build())
+            .then((data) => {
+              assert.equal(data.get('length'), 0, '1 suggestion deleted on backend');
+              done3();
             });
-          }), timeout);*/
+            done2();
+          });
         });
         done();
       });

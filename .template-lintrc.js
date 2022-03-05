@@ -867,6 +867,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/delete-with-details",
       "only": [
         "eol-last"

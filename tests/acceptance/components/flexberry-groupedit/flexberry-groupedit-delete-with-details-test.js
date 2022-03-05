@@ -1,12 +1,79 @@
 import Ember from 'ember';
-import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
-executeTest('check delete with details', (store, assert, app) => {
-  assert.expect(25);
+import { module, test } from 'qunit';
+import startApp from '../../../helpers/start-app';
+
+let app;
+let store;
+const path = 'components-acceptance-tests/flexberry-groupedit/delete-with-details';
+const modelName = 'ember-flexberry-dummy-suggestion';
+const commentModelName = 'ember-flexberry-dummy-comment';
+const commentVoteModelName = 'ember-flexberry-dummy-comment-vote';
+
+module('Acceptance | flexberry-groupedit | delete with details', {
+    beforeEach() {
+
+      // Start application.
+      app = startApp();
+
+      // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
+      let applicationController = app.__container__.lookup('controller:application');
+      applicationController.set('isInAcceptanceTestMode', true);
+      store = app.__container__.lookup('service:store');
+    },
+
+    afterEach() {
+      Ember.run(app, 'destroy');
+    }
+  });
+
+test('delete with details', (assert) => {
+  let initTestData = function(createdRecordsPrefix) {
+    // Add records for deleting. 
+    return Ember.RSVP.Promise.all([
+      store.createRecord('ember-flexberry-dummy-suggestion-type', { name: createdRecordsPrefix + "0" }).save(),
+      store.createRecord('ember-flexberry-dummy-application-user', { 
+                                                                    name: createdRecordsPrefix + "1",
+                                                                    eMail: "1",
+                                                                    phone1: "1"
+                                                                   }).save()
+    ])
+    .then((createdCustomRecords) => 
+      Ember.RSVP.Promise.all([
+        store.createRecord(modelName, { text: createdRecordsPrefix + "0", type: createdCustomRecords[0], author: createdCustomRecords[1], editor1: createdCustomRecords[1] }).save()])
+      .then((suggestions) => 
+        Ember.RSVP.Promise.all([
+          store.createRecord(commentModelName, { text: createdRecordsPrefix + "0", suggestion: suggestions[0], author: createdCustomRecords[1] }).save(),
+          store.createRecord(commentModelName, { text: createdRecordsPrefix + "1", suggestion: suggestions[0], author: createdCustomRecords[1] }).save(),
+          store.createRecord(commentModelName, { text: createdRecordsPrefix + "2", suggestion: suggestions[0], author: createdCustomRecords[1] }).save()])
+        .then((comments) => 
+          Ember.RSVP.Promise.all([
+            store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "0", comment: comments[0], applicationUser: createdCustomRecords[1] }).save(),
+            store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "1", comment: comments[0], applicationUser: createdCustomRecords[1] }).save(),
+            store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "2", comment: comments[1], applicationUser: createdCustomRecords[1] }).save()])
+        )))
+    };
+
+  Ember.run(() => {
+    let done1 = assert.async();
+    let createdRecordsPrefix = 'fge-delete-with-details-test' + generateUniqueId();
+    initTestData(createdRecordsPrefix).then(() => {
+      visit(path +'?createdRecordsPrefix=' + createdRecordsPrefix);
+      andThen(() => {
+        assert.equal(currentPath(), path, createdRecordsPrefix);
+        done1();
+      });
+    });
+  });
+});
+
+
+/*executeTest('check delete with details', (store, assert, app) => {
+  assert.expect(5);
   let path = 'components-acceptance-tests/flexberry-objectlistview/delete-with-details';
   let modelName = 'ember-flexberry-dummy-suggestion';
   let commentModelName = 'ember-flexberry-dummy-comment';
@@ -177,4 +244,4 @@ executeTest('check delete with details', (store, assert, app) => {
       done1();
     });
   });
-});
+});*/

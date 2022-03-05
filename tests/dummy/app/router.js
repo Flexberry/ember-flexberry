@@ -198,6 +198,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
+  this.route('components-acceptance-tests/flexberry-groupedit/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');

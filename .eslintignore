@@ -191,6 +191,7 @@ tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-delete-with-details-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js
@@ -282,6 +283,7 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/setting
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/base-operations.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/computable-field.js
@@ -404,6 +406,7 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-exa
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-relation-name.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/base-operations.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/computable-field.js

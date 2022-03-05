@@ -2,8 +2,8 @@ import Ember from 'ember';
 import { executeTest, addDataForDestroy } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
-import { Query } from 'ember-flexberry-data';
-const { Builder } = Query;
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 executeTest('check delete with details', (store, assert, app) => {
   assert.expect(5);
@@ -92,14 +92,12 @@ executeTest('check delete with details', (store, assert, app) => {
     let done1 = assert.async();
     let createdRecordsPrefix = 'folv-delete-with-details-test' + generateUniqueId();
     initTestData(createdRecordsPrefix).then(() => {
-      let builder = new Builder(store).from(modelName).count();
+      let builder = new QueryBuilder(store).from(modelName).count();
       let done = assert.async();
       store.query(modelName, builder.build()).then((result) => {
         visit(path + '?perPage=' + result.meta.count);
         andThen(() => {
           assert.equal(currentPath(), path);
-          let controller = app.__container__.lookup('controller:' + currentRouteName());
-          controller.set('immediateDelete', true);
 
           // Check records added.
           assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "0") > 0, true, 1 + ' record added');
@@ -131,11 +129,44 @@ executeTest('check delete with details', (store, assert, app) => {
             assert.notOk(lookAtLocalStore(commentVoteModelName, 'comment.text', createdRecordsPrefix + "1"), "Comment vote deleted");
 
             let builder = new QueryBuilder(store, modelName)
-              .where(new SimplePredicate(new AttributeParam('text'), FilterOperator.Eq, new ConstParam(createdRecordsPrefix + "0")));
+              .where(new SimplePredicate('text', "==", createdRecordsPrefix + "0"));
             let done3 = assert.async();
             store.query(modelName, builder.build())
             .then((data) => {
               assert.equal(data.get('length'), 0, '1 suggestion deleted on backend');
+
+              let $deleteButton2 = getDeleteButton(createdRecordsPrefix + "1");
+              let done4 = assert.async();
+              Ember.run(() => {
+                // An exception can be thrown to console due to observer on detail's count.
+                $deleteButton2.click();
+              });
+              wait().then(() => {
+                assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "1"), 0, 2 + ' record deleted');
+                assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2") > 0, true, 3 + ' still on OLV');
+                
+                // Check local storage.
+                assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "1"), "2 suggestion deleted on store");
+                assert.ok(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "2"), "3 suggestion still on store");
+
+                assert.notOk(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "2"), "3 comment deleted");
+                assert.notOk(lookAtLocalStore(commentModelName, 'text', createdRecordsPrefix + "3"), "4 comment deleted");
+
+                let $deleteButton3 = getDeleteButton(createdRecordsPrefix + "2");
+                let done5 = assert.async();
+                Ember.run(() => {
+                  // An exception can be thrown to console due to observer on detail's count.
+                  $deleteButton3.click();
+                });
+                wait().then(() => {
+                  assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2"), 0, 3 + ' record deleted');
+                  
+                  // Check local storage.
+                  assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "2"), "3 suggestion deleted on store");
+                  done5();
+                });
+                done4();
+              });
               done3();
             });
             done2();

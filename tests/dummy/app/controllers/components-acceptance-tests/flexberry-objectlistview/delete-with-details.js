@@ -25,7 +25,5 @@ export default ListFormController.extend({
     @property loadCount
     @type Int
   */
-  loadCount: 0,
-
-  immediateDelete: true
+  loadCount: 0
 });

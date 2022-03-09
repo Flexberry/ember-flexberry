@@ -1,140 +1,41 @@
-  <div class="field {{if model.errors.address "error" ""}}">
-    {{flexberry-field
-      value=model.address
-      label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.text "error" ""}}">
-    {{flexberry-field
-      value=model.text
-      label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.date "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
-    {{flexberry-simpledatetime
-      type="date"
-      value=model.date
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.votes "error" ""}}">
-    {{flexberry-field
-      value=model.votes
-      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.moderated
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.type "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
-    {{flexberry-lookup
-      value=model.type
-      relatedModel=model
-      relationName="type"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      dropdown=true
-      readonly=readonly
-      direction="upward"
-      componentName="SuggestionEditType"
-    }}
-    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.author "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
-    {{flexberry-lookup
-      value=model.author
-      relatedModel=model
-      relationName="author"
-      projection="ApplicationUserL"
-      displayAttributeName="name"
-      showPreviewButton=true
-      previewOnSeparateRoute=true
-      previewFormRoute="ember-flexberry-dummy-application-user-edit"
-      title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      preview=(action "previewLookupValue")
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
-      readonly=readonly
-      componentName="SuggestionEditAuthor"
-    }}
-    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.editor1 "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
-    {{flexberry-lookup
-      value=model.editor1
-      relatedModel=model
-      relationName="editor1"
-      projection="ApplicationUserL"
-      displayAttributeName="name"
-      showPreviewButton=true
-      previewFormRoute="ember-flexberry-dummy-application-user-edit"
-      title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      preview=(action "previewLookupValue")
-      readonly=readonly
-      componentName="SuggestionEditEditor1"
-    }}
-    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
-    {{flexberry-groupedit
-      componentName="filesGroupEdit"
-      content=model.files
-      mainModelProjection=modelProjection
-      modelProjection=modelProjection.attributes.files
-      orderable=true
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
-    {{flexberry-groupedit
-      componentName="suggestionUserVotesGroupEdit"
-      content=model.userVotes
-      mainModelProjection=modelProjection
-      modelProjection=modelProjection.attributes.userVotes
-      orderable=true
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
-    {{flexberry-groupedit
-      componentName="suggestionCommentsGroupEdit"
-      content=model.comments
-      mainModelProjection=modelProjection
-      modelProjection=modelProjection.attributes.comments
-      rowClickable=true
-      rowClick="rowClick"
-      editOnSeparateRoute=true
-      editFormRoute=commentsEditRoute
-      saveBeforeRouteLeave=true
-      orderable=true
-      readonly=readonly
-    }}
-    {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
-  </div>
+<div class="field {{if model.errors.address "error" ""}}">
+  {{flexberry-field
+    value=model.address
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.text "error" ""}}">
+  {{flexberry-field
+    value=model.text
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.date "error" ""}}">
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
+  {{flexberry-simpledatetime
+    type="date"
+    value=model.date
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.votes "error" ""}}">
+  {{flexberry-field
+    value=model.votes
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
+    readonly=readonly
+  }}
+</div>
+<div class="field">
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
+  {{flexberry-groupedit
+    componentName="suggestionCommentsGroupEdit"
+    content=model.comments
+    mainModelProjection=modelProjection
+    modelProjection=modelProjection.attributes.comments
+    showDeleteButtonInRow = true
+    orderable=true
+    readonly=readonly
+  }}
+</div>

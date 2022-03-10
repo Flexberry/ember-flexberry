@@ -27,15 +27,12 @@
     readonly=readonly
   }}
 </div>
-<div class="field">
-  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
-  {{flexberry-groupedit
-    componentName="suggestionCommentsGroupEdit"
-    content=model.comments
-    mainModelProjection=modelProjection
-    modelProjection=modelProjection.attributes.comments
-    showDeleteButtonInRow = true
-    orderable=true
-    readonly=readonly
-  }}
-</div>
+{{flexberry-groupedit
+  componentName="suggestionCommentsGroupEdit"
+  content=model.comments
+  mainModelProjection=modelProjection
+  modelProjection=modelProjection.attributes.comments
+  showDeleteButtonInRow = true
+  orderable=true
+  readonly=readonly
+}}

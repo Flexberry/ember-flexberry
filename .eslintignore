@@ -235,6 +235,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-delete-button-in-row-t
 tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-e-form-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-olv-test.js
+tests/acceptance/components/flexberry-objectlistview/folv-delete-with-details-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-edit-button-in-row-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-from-edit-form-with-queryparams-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-getCellComponent-test.js

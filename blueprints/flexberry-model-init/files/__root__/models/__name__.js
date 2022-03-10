@@ -26,7 +26,7 @@ const Validations = buildValidations(<%= parentModelName ? '$.extend({}, ParentV
   dependentKeys: ['model.i18n.locale'],
 });
 
-let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= !parentModelName ? 'OfflineModelMixin, ' : '' %><%= className %>Mixin, Validations, {
+let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= additionalModelMixin%><%= additionalModelMixin ? ', ' : '' %><%= className %>Mixin, Validations, {
 });<%
 
 if (parentModelName || projections) { %>

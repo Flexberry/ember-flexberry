@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+
+## [2.7.0-beta.6] - 2022-02-08
+### Added
+* The `flexberry-lookup` component:
+    * Option `emptyValueAtEnd` for the dropdown mode.
 
 ## [2.7.0-beta.5] - 2022-02-01
 ### Added

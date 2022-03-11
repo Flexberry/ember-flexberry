@@ -209,9 +209,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-datepicker.placeholder')'
+    @default 't('components.flexberry-simpledatetime.placeholder')'
   */
-  placeholder: t('components.flexberry-datepicker.placeholder'),
+  placeholder: t('components.flexberry-simpledatetime.placeholder'),
 
   /**
     Array CSS class names.

@@ -71,6 +71,11 @@ export default Mixin.create({
   logoClass: '.background-logo',
 
   /**
+   * Класс родительского элемента.
+   */
+  parentComponentClasses: 'body > .pushable > .pusher',
+
+  /**
    * Находит и сохраняет ссылки на компонент и дочерний элемент
    * Задает начальное значение фиксированному элементу.
    * @inheritdoc
@@ -116,7 +121,8 @@ export default Mixin.create({
     const component = this.get('componentRef');
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
-    let parentComponent = $('body > .pushable > .pusher').get(0);
+    const parentComponentClasses = this.get('parentComponentClasses');
+    let parentComponent = $(parentComponentClasses).get(0);
 
     if (!isVisible || fixedOnVisible) {
       const { height, left, width, bottom } = component.getBoundingClientRect();

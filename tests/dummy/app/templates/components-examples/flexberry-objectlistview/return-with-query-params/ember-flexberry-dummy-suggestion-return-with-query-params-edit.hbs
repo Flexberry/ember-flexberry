@@ -64,6 +64,7 @@
   <div class="field {{if model.errors.date "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
     {{flexberry-simpledatetime
+      type="date"
       value=model.date
       readonly=readonly
     }}

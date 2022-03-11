@@ -49,7 +49,8 @@ export default {
     },
 
     'flexberry-simpledatetime': {
-      placeholder: '(no value)'
+      placeholder: '(no value)',
+      'scroll-caption-text': 'Scroll to increment',
     },
 
     'flexberry-textarea': {
@@ -58,14 +59,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
     },
 
     'flexberry-file': {

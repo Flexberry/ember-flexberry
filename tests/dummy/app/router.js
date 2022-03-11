@@ -198,12 +198,14 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');
   this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
   this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
+  this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',

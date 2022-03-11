@@ -512,7 +512,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
       "only": [
-        "quotes"
+        "quotes",
         "eol-last"
       ]
     },

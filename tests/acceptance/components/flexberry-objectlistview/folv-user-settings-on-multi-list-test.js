@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 import { deleteRecords, addRecords } from './folv-tests-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
@@ -33,7 +33,7 @@ module('Acceptance | flexberry-objectlistview | per page user settings on multi 
   }
 });
 
-test('check perPage developerUserSetting in multi list', function(assert) {
+skip('check perPage developerUserSetting in multi list', function(assert) {
   assert.expect(28);
 
   let modelInfos = [
@@ -45,10 +45,10 @@ test('check perPage developerUserSetting in multi list', function(assert) {
   Ember.set(
     route,
     'developerUserSettings',
-    { 
+    {
       'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[0] } },
-      'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[0] } }, 
-      'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[0] } } 
+      'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[0] } },
+      'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[0] } }
     });
 
   // Add records for paging.
@@ -56,7 +56,7 @@ test('check perPage developerUserSetting in multi list', function(assert) {
     initTestData(store, modelInfos).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
       let done = assert.async();
-      
+
       visit(path);
       andThen(function() {
         try {
@@ -67,10 +67,10 @@ test('check perPage developerUserSetting in multi list', function(assert) {
           Ember.set(
             route,
             'developerUserSettings',
-            { 
+            {
               'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[1] } },
-              'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[1] } }, 
-              'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[1] } } 
+              'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[1] } },
+              'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[1] } }
             });
 
           let doneHelp = assert.async();
@@ -83,7 +83,7 @@ test('check perPage developerUserSetting in multi list', function(assert) {
               try {
                 assert.equal(currentPath(), path);
                 checkPaging(assert, modelInfos, 0);
-                
+
                 let done2 = assert.async();
                 click("div.folv-for-changing div.cols-config i.dropdown");
                 andThen(function() {
@@ -125,7 +125,7 @@ test('check perPage developerUserSetting in multi list', function(assert) {
         catch(error) {
           clearAllData(assert, store, modelInfos);
           throw error;
-        } 
+        }
         finally {
           done();
         }
@@ -143,10 +143,10 @@ function checkWithDisabledUserSettings(assert, asyncDone, modelInfos) {
       Ember.set(
         route,
         'developerUserSettings',
-        { 
+        {
           'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[3] } },
-          'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[3] } }, 
-          'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[3] } } 
+          'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[3] } },
+          'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[3] } }
         });
       Ember.set(userService, 'isUserSettingsServiceEnabled', false);
 
@@ -154,7 +154,7 @@ function checkWithDisabledUserSettings(assert, asyncDone, modelInfos) {
       Ember.set(userService, 'currentUserSettings', {});
 
       let done1 = assert.async();
-      visit(path);    
+      visit(path);
       andThen(function() {
         try {
           assert.equal(currentPath(), path);

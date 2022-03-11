@@ -510,13 +510,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
-      "only": [
-        "quotes"
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-edit",
       "only": [
         "eol-last",

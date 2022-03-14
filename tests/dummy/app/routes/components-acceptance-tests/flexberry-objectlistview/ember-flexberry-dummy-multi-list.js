@@ -58,5 +58,5 @@ export default ListFormRoute.extend(MultiListRoute, MultiListModel, {
     @type Object
     @default {}
   */
-  developerUserSettings: { MultiUserList: {}, MultiUserList2: {}, MultiSuggestionList: {}, MultiHierarchyList: {} },
+  developerUserSettings: { MultiUserList: { DEFAULT: { perPage: 9 } }, MultiUserList2: { DEFAULT: { perPage: 10 } }, MultiSuggestionList: { DEFAULT: { perPage: 11 } } },
 });

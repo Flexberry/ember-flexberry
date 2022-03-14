@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 import { deleteRecords, addRecords } from './folv-tests-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
@@ -21,7 +21,6 @@ module('Acceptance | flexberry-objectlistview | per page user settings on multi 
     let applicationController = app.__container__.lookup('controller:application');
     applicationController.set('isInAcceptanceTestMode', true);
     store = app.__container__.lookup('service:store');
-    route = app.__container__.lookup('route:components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
     userService = app.__container__.lookup('service:user-settings')
     Ember.set(userService, 'isUserSettingsServiceEnabled', true);
   },
@@ -33,23 +32,13 @@ module('Acceptance | flexberry-objectlistview | per page user settings on multi 
   }
 });
 
-skip('check perPage developerUserSetting in multi list', function(assert) {
+test('check perPage developerUserSetting in multi list', function(assert) {
   assert.expect(28);
-
   let modelInfos = [
     { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList', perPage: [9, 12, 9, 15] },
     { modelName: 'ember-flexberry-dummy-application-user', uuid: generateUniqueId(), componentName: 'MultiUserList2', perPage: [10, 13, 13, 16] },
     { modelName: 'ember-flexberry-dummy-suggestion-type', uuid: generateUniqueId(), componentName: 'MultiSuggestionList', perPage: [11, 14, 11, 17] }
   ];
-
-  Ember.set(
-    route,
-    'developerUserSettings',
-    {
-      'MultiUserList': { DEFAULT: { perPage: modelInfos[0].perPage[0] } },
-      'MultiUserList2': { DEFAULT: { perPage: modelInfos[1].perPage[0] } },
-      'MultiSuggestionList': { DEFAULT: { perPage: modelInfos[2].perPage[0] } }
-    });
 
   // Add records for paging.
   Ember.run(() => {
@@ -64,6 +53,9 @@ skip('check perPage developerUserSetting in multi list', function(assert) {
           let currentUrl = currentURL();
           assert.ok(true, "Текущий адрес: " + currentUrl);
           checkPaging(assert, modelInfos, 0);
+
+          // There is an error on test if try to get this route earlier.
+          route = app.__container__.lookup('route:components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
           Ember.set(
             route,
             'developerUserSettings',

@@ -256,7 +256,7 @@ module.exports = {
         packages: [
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
-          { name: 'broccoli-jscs', target: '1.2.2' },
+          { name: 'broccoli-jscs', target: '1.4.1' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-test-selectors', target: '2.1.0' }
         ]
@@ -268,7 +268,7 @@ module.exports = {
         { name: 'inflection', target: '1.10.0' }
       ]);
     }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
+      return _this.addPackageToProject('semantic-ui-ember','https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
       return _this.removePackagesFromProject([
         { name: 'ember-data' },

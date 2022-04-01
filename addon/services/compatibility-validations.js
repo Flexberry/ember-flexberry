@@ -2,9 +2,9 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
-
-const { Service, getOwner, set } = Ember;
+import Service from  '@ember/service';
+import { set } from '@ember/object';
+import { getOwner } from '@ember/application';
 
 const EMBER_VALIDATIONS_VALIDATORS = [
   'absence',

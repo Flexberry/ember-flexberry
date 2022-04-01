@@ -1,4 +1,5 @@
 import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger, Ember.testing = false;
+import TestAdapter from '@ember/test/adapter';
 import DS from 'ember-data';
 import { module, test } from 'qunit';
 import { resolve, reject } from 'rsvp';
@@ -19,8 +20,8 @@ module('Unit | Service | log', {
   beforeEach() {
     app = startApp();
 
-    adapter = Ember.Test.adapter;
-    Ember.Test.adapter = null;
+    adapter = TestAdapter;
+    TestAdapter = null;
     Ember.testing = false;
 
     saveModel = DS.Model.prototype.save;
@@ -30,7 +31,7 @@ module('Unit | Service | log', {
   },
 
   afterEach() {
-    Ember.Test.adapter = adapter;
+    TestAdapter = adapter;
     Ember.testing = true;
 
     DS.Model.prototype.save = saveModel;

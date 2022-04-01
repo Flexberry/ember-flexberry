@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import sinon from 'sinon';
 import UserSettingsService from 'ember-flexberry/services/user-settings';
 import Ember from 'ember';
+import { getOwner } from '@ember/application';
 
 module('Unit | Service | userSettings',
 {
@@ -13,7 +14,7 @@ module('Unit | Service | userSettings',
       factoryFor: () =>({ class: { APP: {} }})
       })},
   afterEach() {
-     Ember.getOwner.restore();}
+     getOwner.restore();}
 });
 
 

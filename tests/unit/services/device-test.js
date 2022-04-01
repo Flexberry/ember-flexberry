@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { getOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import sinon from 'sinon';
 import DeviceService from 'ember-flexberry/services/device';
@@ -10,7 +11,7 @@ module('Unit | Service | device', {
   },
   afterEach() {
     // eslint-disable-next-line ember/new-module-imports
-    Ember.getOwner.restore();
+    getOwner.restore();
   }
 });
 

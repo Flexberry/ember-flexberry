@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 import { deleteRecords, addRecords } from './folv-tests-functions';
@@ -27,13 +29,13 @@ module('Acceptance | flexberry-objectlistview | per page user settings', {
     store = app.__container__.lookup('service:store');
     route = app.__container__.lookup('route:components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
     userService = app.__container__.lookup('service:user-settings')
-    Ember.set(userService, 'isUserSettingsServiceEnabled', true);
+    set(userService, 'isUserSettingsServiceEnabled', true);
   },
 
   afterEach() {
     // Destroy application.
-    Ember.set(userService, 'isUserSettingsServiceEnabled', true);
-    Ember.run(app, 'destroy');
+    set(userService, 'isUserSettingsServiceEnabled', true);
+    run(app, 'destroy');
   }
 });
 
@@ -49,7 +51,7 @@ test('check saving of user settings', function(assert) {
   route.set('developerUserSettings', { FOLVPagingObjectListView: { DEFAULT: { colsOrder: [ { propName: 'name' } ], perPage: 28 } } });
 
   // Add records for paging.
-  Ember.run(() => {
+  run(() => {
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
       let done = assert.async();
@@ -139,10 +141,10 @@ function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
     andThen(function() {
       assert.equal(currentPath(), pathHelp);
       route.set('developerUserSettings', { FOLVPagingObjectListView: { DEFAULT: { colsOrder: [ { propName: 'name' } ], perPage: 11 } } });
-      Ember.set(userService, 'isUserSettingsServiceEnabled', false);
+      set(userService, 'isUserSettingsServiceEnabled', false);
 
       // Remove current saved not in Database settings.
-      Ember.set(userService, 'currentUserSettings', {});
+      set(userService, 'currentUserSettings', {});
 
       let done1 = assert.async();
       visit(path);   
@@ -155,7 +157,7 @@ function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
         } catch(error) {
           throw error;
         } finally {
-          Ember.set(userService, 'isUserSettingsServiceEnabled', true);
+          set(userService, 'isUserSettingsServiceEnabled', true);
           deleteRecords(store, modelName, uuid, assert);
           deleteUserSetting(assert);
           done1();
@@ -175,14 +177,14 @@ function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
 // Function to check current perPage value on page.
 function checkPaging(assert, expectedCount) {
   // check paging.
-  let $perPageElement = Ember.$('div.flexberry-dropdown div.text');
+  let $perPageElement = $('div.flexberry-dropdown div.text');
   assert.equal($perPageElement.length, 1, "Элемент количества записей на странице найден.");
   assert.equal($perPageElement.text(), expectedCount, `Количество элементов на странице равно заданному: ${expectedCount}.`)
 }
 
 // Function for deleting user settings from database.
 function deleteUserSetting(assert) {
-  Ember.run(() => {
+  run(() => {
     let done = assert.async();
     userService._getExistingSettings("FOLVPagingObjectListView", "DEFAULT").then(
       foundRecords => {

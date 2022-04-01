@@ -1,4 +1,5 @@
-import Ember from 'ember'; //TODO Import Module. Replace Ember.generateGuid, Ember.Logger
+import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger
+import { generateGuid } from '@ember/object/internals';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { deprecate } from '@ember/application/deprecations';
@@ -249,7 +250,7 @@ export default ApplicationLogListFormController.extend({
     @private
   */
   _generateUniqueMessagePrefix() {
-    return '№' + Ember.generateGuid(null, '') + ': ';
+    return '№' + generateGuid(null, '') + ': ';
   },
 
   /**

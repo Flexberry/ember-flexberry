@@ -1,5 +1,5 @@
 import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger
-import { generateGuid } from '@ember/object/internals';
+import { generateGuid } from '@ember/-internals/utils';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { deprecate } from '@ember/application/deprecations';

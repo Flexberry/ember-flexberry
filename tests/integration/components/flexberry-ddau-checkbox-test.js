@@ -1,6 +1,6 @@
+import Ember from 'ember';
 import $ from 'jquery';
 import { A } from '@ember/array';
-import { assert as emberAssert } from '@ember/debug';
 import FlexberryDdauCheckboxComponent from 'ember-flexberry/components/flexberry-ddau-checkbox';
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -114,8 +114,8 @@ test('Component invokes actions', function(assert) {
 test('Component changes binded value (without \'change\' action handler)', function(testAssert) {
   // Mock Ember.assert method.
   let thrownExceptions = A();
-  let originalEmberAssert = emberAssert;
-  emberAssert = function(...args) {
+  let originalEmberAssert = Ember.assert;
+  Ember.assert = function(...args) {
     try {
       originalEmberAssert(...args);
     } catch (ex) {
@@ -156,7 +156,7 @@ test('Component changes binded value (without \'change\' action handler)', funct
     'Component throws single exception if \'change\' action handler is not defined');
 
   // Clean up after mock Ember.assert.
-  emberAssert = originalEmberAssert;
+  Ember.assert = originalEmberAssert;
 });
 
 test('Component changes binded value (with \'change\' action handler)', function(assert) {

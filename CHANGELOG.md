@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.7.0-beta.7] - 2022-04-05
 ### Changed
 * The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
 * The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).

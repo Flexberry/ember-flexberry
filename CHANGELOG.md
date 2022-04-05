@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 * The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
-* The `ember-flexberry` blueprint change dependencies.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
 
 ## [2.7.0-beta.6] - 2022-02-08
 ### Added

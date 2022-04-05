@@ -146,7 +146,7 @@ module.exports = {
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
-     
+
 
 
     /*
@@ -235,7 +235,7 @@ module.exports = {
       return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.6.3' },
+        { name: 'flatpickr-calendar', source: 'https://github.com/chmln/flatpickr.git', target: '2.6.3' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
@@ -244,7 +244,7 @@ module.exports = {
         { name: 'moment', target: '^2.9.0' }
       ]);
     }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
+      return _this.addBowerPackageToProject('semantic-ui','https://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-moment', target: '6.0.0' }).catch(function () {
         return _this.removePackageFromProject('ember-cli-moment-shim').then(function () {

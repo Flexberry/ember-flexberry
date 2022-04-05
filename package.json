@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "2.7.0-beta.6",
+  "version": "2.7.0-beta.7",
   "description": "Ember Flexberry Addon",
   "license": "MIT",
   "author": {
@@ -82,7 +82,7 @@
     "moment-timezone": "0.5.0",
     "node-uuid": "^1.4.7",
     "npm-run-all": "^4.1.5",
-    "semantic-ui-ember": "git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3",
+    "semantic-ui-ember": "https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3",
     "ui-ember-slider": "0.5.0"
   },
   "dependencies": {

@@ -146,7 +146,7 @@ module.exports = {
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
-     
+
 
 
     /*
@@ -235,7 +235,7 @@ module.exports = {
       return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.6.3' },
+        { name: 'flatpickr-calendar', source: 'https://github.com/chmln/flatpickr.git', target: '2.6.3' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
@@ -244,7 +244,7 @@ module.exports = {
         { name: 'moment', target: '^2.9.0' }
       ]);
     }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
+      return _this.addBowerPackageToProject('semantic-ui','https://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-moment', target: '6.0.0' }).catch(function () {
         return _this.removePackageFromProject('ember-cli-moment-shim').then(function () {
@@ -256,7 +256,7 @@ module.exports = {
         packages: [
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
-          { name: 'broccoli-jscs', target: '1.2.2' },
+          { name: 'broccoli-jscs', target: '1.4.1' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-test-selectors', target: '2.1.0' }
         ]
@@ -268,7 +268,7 @@ module.exports = {
         { name: 'inflection', target: '1.10.0' }
       ]);
     }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
+      return _this.addPackageToProject('semantic-ui-ember','https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
       return _this.removePackagesFromProject([
         { name: 'ember-data' },

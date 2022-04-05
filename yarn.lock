@@ -8752,9 +8752,9 @@ sane@^1.1.1:
     walker "~1.0.5"
     watch "~0.10.0"
 
-"semantic-ui-ember@git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3":
+"semantic-ui-ember@https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3":
   version "0.9.3"
-  resolved "git://github.com/Flexberry/Semantic-UI-Ember.git#0d27d98ae0a66c9a078ff1fd77f260ea57b9d3b8"
+  resolved "https://github.com/Flexberry/Semantic-UI-Ember.git#0d27d98ae0a66c9a078ff1fd77f260ea57b9d3b8"
   dependencies:
     ember-cli-babel "^5.1.3"
 

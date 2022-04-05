@@ -7,7 +7,7 @@
     "ember-cli-test-loader": "0.2.2",
     "ember-qunit-notifications": "0.1.0",
     "jquery-mockjax": "2.2.0",
-    "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
+    "semantic-ui": "https://github.com/Flexberry/Semantic-UI.git#fixed-abort",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "blueimp-file-upload": "9.11.2",

@@ -4,97 +4,106 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.6.0-beta.13] - 2021-05-24
-### Fixed
-* Fixed `flexberry-validationsummary` component for IE.
+## [2.7.0-beta.7] - 2022-04-05
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
 
-## [2.6.0-beta.12] - 2021-05-21
+## [2.7.0-beta.6] - 2022-02-08
 ### Added
-* Property `autocompleteDirection` for `flexberry-lookup` to set direction of autocomplete window.
+* The `flexberry-lookup` component:
+    * Option `emptyValueAtEnd` for the dropdown mode.
+
+## [2.7.0-beta.5] - 2022-02-01
+### Added
+* Optional `ember-cp-validations` support.
+
+### Fixed
+* The `flexberry-objectlistview` component:
+    * Using of `perPage` setting at `developerUserSettings`.
+* Validation for deleted records in `flexberry-groupedit` on `edit-form`.
+
+## [2.7.0-beta.4] - 2021-10-11
+### Fixed
+* The `flexberry-groupedit` component:
+    * Optimized sort function.
+
+### Breaking changes
+* Deleted `custom-inflector-rules`.
+
+## [2.7.0-beta.3] - 2021-09-28
+### Added
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+
+## [2.7.0-beta.2] - 2021-09-21
+### Fixed
+* The `flexberry-groupedit` component:
+    * Lookup's autocomplite and dropdown groupedit container overflow.
+
+## [2.7.0-beta.1] - 2021-09-20
+### Changed
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+
+## [2.7.0-beta.0] - 2021-07-18
+### Added
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
+
+### Breaking changes
+* The `flexberry-datepicker` component was removed.
+* The `daterangepicker` `bower`-package was removed from dependencies.
+* The `moment` `bower`-package was added to dependencies.
+
+## [2.6.1] - 2021-07-02
+### Fixed
+* The `flexberry-model` blueprint generated wrong model mixin when project contains `ember-cp-validations` dependency.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0`.
+
+## [2.6.0] - 2021-06-16
+### Added
 * The `flexberry-file` component:
     * Added upload/download file options for mobile component's menu.
+* The `flexberry-objectlistview` component:
+    * The `hierarchyAttribute` property.
+    * Default test selector.
+    * Button to clear the filter in a column.
+* The `flexberry-lookup` component:
+    * Support for component's block form, which was previously only available in the mobile version.
+    * The `lookupOnChange` event in the `LookupEvents` service, called when the value in the component changes.
+    * The `autocompleteDirection` property to set direction of autocomplete window.
+* Support of `errors` property change for `flexberry-validationsummary`.
+* The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.
+* The `isDesktop` and `isMobile` methods for `device` service.
+* Ability to define default user settings for the type of models to be used in the lists.
+* The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.
+* The `validationObject` property, `validate` and `saveModel` methods for `edit-form` controller.
+* The localization of the `loading` template.
 
 ### Fixed
 * The `device` service:
-    * Fixed `isTv` method.
-
-## [2.6.0-beta.11] - 2021-05-14
-### Added
-* Support of `errors` property change for `flexberry-validationsummary`.
-
-## [2.6.0-beta.10] - 2021-04-22
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.4`.
-
-## [2.6.0-beta.9] - 2021-04-06
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.3`.
-
-## [2.6.0-beta.8] - 2021-03-29
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.2`.
-
-## [2.6.0-beta.7] - 2021-02-18
-### Changed
-* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.1`.
-
-## [2.6.0-beta.6] - 2021-02-18
-### Fixed
-* The `flexberry-objectlitview` and `flexberry-simpleolv` components:
-    * Fixed check all rows with respect to `rowConfig.canBeSelected` option.
-
+    * `isTv` method.
 * The `edit-form-new` route:
-    * Fixed return promise in model.
-
-## [2.6.0-beta.5] - 2021-01-27
-### Changed
-* Replace test models localization with separated classes.
-
-### Fixed
-* Getting path prefixes logic for `device` service.
-
-## [2.6.0-beta.4] - 2021-01-15
-### Added
-* The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.
-
-### Fixed
+    * Returning promise in model.
 * The `default-user-setting` blueprint:
-    * Fixed init component path.
-
-## [2.6.0-beta.3] - 2021-01-13
-### Fixed
-* The `flexberry-objectlitview` component:
+    * Init component path.
+* The `flexberry-objectlistview` component:
+    * Check all rows with respect to `rowConfig.canBeSelected` option.
     * Add ability to on and off hierarchical mode when component is in hierarchical mode initially.
-
-## [2.6.0-beta.2] - 2020-12-20
-### Added
-* The `isDesktop` and `isMobile` methods for `device` service.
-* The `hierarchyAttribute` property for `flexberry-objectlistview` component.
-* Ability to define default user settings for the type of models to be used in the lists.
-
-## [2.6.0-beta.1] - 2020-11-15
-### Added
-* The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.
-* The `validationObject` property, `validate` and `saveModel` methods for `edit-form` controller.
-
-### Fixed
 * Show save notifications on the edit form.
-
-## [2.6.0-beta.0] - 2020-10-06
-### Added
-* The `lookupOnChange` event in the `LookupEvents` service, called when the value in the `flexberry-lookup` component changes.
-* Support for the `flexberry-lookup` component block form, which was previously only available in the mobile version.
-* The localization of the `loading` template.
-* Button to clear the filter in a column in the `flexberry-objectlistview` and `flexberry-simpleolv` components.
-* Default test selector for `flexberry-objectlistview` component.
-
-### Fixed
 * The `updateLookupAction` action in the `flexberry-lookup` component is not called when a value is selected in a modal window.
 * The `index` route is no longer generated in the `flexberry-application` blueprint. Because of this, some of the application regeneration methods did not work.
 * In the row click handler, in the `flexberry-objectlistview` component, async operations outside the ember run loop were used. Now you can just do `click(row)` in your tests.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.6.0-beta.0`.
+* Replace `semantic-ui-daterangepicker` dependency with `daterangepicker` 3.0.5.
+* Replace test models localization with separated classes.
 * Now the `flexberry-objectlistview` component is generated with the `showCheckBoxInRow` option set to `true` value on the list form.
 * The `flexberry-acceptance-test` blueprint:
     * An `[AGAT]` tag is added to the name of each test module, which can be used to run the desired test suite. For example `ember test --filter="AGAT"`.

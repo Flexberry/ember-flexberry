@@ -188,14 +188,6 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
-            'title': '',
-            'settings-example': {
-              'caption': 'Пример работы с настройками',
-              'title': ''
-            }
-          },
           'flexberry-dropdown': {
             'caption': 'flexberry-dropdown',
             'title': '',
@@ -553,7 +545,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Карма',
       'name-validation-message-caption': 'Заполните поле "Имя"',
-      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"',
+      'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -697,11 +690,6 @@ Ember.$.extend(true, translations, {
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Пример работы с настройками'
         }
       },
       'flexberry-dropdown': {

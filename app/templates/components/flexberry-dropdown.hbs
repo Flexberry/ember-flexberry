@@ -38,7 +38,7 @@
   {{else}}
     <div class="text">{{text}}</div>
   {{/if}}
-  <div class="menu">
+  <div class="menu {{if canFixElement fixedElementClass}}">
     {{yield}}
     {{#each-in _items as |key value|}}
       {{#if value}}

@@ -375,9 +375,9 @@ export default Service.extend(Evented, {
 
     this.initProperties();
 
-    let originalEmberLoggerError = Ember.Logger.error;
+    let originalEmberLoggerError = console.error;
     originalMethodsCache.pushObject({
-      methodOwner: Ember.Logger,
+      methodOwner: console,
       methodName: 'error',
       methodReference: originalEmberLoggerError
     });
@@ -403,106 +403,106 @@ export default Service.extend(Evented, {
     RSVP.on('error', onPromiseError);
 
     // Extend Ember.Logger.error logic.
-    Ember.Logger.error = function() {
-      originalEmberLoggerError(...arguments);
+    // Ember.Logger.error = function() {
+    //   originalEmberLoggerError(...arguments);
 
-      return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
-          resolve(result);
-        }).catch((reason) => {
-          reject(reason);
-        });
-      });
-    };
+    //   return _this._queue.attach((resolve, reject) => {
+    //     return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
+    //       resolve(result);
+    //     }).catch((reason) => {
+    //       reject(reason);
+    //     });
+    //   });
+    // };
 
     // Extend Ember.Logger.warn logic.
-    let originalEmberLoggerWarn = Ember.Logger.warn;
+    let originalEmberLoggerWarn = console.warn;
     originalMethodsCache.pushObject({
-      methodOwner: Ember.Logger,
+      methodOwner: console,
       methodName: 'warn',
       methodReference: originalEmberLoggerWarn
     });
 
-    Ember.Logger.warn = function() {
-      originalEmberLoggerWarn(...arguments);
+    // Ember.Logger.warn = function() {
+    //   originalEmberLoggerWarn(...arguments);
 
-      return _this._queue.attach((resolve, reject) => {
-        let message = joinArguments(...arguments);
-        if (message.indexOf('DEPRECATION') === 0) {
-          return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
-            resolve(result);
-          }).catch((reason) => {
-            reject(reason);
-          });
-        } else {
-          return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
-            resolve(result);
-          }).catch((reason) => {
-            reject(reason);
-          });
-        }
-      });
-    };
+    //   return _this._queue.attach((resolve, reject) => {
+    //     let message = joinArguments(...arguments);
+    //     if (message.indexOf('DEPRECATION') === 0) {
+    //       return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
+    //         resolve(result);
+    //       }).catch((reason) => {
+    //         reject(reason);
+    //       });
+    //     } else {
+    //       return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
+    //         resolve(result);
+    //       }).catch((reason) => {
+    //         reject(reason);
+    //       });
+    //     }
+    //   });
+    // };
 
     // Extend Ember.Logger.log logic.
-    let originalEmberLoggerLog = Ember.Logger.log;
+    let originalEmberLoggerLog = console.log.bind;
     originalMethodsCache.pushObject({
-      methodOwner: Ember.Logger,
+      methodOwner: console,
       methodName: 'log',
       methodReference: originalEmberLoggerLog
     });
 
-    Ember.Logger.log = function() {
-      originalEmberLoggerLog(...arguments);
+  //   Ember.Logger.log = function() {
+  //     originalEmberLoggerLog(...arguments);
 
-      return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
-          resolve(result);
-        }).catch((reason) => {
-          reject(reason);
-        });
-      });
-   };
+  //     return _this._queue.attach((resolve, reject) => {
+  //       return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
+  //         resolve(result);
+  //       }).catch((reason) => {
+  //         reject(reason);
+  //       });
+  //     });
+  //  };
 
     // Extend Ember.Logger.info logic.
-    let originalEmberLoggerInfo = Ember.Logger.info;
+    let originalEmberLoggerInfo = console.info;
     originalMethodsCache.pushObject({
-      methodOwner: Ember.Logger,
+      methodOwner: console,
       methodName: 'info',
       methodReference: originalEmberLoggerInfo
     });
 
-    Ember.Logger.info = function() {
-      originalEmberLoggerInfo(...arguments);
+    // Ember.Logger.info = function() {
+    //   originalEmberLoggerInfo(...arguments);
 
-      return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
-          resolve(result);
-        }).catch((reason) => {
-          reject(reason);
-        });
-      });
-    };
+    //   return _this._queue.attach((resolve, reject) => {
+    //     return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
+    //       resolve(result);
+    //     }).catch((reason) => {
+    //       reject(reason);
+    //     });
+    //   });
+    // };
 
     // Extend Ember.Logger.debug logic.
-    let originalEmberLoggerDebug = Ember.Logger.debug;
+    let originalEmberLoggerDebug = console.debug;
     originalMethodsCache.pushObject({
-      methodOwner: Ember.Logger,
+      methodOwner: console,
       methodName: 'debug',
       methodReference: originalEmberLoggerDebug
     });
 
-    Ember.Logger.debug = function() {
-      originalEmberLoggerDebug(...arguments);
+    // Ember.Logger.debug = function() {
+    //   originalEmberLoggerDebug(...arguments);
 
-      return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
-          resolve(result);
-        }).catch((reason) => {
-          reject(reason);
-        });
-      });
-    };
+    //   return _this._queue.attach((resolve, reject) => {
+    //     return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
+    //       resolve(result);
+    //     }).catch((reason) => {
+    //       reject(reason);
+    //     });
+    //   });
+    // };
 
     this.set('_originalMethodsCache', originalMethodsCache);
   },

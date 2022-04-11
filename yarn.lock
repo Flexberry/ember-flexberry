@@ -4253,6 +4253,11 @@ eslint-plugin-qunit@^5.0.0:
     eslint-utils "^2.1.0"
     requireindex "^1.2.0"
 
+eslint-plugin-todo-errors@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-todo-errors/-/eslint-plugin-todo-errors-0.3.0.tgz#3d6c46ef1b2b2da1b222b859b4c0e03fc29680c3"
+  integrity sha512-F6xeznMbxblBcCyBN8XEOWJrF4QpfN2a+PBiclXiw0rpqxSubXLjVwTa88zSiVNdBi+xrApPv7PkJCOQNDovOw==
+
 eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"

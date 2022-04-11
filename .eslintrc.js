@@ -14,7 +14,8 @@ module.exports = {
     'ember',
     'hbs',
     'jsdoc',
-    'qunit'
+    'qunit',
+    'todo-errors'
   ],
   extends: [
     'eslint:recommended',

@@ -21,7 +21,6 @@
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
-    "lint:ts": "eslint --ext .ts --env node .",
     "start": "ember server",
     "test": "ember try:testall"
   },
@@ -31,8 +30,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --no-ignore",
-    "*.ts": "eslint --no-ignore --ext .ts --env node",
+    "*.{js,ts}": "eslint --no-ignore",
     "*.hbs": "ember-template-lint --config '{ \"extends\": [\"recommended\", \"stylistic\"], \"rules\": { \"no-bare-strings\": true } }'"
   },
   "engines": {

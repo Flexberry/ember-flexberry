@@ -46,6 +46,7 @@ module.exports = {
         'index.js',
         'testem.js',
         'blueprints/**/*.js',
+        'blueprints/**/*.ts',
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],

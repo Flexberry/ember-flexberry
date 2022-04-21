@@ -398,6 +398,36 @@ export default Service.extend(Evented, {
       _this._onError(reason, true);
     };
 
+    console.error = function(error) {
+      originalEmberLoggerError(error);
+      _this._onError(error, true);
+    };
+
+    console.warn = function(warn) {
+        originalEmberLoggerError(warn);
+        _this._onError(warn, true);
+    };
+
+    console.deprecated = function(deprecate) {
+        originalEmberLoggerError(deprecate);
+        _this._onError(deprecate, true);
+    };
+
+    console.log = function(log) {
+        originalEmberLoggerError(log);
+        _this._onError(log, true);
+    };
+
+    console.info = function(info) {
+        originalEmberLoggerError(info);
+        _this._onError(info, true);
+    };
+
+    console.debug = function(debug) {
+        originalEmberLoggerError(debug);
+        _this._onError(debug, true);
+    };
+
     // Assign Ember.onerror & RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = onError;
     RSVP.on('error', onPromiseError);

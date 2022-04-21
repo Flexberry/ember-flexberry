@@ -713,12 +713,12 @@ $.extend(true, translations, {
         'throw-exception-button-message': 'Exception thrown',
         'reject-rsvp-promise-button-message': 'Promise rejected',
         'ember-assert-button-message': 'assert called',
-        'ember-logger-error-button-message': 'Ember.Logger.error called',
-        'ember-logger-warn-button-message': 'Ember.warn called',
-        'ember-deprecate-button-message': 'Ember.deprecate called',
-        'ember-logger-log-button-message': 'Ember.Logger.log called',
-        'ember-logger-info-button-message': 'Ember.Logger.info called',
-        'ember-logger-debug-button-message': 'Ember.debug called'
+        'ember-logger-error-button-message': 'console.error called',
+        'ember-logger-warn-button-message': 'console.warn called',
+        'ember-deprecate-button-message': 'console.deprecate called',
+        'ember-logger-log-button-message': 'console.log called',
+        'ember-logger-info-button-message': 'console.info called',
+        'ember-logger-debug-button-message': 'console.debug called'
       }
     },
 

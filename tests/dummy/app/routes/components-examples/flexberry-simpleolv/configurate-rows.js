@@ -30,7 +30,16 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { SOLVConfigurateRowsObjectListView: { } },
+  developerUserSettings: { 
+    SOLVConfigurateRowsObjectListView: { "DEFAULT": {
+      "perPage": 10,
+      "sorting": [{
+        "propName": "address",
+        "direction": "desc",
+        "sortPriority": 1
+      }]
+    }}
+  },
 
   /**
     Name of model to be used as list's records types.

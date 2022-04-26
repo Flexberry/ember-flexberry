@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.7.0-beta.10] - 2022-04-26
+### Added
+* Changes up to `2.7.0-beta.7` version.
+
 ## [2.7.0-beta.7] - 2022-04-05
 ### Changed
 * The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.

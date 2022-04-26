@@ -2,7 +2,19 @@
   <div class="header">{{header}}</div>
 {{/if}}
 <ul class="list">
-  {{#each errors as |error|}}
-    <li>{{error}}</li>
-  {{/each}}
+  {{#if _isEmberDataErrors}}
+    {{#each-in errors as |key|}}
+      {{#with (get errors key) as |errors|}}
+        {{#if (is-array errors)}}
+          {{#each errors as |error|}}
+            <li>{{error}}</li>
+          {{/each}}
+        {{/if}}
+      {{/with}}
+    {{/each-in}}
+  {{else}}
+    {{#each errors as |error|}}
+      <li>{{error}}</li>
+    {{/each}}
+  {{/if}}
 </ul>

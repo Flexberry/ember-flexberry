@@ -207,7 +207,11 @@ export function addRecords(store, modelName, uuid) {
       let newRecords = A();
 
       for (let i = 0; i < howAddRec; i++) {
-        newRecords.pushObject(store.createRecord(modelName, { name: uuid }));
+        newRecords.pushObject(
+          store.createRecord(modelName, 
+            modelName == 'ember-flexberry-dummy-application-user'
+            ? { name: uuid, eMail: uuid, phone1: uuid }
+            : { name: uuid }));
       }
 
       newRecords.forEach(function(item) {

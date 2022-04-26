@@ -1,0 +1,8 @@
+<div class="field">
+  <label>{{<%= caption %>}}</label>
+  {{flexberry-checkbox
+    readonly=<%= readonly %>
+    value=model.<%= name %>
+    data-test-<%= entityName %>-<%= dashedName %>=true
+  }}
+</div>

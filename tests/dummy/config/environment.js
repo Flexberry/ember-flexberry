@@ -5,7 +5,7 @@ module.exports = function(environment) {
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
-    backendUrl = 'http://localhost:6501';
+    backendUrl = 'http://localhost:6500';
   }
 
   let ENV = {
@@ -101,7 +101,10 @@ module.exports = function(environment) {
         // Settings for flexberry-objectlistview component.
         flexberryObjectlistview: {
           // Flag indicates whether to side page or usually mode.
-          useSidePageMode: false,
+          useSidePageMode: true,
+
+          // Default number of records on the list page
+          defaultPerPage: 5
         },
 
         // Settings for flexberry-lookup component.

@@ -761,7 +761,8 @@ export default FlexberryBaseComponent.extend({
               userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
             } else {
               let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-              router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+              let perPageDefault = defaultDeveloperUserSetting.perPage;
+              router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
             }
           });
           /* eslint-enable no-unused-vars */

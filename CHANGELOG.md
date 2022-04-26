@@ -4,16 +4,123 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.6.0-beta.3] - 2021-08-05
-### Fixed
-* The `flexberry-lookup` component in dropdown mode wrong calculate position.
-
-## [3.6.0-beta.2] - 2021-07-08
+## [3.7.0-beta.10] - 2022-04-26
 ### Added
-- Changes from [`2.6.0`](#260---2021-06-16) and [`2.6.1`](#261---2021-07-02) versions.
+* Changes up to `2.7.0-beta.7` version.
+
+## [2.7.0-beta.7] - 2022-04-05
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
+
+## [2.7.0-beta.6] - 2022-02-08
+### Added
+* The `flexberry-lookup` component:
+    * Option `emptyValueAtEnd` for the dropdown mode.
+
+## [2.7.0-beta.5] - 2022-02-01
+### Added
+* Optional `ember-cp-validations` support.
+
+### Fixed
+* The `flexberry-objectlistview` component:
+    * Using of `perPage` setting at `developerUserSettings`.
+* Validation for deleted records in `flexberry-groupedit` on `edit-form`.
+
+## [3.7.0-beta.9] - 2022-01-18
+### Fixed
+* Null content check in `object-list-view`.
+
+## [3.7.0-beta.8] - 2022-01-13
+### Added
+* Optional support for `ember-validations` addon.
+
+### Fixed
+* Dropdown value as enum with empty string element.
+
+## [3.7.0-beta.7] - 2021-12-14
+### Fixed
+* Work with empty current app page in `adv-limit` services.
+
+## [3.7.0-beta.6] - 2021-11-25
+### Fixed
+* Settings getting in `user-setting` and `adv-limit` services.
+
+## [3.7.0-beta.5] - 2021-11-16
+### Added
+* Lookup's sidepage mode in generated app.
+
+## [3.7.0-beta.4] - 2021-11-11
+### Fixed
+* Filtering and sorting on list forms in generated application.
+* En locale for application caption and application title.
+
+## [3.7.0-beta.3] - 2021-11-09
+### Fixed
+* En locale for application menu.
+
+## [3.7.0-beta.2] - 2021-11-02
+### Changed
+* En locale generates from captions.
+
+## [3.7.0-beta.1] - 2021-10-29
+### Changed
+* If not specified, default locale would be browser's or system locale.
+
+## [3.7.0-beta.0] - 2021-10-12
+### Added
+* Changes from `2.7.0-beta.0` to `2.7.0-beta.4` versions.
+
+## [2.7.0-beta.4] - 2021-10-11
+### Fixed
+* The `flexberry-groupedit` component:
+    * Optimized sort function.
+
+### Breaking changes
+* Deleted `custom-inflector-rules`.
+
+## [2.7.0-beta.3] - 2021-09-28
+### Added
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+
+## [2.7.0-beta.2] - 2021-09-21
+### Fixed
+* The `flexberry-groupedit` component:
+    * Lookup's autocomplite and dropdown groupedit container overflow.
+
+## [2.7.0-beta.1] - 2021-09-20
+### Changed
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+
+## [2.7.0-beta.0] - 2021-07-18
+### Added
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
+
+### Breaking changes
+* The `flexberry-datepicker` component was removed.
+* The `daterangepicker` `bower`-package was removed from dependencies.
+* The `moment` `bower`-package was added to dependencies.
+
+## [3.6.1] - 2021-08-19
+### Fixed
+* The `adv-limit` service's `init` method.
+
+## [3.6.0] - 2021-08-16
+### Added
+* Changes from [`2.6.0`](#260---2021-06-16) and [`2.6.1`](#261---2021-07-02) versions.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.6.0-beta.1`.
+* Update dependency on `ember-flexberry-data` to version `3.6.0`.
+* Add some improvements for UI of generated application.
+
+### Fixed
+* The `flexberry-lookup` component in dropdown mode wrong calculate position.
 
 ## [2.6.1] - 2021-07-02
 ### Fixed
@@ -73,17 +180,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-lookup` component:
     * Removed mobile template.
     * An exception will be thrown when trying to use the block form of the component with `autocomplete` or `dropdown` options.
-
-## [3.6.0-beta.1] - 2021-04-29
-### Changed
-- Add some improvements for UI of generated application.
-
-## [3.6.0-beta.0] - 2020-10-07
-### Added
-- Changes from [`2.6.0-beta.0`](#260-beta0---2020-10-06) version.
-
-### Changed
-* Update dependency on `ember-flexberry-data` to version `3.6.0-beta.0`.
 
 ## [3.5.0] - 2020-09-17
 ### Added

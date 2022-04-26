@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "3.6.0-beta.3",
+  "version": "3.7.0-beta.10",
   "description": "Ember Flexberry Addon",
   "keywords": [
     "ember-addon",
@@ -43,9 +43,8 @@
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "ember-flexberry-data": "~3.6.0-beta.1",
+    "ember-flexberry-data": "~3.7.0-beta.2",
     "ember-i18n": "5.2.1",
-    "ember-i18n-cp-validations": "~3.1.0",
     "ember-test-selectors": "2.1.0",
     "ember-truth-helpers": "2.0.0",
     "lodash": "^4.4.0",
@@ -74,10 +73,11 @@
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
-    "ember-cp-validations": "~3.5.2",
+    "ember-cp-validations": "^3.5.6",
     "ember-data": "~3.1.1",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
+    "ember-i18n-cp-validations": "^3.1.0",
     "ember-link-action": "0.0.36",
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
@@ -89,10 +89,11 @@
     "ember-source-channel-url": "^1.0.1",
     "ember-template-lint": "^2.14.0",
     "ember-try": "^0.2.23",
+    "ember-validations": "~2.0.0-alpha.5",
     "ember-welcome-page": "^3.0.0",
     "eslint": "^7.13.0",
     "eslint-plugin-ember": "^9.6.0",
-    "eslint-plugin-hbs": "^1.0.0",
+    "eslint-plugin-hbs": "1.0.0",
     "eslint-plugin-jsdoc": "^30.7.8",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-qunit": "^5.0.0",
@@ -107,7 +108,8 @@
     "ui-ember-slider": "0.5.0"
   },
   "resolutions": {
-    "ws": "6.2.1"
+    "ws": "6.2.1",
+    "ember-get-config": "0.3.0"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

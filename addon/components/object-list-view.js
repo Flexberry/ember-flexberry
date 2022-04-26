@@ -2596,16 +2596,51 @@ export default FlexberryBaseComponent.extend(
     @return {Promise} A promise that will be resolved when relationships have been deleted
   */
   _deleteHasManyRelationships(record, immediately) {
+    /*
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM.
+    ORM will delete all hasMany relationships on server side,
+    but it is needed to unload hasMany relationships on client side.
+
+    If ONLINE with flag NOT IMMEDIATELY then it is necessary manually to "deleteRecord"
+    of all hasMany relationships.
+
+    If OFFLINE then adapter will delete connected hasMany relationships.
+    */
+
     let promises = A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the `record` and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
+    let store = this.get('store');
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        record.get(name).forEach((relRecord) => {
-          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
-        });
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i >= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
+          if (immediately) {
+            store.unloadRecord(relRecord);
+          }
+          else {
+            promises.pushObject(relRecord.deleteRecord());
+          }
+        }
       }
     });
-
-    return RSVP.all(promises);
   },
 
   /**
@@ -2698,6 +2733,9 @@ export default FlexberryBaseComponent.extend(
     // Property changing displays automatically.
     let content = this.get('content');
     let contentWithKeys = this.get('contentWithKeys');
+
+    if (isNone(content) || isNone(contentWithKeys)) return;
+
     let componentName = this.get('componentName');
     let immediateDelete = this.get('immediateDelete');
     let selectedRecords = this.get('selectedRecords');

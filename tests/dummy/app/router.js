@@ -195,15 +195,19 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
+  this.route('components-acceptance-tests/flexberry-groupedit/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');
   this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
   this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
+  this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',

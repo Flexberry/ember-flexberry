@@ -1,0 +1,33 @@
+<div class="ui stackable grid">
+<div class="row">
+  {{#if hasSubitems}}
+    {{#flexberry-toggler
+      caption=(if item.localeKey (t item.localeKey) item.title)
+      iconClass=item.icon
+      expanded=false
+    }}
+        {{#each item.items as |item|}}
+          {{flexberry-menuitem item=item}}
+        {{/each}}
+    {{/flexberry-toggler}}
+  {{else}}
+    {{#if titleIsBeforeIcon}}
+      {{#if item.localeKey}}
+        <span>{{t item.localeKey}}</span>
+      {{else}}
+        <span>{{item.title}}</span>
+      {{/if}}
+    {{/if}}
+    {{#if item.icon}}
+      <i class="{{item.icon}}"></i>
+    {{/if}}
+    {{#if (not titleIsBeforeIcon)}}
+      {{#if item.localeKey}}
+        <span>{{t item.localeKey}}</span>
+      {{else}}
+        <span>{{item.title}}</span>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</div>
+</div>

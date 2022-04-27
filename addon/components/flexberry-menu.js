@@ -250,6 +250,8 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _onClickHandler(e) {
+    e.stopPropagation();
+
     // Find clicked menu item element.
     let itemElement = $(e.target);
 

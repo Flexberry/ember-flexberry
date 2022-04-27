@@ -1,0 +1,164 @@
+{{#if refreshButton}}
+  <button
+    class="ui refresh-button {{buttonClass}} button"
+    title={{t "components.olv-toolbar.refresh-button-text"}}
+    {{action "refresh"}}>
+      {{t "components.olv-toolbar.refresh-button-text"}}
+      <i class="refresh icon"></i>
+  </button>
+{{/if}}
+{{#if createNewButton}}
+  {{#if (or readonly (not enableCreateNewButton))}}
+    <button
+      class="ui create-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      disabled="disabled"
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{else}}
+    <button
+      class="ui create-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
+    </button>
+  {{/if}}
+{{/if}}
+{{#if deleteButton}}
+  {{#if (or readonly (not isDeleteButtonEnabled))}}
+    <button
+      class="ui delete-button {{buttonClass}} disabled button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      disabled="disabled"
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{else}}
+    <button
+      class="ui delete-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+      {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
+        <i class="delete icon"></i>
+    </button>
+  {{/if}}
+{{/if}}
+{{#if availableHierarchicalMode}}
+  <button
+    class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
+    title={{t "components.olv-toolbar.hierarchy-button-text"}}
+    {{action switchHierarchicalMode}}>
+      <i class="sitemap icon"></i>
+  </button>
+  {{#if availableCollExpandMode}}
+    <button
+      class="ui button icon hierarchical-button {{buttonClass}} active"
+      title={{if inExpandMode (t "components.olv-toolbar.coll-comspres-button-text") (t "components.olv-toolbar.coll-expand-button-text")}}
+      {{action switchExpandMode}}>
+        <i class="{{if inExpandMode "compress" "expand"}} icon"></i>
+    </button>
+  {{/if}}
+{{/if}}
+{{#if enableFilters}}
+  <div class="ui icon buttons filter-active {{if filters "show-filter"}}">
+    <button
+      class="ui button {{buttonClass}} {{if showFilters "active"}}"
+      title={{t "components.olv-toolbar.filter-button-text"}}
+      {{action "showFiltersTool"}}>
+        <i class="filter icon"></i>
+    </button>
+    {{#if filters}}
+      <div class="or" data-text="&bull;"></div>
+      <button
+        class="ui button removeFilter-button {{buttonClass}}"
+        title={{t "components.olv-toolbar.remove-filter-button-text"}}
+        {{action resetFilters}}>
+          <i class="remove icon"></i>
+      </button>
+    {{/if}}
+  </div>
+{{/if}}
+{{#if filterButton}}
+  <div class="ui action input search-field">
+    <div class="block-action-input">{{input
+      type="text"
+      placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
+      value=filterByAnyMatchText key-down="keyDownFilterAction"
+    }}</div>
+    <button
+      class="ui {{buttonClass}} icon button search-button"
+      title={{t "components.olv-toolbar.search-button-text"}}
+      {{action "filterByAnyMatch"}}>
+        <i class="search icon"></i>
+    </button>
+    <button
+      class="ui {{buttonClass}} icon button clear-search-button"
+      title={{t "components.olv-toolbar.clear-search-button-text"}}
+      {{action "removeFilter"}}>
+        <i class="remove icon"></i>
+    </button>
+  </div>
+{{/if}}
+{{#if exportExcelButton}}
+  <div class="ui buttons export-config">
+    {{flexberry-menu
+      items=exportExcelItems
+      onItemClick=(action "onExportMenuItemClick")
+    }}
+  </div>
+{{/if}}
+{{#if colsConfigButton}}
+  <div class="ui buttons cols-config">
+    {{#if colsSettingsItems}}
+      {{flexberry-menu
+        items=colsSettingsItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}
+{{#if advLimitButton}}
+  <div class="ui buttons adv-limit-config">
+    {{#if advLimitItems}}
+      {{flexberry-menu
+        items=advLimitItems
+        onItemClick=(action "onLimitMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}
+{{#each customButtons as |customButton|}}
+  <button
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+    title={{if customButton.buttonTitle customButton.buttonTitle}}
+    disabled={{customButton.disabled}}
+    {{action "customButtonAction" customButton.buttonAction}}>
+      {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
+  </button>
+{{/each}}
+<div class="olv-toolbar-info-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    <i class="olvt icon"></i>
+    {{_infoModalDialogCaption}}
+  </div>
+  <div class="center aligned ui grid">
+  <button
+    class="ui button icon olv-toolbar-info-modal-dialog-copy-button"
+    title={{t "components.olv-toolbar.copy"}}
+    {{action "copyJSONContent"}}>
+      {{t "components.olv-toolbar.copy"}}
+  </button>
+  <div class="actions">
+    <div class="ui button approve olv-toolbar-info-modal-dialog-ok-button">
+      {{t "components.olv-toolbar.close"}}
+    </div>
+  </div>
+  </div>
+  <div class="ui form">
+    <div class="ui field olv-toolbar-info-modal-dialog-content center aligned ">
+      <textarea cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
+    </div>
+  </div>
+</div>

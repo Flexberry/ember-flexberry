@@ -1,0 +1,17 @@
+{{#if titleIsBeforeIcon}}
+  {{#if item.localeKey}}
+    <span>{{t item.localeKey}}</span>
+  {{else}}
+    <span>{{item.title}}</span>
+  {{/if}}
+{{/if}}
+{{#if item.icon}}
+  <i class="{{item.icon}}"></i>
+{{/if}}
+{{#if (not titleIsBeforeIcon)}}
+  {{#if item.localeKey}}
+    <span>{{t item.localeKey}}</span>
+  {{else}}
+    <span>{{item.title}}</span>
+  {{/if}}
+{{/if}}

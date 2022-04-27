@@ -5,6 +5,7 @@ moduleFor('controller:new-platform-flexberry-services-lock-list', 'Unit | Contro
     'controller:advlimit-dialog',
     'controller:colsconfig-dialog',
     'controller:filters-dialog',
+    'controller:flexberry-menuitem-dialog',
     'service:adv-limit',
     'service:objectlistview-events',
     'service:user-settings',

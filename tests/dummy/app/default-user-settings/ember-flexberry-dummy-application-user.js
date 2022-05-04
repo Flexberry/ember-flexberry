@@ -8,6 +8,7 @@ UserSetting.DEFAULT = {
       },
       {
         propName: "activated",
+        hide: true,
         name: "Activated"
       },
       {

@@ -176,15 +176,34 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
 
+      let model = modelToLookup ? modelToLookup : this.get('model');
+      
+      // Get ember static function to get relation by name.
+      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
 
-      let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
-      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+      let userSettings;
 
-      // Get ember static function to get relation by name.
-      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      if (options.notUseUserSettings === true) {
+        userSettings = lookupController.get('developerUserSettings');
+        userSettings = userSettings ? userSettings[folvComponentName] : undefined;
+        userSettings = userSettings ? userSettings.DEFAULT : undefined;
+      } else {
+        userSettings = userSettingsService.getCurrentUserSetting(folvComponentName);
+      }
+
+      if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
+        const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + relatedToType);
+        if (!Ember.isNone(userSettingValue)) {
+          userSettings = userSettingValue.DEFAULT
+        }
+      }
+
+      let sorting = userSettings.sorting || options.sorting || [];
+      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+      
 
       // Get relation property from model.
       let relation = relationshipsByName.get(relationName);

@@ -12,8 +12,17 @@ UserSetting.DEFAULT = {
       },
       {
         propName: "gender",
-        hide: true,
         name: "Gender"
+      }
+    ],
+    sorting: [
+      {
+        propName: "gender",
+        direction: "asc" 
+      },
+      {
+        propName: "name",
+        direction: "desc" 
       }
     ]
   };

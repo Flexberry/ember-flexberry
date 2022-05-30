@@ -634,6 +634,10 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  /**
+    Handles drag enter event.
+    @param {Event} event Event
+  */
   dragEnter(event) {
     if (event.preventDefault) {
       event.preventDefault();
@@ -642,6 +646,10 @@ export default FlexberryBaseComponent.extend({
     this.set('isDrag', true);
   },
 
+  /**
+    Handles drag over event.
+    @param {Event} event Event
+  */
   dragOver(event) {
     if (event.preventDefault) {
       event.preventDefault();
@@ -650,6 +658,10 @@ export default FlexberryBaseComponent.extend({
     this.set('isDrag', true);
   },
 
+  /**
+    Handles drag leave event.
+    @param {Event} event Event
+  */
   dragLeave(event) {
     if (event.preventDefault) {
       event.preventDefault();
@@ -658,6 +670,10 @@ export default FlexberryBaseComponent.extend({
     this.set('isDrag', false);
   },
 
+  /**
+    Handles drag drop event.
+    @param {Event} event Event
+  */
   drop(event) {
     if (event.preventDefault) {
       event.preventDefault();
@@ -672,6 +688,12 @@ export default FlexberryBaseComponent.extend({
     this.addFile(this, event, uploadData);
   },
 
+  /**
+    Add data to control.
+    @param {Object} _this Owner
+    @param {Event} e Event
+    @param {Object} uploadData Upload data.
+   */
   addFile: function(_this, e, uploadData) {
     let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
 

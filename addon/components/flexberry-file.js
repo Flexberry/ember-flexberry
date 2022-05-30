@@ -562,6 +562,14 @@ export default FlexberryBaseComponent.extend({
   */
   base64FileExtension: null,
 
+  /**
+    Flag: Is the drag-and-drop event currently proceed.
+    @property isDrag
+    @type Boolean
+    @default false
+  */
+  isDrag: false,
+
   actions: {
     /**
       Handles click on selected image preview and sends action with data outside component
@@ -626,6 +634,84 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  dragEnter(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set('isDrag', true);
+  },
+
+  dragOver(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set('isDrag', true);
+  },
+
+  dragLeave(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set('isDrag', false);
+  },
+
+  drop(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.set('isDrag', false);
+
+    let uploadData = {
+      files: event.dataTransfer.files
+    };
+    
+    this.addFile(this, event, uploadData);
+  },
+
+  addFile: function(_this, e, uploadData) {
+    let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
+
+    const accept = _this.get('accept');
+    const fileType = selectedFile.type;
+    const fileName = selectedFile.name;
+
+    if (!_this._isValidTypeFile(fileType, accept)) {
+      _this.showFileExtensionErrorModalDialog(fileName);
+      return;
+    }
+
+    let maxUploadFileSize = _this.get('maxUploadFileSize');
+
+    if (!Ember.isNone(maxUploadFileSize)) {
+      Ember.assert(
+        `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
+        ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
+
+      let sizeUnit = _this.get('maxUploadFileSizeUnit');
+      if (!(sizeUnit in _this.get('_fileSizeUnits'))) {
+        console.log('Flexberry-file error, file max size wrong units assigned');
+        sizeUnit = Object.keys(_this.get('_fileSizeUnits'))[0];
+      }
+
+      let fileSizeInUnits = getSizeInUnits(selectedFile.size, sizeUnit);
+
+      // Prevent files greater then maxUploadFileSize.
+      if (fileSizeInUnits > maxUploadFileSize) {
+        _this.showFileSizeErrorModalDialog(selectedFile.name, fileSizeInUnits, maxUploadFileSize, sizeUnit);
+
+        // Break file upload.
+        return;
+      }
+    }
+
+    uploadData.headers = _this.get('headers');
+    _this.set('_uploadData', uploadData);
+  },
+
   /**
     Initializes {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} component.
   */
@@ -680,43 +766,7 @@ export default FlexberryBaseComponent.extend({
 
     // jQuery fileupload 'add' callback.
     let onFileAdd = (e, uploadData) => {
-      let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
-
-      const accept = this.get('accept');
-      const fileType = selectedFile.type;
-      const fileName = selectedFile.name;
-
-      if (!this._isValidTypeFile(fileType, accept)) {
-        this.showFileExtensionErrorModalDialog(fileName);
-        return;
-      }
-
-      let maxUploadFileSize = this.get('maxUploadFileSize');
-
-      if (!Ember.isNone(maxUploadFileSize)) {
-        Ember.assert(
-          `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
-          ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
-
-        let sizeUnit = this.get('maxUploadFileSizeUnit');
-        if (!(sizeUnit in this.get('_fileSizeUnits'))) {
-          console.log('Flexberry-file error, file max size wrong units assigned');
-          sizeUnit = Object.keys(this.get('_fileSizeUnits'))[0];
-        }
-
-        let fileSizeInUnits = getSizeInUnits(selectedFile.size, sizeUnit);
-
-        // Prevent files greater then maxUploadFileSize.
-        if (fileSizeInUnits > maxUploadFileSize) {
-          this.showFileSizeErrorModalDialog(selectedFile.name, fileSizeInUnits, maxUploadFileSize, sizeUnit);
-
-          // Break file upload.
-          return;
-        }
-      }
-
-      uploadData.headers = this.get('headers');
-      this.set('_uploadData', uploadData);
+      this.addFile(this, e, uploadData);
     };
 
     let onFileChange = (e, uploadData) => {

@@ -1,0 +1,52 @@
+<div class="field no-margin">
+  <div class="field {{if readonly "no-margin"}}">
+    <label data-test-caption>
+      {{caption}}
+    </label>
+    {{#unless readonly}}
+      {{#if hasBlock}}
+        {{yield value}}
+      {{else}}
+        {{flexberry-lookup
+          componentName=componentName
+          folvComponentName=folvComponentName
+          choose=choose
+          remove=remove
+          value=value
+          autocomplete=true
+          autocompleteProjection=autocompleteProjection
+          displayAttributeName=displayAttributeName
+          relatedModel=relatedModel
+          relationName=relationName
+          projection=projection
+          title=title
+          readonly=readonly
+          dynamicProperties=dynamicProperties
+          lookupLimitPredicate=lookupLimitPredicate
+          lookupWindowCustomProperties=lookupWindowCustomProperties
+          usePaginationForAutocomplete=usePaginationForAutocomplete
+        }}
+      {{/if}}
+    {{/unless}}
+  </div>
+  <div class="{{if isColumnMode "flex-column"}}">
+    {{#each filteredRecords as |record|}}
+      <a class="ui label" data-test-tag>
+        <span class="normal-weight" onClick={{action "preview" record}}>
+          {{record.tagDisplayValue}}
+        </span>
+        {{#unless readonly}}
+          <i
+            class="delete icon"
+            data-test-tag-remove-btn
+            onClick={{action "delete" record}}
+          ></i>
+        {{/unless}}
+      </a>
+    {{else if readonly}}
+      <span class="italic" data-test-no-data>
+        {{t "components.multiple-lookup.no-data"}}
+      </span>
+    {{/each}}
+  </div>
+</div>

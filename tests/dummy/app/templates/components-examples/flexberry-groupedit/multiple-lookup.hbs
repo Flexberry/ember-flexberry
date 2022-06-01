@@ -1,0 +1,28 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-groupedit.multiple-lookup.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-multiple-lookup
+        componentName="MultipleLookupGroupedit"
+        folvComponentName="folvMultipleLookupGroupedit"
+        caption=(t "forms.components-examples.flexberry-groupedit.multiple-lookup.lookup-caption")
+        choose="showLookupDialog"
+        add=(action 'addMultipleValue')
+        delete=(action 'deleteMultipleValue')
+        preview=(action 'previewMultipleValue')
+        records=model.userVotes
+        value=baseVoteModel.author
+        isColumnMode=false
+        autocomplete=true
+        autocompleteProjection="PreviewExampleView"
+        relatedModel=baseVoteModel
+        relationName="author"
+        projection="PreviewExampleView"
+        displayAttributeName="name"
+        dynamicProperties=dynamicProperties
+        title=(t "forms.components-examples.flexberry-groupedit.multiple-lookup.lookup-title")
+        lookupWindowCustomProperties=lookupWindowCustomProperties
+        readonly=readonly
+        usePaginationForAutocomplete=true
+    }}
+  </div>
+</form>

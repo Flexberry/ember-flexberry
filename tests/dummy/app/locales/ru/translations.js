@@ -254,6 +254,10 @@ Ember.$.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
               'title': ''
+            },
+            'multiple-lookup': {
+              'caption': 'Лукап множественного выбора',
+              'title': 'Лукап множественного выбора'
             }
           },
           'flexberry-lookup': {
@@ -744,6 +748,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
+        },
+        'multiple-lookup': {
+          'caption': 'Лукап множественного выбора',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-lookup': {

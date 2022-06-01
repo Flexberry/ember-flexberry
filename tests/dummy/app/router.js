@@ -88,6 +88,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-groupedit/model-update-example');
   this.route('components-examples/flexberry-groupedit/custom-buttons-example');
   this.route('components-examples/flexberry-groupedit/configurate-row-example');
+  this.route('components-examples/flexberry-groupedit/multiple-lookup');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example');

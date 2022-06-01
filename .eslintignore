@@ -155,7 +155,6 @@ app/browserify.js
 app/services/cols-config-menu.js
 app/services/perf.js
 app/services/user-settings.js
-app/templates/components/flexberry-multiple-lookup.hbs
 
 blueprints/ember-flexberry/index.js
 blueprints/flexberry-acceptance-test/index.js

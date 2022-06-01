@@ -251,6 +251,14 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/flexberry-multiple-lookup",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "no-unnecessary-concat"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/flexberry-objectlistview",
       "only": [
         "quotes",

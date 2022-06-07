@@ -57,6 +57,15 @@ LimitedControllerMixin,
 FlexberryOlvToolbarMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin, {
   /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
+  }).readOnly(),
+
+  /**
     Controller to show colsconfig modal window.
 
     @property lookupController
@@ -210,7 +219,19 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type Any
     @default model
   */
-  validationObject: Ember.computed.alias('model'),
+  validationObject: Ember.computed.deprecatingAlias('validationModel', {
+    id: 'ember-flexberry.edit-form-controller.validation-object-property',
+    until: '4.0.0',
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: Ember.computed.alias('model'),
 
   actions: {
     /**
@@ -384,7 +405,34 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {RSVP.Promise}
   */
   validate() {
-    return this.get('validationObject').validate();
+    Ember.deprecate(`Use method 'validateModel' instead.`, false, {
+      id: 'ember-flexberry.edit-form-controller.validate-method',
+      until: '4.0.0',
+    });
+
+    return this.validateModel();
+  },
+
+  /**
+   * Runs validation on {{#crossLink "EditFormController/validationModel:property"}}{{/crossLink}} and returns promise.
+   * Promise resolved if validation successful or rejected if validation failed.
+   *
+   * @returns {Promise}
+   */
+  validateModel() {
+    const validationModel = this.get('validationModel');
+    if (validationModel) {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
+        const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+        if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
+          return Ember.RSVP.reject(validations);
+        }
+
+        return Ember.RSVP.resolve();
+      });
+    }
+
+    return Ember.RSVP.resolve();
   },
 
   /**
@@ -398,8 +446,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
-    return this.validate().then(() => {
-      this.onSaveActionStarted();
+    this.onSaveActionStarted();
+
+    return this.validateModel().then(() => {
       this.get('appState').loading();
 
       const afterSaveModelFunction = () => {
@@ -437,8 +486,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         this.onSaveActionAlways(data);
       });
     }).catch((errorData) => {
-      this.send('error', new Error(errorData.get('message')));
       this.get('appState').error();
+      this.onSaveActionRejected(errorData);
       return Ember.RSVP.reject(errorData);
     });
   },
@@ -578,7 +627,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     Ember.$('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof Errors)) {
+    const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+    if (!(errorData instanceof Errors) && (!resultCollection || !(errorData instanceof resultCollection))) {
       this.send('handleError', errorData);
     }
   },

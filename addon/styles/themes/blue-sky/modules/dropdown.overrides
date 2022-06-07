@@ -69,3 +69,10 @@
       max-width: inherit;
     }
 }
+
+.groupedit-container .flexberry-dropdown.ui.dropdown {
+    transform: none;
+    .menu {
+        min-width: 0.071em;
+    }
+}

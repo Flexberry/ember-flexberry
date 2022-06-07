@@ -276,16 +276,6 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.title'),
-          children: [{
-            link: 'components-examples/flexberry-datepicker/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
-            children: null
-          }]
-        }, {
-          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.title'),
           children: [{
@@ -680,6 +670,31 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.title'),
+          children: [{
+            link: null,
+            caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.title'),
+            children: [{
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.title'),
+              children: null
+            }]
           }]
         }]
       }, {

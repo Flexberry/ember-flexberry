@@ -69,6 +69,468 @@ export default {
 
     'loading': {
       caption: 'Загрузка...',
+    },
+
+    'application': {
+      'header': {
+        'menu': {
+          'sitemap-button': {
+            'title': 'Меню'
+          },
+          'user-settings-service-checkbox': {
+            'caption': 'Использовать сервис сохранения пользовательских настроек'
+          },
+          'show-menu': {
+            'caption': 'Показать меню'
+          },
+          'hide-menu': {
+            'caption': 'Скрыть меню'
+          },
+          'language-dropdown': {
+            'caption': 'Язык приложения',
+            'placeholder': 'Выберите язык'
+          }
+        },
+        'login': {
+          'caption': 'Вход'
+        },
+        'logout': {
+          'caption': 'Выход'
+        }
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-row-caption': 'Удалить строку ?',
+        'delete-rows-caption': 'Удалить выбранные строки ?',
+      },
+
+      'footer': {
+        'application-name': 'Тестовый стенд ember-flexberry',
+        'application-version': {
+          'caption': 'Версия аддона {{version}}',
+          'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
+            '(версия npm-пакета + хэш коммита). ' +
+            'Кликните, чтобы перейти на GitHub.'
+        }
+      },
+
+      'sitemap': {
+        'application-name': {
+          'caption': 'Тестовый стенд ember-flexberry',
+          'title': ''
+        },
+        'application-version': {
+          'caption': 'Версия аддона {{version}}',
+          'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
+            '(версия npm-пакета + хэш коммита). ' +
+            'Кликните, чтобы перейти на GitHub.'
+        },
+        'index': {
+          'caption': 'Главная',
+          'title': ''
+        },
+        'application': {
+          'caption': 'Приложение',
+          'title': '',
+          'application-users': {
+            'caption': 'Пользователи приложения',
+            'title': ''
+          },
+          'localizations': {
+            'caption': 'Локализация',
+            'title': ''
+          },
+          'suggestion-types': {
+            'caption': 'Типы предложений',
+            'title': ''
+          },
+          'suggestions': {
+            'caption': 'Предложения',
+            'title': ''
+          },
+          'multi': {
+            'caption': 'Несколько списков',
+            'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Файлы предложения',
+            'title': ''
+          }
+        },
+        'log-service-examples': {
+          'caption': 'Сервис логирования',
+          'title': '',
+          'application-log': {
+            'caption': 'Лог приложения',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Пример работы с настройками',
+            'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Очистка лога',
+            'title': ''
+          }
+        },
+        'lock': {
+          'caption': 'Блокировки',
+          'title': 'Список блокировок',
+        },
+        'components-examples': {
+          'caption': 'Примеры компонентов',
+          'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-checkbox': {
+            'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Пример с тремя состояниями',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-dropdown': {
+            'caption': 'flexberry-dropdown',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'conditional-render-example': {
+              'caption': 'Пример условного рендеринга',
+              'title': ''
+            },
+            'empty-value-example': {
+              'caption': 'Пример dropdown-а с пустым значением',
+              'title': ''
+            },
+            'items-example': {
+              'caption': 'Пример элементов значений',
+              'title': ''
+            }
+          },
+          'flexberry-field': {
+            'caption': 'flexberry-field',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'flexberry-file-in-modal': {
+              'caption': 'Пример файла в модальном окне',
+              'title': ''
+            },
+          },
+          'flexberry-groupedit': {
+            'caption': 'flexberry-groupedit',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Обновление модели',
+              'title': ''
+            },
+            'custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Настройка строк',
+              'title': ''
+            },
+            'groupedit-with-lookup-with-computed-atribute': {
+              'caption': 'Computed атрибуты LookUp в GroupEdit',
+              'title': ''
+            },
+            'readonly-columns-by-configurate-row-example': {
+              'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
+              'title': ''
+            }
+          },
+          'flexberry-lookup': {
+            'caption': 'flexberry-lookup',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Настройка окна',
+              'title': ''
+            },
+            'compute-autocomplete': {
+              'caption': 'Пример лукапа с вычислимым автокомплитом',
+              'title': ''
+            },
+            'numeric-autocomplete': {
+              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'title': ''
+            },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Пример иерархического OLV-а в lookup-e',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
+            },
+            'autofill-by-limit-example': {
+              'caption': 'Пример autofillByLimit',
+              'title': ''
+            },
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Функция ограничения через динамические свойства',
+              'title': ''
+            },
+            'lookup-block-form-example': {
+              'caption': 'Лукап в блочной форме',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Лукап в модальном окне',
+              'title': ''
+            },
+            'dropdown-mode-example': {
+              'caption': 'Режим dropdown',
+              'title': ''
+            },
+            'default-ordering-example': {
+              'caption': 'Сортировка по умолчанию',
+              'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Пример сортировки при автокомплите',
+              'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Пример настройки OLV модального окна',
+              'title': ''
+            }
+          },
+          'flexberry-menu': {
+            'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-objectlistview': {
+            'caption': 'flexberry-objectlistview',
+            'title': '',
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
+            },
+            'inheritance-models': {
+              'caption': 'Наследуемые модели',
+              'title': ''
+            },
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Размещение на форме редактирования',
+              'title': ''
+            },
+            'list-on-editform': {
+              'caption': 'Размещение списка детейлов мастера на форме редактирования',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Настройка фильтра',
+              'title': ''
+            },
+            'edit-form-with-detail-list': {
+              'caption': 'Пример списка',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Пример иерархии на списке',
+              'title': ''
+            },
+            'hierarchy-paging-example': {
+              'caption': 'Пример иерархии c пейджингом',
+              'title': ''
+            },
+            'configurate-rows': {
+              'caption': 'Раскраска строк',
+              'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Выбранные строки',
+              'title': ''
+            },
+            'downloading-files-from-olv-list': {
+              'caption': 'Пример скачивания файлов со списка',
+              'title': ''
+            },
+            'object-list-view-resize': {
+              'caption': 'Разметка столбцов',
+              'title': ''
+            },
+            'return-from-ediform': {
+              'title': 'Возвращение с edit-form на list-form с queryParametr',
+              'return-button': 'Вернутся'
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Пример отображение имени пользователя заблокировшего объект',
+              'title': ''
+            },
+            'limited-text-size-example': {
+              'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
+          },
+          'flexberry-simpledatetime': {
+            'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-textarea': {
+            'caption': 'flexberry-textarea',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-textbox': {
+            'caption': 'flexberry-textbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-toggler': {
+            'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'settings-example-inner': {
+              'caption': 'Пример работы с настройками (toggler в toggler)',
+              'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit в toggler example',
+            }
+          },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          }
+        },
+        'integration-examples': {
+          'caption': 'Примеры интеграции',
+          'title': '',
+          'edit-form': {
+            'caption': 'Форма редактирования',
+            'title': '',
+            'readonly-mode': {
+              'caption': 'Режим только для чтения',
+              'title': ''
+            },
+            'validation': {
+              'caption': 'Валидация',
+              'title': ''
+            }
+          },
+          'odata-examples': {
+            'caption': 'Работа с OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Вычитка мастеров через OData-функцию',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Сотрудник',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Департамент',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Вид департамента',
+                'title': ''
+              }
+            },
+          },
+        },
+        'user-setting-forms': {
+          'caption': 'Пользовательские настройки',
+          'title': '',
+          'user-setting-delete': {
+            'caption': 'Удаление настроек',
+            'title': ''
+          }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance тесты',
+          'title': '',
+        },
+      }
     }
   },
 

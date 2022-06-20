@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   /**
     Array of search objects.
-   
+
     @property sitemap
     @type Array
    */
@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
   /**
     Result array consisting of filtered objects.
-   
+
     @property _results
     @type Array
     @private
@@ -24,7 +24,7 @@ export default Ember.Component.extend({
 
   /**
     User input from .sitemap-search-input.
-   
+
     @property lastKeyPress
     @type string
    */
@@ -32,7 +32,7 @@ export default Ember.Component.extend({
 
   /**
     Toggler for showing .sitemap-search-results-list.
-   
+
     @property isShowingResults
     @type boolean
    */
@@ -40,17 +40,20 @@ export default Ember.Component.extend({
 
   /**
     Flag for showing error message if user query doesn't get any hits.
-   
+
     @property noHits
     @type boolean
    */
   noHits: Ember.computed('_results', 'userQuery', function() {
-    return this.get(this, '_results').length === 0 && !Ember.isEmpty(this.get('userQuery'));
+    const results = this.get('_results');
+    if (results) {
+      return results.length === 0 && !Ember.isEmpty(this.get('userQuery'));
+    }
   }),
 
   /**
     Event timestamp in milliseconds.
-   
+
     @property lastKeyPress
     @type number
    */
@@ -58,7 +61,7 @@ export default Ember.Component.extend({
 
   /**
     Component's input placeholder.
-   
+
     @property placeholder
     @type String
     @default t('components.flexberry-sitemap-searchbar.placeholder')
@@ -123,7 +126,7 @@ export default Ember.Component.extend({
   actions: {
     /**
      Initiate sitemap search.
-     
+
      @private
      @function startSearch
      */
@@ -146,7 +149,7 @@ export default Ember.Component.extend({
 
     /**
      Toggle isShowingResults prop.
-     
+
      @private
      @function toggleResultsList
      */

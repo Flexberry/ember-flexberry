@@ -49,6 +49,8 @@ export default Ember.Component.extend({
     if (results) {
       return results.length === 0 && !Ember.isEmpty(this.get('userQuery'));
     }
+
+    return undefined;
   }),
 
   /**

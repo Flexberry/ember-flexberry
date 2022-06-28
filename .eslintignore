@@ -522,7 +522,7 @@ tests/integration/components/flexberry-error-test.js
 tests/integration/components/flexberry-field-test.js
 tests/integration/components/flexberry-groupedit-test.js
 tests/integration/components/flexberry-lookup-test.js
-tests/integration/components/flexberry-sitemap-searchbar.js
+tests/integration/components/flexberry-sitemap-searchbar-test.js
 tests/integration/components/flexberry-simpledatetime-test.js
 tests/integration/components/flexberry-textarea-test.js
 tests/integration/components/flexberry-textbox-test.js

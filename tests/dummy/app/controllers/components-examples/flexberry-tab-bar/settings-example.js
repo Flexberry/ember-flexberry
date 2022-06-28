@@ -1,7 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  tenTabBarItems: Object.freeze([
+  tenTabBarItems: null,
+
+    init() {
+      this._super(...arguments);
+      this.tenTabBarItems = this.tenTabBarItems || [
         { selector: 'tab1', caption: 'Вкладка первая', active: true },
         { selector: 'tab2', caption: 'Вкладка вторая' },
         { selector: 'tab3', caption: 'Вкладка третья' },
@@ -12,7 +16,9 @@ export default Ember.Controller.extend({
         { selector: 'tab8', caption: 'Вкладка восьмая' },
         { selector: 'tab9', caption: 'Вкладка девятая' },
         { selector: 'tab10', caption: 'Вкладка десятая' }
-    ]),
+      ]
+    },
+
   actions: {
     }
 });

@@ -52,11 +52,15 @@ export default Ember.Mixin.create({
           }
         }
 
-        let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
-          resolve(sortRecordsArray);
-        });
+        if (sortRecordsArray.length === 0) {
+          this.send('loadRecordsById', id, target, property, true, recordParams);
+        } else {
+          let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            resolve(sortRecordsArray);
+          });
 
-        Ember.set(target, property, recordsArrayinPromise);
+          Ember.set(target, property, recordsArrayinPromise);
+        }
       }
     },
 

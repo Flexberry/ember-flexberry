@@ -24,10 +24,6 @@
   }
 }
 
-.object-list-view-container.groupedit-container {
-  overflow: visible;
-}
-
 .object-list-view-container.fixed-header {
   max-height: calc(~'100vh - 350px');
   width: intrinsic;           /* Safari/WebKit uses a non-standard name */
@@ -43,7 +39,7 @@
   .ui.table{
     border-top: 0px;
   }
-  
+
   tr.object-list-view-filters > *{
     position: relative;
     background-color: @olvFiltersBackground;
@@ -90,15 +86,7 @@ table.object-list-view.selectable thead {
     border-left: none;
 }
 
-.inline.fields.filter .filter-operation {
-    width: 70px;
-}
-
 .inline.fields.filter .filter-value {
     width: 100%-5px;
     padding-left:5px;
-}
-
-.inline.fields.filter .ui {
-    width: 100%;
 }

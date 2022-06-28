@@ -12,6 +12,9 @@ import componentsExampleGroupeditDetailModel from './models/components-examples/
 import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
 import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
+import emberFlexberryDummyDepartamentModel from './models/ember-flexberry-dummy-departament';
+import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-sotrudnik';
+import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
@@ -29,7 +32,10 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
     'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
     'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
-    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel,
+    'ember-flexberry-dummy-departament': emberFlexberryDummyDepartamentModel,
+    'ember-flexberry-dummy-sotrudnik': emberFlexberryDummySotrudnikModel,
+    'ember-flexberry-dummy-vid-departamenta': emberFlexberryDummyVidDepartamentaModel
   },
 
   'application-name': 'Test stand for ember-flexberry',
@@ -62,10 +68,6 @@ Ember.$.extend(true, translations, {
             'caption': 'Application language',
             'placeholder': 'Choose language'
           },
-          'suggestion-file': {
-            'caption': 'Suggestion file',
-            'title': ''
-          }
         },
         'login': {
           'caption': 'Login'
@@ -129,6 +131,10 @@ Ember.$.extend(true, translations, {
           'multi': {
             'caption': 'Multi list',
             'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -168,18 +174,14 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Three-state example',
+              'title': ''
             }
           },
           'flexberry-ddau-checkbox': {
             'caption': 'flexberry-ddau-checkbox',
-            'title': '',
-            'settings-example': {
-              'caption': 'Settings example',
-              'title': ''
-            }
-          },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -472,7 +474,27 @@ Ember.$.extend(true, translations, {
               'caption': 'Validation',
               'title': ''
             }
-          }
+          },
+          'odata-examples': {
+            'caption': 'Work with OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Get master from oData function',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Sotrudnik',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Departament',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Vid departamenta',
+                'title': ''
+              }
+            },
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -523,7 +545,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Karma',
       'name-validation-message-caption': 'Name is required',
-      'eMail-validation-message-caption': 'E-Mail is required'
+      'eMail-validation-message-caption': 'E-Mail is required',
+      'phone1-required-caption': 'Require filling in the "Phone1" field',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -658,16 +681,15 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        },
+        'three-state-example': {
+          'caption': 'Three-state example',
+          'indeterminate-button': 'Set blank'
         }
       },
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Settings example for flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Settings example'
         }
       },
       'flexberry-dropdown': {
@@ -976,6 +998,41 @@ Ember.$.extend(true, translations, {
           'file-caption': 'File',
           'master-caption': 'Master',
           'details-caption': 'Details'
+        }
+      },
+      'odata-examples': {
+        'get-masters': {
+          'ember-flexberry-dummy-departament-e': {
+            caption: 'EmberFlexberryDummyDepartamentE',
+            'name-caption': 'name',
+            'vid-caption': 'vid'
+          },
+          'ember-flexberry-dummy-departament-l': {
+            caption: 'EmberFlexberryDummyDepartamentL'
+          },
+          'ember-flexberry-dummy-sotrudnik-e': {
+            caption: 'EmberFlexberryDummySotrudnikE',
+            'familiia-caption': 'familiia',
+            'name-caption': 'name',
+            'dataRozhdeniia-caption': 'dataRozhdeniia',
+            'departament-caption': 'departament'
+          },
+          'ember-flexberry-dummy-sotrudnik-l': {
+            caption: 'EmberFlexberryDummySotrudnikL',
+            'doOdataFunction': 'Do Odata function',
+            'dataReceived': 'Objects loaded',
+            'receivedMasters': 'Masters loaded',
+            'receivedMastersError': 'Error loading masters',
+            'receivedMasterMasters': 'Master masters loaded',
+            'receivedMasterMastersError': 'Error loading masters from masters'
+          },
+          'ember-flexberry-dummy-vid-departamenta-e': {
+            caption: 'EmberFlexberryDummyVidDepartamentaE',
+            'name-caption': 'name'
+          },
+          'ember-flexberry-dummy-vid-departamenta-l': {
+            caption: 'EmberFlexberryDummyVidDepartamentaL'
+          },
         }
       }
     },

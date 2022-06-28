@@ -57,7 +57,8 @@
   </div>
   <div class="field {{if model.errors.birthday "error" ""}}">
     <label>{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.birthday-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       value=model.birthday
       readonly=readonly
     }}

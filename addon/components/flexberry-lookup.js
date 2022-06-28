@@ -10,6 +10,8 @@ import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
 import Information from 'ember-flexberry-data/utils/information';
 
+import FixableComponent from '../mixins/fixable-component';
+
 const {
   Builder,
   Condition,
@@ -54,7 +56,7 @@ const {
   @class FlexberryLookup
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     This property is used in order to cache loaded for dropdown mode values.
     Values are kept as array with master id as key and master object as value.
@@ -620,6 +622,16 @@ export default FlexberryBaseComponent.extend({
   autocompleteOrder: null,
 
   /**
+    Direction of list for autocomplete values.
+    Availible values: 'upward', 'downward', 'auto'.
+
+    @property autocompleteDirection
+    @type String
+    @default downward
+  */
+  autocompleteDirection: 'downward',
+
+  /**
     Projection name for autocomplete query.
 
     @property autocompleteProjection
@@ -752,6 +764,19 @@ export default FlexberryBaseComponent.extend({
   allowTab: true,
   transition: 'auto',
   duration: 200,
+
+  /**
+    Additional setting for dropdown.
+    Places autocomplete empty value at the end of values list.
+  */
+  emptyValueAtEnd: false,
+
+  /**
+    @method onShowHide
+  */
+  onShowHide(fixedOnVisible = false) {
+    this.showFixedElement({ top: -1, fixedOnVisible: fixedOnVisible });
+  },
 
   actions: {
     /**
@@ -1157,7 +1182,7 @@ export default FlexberryBaseComponent.extend({
 
       /**
        * Handles opening of the autocomplete list.
-       * Sets current state (taht autocomplete list is opened) for future purposes.
+       * Sets current state (that autocomplete list is opened).
        */
       onResultsOpen() {
         state = 'opened';
@@ -1165,6 +1190,26 @@ export default FlexberryBaseComponent.extend({
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
+
+        Ember.run(() => {
+          _this.onShowHide();
+        });
+
+        let autocompleteDirection = Ember.get(_this, 'autocompleteDirection');
+        if (autocompleteDirection == 'auto')
+        {
+          const { height, left, width, bottom } = _this.element.getBoundingClientRect();
+          let elementHeight = _this.$('div.results').outerHeight();
+          let upward = window.innerHeight - bottom < elementHeight;
+          autocompleteDirection = upward ? 'upward' : 'downward';
+        }
+
+        if (autocompleteDirection == 'upward') {
+          _this.$('div.results').addClass('upward');
+        }
+        else {
+          _this.$('div.results').removeClass('upward');
+        }
       },
 
       /**
@@ -1268,6 +1313,10 @@ export default FlexberryBaseComponent.extend({
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
+
+        Ember.run(() => {
+          _this.onShowHide();
+        });
       }
     });
   },
@@ -1347,7 +1396,12 @@ export default FlexberryBaseComponent.extend({
               });
 
               if (!_this.get('required')) {
-                results.unshift({ name: _this.get('placeholder'), value: null });
+                if (_this.get('emptyValueAtEnd')) {
+                  results.push({ name: _this.get('placeholder'), value: null });
+                } else {
+                  results.unshift({ name: _this.get('placeholder'), value: null });
+                }
+
                 resultArray['null'] = null;
               }
 

@@ -129,7 +129,6 @@ module.exports = {
       "only": [
         "block-indentation",
         "eol-last",
-        "no-trailing-spaces",
         "no-unnecessary-concat",
         "quotes",
         "link-href-attributes",
@@ -160,12 +159,6 @@ module.exports = {
     },
     {
       "moduleId": "app/templates/components/flexberry-colorpicker",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-datepicker",
       "only": [
         "eol-last"
       ]
@@ -607,9 +600,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
       "only": [
-        "eol-last",
-        "quotes",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {
@@ -875,6 +866,18 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/computable-field",
       "only": [
         "eol-last"
@@ -906,6 +909,18 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/folv-user-settings",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-button/settings-example",
       "only": [
         "eol-last"
@@ -915,13 +930,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-checkbox/settings-example",
       "only": [
         "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-datepicker/settings-example",
-      "only": [
-        "eol-last",
-        "quotes"
       ]
     },
     {

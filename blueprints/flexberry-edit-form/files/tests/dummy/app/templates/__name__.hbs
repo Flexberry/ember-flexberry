@@ -4,7 +4,11 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide field">
-      {{flexberry-validationsummary errors=model.errors}}
+      <%=
+        isEmberCpValidationsUsed
+          ? '{{flexberry/validation-summary errors=(v-get validationModel "messages")}}'
+          : '{{flexberry-validationsummary errors=model.errors}}'
+      %>
     </div>
   </div>
   <div class="field">
@@ -29,5 +33,5 @@
         ))
     }}
   </div>
-  <%=flexberryComponents%>
+<%=flexberryComponents%>
 </form>

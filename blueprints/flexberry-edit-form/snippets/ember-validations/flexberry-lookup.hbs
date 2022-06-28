@@ -1,0 +1,17 @@
+<div class="field">
+  <label>{{<%= caption %>}}</label>
+  {{flexberry-lookup
+    choose="showLookupDialog"
+    remove="removeLookupValue"
+    value=model.<%= name %>
+    <%if(lookupValueField){%>displayAttributeName="<%= lookupValueField %>"
+    autocomplete=true<%}else{%><%}%>
+    relationName="<%= name %>"
+    projection="<%= projection %>"
+    title=(<%= caption %>)
+    readonly=<%= readonly %>
+    componentName="<%= name %>Lookup"
+    data-test-<%= entityName %>-<%= dashedName %>=true
+  }}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+</div>

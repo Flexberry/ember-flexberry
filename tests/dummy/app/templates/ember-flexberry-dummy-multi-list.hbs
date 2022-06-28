@@ -1,5 +1,5 @@
 {{flexberry-error error=error}}
-<h3>{{t 'forms.ember-flexberry-dummy-multi-list.caption'}}</h3>
+<h3>{{t "forms.ember-flexberry-dummy-multi-list.caption"}}</h3>
 <div class="row">
   {{#with multiListSettings.MultiUserList as |settings|}}
     {{flexberry-objectlistview
@@ -24,7 +24,6 @@
       gotoPage=(action "gotoPage")
       nextPage=(action "nextPage")
       componentName=settings.componentName
-      advLimitButton=true
       advLimitButton=settings.advLimitButton
     }}
   {{/with}}
@@ -67,7 +66,7 @@
       enableFilters=true
       filters=settings.filters
       filterButton=true
-      filterByAnyMatch=(action 'filterByAnyMatch')
+      filterByAnyMatch=(action "filterByAnyMatch")
       filterText=settings.filter
       refreshButton=true
       exportExcelButton=true

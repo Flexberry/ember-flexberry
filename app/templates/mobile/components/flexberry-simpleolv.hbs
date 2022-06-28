@@ -253,7 +253,7 @@
             <td rowspan="1"></td>
           {{/if}}
         </tr>
-        <tr>
+        <tr class="object-list-view-filters">
           {{#if showHelperColumn}}
             <td rowspan="1"></td>
           {{/if}}
@@ -309,7 +309,7 @@
                     {{#if showCheckBoxInRow}}
                       <div class="cell">
                         {{flexberry-checkbox
-                          readonly=(or readonly (not record.rowConfig.canBeSelected))
+                          readonly=(or readonly (not record.rowConfig.canBeSelected) allSelect)
                           onChange=(action "selectRow" record)
                           value=record.selected
                         }}

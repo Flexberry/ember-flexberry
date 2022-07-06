@@ -17,7 +17,7 @@ export default FlexberryBaseComponent.extend({
    */
   _editPanelWidth: undefined,
 
-  /**   
+  /**
     @property {number} _buttonsWidth Buttons width.
     @private
    */
@@ -27,7 +27,7 @@ export default FlexberryBaseComponent.extend({
     .reduce((prev, curr) => prev + curr);
   }),
 
-  /**   
+  /**
     @property {number} _closeButtonWidth Close button width.
     @private
    */
@@ -50,7 +50,7 @@ export default FlexberryBaseComponent.extend({
       : 225;
   }),
 
-  /**   
+  /**
     @property {Array} _menuButtons Menu buttons.
     @private
    */
@@ -63,7 +63,7 @@ export default FlexberryBaseComponent.extend({
   _panelButtons: undefined,
 
   /**
-    @property {Array} _panelButtons Edit panel buttons. 
+    @property {Array} _panelButtons Edit panel buttons.
    */
   buttons: undefined,
 
@@ -73,17 +73,17 @@ export default FlexberryBaseComponent.extend({
    */
   _buttonsSorting: undefined,
 
-  /**   
+  /**
     @property {object} panelButtonsSorted Sorting panel buttons type.
    */
   panelButtonsSorted: Ember.computed.sort('_panelButtons', '_buttonsSorting'),
 
-  /**   
+  /**
     @property {object} menuButtonsSorted Sorting menu buttons type.
    */
   menuButtonsSorted: Ember.computed.sort('_menuButtons', '_buttonsSorting'),
 
-  /**   
+  /**
     @property {boolean} showCloseButton Show close button in panel.
    */
   showCloseButton: false,
@@ -91,14 +91,14 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag, the component is embedded in another component, for example, in the flexberry-olv toolbar.
     Set to send action in the controller.
-   
+
     @type {boolean}
    */
   deepMount: false,
 
   /**
     Update display buttons.
-   
+
     @function _updateDisplayButtons
     @private
    */
@@ -190,6 +190,17 @@ export default FlexberryBaseComponent.extend({
 
     $(window).unbind('resize');
   },
+
+  buttonsObserver: Ember.observer('buttons', function() {
+    const buttons = this.get('buttons');
+    if (this.get('_panelButtons').length > 0) {
+      this.set('_panelButtons', buttons);
+    }
+
+    if (this.get('_menuButtons').length > 0) {
+      this.set('_menuButtons', buttons);
+    }
+  }),
 
   actions: {
     /**

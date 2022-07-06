@@ -1,24 +1,23 @@
 {{#unless readonly}}
   {{#if panelButtonsSorted}}
     {{#each panelButtonsSorted as |panel-button|}}
-      {{#unless panel-button.disabled}}
         {{#if panel-button.buttons}}
           {{flexberry-button-dropdown
-            title=button.text
+            title=button.buttonTitle
             elementId=button.id
             deepMount=deepMount
             buttons=panel-button.buttons
           }}
         {{else}}
           <button id={{panel-button.id}}
-            type={{if panel-button.type panel-button.type "button"}}
-            class="ui button {{panel-button.class}}"
-            {{action "sendButtonAction" panel-button.action}}
-            title={{panel-button.title}}>
-            {{panel-button.text}}
+            type="button"
+            class="ui {{if panel-button.buttonClasses panel-button.buttonClasses}} {{if panel-button.iconClasses "icon"}} custom button"
+            disabled={{panel-button.disabled}}
+            {{action "sendButtonAction" panel-button.buttonAction}}
+            title={{panel-button.buttonTitle}}>
+            {{panel-button.buttonTitle}}
           </button>
         {{/if}}
-      {{/unless}}
     {{/each}}
   {{/if}}
 

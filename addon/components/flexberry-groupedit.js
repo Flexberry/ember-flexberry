@@ -695,17 +695,17 @@ export default FlexberryBaseComponent.extend({
       let min = i;
       for(let j = i + 1; j < hashArrayLength; j++) {
         if(condition(min, j)) {
-          min = j; 
+          min = j;
         }
       }
       if (min != i) {
         // Exchange current with minimum.
-        let tmp = hashArray[i]; 
+        let tmp = hashArray[i];
         hashArray[i] = hashArray[min];
-        hashArray[min] = tmp;      
+        hashArray[min] = tmp;
       }
     }
-    
+
     // Remove unsorted part.
     recordsSort.removeAt(start, end - start + 1);
 

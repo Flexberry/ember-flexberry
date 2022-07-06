@@ -29,18 +29,18 @@
       buttons=(array
         (hash
           type="submit"
-          class="save-button"
+          buttonClasses="save-button"
           disabled=(and hasParentRoute (not saveBeforeRouteLeave))
-          text=(t "forms.edit-form.save-button-text")
+          buttonTitle=(t "forms.edit-form.save-button-text")
           icon="icon icon-save"
-          action="save")
+          buttonAction="save")
         (hash
           type="submit"
-          class="save-close-button"
+          buttonClasses="save-close-button"
           disabled=(and hasParentRoute (not saveBeforeRouteLeave))
-          text=(t "forms.edit-form.saveAndClose-button-text")
+          buttonTitle=(t "forms.edit-form.saveAndClose-button-text")
           icon="icon icon-save-close"
-          action="saveAndClose"
+          buttonAction="saveAndClose"
         ))
     }}
   </div>

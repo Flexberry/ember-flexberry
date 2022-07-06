@@ -36,10 +36,10 @@ test(testName, (assert) => {
 
     // First click.
     click('.test-click-button');
-    andThen(() => assert.equal(controller.clickCounter, 2, 'Test button was pressed'));
+    andThen(() => assert.equal(controller.clickCounter, 3, 'Test button was pressed'));
 
     // Second click.
     click('.test-click-button');
-    andThen(() => assert.equal(controller.clickCounter, 3, 'Test button was pressed'));
+    andThen(() => assert.equal(controller.clickCounter, 5, 'Test button was pressed'));
   });
 });

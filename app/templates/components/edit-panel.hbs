@@ -1,23 +1,23 @@
 {{#unless readonly}}
   {{#if panelButtonsSorted}}
     {{#each panelButtonsSorted as |panel-button|}}
-        {{#if panel-button.buttons}}
-          {{flexberry-button-dropdown
-            title=button.buttonTitle
-            elementId=button.id
-            deepMount=deepMount
-            buttons=panel-button.buttons
-          }}
-        {{else}}
-          <button id={{panel-button.id}}
-            type="button"
-            class="ui {{if panel-button.buttonClasses panel-button.buttonClasses}} {{if panel-button.iconClasses "icon"}} custom button"
-            disabled={{panel-button.disabled}}
-            {{action "sendButtonAction" panel-button.buttonAction}}
-            title={{panel-button.buttonTitle}}>
-            {{panel-button.buttonTitle}}
-          </button>
-        {{/if}}
+      {{#if panel-button.buttons}}
+        {{flexberry-button-dropdown
+          title=button.buttonTitle
+          elementId=button.id
+          deepMount=deepMount
+          buttons=panel-button.buttons
+        }}
+      {{else}}
+        <button id={{panel-button.id}}
+          type="button"
+          class="ui {{if panel-button.buttonClasses panel-button.buttonClasses}} {{if panel-button.iconClasses "icon"}} custom button"
+          disabled={{panel-button.disabled}}
+          {{action "sendButtonAction" panel-button.buttonAction}}
+          title={{panel-button.buttonTitle}}>
+          {{panel-button.buttonTitle}}
+        </button>
+      {{/if}}
     {{/each}}
   {{/if}}
 

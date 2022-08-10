@@ -127,6 +127,10 @@ export default {
       'placeholder': 'There is no data'
     },
 
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Show all forms fields'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Close'

@@ -1,0 +1,35 @@
+<div class="ui two column grid">
+  {{#each menu as |item index|}}
+    <div class="column">
+      <h3 class="ui header">{{increase-number index}}</h3>
+    </div>
+    <div class="column">
+      <h3 class="ui header">{{item.razdelName}}</h3>
+      {{#each item.children as |child|}}
+        <div>
+          <a class={{concat "tab item" (if child.active " active")}}
+          title="{{child.gruppaPolejVvodaName}}"
+          data-tab="{{activeForm}}"
+          {{action "change" child on="click"}}>
+          {{child.gruppaPolejVvodaName}}
+        </a>
+        {{!-- {{#if (and showAsteriskInRow record.data.hasDirtyAttributes)}} --}}
+          <div class="cell asterisk-cell">
+            <i class="asterisk small red icon"></i>
+          </div>
+        {{!-- {{/if}} --}}
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+</div>
+<div>
+  {{flexberry-button
+    class="basic"
+    iconClass="edit icon"
+    caption=(t "components.highload-edit-form-menu.show-all-forms-button")
+    tooltip=(t "components.highload-edit-form-menu.show-all-forms-button")
+    readonly=readonly
+    click=(action "showAllForms")
+  }}
+</div>

@@ -1,12 +1,13 @@
-<div class="ui two column grid">
+<div class="ui two column grid highloaded-menu">
   {{#each menu as |item index|}}
-    <div class="column">
-      <h3 class="ui header">{{increase-number index}}</h3>
+    <div class="one wide column">
+      <h3 class="ui header number">{{increase-number index}}</h3>
     </div>
-    <div class="column">
-      <h3 class="ui header">{{item.razdelName}}</h3>
+    <div class="fourteen wide column">
+      <h3 class="ui header title">{{item.razdelName}}</h3>
+      <ul class="list">
       {{#each item.children as |child|}}
-        <div>
+        <li class="tab-item-container">
           <a class={{concat "tab item" (if child.active " active")}}
           title="{{child.gruppaPolejVvodaName}}"
           data-tab="{{activeForm}}"
@@ -18,8 +19,9 @@
             <i class="asterisk small red icon"></i>
           </div>
         {{!-- {{/if}} --}}
-        </div>
+        </li>
       {{/each}}
+      </ul>
     </div>
   {{/each}}
 </div>

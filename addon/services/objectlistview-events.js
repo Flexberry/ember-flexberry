@@ -228,6 +228,30 @@ export default Service.extend(Evented, {
   },
 
   /**
+    Trigger for "show next group forms" event in highload-menu.
+    Event name: showNextGroupForms.
+
+    @method showNextGroupFormsTrigger
+
+    @param {String} componentName
+  */
+    showNextGroupFormsTrigger(componentName) {
+      this.trigger('showNextGroupForms', componentName);
+    },
+
+  /**
+    Trigger for "show prev group forms" event in highload-menu.
+    Event name: showNextGroupForms.
+
+    @method showPrevGroupFormsTrigger
+
+    @param {String} componentName
+  */
+    showPrevGroupFormsTrigger(componentName) {
+      this.trigger('showPrevGroupForms', componentName);
+    },
+
+  /**
     Trigger for "setSorting" event in route.
     Event name: setSorting.
 

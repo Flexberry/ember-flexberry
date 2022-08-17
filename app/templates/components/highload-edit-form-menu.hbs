@@ -1,35 +1,40 @@
-<div class="ui two column grid">
+<div class="ui fixed">
+  <div class="ui two column grid">
   {{#each menu as |item index|}}
-    <div class="column">
-      <h3 class="ui header">{{increase-number index}}</h3>
-    </div>
+    {{#if razdelNumeration}}
+      <div class="column">
+        <h3 class="ui header">{{increase-number index}}</h3>
+      </div>
+    {{/if}}
     <div class="column">
       <h3 class="ui header">{{item.razdelName}}</h3>
       {{#each item.children as |child|}}
         <div>
-          <a class={{concat "tab item" (if child.active " active")}}
+          <a class={{concat "tab item" item.class (if child.active " active")}}
+
           title="{{child.gruppaPolejVvodaName}}"
-          data-tab="{{activeForm}}"
+          data-tab="{{child.selector}}"
           {{action "change" child on="click"}}>
           {{child.gruppaPolejVvodaName}}
         </a>
-        {{!-- {{#if (and showAsteriskInRow record.data.hasDirtyAttributes)}} --}}
+        {{#if child.showAsterisk}}
           <div class="cell asterisk-cell">
             <i class="asterisk small red icon"></i>
           </div>
-        {{!-- {{/if}} --}}
+        {{/if}}
         </div>
       {{/each}}
     </div>
   {{/each}}
-</div>
-<div>
-  {{flexberry-button
-    class="basic"
-    iconClass="edit icon"
-    caption=(t "components.highload-edit-form-menu.show-all-forms-button")
-    tooltip=(t "components.highload-edit-form-menu.show-all-forms-button")
-    readonly=readonly
-    click=(action "showAllForms")
-  }}
+  </div>
+  <div>
+    {{flexberry-button
+      class="basic showAllFormsButton"
+      iconClass="edit icon"
+      caption=(t "components.highload-edit-form-menu.show-all-forms-button")
+      tooltip=(t "components.highload-edit-form-menu.show-all-forms-button")
+      readonly=readonly
+      click=(action "showAllForms")
+    }}
+  </div>
 </div>

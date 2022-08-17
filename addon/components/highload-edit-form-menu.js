@@ -81,7 +81,7 @@ export default Component.extend({
   init(...args) {
     this._super(...args);
 
-    let menu = this.get('menu');
+    let menu = get(this, 'menu');
     if (!isArray(menu)) {
       menu = A(menu)
     }
@@ -99,7 +99,7 @@ export default Component.extend({
       });
     });
 
-    this.set('_menu', _menu);
+    set(this, '_menu', _menu);
 
     let active = false;
     _menu.forEach((item, key) => {
@@ -107,19 +107,19 @@ export default Component.extend({
       if (itemIsActive && !active) {
         active = true;
 
-        this.set('prevTab', item);
-        this.set('_currentTab', item);
+        set(this, 'prevTab', item);
+        set(this, '_currentTab', item);
         if (key + 1 < _menu.length) {
-          this.set('nextTab', _menu[key + 1]);
+          set(this, 'nextTab', _menu[key + 1]);
         } else {
-          this.set('nextTab', _menu[key]);
+          set(this, 'nextTab', _menu[key]);
         }
       } else {
         set(item, 'active', false);
       }
     });
 
-    this.set('prevTab', this._menu[0]);
+    set(this, 'prevTab', this._menu[0]);
   },
 
   prevTab: undefined,
@@ -138,8 +138,8 @@ export default Component.extend({
   uiGrid: true,
 
   didInsertElement() {
-    this.get('objectlistviewEventsService').on('showNextGroupForms', this, this.showNextGroupForms);
-    this.get('objectlistviewEventsService').on('showPrevGroupForms', this, this.showPrevGroupForms);
+    get(this, 'objectlistviewEventsService').on('showNextGroupForms', this, this.showNextGroupForms);
+    get(this, 'objectlistviewEventsService').on('showPrevGroupForms', this, this.showPrevGroupForms);
   },
 
   didRender() {
@@ -152,7 +152,7 @@ export default Component.extend({
 
   setActiveTab(currentTab, scrollToActiveTab) {
     if (!currentTab) {
-      currentTab = this.get('_currentTab');
+      currentTab = get(this, '_currentTab');
     }
 
     let groups = $('.gruppaPolejVvoda');
@@ -192,7 +192,7 @@ export default Component.extend({
         tabContentFocus.scrollIntoView(false);
         highestTab = tabContentFocus;
       } else {
-        let _menu = this.get('_menu');
+        let _menu = get(this, '_menu');
         _menu.forEach(child => {
           if (child.gruppaPolejVvodaName == highestTab.dataset.tab) {
             set(child, 'active', true);
@@ -200,28 +200,28 @@ export default Component.extend({
             set(child, 'active', false);
           }
         });
-        this.set('_menu', _menu);
+        set(this, '_menu', _menu);
       }
       highestTab.classList.add('highlighted');
     }
   },
 
   setCurrentMenuItem(currentTab) {
-    this.set('_currentTab', currentTab);
+    set(this, '_currentTab', currentTab);
     set(currentTab, 'active', true);
-    let _menu = this.get('_menu');
+    let _menu = get(this, '_menu');
     _menu.forEach((child, key) => {
       if (child.gruppaPolejVvodaName == currentTab.gruppaPolejVvodaName) {
         if (key + 1 < _menu.length) {
-          this.set('nextTab', _menu[key + 1]);
+          set(this, 'nextTab', _menu[key + 1]);
         } else {
-          this.set('nextTab', _menu[key]);
+          set(this, 'nextTab', _menu[key]);
         }
 
         if (key - 1 >= 0) {
-          this.set('prevTab', _menu[key - 1]);
+          set(this, 'prevTab', _menu[key - 1]);
         } else {
-          this.set('prevTab', _menu[key]);
+          set(this, 'prevTab', _menu[key]);
         }
 
         set(child, 'active', true);
@@ -229,23 +229,23 @@ export default Component.extend({
         set(child, 'active', false);
       }
     });
-    this.set('_menu', _menu);
+    set(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
   },
 
   showNextGroupForms() {
-    this.setCurrentMenuItem(this.get('nextTab'));
+    this.setCurrentMenuItem(get(this, 'nextTab'));
   },
 
   showPrevGroupForms() {
-    this.setCurrentMenuItem(this.get('prevTab'));
+    this.setCurrentMenuItem(get(this, 'prevTab'));
   },
 
   actions: {
     showAllForms() {
-      let isShowAll = !this.get('showAllFormsButton');
-      this.set('showAllFormsButton', isShowAll);
-      this.setActiveTab(this.get('_currentTab'));
+      let isShowAll = !get(this, 'showAllFormsButton');
+      set(this, 'showAllFormsButton', isShowAll);
+      this.setActiveTab(get(this, '_currentTab'));
       if (isShowAll) {
         $('.showAllFormsButton')[0].classList.add('active');
         $('.tabsNavigation').css("visibility", "hidden");

@@ -18,8 +18,8 @@ executeTest('check filter', (store, assert, app) => {
     let builder2 = new Builder(store).from(modelName).selectByProjection('SuggestionL').where('address', FilterOperator.Neq, '').top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'), arr.objectAt(0).get('moderated'),
-      arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
+      filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'),
+        arr.objectAt(0).get('moderated').toString(), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
       let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
@@ -43,7 +43,7 @@ executeTest('check filter', (store, assert, app) => {
         /* eslint-disable no-unused-vars */
         refreshListByFunction(refreshFunction, controller).then(($list) => {
           let filtherResult = controller.model.content;
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
+          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           done1();
         });
         /* eslint-enable no-unused-vars */

@@ -1,31 +1,30 @@
 <div class="ui fixed">
   <div class="ui two column grid">
-  {{#each menu as |item index|}}
-    {{#if razdelNumeration}}
-      <div class="column">
-        <h3 class="ui header">{{increase-number index}}</h3>
-      </div>
-    {{/if}}
-    <div class="column">
-      <h3 class="ui header">{{item.razdelName}}</h3>
-      {{#each item.children as |child|}}
-        <div>
-          <a class={{concat "tab item" item.class (if child.active " active")}}
-
-          title="{{child.gruppaPolejVvodaName}}"
-          data-tab="{{child.selector}}"
-          {{action "change" child on="click"}}>
-          {{child.gruppaPolejVvodaName}}
-        </a>
-        {{#if child.showAsterisk}}
-          <div class="cell asterisk-cell">
-            <i class="asterisk small red icon"></i>
-          </div>
-        {{/if}}
+    {{#each menu as |item index|}}
+      {{#if razdelNumeration}}
+        <div class="column">
+          <h3 class="ui header">{{increase-number index}}</h3>
         </div>
-      {{/each}}
-    </div>
-  {{/each}}
+      {{/if}}
+      <div class="column">
+        <h3 class="ui header">{{item.razdelName}}</h3>
+        {{#each item.children as |child|}}
+          <div>
+            <a class={{concat "tab item" item.class (if child.active " active")}}
+              title={{child.gruppaPolejVvodaName}}
+              data-tab={{child.selector}}
+              {{action "change" child on="click"}}>
+              {{child.gruppaPolejVvodaName}}
+            </a>
+            {{#if child.showAsterisk}}
+              <div class="cell asterisk-cell">
+                <i class="asterisk small red icon"></i>
+              </div>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
   </div>
   <div>
     {{flexberry-button

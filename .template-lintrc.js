@@ -302,6 +302,15 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/highload-edit-form-menu",
+      "only": [
+        "eol-last",
+        "no-unnecessary-concat",
+        "link-href-attributes",
+        "no-invalid-interactive"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/object-list-view-cell",
       "only": [
         "eol-last"

@@ -10,7 +10,7 @@ import { get, set } from '@ember/object';
   @example
     templates/my-form.hbs
     ```handlebars
-    {{highload-edit-form-menu
+    {{#highload-edit-form-menu
       menu=(array
         (hash razdelName="Razdel1" children=(array
           (hash selector="gruppa1.1" gruppaPolejVvodaName="gruppa1.1" active=true showAsterisk=true)
@@ -21,35 +21,7 @@ import { get, set } from '@ember/object';
     <div data-tab="gruppa1.1" class="ui tab gruppaPolejVvoda active">
     ...
     </div>
-
-    {{flexberry-button
-      class="basic tabsNavigation"
-      iconClass="icon arrow down"
-      caption="Далее"
-      readonly=readonly
-      click=(action "showNextGroupForms")
-    }}
-
-    {{flexberry-button
-      class="basic tabsNavigation"
-      iconClass="icon arrow up"
-      caption="Назад"
-      readonly=readonly
-      click=(action "showPrevGroupForms")
-    }}
-    ```
-
-    controllers/my-form.js
-    ```javascript
-    actions: {
-      showNextGroupForms() {
-        this.get('objectlistviewEventsService').showNextGroupFormsTrigger();
-      },
-
-      showPrevGroupForms() {
-        this.get('objectlistviewEventsService').showPrevGroupFormsTrigger();
-      }
-    }
+    {{/highload-edit-form-menu}}
     ```
 
   @class FlexberryCheckboxComponent
@@ -136,11 +108,6 @@ export default Component.extend({
    * @default true
    */
   uiGrid: true,
-
-  didInsertElement() {
-    get(this, 'objectlistviewEventsService').on('showNextGroupForms', this, this.showNextGroupForms);
-    get(this, 'objectlistviewEventsService').on('showPrevGroupForms', this, this.showPrevGroupForms);
-  },
 
   didRender() {
     let _this = this;
@@ -233,14 +200,6 @@ export default Component.extend({
     this.setActiveTab(currentTab, true);
   },
 
-  showNextGroupForms() {
-    this.setCurrentMenuItem(get(this, 'nextTab'));
-  },
-
-  showPrevGroupForms() {
-    this.setCurrentMenuItem(get(this, 'prevTab'));
-  },
-
   actions: {
     showAllForms() {
       let isShowAll = !get(this, 'showAllFormsButton');
@@ -253,6 +212,14 @@ export default Component.extend({
         $('.showAllFormsButton')[0].classList.remove('active');
         $('.tabsNavigation').css("visibility", "visible");
       }
+    },
+
+    showNextGroupForms() {
+      this.setCurrentMenuItem(get(this, 'nextTab'));
+    },
+
+    showPrevGroupForms() {
+      this.setCurrentMenuItem(get(this, 'prevTab'));
     },
 
     change(currentTab) {

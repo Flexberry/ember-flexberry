@@ -649,6 +649,11 @@ export default Controller.extend({
             children: null
           }]
         }, {
+          link: 'components-examples/highload-edit-form-menu/index',
+          caption: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.title'),
+          children: null
+        },{
           link: 'components-examples/modal-dialog',
           caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.modal-dialog.title'),

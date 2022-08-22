@@ -480,6 +480,10 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
+          },
           'modal-dialog': {
             'caption': 'modal-dialog',
             'title': '',
@@ -984,6 +988,10 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
+      },
+      'highload-edit-form-menu': {
+        'caption': 'Examples of using the {{component}} component',
+        'title': '',
       },
       'modal-dialog': {
         'caption': 'Examples of using the {{component}} component',

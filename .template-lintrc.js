@@ -1283,6 +1283,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/highload-edit-form-menu/index",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/modal-dialog/index",
       "only": [
         "block-indentation",

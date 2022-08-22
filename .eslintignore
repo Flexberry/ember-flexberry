@@ -498,6 +498,8 @@ tests/dummy/app/routes/components-examples/flexberry-simpleolv/toolbar-custom-bu
 tests/dummy/app/routes/components-examples/flexberry-textarea/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-textbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-toggler/ge-into-toggler-example.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/index.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/on-edit-form/user.js
 tests/dummy/app/routes/ember-flexberry-dummy-application-user-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-localization-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-multi-list-user-edit.js

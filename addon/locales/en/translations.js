@@ -51,6 +51,7 @@ export default {
     'flexberry-simpledatetime': {
       placeholder: '(no value)',
       'scroll-caption-text': 'Scroll to increment',
+      'apply-button-text': 'Choose',
     },
 
     'flexberry-textarea': {

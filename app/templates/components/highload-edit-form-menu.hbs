@@ -10,8 +10,8 @@
           {{/if}}
           <div class="fourteen wide column">
             <h3 class="ui header title">{{item.razdelName}}</h3>
-            <ul class="list">
-            {{#each item.children as |child|}}
+            <ul class={{concat "list" (if item.active " active")}}>
+              {{#each item.children as |child|}}
               <li class="tab-item-container">
                 <a class={{concat "tab item" item.class (if child.active " active")}}
                   title={{child.gruppaPolejVvodaName}}
@@ -32,8 +32,8 @@
       </div>
       <div>
         {{flexberry-button
-          class="basic showAllFormsButton"
-          iconClass="edit icon"
+          class="showAllFormsButton ui empty button show-all"
+          iconClass="icon-guideline-list icon"
           caption=(t "components.highload-edit-form-menu.show-all-forms-button")
           tooltip=(t "components.highload-edit-form-menu.show-all-forms-button")
           readonly=readonly
@@ -44,11 +44,11 @@
   </div>
   <div class="eleven wide column">
     {{yield}}
-    <div class="ui two column grid">
+    <div class="button-container">
       <div class="column">
         {{flexberry-button
-          class="basic tabsNavigation"
-          iconClass="icon arrow down"
+          class="tabsNavigation pink-btn"
+          iconClass="icon icon-guideline-arrow-short-down"
           caption="Далее"
           readonly=readonly
           click=(action "showNextGroupForms")
@@ -56,8 +56,8 @@
       </div>
       <div class="column">
         {{flexberry-button
-          class="basic tabsNavigation"
-          iconClass="icon arrow up"
+          class="ui empty button tabsNavigation"
+          iconClass="icon icon-guideline-arrow-short-up"
           caption="Назад"
           readonly=readonly
           click=(action "showPrevGroupForms")

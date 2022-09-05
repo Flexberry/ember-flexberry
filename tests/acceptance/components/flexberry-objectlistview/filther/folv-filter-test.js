@@ -19,7 +19,7 @@ executeTest('check filter', (store, assert, app) => {
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'),
-        arr.objectAt(0).get('moderated').toString(), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
+      arr.objectAt(0).get('moderated').toString(), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
       let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');

@@ -53,13 +53,10 @@ export default Component.extend({
   init(...args) {
     this._super(...args);
 
-
     let menu = get(this, 'menu');
     if (!isArray(menu)) {
       menu = A(menu)
     }
-    menu[0].active = true;
-
     menu[0].active = true;
 
     if (this.menu.length > 1) {
@@ -188,7 +185,11 @@ export default Component.extend({
           activeRazdel = true;
         }
       });
-      set(razdel, 'active', activeRazdel);
+      if (activeRazdel) {
+        set(razdel, 'active', true);
+      } else {
+        set(razdel, 'active', false);
+      }
     });
     set(this, 'menu', menu);
   },
@@ -221,7 +222,6 @@ export default Component.extend({
     });
     set(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
-
   },
 
   actions: {

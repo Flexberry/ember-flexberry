@@ -45,18 +45,19 @@
   <div class="eleven wide column">
     {{yield}}
     {{flexberry-button
-      class="tabsNavigation ui primary button"
+      class="tabsNavigation primary"
       iconClass="icon icon-guideline-arrow-short-down"
       caption="Далее"
       readonly=readonly
       click=(action "showNextGroupForms")
     }}
     {{flexberry-button
-      class="ui secondary basic button tabsNavigation"
+      class="secondary basic tabsNavigation"
       iconClass="icon icon-guideline-arrow-short-up"
       caption="Назад"
       readonly=readonly
       click=(action "showPrevGroupForms")
     }}
+
   </div>
 </div>

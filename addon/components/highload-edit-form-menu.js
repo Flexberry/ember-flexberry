@@ -188,11 +188,7 @@ export default Component.extend({
           activeRazdel = true;
         }
       });
-      if (activeRazdel) {
-        set(razdel, 'active', true);
-      } else {
-        set(razdel, 'active', false);
-      }
+      set(razdel, 'active', activeRazdel);
     });
     set(this, 'menu', menu);
   },
@@ -226,18 +222,6 @@ export default Component.extend({
     set(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
 
-    // Меню, используемое в шаблоне
-    let menu = get(this, 'menu');
-    menu.forEach((razdel) => {
-      let activeRazdel = false;
-      razdel.children.forEach((item) => {
-        if (item.gruppaPolejVvodaName == currentTab.gruppaPolejVvodaName) {
-          activeRazdel = true;
-        }
-      });
-      set(razdel, 'active', activeRazdel);
-    });
-    set(this, 'menu', menu);
   },
 
   actions: {

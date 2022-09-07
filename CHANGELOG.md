@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.1] - 2022-08-24
+### Fixed
+* The `flexberry-objectlistview` component:
+    * `simpledatetime` in filter.
+
 ## [3.8.0-beta.0] - 2022-07-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.8.0-beta.0`.

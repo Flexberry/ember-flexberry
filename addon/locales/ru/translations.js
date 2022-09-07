@@ -90,6 +90,7 @@ export default {
     'flexberry-simpledatetime': {
       placeholder: '(нет значения)',
       'scroll-caption-text': 'Используйте скролл для перемотки',
+      'apply-button-text': 'Выбрать',
     },
 
     'flexberry-textarea': {

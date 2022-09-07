@@ -58,6 +58,7 @@ export default Component.extend({
     if (!isArray(menu)) {
       menu = A(menu)
     }
+    menu[0].active = true;
 
     menu[0].active = true;
 
@@ -114,7 +115,7 @@ export default Component.extend({
 
   didRender() {
     let _this = this;
-    document.getElementsByClassName('full height')[0].addEventListener('scroll', function() {
+    document.getElementsByClassName('full height')[0].addEventListener('wheel', function() {
       document.getElementsByClassName('full height')[0].scrollTop;
       _this.setActiveTab();
     });
@@ -173,12 +174,35 @@ export default Component.extend({
         set(this, '_menu', _menu);
       }
       highestTab.classList.add('highlighted');
+      this.setMenuForTemplate(highestTab.dataset.tab);
     }
+  },
+
+  setMenuForTemplate(tabName) {
+    // Меню, используемое в шаблоне
+    let menu = get(this, 'menu');
+    menu.forEach((razdel) => {
+      let activeRazdel = false;
+      razdel.children.forEach((item) => {
+        if (item.gruppaPolejVvodaName == tabName) {
+          activeRazdel = true;
+        }
+      });
+      if (activeRazdel) {
+        set(razdel, 'active', true);
+      } else {
+        set(razdel, 'active', false);
+      }
+    });
+    set(this, 'menu', menu);
   },
 
   setCurrentMenuItem(currentTab) {
     set(this, '_currentTab', currentTab);
     set(currentTab, 'active', true);
+    this.setMenuForTemplate(currentTab.gruppaPolejVvodaName);
+
+    // Меню для контроллера
     let _menu = get(this, '_menu');
     _menu.forEach((child, key) => {
       if (child.gruppaPolejVvodaName == currentTab.gruppaPolejVvodaName) {

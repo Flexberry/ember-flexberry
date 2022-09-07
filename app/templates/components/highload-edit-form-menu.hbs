@@ -44,25 +44,19 @@
   </div>
   <div class="eleven wide column">
     {{yield}}
-    <div class="button-container">
-      <div class="column">
-        {{flexberry-button
-          class="tabsNavigation pink-btn"
-          iconClass="icon icon-guideline-arrow-short-down"
-          caption="Далее"
-          readonly=readonly
-          click=(action "showNextGroupForms")
-        }}
-      </div>
-      <div class="column">
-        {{flexberry-button
-          class="ui empty button tabsNavigation"
-          iconClass="icon icon-guideline-arrow-short-up"
-          caption="Назад"
-          readonly=readonly
-          click=(action "showPrevGroupForms")
-        }}
-      </div>
-    </div>
+    {{flexberry-button
+      class="tabsNavigation ui primary button"
+      iconClass="icon icon-guideline-arrow-short-down"
+      caption="Далее"
+      readonly=readonly
+      click=(action "showNextGroupForms")
+    }}
+    {{flexberry-button
+      class="ui secondary basic button tabsNavigation"
+      iconClass="icon icon-guideline-arrow-short-up"
+      caption="Назад"
+      readonly=readonly
+      click=(action "showPrevGroupForms")
+    }}
   </div>
 </div>

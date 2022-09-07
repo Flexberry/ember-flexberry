@@ -42,7 +42,7 @@ export default Component.extend({
   _menu: null,
 
   store: service('store'),
-
+  classNames: ['highloaded-menu-container'],
   /**
     Service that triggers objectlistview events.
     @property objectlistviewEventsService
@@ -211,11 +211,7 @@ export default Component.extend({
           activeRazdel = true;
         }
       });
-      if (activeRazdel) {
-        set(razdel, 'active', true);
-      } else {
-        set(razdel, 'active', false);
-      }
+      set(razdel, 'active', activeRazdel);
     });
     set(this, 'menu', menu);
   },

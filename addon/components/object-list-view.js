@@ -496,91 +496,96 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: computed('modelProjection', 'enableFilters', 'content', function() {
-    let ret;
-    let projection = this.get('modelProjection');
+  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
+    const projection = this.get('modelProjection');
+    
+    if (Ember.isBlank(projection)) return Ember.A();
+     
+    const modelName = this.get('modelName');
+    const onEditForm = this.get('onEditForm');
+    const useLocalSettings = this.get('notUseUserSettings');
+    const currentController = this.get('currentController');
+    const defaultColumnWidth = 150;
+    const currentComponentName = this.get('componentName');
+    const developerUserSettings = currentController.get('developerUserSettings');
+    
+    let builtColumns = [];
+    let cachedColumn = {};
+    let componentSettings = null;
+    let generatedColumns = this._generateColumns(projection.attributes);
 
-    if (!projection) {
-      return A();
-    }
-
-    let cols = this._generateColumns(projection.attributes);
-    let userSettings;
-    if (this.notUseUserSettings) {
+    if (useLocalSettings) {
 
       // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
-      userSettings = this.get('currentController.developerUserSettings');
-      userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
-      userSettings = userSettings ? userSettings.DEFAULT : undefined;
+      componentSettings = developerUserSettings[currentComponentName]['DEFAULT'];
     } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
+      componentSettings = this.get('userSettingsService').getCurrentUserSetting(currentComponentName); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
-    if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
-      const userSettingValue = getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
-      if (!isNone(userSettingValue)) {
-        userSettings = userSettingValue.DEFAULT
+    if (Ember.isNone(componentSettings) || Ember.isEmpty(Object.keys(componentSettings))) {
+      const defaultUserSettings = Ember.getOwner(this).lookup(`default-user-setting:${modelName}`);
+      
+      if (!Ember.isNone(defaultUserSettings)) {
+        componentSettings = defaultUserSettings['DEFAULT'];
       }
     }
-
-    let onEditForm = this.get('onEditForm');
 
     // TODO: add userSettings support on edit form.
-    if (userSettings && !onEditForm) {
-      let namedCols = {};
-      for (let i = 0; i < cols.length; i++) {
-        let col = cols[i];
-        delete col.sorted;
-        delete col.sortNumber;
-        delete col.sortAscending;
-        delete col.width;
-        let propName = col.propName;
-        namedCols[propName] = col;
+    if (Ember.isBlank(componentSettings) || onEditForm || Ember.isBlank(componentSettings.colsOrder)) {
+      if (developerUserSettings) {
+        currentController.set('userSettings', {});
+        currentController.set('colsOrder', generatedColumns);
       }
 
-      // Set columns width.
-      if (isArray(userSettings.columnWidths)) {
-        for (let i = 0; i < userSettings.columnWidths.length; i++) {
-          let columnWidth = userSettings.columnWidths[i];
-          if (namedCols[columnWidth.propName]) {
-            namedCols[columnWidth.propName].width = columnWidth.width || 150;
-          }
+      this.get('objectlistviewEventsService').setOlvFilterColumnsArray(currentComponentName, builtColumns);
+
+      return generatedColumns;
+    }
+      
+    generatedColumns.map((column) => {
+      column.sorted = null;
+      column.sortNumber = null;
+      column.sortAscending = null;
+      column.width = null;
+
+      cachedColumn[column.propName] = column;
+    });
+
+    // Set columns width.
+    if (Ember.isArray(componentSettings.columnWidths)) {
+      componentSettings.columnWidths.forEach((columnWidth) => {
+        if (!Ember.isEmpty(cachedColumn[columnWidth.propName])) {
+          cachedColumn[columnWidth.propName].width = columnWidth.width || defaultColumnWidth;
         }
-      }
-
-      if (userSettings.sorting === undefined) {
-        userSettings.sorting = [];
-      }
-
-      if (isNone(this.get('orderedProperty'))) {
-        for (let i = 0; i < userSettings.sorting.length; i++) {
-          let sorting = userSettings.sorting[i];
-          if (namedCols[sorting.propName]) {
-            namedCols[sorting.propName].sorted = true;
-            namedCols[sorting.propName].sortAscending = sorting.direction === 'asc' ? true : false;
-            namedCols[sorting.propName].sortNumber = i + 1;
-          }
-        }
-      }
-
-      if (userSettings.colsOrder !== undefined) {
-        ret = [];
-        for (let i = 0; i < userSettings.colsOrder.length; i++) {
-          let userSetting = userSettings.colsOrder[i];
-          if (!userSetting.hide && namedCols[userSetting.propName]) {
-            ret[ret.length] = namedCols[userSetting.propName];
-          }
-        }
-      } else {
-        ret = cols;
-      }
-    } else {
-      ret = cols;
+      });
     }
 
-    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(this.get('componentName'), ret);
-    return ret;
+    // Set sorting
+    if (Ember.isBlank(componentSettings.sorting)) {
+      componentSettings.sorting = [];
+    }
+
+    if (Ember.isNone(this.get('orderedProperty'))) {
+      componentSettings.sorting.forEach((sorting, sortingIndex) => {
+        if (cachedColumn[sorting.propName]) {
+          cachedColumn[sorting.propName].sorted = true;
+          cachedColumn[sorting.propName].sortAscending = sorting.direction === 'asc' ? true : false;
+          cachedColumn[sorting.propName].sortNumber = sortingIndex + 1;
+        }
+      });
+    }
+    
+    // Set ordering
+    if (!Ember.isBlank(componentSettings.colsOrder)) {
+      componentSettings.colsOrder.forEach((colOrder) => {
+        if (!colOrder.hide && cachedColumn[colOrder.propName]) {
+          builtColumns.push(cachedColumn[colOrder.propName]);
+        }
+      });
+    }
+
+    return builtColumns;
   }),
 
   /**

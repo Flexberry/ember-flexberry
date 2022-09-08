@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'guideline-icons';
-  src:  url('fonts/guideline-icons/guideline-icons.eot?4rjgj0');
-  src:  url('fonts/guideline-icons/guideline-icons.eot?4rjgj0#iefix') format('embedded-opentype'),
-    url('fonts/guideline-icons/guideline-icons.ttf?4rjgj0') format('truetype'),
-    url('fonts/guideline-icons/guideline-icons.woff?4rjgj0') format('woff'),
-    url('fonts/guideline-icons/guideline-icons.svg?4rjgj0#guideline-icons') format('svg');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?1jz4p8');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?1jz4p8#iefix') format('embedded-opentype'),
+    url('fonts/guideline-icons/guideline-icons.ttf?1jz4p8') format('truetype'),
+    url('fonts/guideline-icons/guideline-icons.woff?1jz4p8') format('woff'),
+    url('fonts/guideline-icons/guideline-icons.svg?1jz4p8#guideline-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guideline-navigate-arrow-left:before {
+  content: "\e989";
+}
+.icon-guideline-navigate-arrow-up:before {
+  content: "\e98a";
+}
+.icon-guideline-download-layer:before {
+  content: "\e988";
+}
 .icon-guideline-goout:before {
   content: "\e987";
 }

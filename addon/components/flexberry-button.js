@@ -72,6 +72,9 @@ let FlexberryButtonComponent = Component.extend(
     */
     _hasCaption: Ember.computed('caption', function () {
       const caption = this.get('caption');
+
+      if (Ember.isEmpty(caption)) return false;
+
       const isCaptionTypeIsString = Ember.typeOf(caption) === 'string';
       const isCaptionNotEmpty = Ember.$.trim(caption) !== '';
       const isCaptionSafe = Ember.String.isHTMLSafe(caption);

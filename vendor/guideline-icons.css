@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'guideline-icons';
-  src:  url('fonts/guideline-icons/guideline-icons.eot?g0yyp8');
-  src:  url('fonts/guideline-icons/guideline-icons.eot?g0yyp8#iefix') format('embedded-opentype'),
-    url('fonts/guideline-icons/guideline-icons.ttf?g0yyp8') format('truetype'),
-    url('fonts/guideline-icons/guideline-icons.woff?g0yyp8') format('woff'),
-    url('fonts/guideline-icons/guideline-icons.svg?g0yyp8#guideline-icons') format('svg');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?4rjgj0');
+  src:  url('fonts/guideline-icons/guideline-icons.eot?4rjgj0#iefix') format('embedded-opentype'),
+    url('fonts/guideline-icons/guideline-icons.ttf?4rjgj0') format('truetype'),
+    url('fonts/guideline-icons/guideline-icons.woff?4rjgj0') format('woff'),
+    url('fonts/guideline-icons/guideline-icons.svg?4rjgj0#guideline-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,249 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guideline-goout:before {
+  content: "\e987";
+}
+.icon-guideline-line:before {
+  content: "\e985";
+}
+.icon-guideline-line-plus:before {
+  content: "\e986";
+}
+.icon-guideline-copy-doc:before {
+  content: "\e984";
+}
+.icon-guideline-share:before {
+  content: "\e983";
+}
+.icon-guideline-Arrows-max-left:before {
+  content: "\e961";
+}
+.icon-guideline-Arrows-max-right:before {
+  content: "\e962";
+}
+.icon-guideline-bookmark:before {
+  content: "\e963";
+}
+.icon-guideline-bookmark-filled:before {
+  content: "\e964";
+}
+.icon-guideline-chart:before {
+  content: "\e965";
+}
+.icon-guideline-circle:before {
+  content: "\e966";
+}
+.icon-guideline-archive:before {
+  content: "\e960";
+}
+.icon-guideline-clock:before {
+  content: "\e967";
+}
+.icon-guideline-compare:before {
+  content: "\e968";
+}
+.icon-guideline-compass:before {
+  content: "\e969";
+}
+.icon-guideline-coordinates:before {
+  content: "\e96a";
+}
+.icon-guideline-copy-map:before {
+  content: "\e96b";
+}
+.icon-guideline-cross-arrow:before {
+  content: "\e96c";
+}
+.icon-guideline-cut:before {
+  content: "\e96d";
+}
+.icon-guideline-eraser:before {
+  content: "\e96e";
+}
+.icon-guideline-grid:before {
+  content: "\e96f";
+}
+.icon-guideline-hand:before {
+  content: "\e970";
+}
+.icon-guideline-intersection:before {
+  content: "\e971";
+}
+.icon-guideline-layer-all:before {
+  content: "\e972";
+}
+.icon-guideline-layer-first:before {
+  content: "\e973";
+}
+.icon-guideline-layers-info:before {
+  content: "\e974";
+}
+.icon-guideline-layer-visible:before {
+  content: "\e975";
+}
+.icon-guideline-marker-point:before {
+  content: "\e976";
+}
+.icon-guideline-marker:before {
+  content: "\e977";
+}
+.icon-guideline-measure:before {
+  content: "\e978";
+}
+.icon-guideline-plus-min:before {
+  content: "\e979";
+}
+.icon-guideline-points:before {
+  content: "\e97a";
+}
+.icon-guideline-print:before {
+  content: "\e97b";
+}
+.icon-guideline-rectangle:before {
+  content: "\e97c";
+}
+.icon-guideline-scissors:before {
+  content: "\e97d";
+}
+.icon-guideline-search-plus:before {
+  content: "\e97e";
+}
+.icon-guideline-table:before {
+  content: "\e97f";
+}
+.icon-guideline-arrow-long-back:before {
+  content: "\e937";
+}
+.icon-guideline-arrow-long-down:before {
+  content: "\e981";
+}
+.icon-guideline-arrow-long-up:before {
+  content: "\e982";
+}
+.icon-guideline-arrow-long-next:before {
+  content: "\e95f";
+}
+.icon-guideline-book:before {
+  content: "\e959";
+}
+.icon-guideline-resize-plus:before {
+  content: "\e95a";
+}
+.icon-guideline-resize-minus:before {
+  content: "\e95b";
+}
+.icon-guideline-edit-circle:before {
+  content: "\e95c";
+}
+.icon-guideline-minus-circle:before {
+  content: "\e95d";
+}
+.icon-guideline-plus-circle:before {
+  content: "\e95e";
+}
+.icon-guideline-logout:before {
+  content: "\e955";
+}
+.icon-guideline-hide:before {
+  content: "\e956";
+}
+.icon-guideline-show:before {
+  content: "\e957";
+}
+.icon-guideline-save-close:before {
+  content: "\e958";
+}
+.icon-guideline-document:before {
+  content: "\e941";
+}
+.icon-guideline-document-upload:before {
+  content: "\e94e";
+}
+.icon-guideline-external-layer:before {
+  content: "\e94f";
+}
+.icon-guideline-group-plus:before {
+  content: "\e950";
+}
+.icon-guideline-lock:before {
+  content: "\e951";
+}
+.icon-guideline-map:before {
+  content: "\e952";
+}
+.icon-guideline-polygone:before {
+  content: "\e953";
+}
+.icon-guideline-rast-map:before {
+  content: "\e954";
+}
+.icon-guideline-check:before {
+  content: "\e938";
+}
+.icon-guideline-circle-check:before {
+  content: "\e939";
+}
+.icon-guideline-copy-r:before {
+  content: "\e93a";
+}
+.icon-guideline-cross-r:before {
+  content: "\e93b";
+}
+.icon-guideline-delete-r:before {
+  content: "\e93c";
+}
+.icon-guideline-earth:before {
+  content: "\e93d";
+}
+.icon-guideline-earth-1:before {
+  content: "\e93e";
+}
+.icon-guideline-earth-plus:before {
+  content: "\e93f";
+}
+.icon-guideline-edit-r:before {
+  content: "\e940";
+}
+.icon-guideline-edit-note:before {
+  content: "\e942";
+}
+.icon-guideline-file-download:before {
+  content: "\e943";
+}
+.icon-guideline-folder:before {
+  content: "\e944";
+}
+.icon-guideline-circle-problem:before {
+  content: "\e945";
+}
+.icon-guideline-circle-more:before {
+  content: "\e946";
+}
+.icon-guideline-circle-info:before {
+  content: "\e947";
+}
+.icon-guideline-layers:before {
+  content: "\e948";
+}
+.icon-guideline-navigate-arrow-down:before {
+  content: "\e980";
+}
+.icon-guideline-navigate-arrow:before {
+  content: "\e94a";
+}
+.icon-guideline-minus-r:before {
+  content: "\e949";
+}
+.icon-guideline-plus-r:before {
+  content: "\e94b";
+}
+.icon-guideline-search-r:before {
+  content: "\e94c";
+}
+.icon-guideline-user:before {
+  content: "\e94d";
+}
 .icon-guideline-check-menu:before {
   content: "\e932";
 }
@@ -34,7 +277,7 @@
 .icon-guideline-copy:before {
   content: "\e931";
 }
-.icon-guideline-arrow-long-down:before {
+.icon-guideline-arrow-long-down1:before {
   content: "\e900";
 }
 .icon-guideline-arrow-long-left:before {
@@ -43,7 +286,7 @@
 .icon-guideline-arrow-long-right:before {
   content: "\e902";
 }
-.icon-guideline-arrow-long-up:before {
+.icon-guideline-arrow-long-up1:before {
   content: "\e903";
 }
 .icon-guideline-arrow-short-down:before {

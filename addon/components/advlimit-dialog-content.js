@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
-
+import { translationMacro as t } from 'ember-i18n';
 import { BasePredicate, stringToPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
@@ -56,7 +56,7 @@ export default FlexberryBaseComponent.extend({
       this._hideMessage();
       const advLimit = this.get('model.advLimit');
       if (!this._checkPredicate(advLimit)) {
-        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
+        this._showMessage('error', t('components.advlimit-dialog-content.cant-parse'));
         return;
       }
 
@@ -84,9 +84,9 @@ export default FlexberryBaseComponent.extend({
       this._hideMessage();
       const stringPredicate = this.get('model.advLimit');
       if (this._checkPredicate(stringPredicate)) {
-        this._showMessage('success', this.get('i18n').t('components.advlimit-dialog-content.is-correct'));
+        this._showMessage('success', t('components.advlimit-dialog-content.is-correct'));
       } else {
-        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
+        this._showMessage('error', t('components.advlimit-dialog-content.cant-parse'));
       }
     },
 
@@ -98,14 +98,14 @@ export default FlexberryBaseComponent.extend({
     saveAdvLimit: function() {
       this._hideMessage();
       const advLimitName = this.get('model.advLimitName');
-      if (isBlank(advLimitName)) {
-        this._showMessage('warning', this.get('i18n').t('components.advlimit-dialog-content.enter-setting-name'));
+      if (Ember.isBlank(advLimitName)) {
+        this._showMessage('warning', t('components.advlimit-dialog-content.enter-setting-name'));
         return;
       }
 
       const advLimit = this.get('model.advLimit');
       if (!this._checkPredicate(advLimit)) {
-        this._showMessage('error', this.get('i18n').t('components.advlimit-dialog-content.cant-parse'));
+        this._showMessage('error', t('components.advlimit-dialog-content.cant-parse'));
         return;
       }
 
@@ -115,15 +115,15 @@ export default FlexberryBaseComponent.extend({
         () => {
           this._showMessage(
             'success',
-            this.get('i18n').t('components.advlimit-dialog-content.limit') +
+            t('components.advlimit-dialog-content.limit') +
               advLimitName +
-              this.get('i18n').t('components.advlimit-dialog-content.is-saved')
+              t('components.advlimit-dialog-content.is-saved')
           );
         },
         error => {
           this._showMessage(
             'error',
-            this.get('i18n').t('components.advlimit-dialog-content.have-errors'),
+            t('components.advlimit-dialog-content.have-errors'),
             JSON.stringify(error)
           );
           this.get('close')(advLimit);

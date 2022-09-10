@@ -36,7 +36,7 @@ export default FlexberryFile.extend({
     if (this.get('showPreview')) {
       menuSubItems.push({
         icon: 'zoom icon',
-        title: this.get('i18n').t('components.flexberry-file.menu-for-file.zoom-image-item-caption'),
+        title: t('components.flexberry-file.menu-for-file.zoom-image-item-caption'),
         isZoomItem: true
       });
     }
@@ -44,7 +44,7 @@ export default FlexberryFile.extend({
     if (!this.get('readonly')) {
       menuSubItems.push({
         icon: 'file outline icon',
-        title: this.get('i18n').t('components.flexberry-file.menu-for-file.replace-file-item-caption'),
+        title: t('components.flexberry-file.menu-for-file.replace-file-item-caption'),
         isReplaceItem: true
       });
     }
@@ -52,21 +52,21 @@ export default FlexberryFile.extend({
     if (!this.get('readonly')) {
       menuSubItems.push({
         icon: 'trash icon',
-        title: this.get('i18n').t('components.flexberry-file.menu-for-file.delete-file-item-caption'),
+        title: t('components.flexberry-file.menu-for-file.delete-file-item-caption'),
         isDeleteItem: true
       });
     }
     if (this.get('_uploadButtonIsVisible')) {
       menuSubItems.push({
         icon: 'upload outline icon',
-        title: this.get('i18n').t('components.flexberry-file.upload-button-title'),
+        title: t('components.flexberry-file.upload-button-title'),
         isUploadItem: true
       });
     }
     if (this.get('_downloadButtonIsVisible')) {
       menuSubItems.push({
         icon: 'download outline icon',
-        title: this.get('i18n').t('components.flexberry-file.download-button-title'),
+        title: t('components.flexberry-file.download-button-title'),
         isDownloadItem: true
       });
     }

@@ -1168,7 +1168,6 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     });
 
     let state;
-    let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
 
@@ -1179,9 +1178,9 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         /* eslint-disable no-unused-vars */
         message: function(message, type) {
           return '<div class="message empty"><div class="header">' +
-          i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
+          t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
           '</div><div class="description">' +
-          i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
+          t('components.flexberry-lookup.dropdown.messages.noResults').string +
           '</div></div>';
         }
         /* eslint-enable no-unused-vars */
@@ -1429,7 +1428,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       cache: false,
       forceSelection: false,
       message: {
-        noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
+        noResults: t('components.flexberry-lookup.dropdown.messages.noResults').string
       },
       apiSettings: {
         responseAsync(settings, callback) {

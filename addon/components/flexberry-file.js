@@ -971,10 +971,9 @@ export default FlexberryBaseComponent.extend({
     @returns {String} Error content.
   */
   showFileSizeErrorModalDialog(fileName, actualFileSize, maxFileSize, sizeUnit) {
-    let i18n = this.get('i18n');
     let actualFileSizeRoundedString = actualFileSize.toFixed(1);
-    let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
-    let errorContent = i18n.t('components.flexberry-file.file-too-big-error-message', {
+    let errorCaption = t('components.flexberry-file.add-file-error-caption');
+    let errorContent = t('components.flexberry-file.file-too-big-error-message', {
       fileName: fileName,
       actualFileSize: actualFileSizeRoundedString,
       maxFileSize: maxFileSize,
@@ -994,9 +993,8 @@ export default FlexberryBaseComponent.extend({
     @returns {String} Error content.
   */
   showFileExtensionErrorModalDialog(fileName) {
-    let i18n = this.get('i18n');
-    let errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
-    let errorContent = i18n.t('components.flexberry-file.file-extension-error-message', {
+    let errorCaption = t('components.flexberry-file.add-file-error-caption');
+    let errorContent = t('components.flexberry-file.file-extension-error-message', {
       fileName: fileName,
     });
 
@@ -1014,9 +1012,8 @@ export default FlexberryBaseComponent.extend({
     @returns {String} Error content.
   */
   showUploadErrorModalDialog(fileName, errorMessage) {
-    let i18n = this.get('i18n');
-    let errorCaption = i18n.t('components.flexberry-file.upload-file-error-caption');
-    let errorContent = i18n.t('components.flexberry-file.upload-file-error-message', {
+    let errorCaption = t('components.flexberry-file.upload-file-error-caption');
+    let errorContent = t('components.flexberry-file.upload-file-error-message', {
       fileName: fileName,
       errorMessage: errorMessage
     });
@@ -1035,9 +1032,8 @@ export default FlexberryBaseComponent.extend({
     @param {String} errorMessage Message about error occurred during file download.
   */
   showDownloadErrorModalDialog(fileName, errorMessage) {
-    let i18n = this.get('i18n');
-    let errorCaption = i18n.t('components.flexberry-file.download-file-error-caption');
-    let errorContent = i18n.t('components.flexberry-file.download-file-error-message', {
+    let errorCaption = t('components.flexberry-file.download-file-error-caption');
+    let errorContent = t('components.flexberry-file.download-file-error-message', {
       fileName: fileName,
       errorMessage: errorMessage
     });

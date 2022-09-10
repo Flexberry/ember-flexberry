@@ -1210,16 +1210,15 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      let i18n = this.get('i18n');
       let namedSetting = namedItemSpans.get(0).innerText;
 
       let isUncheckAllAtPage = this.get('allSelectAtPage');
-      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') :
-      i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? t('components.olv-toolbar.uncheck-all-at-page-button-text') :
+      t('components.olv-toolbar.check-all-at-page-button-text');
 
       let isUncheckAll = this.get('allSelect');
-      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') :
-      i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitle = isUncheckAll ? t('components.olv-toolbar.uncheck-all-button-text') :
+      t('components.olv-toolbar.check-all-button-text');
 
       switch (namedSetting) {
         case checkAllAtPageTitle.toString(): {

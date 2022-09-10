@@ -1100,7 +1100,7 @@ export default folv.extend(
           break;
         case 'unhide icon':
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          let caption = t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
       }
@@ -1151,7 +1151,7 @@ export default folv.extend(
       infoModalDialog.find('.olv-toolbar-info-modal-dialog-content textarea').select();
       let copied = document.execCommand('copy');
       let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
-      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
+      oLVToolbarInfoCopyButton.get(0).innerHTML = t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     },
 
@@ -2898,7 +2898,6 @@ export default folv.extend(
     @readOnly
   */
   colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
-      let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
           iconAlignment: 'right',
@@ -2926,7 +2925,7 @@ export default folv.extend(
       let createSettitingItem = {
         icon: 'table icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        title: t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title'
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
@@ -2935,7 +2934,7 @@ export default folv.extend(
       let setDefaultItem = {
         icon: 'remove circle icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
+        title: t('components.olv-toolbar.set-default-setting-title'),
         localeKey: 'components.olv-toolbar.set-default-setting-title'
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
@@ -2943,7 +2942,7 @@ export default folv.extend(
         let showDefaultItem = {
           icon: 'unhide icon',
           iconAlignment: 'left',
-          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+          title: t('components.olv-toolbar.show-default-setting-title'),
           localeKey: 'components.olv-toolbar.show-default-setting-title'
         };
         rootItem.items[rootItem.items.length] = showDefaultItem;
@@ -2967,7 +2966,6 @@ export default folv.extend(
     @readOnly
   */
   exportExcelItems:  Ember.computed(function() {
-      let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
           iconAlignment: 'right',
@@ -2995,7 +2993,7 @@ export default folv.extend(
       let createSettitingItem = {
         icon: 'file excel outline icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        title: t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title'
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
@@ -3072,7 +3070,7 @@ export default folv.extend(
     }
 
     let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
-    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = t('components.olv-toolbar.copy');
     oLVToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
   },

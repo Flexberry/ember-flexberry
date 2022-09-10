@@ -7,6 +7,7 @@ import { Promise } from 'rsvp';
 import { assert } from '@ember/debug';
 import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Mobile version of {{#crossLink "ObjectListViewComponent"}}{{/crossLink}} (with mobile-specific defaults).
@@ -109,7 +110,6 @@ export default ObjectListViewComponent.extend({
     'allSelect',
     'allSelectAtPage',
     function() {
-      let i18n = this.get('i18n');
       let readonly = this.get('readonly');
       let allSelect = this.get('allSelect');
 
@@ -122,13 +122,13 @@ export default ObjectListViewComponent.extend({
       };
 
       let isUncheckAllAtPage = this.get('allSelectAtPage');
-      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') :
-      i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? t('components.olv-toolbar.uncheck-all-at-page-button-text') :
+      t('components.olv-toolbar.check-all-at-page-button-text');
       let checkAllAtPageTitleKey = isUncheckAllAtPage ? 'components.olv-toolbar.uncheck-all-at-page-button-text' :
       'components.olv-toolbar.check-all-at-page-button-text';
 
-      let checkAllTitle = allSelect ? i18n.t('components.olv-toolbar.uncheck-all-button-text') :
-      i18n.t('components.olv-toolbar.check-all-button-text');
+      let checkAllTitle = allSelect ? t('components.olv-toolbar.uncheck-all-button-text') :
+      t('components.olv-toolbar.check-all-button-text');
       let checkAllTitleKey = allSelect ? 'components.olv-toolbar.uncheck-all-button-text' :
       'components.olv-toolbar.check-all-button-text';
 

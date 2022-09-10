@@ -2,10 +2,9 @@
   @module ember-flexberry
 */
 
-import Mixin from '@ember/object/mixin';
-import { computed } from '@ember/object';
-import { isArray } from '@ember/array';
-import { htmlSafe } from '@ember/string';
+import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
+
 /**
   Edit forms controllers mixin which handles save/delete operations indication.
 
@@ -71,13 +70,12 @@ export default Mixin.create({
     @property formSuccessMessageCaption.
     @type String
   */
-  formSuccessMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
+  formSuccessMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
     if (this.get('latestOperationType') === 'save') {
-      return i18n.t('forms.edit-form.save-success-message-caption');
+      return t('forms.edit-form.save-success-message-caption');
     }
 
-    return i18n.t('forms.edit-form.delete-success-message-caption');
+    return t('forms.edit-form.delete-success-message-caption');
   }),
 
   /**
@@ -86,13 +84,12 @@ export default Mixin.create({
     @property formSuccessMessage.
     @type String
   */
-  formSuccessMessage: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
+  formSuccessMessage: Ember.computed('i18n.locale', 'latestOperationType', function() {
     let message = null;
     if (this.get('latestOperationType') === 'save') {
-      message = i18n.t('forms.edit-form.save-success-message');
+      message = t('forms.edit-form.save-success-message');
     } else {
-      message = i18n.t('forms.edit-form.delete-success-message');
+      message = t('forms.edit-form.delete-success-message');
     }
 
     return new htmlSafe('<ul><li>' + message + '</li></ul>');
@@ -113,13 +110,12 @@ export default Mixin.create({
     @property formErrorMessageCaption.
     @type String
   */
-  formErrorMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
+  formErrorMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
     if (this.get('latestOperationType') === 'save') {
-      return i18n.t('forms.edit-form.save-error-message-caption');
+      return t('forms.edit-form.save-error-message-caption');
     }
 
-    return i18n.t('forms.edit-form.delete-error-message-caption');
+    return t('forms.edit-form.delete-error-message-caption');
   }),
 
   /**

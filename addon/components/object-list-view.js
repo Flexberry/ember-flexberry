@@ -1307,6 +1307,8 @@ export default FlexberryBaseComponent.extend(
       set(filter, 'component.name', get(filter, 'component._defaultComponent'));
       set(filter, 'condition', null);
       set(filter, 'pattern', null);
+      let options = this._getFilterComponentByCondition(undefined, "between");
+      setProperties(filter.component, options);
     },
   },
 
@@ -2066,6 +2068,14 @@ export default FlexberryBaseComponent.extend(
           'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
           'between': this.get('i18n').t('components.object-list-view.filters.between'),
         };
+      case 'decimal':
+        return {
+          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
+          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
+          'le': this.get('i18n').t('components.object-list-view.filters.le'),
+          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+          'between': this.get('i18n').t('components.object-list-view.filters.between'),
+        };
       case 'string':
         return {
           'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
@@ -2106,6 +2116,10 @@ export default FlexberryBaseComponent.extend(
 
       case 'string':
       case 'number':
+        component.name = 'flexberry-textbox';
+        break;
+
+      case 'decimal':
         component.name = 'flexberry-textbox';
         break;
 

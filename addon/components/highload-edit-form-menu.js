@@ -59,11 +59,7 @@ export default Component.extend({
     }
     menu[0].active = true;
 
-    if (this.menu.length > 1) {
-      this.razdelNumeration = true;
-    } else {
-      this.razdelNumeration = false;
-    }
+    this.razdelNumeration = this.menu.length > 1;
 
     let _menu = [];
     menu.forEach((razdel) => {
@@ -110,10 +106,18 @@ export default Component.extend({
    */
   uiGrid: true,
 
+  /**
+   * Класс для отслеживания прокрутки страницы.
+   * @type {String}
+   * @default 'full height'
+   */
+  scrollClass: 'full height',
+
   didRender() {
     let _this = this;
-    document.getElementsByClassName('full height')[0].addEventListener('wheel', function() {
-      document.getElementsByClassName('full height')[0].scrollTop;
+    const scrollClass = get(this, 'scrollClass');
+    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', function() {
+      document.getElementsByClassName(scrollClass)[0].scrollTop;
       _this.setActiveTab();
     });
   },
@@ -183,13 +187,10 @@ export default Component.extend({
       razdel.children.forEach((item) => {
         if (item.gruppaPolejVvodaName == tabName) {
           activeRazdel = true;
+          return;
         }
       });
-      if (activeRazdel) {
-        set(razdel, 'active', true);
-      } else {
-        set(razdel, 'active', false);
-      }
+      set(razdel, 'active', activeRazdel);
     });
     set(this, 'menu', menu);
   },

@@ -129,7 +129,9 @@ export default {
     },
 
     'highload-edit-form-menu': {
-      'show-all-forms-button': 'Show all forms fields'
+      'show-all-forms-button': 'Show all forms fields',
+      'next-button': 'Next',
+      'prev-button': 'Previous'
     },
 
     'modal-dialog': {

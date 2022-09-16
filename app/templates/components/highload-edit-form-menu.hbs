@@ -5,26 +5,26 @@
         {{#each menu as |item index|}}
           <div class="highloaded-menu-cell">
             {{#if razdelNumeration}}
-                <h3 class="ui header highloaded-menu-number">{{increase-number index}}</h3>
+              <h3 class="ui header highloaded-menu-number">{{increase-number index}}</h3>
             {{/if}}
             <div>
               <h3 class="ui header title">{{item.razdelName}}</h3>
               <ul class={{concat "list" (if item.active " active")}}>
                 {{#each item.children as |child|}}
-                <li class="tab-item-container">
-                  <a class={{concat "tab item" item.class (if child.active " active")}}
-                    title={{child.gruppaPolejVvodaName}}
-                    data-tab={{child.selector}}
-                    {{action "change" child on="click"}}>
-                    {{child.gruppaPolejVvodaName}}
-                  </a>
-                  {{#if child.showAsterisk}}
-                    <div class="cell asterisk-cell">
-                      <i class="asterisk small red icon"></i>
-                    </div>
-                  {{/if}}
-                </li>
-              {{/each}}
+                  <li class="tab-item-container">
+                    <a class={{concat "tab item" item.class (if child.active " active")}}
+                      title={{child.gruppaPolejVvodaName}}
+                      data-tab={{child.selector}}
+                      {{action "change" child on="click"}}>
+                      {{child.gruppaPolejVvodaName}}
+                    </a>
+                    {{#if child.showAsterisk}}
+                      <div class="cell asterisk-cell">
+                        <i class="asterisk small red icon"></i>
+                      </div>
+                    {{/if}}
+                  </li>
+                {{/each}}
               </ul>
             </div>
           </div>
@@ -47,14 +47,14 @@
     {{flexberry-button
       class="tabsNavigation primary"
       iconClass="icon icon-guideline-navigate-arrow-down"
-      caption="Далее"
+      caption=(t "components.highload-edit-form-menu.next-button")
       readonly=readonly
       click=(action "showNextGroupForms")
     }}
     {{flexberry-button
       class="empty tabsNavigation"
       iconClass="icon icon-guideline-navigate-arrow-up"
-      caption="Назад"
+      caption=(t "components.highload-edit-form-menu.prev-button")
       readonly=readonly
       click=(action "showPrevGroupForms")
     }}

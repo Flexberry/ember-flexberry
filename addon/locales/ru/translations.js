@@ -169,7 +169,9 @@ export default {
     },
 
     'highload-edit-form-menu': {
-      'show-all-forms-button': 'Показать все поля формы'
+      'show-all-forms-button': 'Показать все поля формы',
+      'next-button': 'Далее',
+      'prev-button': 'Назад'
     },
 
     'modal-dialog': {

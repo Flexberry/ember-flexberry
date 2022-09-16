@@ -166,11 +166,7 @@ export default Component.extend({
       } else {
         let _menu = get(this, '_menu');
         _menu.forEach(child => {
-          if (child.gruppaPolejVvodaName == highestTab.dataset.tab) {
-            set(child, 'active', true);
-          } else {
-            set(child, 'active', false);
-          }
+          set(child, 'active', child.gruppaPolejVvodaName == highestTab.dataset.tab);
         });
         set(this, '_menu', _menu);
       }

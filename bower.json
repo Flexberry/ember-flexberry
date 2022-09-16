@@ -11,6 +11,6 @@
     "jquery-minicolors": "2.3.4",
     "js-beautify": "1.6.4",
     "moment": "~2.22.0",
-    "ember-flexberry-themes": "git://github.com/Flexberry/ember-flexberry-themes#develop"
+    "ember-flexberry-themes": "git+https://github.com/Flexberry/ember-flexberry-themes#develop"
   }
 }

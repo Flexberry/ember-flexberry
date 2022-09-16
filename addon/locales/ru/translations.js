@@ -168,6 +168,12 @@ export default {
       'placeholder': 'Нет данных'
     },
 
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Показать все поля формы',
+      'next-button': 'Далее',
+      'prev-button': 'Назад'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Закрыть'

@@ -302,6 +302,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/highload-edit-form-menu",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/object-list-view-cell",
       "only": [
         "eol-last"
@@ -1273,6 +1280,13 @@ module.exports = {
       "only": [
         "eol-last",
         "link-href-attributes"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-examples/highload-edit-form-menu/index",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive"
       ]
     },
     {

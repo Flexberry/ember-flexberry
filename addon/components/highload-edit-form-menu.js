@@ -42,7 +42,7 @@ export default Component.extend({
   _menu: null,
 
   store: service('store'),
-
+  classNames: ['highloaded-menu-container'],
   /**
     Service that triggers objectlistview events.
     @property objectlistviewEventsService
@@ -212,7 +212,7 @@ export default Component.extend({
 
         if (key - 1 >= 0) {
           set(this, 'prevTab', _menu[key - 1]);
-        } else {
+      } else {
           set(this, 'prevTab', _menu[key]);
         }
 

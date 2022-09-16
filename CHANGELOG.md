@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.2] - 2022-09-16
+### Added
+* The `highload-edit-form-menu` component.
+
+### Fixed
+* Filter for `decimal` and `between`.
+
 ## [3.8.0-beta.1] - 2022-08-24
 ### Fixed
 * The `flexberry-objectlistview` component:

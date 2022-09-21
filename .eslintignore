@@ -192,6 +192,7 @@ tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-delete-with-details-test.js
+tests/acceptance/components/flexberry-simpledatetime/flexberry-simpledatetime-manual-enter-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js
@@ -284,6 +285,7 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/setting
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/base-operations.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
@@ -401,6 +403,7 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/base-operati
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-actions.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-autocomplete.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-dropdown.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-limit-function.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-preview.js

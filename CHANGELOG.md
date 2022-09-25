@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.3] - 2022-09-25
+### Fixed
+* `flexberry-simpledatetime` current date manual enter.
+
 ## [3.8.0-beta.2] - 2022-09-16
 ### Added
 * The `highload-edit-form-menu` component.

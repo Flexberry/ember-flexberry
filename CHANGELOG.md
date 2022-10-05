@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.4] - 2022-10-05
+### Added
+* `flexberry-groupedit`'s custom buttons in row.
+
 ## [3.8.0-beta.3] - 2022-09-25
 ### Fixed
 * `flexberry-simpledatetime` current date manual enter.

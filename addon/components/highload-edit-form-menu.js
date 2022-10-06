@@ -267,10 +267,10 @@ export default Component.extend({
   didDestroyElement() {
     this._super(...arguments);
 
-    let historyLength = get(this, 'routeHistory')._routeHistory.length;
-    let lastRoute = this.routeHistory.get('_routeHistory')[historyLength - 1];
+    let historyLength = get(this, 'routeHistory._routeHistory.length');
+    let lastRoute = get(this, 'routeHistory._routeHistory')[historyLength - 1];
     let _menu = get(this, '_menu');
-    this.get('routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
+    get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
   },
 
   actions: {

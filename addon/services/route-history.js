@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { get } from '@ember/object';
 
 const {
   isEmpty,
@@ -16,14 +17,14 @@ export default Service.extend({
    *
    * @type {Array<Object>}
    */
-  _routeHistory: [],
+  _routeHistory: null,
 
   /**
    * Последний роут с которого перешли, не удаляется по кнопкам "Закрыть", "Назад"
    *
    * @type {Array<string>}
    */
-  _lastRoute: [],
+  _lastRoute: null,
 
   /**
    * Максимальное число хранящихся в истории роутов.
@@ -32,15 +33,22 @@ export default Service.extend({
    */
   maxEntries: 10,
 
+  init() {
+    this._super(...arguments);
+
+    this._routeHistory = this._routeHistory || [];
+    this._lastRoute = this._lastRoute || [];
+  },
+
   /**
    * Возвращает последний сохраненный в истории роутов (т.е. текущий).
    *
    * @type {Object}
    */
   currentRoute: computed('_routeHistory', '_routeHistory.[]', function () {
-    let length = this.get('_routeHistory').length;
+    let length = get(this, '_routeHistory').length;
     if (length > 0) {
-      return this.get('_routeHistory').objectAt(length - 1);
+      return get(this, '_routeHistory').objectAt(length - 1);
     }
 
     return null;
@@ -52,7 +60,7 @@ export default Service.extend({
    * @type {Object}
    */
   previousRoute: computed('_routeHistory', '_routeHistory.[]', function () {
-    let length = this._routeHistory.get('length');
+    let length = get(this, '_routeHistory.length');
     if (length > 1) {
       return this._routeHistory.objectAt(length - 2);
     }
@@ -98,7 +106,7 @@ export default Service.extend({
       }
     }
 
-    let currentRoute = this.get('currentRoute');
+    let currentRoute = get(this, 'currentRoute');
     if (currentRoute && currentRoute.routeName === routeName) {
       // Если имя добавляемого роута совпадает с текущим, удаляем текущий, чтобы заменить новым.
       this._routeHistory.pop();
@@ -115,7 +123,7 @@ export default Service.extend({
     this._routeHistory.push(routeObject);
     this._lastRoute.push(routeObject);
 
-    if (this._routeHistory.length > this.get('maxEntries')) {
+    if (this._routeHistory.length > get(this, 'maxEntries')) {
       // Если длина истории после добавления превышает допустимую, удаляем элемент из начала массива (самую старую запись).
       this._routeHistory.shift();
     }
@@ -140,7 +148,7 @@ export default Service.extend({
    *                             оставит только один.
    */
   popRoutes: function(routesCount) {
-    let historyLength = this._routeHistory.get('length');
+    let historyLength = get(this, '_routeHistory.length');
     if (historyLength < 2) {
       return;
     }
@@ -163,7 +171,7 @@ export default Service.extend({
    *                            происходит переход на первый роут из истории.
    */
   routeBackAt: function (stepsCount) {
-    let historyLength = this._routeHistory.get('length');
+    let historyLength = get(this, '_routeHistory.length');
     if (historyLength < 2) {
       return;
     }
@@ -191,7 +199,7 @@ export default Service.extend({
   saveCurrentRouteToSessionStorage(exceptions) {
     const storageKey = 'customRedirectInfo';
 
-    let lastRoute = this.get('currentRoute');
+    let lastRoute = get(this, 'currentRoute');
     let saveFlag = !isBlank(lastRoute && lastRoute.routeName) &&
       !exceptions.some(route => route === lastRoute.routeName.split('?')[0]);
 
@@ -207,7 +215,7 @@ export default Service.extend({
    * @param {string} delId Ид объекта
    */
   removeRoutesForObject(delRouteName, delId) {
-    let historyLength = this._routeHistory.get('length');
+    let historyLength = get(this, '_routeHistory.length');
     if (historyLength < 2) {
       return;
     }

@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.5] - 2022-10-07
+### Added
+* `route-history` service.
+
+### Fixed
+* `flexberry-groupedit`'s custom buttons in row styles.
+
 ## [3.8.0-beta.4] - 2022-10-05
 ### Added
 * `flexberry-groupedit`'s custom buttons in row.

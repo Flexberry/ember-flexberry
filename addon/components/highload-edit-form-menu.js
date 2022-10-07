@@ -24,11 +24,36 @@ import { get, set } from '@ember/object';
     {{/highload-edit-form-menu}}
     ```
 
+    routes/my-form.js
+    ```javascript
+    routeHistory: service(),
+
+    afterModel(model, transition) {
+      this._super(...arguments);
+
+      const id = get(model, 'id') || get(model, 'base.id') || null;
+      const context = id ? [id] : [];
+      const { intent } = transition;
+      const routeName = intent.name
+        ? intent.name
+        : transition.targetName;
+
+      let historyLength = get(this, 'routeHistory._routeHistory').length;
+      if ((historyLength > 0) && (get(this, 'routeHistory._routeHistory')[historyLength - 1].contexts[0]  != context[0])
+        || historyLength == 0) {
+        this.get('routeHistory').pushRoute(routeName, context, intent.queryParams);
+      }
+    }
+    ```
+
   @class FlexberryCheckboxComponent
   @extends FlexberryBaseComponent
 */
 
 export default Component.extend({
+
+  routeHistory: service(),
+
   /**
     Menu used in template.
     @property menu
@@ -120,6 +145,22 @@ export default Component.extend({
       document.getElementsByClassName(scrollClass)[0].scrollTop;
       _this.setActiveTab();
     });
+
+    let historyLength = get(this, 'routeHistory')._routeHistory.length;
+    let lastRoute = this.routeHistory._routeHistory[historyLength - 1];
+    if (lastRoute && lastRoute.queryParams) {
+      try {
+        lastRoute.queryParams.forEach((item) => {
+          if (item.active) {
+            this.setCurrentMenuItem(item);
+            return;
+          }
+        });
+      }
+      catch (error) {
+        return;
+      }
+    }
   },
 
   setActiveTab(currentTab, scrollToActiveTab) {
@@ -183,7 +224,9 @@ export default Component.extend({
       razdel.children.forEach((item) => {
         if (item.gruppaPolejVvodaName == tabName) {
           activeRazdel = true;
-          return;
+          set(item, 'active', true);
+        } else {
+          set(item, 'active', false);
         }
       });
       set(razdel, 'active', activeRazdel);
@@ -219,6 +262,15 @@ export default Component.extend({
     });
     set(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
+  },
+
+  didDestroyElement() {
+    this._super(...arguments);
+
+    let historyLength = get(this, 'routeHistory._routeHistory.length');
+    let lastRoute = get(this, 'routeHistory._routeHistory')[historyLength - 1];
+    let _menu = get(this, '_menu');
+    get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
   },
 
   actions: {

@@ -10,4 +10,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    @default 'ember-flexberry-dummy-application-user-list'
   */
    parentRoute: 'components-examples/highload-edit-form-menu/index',
+
+   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 });

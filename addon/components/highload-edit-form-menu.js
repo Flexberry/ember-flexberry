@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { get, set } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 
 /**
   Highload edit menu component.
@@ -66,6 +67,8 @@ export default Component.extend({
   */
   _menu: null,
 
+  showAllFormsButton: false,
+
   store: service('store'),
   classNames: ['highloaded-menu-container'],
   /**
@@ -114,6 +117,7 @@ export default Component.extend({
     });
 
     set(this, 'prevTab', this._menu[0]);
+    this._afterEditForm();
   },
 
   prevTab: undefined,
@@ -121,8 +125,6 @@ export default Component.extend({
   nextTab: undefined,
 
   _currentTab: undefined,
-
-  showAllFormsButton: false,
 
   /**
    * Использовать в вёрстке ui grid.
@@ -145,22 +147,26 @@ export default Component.extend({
       document.getElementsByClassName(scrollClass)[0].scrollTop;
       _this.setActiveTab();
     });
+  },
 
-    let historyLength = get(this, 'routeHistory')._routeHistory.length;
-    let lastRoute = this.routeHistory._routeHistory[historyLength - 1];
-    if (lastRoute && lastRoute.queryParams) {
-      try {
-        lastRoute.queryParams.forEach((item) => {
-          if (item.active) {
-            this.setCurrentMenuItem(item);
-            return;
-          }
-        });
+  _afterEditForm() {
+    scheduleOnce('afterRender', this, function() {
+      let historyLength = get(this, 'routeHistory')._routeHistory.length;
+      let lastRoute = this.routeHistory._routeHistory[historyLength - 1];
+      if (lastRoute && lastRoute.queryParams) {
+        try {
+          lastRoute.queryParams.forEach((item) => {
+            if (item.active) {
+              this.setCurrentMenuItem(item);
+              return;
+            }
+          });
+        }
+        catch (error) {
+          return;
+        }
       }
-      catch (error) {
-        return;
-      }
-    }
+    });
   },
 
   setActiveTab(currentTab, scrollToActiveTab) {
@@ -170,7 +176,7 @@ export default Component.extend({
 
     let groups = $('.gruppaPolejVvoda');
     groups = Object.values(groups);
-    let highestTabY = groups[0].getBoundingClientRect().top;
+    let highestTabY = groups[0] ? groups[0].getBoundingClientRect().top : undefined;
     let highestTab = groups[0];
 
     if (!this.showAllFormsButton) {
@@ -207,12 +213,12 @@ export default Component.extend({
       } else {
         let _menu = get(this, '_menu');
         _menu.forEach(child => {
-          set(child, 'active', child.gruppaPolejVvodaName == highestTab.dataset.tab);
+          set(child, 'active', child.selector == highestTab.dataset? highestTab.dataset.tab : undefined);
         });
         set(this, '_menu', _menu);
       }
       highestTab.classList.add('highlighted');
-      this.setMenuForTemplate(highestTab.dataset.tab);
+      this.setMenuForTemplate(highestTab.dataset? highestTab.dataset.tab : undefined);
     }
   },
 
@@ -222,7 +228,7 @@ export default Component.extend({
     menu.forEach((razdel) => {
       let activeRazdel = false;
       razdel.children.forEach((item) => {
-        if (item.gruppaPolejVvodaName == tabName) {
+        if (String(item.selector) == String(tabName)) {
           activeRazdel = true;
           set(item, 'active', true);
         } else {
@@ -237,12 +243,12 @@ export default Component.extend({
   setCurrentMenuItem(currentTab) {
     set(this, '_currentTab', currentTab);
     set(currentTab, 'active', true);
-    this.setMenuForTemplate(currentTab.gruppaPolejVvodaName);
+    this.setMenuForTemplate(currentTab.selector);
 
     // Меню для контроллера
     let _menu = get(this, '_menu');
     _menu.forEach((child, key) => {
-      if (child.gruppaPolejVvodaName == currentTab.gruppaPolejVvodaName) {
+      if (child.selector == currentTab.selector) {
         if (key + 1 < _menu.length) {
           set(this, 'nextTab', _menu[key + 1]);
         } else {

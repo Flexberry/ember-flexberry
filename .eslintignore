@@ -58,6 +58,7 @@ addon/components/flexberry-treenode.js
 addon/components/flexberry-validationmessage.js
 addon/components/flexberry-validationsummary.js
 addon/components/form-load-time-tracker.js
+addon/components/highload-edit-form-menu.js
 addon/components/groupedit-toolbar.js
 addon/components/mobile/flexberry-file.js
 addon/components/mobile/flexberry-groupedit.js

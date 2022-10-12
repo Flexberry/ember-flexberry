@@ -276,7 +276,9 @@ export default Component.extend({
     let historyLength = get(this, 'routeHistory._routeHistory.length');
     let lastRoute = get(this, 'routeHistory._routeHistory')[historyLength - 1];
     let _menu = get(this, '_menu');
-    get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
+    if (lastRoute) {
+      get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
+    }
   },
 
   actions: {

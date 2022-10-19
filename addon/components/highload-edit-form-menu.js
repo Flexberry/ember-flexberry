@@ -2,7 +2,7 @@ import { A, isArray } from '@ember/array';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { get, set, trySet } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 
 /**
@@ -214,6 +214,9 @@ export default Component.extend({
         }
       });
 
+      if (this.isDestroyed) {
+        return;
+      }
       if (scrollToActiveTab) {
         tabContentFocus.scrollIntoView(false);
         highestTab = tabContentFocus;
@@ -222,12 +225,7 @@ export default Component.extend({
         _menu.forEach(child => {
           set(child, 'active', child.selector == highestTab.dataset? highestTab.dataset.tab : undefined);
         });
-        try {
-          set(this, '_menu', _menu);
-        }
-        catch (error) {
-          return;
-        }
+        trySet(this, '_menu', _menu);
       }
       highestTab.classList.add('highlighted');
       this.setMenuForTemplate(highestTab.dataset? highestTab.dataset.tab : undefined);
@@ -278,7 +276,10 @@ export default Component.extend({
         set(child, 'active', false);
       }
     });
-    set(this, '_menu', _menu);
+    if (this.isDestroyed) {
+      return;
+    }
+    trySet(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
   },
 
@@ -292,7 +293,7 @@ export default Component.extend({
       get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
     }
     const scrollClass = get(this, 'scrollClass');
-    document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler, [{once: true}]);
+    document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler);
   },
 
   actions: {

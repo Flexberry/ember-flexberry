@@ -140,13 +140,20 @@ export default Component.extend({
    */
   scrollClass: 'full height',
 
+  wheelHandler: undefined,
+
   didRender() {
     let _this = this;
     const scrollClass = get(this, 'scrollClass');
-    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', function() {
-      document.getElementsByClassName(scrollClass)[0].scrollTop;
-      _this.setActiveTab();
-    });
+
+    set(this, 'wheelHandler', this.wheelEvent.bind(_this));
+    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', this.wheelHandler, [{once: true}]);
+  },
+
+  wheelEvent() {
+    const scrollClass = get(this, 'scrollClass');
+    document.getElementsByClassName(scrollClass)[0].scrollTop;
+    this.setActiveTab();
   },
 
   _afterEditForm() {
@@ -215,7 +222,12 @@ export default Component.extend({
         _menu.forEach(child => {
           set(child, 'active', child.selector == highestTab.dataset? highestTab.dataset.tab : undefined);
         });
-        set(this, '_menu', _menu);
+        try {
+          set(this, '_menu', _menu);
+        }
+        catch (error) {
+          return;
+        }
       }
       highestTab.classList.add('highlighted');
       this.setMenuForTemplate(highestTab.dataset? highestTab.dataset.tab : undefined);
@@ -279,6 +291,8 @@ export default Component.extend({
     if (lastRoute) {
       get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
     }
+    const scrollClass = get(this, 'scrollClass');
+    document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler, [{once: true}]);
   },
 
   actions: {

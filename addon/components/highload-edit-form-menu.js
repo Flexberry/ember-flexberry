@@ -2,7 +2,7 @@ import { A, isArray } from '@ember/array';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { get, set, trySet } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 
 /**
@@ -140,13 +140,20 @@ export default Component.extend({
    */
   scrollClass: 'full height',
 
+  wheelHandler: undefined,
+
   didRender() {
     let _this = this;
     const scrollClass = get(this, 'scrollClass');
-    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', function() {
-      document.getElementsByClassName(scrollClass)[0].scrollTop;
-      _this.setActiveTab();
-    });
+
+    set(this, 'wheelHandler', this.wheelEvent.bind(_this));
+    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', this.wheelHandler, [{once: true}]);
+  },
+
+  wheelEvent() {
+    const scrollClass = get(this, 'scrollClass');
+    document.getElementsByClassName(scrollClass)[0].scrollTop;
+    this.setActiveTab();
   },
 
   _afterEditForm() {
@@ -207,6 +214,9 @@ export default Component.extend({
         }
       });
 
+      if (this.isDestroyed) {
+        return;
+      }
       if (scrollToActiveTab) {
         tabContentFocus.scrollIntoView(false);
         highestTab = tabContentFocus;
@@ -215,7 +225,7 @@ export default Component.extend({
         _menu.forEach(child => {
           set(child, 'active', child.selector == highestTab.dataset? highestTab.dataset.tab : undefined);
         });
-        set(this, '_menu', _menu);
+        trySet(this, '_menu', _menu);
       }
       highestTab.classList.add('highlighted');
       this.setMenuForTemplate(highestTab.dataset? highestTab.dataset.tab : undefined);
@@ -266,7 +276,10 @@ export default Component.extend({
         set(child, 'active', false);
       }
     });
-    set(this, '_menu', _menu);
+    if (this.isDestroyed) {
+      return;
+    }
+    trySet(this, '_menu', _menu);
     this.setActiveTab(currentTab, true);
   },
 
@@ -279,6 +292,8 @@ export default Component.extend({
     if (lastRoute) {
       get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
     }
+    const scrollClass = get(this, 'scrollClass');
+    document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler);
   },
 
   actions: {

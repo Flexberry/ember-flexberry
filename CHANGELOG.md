@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Batch save on non separate route.
 
 ## [3.8.0-beta.7] - 2022-10-19
 ### Fixed

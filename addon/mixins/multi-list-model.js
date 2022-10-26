@@ -83,6 +83,7 @@ export default Ember.Mixin.create({
               sorting: settings.sorting,
               filter: settings.filter,
               filterCondition: settings.filterCondition,
+              excludeFromSearchColumns: settings.excludeFromSearchColumns,
               filters: settings.filtersPredicate,
               predicate: limitPredicate,
               advLimit: advLimit,

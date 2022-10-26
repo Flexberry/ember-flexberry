@@ -262,6 +262,9 @@ export default {
       },
       type: {
         __caption__: 'Тип предложения',
+        name: {
+          __caption__: 'Тип предложения'
+        },
         moderated: {
           __caption__: 'Одобрено'
         },
@@ -274,6 +277,9 @@ export default {
       },
       author: {
         __caption__: 'Автор',
+        name: {
+          __caption__: 'Автор'
+        },
         eMail: {
           __caption__: 'Почта'
         }

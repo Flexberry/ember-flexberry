@@ -767,7 +767,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Limit function example',
-          'titleLookup': 'Master'
+          'titleLookup': 'Master',
+          'fields-name': 'Field name',
+          'search-by-name': 'Search by field'
         },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
@@ -860,7 +862,9 @@ Ember.$.extend(true, translations, {
           'caption': 'List of children Type'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter',
+          'fields-name': 'Field name',
+          'search-by-name': 'Search by field'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'

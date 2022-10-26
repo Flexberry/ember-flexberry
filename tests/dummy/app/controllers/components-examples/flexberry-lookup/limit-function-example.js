@@ -5,6 +5,11 @@ import { Query } from 'ember-flexberry-data';
 const { StringPredicate } = Query;
 
 export default EditFormController.extend({
+
+  excludeFromSearchColumnsTest: [],
+
+  modelFieldsForSettingExclusion: ['name', 'moderated'],
+
   /**
     Current predicate to limit accessible values for lookup.
 
@@ -45,6 +50,25 @@ export default EditFormController.extend({
       }
 
       return undefined;
+    },
+
+    /**
+      Chenge excludeFromSearchColumns.
+
+      @method selectExcludeField
+      @param {Object} items items chenge setting.
+      @param {Object} value new prop value.
+    */
+    selectExcludeField(item, value) {
+      let excludeFromSearchColumns = this.get('excludeFromSearchColumnsTest');
+      if (value.checked) {
+        let index = excludeFromSearchColumns.indexOf(item);
+        if (index !== -1) {
+          excludeFromSearchColumns.splice(index, 1);
+        }
+      } else {
+        excludeFromSearchColumns.push(item);
+      }
     }
   }
 });

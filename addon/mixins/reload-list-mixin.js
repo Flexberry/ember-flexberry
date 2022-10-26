@@ -131,7 +131,8 @@ export default Ember.Mixin.create({
 
     const filter = reloadOptions.filter;
     const filterCondition = reloadOptions.filterCondition;
-    const filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
+    const excludeFromSearchColumns = reloadOptions.excludeFromSearchColumns;
+    const filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition, excludeFromSearchColumns }) : undefined;
     allPredicates.addObject(filterPredicate);
     allPredicates = allPredicates.compact();
     const resultPredicate = allPredicates.length > 1 ?
@@ -191,10 +192,15 @@ export default Ember.Mixin.create({
     @param {String} attribute.type Type of attribute, example `string` or `number`.
     @param {String} filter Pattern for search.
     @param {String} filterCondition Condition for predicate, can be `or` or `and`.
+    @param {Array} excludeFromSearchColumns Array columns not to bu searched.
     @return {BasePredicate|null} Object class of `BasePredicate` or `null`, if not need filter.
     @for ListFormRoute
   */
-  predicateForAttribute(attribute, filter, filterCondition) {
+  predicateForAttribute(attribute, filter, filterCondition, excludeFromSearchColumns) {
+    if (!Ember.isNone(excludeFromSearchColumns) && Ember.isArray(excludeFromSearchColumns) && Ember.A(excludeFromSearchColumns).includes(attribute.name)) {
+      return null;
+    }
+
     if (attribute.options.hidden && !attribute.options.displayMemberPath) {
       return null;
     }
@@ -259,7 +265,7 @@ export default Ember.Mixin.create({
     if (params.filter) {
       let attributes = this._attributesForFilter(modelProjection, this.store);
       attributes.forEach((attribute) => {
-        let predicate = this.predicateForAttribute(attribute, params.filter, params.filterCondition);
+        let predicate = this.predicateForAttribute(attribute, params.filter, params.filterCondition, params.excludeFromSearchColumns);
         if (predicate) {
           predicates.push(predicate);
         }

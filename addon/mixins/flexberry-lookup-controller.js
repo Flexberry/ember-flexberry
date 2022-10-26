@@ -140,6 +140,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         predicate: undefined,
         modelToLookup: undefined,
         lookupWindowCustomPropertiesData: undefined,
+        excludeFromSearchColumns: undefined,
         componentName: undefined,
         folvComponentName: undefined,
         notUseUserSettings: undefined,
@@ -171,13 +172,14 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
+      let excludeFromSearchColumns = options.excludeFromSearchColumns;
       let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
       let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
       let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
-      
+
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
 
@@ -203,7 +205,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       let sorting = userSettings.sorting || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
-      
+
 
       // Get relation property from model.
       let relation = relationshipsByName.get(relationName);
@@ -228,6 +230,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
+        excludeFromSearchColumns: excludeFromSearchColumns,
         hierarchicalAttribute: hierarchicalAttribute,
         hierarchyPaging: hierarchyPaging,
 
@@ -435,6 +438,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: undefined,
       filterCondition: undefined,
       predicate: undefined,
+      excludeFromSearchColumns: undefined,
       hierarchicalAttribute: undefined,
       hierarchyPaging: false,
 
@@ -476,6 +480,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      excludeFromSearchColumns: reloadData.excludeFromSearchColumns,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging
@@ -503,6 +508,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      excludeFromSearchColumns: reloadData.excludeFromSearchColumns,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging,

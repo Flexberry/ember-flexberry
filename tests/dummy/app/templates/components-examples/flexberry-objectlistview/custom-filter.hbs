@@ -1,5 +1,30 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.components-examples.flexberry-objectlistview.custom-filter.caption"}}</h3>
+
+<div class="row">
+  <table class="ui collapsing table">
+    <thead>
+      <tr>
+        <th>{{t "forms.components-examples.flexberry-objectlistview.custom-filter.fields-name"}}</th>
+        <th>{{t "forms.components-examples.flexberry-objectlistview.custom-filter.search-by-name"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each modelFieldsForSettingExclusion as |field|}}
+        <tr>
+          <td>{{t (concat "models." modelName ".projections." modelProjection.projectionName "." field ".__caption__")}}</td>
+          <td>
+            {{flexberry-checkbox
+              value=true
+              onChange=(action 'selectExcludeField' field bubbles=false)
+            }}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <div class="row">
   {{flexberry-objectlistview
     content=model

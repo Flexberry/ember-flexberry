@@ -93,6 +93,14 @@ ErrorableRouteMixin, {
   advLimit: Ember.inject.service(),
 
   /**
+    Array columns not to bu searched.
+
+    @property excludeFromSearchColumns
+    @type Array
+  */
+  excludeFromSearchColumns: undefined,
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -197,6 +205,7 @@ ErrorableRouteMixin, {
           filter: params.filter,
           filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
+          excludeFromSearchColumns: this.get('excludeFromSearchColumns'),
           predicate: limitPredicate,
           advLimit: advLimit,
           hierarchicalAttribute: hierarchicalAttribute,

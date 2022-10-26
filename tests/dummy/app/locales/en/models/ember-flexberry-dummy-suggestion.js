@@ -262,6 +262,9 @@ export default {
       },
       type: {
         __caption__: 'Type',
+        name: {
+          __caption__: 'Type'
+        },
         moderated: {
           __caption__: 'Moderated'
         },
@@ -274,6 +277,9 @@ export default {
       },
       author: {
         __caption__: 'Author',
+        name: {
+          __caption__: 'Author'
+        },
         eMail: {
           __caption__: 'Email'
         }

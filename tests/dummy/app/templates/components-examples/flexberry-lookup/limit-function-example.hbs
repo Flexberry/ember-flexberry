@@ -1,4 +1,29 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.limit-function-example.caption"}}</h3>
+
+<div class="row">
+  <table class="ui collapsing table">
+    <thead>
+      <tr>
+        <th>{{t "forms.components-examples.flexberry-lookup.limit-function-example.fields-name"}}</th>
+        <th>{{t "forms.components-examples.flexberry-lookup.limit-function-example.search-by-name"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each modelFieldsForSettingExclusion as |field|}}
+        <tr>
+          <td>{{t (concat "models.ember-flexberry-dummy-suggestion-type.projections.SettingLookupExampleView." field ".__caption__")}}</td>
+          <td>
+            {{flexberry-checkbox
+              value=true
+              onChange=(action 'selectExcludeField' field bubbles=false)
+            }}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     {{flexberry-lookup
@@ -10,6 +35,7 @@
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
+      excludeFromSearchColumns=excludeFromSearchColumnsTest
       lookupWindowCustomProperties=(action 'getLookupFolvProperties')
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true

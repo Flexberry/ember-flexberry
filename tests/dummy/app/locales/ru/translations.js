@@ -772,7 +772,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Функция ограничения',
-          'titleLookup': 'Мастер'
+          'titleLookup': 'Мастер',
+          'fields-name': 'Имя поля',
+          'search-by-name': 'Поиск по полю'
         },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
@@ -865,7 +867,9 @@ Ember.$.extend(true, translations, {
           'caption': 'Список детейлов Тип предложения'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Настройка фильтра'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра',
+          'fields-name': 'Имя поля',
+          'search-by-name': 'Поиск по полю'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'

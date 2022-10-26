@@ -322,6 +322,14 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   autofillByLimit: false,
 
   /**
+    Array columns not to bu searched.
+
+    @property excludeFromSearchColumns
+    @type Array
+  */
+  excludeFromSearchColumns: undefined,
+
+  /**
     Observer on 'autofillByLimit'.
 
     @property _autofillByLimitObserver
@@ -534,6 +542,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'excludeFromSearchColumns',
     'updateLookupAction',
     'notUseUserSettings',
     '_modalDialogSettings',
@@ -550,6 +559,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         componentName: this.get('componentName'),
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
+        excludeFromSearchColumns: this.get('excludeFromSearchColumns'),
         folvComponentName: this.get('folvComponentName'),
         modalDialogSettings: this.get('_modalDialogSettings'),
         updateLookupAction: this.get('updateLookupAction'),

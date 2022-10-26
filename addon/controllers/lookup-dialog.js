@@ -193,6 +193,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         filters: this._filtersPredicate(),
         filter: this.get('filter'),
         filterCondition: this.get('filterCondition'),
+        excludeFromSearchColumns: this.get('excludeFromSearchColumns'),
         predicate: this.get('predicate'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         hierarchyPaging: this.get('hierarchyPaging'),
@@ -273,6 +274,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       this.set('sort', undefined);
       this.set('filters', undefined);
       this.set('filter', undefined);
+      this.set('excludeFromSearchColumns', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);
 

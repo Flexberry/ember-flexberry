@@ -9,6 +9,8 @@ export default ListFormController.extend({
   queryParams: ['filterCondition'],
   filterCondition: undefined,
 
+  modelFieldsForSettingExclusion: ['address', 'type.name', 'author.name', 'author.eMail'],
+
   /**
     Observes current state of FilterCondition parameter
     & set right filter option after reload page.
@@ -82,5 +84,26 @@ export default ListFormController.extend({
           return ['eq', 'neq'];
       }
     },
+
+    /**
+      Chenge excludeFromSearchColumns.
+
+      @method selectExcludeField
+      @param {Object} items items chenge setting.
+      @param {Object} value new prop value.
+    */
+    selectExcludeField(item, value) {
+      let excludeFromSearchColumns = this.get('excludeFromSearchColumns');
+      if (value.checked) {
+        let index = excludeFromSearchColumns.indexOf(item);
+        if (index !== -1) {
+          excludeFromSearchColumns.splice(index, 1);
+        }
+      } else {
+        excludeFromSearchColumns.push(item);
+      }
+
+      this.send('updateExcludeFromSearchColumns', excludeFromSearchColumns);
+    }
   }
 });

@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.8.0-beta.2] - 2022-10-26
+### Fixed
+* The `flexberry-lookup` component:
+    * Default user settings usage.
+
+## [2.8.0-beta.1] - 2022-10-26
+### Added
+* The `flexberry-file` component:
+    * Drag-and-drop support.
+
 ## [2.7.0] - 2022-05-17
 ### Added
 * The `flexberry-lookup` component:

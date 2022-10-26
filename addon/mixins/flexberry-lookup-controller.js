@@ -196,6 +196,15 @@ export default Ember.Mixin.create(ReloadListMixin, {
         userSettings = userSettingsService.getCurrentUserSetting(folvComponentName);
       }
 
+      // Get relation property from model.
+      let relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+      }
+
+      // Get property type name.
+      let relatedToType = relation.type;
+
       if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
         const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + relatedToType);
         if (!Ember.isNone(userSettingValue)) {

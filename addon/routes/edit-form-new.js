@@ -68,6 +68,10 @@ export default EditFormRoute.extend({
       }
 
       if (modelSelectedDetail) {
+        if (modelSelectedDetail.get('isNew')) {
+          modelSelectedDetail.set('id', generateUniqueId());
+        }
+
         return this.returnNewModel(modelSelectedDetail);
       }
 

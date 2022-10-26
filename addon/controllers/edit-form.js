@@ -486,7 +486,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
             transitionQuery.queryParams.recordAdded = true;
             transitionQuery.queryParams.parentRoute = this.get('parentRoute');
             transitionQuery.queryParams.parentRouteRecordId = this.get('parentRouteRecordId');
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+
+            // Refresh form model after save. For batch update.
+            const store = this.get('store');
+            const modelName = this.get('modelProjection').modelName;
+            const modelId = this.get('model.id');
+            const modelAfterSaveRefreshed = store.peekRecord(modelName , modelId);
+
+            this.transitionToRoute(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
           }
         }
       };
@@ -623,11 +630,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @method onSaveActionFulfilled.
   */
   onSaveActionFulfilled() {
-    const store = this.get('store');
-    const modelName = this.get('modelProjection').modelName;
-    const modelId = this.get('model.id');
-    const modelAfterSaveFromStore = store.peekRecord(modelName , modelId);
-    this.set('model', modelAfterSaveFromStore);
   },
 
   /**

@@ -215,16 +215,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let sorting = userSettings.sorting || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
-
-      // Get relation property from model.
-      let relation = relationshipsByName.get(relationName);
-      if (!relation) {
-        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-      }
-
-      // Get property type name.
-      let relatedToType = relation.type;
-
       // Lookup
       let lookupSettings = this.get('lookupSettings');
       Ember.assert('Lookup settings are undefined.', lookupSettings);

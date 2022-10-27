@@ -297,7 +297,7 @@ module.exports = {
         { name: 'node-uuid', target: '^1.4.7' },
         { name: 'flatpickr', target: '4.6.1' },
         { name: 'autoprefixer', target: '^6' },
-        { name: 'ember-flexberry-themes' }
+        { name: 'ember-flexberry-themes', target: '0.1.0-beta.20' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

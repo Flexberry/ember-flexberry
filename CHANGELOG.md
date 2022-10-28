@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.9] - 2022-10-28
+### Fixed
+* Locks creating.
+
 ## [3.8.0-beta.8] - 2022-10-27
 ### Fixed
 * Batch save for detail on separate route.

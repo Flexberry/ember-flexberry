@@ -99,7 +99,7 @@ export default Mixin.create({
           this.store.queryRecord('new-platform-flexberry-services-lock', builder.build()).then((lock) => {
             if (!lock) {
               this.store.createRecord('new-platform-flexberry-services-lock', {
-                lockKey: params.id,
+                id: params.id,
                 userName: userService.getCurrentUserName(),
                 lockDate: new Date(),
               }).save().then((lock) => {

@@ -1,4 +1,5 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
+import { set } from '@ember/object';
 
 export default EditFormRoute.extend({
 /**
@@ -22,9 +23,9 @@ export default EditFormRoute.extend({
     const localizedType = store.createRecord('ember-flexberry-dummy-localized-suggestion-type');
     const localization = store.createRecord('ember-flexberry-dummy-localization');
 
-    localization.set('name', 'testLoc');
-    localizedType.set('name', 'test');
-    localizedType.set('localization', localization);
+    set(localization, 'name', 'testLoc');
+    set(localizedType, 'name', 'test');
+    set(localizedType, 'localization', localization);
     suggetionTypeRecord.localizedTypes.addObject(localizedType);
 
     return suggetionTypeRecord;

@@ -340,6 +340,10 @@ $.extend(true, translations, {
               'caption': 'Example for autocomplete with order',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Example for autocomplete lookup in groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
               'title': ''

@@ -340,6 +340,10 @@ $.extend(true, translations, {
               'caption': 'Пример сортировки при автокомплите',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Пример лукапа с автокомплитом в groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''

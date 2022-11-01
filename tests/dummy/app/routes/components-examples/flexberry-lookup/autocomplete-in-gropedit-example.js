@@ -16,8 +16,7 @@ export default EditFormRoute.extend({
 
     @method model
    */
-  /* eslint-disable no-unused-vars */
-  model(params) {
+  model() {
     const store = this.get('store');
     const suggetionTypeRecord = store.createRecord('ember-flexberry-dummy-suggestion-type');
     const localizedType = store.createRecord('ember-flexberry-dummy-localized-suggestion-type');
@@ -30,5 +29,4 @@ export default EditFormRoute.extend({
 
     return suggetionTypeRecord;
   }
-  /* eslint-enable no-unused-vars */
 });

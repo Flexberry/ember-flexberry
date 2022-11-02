@@ -142,18 +142,21 @@ export default Component.extend({
 
   wheelHandler: undefined,
 
-  didRender() {
+  didInsertElement() {
+    this._super(...arguments);
     let _this = this;
     const scrollClass = get(this, 'scrollClass');
 
     set(this, 'wheelHandler', this.wheelEvent.bind(_this));
-    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', this.wheelHandler, [{once: true}]);
+    document.getElementsByClassName(scrollClass)[0].addEventListener('wheel', this.wheelHandler);
   },
 
   wheelEvent() {
-    const scrollClass = get(this, 'scrollClass');
-    document.getElementsByClassName(scrollClass)[0].scrollTop;
-    this.setActiveTab();
+    if (this.showAllFormsButton) {
+      const scrollClass = get(this, 'scrollClass');
+      document.getElementsByClassName(scrollClass)[0].scrollTop;
+      this.setActiveTab();
+    }
   },
 
   _afterEditForm() {
@@ -294,6 +297,7 @@ export default Component.extend({
     }
     const scrollClass = get(this, 'scrollClass');
     document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler);
+    set(this, 'wheelHandler', undefined);
   },
 
   actions: {

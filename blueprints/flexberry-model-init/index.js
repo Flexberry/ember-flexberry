@@ -59,6 +59,8 @@ module.exports = {
             parentExternal: modelBlueprint.parentExternal,
             name: modelBlueprint.name,
             projections: modelBlueprint.projections,
+            additionalModelMixin: additionalModelMixin,
+            additionalModelMixinImport: additionalModelMixinImport
         };
     }
 };

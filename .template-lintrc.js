@@ -302,6 +302,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/highload-edit-form-menu",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/object-list-view-cell",
       "only": [
         "eol-last"
@@ -507,13 +514,6 @@ module.exports = {
         "self-closing-void-elements",
         "no-inline-styles",
         "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
-      "only": [
-        "quotes"
-        "eol-last"
       ]
     },
     {
@@ -818,6 +818,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/base-operations",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/delete-with-details",
       "only": [
         "eol-last"
       ]
@@ -1261,13 +1273,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-toggler/settings-example",
       "only": [
         "block-indentation"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-tree/settings-example",
-      "only": [
-        "eol-last",
-        "link-href-attributes"
       ]
     },
     {

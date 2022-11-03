@@ -3,102 +3,108 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
 
-## [2.7.0-beta.6] - 2022-02-08
+## [3.8.0-beta.9] - 2022-10-28
+### Fixed
+* Locks creating.
+
+## [3.8.0-beta.8] - 2022-10-27
+### Fixed
+* Batch save for detail on separate route.
+
+## [3.8.0-beta.7] - 2022-10-19
+### Fixed
+* The `highload-edit-form-menu` component errors.
+
+## [3.8.0-beta.6] - 2022-10-11
+### Fixed
+* The `highload-edit-form-menu` component errors.
+
+## [3.8.0-beta.5] - 2022-10-07
+### Added
+* `route-history` service.
+
+### Fixed
+* `flexberry-groupedit`'s custom buttons in row styles.
+
+## [3.8.0-beta.4] - 2022-10-05
+### Added
+* `flexberry-groupedit`'s custom buttons in row.
+
+## [3.8.0-beta.3] - 2022-09-25
+### Fixed
+* `flexberry-simpledatetime` current date manual enter.
+
+## [3.8.0-beta.2] - 2022-09-16
+### Added
+* The `highload-edit-form-menu` component.
+
+### Fixed
+* Filter for `decimal` and `between`.
+
+## [3.8.0-beta.1] - 2022-08-24
+### Fixed
+* The `flexberry-objectlistview` component:
+    * `simpledatetime` in filter.
+
+## [3.8.0-beta.0] - 2022-07-07
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.8.0-beta.0`.
+
+## [3.7.0] - 2022-05-17
+### Added
+* Changes up to `2.7.0` version.
+* Lookup's sidepage mode in generated app.
+* Optional support for `ember-validations` addon.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.7.0`.
+* If not specified, default locale would be browser's or system locale.
+* En locale generates from captions.
+
+### Fixed
+* En locale for application menu.
+* Filtering and sorting on list forms in generated application.
+* En locale for application caption and application title.
+* Settings getting in `user-setting` and `adv-limit` services.
+* Work with empty current app page in `adv-limit` services.
+* Dropdown value as enum with empty string element.
+* Null content check in `object-list-view`.
+
+## [2.7.0] - 2022-05-17
 ### Added
 * The `flexberry-lookup` component:
     * Option `emptyValueAtEnd` for the dropdown mode.
-
-## [2.7.0-beta.5] - 2022-02-01
-### Added
 * Optional `ember-cp-validations` support.
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+* Update dependency on `ember-flexberry-data` to version `2.7.0`.
 
 ### Fixed
 * The `flexberry-objectlistview` component:
     * Using of `perPage` setting at `developerUserSettings`.
 * Validation for deleted records in `flexberry-groupedit` on `edit-form`.
-
-## [3.7.0-beta.9] - 2022-01-18
-### Fixed
-* Null content check in `object-list-view`.
-
-## [3.7.0-beta.8] - 2022-01-13
-### Added
-* Optional support for `ember-validations` addon.
-
-### Fixed
-* Dropdown value as enum with empty string element.
-
-## [3.7.0-beta.7] - 2021-12-14
-### Fixed
-* Work with empty current app page in `adv-limit` services.
-
-## [3.7.0-beta.6] - 2021-11-25
-### Fixed
-* Settings getting in `user-setting` and `adv-limit` services.
-
-## [3.7.0-beta.5] - 2021-11-16
-### Added
-* Lookup's sidepage mode in generated app.
-
-## [3.7.0-beta.4] - 2021-11-11
-### Fixed
-* Filtering and sorting on list forms in generated application.
-* En locale for application caption and application title.
-
-## [3.7.0-beta.3] - 2021-11-09
-### Fixed
-* En locale for application menu.
-
-## [3.7.0-beta.2] - 2021-11-02
-### Changed
-* En locale generates from captions.
-
-## [3.7.0-beta.1] - 2021-10-29
-### Changed
-* If not specified, default locale would be browser's or system locale.
-
-## [3.7.0-beta.0] - 2021-10-12
-### Added
-* Changes from `2.7.0-beta.0` to `2.7.0-beta.4` versions.
-
-## [2.7.0-beta.4] - 2021-10-11
-### Fixed
 * The `flexberry-groupedit` component:
     * Optimized sort function.
-
-### Breaking changes
-* Deleted `custom-inflector-rules`.
-
-## [2.7.0-beta.3] - 2021-09-28
-### Added
-* The `fixable-component` mixin:
-    * `parentComponent` property.
-
-## [2.7.0-beta.2] - 2021-09-21
-### Fixed
 * The `flexberry-groupedit` component:
     * Lookup's autocomplite and dropdown groupedit container overflow.
 
-## [2.7.0-beta.1] - 2021-09-20
-### Changed
-* The `flexberry-objectlistview` and `flexberry-groupedit` components:
-    * Rows can be selected in readonly mode.
-
-## [2.7.0-beta.0] - 2021-07-18
-### Added
-* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
-* The `validationModel` property of `edit-form` controller.
-
-### Deprecated
-* The `validationObject` property of `edit-form` controller.
-
 ### Breaking changes
+* Deleted `custom-inflector-rules`.
 * The `flexberry-datepicker` component was removed.
 * The `daterangepicker` `bower`-package was removed from dependencies.
 * The `moment` `bower`-package was added to dependencies.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
 
 ## [3.6.1] - 2021-08-19
 ### Fixed

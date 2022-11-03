@@ -340,6 +340,10 @@ $.extend(true, translations, {
               'caption': 'Пример сортировки при автокомплите',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Пример лукапа с автокомплитом в groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''
@@ -479,6 +483,10 @@ $.extend(true, translations, {
               'caption': 'Пример работы с настройками',
               'title': ''
             }
+          },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
           },
           'modal-dialog': {
             'caption': 'modal-dialog',
@@ -989,6 +997,10 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
           'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
+      },
+      'highload-edit-form-menu': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'title': '',
       },
       'modal-dialog': {
         'caption': 'Примеры использования компонента {{component}}',

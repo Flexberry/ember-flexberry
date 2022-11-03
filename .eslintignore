@@ -58,6 +58,7 @@ addon/components/flexberry-treenode.js
 addon/components/flexberry-validationmessage.js
 addon/components/flexberry-validationsummary.js
 addon/components/form-load-time-tracker.js
+addon/components/highload-edit-form-menu.js
 addon/components/groupedit-toolbar.js
 addon/components/mobile/flexberry-file.js
 addon/components/mobile/flexberry-groupedit.js
@@ -195,6 +196,7 @@ tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-delete-with-details-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js
@@ -241,6 +243,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-delete-button-in-row-t
 tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-e-form-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-olv-test.js
+tests/acceptance/components/flexberry-objectlistview/folv-delete-with-details-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-edit-button-in-row-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-from-edit-form-with-queryparams-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-getCellComponent-test.js
@@ -263,6 +266,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js
+tests/acceptance/components/highload-edit-form-menu-test.js
 tests/acceptance/components/readonly-test/edit-form-readonly-test.js
 tests/acceptance/edit-form-validation-test/execute-validation-test.js
 tests/acceptance/edit-form-validation-test/validation-base-test.js
@@ -289,7 +293,9 @@ tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/setting
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/base-operations.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/computable-field.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/custom-filter.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/date-format.js
@@ -410,7 +416,9 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-exa
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-relation-name.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/base-operations.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/computable-field.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/custom-filter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-objectlistview/date-format.js
@@ -491,6 +499,8 @@ tests/dummy/app/routes/components-examples/flexberry-simpleolv/toolbar-custom-bu
 tests/dummy/app/routes/components-examples/flexberry-textarea/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-textbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-toggler/ge-into-toggler-example.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/index.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/on-edit-form/user.js
 tests/dummy/app/routes/ember-flexberry-dummy-application-user-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-localization-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-multi-list-user-edit.js

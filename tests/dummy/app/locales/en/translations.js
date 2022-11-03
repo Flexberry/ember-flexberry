@@ -340,6 +340,10 @@ $.extend(true, translations, {
               'caption': 'Example for autocomplete with order',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Example for autocomplete lookup in groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
               'title': ''
@@ -479,6 +483,10 @@ $.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             }
+          },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
           },
           'modal-dialog': {
             'caption': 'modal-dialog',
@@ -984,6 +992,10 @@ $.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
+      },
+      'highload-edit-form-menu': {
+        'caption': 'Examples of using the {{component}} component',
+        'title': '',
       },
       'modal-dialog': {
         'caption': 'Examples of using the {{component}} component',

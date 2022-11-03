@@ -52,10 +52,10 @@ module.exports = {
 
     var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:6500\';\n\n' +
+      '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:6500\';\n' +
+      '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
     var env2after = 'EmberENV: {\n';
@@ -297,7 +297,7 @@ module.exports = {
         { name: 'node-uuid', target: '^1.4.7' },
         { name: 'flatpickr', target: '4.6.1' },
         { name: 'autoprefixer', target: '^6' },
-        { name: 'ember-flexberry-themes' }
+        { name: 'ember-flexberry-themes', target: '0.1.0-beta.20' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

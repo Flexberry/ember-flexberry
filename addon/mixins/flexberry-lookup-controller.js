@@ -177,7 +177,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       const updateLookupAction = options.updateLookupAction;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
-      
+
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
 
@@ -194,6 +194,15 @@ export default Ember.Mixin.create(ReloadListMixin, {
         userSettings = userSettingsService.getCurrentUserSetting(folvComponentName);
       }
 
+      // Get relation property from model.
+      let relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+      }
+
+      // Get property type name.
+      let relatedToType = relation.type;
+
       if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
         const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + relatedToType);
         if (!Ember.isNone(userSettingValue)) {
@@ -203,16 +212,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       let sorting = userSettings.sorting || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
-      
-
-      // Get relation property from model.
-      let relation = relationshipsByName.get(relationName);
-      if (!relation) {
-        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-      }
-
-      // Get property type name.
-      let relatedToType = relation.type;
 
       // Lookup
       let lookupSettings = this.get('lookupSettings');

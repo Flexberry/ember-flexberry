@@ -44,10 +44,10 @@ module.exports = {
 
     var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:6500\';\n\n' +
+      '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:6500\';\n' +
+      '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
     var env2after = 'EmberENV: {\n';

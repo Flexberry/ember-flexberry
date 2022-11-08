@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.10] - 2022-11-08
+### Added
+* Addon order with `ember-flexberry-data`.
+
+### Fixed
+* The `highload-edit-form-menu` component errors.
+
 ## [3.8.0-beta.9] - 2022-10-28
 ### Fixed
 * Locks creating.

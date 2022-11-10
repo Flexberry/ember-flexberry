@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.11] - 2022-11-10
+### Added
+* `flexberry-simpledatetime` custom date format support.
+
 ## [3.8.0-beta.10] - 2022-11-08
 ### Added
 * Addon order with `ember-flexberry-data`.

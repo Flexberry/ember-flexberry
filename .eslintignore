@@ -58,6 +58,7 @@ addon/components/flexberry-treenode.js
 addon/components/flexberry-validationmessage.js
 addon/components/flexberry-validationsummary.js
 addon/components/form-load-time-tracker.js
+addon/components/highload-edit-form-menu.js
 addon/components/groupedit-toolbar.js
 addon/components/mobile/flexberry-file.js
 addon/components/mobile/flexberry-groupedit.js
@@ -265,6 +266,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js
+tests/acceptance/components/highload-edit-form-menu-test.js
 tests/acceptance/components/readonly-test/edit-form-readonly-test.js
 tests/acceptance/edit-form-validation-test/execute-validation-test.js
 tests/acceptance/edit-form-validation-test/validation-base-test.js
@@ -497,6 +499,8 @@ tests/dummy/app/routes/components-examples/flexberry-simpleolv/toolbar-custom-bu
 tests/dummy/app/routes/components-examples/flexberry-textarea/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-textbox/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-toggler/ge-into-toggler-example.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/index.js
+tests/dummy/app/routes/components-examples/highload-edit-form-menu/on-edit-form/user.js
 tests/dummy/app/routes/ember-flexberry-dummy-application-user-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-localization-list.js
 tests/dummy/app/routes/ember-flexberry-dummy-multi-list-user-edit.js

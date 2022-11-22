@@ -5,6 +5,7 @@
 import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
 import { resolve } from 'rsvp';
+import { get } from '@ember/object';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import EditFormRoute from './edit-form';
@@ -68,6 +69,10 @@ export default EditFormRoute.extend({
       }
 
       if (modelSelectedDetail) {
+        if (get(modelSelectedDetail, 'isNew') && isNone(get(modelSelectedDetail, 'id'))) {
+          modelSelectedDetail.set('id', generateUniqueId());
+        }
+
         return this.returnNewModel(modelSelectedDetail);
       }
 

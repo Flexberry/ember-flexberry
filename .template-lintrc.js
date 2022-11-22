@@ -302,6 +302,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/highload-edit-form-menu",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/object-list-view-cell",
       "only": [
         "eol-last"
@@ -1266,13 +1273,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-toggler/settings-example",
       "only": [
         "block-indentation"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-tree/settings-example",
-      "only": [
-        "eol-last",
-        "link-href-attributes"
       ]
     },
     {

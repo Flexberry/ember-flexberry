@@ -460,6 +460,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/autocomplete-in-gropedit-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-in-groupedit-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-in-groupedit-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
@@ -648,6 +653,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-tree.settings-example.title'),
             children: null
           }]
+        }, {
+          link: 'components-examples/highload-edit-form-menu/index',
+          caption: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.title'),
+          children: null
         }, {
           link: 'components-examples/modal-dialog',
           caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),

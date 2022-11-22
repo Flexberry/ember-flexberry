@@ -70,6 +70,29 @@ let predicateForFilter = function (filter) {
           return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
         }
 
+      case 'decimal':
+        if (filter.condition === 'between') {
+          if (!filter.pattern) {
+            return new SimplePredicate(filter.name, filter.condition, null);
+          } else {
+            let [from, to] = filter.pattern.split('|');
+            let isNumber = (s) => Number(s) === Number(s) && s;
+            if (isNumber(from) && isNumber(to)) {
+              return new SimplePredicate(filter.name, 'geq', Number(from)).and(
+                new SimplePredicate(filter.name, 'leq', Number(to))
+              );
+            } else if (isNumber(from)) {
+              return new SimplePredicate(filter.name, 'leq', Number(to));
+            } else if (isNumber(to)) {
+              return new SimplePredicate(filter.name, 'geq', Number(from));
+            } else {
+              return null;
+            }
+          }
+        } else {
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
+        }
+
       case 'date':
         return filter.pattern ?
           new DatePredicate(filter.name, filter.condition, filter.pattern, true) :

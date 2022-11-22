@@ -51,6 +51,7 @@ export default {
     'flexberry-simpledatetime': {
       placeholder: '(no value)',
       'scroll-caption-text': 'Scroll to increment',
+      'apply-button-text': 'Choose',
     },
 
     'flexberry-textarea': {
@@ -125,6 +126,12 @@ export default {
 
     'flexberry-groupedit': {
       'placeholder': 'There is no data'
+    },
+
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Show all forms fields',
+      'next-button': 'Next',
+      'prev-button': 'Previous'
     },
 
     'modal-dialog': {

@@ -100,6 +100,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');
+  this.route('components-examples/flexberry-lookup/autocomplete-in-gropedit-example');
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list');
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
@@ -168,6 +169,8 @@ Router.map(function() {
   this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
+  this.route('components-examples/highload-edit-form-menu/index');
+  this.route('components-examples/highload-edit-form-menu/on-edit-form/user', { path: 'components-examples/highload-edit-form-menu/on-edit-form/user/:id' });
   this.route('components-examples/modal-dialog', function () {
     this.route('index', { path: '/' });
   });

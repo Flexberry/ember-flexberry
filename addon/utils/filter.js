@@ -76,7 +76,7 @@ let predicateForFilter = function (filter) {
             return new SimplePredicate(filter.name, filter.condition, null);
           } else {
             let [from, to] = filter.pattern.split('|');
-            let isNumber = (s) => Number(s) === Number(s) && s;
+            let isNumber = (s) => Number(s) && s || false;
             if (isNumber(from) && isNumber(to)) {
               return new SimplePredicate(filter.name, 'geq', Number(from)).and(
                 new SimplePredicate(filter.name, 'leq', Number(to))

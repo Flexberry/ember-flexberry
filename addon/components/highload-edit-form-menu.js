@@ -153,8 +153,6 @@ export default Component.extend({
 
   wheelEvent() {
     if (this.showAllFormsButton) {
-      const scrollClass = get(this, 'scrollClass');
-      document.getElementsByClassName(scrollClass)[0].scrollTop;
       this.setActiveTab();
     }
   },

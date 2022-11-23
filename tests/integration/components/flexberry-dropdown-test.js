@@ -225,20 +225,18 @@ test('readonly mode works properly', function(assert) {
 
   // Check that component is disabled.
   /* eslint-disable no-unused-vars */
-  new run(() => {
-    run(() => {
-      $component.click();
-    });
+  run(() => {
+    $component.click();
+  });
 
-    run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        assert.strictEqual($dropdownMenu.hasClass('animating'), false, 'Component is not active');
+  run(() => {
+    let animation = assert.async();
+    setTimeout(() => {
+      assert.strictEqual($dropdownMenu.hasClass('animating'), false, 'Component is not active');
 
-        animation();
+      animation();
 
-      }, animationDuration / 2);
-    });
+    }, animationDuration / 2);
   });
   /* eslint-enable no-unused-vars */
 });

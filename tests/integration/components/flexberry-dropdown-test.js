@@ -225,7 +225,7 @@ test('readonly mode works properly', function(assert) {
 
   // Check that component is disabled.
   /* eslint-disable no-unused-vars */
-  new RSVP.Promise(() => {
+  new run(() => {
     run(() => {
       $component.click();
     });

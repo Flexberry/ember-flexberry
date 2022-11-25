@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr } from 'ember-flexberry-data/utils/attributes';
 
-var Model = EmberFlexberryDataModel.extend({
+let Model = EmberFlexberryDataModel.extend({
   date: DS.attr('date')
 });
 

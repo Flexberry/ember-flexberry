@@ -432,7 +432,7 @@ export default FlexberryBaseComponent.extend({
               break;
           }
 
-          return !(dateElement === Number(dateArray[index]))
+          return dateElement !== Number(dateArray[index]);
         });
 
         dateIsValid = this.get('type') === 'date' ? !dateValid : dateValid && date.hours() === Number(dateArray[3]) &&

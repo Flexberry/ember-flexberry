@@ -1,6 +1,5 @@
 import { get } from '@ember/object';
-import { registerAsyncHelper } from '@ember/test';
-import { registerWaiter, unregisterWaiter } from '@ember/test';
+import { registerAsyncHelper, registerWaiter, unregisterWaiter } from '@ember/test';
 
 registerAsyncHelper('checkCloseEditForm',
   function(app, olvSelector, context, assert, path) {

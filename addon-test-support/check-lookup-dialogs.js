@@ -1,5 +1,4 @@
-import { registerAsyncHelper } from '@ember/test';
-import { registerWaiter, unregisterWaiter } from '@ember/test';
+import { registerAsyncHelper, registerWaiter, unregisterWaiter } from '@ember/test';
 
 registerAsyncHelper('checkLookupDialogs',
   function(app) {

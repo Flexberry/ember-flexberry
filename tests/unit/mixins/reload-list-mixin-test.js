@@ -7,9 +7,7 @@ import startApp from '../../helpers/start-app';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 import OdataSerializer from 'ember-flexberry-data/serializers/odata';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate, ComplexPredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 module('Unit | Mixin | reload list mixin');
 

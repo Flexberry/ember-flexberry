@@ -54,7 +54,7 @@ export default Mixin.create({
    */
   reloadList: function(options) {
     if (options.filters instanceof ComplexPredicate) {
-      var newFilter = A();
+      let newFilter = A();
       options.filters._predicates.forEach((predicate) => {
         newFilter.push(this._normalizeNeqPredicate(predicate));
       }, this);

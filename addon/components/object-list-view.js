@@ -2060,15 +2060,7 @@ export default FlexberryBaseComponent.extend(
           'le': this.get('i18n').t('components.object-list-view.filters.le'),
           'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
         };
-      case 'number':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-          'between': this.get('i18n').t('components.object-list-view.filters.between'),
-        };
-      case 'decimal':
+      case 'number' || 'decimal':
         return {
           'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
           'neq': this.get('i18n').t('components.object-list-view.filters.neq'),

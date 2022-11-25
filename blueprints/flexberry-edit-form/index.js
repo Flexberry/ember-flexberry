@@ -4,7 +4,7 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
-var skipConfirmationFunc = require('../utils/skip-confirmation');
+let skipConfirmationFunc = require('../utils/skip-confirmation');
 var fs = require("fs");
 var path = require("path");
 var lodash = require("lodash");
@@ -49,7 +49,7 @@ module.exports = {
         }
     },
     processFiles: function (intoDir, templateVariables) {
-        var skipConfirmation = this.options.skipConfirmation;
+        let skipConfirmation = this.options.skipConfirmation;
         if (skipConfirmation) {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }

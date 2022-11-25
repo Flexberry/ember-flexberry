@@ -10,7 +10,7 @@ const Validations = buildValidations({
   }),
 });
 
-var Model = EmberFlexberryDataModel.extend(Validations, {
+let Model = EmberFlexberryDataModel.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-comment.userVotes.
   // It's not a property for flexberry-lookup component.
   comment: DS.belongsTo('ember-flexberry-dummy-comment', {

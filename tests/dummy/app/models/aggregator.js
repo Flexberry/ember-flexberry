@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
 
-var Model = EmberFlexberryDataModel.extend({
+let Model = EmberFlexberryDataModel.extend({
   // This property is for flexberry-groupedit component.
   // Inverse relationship is necessary here.
   details: DS.hasMany('components-examples/flexberry-groupedit/shared/detail', {

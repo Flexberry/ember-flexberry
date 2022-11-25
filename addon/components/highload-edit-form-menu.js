@@ -207,7 +207,7 @@ export default Component.extend({
             tabContentFocus = child;
           }
           $('.gruppaPolejVvoda')[key].classList.add('active');
-          var tabTop = $('.gruppaPolejVvoda')[key].getBoundingClientRect().top;
+          let tabTop = $('.gruppaPolejVvoda')[key].getBoundingClientRect().top;
           if (Math.abs(tabTop) < Math.abs(highestTabY)) {
             highestTabY = Math.abs(tabTop);
             highestTab = $('.gruppaPolejVvoda')[key];

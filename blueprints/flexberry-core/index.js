@@ -238,11 +238,11 @@ var SitemapItemExt = /** @class */ (function () {
             translationName = this.baseItem.link;
         }
 
-        var nodeIcon;
+        let nodeIcon;
         if (this.baseItem.link !== null) {
-            var icons = ['list', 'archive', 'phone', 'address card', 'book', 'calendar', 'building',
+            let icons = ['list', 'archive', 'phone', 'address card', 'book', 'calendar', 'building',
                 'briefcase', 'chart bar', 'chart line', 'edit', 'file', 'folder', 'paperclip', 'folder open', 'suitcase', 'tasks', 'tags', 'table'];
-            var randomIndex = Math.floor(Math.random() * (icons.length + 1));
+            let randomIndex = Math.floor(Math.random() * (icons.length + 1));
             nodeIcon = icons[randomIndex];
         }
 

@@ -1,7 +1,7 @@
 "use strict";
 var child_process = require('child_process');
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('rsvp');
+let Promise = require('rsvp');
 var lodash = require('lodash');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {

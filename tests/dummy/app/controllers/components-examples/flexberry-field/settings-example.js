@@ -83,7 +83,7 @@ export default Controller.extend({
     @type Object[]
    */
   componentSettingsMetadata: computed('i18n.locale', function() {
-    var componentSettingsMetadata = A();
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'type',
       settingType: 'enumeration',

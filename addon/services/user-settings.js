@@ -5,14 +5,12 @@
 import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import { getOwner } from '@ember/application';
-import { isArray } from '@ember/array';
+import { isArray, A } from '@ember/array';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
 import Builder from 'ember-flexberry-data/query/builder';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
-import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { isNone } from '@ember/utils';
-import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 

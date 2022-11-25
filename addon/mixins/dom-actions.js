@@ -218,7 +218,7 @@ export default Mixin.create({
   */
   detachAllEventHandlers() {
     let eventsMetadata = this.get('_eventsMetadata');
-    var metadataCount = get(eventsMetadata, 'length');
+    let metadataCount = get(eventsMetadata, 'length');
     while (--metadataCount >= 0) {
       let eventMetadata = eventsMetadata[metadataCount];
 
@@ -239,7 +239,7 @@ export default Mixin.create({
           break;
         }
 
-        var handlersCount = get(specifiedEventAttachedEventHandlers, 'length');
+        let handlersCount = get(specifiedEventAttachedEventHandlers, 'length');
         while (--handlersCount >= 0) {
           this.detachEventHandler({
             eventTarget: eventTarget,

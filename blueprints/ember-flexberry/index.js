@@ -23,7 +23,7 @@ module.exports = {
       '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/header-bgw.png\', { destDir: \'assets/themes/orange/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/bgw-head-calendar.png\', { destDir: \'assets/themes/orange/assets/images\' });\n';
-    var options = '    lessOptions: {\n' +
+    let options = '    lessOptions: {\n' +
       '      paths: [\n' +
       '        \'bower_components/semantic-ui\',\n' +
       '        \'node_modules/ember-flexberry-themes\'\n' +
@@ -170,7 +170,7 @@ module.exports = {
       '    outputFormat: \'L\'\n' +
       '  };\n';
 
-      var resolutions = '  "resolutions": {\n' +
+      let resolutions = '  "resolutions": {\n' +
         '    "ember-get-config": "0.3.0"\n' +
         '  },';
 

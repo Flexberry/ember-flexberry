@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import Service from '@ember/service';
-import { inject as service } from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 
 import I18nService from 'ember-i18n/services/i18n';
 import { moduleForComponent, test } from 'ember-qunit';

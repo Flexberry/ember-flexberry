@@ -11,7 +11,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   @param {Object} transition
   */
   model() {
-    var record = this.store.createRecord(this.modelName);
+    let record = this.store.createRecord(this.modelName);
     record.set('moderated', true);
     return record;
   },

@@ -10,7 +10,7 @@ export default EditFormController.extend({
     @type String
    */
   infoMessage: computed('i18n.locale', function() {
-    var message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.info-message', {
+    let message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.info-message', {
       pageTemplate: new htmlSafe(
         '<pre><code>' +
         '{{#if model.enumeration}}<br>' +

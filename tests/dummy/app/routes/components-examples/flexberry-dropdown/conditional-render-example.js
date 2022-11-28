@@ -8,9 +8,9 @@ export default Route.extend({
    */
   /* eslint-disable no-unused-vars */
   model(params) {
-    var store = this.get('store');
+    let store = this.get('store');
 
-    var base = store.createRecord('components-examples/flexberry-dropdown/conditional-render-example/base', {
+    let base = store.createRecord('components-examples/flexberry-dropdown/conditional-render-example/base', {
       enumeration: null
     });
 

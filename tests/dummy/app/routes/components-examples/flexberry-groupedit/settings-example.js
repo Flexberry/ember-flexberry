@@ -37,7 +37,7 @@ export default EditFormRoute.extend({
    */
   /* eslint-disable no-unused-vars */
   model(params) {
-    var store = this.get('store');
+    let store = this.get('store');
 
     // Empty aggregator without details.
     return store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', {});

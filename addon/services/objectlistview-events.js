@@ -2,13 +2,12 @@
   @module ember-flexberry
  */
 
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
 import { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { deprecatingAlias } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
 import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 

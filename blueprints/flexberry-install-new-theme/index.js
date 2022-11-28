@@ -1,11 +1,11 @@
 const fs = require('fs-extra')
 module.exports = {
 	afterInstall: function() {
-		var _this = this;
+		let _this = this;
 
-    var configEnvironmentFile = 'config/environment.js';
-    var configEnvironmentAfter = 'showModalDialogOnDownloadError: true,\n        }';
-    var configEnvironmentContent = ',\n\n        // For guideline theme\n' +
+    let configEnvironmentFile = 'config/environment.js';
+    let configEnvironmentAfter = 'showModalDialogOnDownloadError: true,\n        }';
+    let configEnvironmentContent = ',\n\n        // For guideline theme\n' +
       '        // Settings for flexberry-objectlistview component.\n' +
       '        flexberryObjectlistview: {\n' +
       '          // Flag indicates whether to side page or usually mode.\n' +
@@ -27,7 +27,7 @@ module.exports = {
       '          calendarContext: undefined\n' +
       '        }';
 
-		var fontsImports = '\n  app.import(\'vendor/fonts.css\');\n' +
+		let fontsImports = '\n  app.import(\'vendor/fonts.css\');\n' +
 		'\n  // GOSTUI2\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot\', { destDir: \'assets/fonts\' });\n' +
 		'  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf\', { destDir: \'assets/fonts\' });\n' +
@@ -43,7 +43,7 @@ module.exports = {
     '  app.import(\'vendor/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2\', { destDir: \'assets/fonts\' });\n' +
 		'\n'
 
-		var stylesImports = '\n  // guideline-icons\n' +
+		let stylesImports = '\n  // guideline-icons\n' +
 		'  app.import(\'vendor/guideline-icons.css\');\n' +
 		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.eot\', { destDir: \'assets/fonts/guideline-icons\' });\n' +
 		'  app.import(\'vendor/fonts/guideline-icons/guideline-icons.ttf\', { destDir: \'assets/fonts/guideline-icons\' });\n' +

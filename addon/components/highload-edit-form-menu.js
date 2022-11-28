@@ -153,8 +153,6 @@ export default Component.extend({
 
   wheelEvent() {
     if (this.showAllFormsButton) {
-      const scrollClass = get(this, 'scrollClass');
-      document.getElementsByClassName(scrollClass)[0].scrollTop;
       this.setActiveTab();
     }
   },
@@ -209,7 +207,7 @@ export default Component.extend({
             tabContentFocus = child;
           }
           $('.gruppaPolejVvoda')[key].classList.add('active');
-          var tabTop = $('.gruppaPolejVvoda')[key].getBoundingClientRect().top;
+          let tabTop = $('.gruppaPolejVvoda')[key].getBoundingClientRect().top;
           if (Math.abs(tabTop) < Math.abs(highestTabY)) {
             highestTabY = Math.abs(tabTop);
             highestTab = $('.gruppaPolejVvoda')[key];

@@ -8,9 +8,9 @@ export default Route.extend({
    */
   /* eslint-disable no-unused-vars */
   model(params) {
-    var store = this.get('store');
+    let store = this.get('store');
 
-    var base = store.createRecord('components-examples/flexberry-field/settings-example/base', {});
+    let base = store.createRecord('components-examples/flexberry-field/settings-example/base', {});
 
     return base;
   }

@@ -1,6 +1,5 @@
 import { get } from '@ember/object';
-import { registerAsyncHelper } from '@ember/test';
-import { registerWaiter, unregisterWaiter } from '@ember/test';
+import { registerAsyncHelper, registerWaiter, unregisterWaiter } from '@ember/test';
 import moment from 'moment';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { createRecord } from './utils/create-recort-for-test';

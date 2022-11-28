@@ -6,6 +6,6 @@ moduleForModel('new-platform-flexberry-flexberry-user-setting', 'Unit | Model | 
 });
 
 test('it exists', function(assert) {
-  var model = this.subject();
+  let model = this.subject();
   assert.ok(!!model);
 });

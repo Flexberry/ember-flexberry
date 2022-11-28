@@ -21,14 +21,14 @@ module.exports = {
 
     createOfflineSchema: function (options) {
         let modelsDir = path.join(options.metadataDir, "models");
-        var modelsFiles = fs.readdirSync(modelsDir);
-        var models = [];
-        for (var _i = 0; _i < modelsFiles.length; _i++) {
-            var modelFileName = modelsFiles[_i];
-            var model = ModelBlueprint.default.loadModel(modelsDir, modelFileName);
-            var attrs = model.attrs.map((a) => a.name).join(",");
-            var belongsTo = model.belongsTo.map((a) => a.name).join(",");
-            var hasMany = model.hasMany.map((a) => { return "*" + a.name }).join(",");
+        let modelsFiles = fs.readdirSync(modelsDir);
+        let models = [];
+        for (let _i = 0; _i < modelsFiles.length; _i++) {
+            let modelFileName = modelsFiles[_i];
+            let model = ModelBlueprint.default.loadModel(modelsDir, modelFileName);
+            let attrs = model.attrs.map((a) => a.name).join(",");
+            let belongsTo = model.belongsTo.map((a) => a.name).join(",");
+            let hasMany = model.hasMany.map((a) => { return "*" + a.name }).join(",");
             models.push("'" + model.modelName +  "': 'id"
                 + this.updateOfflineSchemaString(attrs)
                 + this.updateOfflineSchemaString(belongsTo)

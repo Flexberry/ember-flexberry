@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(environment) {
-  var backendUrl = 'http://stands-backend.flexberry.net';
+  let backendUrl = 'http://stands-backend.flexberry.net';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
@@ -187,7 +187,7 @@ module.exports = function(environment) {
   // Change paths to application assets if build has been started with the following parameters:
   // ember build --gh-pages --gh-pages-branch=<branch-to-publish-on-gh-pages>.
   if (process.argv.indexOf('--gh-pages') >= 0) {
-    var branch;
+    let branch;
 
     // Retrieve branch name from process arguments.
     process.argv.forEach(function (value) {

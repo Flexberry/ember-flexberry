@@ -23,7 +23,7 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr, bindingPath, model) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo') {
       if (model.modelName === 'ember-flexberry-dummy-comment-vote' && bindingPath === 'applicationUser') {

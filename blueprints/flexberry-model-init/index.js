@@ -1,5 +1,5 @@
 "use strict";
-var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
+let ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
@@ -34,7 +34,7 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var modelBlueprint = new ModelBlueprint_1.default(this, options);
+        let modelBlueprint = new ModelBlueprint_1.default(this, options);
 
         const noParent = !modelBlueprint.parentModelName;
         const isOffline = this.options.enableOffline;

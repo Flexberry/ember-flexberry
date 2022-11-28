@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 module('PaginatedControllerMixin');
 
 test('it works', function(assert) {
-  var PaginatedControllerObject = EmberObject.extend(PaginatedControllerMixin);
-  var subject = PaginatedControllerObject.create();
+  let PaginatedControllerObject = EmberObject.extend(PaginatedControllerMixin);
+  let subject = PaginatedControllerObject.create();
   assert.ok(subject);
 });

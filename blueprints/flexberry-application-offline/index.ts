@@ -1,7 +1,7 @@
 var child_process = require('child_process');
 var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('rsvp');
+var Promise: PromiseConstructor = require('rsvp');
 var lodash = require('lodash');
 
 module.exports = {

@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
-var Model = EmberFlexberryDataModel.extend({
+let Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for aggregator.details.
   // It's not a property for flexberry-lookup component.
   aggregator: DS.belongsTo('components-examples/flexberry-groupedit/shared/aggregator', {

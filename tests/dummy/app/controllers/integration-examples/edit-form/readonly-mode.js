@@ -23,7 +23,7 @@ export default EditFormController.extend({
    */
   /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, model) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {
       cellComponent.componentProperties = {

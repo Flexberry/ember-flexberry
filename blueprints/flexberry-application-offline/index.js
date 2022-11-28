@@ -1,9 +1,9 @@
 "use strict";
-var child_process = require('child_process');
-var stripBom = require("strip-bom");
-var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('rsvp');
-var lodash = require('lodash');
+let child_process = require('child_process');
+let stripBom = require("strip-bom");
+let Blueprint = require('ember-cli/lib/models/blueprint');
+let Promise = require('rsvp');
+let lodash = require('lodash');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates required entities for flexberry-offline.',
@@ -17,7 +17,7 @@ module.exports = {
         return false;
     },
     install: function (options) {
-        var applicationBlueprint = new ApplicationBlueprint(this, options);
+        let applicationBlueprint = new ApplicationBlueprint(this, options);
         return applicationBlueprint.promise;
     },
     /**
@@ -42,25 +42,25 @@ module.exports = {
         return this._super.processFiles.apply(this, [intoDir, templateVariables]);
     },
 };
-var ElapsedTime = (function () {
+let ElapsedTime = (function () {
     function ElapsedTime(caption, startTime) {
         this.caption = caption;
         this.elapsedTimeSec = (Date.now() - startTime) / 1000;
     }
     ElapsedTime.print = function () {
-        var total = 0;
+        let total = 0;
         console.log("Ellapsed time:");
-        for (var _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
-            var group = _a[_i];
+        for (let _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
+            let group = _a[_i];
             console.log(group.caption + ": " + ElapsedTime.format(group.elapsedTimeSec));
             total += group.elapsedTimeSec;
         }
         console.log("Total: " + ElapsedTime.format(total));
     };
     ElapsedTime.format = function (sec) {
-        var hours = Math.floor(sec / 3600);
-        var min = Math.floor((sec - hours * 3600) / 60);
-        var sec2 = sec - hours * 3600 - min * 60;
+        let hours = Math.floor(sec / 3600);
+        let min = Math.floor((sec - hours * 3600) / 60);
+        let sec2 = sec - hours * 3600 - min * 60;
         //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
         return ElapsedTime.formatterFrac.format(sec) + " sec";
     };
@@ -73,7 +73,7 @@ var ElapsedTime = (function () {
     ElapsedTime.formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
     return ElapsedTime;
 }());
-var ApplicationBlueprint = (function () {
+let ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
         if (options.metadataDir === undefined) {
             options.metadataDir = "vendor/flexberry";
@@ -100,8 +100,8 @@ var ApplicationBlueprint = (function () {
         });
     };
     ApplicationBlueprint.prototype.emberGenerate = function (blueprintName, entityName) {
-        var mainBlueprint = this.getMainBlueprint(blueprintName);
-        var options = lodash.merge({}, this.options, { entity: { name: entityName } });
+        let mainBlueprint = this.getMainBlueprint(blueprintName);
+        let options = lodash.merge({}, this.options, { entity: { name: entityName } });
         return this.promise
             .then(function () {
             return mainBlueprint["install"](options);

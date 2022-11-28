@@ -1293,7 +1293,7 @@ export default FlexberryBaseComponent.extend({
       @param {String} perPageValue Selected perPage value.
     */
     perPageClick(perPageValue) {
-      var userSettings = this.get('userSettingsService');
+      let userSettings = this.get('userSettingsService');
       if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
         userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
       }

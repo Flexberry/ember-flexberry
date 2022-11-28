@@ -1,8 +1,8 @@
 "use strict";
-var fs = require("fs");
-var path = require('path');
-var stripBom = require("strip-bom");
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+let fs = require("fs");
+let path = require('path');
+let stripBom = require("strip-bom");
+let CommonUtils_1 = require('../flexberry-common/CommonUtils');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data enum for flexberry.',
@@ -40,7 +40,7 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        var enumBlueprint = new EnumBlueprint(this, options);
+        let enumBlueprint = new EnumBlueprint(this, options);
         return {
             className: enumBlueprint.className,
             sourceType: enumBlueprint.sourceType,
@@ -49,21 +49,21 @@ module.exports = {
         };
     }
 };
-var EnumBlueprint = (function () {
+let EnumBlueprint = (function () {
     function EnumBlueprint(blueprint, options) {
-        var enumsDir = path.join(options.metadataDir, "enums");
+        let enumsDir = path.join(options.metadataDir, "enums");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var enumFile = path.join(enumsDir, options.file);
-        var content = stripBom(fs.readFileSync(enumFile, "utf8"));
-        var enumeration = JSON.parse(content);
+        let enumFile = path.join(enumsDir, options.file);
+        let content = stripBom(fs.readFileSync(enumFile, "utf8"));
+        let enumeration = JSON.parse(content);
         this.name = options.entity.name;
         this.className = enumeration.className;
         this.sourceType = enumeration.nameSpace == null ? enumeration.className : enumeration.nameSpace + "." + enumeration.className;
-        var values = [];
-        for (var key in enumeration.enumObjects) {
-            var caption = enumeration.enumObjects[key];
+        let values = [];
+        for (let key in enumeration.enumObjects) {
+            let caption = enumeration.enumObjects[key];
             if (caption === "~")
                 caption = "";
             if (caption != null)

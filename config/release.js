@@ -1,6 +1,6 @@
-// var RSVP = require('rsvp');
-var path = require('path');
-var fs = require('fs');
+// let RSVP = require('rsvp');
+let path = require('path');
+let fs = require('fs');
 
 // For details on each option run `ember help release`
 module.exports = {
@@ -21,14 +21,14 @@ module.exports = {
 
   // TODO: rewrite using promises and async fs.
   beforeCommit: function(project, versions) {
-    var filePath = path.join(project.root, 'vendor/ember-flexberry/register-version.js');
+    let filePath = path.join(project.root, 'vendor/ember-flexberry/register-version.js');
     if (fs.existsSync(filePath)) {
-      var contents = fs.readFileSync(filePath, {
+      let contents = fs.readFileSync(filePath, {
         encoding: 'utf8'
       });
 
       // Version string without 'v' tag prefix.
-      var newVersion = versions.next.replace(/^v/, '');
+      let newVersion = versions.next.replace(/^v/, '');
 
       // Replace version number in line "var version = 'x.x.x';".
       contents = contents.replace(/(version = ')(.+)(';)/, '$1' + newVersion + '$3');

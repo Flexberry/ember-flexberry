@@ -23,7 +23,7 @@ export default ListFormController.extend({
    */
   /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, model) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
     if (bindingPath === 'file') {
       cellComponent = {
         componentName: 'flexberry-file',

@@ -5,7 +5,7 @@ import DS from 'ember-data';
 import { moduleFor, test } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
 
-var App;
+let App;
 
 moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
   needs: [

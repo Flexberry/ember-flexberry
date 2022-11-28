@@ -2,9 +2,8 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import MultiListModelEdit from 'ember-flexberry/mixins/multi-list-model-edit';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { get } from '@ember/object';
 
 export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, {
   /**

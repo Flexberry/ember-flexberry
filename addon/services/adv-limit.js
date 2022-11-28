@@ -2,8 +2,7 @@
   @module ember-flexberry
 */
 
-import Service from '@ember/service';
-import { inject as service } from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { getOwner } from '@ember/application';
 import { get, computed } from '@ember/object';
 import { resolve, all } from 'rsvp';

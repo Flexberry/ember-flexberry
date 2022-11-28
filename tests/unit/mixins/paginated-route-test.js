@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 module('PaginatedRouteMixin');
 
 test('it works', function(assert) {
-  var PaginatedRouteObject = EmberObject.extend(PaginatedRouteMixin);
-  var subject = PaginatedRouteObject.create();
+  let PaginatedRouteObject = EmberObject.extend(PaginatedRouteMixin);
+  let subject = PaginatedRouteObject.create();
   assert.ok(subject);
 });

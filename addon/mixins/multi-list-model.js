@@ -4,8 +4,7 @@
 
 import Mixin from '@ember/object/mixin';
 import { assert } from '@ember/debug';
-import { all } from 'rsvp';
-import { hash } from 'rsvp';
+import { all, hash } from 'rsvp';
 import { isNone } from '@ember/utils';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 

@@ -226,9 +226,9 @@ export default Component.extend({
       return;
     }
 
-    var userSettings = this.get('userSettingsService');
+    let userSettings = this.get('userSettingsService');
     let settingName = this.get('settingName');
-    var currentStatus = userSettings.getTogglerStatus(componentName, settingName);
+    let currentStatus = userSettings.getTogglerStatus(componentName, settingName);
     let expanded = this.get('expanded');
 
     if (currentStatus !== null && expanded !== currentStatus) {

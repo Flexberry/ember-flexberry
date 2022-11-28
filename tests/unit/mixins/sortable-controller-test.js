@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 module('SortableControllerMixin');
 
 test('it works', function(assert) {
-  var SortableControllerObject = EmberObject.extend(SortableControllerMixin);
-  var subject = SortableControllerObject.create();
+  let SortableControllerObject = EmberObject.extend(SortableControllerMixin);
+  let subject = SortableControllerObject.create();
   assert.ok(subject);
 });

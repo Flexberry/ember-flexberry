@@ -35,7 +35,7 @@ export function initialize(applicationInstance) {
   // 4. So the the most appropriate way to inject device detection service into application resolver
   // is to reopen application resolver class, and manually add service instance as resolver's property,
   // it will have an effect on both already existing and future instances.
-  var deviceService = applicationInstance.lookup('service:device');
+  let deviceService = applicationInstance.lookup('service:device');
   applicationInstance.application.Resolver.reopen({
     device: deviceService
   });

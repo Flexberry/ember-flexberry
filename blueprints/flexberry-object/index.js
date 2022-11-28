@@ -2,10 +2,10 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
-var stripBom = require("strip-bom");
-var fs = require("fs");
-var path = require('path');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+let stripBom = require("strip-bom");
+let fs = require("fs");
+let path = require('path');
+let CommonUtils_1 = require('../flexberry-common/CommonUtils');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember object for flexberry.',
@@ -43,16 +43,16 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var objectsDir = path.join(options.metadataDir, "objects");
+        let objectsDir = path.join(options.metadataDir, "objects");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var objectFile = path.join(objectsDir, options.file);
-        var content = stripBom(fs.readFileSync(objectFile, "utf8"));
-        var object = JSON.parse(content);
-        var attr;
-        var attrs = [];
-        for (var _i = 0, _a = object.attrs; _i < _a.length; _i++) {
+        let objectFile = path.join(objectsDir, options.file);
+        let content = stripBom(fs.readFileSync(objectFile, "utf8"));
+        let object = JSON.parse(content);
+        let attr;
+        let attrs = [];
+        for (let _i = 0, _a = object.attrs; _i < _a.length; _i++) {
             attr = _a[_i];
             if (attr.defaultValue === "") {
                 attrs.push(attr.name + ": undefined");

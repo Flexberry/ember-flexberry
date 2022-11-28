@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 module('ModalApplicationRouteMixin');
 
 test('it works', function(assert) {
-  var ModalApplicationRouteObject = EmberObject.extend(ModalApplicationRouteMixin);
-  var subject = ModalApplicationRouteObject.create();
+  let ModalApplicationRouteObject = EmberObject.extend(ModalApplicationRouteMixin);
+  let subject = ModalApplicationRouteObject.create();
   assert.ok(subject);
 });

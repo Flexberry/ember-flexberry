@@ -2,9 +2,9 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
-var stripBom = require("strip-bom");
-var fs = require("fs");
-var path = require('path');
+let stripBom = require("strip-bom");
+let fs = require("fs");
+let path = require('path');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember object for flexberry.',
@@ -37,13 +37,13 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var objectsDir = path.join(options.metadataDir, "objects");
+        let objectsDir = path.join(options.metadataDir, "objects");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var objectFile = path.join(objectsDir, options.file);
-        var content = stripBom(fs.readFileSync(objectFile, "utf8"));
-        var object = JSON.parse(content);
+        let objectFile = path.join(objectsDir, options.file);
+        let content = stripBom(fs.readFileSync(objectFile, "utf8"));
+        let object = JSON.parse(content);
         return {
             className: object.className,
             name: object.name,

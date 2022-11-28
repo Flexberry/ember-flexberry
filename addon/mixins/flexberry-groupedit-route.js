@@ -92,7 +92,7 @@ export default Mixin.create({
           }
 
           let detailArray = methodOptions.detailArray;
-          var modelToAdd = _this.store.createRecord(modelName, {});
+          let modelToAdd = _this.store.createRecord(modelName, {});
           detailArray.addObject(modelToAdd);
           record = modelToAdd;
         }

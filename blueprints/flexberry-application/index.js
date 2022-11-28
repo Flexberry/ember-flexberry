@@ -1,8 +1,8 @@
 "use strict";
-var child_process = require('child_process');
-var Blueprint = require('ember-cli/lib/models/blueprint');
+let child_process = require('child_process');
+let Blueprint = require('ember-cli/lib/models/blueprint');
 let Promise = require('rsvp');
-var lodash = require('lodash');
+let lodash = require('lodash');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates all entities for flexberry.',
@@ -15,7 +15,7 @@ module.exports = {
         return false;
     },
     install: function (options) {
-        var applicationBlueprint = new ApplicationBlueprint(this, options);
+        let applicationBlueprint = new ApplicationBlueprint(this, options);
         return applicationBlueprint.promise;
     },
     /**
@@ -40,16 +40,16 @@ module.exports = {
         return this._super(...arguments);
     },
 };
-var ElapsedTime = (function () {
+let ElapsedTime = (function () {
     function ElapsedTime(caption, startTime) {
         this.caption = caption;
         this.elapsedTimeSec = (Date.now() - startTime) / 1000;
     }
     ElapsedTime.print = function () {
-        var total = 0;
+        let total = 0;
         console.log("Ellapsed time:");
-        for (var _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
-            var group = _a[_i];
+        for (let _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
+            let group = _a[_i];
             console.log(group.caption + ": " + ElapsedTime.format(group.elapsedTimeSec));
             total += group.elapsedTimeSec;
         }
@@ -71,7 +71,7 @@ var ElapsedTime = (function () {
     ElapsedTime.formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
     return ElapsedTime;
 }());
-var ApplicationBlueprint = (function () {
+let ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
         if (options.metadataDir === undefined) {
             options.metadataDir = "vendor/flexberry";
@@ -113,8 +113,8 @@ var ApplicationBlueprint = (function () {
         return this.emberGenerate("flexberry-group", blueprintName);
     };
     ApplicationBlueprint.prototype.emberGenerate = function (blueprintName, entityName) {
-        var mainBlueprint = this.getMainBlueprint(blueprintName);
-        var options = lodash.merge({}, this.options, { entity: { name: entityName } });
+        let mainBlueprint = this.getMainBlueprint(blueprintName);
+        let options = lodash.merge({}, this.options, { entity: { name: entityName } });
         return this.promise
             .then(function () {
             return mainBlueprint["install"](options);

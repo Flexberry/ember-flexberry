@@ -40,7 +40,7 @@ module('Unit | Route | edit form new', {
 });
 
 test('it exists', function(assert) {
-  var route = EditFormNewRoute.create();
+  let route = EditFormNewRoute.create();
   assert.ok(route);
 });
 

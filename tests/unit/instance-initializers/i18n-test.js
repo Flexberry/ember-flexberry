@@ -39,10 +39,10 @@ test('Configures i18n service for locale', function(assert) {
 
     assert.strictEqual(i18n.get('locale'), fakeLocale, 'Default i18n-service locale is \'' + fakeLocale + '\'');
 
-    var currentLocale = defaultLocale ? defaultLocale :
+    let currentLocale = defaultLocale ? defaultLocale :
     window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
 
-    var locales = appInstance.lookup('controller:application').get('locales');
+    let locales = appInstance.lookup('controller:application').get('locales');
     if (!locales || typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || isBlank(currentLocale)) {
       currentLocale = 'en';
     }

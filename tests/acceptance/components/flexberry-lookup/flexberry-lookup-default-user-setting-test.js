@@ -23,7 +23,7 @@ executeTest('flexberry-lookup render olv with default user setting test', (store
     });
 
     run(() => {
-      var done = assert.async();
+      let done = assert.async();
       setTimeout(function () {
 
         let $lookupSearch = $('.content table.object-list-view');

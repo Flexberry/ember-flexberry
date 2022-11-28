@@ -1,8 +1,8 @@
 /* globals module */
 module.exports = {
   afterInstall: function() {
-    var _this = this;
-    var imports = '  app.import(\'vendor/font-icon.css\');\n' +
+    let _this = this;
+    let imports = '  app.import(\'vendor/font-icon.css\');\n' +
       '  app.import(\'vendor/fonts/icons.eot\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/icons.otf\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/icons.svg\', { destDir: \'assets/fonts\' });\n' +
@@ -47,22 +47,22 @@ module.exports = {
       '      }\n' +
       '    }\n';
 
-    var appEnvironment = 'config/environment.js';
-    var addonEnvironment = 'tests/dummy/config/environment.js';
+    let appEnvironment = 'config/environment.js';
+    let addonEnvironment = 'tests/dummy/config/environment.js';
 
-    var env1after = 'module.exports = function(environment) {\n';
-    var env1 = '  // Replace this local address to remote when backed will be published.\n' +
+    let env1after = 'module.exports = function(environment) {\n';
+    let env1 = '  // Replace this local address to remote when backed will be published.\n' +
       '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
       '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
-    var env2after = 'EmberENV: {\n';
-    var env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';
+    let env2after = 'EmberENV: {\n';
+    let env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';
 
-    var env3after = 'APP: {\n';
-    var env3 ='      // Application name. Used in `user-settings` service.\n' +
+    let env3after = 'APP: {\n';
+    let env3 ='      // Application name. Used in `user-settings` service.\n' +
       '      name: \'ember-app\',\n\n' +
       '      backendUrl: backendUrl,\n\n' +
       '      // It\'s a custom property, used to prevent duplicate backend urls in sources.\n' +
@@ -148,8 +148,8 @@ module.exports = {
       '        }\n'+
       '      },\n';
 
-    var env4before = '\n  if (environment === \'development\') {\n';
-    var env4 ='\n  // Read more about CSP:\n' +
+    let env4before = '\n  if (environment === \'development\') {\n';
+    let env4 ='\n  // Read more about CSP:\n' +
       '  // http://www.ember-cli.com/#content-security-policy\n' +
       '  // https://github.com/rwjblue/ember-cli-content-security-policy\n' +
       '  // http://content-security-policy.com\n' +

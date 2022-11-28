@@ -21,7 +21,7 @@ executeTest('flexberry-lookup projection test', (store, assert, app) => {
     });
 
     run(() => {
-      var done = assert.async();
+      let done = assert.async();
       setTimeout(function() {
 
         let $lookupSearch = $('.content table.object-list-view');

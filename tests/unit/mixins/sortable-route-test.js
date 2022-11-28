@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 module('SortableRouteMixin');
 
 test('it works', function(assert) {
-  var SortableRouteObject = EmberObject.extend(SortableRouteMixin);
-  var subject = SortableRouteObject.create();
+  let SortableRouteObject = EmberObject.extend(SortableRouteMixin);
+  let subject = SortableRouteObject.create();
   assert.ok(subject);
 });

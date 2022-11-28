@@ -3,12 +3,12 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var path = require("path");
-var lodash = require("lodash");
-var stripBom = require("strip-bom");
-var Locales_1 = require("../flexberry-core/Locales");
-var CommonUtils_1 = require("../flexberry-common/CommonUtils");
+let fs = require("fs");
+let path = require("path");
+let lodash = require("lodash");
+let stripBom = require("strip-bom");
+let Locales_1 = require("../flexberry-core/Locales");
+let CommonUtils_1 = require("../flexberry-common/CommonUtils");
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
@@ -61,7 +61,7 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        var listFormBlueprint = new ListFormBlueprint(this, options);
+        let listFormBlueprint = new ListFormBlueprint(this, options);
         return lodash.defaults({
             editForm: listFormBlueprint.listForm.editForm,
             formName: listFormBlueprint.listForm.name,
@@ -73,21 +73,21 @@ module.exports = {
         );
     }
 };
-var ListFormBlueprint = /** @class */ (function () {
+let ListFormBlueprint = /** @class */ (function () {
     function ListFormBlueprint(blueprint, options) {
-        var listFormsDir = path.join(options.metadataDir, "list-forms");
+        let listFormsDir = path.join(options.metadataDir, "list-forms");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+        let localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
         this.locales = new Locales_1.default(options.entity.name, "ru", localePathTemplate);
-        var listFormFile = path.join(listFormsDir, options.file);
-        var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+        let listFormFile = path.join(listFormsDir, options.file);
+        let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
         this.listForm = JSON.parse(content);
         this.locales.setupForm(this.listForm);
     }
     ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
-        var targetRoot = "app";
+        let targetRoot = "app";
         if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }

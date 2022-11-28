@@ -1,4 +1,4 @@
-var inflector = require("inflection");
+let inflector = require("inflection");
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an import wrapper for new routes and controllers.',

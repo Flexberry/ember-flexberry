@@ -403,7 +403,7 @@ export default EditFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr, bindingPath) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {
       cellComponent.componentProperties = {

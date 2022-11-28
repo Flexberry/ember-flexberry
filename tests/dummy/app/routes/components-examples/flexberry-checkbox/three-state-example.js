@@ -11,7 +11,7 @@ export default Route.extend({
   model() {
     let store = get(this, 'store');
 
-    var base = store.createRecord('components-examples/flexberry-checkbox/settings-example/base', { flag : null });
+    let base = store.createRecord('components-examples/flexberry-checkbox/settings-example/base', { flag : null });
 
     return base;
   }

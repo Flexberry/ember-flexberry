@@ -7,8 +7,8 @@ import startApp from '../../../helpers/start-app';
 let app;
 const path = 'components-examples/flexberry-groupedit/configurate-row-example';
 const testName = 'check all at page';
-var olvContainerClass = '.object-list-view-container';
-var trTableClass = 'table.object-list-view tbody tr';
+let olvContainerClass = '.object-list-view-container';
+let trTableClass = 'table.object-list-view tbody tr';
 
 module('Acceptance | flexberry-groupedit | ' + testName, {
   beforeEach() {

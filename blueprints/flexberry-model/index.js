@@ -3,10 +3,10 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
-var ModelBlueprint_1 = require("./ModelBlueprint");
-var lodash = require("lodash");
-var path = require("path");
-var CommonUtils_1 = require("../flexberry-common/CommonUtils");
+let ModelBlueprint_1 = require("./ModelBlueprint");
+let lodash = require("lodash");
+let path = require("path");
+let CommonUtils_1 = require("../flexberry-common/CommonUtils");
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
@@ -25,11 +25,11 @@ module.exports = {
             return this._files;
         }
         this.isDummy = this.options.dummy;
-        var modelsDir = path.join(this.options.metadataDir, "models");
+        let modelsDir = path.join(this.options.metadataDir, "models");
         if (!this.options.file) {
             this.options.file = this.options.entity.name + ".json";
         }
-        var model = ModelBlueprint_1.default.loadModel(modelsDir, this.options.file);
+        let model = ModelBlueprint_1.default.loadModel(modelsDir, this.options.file);
         if (!model.offline) {
             this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/mixins/regenerated/serializers/__name__-offline.js"; });
         }
@@ -64,7 +64,7 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var modelBlueprint = new ModelBlueprint_1.default(this, options);
+        let modelBlueprint = new ModelBlueprint_1.default(this, options);
         return lodash.defaults({
             namespace: modelBlueprint.namespace,
             parentModelName: modelBlueprint.parentModelName,

@@ -1,10 +1,10 @@
 "use strict";
-var lodash = require('lodash');
-var fs = require("fs");
-var path = require('path');
-var stripBom = require("strip-bom");
-var Promise = require('rsvp');
-var Blueprint = require('ember-cli/lib/models/blueprint');
+let lodash = require('lodash');
+let fs = require("fs");
+let path = require('path');
+let stripBom = require("strip-bom");
+let Promise = require('rsvp');
+let Blueprint = require('ember-cli/lib/models/blueprint');
 module.exports = {
     description: 'Generates an group of entities for flexberry.',
     availableOptions: [
@@ -15,13 +15,13 @@ module.exports = {
         return false;
     },
     install: function (options) {
-        var groupBlueprint = new GroupBlueprint(this, options);
+        let groupBlueprint = new GroupBlueprint(this, options);
         return groupBlueprint.promise;
     }
 };
-var GroupBlueprint = (function () {
+let GroupBlueprint = (function () {
     function GroupBlueprint(blueprint, options) {
-        var projectTypeName = "app";
+        let projectTypeName = "app";
         if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
             projectTypeName = "addon";
         }
@@ -73,7 +73,7 @@ var GroupBlueprint = (function () {
         }
     }
     GroupBlueprint.funCallback = function (arg) {
-        var opt = GroupBlueprint.groupOptions.pop();
+        let opt = GroupBlueprint.groupOptions.pop();
         return GroupBlueprint.mainBlueprint["install"](opt);
     };
     GroupBlueprint.prototype.setMainBlueprint = function (blueprintName) {
@@ -90,22 +90,22 @@ var GroupBlueprint = (function () {
         metadataSubDir = path.join(this.metadataDir, metadataSubDir);
         if (!fs.existsSync(metadataSubDir))
             return;
-        var list = fs.readdirSync(metadataSubDir);
-        for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
-            var file = list_1[_i];
-            var pp = path.parse(file);
+        let list = fs.readdirSync(metadataSubDir);
+        for (let _i = 0, list_1 = list; _i < list_1.length; _i++) {
+            let file = list_1[_i];
+            let pp = path.parse(file);
             if (pp.ext != ".json")
                 continue;
-            var entityName = pp.name;
+            let entityName = pp.name;
 
             if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 continue;
 
-            var entity = JSON.parse(stripBom(fs.readFileSync(path.join(metadataSubDir, file), "utf8")));
+            let entity = JSON.parse(stripBom(fs.readFileSync(path.join(metadataSubDir, file), "utf8")));
             if (entity.external)
                 continue;
 
-            var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
+            let groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
             this.promise = this.promise.then(GroupBlueprint.funCallback);
         }

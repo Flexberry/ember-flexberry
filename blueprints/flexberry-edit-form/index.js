@@ -3,15 +3,15 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
-var stripBom = require("strip-bom");
+let stripBom = require("strip-bom");
 let skipConfirmationFunc = require('../utils/skip-confirmation');
-var fs = require("fs");
-var path = require("path");
-var lodash = require("lodash");
-var Locales_1 = require("../flexberry-core/Locales");
-var CommonUtils_1 = require("../flexberry-common/CommonUtils");
-var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
-var componentMaps = [
+let fs = require("fs");
+let path = require("path");
+let lodash = require("lodash");
+let Locales_1 = require("../flexberry-core/Locales");
+let CommonUtils_1 = require("../flexberry-common/CommonUtils");
+let ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
+let componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
     { name: "flexberry-simpledatetime", types: ["date"] },
@@ -69,7 +69,7 @@ module.exports = {
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var editFormBlueprint = new EditFormBlueprint(this, options);
+        let editFormBlueprint = new EditFormBlueprint(this, options);
         return lodash.defaults({
             modelName: editFormBlueprint.editForm.projections[0].modelName,
             modelProjection: editFormBlueprint.editForm.projections[0].modelProjection,
@@ -84,7 +84,7 @@ module.exports = {
         );
     }
 };
-var EditFormBlueprint = /** @class */ (function () {
+let EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
@@ -92,22 +92,22 @@ var EditFormBlueprint = /** @class */ (function () {
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
-        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
+        let localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
         this.locales = new Locales_1.default(options.entity.name, "ru", localePathTemplate);
         this.process();
         this.flexberryComponents = this.snippetsResult.join("\n");
         this.parentRoute = this.getParentRoute();
-        var bodySwitchBindingPath = [];
-        var propertyLookup;
-        for (var _i = 0, _a = this.editForm.propertyLookup; _i < _a.length; _i++) {
+        let bodySwitchBindingPath = [];
+        let propertyLookup;
+        for (let _i = 0, _a = this.editForm.propertyLookup; _i < _a.length; _i++) {
             propertyLookup = _a[_i];
             if (!propertyLookup.master)
                 continue;
-            var snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
+            let snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
             bodySwitchBindingPath.push(lodash.template(snippet)(propertyLookup));
         }
         if (bodySwitchBindingPath.length > 0) {
-            var snippet = this.readSnippetFile("getCellComponent-function", "js");
+            let snippet = this.readSnippetFile("getCellComponent-function", "js");
             this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
             this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
         }
@@ -116,18 +116,18 @@ var EditFormBlueprint = /** @class */ (function () {
         }
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
-        var snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+        let snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
         return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
     };
     EditFormBlueprint.prototype.readHbsSnippetFile = function (componentName) {
         return this.readSnippetFile(componentName, "hbs");
     };
     EditFormBlueprint.prototype.loadModel = function (modelName) {
-        var model = ModelBlueprint_1.default.loadModel(this.modelsDir, modelName + ".json");
+        let model = ModelBlueprint_1.default.loadModel(this.modelsDir, modelName + ".json");
         return model;
     };
     EditFormBlueprint.prototype.findAttr = function (model, attrName) {
-        var modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+        let modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
         if (!modelAttr) {
             model = this.loadModel(model.parentModelName);
             return this.findAttr(model, attrName);
@@ -135,31 +135,31 @@ var EditFormBlueprint = /** @class */ (function () {
         return modelAttr;
     };
     EditFormBlueprint.prototype.loadSnippet = function (model, attrName) {
-        var modelAttr = this.findAttr(model, attrName);
-        var component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
+        let modelAttr = this.findAttr(model, attrName);
+        let component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
         if (!component) {
             return this.readHbsSnippetFile("flexberry-dropdown");
         }
         return this.readHbsSnippetFile(component.name);
     };
     EditFormBlueprint.prototype.process = function () {
-        var editFormsDir = path.join(this.options.metadataDir, "edit-forms");
-        var editFormsFile = path.join(editFormsDir, this.options.file);
-        var content = stripBom(fs.readFileSync(editFormsFile, "utf8"));
+        let editFormsDir = path.join(this.options.metadataDir, "edit-forms");
+        let editFormsFile = path.join(editFormsDir, this.options.file);
+        let content = stripBom(fs.readFileSync(editFormsFile, "utf8"));
         this.editForm = JSON.parse(content);
         this.locales.setupForm(this.editForm);
-        var linkProj = this.editForm.projections[0];
-        var model = this.loadModel(linkProj.modelName);
-        var proj = lodash.find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
-        var projAttr;
-        for (var _i = 0, _a = proj.attrs; _i < _a.length; _i++) {
+        let linkProj = this.editForm.projections[0];
+        let model = this.loadModel(linkProj.modelName);
+        let proj = lodash.find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
+        let projAttr;
+        for (let _i = 0, _a = proj.attrs; _i < _a.length; _i++) {
             projAttr = _a[_i];
             this.locales.setupEditFormAttribute(projAttr);
             if (projAttr.hidden || projAttr.index === -1) {
                 continue;
             }
-            var snippet = this.loadSnippet(model, projAttr.name);
-            var attr = this.findAttr(model, projAttr.name);
+            let snippet = this.loadSnippet(model, projAttr.name);
+            let attr = this.findAttr(model, projAttr.name);
             projAttr.readonly = "readonly";
             projAttr.type = attr.type;
             projAttr.entityName = this.options.entity.name;
@@ -168,14 +168,14 @@ var EditFormBlueprint = /** @class */ (function () {
             this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
         }
         this.fillBelongsToAttrs(proj.belongsTo, []);
-        var belongsTo, hasMany;
-        for (var _b = 0, _c = proj.belongsTo; _b < _c.length; _b++) {
+        let belongsTo, hasMany;
+        for (let _b = 0, _c = proj.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
             this.locales.setupEditFormAttribute(belongsTo);
             if (belongsTo.hidden || belongsTo.index === -1) {
                 continue;
             }
-            var propertyLookup = lodash.find(this.editForm.propertyLookup, function (propLookup) { return propLookup.relationName === belongsTo.relationName; });
+            let propertyLookup = lodash.find(this.editForm.propertyLookup, function (propLookup) { return propLookup.relationName === belongsTo.relationName; });
             if (propertyLookup) {
                 belongsTo.projection = propertyLookup.projection;
                 belongsTo.readonly = "readonly";
@@ -187,7 +187,7 @@ var EditFormBlueprint = /** @class */ (function () {
         }
         this._tmpSnippetsResult = lodash.sortBy(this._tmpSnippetsResult, ["index"]);
         this.snippetsResult = lodash.map(this._tmpSnippetsResult, "snippetResult");
-        for (var _d = 0, _e = proj.hasMany; _d < _e.length; _d++) {
+        for (let _d = 0, _e = proj.hasMany; _d < _e.length; _d++) {
             hasMany = _e[_d];
             hasMany.readonly = "readonly";
             hasMany.entityName = this.options.entity.name;
@@ -198,18 +198,18 @@ var EditFormBlueprint = /** @class */ (function () {
         }
     };
     EditFormBlueprint.prototype.fillBelongsToAttrs = function (belongsToArray, parentPath) {
-        for (var _i = 0, belongsToArray_1 = belongsToArray; _i < belongsToArray_1.length; _i++) {
-            var belongsTo = belongsToArray_1[_i];
-            var currentPath = lodash.concat(parentPath, belongsTo.name);
-            var belongsToAttr = void 0;
-            for (var _a = 0, _b = belongsTo.attrs; _a < _b.length; _a++) {
+        for (let _i = 0, belongsToArray_1 = belongsToArray; _i < belongsToArray_1.length; _i++) {
+            let belongsTo = belongsToArray_1[_i];
+            let currentPath = lodash.concat(parentPath, belongsTo.name);
+            let belongsToAttr = void 0;
+            for (let _a = 0, _b = belongsTo.attrs; _a < _b.length; _a++) {
                 belongsToAttr = _b[_a];
                 if (belongsToAttr.hidden || belongsToAttr.index === -1) {
                     continue;
                 }
-                var model = this.loadModel(belongsTo.relatedTo);
-                var snippet = this.loadSnippet(model, belongsToAttr.name);
-                var attr = this.findAttr(model, belongsToAttr.name);
+                let model = this.loadModel(belongsTo.relatedTo);
+                let snippet = this.loadSnippet(model, belongsToAttr.name);
+                let attr = this.findAttr(model, belongsToAttr.name);
                 belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
@@ -223,17 +223,17 @@ var EditFormBlueprint = /** @class */ (function () {
         }
     };
     EditFormBlueprint.prototype.getParentRoute = function () {
-        var parentRoute = '';
-        var listFormsDir = path.join(this.options.metadataDir, "list-forms");
-        var listForms = fs.readdirSync(listFormsDir);
-        for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
-            var form = listForms_1[_i];
-            var pp = path.parse(form);
+        let parentRoute = '';
+        let listFormsDir = path.join(this.options.metadataDir, "list-forms");
+        let listForms = fs.readdirSync(listFormsDir);
+        for (let _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
+            let form = listForms_1[_i];
+            let pp = path.parse(form);
             if (pp.ext != ".json")
                 continue;
-            var listFormFile = path.join(listFormsDir, form);
-            var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
-            var listForm = JSON.parse(content);
+            let listFormFile = path.join(listFormsDir, form);
+            let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+            let listForm = JSON.parse(content);
             if (this.options.entity.name === listForm.editForm) {
                 parentRoute = pp.name;
             }
@@ -241,16 +241,16 @@ var EditFormBlueprint = /** @class */ (function () {
         return parentRoute;
     };
     EditFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
-        var targetRoot = "app";
+        let targetRoot = "app";
         if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
     };
     EditFormBlueprint.prototype.calculateValidatePropertyNames = function (attrs) {
-        var name = attrs.name;
-        var lastDotIndex = name.lastIndexOf(".");
-        var isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
+        let name = attrs.name;
+        let lastDotIndex = name.lastIndexOf(".");
+        let isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
         attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
         attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
     };

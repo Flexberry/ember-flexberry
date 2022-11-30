@@ -486,8 +486,15 @@ export default FlexberryBaseComponent.extend({
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
       dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
-      onChange: (dates) => {
-        this.set('_valueAsDate', dates[0]);
+      onChange: (dates, dateStr, instance) => {
+        const newValue = dates[0];
+
+        this.set('_valueAsDate', newValue);
+
+        const onChange = this.get('onChange');
+        if (typeof onChange === 'function') {
+          onChange(newValue, dateStr, instance);
+        }
       },
       onClose: () => {
         this.set('canClick', true);

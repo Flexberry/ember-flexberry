@@ -1220,19 +1220,22 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
           builder.skip(skip);
           builder.top(maxResults);
-          builder.count();
+
+          if (usePagination) builder.count();
 
           run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
 
-              if (usePagination && skip > 0) {
-                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
-              }
+              if (usePagination) {
+                if (skip > 0)
+                  results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
 
-              if (skip + records.get('length') < records.get('meta.count')) {
-                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
-                results.push({ title: title, nextPage: usePagination });
+                if (skip + records.get('length') < records.get('meta.count'))
+                  results.push({ title: '<div class="ui center aligned container"><i class="angle down icon"></i></div>', nextPage: true });
+              } else {
+                if (records.get('length') == maxResults)
+                  results.push({ title: '...', nextPage: false });
               }
 
               callback({ success: true, results: results });

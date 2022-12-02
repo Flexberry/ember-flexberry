@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.13] - 2022-12-02
+### Changed
+* The `flexberry-objectlistview` component:
+    * Moved `_conditionsByType` function with default filter conditions to utils.
+
 ## [3.8.0-beta.12] - 2022-11-30
 ### Added
 * `flexberry-simpledatetime` `onChange` function.

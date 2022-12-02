@@ -23,6 +23,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import getProjectionByName from '../utils/get-projection-by-name';
 import runAfter from '../utils/run-after';
+import defaultConditionsByType from '../utils/default-conditions-by-type';
 
 /**
   Object list view component.
@@ -1978,7 +1979,7 @@ export default FlexberryBaseComponent.extend(
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type, attribute);
     } else {
-      conditions = this._conditionsByType(attribute.type);
+      conditions = defaultConditionsByType(attribute.type, this.get('i18n'));
     }
 
     let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
@@ -2039,65 +2040,6 @@ export default FlexberryBaseComponent.extend(
 
     let model = this.get('store').modelFor(modelName);
     return get(model, 'attributes').get(attributeName);
-  },
-
-  /**
-    Return available conditions for filter.
-
-    @method _conditionsByType
-    @param {String} type
-    @return {Array} Available conditions for filter.
-  */
-  _conditionsByType(type) {
-    switch (type) {
-      case 'file':
-        return null;
-
-      case 'date':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-        };
-      case 'number':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-          'between': this.get('i18n').t('components.object-list-view.filters.between'),
-        };
-      case 'decimal':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-          'between': this.get('i18n').t('components.object-list-view.filters.between'),
-        };
-      case 'string':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'like': this.get('i18n').t('components.object-list-view.filters.like'),
-          'nlike': this.get('i18n').t('components.object-list-view.filters.nlike')
-        };
-
-      case 'boolean':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'nempty': this.get('i18n').t('components.object-list-view.filters.nempty'),
-          'empty': this.get('i18n').t('components.object-list-view.filters.empty'),
-        };
-
-      default:
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
-        };
-    }
   },
 
   /**

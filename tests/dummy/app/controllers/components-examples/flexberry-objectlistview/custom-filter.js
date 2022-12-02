@@ -1,5 +1,6 @@
 import { computed, observer } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
+import defaultConditionsByType from 'ember-flexberry/utils/default-conditions-by-type';
 
 export default ListFormController.extend({
   filterByAnyWord: false,
@@ -65,24 +66,18 @@ export default ListFormController.extend({
     },
     /* eslint-enable no-unused-vars */
 
-    conditionsByType(type) {
-      switch (type) {
-        case 'file':
-          return null;
-
-        case 'date':
-        case 'number':
-          return ['eq', 'neq', 'le', 'ge'];
-
-        case 'string':
-          return ['eq', 'neq', 'like', 'empty'];
-
-        case 'boolean':
-          return ['eq'];
-
-        default:
-          return ['eq', 'neq'];
+    conditionsByType(type, attribute) {
+      let i18n = this.get('i18n');
+      if (attribute && attribute.name === 'address') {
+        return {
+          'eq': 'Адресочек равен',
+          'neq': 'Адресочек неравен',
+          'like': 'Адресочек содержит',
+          'nlike': 'Адресочек не содержит'
+        };
       }
+
+      return defaultConditionsByType(type, i18n);      
     },
   }
 });

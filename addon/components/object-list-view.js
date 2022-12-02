@@ -1979,7 +1979,7 @@ export default FlexberryBaseComponent.extend(
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type, attribute);
     } else {
-      conditions = this._conditionsByType(attribute.type);
+      conditions = defaultConditionsByType(attribute.type, this.get('i18n'));
     }
 
     let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
@@ -2040,17 +2040,6 @@ export default FlexberryBaseComponent.extend(
 
     let model = this.get('store').modelFor(modelName);
     return get(model, 'attributes').get(attributeName);
-  },
-
-  /**
-    Return available conditions for filter.
-
-    @method _conditionsByType
-    @param {String} type
-    @return {Array} Available conditions for filter.
-  */
-  _conditionsByType(type) {
-    return defaultConditionsByType(type, this.get('i18n'));
   },
 
   /**

@@ -70,11 +70,15 @@ export default ListFormController.extend({
       let i18n = this.get('i18n');
       if (attribute && attribute.name === 'address') {
         return {
-          'eq': 'Адресочек равен',
-          'neq': 'Адресочек неравен',
-          'like': 'Адресочек содержит',
-          'nlike': 'Адресочек не содержит'
+          'eq': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.eqAddress'),
+          'neq': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.neqAddress'),
+          'like': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.likeAddress'),
+          'nlike': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.nlikeAddress'),
         };
+      }
+
+      if (type === 'string') {
+        return ['eq', 'neq', 'like', 'empty'];
       }
 
       return defaultConditionsByType(type, i18n);      

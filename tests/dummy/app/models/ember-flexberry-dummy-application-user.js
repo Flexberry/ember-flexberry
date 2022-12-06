@@ -1,7 +1,29 @@
+import Ember from 'ember';
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import { buildValidations, validator } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+import { Projection } from 'ember-flexberry-data';
+import BaseModel from 'ember-flexberry-data/models/model-without-validation';
+
+const { computed } = Ember;
+
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+  eMail: validator('presence', {
+    presence: true,
+    message: 'User email is required',
+  }),
+  phone1: validator('presence', {
+    presence: true,
+    message: 'Phone is required',
+    disabled: computed.not('model.phone1IsRequired'),
+  }),
+});
+
+const Model = BaseModel.extend(Validations, {
   name: DS.attr('string'),
   eMail: DS.attr('string'),
   phone1: DS.attr('string'),
@@ -17,26 +39,6 @@ var Model = Projection.Model.extend({
   karma: DS.attr('decimal'),
 
   phone1IsRequired: false,
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    eMail: {
-      presence: {
-        message: 'User email is required'
-      }
-    },
-    phone1: {
-      presence: {
-        'if': 'phone1IsRequired',
-        message: 'Phone is required',
-      }
-    },
-  }
 });
 
 // Edit form projection.

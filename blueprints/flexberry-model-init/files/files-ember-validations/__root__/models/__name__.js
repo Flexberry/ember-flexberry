@@ -9,11 +9,13 @@ if (parentModelName) { %>
 import <%= parentClassName %>Model from <%= (parentExternal ? "set path to '/" : "'./") + parentModelName + "'" %>;<%
 }
 else { %>
-import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
-import OfflineModelMixin from 'ember-flexberry-data/mixins/offline-model';<%
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';<%
+}
+if (!parentModelName && additionalModelMixin && additionalModelMixinImport) { %>
+import <%= additionalModelMixin %> from <%= additionalModelMixinImport %>; <%
 } %>
 
-let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= !parentModelName ? 'OfflineModelMixin, ' : '' %><%= className %>Mixin, {
+let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= additionalModelMixin%><%= additionalModelMixin ? ', ' : '' %><%= className %>Mixin, {
 });<%
 
 if (namespace || parentModelName || projections) { %>

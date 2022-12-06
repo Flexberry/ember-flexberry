@@ -45,9 +45,8 @@ export default EditFormController.extend({
 
     if (bindingPath === 'date') {
       return {
-        componentName: 'flexberry-datepicker',
-        componentProperties: {
-        }
+        componentName: 'flexberry-simpledatetime',
+        componentProperties: { type: 'date' },
       };
     }
 

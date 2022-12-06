@@ -7,7 +7,9 @@ module.exports = {
     availableOptions: [
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String },
-        { name: 'skip-confirmation', type: Boolean }
+        { name: 'skip-confirmation', type: Boolean },
+        { name: 'enable-offline', type: Boolean },
+        { name: 'enable-audit', type: Boolean }
     ],
 
     supportsAddon: function () {
@@ -34,6 +36,22 @@ module.exports = {
      */
     locals: function (options) {
         var modelBlueprint = new ModelBlueprint_1.default(this, options);
+
+        const noParent = !modelBlueprint.parentModelName;
+        const isOffline = this.options.enableOffline;
+        const isAudit = this.options.enableAudit;
+
+        let additionalModelMixin = '';
+        let additionalModelMixinImport = '';
+
+        if (noParent) {
+            additionalModelMixin = isAudit ? 'AuditModelMixin' : '';
+            additionalModelMixinImport = isAudit ? '\'ember-flexberry-data/mixins/audit-model\'' : '';
+
+            additionalModelMixin = isOffline ? 'OfflineModelMixin' : additionalModelMixin;
+            additionalModelMixinImport = isOffline ? '\'ember-flexberry-data/mixins/offline-model\'' : additionalModelMixinImport;
+        }
+
         return {
             namespace: modelBlueprint.namespace,
             className: modelBlueprint.className,
@@ -41,7 +59,9 @@ module.exports = {
             parentClassName: modelBlueprint.parentClassName,
             parentExternal: modelBlueprint.parentExternal,
             name: modelBlueprint.name,
-            projections: modelBlueprint.projections
+            projections: modelBlueprint.projections,
+            additionalModelMixin: additionalModelMixin,
+            additionalModelMixinImport: additionalModelMixinImport
         };
     },
 

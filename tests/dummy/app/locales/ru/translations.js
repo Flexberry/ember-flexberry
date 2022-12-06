@@ -188,14 +188,6 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
-            'title': '',
-            'settings-example': {
-              'caption': 'Пример работы с настройками',
-              'title': ''
-            }
-          },
           'flexberry-dropdown': {
             'caption': 'flexberry-dropdown',
             'title': '',
@@ -698,11 +690,6 @@ Ember.$.extend(true, translations, {
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Пример работы с настройками'
         }
       },
       'flexberry-dropdown': {

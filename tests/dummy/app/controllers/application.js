@@ -724,6 +724,11 @@ export default Controller.extend({
               children: null
             }]
           }]
+        }, {
+          link: 'integration-examples/ember-flexberry-icons',
+          caption: i18n.t('forms.application.sitemap.integration-examples.icons.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.icons.title'),
+          children: null
         }]
       }, {
         link: null,

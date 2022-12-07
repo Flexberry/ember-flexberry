@@ -226,6 +226,7 @@ Router.map(function() {
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 
   this.route('login');
+  this.route('integration-examples/ember-flexberry-icons');
 });
 
 export default Router;

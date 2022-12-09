@@ -52,21 +52,21 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/outline-icons.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/outline-icons.woff2', { destDir: 'assets/fonts' });
 
-    // GOSTUI2
-    const ghostThemeAssetsDir = 'node_modules/ember-flexberry-themes/src/themes/ghost/assets';
-    app.import(`${ghostThemeAssetsDir}/fonts.css`);
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff2`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.eot`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.ttf`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff2`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.eot`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.ttf`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff`, { destDir: 'assets/fonts' });
-    app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2`, { destDir: 'assets/fonts' });
+  // GOSTUI2
+  const ghostThemeAssetsDir = 'bower/ember-flexberry-themes/src/themes/ghost/assets';
+  app.import(`${ghostThemeAssetsDir}/fonts.css`);
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.woff2`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.eot`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.ttf`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w450-medium_g_temp.woff2`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.eot`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.ttf`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff`, { destDir: 'assets/fonts' });
+  app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2`, { destDir: 'assets/fonts' });
 
   // material-design-icons
   app.import('vendor/material-design-icons.css');

@@ -180,6 +180,7 @@ Router.map(function() {
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/theming-components');
   this.route('integration-examples/edit-form/validation');
+  this.route('integration-examples/ember-flexberry-icons');
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
@@ -226,7 +227,6 @@ Router.map(function() {
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 
   this.route('login');
-  this.route('integration-examples/ember-flexberry-icons');
 });
 
 export default Router;

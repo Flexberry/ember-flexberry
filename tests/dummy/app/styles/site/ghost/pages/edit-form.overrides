@@ -6,7 +6,7 @@
   min-height: 120px;
   text-align: center;
 
-  i::before {
+  i {
     font-size: 32px;
   }
 

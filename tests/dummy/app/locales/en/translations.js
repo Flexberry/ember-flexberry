@@ -540,6 +540,10 @@ $.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Icons',
+            'title': 'Icons'
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -1087,7 +1091,11 @@ $.extend(true, translations, {
             caption: 'EmberFlexberryDummyVidDepartamentaL'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Icons',
+        'title': 'Icons'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

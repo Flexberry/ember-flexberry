@@ -540,6 +540,10 @@ $.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Иконки',
+            'title': 'Иконки'
+          },
         },
         'user-setting-forms': {
           'caption': 'Пользовательские настройки',
@@ -1092,7 +1096,11 @@ $.extend(true, translations, {
             caption: 'Виды департаментов'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Иконки',
+        'title': 'Иконки'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

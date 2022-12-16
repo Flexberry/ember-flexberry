@@ -79,7 +79,7 @@
     "lint-staged": "^10.5.1",
     "loader.js": "^4.0.1",
     "moment": "2.29.4",
-    "moment-timezone": "0.5.0",
+    "moment-timezone": "0.5.35",
     "node-uuid": "^1.4.7",
     "npm-run-all": "^4.1.5",
     "semantic-ui-ember": "https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3",

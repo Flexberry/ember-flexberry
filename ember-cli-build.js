@@ -11,6 +11,21 @@ module.exports = function(defaults) {
           'bower_components/ember-flexberry-themes',
       ]
     },
+
+    outputPaths: {
+      app: {
+        css: {
+          'app': '/assets/purple.css',
+          'dark': '/assets/dark.css',
+          'default': '/assets/default.css'
+        }
+      }
+    },
+
+    fingerprint: {
+      exclude: ['purple', 'dark', 'default']
+    },
+
     postcssOptions: {
       compile: {
         enabled: false,

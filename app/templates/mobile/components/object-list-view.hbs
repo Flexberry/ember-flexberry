@@ -151,12 +151,14 @@
     </button>
     {{#if (and (eq class "groupedit-container") arrowsButtons)}}
       <button
+        type="button"
         class="ui ui-move-up {{buttonClass}} {{if readonly 'disabled'}} button"
         title={{t "components.groupedit-toolbar.move-up-button-text"}}
         {{action '_moveRow' componentName -1}}>
         <i class="arrow up icon"></i>
       </button>
       <button
+        type="button"
         class="ui ui-move-down {{buttonClass}} {{if readonly 'disabled'}} button"
         title={{t "components.groupedit-toolbar.move-down-button-text"}}
         {{action '_moveRow' componentName 1}}>

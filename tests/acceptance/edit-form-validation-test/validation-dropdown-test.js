@@ -32,8 +32,10 @@ executeTest('check operation dropdown', (store, assert, app) => {
       $validationFlexberryDropdownItem.click();
     });
 
-    // Validationmessage must be empty.
-    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Dropdown have value');
+    run.next(() => {
+      // Validationmessage must be empty.
+      assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Dropdown have value');
+    });
   });
 });
 /* eslint-enable no-unused-vars */

@@ -79,6 +79,7 @@ module.exports = {
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
             functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
+            isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
         }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -87,6 +88,7 @@ var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
+        this.isEmberCpValidationsUsed = true;
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
@@ -114,7 +116,8 @@ var EditFormBlueprint = /** @class */ (function () {
         }
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
-        return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
+        var snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+        return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
     };
     EditFormBlueprint.prototype.readHbsSnippetFile = function (componentName) {
         return this.readSnippetFile(componentName, "hbs");

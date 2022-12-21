@@ -593,6 +593,21 @@ export default FlexberryBaseComponent.extend({
 
       this.get(actionName)();
     },
+
+    /**
+      Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit row was found.');
+      }
+
+      this.sendAction(actionName, model);
+    },
   },
 
   sortingObserver: observer('sorting', function() {
@@ -688,9 +703,30 @@ export default FlexberryBaseComponent.extend({
   */
   sortRecords(records, sortDef, start, end) {
     let recordsSort = records;
-    let condition = function(koef) {
-      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.attributePath || sortDef.propName);
-      let secondProp = recordsSort.objectAt(koef).get(sortDef.attributePath || sortDef.propName);
+    if (start >= end) {
+      return recordsSort;
+    }
+
+    // Form hash array (there can be different observers on recordsSort changing, so it is better to minimize such changes).
+    let hashArray = [];
+    for (let i = start; i <= end; i++) {
+      let currentRecord = recordsSort.objectAt(i);
+      let currentHash = currentRecord.get(sortDef.attributePath || sortDef.propName);
+      let hashStructure = {
+        record: currentRecord,
+        hash: currentHash
+      };
+
+      hashArray.push(hashStructure);
+    }
+
+    let hashArrayLength = hashArray.length;
+
+    // Compare record with number koef1 and koef2.
+    // It returns true if records should be exchanged.
+    let condition = function(koef1, koef2) {
+      let firstProp = hashArray[koef1].hash;
+      let secondProp = hashArray[koef2].hash;
       if (sortDef.direction === 'asc') {
         return isNone(secondProp) && !isNone(firstProp) ? true : firstProp > secondProp;
       }
@@ -702,12 +738,29 @@ export default FlexberryBaseComponent.extend({
       return false;
     };
 
-    for (let i = start + 1; i <= end; i++) {
-      for (let j = i; j > start && condition(j); j--) {
-        let record = recordsSort.objectAt(j);
-        recordsSort.removeAt(j);
-        recordsSort.insertAt(j - 1, record);
+    // Sort with minimum exchanges.
+    for(let i = 0; i < hashArrayLength; i++) {
+      // Find minimum in right not sorted part.
+      let min = i;
+      for(let j = i + 1; j < hashArrayLength; j++) {
+        if(condition(min, j)) {
+          min = j;
+        }
       }
+      if (min != i) {
+        // Exchange current with minimum.
+        let tmp = hashArray[i];
+        hashArray[i] = hashArray[min];
+        hashArray[min] = tmp;
+      }
+    }
+
+    // Remove unsorted part.
+    recordsSort.removeAt(start, end - start + 1);
+
+    // Insert sorted elements.
+    for (let i = start; i <= end; i++) {
+      recordsSort.insertAt(i, hashArray[i-start].record);
     }
 
     return recordsSort;

@@ -2,17 +2,8 @@
   <tr class="{{record.rowConfig.customClass}}{{if record.selected " active"}}{{if record.data.hasDirtyAttributes " groupedit-new-row"}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
-      {{#each customButtonsInRow as |customButtonInRow|}}
-          <button
-            type="button"
-            class="ui {{customButtonInRow.buttonClasses}} button"
-            title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
-            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
-            <i class={{customButtonInRow.buttonIcon}}></i>
-          </button>
-      {{/each}}
-      {{#if showHelperColumn}}
-        <div class="object-list-view-helper-column-cell">
+      <div class="object-list-view-helper-column-cell">
+        {{#if showHelperColumn}}
           {{#if (and showAsteriskInRow record.data.hasDirtyAttributes)}}
             <div class="cell asterisk-cell">
               <i class="asterisk small red icon"></i>
@@ -21,7 +12,7 @@
           {{#if showCheckBoxInRow}}
             <div class="cell">
               {{flexberry-checkbox
-                readonly=(or readonly (not record.rowConfig.canBeSelected))
+                readonly=(or (not record.rowConfig.canBeSelected) allSelect)
                 onChange=(action selectRow record)
                 value=record.selected
               }}
@@ -90,8 +81,17 @@
               {{/if}}
             </div>
           {{/if}}
-        </div>
-      {{/if}}
+        {{/if}}
+        {{#each customButtonsInRow as |customButtonInRow|}}
+            <button
+              type="button"
+              class="ui {{customButtonInRow.buttonClasses}} button"
+              title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+              {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
+              <i class={{customButtonInRow.buttonIcon}}></i>
+            </button>
+        {{/each}}
+      </div>
     </td>
     {{#each columns as |column index|}}
       <td

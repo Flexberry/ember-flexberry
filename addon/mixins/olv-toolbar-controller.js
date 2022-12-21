@@ -66,11 +66,12 @@ export default Mixin.create({
       @method actions.showConfigDialog
       @param componentName Component name.
       @param settingName Setting name.
+      @param useSidePageMode Indicates when use side page mode.
       @param isExportExcel Indicates if it's export excel dialog.
       @param immediateExport Indicate if auto export is needed.
     */
-    showConfigDialog(componentName, settingName, useSidePgeMode=false, isExportExcel = false, immediateExport = false) {
-      this._showConfigDialog(componentName, settingName, useSidePgeMode, this, isExportExcel, immediateExport);
+    showConfigDialog(componentName, settingName, useSidePageMode=false, isExportExcel = false, immediateExport = false) {
+      this._showConfigDialog(componentName, settingName, useSidePageMode, this, isExportExcel, immediateExport);
     },
 
     /**

@@ -71,6 +71,11 @@ export default Mixin.create({
   logoClass: '.background-logo',
 
   /**
+   * Класс родительского элемента.
+   */
+  parentComponentClasses: 'body > .pushable > .pusher',
+
+  /**
    * Находит и сохраняет ссылки на компонент и дочерний элемент
    * Задает начальное значение фиксированному элементу.
    * @inheritdoc
@@ -116,7 +121,8 @@ export default Mixin.create({
     const component = this.get('componentRef');
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
-    let parentComponent = $('body > .pushable > .pusher').get(0);
+    const parentComponentClasses = this.get('parentComponentClasses');
+    let parentComponent = $(parentComponentClasses).get(0);
 
     if (!isVisible || fixedOnVisible) {
       const { height, left, width, bottom } = component.getBoundingClientRect();
@@ -124,6 +130,7 @@ export default Mixin.create({
       const optionWidth = options.width || 0;
 
       if (this.get('isInsideOlv')) {
+        element.style.maxHeight = 'none';
         let elementHeight = $(element).outerHeight();
 
         const upward = window.innerHeight - bottom < elementHeight;
@@ -132,22 +139,23 @@ export default Mixin.create({
 
         if (upward) {
           element.style.overflowY = 'auto';
+
           if (elementHeight > top) {
             let logoHeight = $(this.get('logoClass')).outerHeight();
             element.style.maxHeight = `${top - logoHeight}px`;
-            top = `${top - optionTop - elementHeight + (elementHeight - (top - logoHeight))}px`;
-          } else {
-            top = `${top - optionTop - elementHeight}px`;
           }
 
-          element.style.bottom = 'auto';
+          element.style.bottom = `${window.innerHeight - top}px`;
+          element.style.top = `auto`;
+
           component.classList.add('upward');
         } else {
-          top = `${top + height + optionTop}px`;
+          element.style.top = `${top + height + optionTop}px`;
+          element.style.bottom = `auto`;
+
           component.classList.remove('upward');
         }
 
-        element.style.top = top;
         let offsetLeft = left - parentComponent.getBoundingClientRect().left + optionLeft;
         $(element).attr('style', function(i, s) { return (s || '') + `left: ${offsetLeft}px !important;` });
       }

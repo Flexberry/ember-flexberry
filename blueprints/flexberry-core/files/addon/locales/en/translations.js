@@ -75,7 +75,7 @@ $.extend(true, translations, {
           caption: 'Home',
           title: ''
         },
-<%= enApplicationMenu %>
+<%= ruApplicationMenu %>
       }
     },
 

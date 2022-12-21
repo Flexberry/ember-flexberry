@@ -1,7 +1,6 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
-import { click } from '@ember/test-helpers';
 
 /* eslint-disable no-unused-vars */
 executeTest('check complete all tests', (store, assert, app) => {
@@ -14,22 +13,7 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationDataField = $('.flexberry-simpledatetime');
-    let $validationDataDiv = $validationDataField.children('.input');
-    let $validationDataInput = $validationDataDiv.children('.flatpickr-input');
-
-    run(() => {
-      // Open datepicker calendar.
-      $($validationDataInput[0]).click();
-      let $validationDateButton = $('.flatpickr-day')[16];
-
-      // Select date.
-      click($validationDateButton);
-    });
-
-    let $validationFlexberryLookup = $('.flexberry-lookup');
-    let $validationFlexberryLookupInput = $validationFlexberryLookup.children('.input');
-    let $validationFlexberryLookupButton = $validationFlexberryLookupInput.children('.ui-change.button');
+    let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
 
     // Click lookup button.
     run(() => {

@@ -1,0 +1,23 @@
+<h3 class="ui header">
+  {{t "forms.components-examples.flexberry-checkbox.three-state-example.caption"
+  }}
+</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-checkbox
+      isNullable=true
+      value=model.flag
+      label=(t
+        "forms.components-examples.flexberry-checkbox.three-state-example.caption"
+      )
+      readonly=readonly
+    }}
+  </div>
+  {{flexberry-button
+    caption=(t
+      "forms.components-examples.flexberry-checkbox.three-state-example.indeterminate-button"
+    )
+    readonly=readonly
+    click=(action "setIndeterminate")
+  }}
+</form>

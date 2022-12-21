@@ -161,6 +161,8 @@ export default Mixin.create(ReloadListMixin, {
       let customInHierarchicalMode = get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
       lookupController.set('inHierarchicalMode', customInHierarchicalMode);
 
+      lookupController.set('developerUserSettings', this.get('developerUserSettings'));
+
       let projectionName = options.projection;
       assert('ProjectionName is undefined.', projectionName);
 

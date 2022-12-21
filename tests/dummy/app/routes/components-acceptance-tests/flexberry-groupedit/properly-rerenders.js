@@ -1,3 +1,4 @@
+import { get } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -27,7 +28,7 @@ export default EditFormRoute.extend({
 
   /* eslint-disable no-unused-vars */
   model(params) {
-    let store = this.get('store');
+    let store = get(this, 'store');
 
     let base = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     return base;

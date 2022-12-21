@@ -1,0 +1,12 @@
+<div class="field">
+  {{flexberry-field
+    placeholder=(t "components.flexberry-field.placeholder")
+    readonly=<%= readonly %>
+    required=true
+    value=model.<%= name %>
+    class=(if model.errors.<%= name %> "error")
+    label=(<%= caption %>)
+    data-test-<%= entityName %>-<%= dashedName %>=true
+  }}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+</div>

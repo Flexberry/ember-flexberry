@@ -52,10 +52,10 @@ module.exports = {
 
     var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:6500\';\n\n' +
+      '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:6500\';\n' +
+      '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
     var env2after = 'EmberENV: {\n';
@@ -125,7 +125,27 @@ module.exports = {
       '          showModalDialogOnUploadError: true,\n\n' +
       '          // Flag: indicates whether to show modal dialog on download errors or not.\n' +
       '          showModalDialogOnDownloadError: true,\n' +
-      '        }\n' +
+      '        },\n' +
+      '        // Settings for `flexberryObjectlistview` component.\n' +
+      '        flexberryObjectlistview: {\n' +
+      '          // Default number of records on the list page.\n'+
+      '          defaultPerPage: 5,\n' +
+      '          // Flag indicates whether to use side page or usual mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '        },\n'+
+      '        // Settings for flexberry-lookup component.\n'+
+      '        flexberryLookup: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberryGroupedit: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberrySimpledatetime: {\n'+
+      '          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.\n'+
+      '          calendarContext: undefined,\n'+
+      '        }\n'+
       '      },\n';
 
     var env4before = '\n  if (environment === \'development\') {\n';
@@ -142,13 +162,17 @@ module.exports = {
       '  ENV.i18n = {\n' +
       '    // Should be defined to avoid ember-i18n deprecations.\n' +
       '    // Locale will be changed then to navigator current locale (in instance initializer).\n' +
-      '    defaultLocale: \'ru\'\n' +
+      '    defaultLocale: null\n' +
       '  };\n\n' +
       '  // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.\n' +
       '  // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).\n' +
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
+
+      var resolutions = '  "resolutions": {\n' +
+        '    "ember-get-config": "0.3.0"\n' +
+        '  },';
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
@@ -221,6 +245,14 @@ module.exports = {
         }
       );
     }).then(function() {
+      return _this.insertIntoFile(
+        'package.json',
+        resolutions,
+        {
+          before: '  "engines": {'
+        }
+      );
+    }).then(function() {
       return _this.insertIntoFile(appEnvironment, env1, { after: env1after });
     }).then(function() {
       return _this.insertIntoFile(addonEnvironment, env1, { after: env1after });
@@ -251,7 +283,8 @@ module.exports = {
         packages: [
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '^1.5.4' },
-          { name: 'ember-cp-validations', target: '~3.5.2' },
+          { name: 'ember-cp-validations', target: '^3.5.6' },
+          { name: 'ember-i18n-cp-validations', target: '^3.1.0' },
           { name: 'ember-link-action', target: '0.0.36' },
           { name: 'ember-moment', target: '7.7.0' },
           { name: 'ember-test-selectors', target: '2.1.0' }
@@ -264,7 +297,7 @@ module.exports = {
         { name: 'node-uuid', target: '^1.4.7' },
         { name: 'flatpickr', target: '4.6.1' },
         { name: 'autoprefixer', target: '^6' },
-        { name: 'ember-flexberry-themes' }
+        { name: 'ember-flexberry-themes', target: '0.1.0-beta.20' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');

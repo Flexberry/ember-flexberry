@@ -5,7 +5,7 @@
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { isBlank } from '@ember/utils';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 
 /**
   Field component for Semantic UI.
@@ -98,7 +98,7 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   hasText: computed('value', function () {
-    return !isBlank(this.get('value'));
+    return !isBlank(get(this, 'value'));
   }),
 
   /**

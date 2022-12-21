@@ -4,6 +4,7 @@ import RSVP from 'rsvp';
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { run, later } from '@ember/runloop';
+import { set } from '@ember/object';
 import { isNone } from '@ember/utils';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
@@ -357,4 +358,112 @@ test('preview with readonly renders properly', function(assert) {
 
     assert.strictEqual($lookupButtonPreview.hasClass('disabled'), false, 'Component\'s container has not \'disabled\' css-class');
   });
+});
+
+test('autocompleteDirection adds no css-class if autocompleteDirection is not defined', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')
+    }, 5000);
+});
+
+test('autocompleteDirection adds css-class if autocompleteDirection is defined as upward', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    set(this, 'autocompleteDirection', undefined);
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      autocompleteDirection="upward"
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), true, 'Autocomplete window has extra class.')
+    }, 5000);
+});
+
+test('autocompleteDirection adds no css-class if autocompleteDirection is defined as downward', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      autocompleteDirection="downward"
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')
+    }, 5000);
 });

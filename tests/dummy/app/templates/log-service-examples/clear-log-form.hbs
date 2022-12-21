@@ -13,15 +13,15 @@
     }}
   </p>
   {{#if logRecordsOlderDate}}
-  <p>
-    Log records older this date count: {{logRecordsOlderDateCount}}
-  </p>
+    <p>
+      Log records older this date count: {{logRecordsOlderDateCount}}
+    </p>
   {{/if}}
   <p>
-  <button type="submit" class="ui refresh-counts button" {{action "getCounts"}}>Refresh counts</button>
-  <button type="submit" class="ui clear-all-log button" {{action "clearLogRecords"}}>Clear
-    {{#if logRecordsOlderDate}} {{logRecordsOlderDateCount}} {{else}} all {{/if}} log records</button>
-  </p>
+    <button type="submit" class="ui refresh-counts button" {{action "getCounts"}}>Refresh counts</button>
+    <button type="submit" class="ui clear-all-log button" {{action "clearLogRecords"}}>Clear
+      {{#if logRecordsOlderDate}} {{logRecordsOlderDateCount}} {{else}} all {{/if}} log records</button>
+    </p>
   {{#if queryInExecutingState}}
   <p>
     Executing query...

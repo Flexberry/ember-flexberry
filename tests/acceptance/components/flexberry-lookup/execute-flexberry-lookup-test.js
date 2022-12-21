@@ -1,10 +1,11 @@
 import $ from 'jquery';
+import { isNone } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { A } from '@ember/array';
 import startApp from '../../../helpers/start-app';
 
-export function executeTest(testName, callback) {
+export function executeTest(testName, callback, additionalBeforeEachSettings) {
   let app;
   let store;
   let latestReceivedRecords = A();
@@ -31,6 +32,10 @@ export function executeTest(testName, callback) {
           return records;
         });
       };
+
+      if (!isNone(additionalBeforeEachSettings) && typeof additionalBeforeEachSettings === 'function') {
+        additionalBeforeEachSettings(app, store);
+      }
     },
 
     afterEach() {

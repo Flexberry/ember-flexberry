@@ -281,7 +281,7 @@ module.exports = {
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-browserify', target: '1.1.9' },
+          { name: 'ember-browserify', target: '1.2.2' },
           { name: 'ember-cli-less', target: '^1.5.4' },
           { name: 'ember-cp-validations', target: '^3.5.6' },
           { name: 'ember-i18n-cp-validations', target: '^3.1.0' },

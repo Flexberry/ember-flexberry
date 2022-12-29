@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 import EmberValidations from 'ember-validations';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';

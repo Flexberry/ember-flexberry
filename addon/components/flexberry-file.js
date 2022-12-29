@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember'; //TODO Import Module. Replace Ember.uuid()
+import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import $ from 'jquery';
 import RSVP from 'rsvp';
 import { typeOf, isBlank, isNone } from '@ember/utils';
@@ -63,7 +63,7 @@ export default FlexberryBaseComponent.extend({
     let fileInputId = 'flexberry-file-file-input-';
     let elementId = this.get('elementId');
     if (isBlank(elementId)) {
-      fileInputId += Ember.uuid();
+      fileInputId += generateUniqueId();
     } else {
       fileInputId += elementId;
     }

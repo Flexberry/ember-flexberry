@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
 import { module, test } from 'qunit';
 
 import absence from 'ember-validations/validators/local/absence';
@@ -14,8 +14,6 @@ import presence from 'ember-validations/validators/local/presence';
 import CompatibilityValidationsService from 'ember-flexberry/services/compatibility-validations';
 
 import startApp from '../../helpers/start-app';
-
-const { get } = Ember;
 
 module('Unit | Service | compatibility-validations', function() {
   test('it works', function(assert) {

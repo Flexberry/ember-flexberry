@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
@@ -19,15 +20,15 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   },
 
   afterEach() {
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   }
 });
 
 skip(testName, (assert) => {
   assert.expect(78);
-  let recordArray = new Ember.A();
+  let recordArray = new A();
 
-  Ember.run(() => {
+  run(() => {
     recordArray.insertAt(0, store.createRecord(
       'ember-flexberry-dummy-suggestion',
       {
@@ -129,7 +130,7 @@ skip(testName, (assert) => {
     specialArrayCompare(sortResult, [1, 3, 4, 5, 2], assert, 'sortRecords | partial sort | desc');
   }
   finally {
-    Ember.run(() => {
+    run(() => {
       recordArray.forEach(currentRecord => {
         store.deleteRecord(currentRecord);
       });

@@ -2,9 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
-const { Component, computed } = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 /**
   Component for output messages of validation errors as a [Semantic UI Message](https://semantic-ui.com/collections/message.html) collection.

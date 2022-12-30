@@ -929,7 +929,11 @@ $.extend(true, translations, {
           'caption': 'List of children Type'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter',
+          'eqAddress': 'Address is equal',
+          'neqAddress': 'Address is not equal',
+          'likeAddress': 'Address contains',
+          'nlikeAddress': 'Address does not contain'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'

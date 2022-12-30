@@ -934,7 +934,11 @@ $.extend(true, translations, {
           'caption': 'Список детейлов Тип предложения'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Настройка фильтра'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра',
+          'eqAddress': 'Адресочек равен',
+          'neqAddress': 'Адресочек неравен',
+          'likeAddress': 'Адресочек содержит',
+          'nlikeAddress': 'Адресочек не содержит'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'

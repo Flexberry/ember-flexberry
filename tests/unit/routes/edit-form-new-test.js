@@ -5,7 +5,6 @@ import { run } from '@ember/runloop';
 import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
 import Model from 'ember-flexberry-data/models/model';
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
 import destroyApp from '../../helpers/destroy-app';
 
@@ -32,8 +31,6 @@ let getConfiguredTestRoute = function(modelCurrentNotSaved, modelSelectedDetail)
 };
 
 module('Unit | Route | edit form new', function(hooks) {
-  setupTest(hooks);
-
   hooks.beforeEach(() => {
     app = startApp();
   });
@@ -41,45 +38,45 @@ module('Unit | Route | edit form new', function(hooks) {
   hooks.afterEach(() => {
     destroyApp(app);
   });
-
+    
   test('it exists', function(assert) {
     var route = EditFormNewRoute.create();
     assert.ok(route);
   });
-  
+
   test('return model as Promise main', function(assert) {
     let route = getConfiguredTestRoute();
-  
+
     assert.ok(route);
     run(() => {
       let record = route.model({}, { queryParams: { } });
       assert.equal(record instanceof Promise, true);
     });
   });
-  
+
   test('return model as Promise modelCurrentNotSaved', function(assert) {
     let route = getConfiguredTestRoute(true);
-  
+
     assert.ok(route);
     run(() => {
       let record = route.model({}, { queryParams: { } });
       assert.equal(record instanceof Promise, true);
     });
   });
-  
+
   test('return model as Promise modelSelectedDetail', function(assert) {
     let route = getConfiguredTestRoute(false, true);
-  
+
     assert.ok(route);
     run(() => {
       let record = route.model({}, { queryParams: { } });
       assert.equal(record instanceof Promise, true);
     });
   });
-  
+
   test('return model as Promise prototypeId', function(assert) {
     let route = getConfiguredTestRoute();
-  
+
     assert.ok(route);
     run(() => {
       let record = route.model({}, { queryParams: { prototypeId: 'test-id' } });

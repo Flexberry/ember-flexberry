@@ -957,7 +957,7 @@ export default FlexberryBaseComponent.extend({
   */
   /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
@@ -977,14 +977,14 @@ export default FlexberryBaseComponent.extend({
       this.get('objectlistviewEventsService').updateSelectAllTrigger(this.get('componentName'), false);
     }
 
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', false);
     }
   },
   /* eslint-enable no-unused-vars */
 
   _updateListNamedUserSettings(componentName) {
-    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && componentName === this.get('componentName'))) {
+    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && this.isNameOfCurrentComponent(componentName))) {
       return;
     }
 
@@ -1035,7 +1035,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   _deleteNamedSetting(namedSetting, componentName) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this._updateListNamedUserSettings(componentName);
     }
   },
@@ -1043,7 +1043,7 @@ export default FlexberryBaseComponent.extend({
 
   /* eslint-disable no-unused-vars */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }

@@ -1086,7 +1086,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @private
   */
   _setModalIsStartToShow(componentName) {
-    if (this.get('componentName') === componentName && this.get('modalIsShow')) {
+    if (this.isNameOfCurrentComponent(componentName) && this.get('modalIsShow')) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }
@@ -1100,7 +1100,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   */
   /* eslint-disable no-unused-vars */
   _setModalIsVisible(componentName, lookupDialog) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsShow', true);
       this.set('modalIsStartToShow', false);
@@ -1115,7 +1115,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @private
   */
   _setModalIsHidden(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsShow', false);
       this.set('modalIsStartToShow', false);

@@ -2200,7 +2200,7 @@ export default FlexberryBaseComponent.extend(
     @param {Array} sorting Array of sorting definitions.
   */
   _setContent(componentName, sorting) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let content = this.get('content');
       if (content && !content.isLoading) {
         this.set('contentWithKeys', A());
@@ -2412,7 +2412,7 @@ export default FlexberryBaseComponent.extend(
     @param {String} componentName The name of triggered component
   */
   _addRow(componentName) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       if (this.get('editOnSeparateRoute')) {
 
         // Depending on settings current model has to be saved before adding detail.
@@ -2440,7 +2440,7 @@ export default FlexberryBaseComponent.extend(
     @param {Object} filterQuery Filter applying before delete all records on all pages
   */
   _deleteAllRows(componentName, filterQuery) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let currentController = this.get('currentController');
       currentController.onDeleteActionStarted();
       let beforeDeleteAllRecords = this.get('beforeDeleteAllRecords');
@@ -2527,7 +2527,7 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} immediately Flag to delete record immediately
   */
   _deleteRows(componentName, immediately) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
       selectedRecords.forEach((item) => {
@@ -2680,13 +2680,11 @@ export default FlexberryBaseComponent.extend(
     @param {String} pattern The pattern to filter objects
   */
   _filterByAnyMatch(componentName, pattern) {
-    if (this.get('componentName') === componentName) {
-      let anyWord = this.get('filterByAnyWord');
-      let allWords = this.get('filterByAllWords');
-      assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+    if (this.isNameOfCurrentComponent(componentName)) {
+      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.get('filterByAnyMatch')(pattern, filterCondition, componentName);
-    }
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
+    };
   },
 
   /**
@@ -2868,8 +2866,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.componentName)
-    {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('allSelect', selectAllParameter);
 
       let contentWithKeys = this.get('contentWithKeys');
@@ -3040,7 +3037,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _moveRow(componentName, shift) {
-    if (componentName === this.componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let contentForRender = this.get('contentForRender');
       let orderedProperty = this.get('orderedProperty');
       let selectedRecords = this.get('selectedRecords').sortBy(`${orderedProperty}`);
@@ -3077,7 +3074,7 @@ export default FlexberryBaseComponent.extend(
     @param {String} oldvalue The old value of the filter condition.
   */
   _filterConditionChanged(componentName, filter, newValue, oldValue) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.send('filterConditionChanged', filter, newValue, oldValue);
     }
   },

@@ -1563,7 +1563,7 @@ export default folv.extend(
     @param {Array} userSetting User setting to apply to control
   */
   _setColumnWidths(componentName) {
-    if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
+    if (Ember.isBlank(componentName) || this.isNameOfCurrentComponent(componentName)) {
       let $table = this.$('table.object-list-view');
       if (!$table) {
         // Table will not rendered yet.
@@ -1739,7 +1739,7 @@ export default folv.extend(
   },
 
   _resetColumnFilters(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let columns = this.get('columns');
       if (!columns) {
         return;
@@ -2212,7 +2212,7 @@ export default folv.extend(
     @private
   */
   _refreshList(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       if (this.get('enableFilters')) {
         let filters = {};
         let hasFilters = false;
@@ -2341,7 +2341,7 @@ export default folv.extend(
     @param {String} componentName The name of triggered component
   */
   _addRow(componentName) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       if (this.get('editOnSeparateRoute')) {
         // Depending on settings current model has to be saved before adding detail.
         this.send('rowClick', undefined, undefined);
@@ -2365,7 +2365,7 @@ export default folv.extend(
     @param {Object} filterQuery Filter applying before delete all records on all pages
   */
   _deleteAllRows(componentName, filterQuery) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let currentController = this.get('currentController');
       currentController.onDeleteActionStarted();
       let beforeDeleteAllRecords = this.get('beforeDeleteAllRecords');
@@ -2450,7 +2450,7 @@ export default folv.extend(
     @param {Boolean} immediately Flag to delete record immediately
   */
   _deleteRows(componentName, immediately) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
@@ -2473,7 +2473,7 @@ export default folv.extend(
     @param {Integer} count Number of deleted records
   */
   _rowsDeleted(componentName, count) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', false);
     }
   },
@@ -2573,7 +2573,7 @@ export default folv.extend(
     @param {String} pattern The pattern to filter objects
   */
   _filterByAnyMatch(componentName, pattern) {
-    if (this.get('componentName') === componentName) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       let anyWord = this.get('filterByAnyWord');
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
@@ -3088,7 +3088,7 @@ export default folv.extend(
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
@@ -3161,7 +3161,7 @@ export default folv.extend(
     @private
   */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.componentName)
+    if (this.isNameOfCurrentComponent(componentName))
     {
       this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);

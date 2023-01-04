@@ -269,7 +269,7 @@ export default FlexberryBaseComponent.extend({
   */
   /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName') && !this.get('isDestroying')) {
+    if (this.isNameOfCurrentComponent(componentName) && !this.get('isDestroying')) {
       this.set('_hasSelectedRows', count > 0);
 
       const $tbody = this.$().parent().find('tbody');
@@ -292,7 +292,7 @@ export default FlexberryBaseComponent.extend({
   */
   /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('_hasSelectedRows', false);
     }
   }

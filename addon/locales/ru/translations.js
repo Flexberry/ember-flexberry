@@ -409,4 +409,8 @@ export default {
       },
     },
   },
+
+  validations: {
+    'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
+  },
 };

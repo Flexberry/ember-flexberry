@@ -51,6 +51,12 @@ const Validations = buildValidations({
         min: 5,
         message: 'Text length must be >= 5',
       }),
+      validator('uniqueAttributes', {
+        secondProperty: 'date',
+        view: 'BaseE',
+        message: 'Combination of attributes (Text, Date) are not unique',
+        debounce: 300
+      }),
     ],
   },
   longText: validator('presence', {

@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 * Change unit tests blueprints.
+* Change unit tests, migrate from moduleFor APIs.
 
 ## [3.8.0-beta.13] - 2022-12-02
 ### Changed

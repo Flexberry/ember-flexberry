@@ -1,16 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:new-platform-flexberry-services-lock-list', 'Unit | Route | new-platform-flexberry-services-lock-list', {
-  needs: [
-    'service:cols-config-menu',
-    'service:form-load-time-tracker',
-    'service:objectlistview-events',
-    'service:app-state',
-    'service:adv-limit',
-  ],
-});
+module('Unit | Route | new-platform-flexberry-services-lock-list', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:new-platform-flexberry-services-lock-list');
+    assert.ok(route);
+  });
 });

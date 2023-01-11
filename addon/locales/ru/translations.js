@@ -410,7 +410,7 @@ export default {
     },
   },
 
-  validations: {
+  'validations': {
     'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
   },
 };

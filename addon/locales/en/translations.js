@@ -369,7 +369,7 @@ export default {
     },
   },
 
-  validations: {
+  'validations': {
     'server-side-validation-error': 'Error requesting server side validation'
   },
 };

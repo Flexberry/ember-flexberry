@@ -1,4 +1,4 @@
-import { get, set } from '@ember/object';
+import { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import BaseValidator from 'ember-cp-validations/validators/base';
@@ -15,8 +15,12 @@ const uniqueAttributes = BaseValidator.extend({
     let secondProp = get(options, 'secondProperty'); 
     let errorMessage = get(options, 'message');
     let secondValue = get(model, secondProp);
-    let modelName = model._internalModel.name;
+    let modelName = get(options, 'modelName');
     let thisStore = get(this, 'store');
+
+    if (isEmpty(modelName)) {
+      modelName = model._internalModel.name;
+    }
 
     if (isEmpty(modelName)) {
       modelName = model._internalModel.modelName;

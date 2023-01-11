@@ -53,7 +53,8 @@ const Validations = buildValidations({
       }),
       validator('uniqueAttributes', {
         secondProperty: 'date',
-        view: 'BaseE',
+        modelName: 'ember-flexberry-dummy-suggestion',
+        view: 'SuggestionL',
         message: 'Combination of attributes (Text, Date) are not unique',
         debounce: 300
       }),

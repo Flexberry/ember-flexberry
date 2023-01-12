@@ -41,14 +41,18 @@ const uniqueAttributes = BaseValidator.extend({
   call() {
     // суть: запрос к серверу на уникальность сочетания полей
     let value = get(this.model, this.property);
-    let secondProp = get(this.options, 'secondProperty'); // сделать возможность указывать массив.
+    let secondProp = get(this.options, 'secondProperty');
     let errorMessage = get(this.options, 'message');
     let secondValue = get(this.model, secondProp);
-    let modelName = this.model._internalModel.name;
+    let modelName = get(this.options, 'modelName');
     let thisStore = get(this, 'store');
 
     if (Ember.isEmpty(modelName)) {
-      modelName = this.model._internalModel.modelName;
+      modelName = model._internalModel.name;
+    }
+
+    if (Ember.isEmpty(modelName)) {
+      modelName = model._internalModel.modelName;
     }
 
     if (!Ember.isEmpty(value) && !Ember.isEmpty(secondValue)) {
@@ -59,8 +63,6 @@ const uniqueAttributes = BaseValidator.extend({
         .from(modelName)
         .selectByProjection(this.options.view)
         .where(limitPredicate);
-        //.where(this.property, FilterOperator.Eq, value);
-        //.where(secondProp, FilterOperator.Eq, secondValue);
 
       return thisStore.query(modelName, builder.build()).then((result) => {
         if(get(result, 'length') > 0) {
@@ -87,7 +89,13 @@ uniqueAttributes.reopenClass({
    *
    * @returns {Array}
    */
-  getDependentsFor() {
+  getDependentsFor(_attribute, options) {
+    let secondProp = get(options, 'secondProperty');
+
+    if (!isEmpty(secondProp)) {
+        return [`model.${secondProp}`];
+    }
+
     return [];
   }
 });

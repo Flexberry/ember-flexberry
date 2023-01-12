@@ -60,7 +60,8 @@ let Model = Projection.Model.extend({
       },
       uniqueAttributes: {
         secondProperty: 'date',
-        view: 'BaseE',
+        modelName: 'ember-flexberry-dummy-suggestion',
+        view: 'SuggestionL',
         message: 'Combination of attributes (Text, Date) are not unique'
       }
     },

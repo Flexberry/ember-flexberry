@@ -1094,7 +1094,8 @@ export default folv.extend(
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting).then(() => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            let perPageDefault = defaultDeveloperUserSetting.perPage;
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
           });
           break;
         case 'unhide icon':

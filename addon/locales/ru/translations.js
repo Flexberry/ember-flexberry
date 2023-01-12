@@ -1,4 +1,43 @@
 export default {
+  errors: {
+    description: 'Это поле',
+    inclusion: '{{description}} не входит в список',
+    exclusion: '{{description}} зарезервировано',
+    invalid: '{{description}} недействительно',
+    confirmation: '{{description}} не соответствует {{on}}',
+    accepted: '{{description}} должно быть принято',
+    empty: '{{description}} не может быть пустым',
+    blank: '{{description}} не может быть пустым',
+    present: '{{description}} должно быть пустым',
+    collection: '{{description}} должно быть коллекцией',
+    singular: '{{description}} не может быть коллекцией',
+    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
+    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
+    before: '{{description}} должно быть до {{before}}',
+    after: '{{description}} должно быть после {{after}}',
+    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
+    wrongLength: '{{description}} неправильной длинны (должно быть {{is}} символов)',
+    notANumber: '{{description}} должно быть числом',
+    notAnInteger: '{{description}} должно быть целым числом',
+    greaterThan: '{{description}} должно быть больше {{gt}}',
+    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
+    equalTo: '{{description}} должно быть равно {{is}}',
+    lessThan: '{{description}} должно быть меньше {{lt}}',
+    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
+    otherThan: '{{description}} должно быть отличным от {{value}}',
+    odd: '{{description}} должно быть нечётным числом',
+    even: '{{description}} должно быть чётным числом',
+    positive: '{{description}} должно быть положительным числом',
+    date: '{{description}} должно быть действительной датой',
+    onOrAfter: '{{description}} должно быть не позднее {{onOrAfter}}',
+    onOrBefore: '{{description}} должно быть не раньше {{onOrBefore}}',
+    email: '{{description}} должно быть действительным адресом электронной почты',
+    phone: '{{description}} должно быть действительным номером телефона',
+    url: '{{description}} должно быть действительным URL адресом',
+    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
+    between: '{{description}} должно быть от {{min}} до {{max}} символов',
+  },
+
   'forms': {
     'edit-form': {
       'saved-message': 'Форма сохранена.',
@@ -35,6 +74,7 @@ export default {
 
   'components': {
     'flexberry-simpledatetime': {
+      placeholder: '(нет значения)',
       'scroll-caption-text': 'Используйте скролл для перемотки',
     },
 
@@ -58,14 +98,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(нет значения)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
     },
 
     'flexberry-file': {

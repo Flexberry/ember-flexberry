@@ -66,13 +66,13 @@ const uniqueAttributes = BaseValidator.extend({
 
       return thisStore.query(modelName, builder.build()).then((result) => {
         if(get(result, 'length') > 0) {
-          return errorMessage;
+          return this.errors.pushObject(errorMessage);
         }
         else{
           return true;
         }
       }).catch(() => {
-        return `${get(this.model, 'i18n').t('validations.server-side-validation-error')}`;
+        return this.errors.pushObject(`${get(this.model, 'i18n').t('validations.server-side-validation-error')}`);
       });
     }
   }

@@ -75,10 +75,8 @@ const uniqueAttributes = BaseValidator.extend({
         return this.errors.pushObject(`${get(this.model, 'i18n').t('validations.server-side-validation-error')}`);
       });
     }
-  }
-});
+  },
 
-uniqueAttributes.reopenClass({
   /**
    * Define attribute specific dependent keys for your validator
    *
@@ -97,7 +95,7 @@ uniqueAttributes.reopenClass({
     }
 
     return [];
-  }
+  },
 });
 
 export default uniqueAttributes;

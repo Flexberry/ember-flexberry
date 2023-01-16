@@ -48,11 +48,11 @@ const uniqueAttributes = BaseValidator.extend({
     let thisStore = get(this, 'store');
 
     if (Ember.isEmpty(modelName)) {
-      modelName = model._internalModel.name;
+      modelName = this.model._internalModel.name;
     }
 
     if (Ember.isEmpty(modelName)) {
-      modelName = model._internalModel.modelName;
+      modelName = this.model._internalModel.modelName;
     }
 
     if (!Ember.isEmpty(value) && !Ember.isEmpty(secondValue)) {
@@ -65,10 +65,10 @@ const uniqueAttributes = BaseValidator.extend({
         .where(limitPredicate);
 
       return thisStore.query(modelName, builder.build()).then((result) => {
-        if(get(result, 'length') > 0) {
+        if (get(result, 'length') > 0) {
           return this.errors.pushObject(errorMessage);
         }
-        else{
+        else {
           return true;
         }
       }).catch(() => {
@@ -92,7 +92,7 @@ uniqueAttributes.reopenClass({
   getDependentsFor(_attribute, options) {
     let secondProp = get(options, 'secondProperty');
 
-    if (!isEmpty(secondProp)) {
+    if (!Ember.isEmpty(secondProp)) {
         return [`model.${secondProp}`];
     }
 

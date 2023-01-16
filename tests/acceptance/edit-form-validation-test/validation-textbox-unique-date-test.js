@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { executeTest } from './execute-validation-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
-executeTest('check operation text+date unique', (store, assert, app) => {
+executeTest('check operation text+date unique', (store, assert, _app) => {
   assert.expect(3);
 
   let dateToSet = new Date(2012, 1, 12);

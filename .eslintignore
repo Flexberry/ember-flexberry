@@ -281,6 +281,7 @@ tests/acceptance/edit-form-validation-test/validation-test.js
 tests/acceptance/edit-form-validation-test/validation-textarea-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-letter-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-numeric-test.js
+tests/acceptance/edit-form-validation-test/validation-textbox-unique-date-test.js
 tests/dummy/app/components/css-picker.js
 tests/dummy/app/components/number-input.js
 tests/dummy/app/controllers/application.js

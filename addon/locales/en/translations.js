@@ -367,5 +367,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

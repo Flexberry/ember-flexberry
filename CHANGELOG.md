@@ -3,9 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.8.0-beta.14] - 2023-01-17
 ### Changed
-* Change unit tests blueprints.
-* Change unit tests, migrate from moduleFor APIs.
+* Generated unit tests blueprint.
+
+### Fixed
+* `flexberry-simpledatetime` `onChange` function.
 
 ## [3.8.0-beta.13] - 2022-12-02
 ### Changed

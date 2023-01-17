@@ -450,9 +450,24 @@ export default FlexberryBaseComponent.extend({
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
     } else {
-      if (!isNone(inputValue)) {
+      if (!isBlank(inputValue)) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
+    }
+  },
+
+  _onChange() {
+    const oldValue = this.get('value');
+    this._validationDateTime();
+    const newValue = this.get('value');
+
+    if (newValue && newValue !== oldValue) {
+      this.set('_valueAsDate', newValue);
+
+      const onChange = this.get('onChange');
+      if (typeof onChange === 'function') {
+        onChange(newValue, oldValue);
       }
     }
   },
@@ -486,6 +501,12 @@ export default FlexberryBaseComponent.extend({
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
       dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
+      onChange: () => {
+        let inputValue = this.$('.custom-flatpickr')[0].value;
+        if (!isBlank(inputValue)) {
+          this._onChange();
+        }
+      },
       onClose: () => {
         this.set('canClick', true);
         this.$('.custom-flatpickr').blur();
@@ -497,20 +518,11 @@ export default FlexberryBaseComponent.extend({
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(timeless ? this.dateMask : this.dateTimeMask);
 
-    this.$('.custom-flatpickr').change($.proxy(function () {
-      const oldValue = this.get('value');
-      this._validationDateTime();
-      const newValue = this.get('value');
-
-      if (newValue && newValue !== oldValue) {
-        const newValue = this.get('value');
-  
-        this.set('_valueAsDate', newValue);
-  
-        const onChange = this.get('onChange');
-        if (typeof onChange === 'function') {
-          onChange(newValue, oldValue);
-        }
+    this.$('.custom-flatpickr').keydown($.proxy(function (e) {
+      if (e.which === 13) {
+        this.$('.custom-flatpickr').blur();
+        this._onChange();
+        return false;
       }
     }, this));
 
@@ -519,6 +531,7 @@ export default FlexberryBaseComponent.extend({
     let namespace = this.elementId;
     this.set('eventNamespace', namespace);
     $(document).on(`mousedown.${namespace}`, (e) => {
+      this._onChange();
       let clicky = $(e.target);
       if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
         this.get('_flatpickr').close();

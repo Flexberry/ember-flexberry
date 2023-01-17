@@ -486,16 +486,6 @@ export default FlexberryBaseComponent.extend({
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
       dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
-      onChange: (dates, dateStr, instance) => {
-        const newValue = dates[0];
-
-        this.set('_valueAsDate', newValue);
-
-        const onChange = this.get('onChange');
-        if (typeof onChange === 'function') {
-          onChange(newValue, dateStr, instance);
-        }
-      },
       onClose: () => {
         this.set('canClick', true);
         this.$('.custom-flatpickr').blur();
@@ -506,17 +496,24 @@ export default FlexberryBaseComponent.extend({
     $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(timeless ? this.dateMask : this.dateTimeMask);
-    this.$('.custom-flatpickr').keydown($.proxy(function (e) {
-      if (e.which === 13) {
-        this.$('.custom-flatpickr').blur();
-        this._validationDateTime();
-        return false;
+
+    this.$('.custom-flatpickr').change($.proxy(function () {
+      const oldValue = this.get('value');
+      this._validationDateTime();
+      const newValue = this.get('value');
+
+      if (newValue && newValue !== oldValue) {
+        const newValue = this.get('value');
+  
+        this.set('_valueAsDate', newValue);
+  
+        const onChange = this.get('onChange');
+        if (typeof onChange === 'function') {
+          onChange(newValue, oldValue);
+        }
       }
     }, this));
 
-    this.$('.custom-flatpickr').change($.proxy(function () {
-      this._validationDateTime();
-    }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
 
     let namespace = this.elementId;

@@ -518,6 +518,10 @@ export default FlexberryBaseComponent.extend({
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(timeless ? this.dateMask : this.dateTimeMask);
 
+    this.$('.custom-flatpickr').change($.proxy(function () {
+      this._onChange();
+    }, this));
+
     this.$('.custom-flatpickr').keydown($.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();

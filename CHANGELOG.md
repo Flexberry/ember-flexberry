@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.15] - 2023-01-18
+### Fixed
+* `flexberry-simpledatetime` `onChange` function.
+
 ## [3.8.0-beta.14] - 2023-01-17
 ### Changed
 * Generated unit tests blueprint.

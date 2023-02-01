@@ -229,9 +229,9 @@ ErrorableRouteMixin, {
         this.includeSorting(records, this.sorting);
         controller.set('model', records);
 
-        if (this.sorting.length > 0 && isNone(this.get('controller').get('sort'))) {
-          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
-          this.get('controller').set('sort', sortQueryParam);
+        if (this.sorting.length > 0 && isNone(controller.get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, controller.get('sortDefaultValue'));
+          controller.set('sort', sortQueryParam);
         }
 
         return records;

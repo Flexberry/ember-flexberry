@@ -4,6 +4,7 @@ import { computed  } from '@ember/object';
 export default Controller.extend({
   iconNames: computed(function() {
     return [
+      "icon-guideline-calculate",
       "icon-guideline-clear-layers",
       "icon-guideline-earth-zu",
       "icon-guideline-group-minus-audit",

@@ -68,21 +68,13 @@ module.exports = function(defaults) {
   app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff`, { destDir: 'assets/fonts' });
   app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w706-bold_g_temp.woff2`, { destDir: 'assets/fonts' });
 
-  // material-design-icons
-  app.import('vendor/material-design-icons.css');
-  app.import('vendor/fonts/material-design-icons/material-design-icons.eot', { destDir: 'assets/fonts/material-design-icons' });
-  app.import('vendor/fonts/material-design-icons/material-design-icons.ttf', { destDir: 'assets/fonts/material-design-icons' });
-  app.import('vendor/fonts/material-design-icons/material-design-icons.woff', { destDir: 'assets/fonts/material-design-icons' });
-  app.import('vendor/fonts/material-design-icons/material-design-icons.woff2', { destDir: 'assets/fonts/material-design-icons' });
-  app.import('vendor/fonts/material-design-icons/material-design-icons.svg', { destDir: 'assets/fonts/material-design-icons' });
-
   // guideline-icons
   app.import(`${ghostThemeAssetsDir}/guideline-icons.css`);
-  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.eot`, { destDir: 'assets/fonts'});
-  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.ttf`, { destDir: 'assets/fonts'});
-  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.woff`, { destDir: 'assets/fonts'});
-  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.woff2`, { destDir: 'assets/fonts'});
-  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.svg`, { destDir: 'assets/fonts'});
+  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.eot`, { destDir: 'assets/fonts/guideline-icons'});
+  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.ttf`, { destDir: 'assets/fonts/guideline-icons'});
+  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.woff`, { destDir: 'assets/fonts/guideline-icons'});
+  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.woff2`, { destDir: 'assets/fonts/guideline-icons'});
+  app.import(`${ghostThemeAssetsDir}/fonts/guideline-icons/guideline-icons.svg`, { destDir: 'assets/fonts/guideline-icons'});
 
   app.import('vendor/serviceImages/close.png', {
     destDir: 'assets/themes/blue-sky/assets/images'

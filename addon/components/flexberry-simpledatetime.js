@@ -535,7 +535,6 @@ export default FlexberryBaseComponent.extend({
     let namespace = this.elementId;
     this.set('eventNamespace', namespace);
     $(document).on(`mousedown.${namespace}`, (e) => {
-      this._onChange();
       let clicky = $(e.target);
       if (clicky.closest('.flatpickr-calendar').length === 0 && clicky.get(0) !== this.$('.custom-flatpickr').get(0)) {
         this.get('_flatpickr').close();

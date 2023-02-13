@@ -1,5 +1,5 @@
 <div class="ui {{inputClass}} action input">
-  <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
+  <input type="file" name="files[]" accept={{accept}} id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
   {{!-- value=(get this "_fileName") is a way to get one way binding, so input events will not cause _fileName mutation --}}
   {{input
     type="text"
@@ -53,7 +53,7 @@
           src={{_previewImageAsBase64String}}
           alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
       {{/unless}}
-      <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
+      <div class="ui {{if _previewDownloadIsInProgress "active" "disabled"}} loader"></div>
     </div>
   {{else}}
     <span>{{_fileName}}</span>&nbsp;<span style ="color:red">{{_errorPreviewCaption}}</span>

@@ -25,6 +25,15 @@ export default Ember.Service.extend(Ember.Evented, {
   _selectedRecords: undefined,
 
   /**
+    Current model projection columns with available filters.
+
+    @property _olvFilterColumnsArray
+    @type Object
+    @private
+  */
+  _olvFilterColumnsArray: Ember.computed(() => ({})),
+
+  /**
     Init service.
 
     @method init
@@ -93,6 +102,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   refreshListTrigger(componentName) {
     this.trigger('refreshList', componentName);
+  },
+
+  /**
+    Trigger for "refresh list" event in OLV component by name.
+
+    @method refreshListOnlyTrigger
+    @param {String} componentName The name of OLV component.
+  */
+  refreshListOnlyTrigger(componentName) {
+    this.trigger('refreshListOnly', componentName);
   },
 
   /**
@@ -202,6 +221,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "setSorting" event in route.
+    Event name: setSorting.
+
+    @method setSortingTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  setSortingTrigger(componentName, sorting = []) {
+    this.trigger('setSorting', componentName, sorting);
+  },
+
+  /**
     Trigger for "geSortApply" event in object-list-view.
     Event name: geSortApply.
 
@@ -246,13 +278,39 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Current limit function for OLV.
+    Trigger for "moveRowTrigger" event in objectlistview.
+    Event name: moveRow.
 
-    @property currentLimitFunction
-    @type BasePredicate
-    @default undefined
+    @method moveRowTrigger
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} shift Shift for rows
   */
-  currentLimitFunction: undefined,
+  moveRowTrigger(componentName, shift) {
+    this.trigger('moveRow', componentName, shift);
+  },
+
+  /**
+    Method to fire the `filterConditionChanged` event.
+
+    @method filterConditionChangedTrigger
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  filterConditionChangedTrigger(componentName, filter, newValue, oldvalue) {
+    this.trigger('filterConditionChanged', componentName, filter, newValue, oldvalue);
+  },
+
+  /**
+    Current limit functions for OLV by componentNames.
+
+    @property currentLimitFunctions
+    @type Object
+    @default {}
+  */
+  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -276,19 +334,43 @@ export default Ember.Service.extend(Ember.Evented, {
     @method setLimitFunction
 
     @param {BasePredicate} limitFunction Current limit function.
+    @param {String} componentName Component name.
   */
-  setLimitFunction(limitFunction) {
-    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  setLimitFunction(limitFunction, componentName) {
+    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
   },
 
   /**
     Gets current limit function for OLV.
 
     @method getLimitFunction
+    @param {String} componentName Component name.
     @return {BasePredicate} Current limit function.
   */
-  getLimitFunction() {
-    return this.get('currentLimitFunction');
+  getLimitFunction(componentName) {
+    return this.get(`currentLimitFunctions.${componentName}`);
+  },
+
+  /**
+    Saves the set of columns with filters for the `flexberry-objectlistview` component.
+
+    @method setOlvFilterColumnsArray
+    @param {String} componentName The name of the component for which you want to save filters.
+    @param {Object[]} columns The set of columns with filters.
+  */
+  setOlvFilterColumnsArray(componentName, columns) {
+    this.get('_olvFilterColumnsArray')[componentName] = columns;
+  },
+
+  /**
+    Returns the set of columns with filters saved for the `flexberry-objectlistview` component.
+
+    @method getOlvFilterColumnsArray
+    @param {String} componentName The name of the component for which you want to get filters.
+    @return {Object[]} The set of columns with filters.
+  */
+  getOlvFilterColumnsArray(componentName) {
+    return this.get('_olvFilterColumnsArray')[componentName];
   },
 
   /**

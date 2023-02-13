@@ -70,3 +70,20 @@
 @invertedActiveHoverColor: @red;
 
 @invertedSubMenuActiveBackground: #dcebfc!important;
+
+// Menu item dividing
+@itemDividingHeight: 1px;
+@itemDividingWidth: calc(~'100% - 2em');
+@itemDividingPosition: absolute;
+@itemDividingLeft: 1em;
+@itemDividingBottom: 1em;
+@itemDividingBackground: rgba(0, 0, 0, 0.1);
+
+// Menu item buttons
+@itemButtonPadding: 0;
+@itemButtonLineHeight: 1;
+@itemButtonBorder: none;
+@itemButtonHeight: auto;
+@itemButtonMargin: 0 0 0 0.5em;
+@itemButtonFloat: right;
+@itemButtonHoverBackground: transparent!important;

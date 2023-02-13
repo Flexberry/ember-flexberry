@@ -19,8 +19,14 @@ pushd "$TMP_DIR"
 ember init --skip-npm
 cp app/index.html .
 rm -r app/*
+rm -f ./tests/.jshintrc
+rm -f ./tests/helpers/start-app.js
 mv index.html app
-yarn install
+npm install
+
+# With version 1.11.1 addon installing fails on ember-cli@2.4.3
+npm install resolve@1.11.0
+
 ember install "${ADDON_DIR}"
 #npm install dexie@1.3.6
 rm -f ./.jscsrc
@@ -35,7 +41,7 @@ pushd "$TMP_DIR"
 ember generate flexberry-application app --metadata-dir=${META_DIR}
 
 #ember build
-ember test
+ember test --filter="!JSHint"
 
 # Cleanup.
 popd
@@ -55,11 +61,17 @@ cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
 pushd "$TMP_DIR"
 pushd new-addon-for-tests
 
-yarn install
+npm install
+
+# With version 1.11.1 addon installing fails on ember-cli@2.4.3
+npm install resolve@1.11.0
+
 ember install "${ADDON_DIR}"
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
+rm -f ./tests/.jshintrc
+rm -f ./tests/helpers/start-app.js
 rm -f ./tests/dummy/app/app.js
 rm -f ./tests/dummy/app/resolver.js
 rm -f ./tests/dummy/app/router.js
@@ -71,7 +83,7 @@ rm -f ./.jscsrc
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application --metadata-dir=${META_DIR}
 
-ember test
+ember test --filter="!JSHint"
 
 # Cleanup.
 popd

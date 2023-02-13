@@ -25,7 +25,6 @@ Ember.$.extend(true, translations, {
       header: {
         menu: {
           'sitemap-button': {
-            caption: '',
             title: 'Menu'
           },
           'user-settings-service-checkbox': {

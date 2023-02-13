@@ -16,7 +16,8 @@ module.exports = {
   description: 'Generates an group of entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -70,6 +71,9 @@ class GroupBlueprint {
         this.emberGenerate("list-forms");
         this.emberGenerate("edit-forms");
         break;
+      case 'flexberry-acceptance-test':
+        this.emberGenerate("list-forms");
+        break;
       case 'flexberry-enum':
         this.emberGenerate("enums");
         break;
@@ -93,6 +97,9 @@ class GroupBlueprint {
         break;
       case 'flexberry-serializer-init':
         this.emberGenerate("models", true, projectTypeName + "/serializers");
+        break;
+      case 'flexberry-model-offline':
+        this.emberGenerate("models");
         break;
       default:
         throw new Error(`Unknown blueprint: ${this.blueprintName}`);
@@ -131,4 +138,3 @@ class GroupBlueprint {
   }
 
 }
-

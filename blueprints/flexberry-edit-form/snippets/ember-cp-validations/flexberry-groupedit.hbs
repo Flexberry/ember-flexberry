@@ -1,0 +1,14 @@
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-groupedit
+      componentName="<%= name %>GroupEdit"
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.<%= name %>
+      content=model.<%= name %>
+      readonly=<%= readonly %>
+      orderable=false
+      class=(if (v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
+      data-test-<%= entityName %>-<%= dashedName %>=true
+    }}
+    {{flexberry-validationmessage error=(v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "message")}}
+  </div>

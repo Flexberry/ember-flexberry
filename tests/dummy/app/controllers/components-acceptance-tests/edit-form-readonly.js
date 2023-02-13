@@ -43,11 +43,10 @@ export default EditFormController.extend({
       };
     }
 
-    if (bindingPath === 'time') {
+    if (bindingPath === 'date') {
       return {
         componentName: 'flexberry-simpledatetime',
-        componentProperties: {
-        }
+        componentProperties: { type: 'date' },
       };
     }
 

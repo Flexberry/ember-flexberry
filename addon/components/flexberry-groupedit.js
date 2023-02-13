@@ -4,7 +4,9 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
+import getProjectionByName from '../utils/get-projection-by-name';
 
 /**
   Component for create, edit and delete detail objects.
@@ -25,6 +27,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: Ember.inject.service('store'),
+
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -94,6 +105,26 @@ export default FlexberryBaseComponent.extend({
   createNewButton: true,
 
   /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...', // Button title.
+        iconClasses: '' // Css classes for icon.
+        disabled: true, // The state of the button is disabled if `true` or enabled if `false`.
+      }
+      ```
+
+    @property customButtons
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
     Custom classes for table.
 
     @property customTableClass
@@ -119,6 +150,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   defaultSettingsButton: true,
+
+  /**
+    Flag indicates whether to show button fo default sorting set.
+
+    @property defaultSortingButton
+    @type Boolean
+    @default true
+  */
+  defaultSortingButton: true,
 
   /**
     Route of edit form.
@@ -284,9 +324,9 @@ export default FlexberryBaseComponent.extend({
 
     @property searchForContentChange
     @type Boolean
-    @default false
+    @default true
   */
-  searchForContentChange: false,
+  searchForContentChange: true,
 
   /**
     Flag: indicates whether to show validation messages in every row or not.
@@ -397,6 +437,15 @@ export default FlexberryBaseComponent.extend({
   */
   overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
 
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -501,10 +550,56 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+
+    /**
+      Handler to get user button's actions and send action to corresponding controllers's handler.
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction: function customButtonAction(actionName) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit toolbar was found.');
+      }
+
+      this.sendAction(actionName);
+    },
   },
 
   sortingObserver: Ember.observer('sorting', function() {
     this.sortingFunction();
+  }),
+
+  /**
+    Check in view order property.
+
+    @property orderedProperty
+    @type computed
+  */
+  orderedProperty: Ember.computed('modelProjection', function() {
+    let projection = this.get('modelProjection');
+    if (typeof projection === 'string') {
+      let modelName = this.get('modelName');
+      projection = getProjectionByName(projection, modelName, this.get('store'));
+    }
+
+    if (Ember.isNone(projection)) {
+      return;
+    }
+
+    let information = new Information(this.get('store'));
+    let attributes = projection.attributes;
+    let attributesKeys = Object.keys(attributes);
+
+    let order = attributesKeys.find((key) => {
+      let attrubute = attributes[key];
+      if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
+        this.set('sorting', [{ direction: 'asc', propName: key }]);
+        return key;
+      }
+    });
+
+    return order;
   }),
 
   /**
@@ -559,9 +654,30 @@ export default FlexberryBaseComponent.extend({
   */
   sortRecords(records, sortDef, start, end) {
     let recordsSort = records;
-    let condition = function(koef) {
-      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.attributePath || sortDef.propName);
-      let secondProp = recordsSort.objectAt(koef).get(sortDef.attributePath || sortDef.propName);
+    if (start >= end) {
+      return recordsSort;
+    }
+
+    // Form hash array (there can be different observers on recordsSort changing, so it is better to minimize such changes).
+    let hashArray = [];
+    for (let i = start; i <= end; i++) {
+      let currentRecord = recordsSort.objectAt(i);
+      let currentHash = currentRecord.get(sortDef.attributePath || sortDef.propName);
+      let hashStructure = {
+        record: currentRecord,
+        hash: currentHash
+      };
+
+      hashArray.push(hashStructure);
+    }
+
+    let hashArrayLength = hashArray.length;
+
+    // Compare record with number koef1 and koef2.
+    // It returns true if records should be exchanged.
+    let condition = function(koef1, koef2) {
+      let firstProp = hashArray[koef1].hash;
+      let secondProp = hashArray[koef2].hash;
       if (sortDef.direction === 'asc') {
         return Ember.isNone(secondProp) && !Ember.isNone(firstProp) ? true : firstProp > secondProp;
       }
@@ -573,12 +689,29 @@ export default FlexberryBaseComponent.extend({
       return false;
     };
 
-    for (let i = start + 1; i <= end; i++) {
-      for (let j = i; j > start && condition(j); j--) {
-        let record = recordsSort.objectAt(j);
-        recordsSort.replace(j, 1, [recordsSort.objectAt(j - 1)]);
-        recordsSort.insertAt(j - 1, record);
+    // Sort with minimum exchanges.
+    for(let i = 0; i < hashArrayLength; i++) {
+      // Find minimum in right not sorted part.
+      let min = i;
+      for(let j = i + 1; j < hashArrayLength; j++) {
+        if(condition(min, j)) {
+          min = j; 
+        }
       }
+      if (min != i) {
+        // Exchange current with minimum.
+        let tmp = hashArray[i]; 
+        hashArray[i] = hashArray[min];
+        hashArray[min] = tmp;      
+      }
+    }
+    
+    // Remove unsorted part.
+    recordsSort.removeAt(start, end - start + 1);
+
+    // Insert sorted elements.
+    for (let i = start; i <= end; i++) {
+      recordsSort.insertAt(i, hashArray[i-start].record);
     }
 
     return recordsSort;
@@ -586,41 +719,51 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let developerUserSettings = this.currentController;
-    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
-    developerUserSettings = developerUserSettings[this.componentName] || {};
-    developerUserSettings = developerUserSettings.DEFAULT || {};
-    this.set('sorting', developerUserSettings.sorting || []);
+
+    if (Ember.isNone(this.get('orderedProperty'))) {
+      let developerUserSettings = this.currentController;
+      developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
+      developerUserSettings = developerUserSettings[this.componentName] || {};
+      developerUserSettings = developerUserSettings.DEFAULT || {};
+      this.set('sorting', developerUserSettings.sorting || []);
+    }
   },
 
   /**
     Hook that can be used to confirm delete row.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-groupedit
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
-        confirmDeleteRow() {
-          return confirm('You sure?');
+        confirmDeleteRow(record) {
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: `Delete an object with the ID '${record.get('id')}'?`,
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action "confirmDeleteRow")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRow
-    @return {Boolean} If `true` then delete row, else cancel.
+    @param {DS.Model} record The record to be deleted.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRow: undefined,
 
@@ -628,30 +771,36 @@ export default FlexberryBaseComponent.extend({
     Hook that can be used to confirm delete rows.
 
     @example
-      ```handlebars
-      <!-- app/templates/example.hbs -->
-      {{flexberry-groupedit
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
       ```javascript
       // app/controllers/example.js
       ...
       actions: {
         ...
         confirmDeleteRows() {
-          return confirm('You sure?');
+          return new Promise((resolve, reject) => {
+            this.showConfirmDialg({
+              title: 'Delete all selected records?',
+              onApprove: resolve,
+              onDeny: reject,
+            });
+          });
         }
         ...
       }
       ...
       ```
 
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action "confirmDeleteRows")
+        ...
+      }}
+      ```
+
     @method confirmDeleteRows
-    @return {Boolean} If `true` then delete selected rows, else cancel.
+    @return {Boolean|Promise} If `true`, then delete row, if `Promise`, then delete row after successful resolve, else cancel.
   */
   confirmDeleteRows: undefined,
 

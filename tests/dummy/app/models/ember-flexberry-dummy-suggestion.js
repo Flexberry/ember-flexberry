@@ -18,7 +18,8 @@ var Model = Projection.Model.extend({
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null, async: false
+    inverse: null,
+    async: false
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -77,7 +78,10 @@ var Model = Projection.Model.extend({
       result++;
     });
     this.set('commentsCount', result);
-  }
+
+  },
+
+  prototypeProjection: 'SuggestionE'
 });
 
 // Edit form projection.
@@ -97,7 +101,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
-    })
+    }),
   }, {
     displayMemberPath: 'name'
   }),
@@ -146,41 +150,29 @@ Model.defineProjection('SuggestionMainModelProjectionTest', 'ember-flexberry-dum
 
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
-  address: Projection.attr('Address'),
-  text: Projection.attr('Text'),
-  date: Projection.attr('Date'),
-  votes: Projection.attr('Votes'),
-  moderated: Projection.attr('Moderated'),
+  address: Projection.attr('Address', { index: 0 }),
+  text: Projection.attr('Text', { index: 1 }),
+  date: Projection.attr('Date', { index: 2 }),
+  votes: Projection.attr('Votes', { index: 3 }),
+  moderated: Projection.attr('Moderated', { index: 4 }),
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: Projection.attr('Name', { index: 6, hidden: true })
+  }, { index: 5, displayMemberPath: 'name' }),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
-      hidden: true
-    }),
-    eMail: Projection.attr('Email')
-  }, {
-    displayMemberPath: 'name'
-  }),
+    name: Projection.attr('Name', { index: 8, hidden: true }),
+    eMail: Projection.attr('Email', { index: 9 })
+  }, { index: 7, displayMemberPath: 'name' }),
   editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Projection.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  }),
-  commentsCount: Projection.attr('Comments Count'),
+    name: Projection.attr('Name', { index: 11, hidden: true })
+  }, { index: 10, displayMemberPath: 'name' }),
+  commentsCount: Projection.attr('Comments Count', { index: 15 }),
   comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: Projection.attr('Text'),
-    votes: Projection.attr('Votes'),
-    moderated: Projection.attr('Moderated'),
+    text: Projection.attr('Text', { index: 0 }),
+    votes: Projection.attr('Votes', { index: 1 }),
+    moderated: Projection.attr('Moderated', { index: 2 }),
     author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Projection.attr('Name', { hidden: true })
-    }, { displayMemberPath: 'name' })
+      name: Projection.attr('Name', { index: 4, hidden: true })
+    }, { index: 3, displayMemberPath: 'name' })
   })
 });
 
@@ -193,6 +185,33 @@ Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-sugges
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup example on preview example.
+Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-suggestion', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: Projection.attr('Name', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'name'
+    })
+  }),
 });
 
 // Projection for lookup example on window customization.
@@ -320,6 +339,42 @@ Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dum
     name: Projection.attr('Name', {
       hidden: true
     })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for lookup with computed field test.
+Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr(''),
+  text: Projection.attr(''),
+  date: Projection.attr(''),
+  votes: Projection.attr(''),
+  moderated: Projection.attr(''),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr(''),
+  }),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: Projection.attr(''),
+    moderated: Projection.attr(''),
+    computedField: Projection.attr('')
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
+    name: Projection.attr('')
+  }),
+  createTime: Projection.attr(''),
+  creator: Projection.attr(''),
+  editTime: Projection.attr(''),
+  editor: Projection.attr('')
+});
+
+// Edit form projection with Karma.
+Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true
+    }),
+    karma: Projection.attr(''),
   }, {
     displayMemberPath: 'name'
   })

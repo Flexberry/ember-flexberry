@@ -85,6 +85,14 @@ ErrorableRouteMixin, {
   appState: Ember.inject.service(),
 
   /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: Ember.inject.service(),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -108,6 +116,8 @@ ErrorableRouteMixin, {
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
+    let advLimitService = this.get('advLimit');
+    advLimitService.setCurrentAppPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
@@ -138,8 +148,8 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    userSettingPromise
-      .then(currectPageUserSettings => {
+    Ember.RSVP.all([userSettingPromise, advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings))])
+      .then(() => {
         if (this._invalidSorting(params.sort)) {
           controller.set('isSortingError', true);
           transition.abort();
@@ -168,10 +178,17 @@ ErrorableRouteMixin, {
             } else {
               this.transitionTo(this.currentRouteName, { queryParams: Ember.$.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
+
+            // When abort transition loses the query parameters for the next transition.
+            // transition.abort();
+            return;
           }
         }
 
+        const advLimit = advLimitService.getCurrentAdvLimit(componentName);
+
         let queryParameters = {
+          componentName: componentName,
           modelName: modelName,
           projectionName: projectionName,
           perPage: this.perPage,
@@ -181,11 +198,14 @@ ErrorableRouteMixin, {
           filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
+          advLimit: advLimit,
           hierarchicalAttribute: hierarchicalAttribute,
+          hierarchyPaging: controller.get('hierarchyPaging')
         };
 
         this.onModelLoadingStarted(queryParameters, transition);
-        this.get('colsConfigMenu').updateNamedSettingTrigger();
+        this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
+        this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
@@ -302,20 +322,24 @@ ErrorableRouteMixin, {
   */
   setupController: function(controller, model) {
     this._super(...arguments);
-    this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
 
-    // Define 'modelProjection' for controller instance.
-    // TODO: remove that when list-form controller will be moved to this route.
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    controller.set('error', undefined);
-    controller.set('userSettings', this.userSettings);
-    controller.set('modelProjection', proj);
-    controller.set('developerUserSettings', this.get('developerUserSettings'));
-    controller.set('resultPredicate', this.get('resultPredicate'));
-    controller.set('filtersPredicate', this.get('filtersPredicate'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (Ember.isNone(this.get('multiListSettings'))) {
+      this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
+
+      // Define 'modelProjection' for controller instance.
+      // TODO: remove that when list-form controller will be moved to this route.
+      let modelClass = this.store.modelFor(this.get('modelName'));
+      let proj = modelClass.projections.get(this.get('modelProjection'));
+      controller.set('error', undefined);
+      controller.set('userSettings', this.userSettings);
+      controller.set('modelProjection', proj);
+      controller.set('modelName', this.get('modelName'));
+      controller.set('developerUserSettings', this.get('developerUserSettings'));
+      controller.set('resultPredicate', this.get('resultPredicate'));
+      controller.set('filtersPredicate', this.get('filtersPredicate'));
+      if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+        controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+      }
     }
   },
 

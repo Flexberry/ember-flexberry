@@ -24,34 +24,50 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
-  /**
-    Name of model.comments edit route.
-
-    @property commentsEditRoute
-    @type String
-    @default 'ember-flexberry-dummy-comment-edit'
-   */
   checkboxValue: false,
+
   fieldvalue: 'Vasya',
 
   lookupReadonly: Ember.observer('checkboxValue', function() {
-    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.readonly'))) {
-      if (this.get('checkboxValue')) {
-        this.set('computedProperties.dynamicProperties.readonly', true);
-      } else {
-        this.set('computedProperties.dynamicProperties.readonly', false);
-      }
-    }
-
-    return this.get('checkboxValue');
+    this.set('lookupDynamicProperties.readonly', this.get('checkboxValue'));
   }),
 
   lookupLimitFunction: Ember.observer('fieldvalue', function() {
-    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.lookupLimitPredicate'))) {
-      this.set('computedProperties.dynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
+    this.set('lookupDynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
+  }),
+
+  /**
+    An object with properties for the component `flexberry-lookup` in the component `flexberry-groupedit`.
+
+    @property lookupDynamicProperties
+    @type Object
+    @readOnly
+  */
+  lookupDynamicProperties: Ember.computed(function() {
+    let lookupLimitPredicate;
+    let lookupAdditionalLimitFunction;
+    let fieldvalue = this.get('fieldvalue');
+    if (fieldvalue) {
+      lookupLimitPredicate = new StringPredicate('name').contains(fieldvalue);
     }
 
-  }),
+    lookupAdditionalLimitFunction = function (relationModel) {
+      return new StringPredicate('eMail').contains(relationModel.get('voteType'));
+    };
+
+    return {
+      choose: 'showLookupDialog',
+      remove: 'removeLookupValue',
+      displayAttributeName: 'name',
+      required: true,
+      relationName: 'author',
+      projection: 'ApplicationUserL',
+      autocomplete: true,
+      readonly: this.get('checkboxValue'),
+      lookupLimitPredicate,
+      lookupAdditionalLimitFunction,
+    };
+  }).readOnly(),
 
   /**
     Method to get type and attributes of a component,
@@ -66,22 +82,10 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    let limitFunction = new StringPredicate('name').contains('Vasya');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
-          cellComponent.componentProperties = {
-            choose: 'showLookupDialog',
-            remove: 'removeLookupValue',
-            displayAttributeName: 'name',
-            required: true,
-            relationName: 'author',
-            projection: 'ApplicationUserL',
-            autocomplete: true,
-            lookupLimitPredicate: limitFunction,
-            computedProperties: { thisController: this },
-            readonly: false,
-          };
+          cellComponent.componentProperties = this.get('lookupDynamicProperties');
           break;
 
         case 'ember-flexberry-dummy-comment+author':

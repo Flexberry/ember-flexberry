@@ -21,3 +21,6 @@
 
 /* Selectable */
 @selectableBackground: #f5f8ff;
+
+
+@olvFiltersBackground: #fff;

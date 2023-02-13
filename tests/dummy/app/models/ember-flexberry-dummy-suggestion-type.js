@@ -1,9 +1,11 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
 
 var Model = Projection.Model.extend({
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
+  isParentRecord: DS.attr('boolean'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   parent: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -25,7 +27,27 @@ var Model = Projection.Model.extend({
         message: 'Name is required'
       }
     }
-  }
+  },
+
+  /**
+    Non-stored property.
+
+    @property computedField
+  */
+  computedField: DS.attr('string'),
+
+  moderatedChanged: Ember.on('init', Ember.observer('Name', function() {
+    Ember.run.once(this, 'computedFieldCompute');
+  })),
+
+  nameChanged: Ember.on('init', Ember.observer('Moderated', function() {
+    Ember.run.once(this, 'computedFieldCompute');
+  })),
+
+  computedFieldCompute: function() {
+    let result =  this.get('name') + ' ' + this.get('moderated');
+    this.set('computedField', result);
+  },
 });
 
 // Edit form projection.
@@ -55,6 +77,9 @@ Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type
 Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type', {
   name: Projection.attr('Name'),
   moderated: Projection.attr('Moderated'),
+  isParentRecord: Projection.attr('IsParentRecord', {
+    hidden: true
+  }),
   parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
     name: Projection.attr('Name', {
       hidden: true
@@ -86,6 +111,33 @@ Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-du
 Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
   name: Projection.attr('Name'),
   moderated: Projection.attr('Moderated')
+});
+
+Model.defineProjection('SuggestionTypeEWithComputedField', 'ember-flexberry-dummy-suggestion-type', {
+  name: Projection.attr(''),
+  moderated: Projection.attr(''),
+  computedField: Projection.attr(''),
+  parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    name: Projection.attr(''),
+    moderated: Projection.attr(''),
+    computedField: Projection.attr('')
+  }, {
+    displayMemberPath: 'computedField'
+  }),
+  localizedTypes: Projection.hasMany('ember-flexberry-dummy-localized-suggestion-type', '', {
+    name: Projection.attr('Name'),
+    localization: Projection.belongsTo('ember-flexberry-dummy-localization', 'Localization', {
+      name: Projection.attr('Name', { hidden: true })
+    }, { displayMemberPath: 'name' }),
+    suggestionType: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
+    }, { hidden: true })
+  })
+});
+
+Model.defineProjection('AutocompleteProjectionExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: Projection.attr('Name'),
+  moderated: Projection.attr('Moderated'),
+  computedField: Projection.attr(''),
 });
 
 export default Model;

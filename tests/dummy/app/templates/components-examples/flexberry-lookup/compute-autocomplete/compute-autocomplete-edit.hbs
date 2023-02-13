@@ -1,0 +1,88 @@
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field {{if model.errors.name "error" ""}}">
+    {{flexberry-field
+      value=model.name
+      label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.moderated "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.moderated
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.parent "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
+    {{flexberry-lookup
+      value=model.parent
+      relatedModel=model
+      relationName="parent"
+      projection="SuggestionTypeEWithComputedField"
+      title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      autocomplete=true
+      autocompleteProjection="AutocompleteProjectionExampleView"
+      displayAttributeName="computedField"
+    }}
+    {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.localizedTypes "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionTypeLocalizedTypesGroupEdit"
+      mainModelProjection=modelProjection
+      content=model.localizedTypes
+      modelProjection=modelProjection.attributes.localizedTypes
+      orderable=false
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.localizedTypes pointing="pointing"}}
+  </div>
+</form>

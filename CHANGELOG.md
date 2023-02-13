@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.17] - 2023-02-13
+### Added
+* `guideline-calculate` icon.
+
+### Fixed
+* `flexberry-simpledatetime` `onChange` function.
+
 ## [3.8.0-beta.16] - 2023-02-01
 ### Fixed
 * `controller` usage in `list-form` route model.

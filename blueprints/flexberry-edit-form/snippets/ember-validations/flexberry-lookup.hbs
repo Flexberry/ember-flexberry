@@ -4,8 +4,13 @@
     choose="showLookupDialog"
     remove="removeLookupValue"
     value=model.<%= name %>
-    <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'
-    <%if(type == 'combo'){%>dropdown=true<%}else{%>autocomplete=true<%}%><%}else{%><%}%>
+if (lookupValueField) { %>
+    displayAttributeName="<%= lookupValueField %>"<%
+  if (type == 'combo') { %>
+    dropdown=true<%
+  }else{%>
+    autocomplete=true<%
+}%><%}%>
     relationName="<%= name %>"
     projection="<%= projection %>"
     title=(<%= caption %>)

@@ -6,7 +6,7 @@
       value=model.<%= name %><%
 if (lookupValueField) { %>
       displayAttributeName="<%= lookupValueField %>"<%
-  if (type == 'combo') { %>
+  if (isDropdown) { %>
       dropdown=true<%
   }else{%>
       autocomplete=true<%

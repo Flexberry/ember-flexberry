@@ -1,9 +1,0 @@
-{
-  "nameSpace": "EmberFlexberryDummy",
-  "className": "Gender",
-  "enumObjects": {
-    "Male": "Male",
-    "Female": "Female",
-    "Unknown": "~"
-  }
-}

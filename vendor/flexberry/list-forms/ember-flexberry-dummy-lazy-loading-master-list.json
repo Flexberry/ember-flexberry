@@ -1,0 +1,15 @@
+{
+  "newForm": "ember-flexberry-dummy-lazy-loading-master-edit",
+  "editForm": "ember-flexberry-dummy-lazy-loading-master-edit",
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyLazyLoadingMasterList",
+  "className": "LazyLoadingMasterList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-lazy-loading-master",
+      "modelProjection": "LazyLoadingMasterList"
+    }
+  ]
+}

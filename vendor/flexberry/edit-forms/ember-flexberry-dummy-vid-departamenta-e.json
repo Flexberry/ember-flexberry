@@ -1,0 +1,14 @@
+{
+  "propertyLookup": [],
+  "external": false,
+  "caption": "Вид департамента",
+  "name": "EmberFlexberryDummyVidDepartamentaE",
+  "className": "VidDepartamentaE",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-vid-departamenta",
+      "modelProjection": "VidDepartamentaE"
+    }
+  ]
+}

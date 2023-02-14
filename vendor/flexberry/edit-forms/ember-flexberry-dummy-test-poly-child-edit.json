@@ -1,0 +1,14 @@
+{
+  "propertyLookup": [],
+  "external": false,
+  "caption": "Test polymorphic child class",
+  "name": "EmberFlexberryDummyTestPolyChildEdit",
+  "className": "TestPolyChildEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "modelProjection": "TestPolyChildEdit"
+    }
+  ]
+}

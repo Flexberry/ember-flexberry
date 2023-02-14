@@ -1,0 +1,14 @@
+{
+  "propertyLookup": [],
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyStudentRecordEdit",
+  "className": "StudentRecordEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-student-record",
+      "modelProjection": "StudentRecordE"
+    }
+  ]
+}

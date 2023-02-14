@@ -1,0 +1,108 @@
+{
+  "name": "EmberFlexberryDummySuccessorPhone",
+  "modelName": "ember-flexberry-dummy-successor-phone",
+  "className": "SuccessorPhone",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": "ember-flexberry-dummy-parent",
+  "parentClassName": "Parent",
+  "attrs": [
+    {
+      "name": "phone1",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "phone2",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "phone3",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "SuccessorE",
+      "modelName": "ember-flexberry-dummy-successor-phone",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "phone1",
+          "caption": "Phone1",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "phone2",
+          "caption": "Phone2",
+          "hidden": false,
+          "index": 2
+        },
+        {
+          "name": "phone3",
+          "caption": "Phone3",
+          "hidden": false,
+          "index": 3
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    },
+    {
+      "name": "SuccessorL",
+      "modelName": "ember-flexberry-dummy-successor-phone",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "phone1",
+          "caption": "Phone1",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "phone2",
+          "caption": "Phone2",
+          "hidden": false,
+          "index": 2
+        },
+        {
+          "name": "phone3",
+          "caption": "Phone3",
+          "hidden": false,
+          "index": 3
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

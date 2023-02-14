@@ -1,0 +1,15 @@
+{
+  "newForm": "ember-flexberry-dummy-vid-departamenta-e",
+  "editForm": "ember-flexberry-dummy-vid-departamenta-e",
+  "external": false,
+  "caption": "Виды департаментов",
+  "name": "EmberFlexberryDummyVidDepartamentaL",
+  "className": "VidDepartamentaL",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-vid-departamenta",
+      "modelProjection": "VidDepartamentaL"
+    }
+  ]
+}

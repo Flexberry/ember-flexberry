@@ -1,0 +1,48 @@
+{
+  "name": "EmberFlexberryDummyLazyLoadingDetail",
+  "modelName": "ember-flexberry-dummy-lazy-loading-detail",
+  "className": "LazyLoadingDetail",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "detailText",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "lazyLoadingMaster",
+      "relatedTo": "ember-flexberry-dummy-lazy-loading-master",
+      "inverse": "lazyLoadingDetail"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "LazyLoadingDetailEdit",
+      "modelName": "ember-flexberry-dummy-lazy-loading-detail",
+      "attrs": [
+        {
+          "name": "detailText",
+          "caption": "Detail text",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

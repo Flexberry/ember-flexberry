@@ -1,0 +1,96 @@
+{
+  "name": "EmberFlexberryDummyParent",
+  "modelName": "ember-flexberry-dummy-parent",
+  "className": "Parent",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "eMail",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "birthday",
+      "type": "date",
+      "flexberryType": "NullableDateTime",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "parentE",
+      "modelName": "ember-flexberry-dummy-parent",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "eMail",
+          "caption": "",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "birthday",
+          "caption": "",
+          "hidden": false,
+          "index": 2
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    },
+    {
+      "name": "parentL",
+      "modelName": "ember-flexberry-dummy-parent",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "eMail",
+          "caption": "",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "birthday",
+          "caption": "",
+          "hidden": false,
+          "index": 2
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

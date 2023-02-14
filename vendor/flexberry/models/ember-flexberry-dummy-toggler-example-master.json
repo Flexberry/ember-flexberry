@@ -1,0 +1,76 @@
+{
+  "name": "EmberFlexberryDummyTogglerExampleMaster",
+  "modelName": "ember-flexberry-dummy-toggler-example-master",
+  "className": "TogglerExampleMaster",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "togglerExampleMasterProperty",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [
+    {
+      "name": "togglerExampleDetail",
+      "relatedTo": "ember-flexberry-dummy-toggler-example-detail",
+      "inverse": "togglerExampleMaster"
+    }
+  ],
+  "projections": [
+    {
+      "name": "TogglerExampleMasterE",
+      "modelName": "ember-flexberry-dummy-toggler-example-master",
+      "attrs": [
+        {
+          "name": "togglerExampleMasterProperty",
+          "caption": "Наименование мастера",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": [
+        {
+          "projectionName": "TogglerExampleDetailL",
+          "caption": "",
+          "name": "togglerExampleDetail",
+          "relatedTo": "ember-flexberry-dummy-toggler-example-detail",
+          "inverse": null
+        }
+      ]
+    },
+    {
+      "name": "TogglerExampleMasterL",
+      "modelName": "ember-flexberry-dummy-toggler-example-master",
+      "attrs": [
+        {
+          "name": "togglerExampleMasterProperty",
+          "caption": "Наименование мастера",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": [
+        {
+          "projectionName": "TogglerExampleDetailL",
+          "caption": "",
+          "name": "togglerExampleDetail",
+          "relatedTo": "ember-flexberry-dummy-toggler-example-detail",
+          "inverse": null
+        }
+      ]
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

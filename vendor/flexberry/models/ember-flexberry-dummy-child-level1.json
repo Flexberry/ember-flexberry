@@ -1,0 +1,158 @@
+{
+  "name": "EmberFlexberryDummyChildLevel1",
+  "modelName": "ember-flexberry-dummy-child-level1",
+  "className": "ChildLevel1",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": "ember-flexberry-dummy-suggestion",
+  "parentClassName": "Suggestion",
+  "attrs": [
+    {
+      "name": "textChild1",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "textIf",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": false,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "AllProps",
+      "modelName": "ember-flexberry-dummy-child-level1",
+      "attrs": [
+        {
+          "name": "textChild1",
+          "caption": "TextChild1",
+          "hidden": true,
+          "index": 0
+        },
+        {
+          "name": "textIf",
+          "caption": "TextIf",
+          "hidden": true,
+          "index": 1
+        },
+        {
+          "name": "createTime",
+          "caption": "CreateTime",
+          "hidden": true,
+          "index": 2
+        },
+        {
+          "name": "creator",
+          "caption": "Creator",
+          "hidden": true,
+          "index": 3
+        },
+        {
+          "name": "editTime",
+          "caption": "EditTime",
+          "hidden": true,
+          "index": 4
+        },
+        {
+          "name": "editor",
+          "caption": "Editor",
+          "hidden": true,
+          "index": 5
+        },
+        {
+          "name": "address",
+          "caption": "Address",
+          "hidden": true,
+          "index": 6
+        },
+        {
+          "name": "text",
+          "caption": "Text",
+          "hidden": true,
+          "index": 7
+        },
+        {
+          "name": "date",
+          "caption": "Date",
+          "hidden": true,
+          "index": 8
+        },
+        {
+          "name": "votes",
+          "caption": "Votes",
+          "hidden": true,
+          "index": 9
+        },
+        {
+          "name": "moderated",
+          "caption": "Moderated",
+          "hidden": true,
+          "index": 10
+        },
+        {
+          "name": "commentsCount",
+          "caption": "CommentsCount",
+          "hidden": true,
+          "index": 11
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [],
+          "index": 12,
+          "type": "default",
+          "caption": "Author",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Type",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [],
+          "index": 13,
+          "type": "default",
+          "caption": "Type",
+          "name": "type",
+          "relatedTo": "ember-flexberry-dummy-suggestion-type",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Editor1",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [],
+          "index": 14,
+          "type": "default",
+          "caption": "Editor1",
+          "name": "editor1",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

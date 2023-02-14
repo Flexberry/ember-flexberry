@@ -1,0 +1,15 @@
+{
+  "newForm": "ember-flexberry-dummy-catalog-edit",
+  "editForm": "ember-flexberry-dummy-catalog-edit",
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyCatalogList",
+  "className": "CatalogList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-catalog",
+      "modelProjection": "CatalogL"
+    }
+  ]
+}

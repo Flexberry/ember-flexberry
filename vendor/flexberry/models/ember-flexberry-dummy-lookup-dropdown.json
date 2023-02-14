@@ -1,0 +1,70 @@
+{
+  "name": "EmberFlexberryDummyLookupDropdown",
+  "modelName": "ember-flexberry-dummy-lookup-dropdown",
+  "className": "LookupDropdown",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "masterLookupDropdown",
+      "relatedTo": "ember-flexberry-dummy-master-lookup-dropdown",
+      "inverse": null
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "LookupDropdown",
+      "modelName": "ember-flexberry-dummy-lookup-dropdown",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": true,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Text",
+          "lookupValueField": "text",
+          "relationName": "MasterLookupDropdown",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "text",
+              "caption": "",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "type": "standard",
+          "caption": "Master lookup dropdown",
+          "name": "masterLookupDropdown",
+          "relatedTo": "ember-flexberry-dummy-master-lookup-dropdown",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

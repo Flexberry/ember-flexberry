@@ -1,0 +1,31 @@
+{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Departament",
+      "projection": "DepartamentL",
+      "detailModelName": null
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Departament.vid",
+      "projection": "",
+      "detailModelName": null
+    }
+  ],
+  "external": false,
+  "caption": "Сотрудник",
+  "name": "EmberFlexberryDummySotrudnikE",
+  "className": "SotrudnikE",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-sotrudnik",
+      "modelProjection": "SotrudnikE"
+    }
+  ]
+}

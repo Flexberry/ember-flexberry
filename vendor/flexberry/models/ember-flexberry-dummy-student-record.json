@@ -1,0 +1,73 @@
+{
+  "name": "EmberFlexberryDummyStudentRecord",
+  "modelName": "ember-flexberry-dummy-student-record",
+  "className": "StudentRecord",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": "ember-flexberry-dummy-study-record",
+  "parentClassName": "StudyRecord",
+  "attrs": [
+    {
+      "name": "srFIO",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "srCours",
+      "type": "number",
+      "flexberryType": "int",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "StudentRecordE",
+      "modelName": "ember-flexberry-dummy-student-record",
+      "attrs": [
+        {
+          "name": "srFIO",
+          "caption": "ФИО",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "srCours",
+          "caption": "Курс",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "uniquelD",
+          "caption": "",
+          "hidden": false,
+          "index": 2
+        },
+        {
+          "name": "objectPK",
+          "caption": "",
+          "hidden": false,
+          "index": 3
+        },
+        {
+          "name": "showName",
+          "caption": "",
+          "hidden": true,
+          "index": 4
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

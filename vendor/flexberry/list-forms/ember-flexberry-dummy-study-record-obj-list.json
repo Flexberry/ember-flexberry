@@ -1,0 +1,15 @@
+{
+  "newForm": "ember-flexberry-dummy-student-record-edit",
+  "editForm": "ember-flexberry-dummy-student-record-edit",
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyStudyRecordObjList",
+  "className": "StudyRecordObjList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-study-record",
+      "modelProjection": "StudyRecordL"
+    }
+  ]
+}

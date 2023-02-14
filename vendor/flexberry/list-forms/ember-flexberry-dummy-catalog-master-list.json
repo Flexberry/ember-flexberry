@@ -1,0 +1,15 @@
+{
+  "newForm": "ember-flexberry-dummy-catalog-master-edit",
+  "editForm": "ember-flexberry-dummy-catalog-master-edit",
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyCatalogMasterList",
+  "className": "CatalogMasterList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-catalog-master",
+      "modelProjection": "CatalogMasterL"
+    }
+  ]
+}

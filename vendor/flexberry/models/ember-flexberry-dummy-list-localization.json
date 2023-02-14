@@ -1,0 +1,63 @@
+{
+  "name": "EmberFlexberryDummylistLocalization",
+  "modelName": "ember-flexberry-dummy-list-localization",
+  "className": "listLocalization",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    },
+    {
+      "name": "localeValue",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "catalog",
+      "relatedTo": "ember-flexberry-dummy-catalog",
+      "inverse": "listLocalization"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "listLocalizationD",
+      "modelName": "ember-flexberry-dummy-list-localization",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "localeValue",
+          "caption": "",
+          "hidden": false,
+          "index": 1
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

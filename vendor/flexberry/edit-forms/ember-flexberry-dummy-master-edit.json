@@ -1,0 +1,39 @@
+{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Parent1",
+      "projection": "MasterList",
+      "detailModelName": null
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Parent2",
+      "projection": "MasterList",
+      "detailModelName": null
+    },
+    {
+      "master": "parentDetail",
+      "displayAttributeName": "name",
+      "required": false,
+      "relationName": "Detail.ParentDetail",
+      "projection": "Detail",
+      "detailModelName": "ember-flexberry-dummy-detail"
+    }
+  ],
+  "external": false,
+  "caption": "MasterEdit",
+  "name": "EmberFlexberryDummyMasterEdit",
+  "className": "MasterEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-master",
+      "modelProjection": "MasterEdit"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "name": "EmberFlexberryDummyDetail",
+  "modelName": "ember-flexberry-dummy-detail",
+  "className": "Detail",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": false,
+      "name": "parentDetail",
+      "relatedTo": "ember-flexberry-dummy-detail",
+      "inverse": null
+    },
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "master",
+      "relatedTo": "ember-flexberry-dummy-master",
+      "inverse": "detail"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "Detail",
+      "modelName": "ember-flexberry-dummy-detail",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "ParentDetail",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "type": "standard",
+          "caption": "",
+          "name": "parentDetail",
+          "relatedTo": "ember-flexberry-dummy-detail",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

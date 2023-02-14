@@ -1,0 +1,23 @@
+{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "CatalogMaster",
+      "projection": "CatalogMasterL",
+      "detailModelName": null
+    }
+  ],
+  "external": false,
+  "caption": null,
+  "name": "EmberFlexberryDummyCatalogEdit",
+  "className": "CatalogEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-catalog",
+      "modelProjection": "CatalogE"
+    }
+  ]
+}

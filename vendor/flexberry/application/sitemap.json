@@ -1,0 +1,57 @@
+{
+  "applicationCaption": "Dummy",
+  "applicationTitle": "Dummy",
+  "items": [
+    {
+      "link": null,
+      "menuName": "application",
+      "caption": "Application",
+      "title": "Application",
+      "children": [
+        {
+          "link": "ember-flexberry-dummy-application-user-list",
+          "menuName": null,
+          "caption": "Application Users",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-localization-list",
+          "menuName": null,
+          "caption": "Localizations",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-suggestion-list",
+          "menuName": null,
+          "caption": "Suggestions",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-suggestion-type-list",
+          "menuName": null,
+          "caption": "Suggestion types",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-test-poly-child-list",
+          "menuName": null,
+          "caption": "TestPolyChildList",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-test-poly-list",
+          "menuName": null,
+          "caption": "TestPolyList",
+          "title": "",
+          "children": null
+        }
+      ]
+    }
+  ],
+  "mobile": true
+}

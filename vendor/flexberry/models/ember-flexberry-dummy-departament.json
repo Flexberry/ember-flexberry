@@ -1,0 +1,77 @@
+{
+  "name": "EmberFlexberryDummyDepartament",
+  "modelName": "ember-flexberry-dummy-departament",
+  "className": "Departament",
+  "nameSpace": "EmberFlexberryDummy",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true,
+      "ordered": false
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "vid",
+      "relatedTo": "ember-flexberry-dummy-vid-departamenta",
+      "inverse": null
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "DepartamentE",
+      "modelName": "ember-flexberry-dummy-departament",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Название",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "name",
+          "lookupValueField": "name",
+          "relationName": "vid",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [],
+          "index": 1,
+          "type": "standard",
+          "caption": "Вид",
+          "name": "vid",
+          "relatedTo": "ember-flexberry-dummy-vid-departamenta",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
+    {
+      "name": "DepartamentL",
+      "modelName": "ember-flexberry-dummy-departament",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Название",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true,
+  "external": false
+}

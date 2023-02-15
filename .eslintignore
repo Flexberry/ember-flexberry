@@ -204,6 +204,7 @@ tests/acceptance/components/flexberry-lookup/flexberry-lookup-limit-function-tes
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-window-search-test.js
 tests/acceptance/components/flexberry-lookup/lookup-test-functions.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-autocomplete-test.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-dropdown-test.js

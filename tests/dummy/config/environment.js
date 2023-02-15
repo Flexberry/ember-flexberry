@@ -1,7 +1,5 @@
-/* jshint node: true */
-
 module.exports = function(environment) {
-  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  var backendUrl = 'http://stands-backend.flexberry.net';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
@@ -51,6 +49,7 @@ module.exports = function(environment) {
         storeDeprecationMessages: true,
         storePromiseErrors: true,
         showPromiseErrors: true,
+        errorMessageFilterActive: true,
       },
 
       perf: {
@@ -66,6 +65,9 @@ module.exports = function(environment) {
 
       // Flag: indicates whether to use user settings service or not.
       useUserSettingsService: true,
+
+      // Flag: indicates whether to use adv limit service or not.
+      useAdvLimitService: true,
 
       // Custom property with components settings.
       components: {
@@ -88,6 +90,11 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
+        },
+        // Settings for `flexberryObjectlistview` component.
+        flexberryObjectlistview: {
+          // Default number of records on the list page
+          defaultPerPage: 5
         }
       },
     }
@@ -128,6 +135,12 @@ module.exports = function(environment) {
     // Testem prefers this...
     ENV.baseURL = '/';
     ENV.locationType = 'none';
+
+    // URL of the backend running in docker.
+    backendUrl = 'http://localhost:80';
+    ENV.APP.backendUrl = backendUrl;
+    ENV.APP.backendUrls.root = backendUrl;
+    ENV.APP.backendUrls.api = backendUrl + '/odata';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;

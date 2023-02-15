@@ -308,3 +308,33 @@ test('loong animation speed', function(assert) {
     done();
   }, 1000);
 });
+
+test('Components property hasShadow works properly', function(assert) {
+  this.set('hasShadow', true);
+  this.render(hbs`
+  {{#flexberry-toggler
+    caption="Click me!"
+    hasShadow=hasShadow
+  }}
+    Hello!
+  {{/flexberry-toggler}}`);
+
+  assert.ok(this.$('.flexberry-toggler').hasClass('has-shadow'));
+  this.set('hasShadow', false);
+  assert.notOk(this.$('.flexberry-toggler').hasClass('has-shadow'));
+});
+
+test('Components property hasBorder works properly', function(assert) {
+  this.set('hasBorder', true);
+  this.render(hbs`
+  {{#flexberry-toggler
+    caption="Click me!"
+    hasBorder=hasBorder
+  }}
+    Hello!
+  {{/flexberry-toggler}}`);
+
+  assert.ok(this.$('.flexberry-toggler').hasClass('has-border'));
+  this.set('hasBorder', false);
+  assert.notOk(this.$('.flexberry-toggler').hasClass('has-border'));
+});

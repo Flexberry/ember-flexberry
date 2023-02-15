@@ -4,8 +4,9 @@
 
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
+import { predicateForFilter } from 'ember-flexberry/utils/filter';
 
-const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
+const { Condition, ComplexPredicate } = Query;
 
 /**
   Mixin contains functions for predicate build from filters object.
@@ -16,7 +17,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
 */
 export default Ember.Mixin.create({
   /**
-    Return predicate to filter through.
+    Builds predicate for filter.
 
     @example
       ```javascript
@@ -36,40 +37,7 @@ export default Ember.Mixin.create({
     @param {Object} filter Object (`{ name, condition, pattern }`) with parameters for filter.
     @return {BasePredicate|null} Predicate to filter through.
   */
-  predicateForFilter(filter) {
-    if (filter.condition) {
-      switch (filter.type) {
-        case 'string':
-          return filter.condition === 'like' && filter.pattern ?
-            new StringPredicate(filter.name).contains(filter.pattern) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
-        case 'boolean':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
-        case 'number':
-          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
-        case 'date':
-          return filter.pattern ?
-            new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
-            new SimplePredicate(filter.name, filter.condition, filter.pattern);
-
-        default:
-          return null;
-      }
-    } else if (filter.pattern) {
-      switch (filter.type) {
-        case 'string':
-          Ember.set(filter, 'condition', 'like');
-          return new StringPredicate(filter.name).contains(filter.pattern);
-        case 'date':
-          Ember.set(filter, 'condition', 'eq');
-          return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
-        default:
-          return null;
-      }
-    }
-
-    return null;
-  },
+  predicateForFilter: predicateForFilter,
 
   /**
     Return predicate for `QueryBuilder` or `undefined`.

@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import OlvOnEditMixin from 'ember-flexberry/mixins/flexberry-objectlistview-on-edit-form-controller';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
-export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
+export default EditFormController.extend(OlvOnEditMixin, EditFormControllerOperationsIndicationMixin, {
   /**
    Route name for transition after close edit form.
 

@@ -93,10 +93,12 @@ i.icon.table:before {
     font-family: 'Crimean';
     content: "\e819";
 }
+i.icon.large.file.excel.outline {
+    font-size: 24px;
+}
 i.icon.file.excel.outline:before {
     font-family: 'Crimean';
     content: "\e80a";
-    font-size:20px;
 }
 i.icon.filter:before {
     font-family: 'Crimean';
@@ -242,10 +244,9 @@ i.icon.download:before {
         font-size: 14px;
         opacity: 1;
     }
-    &:hover:before {
-        color: @red;
-    }
 }
+
+.goto-page-button,
 .next-page-button {
     &:before {
         content: "\e81b";
@@ -253,6 +254,10 @@ i.icon.download:before {
         font-size: 14px;
         opacity: 1;
     }
+}
+
+.prev-page-button,
+.next-page-button {
     &:hover:before {
         color: @red;
     }
@@ -352,4 +357,8 @@ i.plus.icon {
 i.minus.icon {
     position: relative;
     left: 5px;
+}
+
+.object-list-view-row-delete-button.mobile i.minus.icon {
+    left: 0px;
 }

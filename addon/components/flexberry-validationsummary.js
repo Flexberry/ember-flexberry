@@ -3,6 +3,9 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
+
+const { get, set, computed } = Ember;
 
 /**
   ValidationSummary component for Semantic UI.
@@ -11,6 +14,15 @@ import Ember from 'ember';
   @extends Ember.Component
 */
 export default Ember.Component.extend({
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+    @type Array
+    @default ['color']
+  */
+  classNameBindings: ['color'],
+
   /**
     Default classes for component wrapper.
   */
@@ -42,12 +54,41 @@ export default Ember.Component.extend({
   validationProperties: undefined,
 
   /**
-    Current errors messages
+    Current errors messages.
 
     @property messages
     @type Ember.A
   */
-  messages: undefined,
+  messages: Ember.computed('_messages', '_errorsListChanged', function() {
+    var errors = Ember.get(this, 'errors');
+    var validationProperties = Ember.get(this, 'validationProperties');
+    var actualValidationProperties = new Ember.A();
+    var needActualizeValidationProperties = false;
+
+    validationProperties.forEach(propertyName => {
+      needActualizeValidationProperties = needActualizeValidationProperties
+          || (!errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName));
+    });
+
+    for (let propertyName in errors) {
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName)) {
+        actualValidationProperties.push(propertyName);
+        needActualizeValidationProperties = needActualizeValidationProperties || !validationProperties.contains(propertyName);
+      }
+    }
+
+    if (needActualizeValidationProperties) {
+      Ember.set(this, 'validationProperties', actualValidationProperties);
+      Ember.set(
+        this,
+        "_messages",
+        Ember.computed(this._getMessageComputingKey(actualValidationProperties), Ember.get(this, '_recomputeMessage')));
+    }
+
+    var realMessages =  Ember.get(this, '_messages');
+    Ember.set(this, 'isVisible', !!realMessages.length);
+    return realMessages;
+  }),
 
   /**
     Header of validationsummary
@@ -58,60 +99,116 @@ export default Ember.Component.extend({
   headerText: undefined,
 
   /**
+    Flag indicating that there is added a new property to errors object.
+
+    @property _errorsListChanged
+    @type Boolean
+    @private
+  */
+  _errorsListChanged: false,
+
+  /**
+    A list of properties that should not be observed.
+
+    @property _wrongErrorsPropertiesList
+    @type Array
+    @private
+  */
+  _wrongErrorsPropertiesList: Ember.A(['toString', '_super', 'setUnknownProperty']),
+
+  /**
+   Current errors messages
+
+    @property _messages
+    @type Ember.A
+    @private
+  */
+  _messages: undefined,
+
+  /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */
   init() {
     this._super(...arguments);
 
-    let errors = this.get('errors');
+    let errors = Ember.get(this, 'errors');
 
     if (!errors) {
       throw new Error('Errors property for flexberry-validationsummary component must be set');
     }
 
-    this.set('validationProperties', new Ember.A());
+    let validationProperties = new Ember.A();
 
     for (let propertyName in errors) {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (errors.hasOwnProperty(propertyName) && propertyName !== 'toString') {
-        this.get('validationProperties').push(propertyName);
-        errors.addObserver(propertyName + '.[]', this, 'changeMessages');
+      if (errors.hasOwnProperty(propertyName) && !Ember.get(this, '_wrongErrorsPropertiesList').contains(propertyName)) {
+        validationProperties.push(propertyName);
       }
     }
 
-    this.get('classNames').push(this.get('color'));
-    this.changeMessages();
+    set(this, 'validationProperties', validationProperties);
+
+    if (errors instanceof Errors) {
+      errors.on('errorListChanged', this, this._onErrorListChanged);
+    }
+
+    set(this, '_messages', computed(this._getMessageComputingKey(validationProperties), this._recomputeMessage));
   },
 
-  /**
-    Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
-  */
   willDestroy() {
-    let errors = this.get('errors');
-    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
-    this._super(...arguments);
+    const errors = get(this, 'errors');
+    if (errors instanceof Errors) {
+      errors.off('errorListChanged', this, this._onErrorListChanged);
+    }
+  },
+
+  _onErrorListChanged() {
+    set(this, '_errorsListChanged', !get(this, '_errorsListChanged'));
   },
 
   /**
-    Push validation errors to messages array
-    and change component visibility if no errors occurred.
+    This method returns validation error messages.
+
+    @method _recomputeMessage
+    @private
+
+    @return {Ember.A} Validation error messages.
   */
-  changeMessages() {
+  _recomputeMessage: function() {
     let messages = new Ember.A();
 
-    this.get('validationProperties').forEach((property) => {
+    Ember.get(this, 'validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.
-      if (property !== 'toString') {
-        let errorMessages = this.get('errors.' + property);
+      if (!Ember.get(this, '_wrongErrorsPropertiesList').contains(property)) {
+        let errorMessages = Ember.get(this, 'errors.' + property);
         errorMessages.forEach((errorMessage) => {
           messages.pushObject(errorMessage);
         });
       }
     });
 
-    this.set('isVisible', !!messages.length);
-    this.set('messages', messages);
-  }
+    return messages;
+  },
+
+  /**
+    This method returns key forcreated in runtime computed property.
+    This computed property observes changes in arrays that are kept in properties of errors object.
+
+    @method _getMessageComputingKey
+    @private
+
+    @param {Ember.A} validationProperties List of properties computed property should observe for.
+    @return {String} Key for compo.
+  */
+  _getMessageComputingKey: function(validationProperties) {
+    var computingKey = ``;
+    validationProperties.forEach(propertyName => {
+      computingKey = (computingKey !== '' ? `${computingKey},` : '') + `${propertyName}.[]`;
+    });
+
+    computingKey = computingKey !== '' ? `errors.{${computingKey}}` : 'errors';
+
+    return computingKey;
+  },
 });

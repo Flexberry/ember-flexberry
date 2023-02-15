@@ -28,10 +28,19 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 
   'components': {
+    'flexberry-simpledatetime': {
+      placeholder: '(no value)',
+      'scroll-caption-text': 'Scroll to increment',
+    },
+
     'flexberry-error': {
       caption: 'An error has occurred',
       'show-more': 'Show more',
@@ -54,14 +63,6 @@ export default {
       'placeholder': '(no value)'
     },
 
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
-    },
-
     'flexberry-file': {
       placeholder: '(no file)',
 
@@ -77,10 +78,16 @@ export default {
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Preview can not be loaded',
+      'error-dialog-size-unit-bt': 'Bytes',
+      'error-dialog-size-unit-kb': 'Kilobytes',
+      'error-dialog-size-unit-mb': 'Magabytes',
+      'error-dialog-size-unit-gb': 'Gigabytes',
 
       'add-file-error-caption': 'Add file error',
-      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
-        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} {{sizeUnit}}. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Selected file \'{{fileName}}\' has unavailable extension.',
 
       'upload-file-error-caption': 'File upload error',
       'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
@@ -106,14 +113,16 @@ export default {
         }
       }
     },
-
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'without-sorting': 'Without sorting',
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {
@@ -133,14 +142,33 @@ export default {
       'sort-ascending': 'Order ascending',
       'sort-descending': 'Order descending',
       'menu-in-row': {
-        'edit-menu-item-title': 'Edit record',
         'add-menu-item-title': 'Add record',
+        'edit-menu-item-title': 'Edit record',
+        'prototype-menu-item-title': 'Create record by prototype',
         'delete-menu-item-title': 'Delete record'
       },
       'hierarchy-buttons': {
         'plus-button-title': 'Expand',
         'minus-button-title': 'Collapse',
       },
+      'filters': {
+        'eq': 'Equals',
+        'neq': 'Not equal',
+        'le': 'Less than',
+        'ge': 'Greater than',
+        'like': 'Contains',
+        'nlike': 'Does not contain',
+        'empty': 'Empty',
+        'nempty': 'Not empty',
+        'between': 'Between',
+      },
+      'filter-condition': 'Condition',
+      'clear-filter-in-column': 'Clear the filter in this column',
+    },
+
+    'olv-filter-interval': {
+      'from': '(from)',
+      'to': '(to)'
     },
 
     'olv-toolbar': {
@@ -162,6 +190,11 @@ export default {
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
       'set-default-setting-title': 'Default setting',
+      'create-limit-title': 'New limit',
+      'use-limit-title': 'Use',
+      'edit-limit-title': 'Edit',
+      'remove-limit-title': 'Remove',
+      'set-default-limit-title': 'Default limit',
       'show-default-setting-title': 'Show settings',
       'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
       'close': 'Close',
@@ -169,14 +202,20 @@ export default {
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy',
       'check-all-at-page-button-text': 'Check all entries on the current page',
+      'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
-      'clear-sorting-button-text': 'Set the default sorting'
+      'uncheck-all-button-text': 'Uncheck all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting',
+      'clear-select-button-text': 'Deselect'
     },
 
     'groupedit-toolbar': {
       'add-button-text': 'Add',
       'delete-button-text': 'Delete',
-      'clear-settings-button-text': 'Restore default settings'
+      'clear-settings-button-text': 'Restore default settings',
+      'custom-button-text': 'Custom button',
+      'move-up-button-text': 'Move up',
+      'move-down-button-text': 'Move down',
     },
 
     'colsconfig-dialog-content': {
@@ -187,8 +226,11 @@ export default {
       'columns-order': 'Specify the order of the columns',
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
+      'sort-direction-caption': 'Sorting',
       'sort-priority': 'Priority column sorting',
+      'sort-priority-caption': 'Priority',
       'column-width': 'Column width',
+      'column-width-caption': 'Width',
       'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
@@ -202,7 +244,32 @@ export default {
       'col-width-on': 'Enable setting column widths',
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
-      'det-separate-cols': 'List\'s properties in separate columns'
+      'det-separate-cols': 'List\'s properties in separate columns',
+      'sort-direction-none': 'None',
+      'sort-direction-asc': 'Ascending',
+      'sort-direction-desc': 'Descending',
+    },
+
+    'advlimit-dialog-content': {
+      'title': 'Customize limit',
+      'limit-name': 'Limit name',
+      'enter-limit-name': 'Enter limit name',
+      'use': 'Use',
+      'save': 'Save',
+      'have-errors': 'When you save a limit errors occurred: ',
+      'cant-parse': 'Can\'t convert current limit string to predicate',
+      'limit': 'Limit ',
+      'is-saved': ' was saved',
+      'is-deleted': ' was deleted',
+      'is-correct': 'Current limit string is correct',
+      'check': 'Check'
+    },
+
+    'filters-dialog-content': {
+      'clear-this-filter': 'Reset this filter',
+      'title': 'Configuring record filtering',
+      'clear': 'Reset filter',
+      'apply': 'Apply'
     },
 
     'form-load-time-tracker': {
@@ -290,5 +357,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  validations: {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

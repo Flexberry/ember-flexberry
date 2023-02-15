@@ -1,8 +1,8 @@
 # Ember Flexberry
 [![npm](https://img.shields.io/npm/v/ember-flexberry.svg?label=npm%20latest%20version)](https://www.npmjs.com/package/ember-flexberry)
-[![Travis master branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
-[![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
-[![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges#work-in-progress)
+[![CI-master](https://github.com/Flexberry/ember-flexberry/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/Flexberry/ember-flexberry/actions/workflows/ci.yml?query=branch%3Amaster+)
+[![CI-develop](https://github.com/Flexberry/ember-flexberry/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/Flexberry/ember-flexberry/actions/workflows/ci.yml?query=branch%3Adevelop+)
+[![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://github.com/orangemug/stability-badges#stable)
 
 [![ember](https://embadge.io/v1/badge.svg?label=ember&range=~2.4.3)](https://github.com/emberjs/ember.js/releases)
 [![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=~2.4.2)](https://github.com/emberjs/data/releases)
@@ -19,17 +19,17 @@ Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework p
 
 ## Documentation
 
-* Common Flexberry PLATFORM documentation site: http://flexberry.github.io
-* Auto-generated documentation under `master` branch: http://flexberry.github.io/master
-* Auto-generated documentation under `develop` branch: http://flexberry.github.io/develop
+* Common Flexberry PLATFORM documentation site: https://flexberry.github.io
+* Auto-generated documentation under `master` branch: https://flexberry.github.io/master
+* Auto-generated documentation under `develop` branch: https://flexberry.github.io/develop
 
 ## Demo
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* Stable version (master branch): https://flexberry.github.io/ember-flexberry/dummy/master/
-* Bleeding edge version (develop branch): https://flexberry.github.io/ember-flexberry/dummy/develop/
-* For temporal testing: https://flexberry.github.io/ember-flexberry/dummy/dummy-test/
+* Stable version (master branch): http://flexberry.github.io/ember-flexberry/dummy/master/
+* Bleeding edge version (develop branch): http://flexberry.github.io/ember-flexberry/dummy/develop/
+* For temporal testing: http://flexberry.github.io/ember-flexberry/dummy/dummy-test/
 
 ## Collaborating / Development
 
@@ -40,10 +40,9 @@ Information on how to contribute to the project you can find [here](https://gith
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js (v5.6.0)](http://nodejs.org/) (with NPM)
+* [Node.js (v10.*)](http://nodejs.org/) (with NPM)
 * [Bower](http://bower.io/)
 * [Ember CLI (v2.4.3)](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
 #### Installation
 
@@ -89,26 +88,10 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
   * `git push origin develop`
 * Delete current release branch on GitHub
 
-#### Deploying Dummy Application
-
-Automatic deployment on [Firebase](https://www.firebase.com):
-* After a successful [Travis CI build](https://travis-ci.org/Flexberry/ember-flexberry), dummy app deploys on
-  * https://flexberry-ember.firebaseapp.com for master branch
-  * https://flexberry-ember-dev.firebaseapp.com for develop branch
-* After update dummy-test branch, dummy app deploy on
-  * https://flexberry-ember-test.firebaseapp.com
-
-Manual deployment on [Firebase](https://www.firebase.com):
-* `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))
-* `ember build` (build application to `dist/` directory)
-* Deploying:
-  * For owners, who have access to the https://ember-flexberry-test.firebaseio.com:</br>`firebase deploy` (deploy `dist/` directory on https://ember-flexberry-test.firebaseapp.com, as described in the [firebase.json](/firebase.json))
-  * For others:</br>`firebase deploy -f you-firebase-app` (deploy `dist/` directory on your own Firebase application)
-
 #### Documenting
 
 * Document your code using [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html). For examples, you can look at the documented code in the ember.js repository.
-* After pushing into master or develop branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/flexberry.github.io), which is available via http://flexberry.github.io.
+* After pushing into master or develop branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/flexberry.github.io), which is available via https://flexberry.github.io.
 * For testing and generating documentation by hands use [YUIDoc](http://yui.github.io/yuidoc/).
 
 ## Further Reading / Useful Links

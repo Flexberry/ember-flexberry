@@ -37,3 +37,6 @@ typings/ember/ember.d.ts
 /.vs
 /bin
 /obj
+
+# os files
+**/.DS_Store

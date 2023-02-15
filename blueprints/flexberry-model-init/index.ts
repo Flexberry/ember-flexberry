@@ -1,4 +1,6 @@
-import ModelBlueprint from '../flexberry-model/ModelBlueprint';
+import ModelBlueprint from "../flexberry-model/ModelBlueprint";
+const path = require("path");
+const skipConfirmationFunc = require("../utils/skip-confirmation");
 
 module.exports = {
 
@@ -6,11 +8,21 @@ module.exports = {
 
   availableOptions: [
     { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
     return false;
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
   },
 
   /**
@@ -34,5 +46,20 @@ module.exports = {
       name: modelBlueprint.name,// for use in files\__root__\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\models\__name__.js
     };
+  },
+
+  /**
+   * Blueprint Hook filesPath.
+   * Override the default files directory. Useful for switching between file sets conditionally.
+   *
+   * @method filesPath
+   * @public
+   *
+   * @param {Object} options Options is an object containing general and entity-specific options.
+   * @return {String} Overridden files directory.
+   */
+  filesPath: function (options) {
+    const filesSubDir = ModelBlueprint.checkCpValidations(this) ? 'files-cp-validations' : 'files-ember-validations';
+    return path.join(this._super.filesPath.apply(this, [ options ]), filesSubDir);
   }
 };

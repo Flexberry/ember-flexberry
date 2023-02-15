@@ -45,7 +45,7 @@ executeTest('check le filter', (store, assert, app) => {
             }
           }
 
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
+          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
           assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });

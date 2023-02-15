@@ -8,6 +8,7 @@ import child_process = require('child_process');
 const stripBom = require("strip-bom");
 const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('ember-cli/lib/ext/promise');
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 import lodash = require('lodash');
 
 
@@ -16,7 +17,8 @@ module.exports = {
   description: 'Generates all entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -28,6 +30,14 @@ module.exports = {
     return applicationBlueprint.promise;
   },
 
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+  },
 
   /**
    * Blueprint Hook locals.
@@ -99,15 +109,13 @@ class ApplicationBlueprint {
     this.promise = this.emberGenerateFlexberryGroup("transform-test");
     this.promise = this.emberGenerateFlexberryGroup("controller-test");
     this.promise = this.emberGenerateFlexberryGroup("route-test");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-acceptance-test");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-    if( !(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" )) {
-      this.promise = this.emberGenerate("route", "index");
-    }
     this.promise = this.emberGenerate("flexberry-common", "app");
     this.promise = this.emberGenerate("flexberry-core", "app");
     this.promise = this.promise

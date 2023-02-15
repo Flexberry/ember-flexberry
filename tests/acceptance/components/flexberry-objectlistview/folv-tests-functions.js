@@ -130,7 +130,6 @@ export function refreshListByFunction(refreshFunction, controller) {
 
     let $lastLoadCount = controller.loadCount;
     refreshFunction();
-
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {
         let loadCount = controller.loadCount;
@@ -174,7 +173,7 @@ export function checkSortingList(store, projection, $olv, ordr) {
   return new Ember.RSVP.Promise((resolve) => {
     Ember.run(() => {
       let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
+      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
       builder = !ordr ? builder : builder.orderBy(ordr);
       store.query(modelName, builder.build()).then((records) => {
         let recordsArr = records.toArray();
@@ -203,7 +202,11 @@ export function addRecords(store, modelName, uuid) {
       let newRecords = Ember.A();
 
       for (let i = 0; i < howAddRec; i++) {
-        newRecords.pushObject(store.createRecord(modelName, { name: uuid }));
+        newRecords.pushObject(
+          store.createRecord(modelName, 
+            modelName == 'ember-flexberry-dummy-application-user'
+            ? { name: uuid, eMail: uuid, phone1: uuid }
+            : { name: uuid }));
       }
 
       newRecords.forEach(function(item) {
@@ -277,18 +280,24 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
     let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
+    let fillPromise;
     if (textbox.length !== 0) {
-      fillIn(textbox, filterValue);
+      fillPromise = fillIn(textbox, filterValue);
     }
 
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
 
-    let timeout = 300;
-    Ember.run.later((() => {
-      resolve();
-    }), timeout);
+    if (fillPromise) {
+      fillPromise.then(() => resolve());
+    } else {
+      let timeout = 300;
+      Ember.run.later((() => {
+        resolve();
+      }), timeout);
+    }
+
   });
 }
 

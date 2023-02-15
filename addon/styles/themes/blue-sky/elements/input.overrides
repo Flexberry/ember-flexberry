@@ -72,3 +72,12 @@ span.lookup-field {
 .ui.form input:read-only {
   color: @readonlyColor !important;
 }
+.ui.form .flexberry-advlimit-input {
+  width: 100%;
+  .flexberry-textarea {
+    width: 100%;
+    textarea {
+      resize: none;
+    }
+  }
+}

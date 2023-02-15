@@ -29,6 +29,16 @@ test('it renders', function(assert) {
   assert.ok(true);
 });
 
+test('check locale at month scroll hint', function(assert) {
+  this.render(hbs`{{flexberry-simpledatetime}}`);
+  this.set('i18n.locale', 'ru');
+  assert.equal(Ember.$('.flatpickr-current-month .cur-month')[0].title,
+    this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text'), 'Locale ru is correct');
+  this.set('i18n.locale', 'en');
+  assert.equal(Ember.$('.flatpickr-current-month .cur-month')[0].title,
+    this.get('i18n').t('components.flexberry-simpledatetime.scroll-caption-text'), 'Locale en is correct');
+});
+
 test('render with type before value', function(assert) {
   assert.expect(1);
   let typeName = 'date';
@@ -75,4 +85,27 @@ test('render with type afther value', function(assert) {
 
   // Check calendar.
   assert.strictEqual($calendar.hasClass('flatpickr-calendar'), true, 'Component\'s wrapper has \' flatpickr-calendar\' css-class');
+});
+
+test('properly init value by input', function(assert) {
+  assert.expect(1);
+  let typeName = 'date';
+  Ember.set(this, 'type', typeName);
+  Ember.set(this, 'dateValue', undefined);
+
+  // Render component.
+  this.render(hbs`{{flexberry-simpledatetime
+      type=type
+      value=dateValue
+    }}`);
+
+  // Retrieve component.
+  let $component = this.$();
+  let $componentInput = Ember.$('.flatpickr-input.custom-flatpickr', $component);
+
+  Ember.run(() => {
+    $componentInput.val('01.01.2022');
+    $componentInput.change();
+    assert.equal(Ember.get(this, 'dateValue').toISOString().split('T')[0], '2022-01-01');
+  });
 });

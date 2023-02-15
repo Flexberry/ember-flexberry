@@ -8,7 +8,9 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -35,6 +37,7 @@ export default {
 
   'components': {
     'flexberry-simpledatetime': {
+      placeholder: '(no value)',
       'scroll-caption-text': 'Scroll to increment',
     },
 
@@ -58,14 +61,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
     },
 
     'flexberry-file': {
@@ -362,5 +357,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  validations: {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

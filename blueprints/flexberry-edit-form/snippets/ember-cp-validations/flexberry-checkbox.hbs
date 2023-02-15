@@ -1,0 +1,10 @@
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-checkbox
+      readonly=<%= readonly %>
+      value=model.<%= name %>
+      class=(if (v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
+      data-test-<%= entityName %>-<%= dashedName %>=true
+    }}
+    {{flexberry-validationmessage error=(v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "message")}}
+  </div>

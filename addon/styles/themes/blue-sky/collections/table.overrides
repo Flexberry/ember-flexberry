@@ -24,10 +24,6 @@
   }
 }
 
-.object-list-view-container.groupedit-container {
-  overflow: visible;
-}
-
 .object-list-view-container.fixed-header {
   max-height: calc(~'100vh - 350px');
   width: intrinsic;           /* Safari/WebKit uses a non-standard name */

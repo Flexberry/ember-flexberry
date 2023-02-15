@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add generating lookups in dropdown mode.
 
 ## [2.8.0-beta.2] - 2022-10-26
 ### Fixed

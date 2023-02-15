@@ -5,9 +5,12 @@
       remove="removeLookupValue"
       value=model.<%= name %><%
 if (lookupValueField) { %>
-      displayAttributeName="<%= lookupValueField %>"
+      displayAttributeName="<%= lookupValueField %>"<%
+  if (isDropdown) { %>
+      dropdown=true<%
+  }else{%>
       autocomplete=true<%
-} %>
+}%><%}%>
       relationName="<%= name %>"
       projection="<%= projection %>"
       title=(<%= caption %>)

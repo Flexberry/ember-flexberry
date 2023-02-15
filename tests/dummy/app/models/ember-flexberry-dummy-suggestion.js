@@ -18,7 +18,8 @@ var Model = Projection.Model.extend({
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null, async: false
+    inverse: null,
+    async: false
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -77,7 +78,10 @@ var Model = Projection.Model.extend({
       result++;
     });
     this.set('commentsCount', result);
-  }
+
+  },
+
+  prototypeProjection: 'SuggestionE'
 });
 
 // Edit form projection.
@@ -97,7 +101,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
-    })
+    }),
   }, {
     displayMemberPath: 'name'
   }),
@@ -348,7 +352,7 @@ Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-su
   votes: Projection.attr(''),
   moderated: Projection.attr(''),
   author: Projection.belongsTo('ember-flexberry-dummy-application-user', '', {
-    name: Projection.attr('')
+    name: Projection.attr(''),
   }),
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', '', {
     name: Projection.attr(''),
@@ -362,6 +366,18 @@ Model.defineProjection('SuggestionEWithComputedField', 'ember-flexberry-dummy-su
   creator: Projection.attr(''),
   editTime: Projection.attr(''),
   editor: Projection.attr('')
+});
+
+// Edit form projection with Karma.
+Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true
+    }),
+    karma: Projection.attr(''),
+  }, {
+    displayMemberPath: 'name'
+  })
 });
 
 export default Model;

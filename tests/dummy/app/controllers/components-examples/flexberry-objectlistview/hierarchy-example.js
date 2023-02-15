@@ -5,7 +5,7 @@ export default ListFormController.extend({
   /**
     Flag indicate when component is in the hierarchical mode.
 
-    @property _inHierarchicalMode
+    @property inHierarchicalMode
     @type Boolean
     @default false
     @private

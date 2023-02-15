@@ -8,6 +8,9 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
+import Information from 'ember-flexberry-data/utils/information';
+
+import FixableComponent from '../mixins/fixable-component';
 
 const {
   Builder,
@@ -53,7 +56,7 @@ const {
   @class FlexberryLookup
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FixableComponent, {
   /**
     This property is used in order to cache loaded for dropdown mode values.
     Values are kept as array with master id as key and master object as value.
@@ -80,6 +83,16 @@ export default FlexberryBaseComponent.extend({
 
   /**
     This property is used in order to cache last value
+    of autocomplete input.
+
+    @private
+    @property _lastAutocompleteValue
+    @type String
+  */
+  _lastAutocompleteValue: undefined,
+
+  /**
+    This property is used in order to cache last value
     of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
     in order to let init this mode afrer re-render only once if flag was enabled.
 
@@ -88,6 +101,28 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
   */
   _cachedDropdownValue: undefined,
+
+  /**
+    @private
+    @property _pageInResultsForAutocomplete
+    @type Number
+    @default 1
+  */
+  _pageInResultsForAutocomplete: 1,
+
+  /**
+    Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
+
+    @private
+    @property _modalDialogSettings
+  */
+  _modalDialogSettings: Ember.computed('modalDialogSettings', function () {
+    return Ember.merge({
+      sizeClass: this.get('_sizeClass'),
+      useOkButton: false,
+      useCloseButton: false,
+    }, this.get('modalDialogSettings'));
+  }),
 
   /**
     Text to be displayed in field, if value not selected.
@@ -193,6 +228,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   autocomplete: false,
+
+  /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
 
   /**
     Flag to show that lookup is in dropdown mode.
@@ -385,6 +429,32 @@ export default FlexberryBaseComponent.extend({
   lookupAdditionalLimitFunction: undefined,
 
   /**
+    An object with options and settings for the modal dialog of the component.
+
+    The following options and settings are available:
+      - {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}}, not set by default.
+      - {{#crossLink "ModalDialog/useOkButton:property"}}`useOkButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/useCloseButton:property"}}`useCloseButton`{{/crossLink}}, default `false`.
+      - {{#crossLink "ModalDialog/settings:property"}}`settings`{{/crossLink}}, not set by default.
+
+    @property modalDialogSettings
+    @type Object
+  */
+  modalDialogSettings: undefined,
+
+  /**
+    Sets the {{#crossLink "ModalDialog/sizeClass:property"}}`sizeClass`{{/crossLink}} property for the modal dialog of the component.
+
+    @property sizeClass
+    @type String
+    @deprecated Use `modalDialogSettings.sizeClass`.
+  */
+  sizeClass: Ember.computed.deprecatingAlias('_sizeClass', {
+    id: 'flexberry-lookup.modal-dialog-size-class',
+    until: '3.0',
+  }),
+
+  /**
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
@@ -464,6 +534,9 @@ export default FlexberryBaseComponent.extend({
     'title',
     'lookupLimitPredicate',
     'relatedModel',
+    'updateLookupAction',
+    'notUseUserSettings',
+    '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     function() {
       let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
@@ -478,9 +551,8 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         folvComponentName: this.get('folvComponentName'),
-
-        //TODO: move to modal settings.
-        sizeClass: this.get('sizeClass')
+        modalDialogSettings: this.get('_modalDialogSettings'),
+        updateLookupAction: this.get('updateLookupAction'),
       };
     }),
 
@@ -526,6 +598,19 @@ export default FlexberryBaseComponent.extend({
   displayAttributeName: null,
 
   /**
+    Type of the attribute of the model to display for the user.
+
+    @property displayAttributeType
+    @type String
+  */
+  displayAttributeType: Ember.computed('displayAttributeName', function() {
+    let information = new Information(this.get('store'));
+    let relationModelName = getRelationType(this.get('relatedModel'), this.get('relationName'));
+    let attrType = information.getType(relationModelName, this.get('displayAttributeName'));
+    return attrType;
+  }),
+
+  /**
     Name of the attribute of the model to display for the user
     for hidden attribute by master.
     Is required for autocomplete and dropdown modes.
@@ -535,6 +620,16 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   autocompleteOrder: null,
+
+  /**
+    Direction of list for autocomplete values.
+    Availible values: 'upward', 'downward', 'auto'.
+
+    @property autocompleteDirection
+    @type String
+    @default downward
+  */
+  autocompleteDirection: 'downward',
 
   /**
     Projection name for autocomplete query.
@@ -670,6 +765,19 @@ export default FlexberryBaseComponent.extend({
   transition: 'auto',
   duration: 200,
 
+  /**
+    Additional setting for dropdown.
+    Places autocomplete empty value at the end of values list.
+  */
+  emptyValueAtEnd: false,
+
+  /**
+    @method onShowHide
+  */
+  onShowHide(fixedOnVisible = false) {
+    this.showFixedElement({ top: -1, fixedOnVisible: fixedOnVisible });
+  },
+
   actions: {
     /**
       Open window for select value.
@@ -761,10 +869,22 @@ export default FlexberryBaseComponent.extend({
         showInSeparateRoute: this.get('previewOnSeparateRoute'),
         modelName: relationModelName,
         controller: this.get('controllerForPreview'),
-        projection: this.get('previewFormProjection')
+        projection: this.get('previewFormProjection'),
+        modalDialogSettings: this.get('_modalDialogSettings'),
       };
 
       this.sendAction('preview', previewData);
+    },
+
+    /**
+      Clears the value when focus is lost.
+
+      @method actions.onInputFocusOut
+    */
+    onInputFocusOut() {
+      if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
+        this.set('displayValue', null);
+      }
     }
   },
 
@@ -795,6 +915,15 @@ export default FlexberryBaseComponent.extend({
   valueObserver: Ember.on('init', Ember.observer('value', 'displayAttributeName', function() { Ember.run.once(this, '_valueObserver'); })),
 
   /**
+    Observe lookup autocomplete max results changes.
+  */
+  maxResultsObserver: Ember.observer('maxResults', function() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    }
+  }),
+
+  /**
     It seems to me a mistake here, it should be [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
     # WRANING!
 
@@ -817,6 +946,16 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Triggered by the component template if the component has a block form definition.
+
+    @private
+    @property _hasBlockSetter
+  */
+  _hasBlockSetter: Ember.computed(function() {
+    this.set('_hasBlock', true);
+  }),
+
+  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
 
@@ -829,6 +968,16 @@ export default FlexberryBaseComponent.extend({
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
       throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
+    }
+
+    let hasBlock = this.get('_hasBlock');
+
+    if (isDropdown && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'dropdown\' enabled and the block form definition.');
+    }
+
+    if (isAutocomplete && hasBlock) {
+      throw new Error('Component flexberry-lookup should not have both flag \'autocomplete\' enabled and the block form definition.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');
@@ -878,7 +1027,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setModalIsStartToShow(componentName) {
-    if (this.get('componentName') === componentName) {
+    if (this.get('componentName') === componentName && this.get('modalIsShow')) {
       this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }
@@ -948,8 +1097,10 @@ export default FlexberryBaseComponent.extend({
     // Add select first autocomplete result by enter click.
     this.$('input').keyup(function(event) {
       if (event.keyCode === 13) {
-        let resultField = _this.$('div.results.transition.visible').children('a.result')[0];
-        if (resultField) {
+        let result = _this.$('div.results.transition.visible');
+        let activeField = result.children('a.result.active');
+        let resultField = result.children('a.result')[0];
+        if (resultField && activeField.length === 0) {
           resultField.click();
         }
       }
@@ -959,7 +1110,9 @@ export default FlexberryBaseComponent.extend({
     let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults + 1,
+
+      // +2 for page switch buttons.
+      maxResults: maxResults + 2,
       cache: false,
       templates: {
         message: function(message, type) {
@@ -984,43 +1137,42 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
+          // Set default page to value change.
+          if (_this.get('_lastAutocompleteValue') !== settings.urlData.query) {
+            _this.set('_pageInResultsForAutocomplete', 1);
+            _this.set('_lastAutocompleteValue', settings.urlData.query);
+          }
+
           let autocompleteProjection = _this.get('autocompleteProjection');
           let autocompleteOrder = _this.get('autocompleteOrder');
 
           let builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
-
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
           }
 
-          let maxRes = _this.get('maxResults');
-          let iCount = 1;
-          builder.top(maxRes + 1);
+          const usePagination = _this.get('usePaginationForAutocomplete');
+          const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
+          builder.skip(skip);
+          builder.top(maxResults);
           builder.count();
 
           Ember.run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
-              callback({
-                success: true,
-                results: records.map(i => {
-                  let attributeName = i.get(displayAttributeName);
-                  if (iCount > maxRes && records.meta.count > maxRes) {
-                    return {
-                      title: '...'
-                    };
-                  } else {
-                    iCount += 1;
-                    return {
-                      title: attributeName,
-                      instance: i
-                    };
-                  }
-                })
-              });
+              const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
+
+              if (usePagination && skip > 0) {
+                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
+              }
+
+              if (skip + records.get('length') < records.get('meta.count')) {
+                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
+                results.push({ title: title, nextPage: usePagination });
+              }
+
+              callback({ success: true, results: results });
             }, () => {
               callback({ success: false });
             });
@@ -1030,7 +1182,7 @@ export default FlexberryBaseComponent.extend({
 
       /**
        * Handles opening of the autocomplete list.
-       * Sets current state (taht autocomplete list is opened) for future purposes.
+       * Sets current state (that autocomplete list is opened).
        */
       onResultsOpen() {
         state = 'opened';
@@ -1038,6 +1190,26 @@ export default FlexberryBaseComponent.extend({
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
+
+        Ember.run(() => {
+          _this.onShowHide();
+        });
+
+        let autocompleteDirection = Ember.get(_this, 'autocompleteDirection');
+        if (autocompleteDirection == 'auto')
+        {
+          const { height, left, width, bottom } = _this.element.getBoundingClientRect();
+          let elementHeight = _this.$('div.results').outerHeight();
+          let upward = window.innerHeight - bottom < elementHeight;
+          autocompleteDirection = upward ? 'upward' : 'downward';
+        }
+
+        if (autocompleteDirection == 'upward') {
+          _this.$('div.results').addClass('upward');
+        }
+        else {
+          _this.$('div.results').removeClass('upward');
+        }
       },
 
       /**
@@ -1047,19 +1219,43 @@ export default FlexberryBaseComponent.extend({
        * @param {Object} result Item from array of objects, built in `responseAsync`.
        */
       onSelect(result) {
-        state = 'selected';
+        if (result.instance) {
+          state = 'selected';
+          _this.set('_pageInResultsForAutocomplete', 1);
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+          Ember.run(() => {
+            Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
-          _this.set('value', result.instance);
-          _this.get('currentController').send(_this.get('updateLookupAction'),
-            {
-              relationName: relationName,
-              modelToLookup: relatedModel,
-              newRelationValue: result.instance
-            });
-        });
+            _this.set('value', result.instance);
+            _this.get('currentController').send(_this.get('updateLookupAction'),
+              {
+                relationName: relationName,
+                modelToLookup: relatedModel,
+                newRelationValue: result.instance,
+                componentName: _this.get('componentName')
+              });
+          });
+        } else {
+          if (_this.get('usePaginationForAutocomplete')) {
+            state = 'loading';
+            if (result.nextPage) {
+              _this.incrementProperty('_pageInResultsForAutocomplete');
+            }
+
+            if (result.prevPage) {
+              _this.decrementProperty('_pageInResultsForAutocomplete');
+            }
+
+            // In the `Semantic UI` of version 2.1.7, the results are closed regardless of what the `onSelect` handler returns.
+            // This function allows us to start the search again, thanks to the `searchOnFocus` option.
+            Ember.run.later(() => {
+              _this.$().search('add results', '');
+              _this.$('input').focus();
+            }, 500);
+          }
+
+          return false;
+        }
       },
 
       /**
@@ -1070,7 +1266,8 @@ export default FlexberryBaseComponent.extend({
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
 
-        if (state !== 'selected') {
+        if (state !== 'selected' && state !== 'loading') {
+          _this.set('_pageInResultsForAutocomplete', 1);
           let displayValue = _this.get('displayValue');
           if (displayValue) {
             if (_this.get('autocompletePersistValue')) {
@@ -1097,7 +1294,8 @@ export default FlexberryBaseComponent.extend({
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
-                        newRelationValue: record
+                        newRelationValue: record,
+                        componentName: _this.get('componentName')
                       });
                   }
                 });
@@ -1114,6 +1312,10 @@ export default FlexberryBaseComponent.extend({
 
         Ember.run(() => {
           Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        });
+
+        Ember.run(() => {
+          _this.onShowHide();
         });
       }
     });
@@ -1172,11 +1374,9 @@ export default FlexberryBaseComponent.extend({
         responseAsync(settings, callback) {
           console.log('load');
           let projectionName = _this.get('projection');
-          let builder = _this._createQueryBuilder(store, relationModelName, projectionName);
-
-          let autocompletePredicate = settings.urlData.query ?
-                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
-                                      undefined;
+          let autocompleteOrder = _this.get('autocompleteOrder');
+          let builder = _this._createQueryBuilder(store, relationModelName, projectionName, autocompleteOrder);
+          let autocompletePredicate = _this._getAutocomplitePredicate(settings.urlData.query);
           let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);
           if (resultPredicate) {
             builder.where(resultPredicate);
@@ -1196,7 +1396,12 @@ export default FlexberryBaseComponent.extend({
               });
 
               if (!_this.get('required')) {
-                results.unshift({ name: _this.get('placeholder'), value: null });
+                if (_this.get('emptyValueAtEnd')) {
+                  results.push({ name: _this.get('placeholder'), value: null });
+                } else {
+                  results.unshift({ name: _this.get('placeholder'), value: null });
+                }
+
                 resultArray['null'] = null;
               }
 
@@ -1223,10 +1428,35 @@ export default FlexberryBaseComponent.extend({
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: newValue
+            newRelationValue: newValue,
+            componentName: _this.get('componentName')
           });
       }
     });
+  },
+
+  /**
+    Build predicate with settingsUrlDataQuery.
+
+    @method _getAutocomplitePredicate
+    @param {String} settingsUrlDataQuery
+    @returns {Predicate}
+    @private
+  */
+  _getAutocomplitePredicate(settingsUrlDataQuery) {
+    if (settingsUrlDataQuery) {
+      let displayAttributeType = this.get('displayAttributeType');
+      let displayAttributeName = this.get('displayAttributeName');
+      switch (displayAttributeType) {
+        case 'decimal':
+        case 'int':
+        case 'long':
+          return new SimplePredicate(displayAttributeName, Query.FilterOperator.Eq, settingsUrlDataQuery);
+
+        default:
+          return new StringPredicate(displayAttributeName).contains(settingsUrlDataQuery);
+      }
+    }
   },
 
   /**
@@ -1396,7 +1626,8 @@ export default FlexberryBaseComponent.extend({
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: record
+            newRelationValue: record,
+            componentName: _this.get('componentName')
           });
       }
     });

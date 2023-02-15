@@ -97,6 +97,46 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Get current device is desktop.
+
+    @method isDesktop
+    @return {Boolean} Returns true, if device is desktop.
+  */
+  isDesktop() {
+    return this.desktop();
+  },
+
+  /**
+    Get current device is tablet.
+
+    @method isTablet
+    @return {Boolean} Returns true, if device is tablet.
+  */
+  isTablet() {
+    return this.tablet();
+  },
+
+  /**
+    Get current device is phone.
+
+    @method isMobile
+    @return {Boolean} Returns true, if device is phone.
+  */
+  isMobile() {
+    return this.mobile();
+  },
+
+  /**
+    Get current device is phone.
+
+    @method isMobile
+    @return {Boolean} Returns true, if device is phone.
+  */
+  isTv() {
+    return this.television();
+  },
+
+  /**
     Destroys service.
   */
   willDestroy() {
@@ -171,13 +211,13 @@ export default Ember.Service.extend(Ember.Evented, {
       return type;
     }
 
-    if (this.desktop()) {
+    if (this.isDesktop()) {
       type = 'desktop';
-    } else if (this.mobile()) {
+    } else if (this.isMobile()) {
       type = 'phone';
-    } else if (this.tablet()) {
+    } else if (this.isTablet()) {
       type = 'tablet';
-    } else if (this.tv()) {
+    } else if (this.isTv()) {
       type = 'tv';
     } else {
       type = '';
@@ -207,7 +247,7 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     let pathPrefixes = { landscape: [], portrait: [] };
-    if (this.desktop()) {
+    if (this.isDesktop()) {
       // No path prefixes for desktop.
       // Cache and return empty array.
       this.set('_cache.pathPrefixes', pathPrefixes);
@@ -236,7 +276,7 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     // Path prefix with common type only: 'mobile' for both tablets and phones etc.
-    let pathPrefixCommon = this.mobile() || this.tablet() ? 'mobile' : '';
+    let pathPrefixCommon = this.isMobile() || this.isTablet() ? 'mobile' : '';
 
     // Path prefixes without orientation.
     let pathPrefixesWithoutOrientation = [

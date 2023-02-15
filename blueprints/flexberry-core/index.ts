@@ -11,12 +11,14 @@ import { ApplicationMenuLocales } from '../flexberry-core/Locales';
 import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 import CommonUtils from '../flexberry-common/CommonUtils';
 const TAB = "  ";
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 
 module.exports = {
   description: 'Generates core entities for flexberry.',
 
   availableOptions: [
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -75,10 +77,19 @@ module.exports = {
     if (this.project.isEmberCLIAddon() || this.options.dummy) {
         lodash.remove(this._files, function (v) { return v === "public/assets/images/cat.gif" || v === "public/assets/images/favicon.ico" || v === "public/assets/images/flexberry-logo.png"; });
     } else {
-        lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
+        lodash.remove(this._files, function (fileName: string) { return fileName.indexOf("tests/dummy/") === 0; });
     }
     this._excludeIfExists();
     return this._files;
+  },
+
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
   },
 
   /**
@@ -102,6 +113,7 @@ module.exports = {
 
     let coreBlueprint = new CoreBlueprint(this, options);
     return lodash.defaults({
+      projectName: this.project.pkg.name,// for use in files\tests\dummy\app\locales\**\translations.js
       children: coreBlueprint.children,// for use in files\__root__\controllers\application.js
       routes: coreBlueprint.routes,// for use in files\__root__\router.js
       importProperties: coreBlueprint.importProperties,// for use in files\__root__\locales\**\translations.js
@@ -109,7 +121,6 @@ module.exports = {
       modelsImportedProperties: coreBlueprint.modelsImportedProperties,// for use in files\__root__\locales\**\translations.js
       applicationCaption: coreBlueprint.sitemap.applicationCaption,// for use in files\__root__\locales\**\translations.js
       applicationTitle: coreBlueprint.sitemap.applicationTitle,// for use in files\__root__\locales\**\translations.js
-      inflectorIrregular: coreBlueprint.inflectorIrregular,// for use in files\__root__\models\custom-inflector-rules.js
       projectTypeNameCamel: projectTypeNameCamel,// for use in files\ember-cli-build.js
       projectTypeNameCebab: projectTypeNameCebab// for use in files\ember-cli-build.js
       },
@@ -137,7 +148,6 @@ class CoreBlueprint {
   modelsImportedProperties: string;
   lodashVariablesApplicationMenu: {};
   sitemap: metadata.Sitemap;
-  inflectorIrregular: string;
 
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
@@ -152,8 +162,6 @@ class CoreBlueprint {
     let importProperties = [];
     let formsImportedProperties = [];
     let modelsImportedProperties = [];
-    let irregularRules = [];
-    let inflectorIrregular = [];
     for (let formFileName of listForms) {
       let pp: path.ParsedPath = path.parse(formFileName);
       if (pp.ext != ".json")
@@ -191,27 +199,10 @@ class CoreBlueprint {
       if (model.external)
         continue;
       let modelName = pp.name;
-      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
-      let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
-      let irregularLastWordOfModelNames = irregularLastWordOfModelName.charAt(0).toUpperCase() + irregularLastWordOfModelName.slice(1) + 's';
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
-      irregularRules.push({ name: irregularLastWordOfModelName, names: irregularLastWordOfModelNames });
     }
 
-    inflectorIrregular = irregularRules.sort(function(a, b) {
-      if (a.name.length > b.name.length) {
-        return -1;
-      } else if (a.name.length < b.name.length) {
-        return 1;
-      } else {
-        return 0;
-      }
-    }).map(function(item) {
-      return `inflector.irregular('${item.name}', '${item.names}');`;
-    }).filter(function(item, index, self) {
-      return self.indexOf(item) === index;
-    });
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
     let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
     let applicationMenuLocales = new ApplicationMenuLocales("ru", localePathTemplate);
@@ -228,7 +219,6 @@ class CoreBlueprint {
     this.importProperties = importProperties.join("\n");
     this.formsImportedProperties = formsImportedProperties.join(",\n");
     this.modelsImportedProperties = modelsImportedProperties.join(",\n");
-    this.inflectorIrregular = inflectorIrregular.join("\n");
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {

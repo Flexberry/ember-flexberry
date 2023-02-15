@@ -3,7 +3,9 @@
 */
 
 import Ember from 'ember';
-const { getOwner } = Ember;
+
+const { getOwner, get } = Ember;
+
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
   warn: { name: 'WARN', priority: 2 },
@@ -79,6 +81,32 @@ export default Ember.Service.extend(Ember.Evented, {
     ```
   */
   enabled: false,
+
+  /**
+    The name of a model that represents log entity.
+
+    @property applicationLogModelName
+    @type String
+    @default 'i-i-s-caseberry-logging-objects-application-log'
+    @example
+    ```
+    // Log service 'applicationLogModelName' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            applicationLogModelName: 'custom-application-log'
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  applicationLogModelName: 'i-i-s-caseberry-logging-objects-application-log',
 
   /**
     Flag: indicates whether log service will store error messages to application log or not.
@@ -289,6 +317,43 @@ export default Ember.Service.extend(Ember.Evented, {
   showPromiseErrors: false,
 
   /**
+    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
+
+    @property errorMessageFilterActive
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            errorMessageFilterActive: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  errorMessageFilterActive: false,
+
+  /**
+    Error messages which must be skipped when flag errorMessageFilterActive is true.
+
+    @property errorMessageFilters
+    @type Array
+    @default [{ category: 'PROMISE', message: "TransitionAborted" }]
+  */
+  errorMessageFilters: Ember.A([
+    { category: 'PROMISE', message: 'TransitionAborted' }
+  ]),
+
+  /**
     Initializes log service.
     Ember services are singletons, so this code will be executed only once since application initialization.
   */
@@ -297,6 +362,8 @@ export default Ember.Service.extend(Ember.Evented, {
 
     let _this = this;
     let originalMethodsCache = Ember.A();
+
+    this.initProperties();
 
     let originalEmberLoggerError = Ember.Logger.error;
     originalMethodsCache.pushObject({
@@ -329,7 +396,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.warn logic.
@@ -345,9 +412,9 @@ export default Ember.Service.extend(Ember.Evented, {
 
       let message = joinArguments(...arguments);
       if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecate, message, '');
+        return _this._storeToApplicationLog(messageCategory.deprecate, message, '');
       } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
+        return _this._storeToApplicationLog(messageCategory.warn, message, '');
       }
     };
 
@@ -362,7 +429,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.info logic.
@@ -376,7 +443,7 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.debug logic.
@@ -390,10 +457,33 @@ export default Ember.Service.extend(Ember.Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
     };
 
     this.set('_originalMethodsCache', originalMethodsCache);
+  },
+
+  /**
+   * Initializes properties of a log service.
+   */
+  initProperties() {
+    const config = getOwner(this).resolveRegistration('config:environment');
+    const logConfiguration = config.APP.log;
+
+    this.set('enabled', typeof logConfiguration.enabled === 'boolean' && logConfiguration.enabled);
+    this.set('storeErrorMessages', typeof logConfiguration.storeErrorMessages === 'boolean' && logConfiguration.storeErrorMessages);
+    this.set('storeWarnMessages', typeof logConfiguration.storeWarnMessages === 'boolean' && logConfiguration.storeWarnMessages);
+    this.set('storeLogMessages', typeof logConfiguration.storeLogMessages === 'boolean' && logConfiguration.storeLogMessages);
+    this.set('storeInfoMessages', typeof logConfiguration.storeInfoMessages === 'boolean' && logConfiguration.storeInfoMessages);
+    this.set('storeDebugMessages', typeof logConfiguration.storeDebugMessages === 'boolean' && logConfiguration.storeDebugMessages);
+    this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
+    this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
+    this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
+    this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
+
+    if (typeof logConfiguration.applicationLogModelName === 'string') {
+      this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
   },
 
   /**
@@ -425,7 +515,19 @@ export default Ember.Service.extend(Ember.Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    if (!this.get('enabled') ||
+    let isSkippedMessage = false;
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
+
+    if (errorMessageFilterActive) {
+      errorMessageFilters.forEach(errorMessageFilter => {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
+          isSkippedMessage = true;
+        }
+      });
+    }
+
+    if (!this.get('enabled') || isSkippedMessage ||
       category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
       category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
@@ -457,7 +559,7 @@ export default Ember.Service.extend(Ember.Evented, {
       formattedMessage: formattedMessage
     };
 
-    let applicationLogModelName = 'i-i-s-caseberry-logging-objects-application-log';
+    const applicationLogModelName = this.get('applicationLogModelName');
     let store = this.get('store');
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
@@ -479,7 +581,7 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    Ember.assert('Logger Error: event name should be a string', Ember.typeOf(eventName) === 'string');
+    Ember.assert('Logger Error: event name should be a string', typeof eventName === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },
@@ -489,11 +591,11 @@ export default Ember.Service.extend(Ember.Evented, {
       return;
     }
 
-    if (Ember.typeOf(error) === 'string') {
+    if (typeof error === 'string') {
       error = new Error(error);
     }
 
-    let message = error.message || error.toString();
+    const message = get(error, 'message') || error.toString();
 
     let formattedMessageBlank = {
       name: error && error.name ? error.name : null,

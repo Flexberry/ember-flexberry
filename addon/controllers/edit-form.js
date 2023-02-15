@@ -10,10 +10,9 @@ import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 import getCurrentAgregator from '../utils/get-current-agregator';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
-import ReloadListMixin from '../mixins/reload-list-mixin';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
-import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
+import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
 const { getOwner } = Ember;
@@ -53,11 +52,28 @@ FlexberryLookupMixin,
 ErrorableControllerMixin,
 FlexberryFileControllerMixin,
 PaginatedControllerMixin,
-ReloadListMixin,
 SortableControllerMixin,
 LimitedControllerMixin,
-FlexberryObjectlistviewHierarchicalControllerMixin,
-FolvOnEditControllerMixin, {
+FlexberryOlvToolbarMixin,
+FlexberryObjectlistviewHierarchicalControllerMixin, {
+  /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
+  }).readOnly(),
+
+  /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
+  */
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
   /**
     Flag to enable return to agregator's path if possible.
 
@@ -196,6 +212,27 @@ FolvOnEditControllerMixin, {
   */
   defaultDeveloperUserSettings: undefined,
 
+  /**
+    Reference to object to be validated.
+
+    @property validationObject
+    @type Any
+    @default model
+  */
+  validationObject: Ember.computed.deprecatingAlias('validationModel', {
+    id: 'ember-flexberry.edit-form-controller.validation-object-property',
+    until: '4.0.0',
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: Ember.computed.alias('model'),
+
   actions: {
     /**
       Default action for button 'Save'.
@@ -331,13 +368,22 @@ FolvOnEditControllerMixin, {
     },
 
     /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    },
+
+    /**
       Sorting list by column.
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
     */
-    sortByColumn: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    sortByColumn: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
 
     /**
@@ -346,9 +392,47 @@ FolvOnEditControllerMixin, {
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
     */
-    addColumnToSorting: function(column) {
-      this._super.apply(this, [column, 'sorting']);
+    addColumnToSorting: function(column, componentName) {
+      this._super.apply(this, [column, componentName, 'sorting']);
     },
+  },
+
+  /**
+    Runs validation on {{#crossLink "EditFormController/validationObject:property"}}{{/crossLink}} and returns promise.
+    Promise resolved if validation successful or rejected if validation failed.
+
+    @method validate
+    @return {RSVP.Promise}
+  */
+  validate() {
+    Ember.deprecate(`Use method 'validateModel' instead.`, false, {
+      id: 'ember-flexberry.edit-form-controller.validate-method',
+      until: '4.0.0',
+    });
+
+    return this.validateModel();
+  },
+
+  /**
+   * Runs validation on {{#crossLink "EditFormController/validationModel:property"}}{{/crossLink}} and returns promise.
+   * Promise resolved if validation successful or rejected if validation failed.
+   *
+   * @returns {Promise}
+   */
+  validateModel() {
+    const validationModel = this.get('validationModel');
+    if (validationModel) {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
+        const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+        if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
+          return Ember.RSVP.reject(validations);
+        }
+
+        return Ember.RSVP.resolve();
+      });
+    }
+
+    return Ember.RSVP.resolve();
   },
 
   /**
@@ -363,70 +447,79 @@ FolvOnEditControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
-    this.get('appState').loading();
 
-    let _this = this;
+    return this.validateModel().then(() => {
+      this.get('appState').loading();
 
-    let afterSaveModelFunction = () => {
-      this.get('appState').success();
-      _this.onSaveActionFulfilled();
-      if (close) {
-        this.get('appState').reset();
-        _this.close(skipTransition);
-      } else if (!skipTransition) {
-        let routeName = _this.get('routeName');
-        if (routeName.indexOf('.new') > 0) {
-          let qpars = {};
-          let queryParams = _this.get('queryParams');
-          queryParams.forEach(function(item, i, params) {
-            qpars[item] = this.get(item);
-          }, _this);
-          let transitionQuery = {};
-          transitionQuery.queryParams = qpars;
-          transitionQuery.queryParams.recordAdded = true;
-          _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
+      const afterSaveModelFunction = () => {
+        this.get('appState').success();
+        this.onSaveActionFulfilled();
+        if (close) {
+          this.get('appState').reset();
+          this.close(skipTransition);
+        } else if (!skipTransition) {
+          const routeName = this.get('routeName');
+          if (routeName.indexOf('.new') > 0) {
+            const qpars = {};
+            const queryParams = this.get('queryParams');
+            queryParams.forEach(function(item) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            transitionQuery.queryParams.recordAdded = true;
+            const parentParameters = {
+              parentRoute: this.get('parentRoute'),
+              parentRouteRecordId: this.get('parentRouteRecordId')
+            };
+            transitionQuery.queryParams.parentParameters = parentParameters;
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+          }
         }
-      }
-    };
+      };
 
-    let savePromise = this.get('model').save().then((model) => {
-      let agragatorModel = getCurrentAgregator.call(this);
-      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        return this._saveHasManyRelationships(model).then((result) => {
-          if (result && Ember.isArray(result)) {
-            let arrayWrapper = Ember.A();
-            arrayWrapper.addObjects(result);
-            let errors = arrayWrapper.filterBy('state', 'rejected');
-            return errors.length > 0 ? Ember.RSVP.reject(errors) : agragatorModel.save().then(afterSaveModelFunction);
-          } else {
-            return agragatorModel.save().then(afterSaveModelFunction);
-          }
-        });
-      } else {
-        return this._saveHasManyRelationships(model).then((result) => {
-          if (result && Ember.isArray(result)) {
-            let arrayWrapper = Ember.A();
-            arrayWrapper.addObjects(result);
-            let errors = arrayWrapper.filterBy('state', 'rejected');
-            if (errors.length > 0) {
-              return Ember.RSVP.reject(errors);
-            } else {
-              afterSaveModelFunction();
-            }
-          } else {
-            afterSaveModelFunction();
-          }
-        });
-      }
+      return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
+        this.get('appState').error();
+        this.onSaveActionRejected(errorData);
+        return Ember.RSVP.reject(errorData);
+      }).finally((data) => {
+        this.onSaveActionAlways(data);
+      });
     }).catch((errorData) => {
       this.get('appState').error();
       this.onSaveActionRejected(errorData);
       return Ember.RSVP.reject(errorData);
-    }).finally((data) => {
-      this.onSaveActionAlways(data);
     });
+  },
 
-    return savePromise;
+  /**
+    The default save model logic implementation.
+
+    @method saveModel
+    @return {Promise}
+  */
+  saveModel() {
+    const model = this.get('model');
+
+    // This is possible when using offline mode.
+    const agragatorModel = getCurrentAgregator.call(this);
+    if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+      return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
+        const errors = Ember.A(result || []).filterBy('state', 'rejected');
+        if (!Ember.isEmpty(errors)) {
+          return Ember.RSVP.reject(errors);
+        }
+
+        return agragatorModel.save();
+      });
+    } else {
+      const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
+      if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
+        return this.get('store').batchUpdate(unsavedModels);
+      }
+
+      return model.save();
+    }
   },
 
   /**
@@ -534,7 +627,8 @@ FolvOnEditControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     Ember.$('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof Errors)) {
+    const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+    if (!(errorData instanceof Errors) && (!resultCollection || !(errorData instanceof resultCollection))) {
       this.send('handleError', errorData);
     }
   },
@@ -698,17 +792,23 @@ FolvOnEditControllerMixin, {
       case 'string':
       case 'number':
         break;
-      case 'boolean':
+      case 'boolean': {
         cellComponent.componentName = 'flexberry-checkbox';
         break;
-      case 'date':
+      }
+
+      case 'date': {
         cellComponent.componentName = 'flexberry-simpledatetime';
         break;
-      case 'file':
+      }
+
+      case 'file': {
         cellComponent.componentName = 'flexberry-file';
         cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
-      default:
+      }
+
+      default: {
 
         // Current cell type is possibly custom transform.
         let transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
@@ -724,6 +824,7 @@ FolvOnEditControllerMixin, {
         }
 
         break;
+      }
     }
 
     return cellComponent;
@@ -785,6 +886,29 @@ FolvOnEditControllerMixin, {
     });
 
     return Ember.RSVP.allSettled(promises);
+  },
+
+  /**
+    Returns an array with the model and all its `hasMany` relationships, obtained recursively, for each model.
+
+    @method _getModelWithHasMany
+    @param {DS.Model} model The object model.
+    @return {Ember.NativeArray} An array with the model and all its `hasMany` relationships.
+  */
+  _getModelWithHasMany(model) {
+    const models = Ember.A([model]);
+
+    model.eachRelationship((name, desc) => {
+      if (desc.kind === 'hasMany') {
+        const hasMany = model.get(name);
+        models.addObjects(hasMany);
+        hasMany.map(this._getModelWithHasMany, this).forEach((hasMany) => {
+          models.addObjects(hasMany);
+        });
+      }
+    });
+
+    return models;
   },
 
   /**

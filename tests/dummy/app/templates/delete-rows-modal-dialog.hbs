@@ -1,0 +1,20 @@
+{{#modal-dialog
+  title=title
+  useOkButton=false
+  useCloseButton=false
+  close=(action "closeModalDialog")
+  settings=(hash
+    closable=false
+    onApprove=(action approveDeleting)
+    onDeny=(action denyDeleting)
+  )
+}}
+  <div class="actions">
+    <div class="ui primary approve large button">
+      {{t "forms.application.delete-rows-modal-dialog.confirm-button-caption"}}
+    </div>
+    <div class="ui cancel large button">
+      {{t "forms.application.delete-rows-modal-dialog.cancel-button-caption"}}
+    </div>
+  </div>
+{{/modal-dialog}}

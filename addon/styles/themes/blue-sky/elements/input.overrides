@@ -69,9 +69,6 @@ span.lookup-field {
   box-shadow: none;
 }
 
-.ui.form input:read-only {
-  color: @readonlyColor !important;
-}
 .ui.form .flexberry-advlimit-input {
   width: 100%;
   .flexberry-textarea {

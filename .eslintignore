@@ -205,6 +205,7 @@ tests/acceptance/components/flexberry-lookup/flexberry-lookup-custom-window-test
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-window-search-test.js
 tests/acceptance/components/flexberry-lookup/lookup-test-functions.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-autocomplete-test.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-dropdown-test.js
@@ -275,6 +276,7 @@ tests/acceptance/edit-form-validation-test/validation-test.js
 tests/acceptance/edit-form-validation-test/validation-textarea-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-letter-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-numeric-test.js
+tests/acceptance/edit-form-validation-test/validation-textbox-unique-date-test.js
 tests/dummy/app/components/css-picker.js
 tests/dummy/app/components/number-input.js
 tests/dummy/app/controllers/application.js

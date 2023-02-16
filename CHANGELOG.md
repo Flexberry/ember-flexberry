@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
 * The `flexberry-lookup` component:
     * Added support of property `filterProjectionName` of `flexberry-objectlistview` on modal window (it sets throught `lookupWindowCustomProperties`).
+* Blueprints:
+    * Add generating lookups in dropdown mode.
 
 ## [2.8.0-beta.2] - 2022-10-26
 ### Fixed

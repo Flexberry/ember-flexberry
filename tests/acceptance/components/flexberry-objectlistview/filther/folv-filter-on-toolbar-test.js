@@ -36,7 +36,7 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
       Ember.run(() => {
         fillIn($filterInput, adressEtalone);
       });
-      
+
       let refreshFunction =  function() {
         $filterApplyButton.click();
       };
@@ -49,7 +49,7 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
         let currentModel = Ember.get(controller, 'model');
         let filteredByCommonProjectionCountN = Ember.get(currentModel, 'meta.count');
         assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${adressEtalone}".`);
-        
+
         // 2) Filter by type.name as typeNameEtalone by filter projection containing only type.name property and get at least 1 record.
         Ember.run(() => {
           Ember.set(controller, 'filterProjectionName', 'TestFilterOnToolbarView');
@@ -58,7 +58,7 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
         Ember.run(() => {
           fillIn($filterInput, typeNameEtalone);
         });
-        
+
         let done2 = assert.async();
         refreshListByFunction(refreshFunction, controller).then(($list) => {
           let currentModel = Ember.get(controller, 'model');
@@ -75,7 +75,7 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
             let currentModel = Ember.get(controller, 'model');
             let filteredByFilterProjectionCount2 = Ember.get(currentModel, 'meta.count');
             assert.ok(filteredByCommonProjectionCountN > filteredByFilterProjectionCount2, `Found ${filteredByFilterProjectionCount2} records by filter projection filtered by "${adressEtalone}".`);
-            
+
             Ember.run(() => {
               Ember.set(controller, 'filterProjectionName', undefined);
             });

@@ -254,10 +254,6 @@ Ember.$.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
               'title': ''
-            },
-            'multiple-lookup': {
-              'caption': 'Лукап множественного выбора',
-              'title': 'Лукап множественного выбора'
             }
           },
           'flexberry-lookup': {
@@ -318,6 +314,14 @@ Ember.$.extend(true, translations, {
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Лукап множественного выбора',
+              'title': 'Лукап множественного выбора'
             }
           },
           'flexberry-menu': {
@@ -748,11 +752,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
-        },
-        'multiple-lookup': {
-          'caption': 'Лукап множественного выбора',
-          'lookup-caption': 'Заполнение пользователей',
-          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-lookup': {
@@ -815,6 +814,13 @@ Ember.$.extend(true, translations, {
         'user-settings-example': {
           'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
           'clear-user-setting': 'Сбросить настройки пользователя'
+        }
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Лукап множественного выбора',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-menu': {

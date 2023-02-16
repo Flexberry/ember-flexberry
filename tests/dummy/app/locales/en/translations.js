@@ -254,10 +254,6 @@ Ember.$.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'GrouptEdit readonly columns by configurateRow',
               'title': ''
-            },
-            'multiple-lookup': {
-              'caption': 'Multiple Lookup',
-              'title': 'Multiple Lookup'
             }
           },
           'flexberry-lookup': {
@@ -318,6 +314,14 @@ Ember.$.extend(true, translations, {
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
               'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Multiple Lookup',
+              'title': 'Multiple Lookup'
             }
           },
           'flexberry-menu': {
@@ -747,11 +751,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Model update example',
           'addDetailButton': 'Add detail',
           'removeDetailButton': 'Remove detail',
-        },
-        'multiple-lookup': {
-          'caption': 'Multiple Lookup',
-          'lookup-caption': 'Choose user',
-          'lookup-title': 'Choose user',
         }
       },
       'flexberry-lookup': {
@@ -811,6 +810,13 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Multiple Lookup',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user',
+        }
       },
       'flexberry-menu': {
         'settings-example': {

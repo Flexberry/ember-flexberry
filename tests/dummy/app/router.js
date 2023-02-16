@@ -88,7 +88,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-groupedit/model-update-example');
   this.route('components-examples/flexberry-groupedit/custom-buttons-example');
   this.route('components-examples/flexberry-groupedit/configurate-row-example');
-  this.route('components-examples/flexberry-groupedit/multiple-lookup');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example');
@@ -105,6 +104,7 @@ Router.map(function() {
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
   this.route('components-examples/flexberry-lookup/user-settings-example');
+  this.route('components-examples/flexberry-multiple-lookup/multiple-lookup');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');

@@ -358,11 +358,6 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.title'),
             children: null
-          }, {
-            link: 'components-examples/flexberry-groupedit/multiple-lookup',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.multiple-lookup.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.multiple-lookup.title'),
-            children: null
           }]
         }, {
           link: null,
@@ -437,6 +432,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/user-settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.title'),
+          children: [{
+            link: 'components-examples/flexberry-multiple-lookup/multiple-lookup',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
             children: null
           }]
         }, {

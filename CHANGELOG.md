@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* The `flexberry-objectlistview` component:
+    * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
+
 * Blueprints:
     * Add generating lookups in dropdown mode.
 

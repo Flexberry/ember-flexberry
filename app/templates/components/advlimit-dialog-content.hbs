@@ -1,0 +1,37 @@
+<div class="ui form {{appState.state}}">
+  <div class="flexberry-colsconfig content">
+    <div class="ui action input flexberry-advlimit-input">
+      {{flexberry-textarea
+        value=model.advLimit
+        class=class
+        rows='10'
+      }}
+    </div>
+    <div class="ui action input flexberry-advlimit-input">
+      {{input
+        type="input"
+        class="setting-name-input fluid"
+        value=model.advLimitName
+        placeholder=(t "components.advlimit-dialog-content.enter-limit-name")
+      }}
+      {{#if advLimit.isAdvLimitServiceEnabled}}
+        <div class="ui small button cols-config-save{{unless model.advLimitName " disabled"}}" {{action "saveAdvLimit"}}>
+          {{t "components.advlimit-dialog-content.save"}}
+        </div>
+      {{/if}}
+      <div class="ui right floated button cols-config-apply" {{action "apply"}}>
+        {{t "components.advlimit-dialog-content.use"}}
+      </div>
+      <div class="ui button cols-config-check" {{action "check"}}>
+        {{t "components.advlimit-dialog-content.check"}}
+      </div>
+    </div>
+    {{ui-message
+      type=message.type
+      visible=message.visible
+      caption=message.caption
+      message=message.message
+      closeable=message.closeable
+    }}
+  </div>
+</div>

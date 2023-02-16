@@ -16,9 +16,25 @@ var Model = Projection.Model.extend({
   }
 });
 
+// List form projection.
+Model.defineProjection('SuggestionFileL', 'ember-flexberry-dummy-suggestion-file', {
+  order: Projection.attr('Order'),
+  suggestion: Projection.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: Projection.attr('Address', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'address'
+  }),
+  file: Projection.attr('File')
+});
+
 // Edit form projection.
 Model.defineProjection('SuggestionFileE', 'ember-flexberry-dummy-suggestion-file', {
   order: Projection.attr('Order'),
+  suggestion: Projection.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: Projection.attr('Address')
+  }),
   file: Projection.attr('File')
 });
 

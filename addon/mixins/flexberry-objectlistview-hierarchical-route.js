@@ -32,7 +32,7 @@ export default Ember.Mixin.create({
       let modelName = params.modelName || this.get('modelName');
 
       if (firstRunMode) {
-        let projectionName = params.modelProjection || this.get('modelProjection');
+        let projectionName = params.projectionName || this.get('modelProjection');
         let builder = new Builder(this.store)
           .from(modelName)
           .selectByProjection(projectionName)
@@ -52,11 +52,15 @@ export default Ember.Mixin.create({
           }
         }
 
-        let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
-          resolve(sortRecordsArray);
-        });
+        if (sortRecordsArray.length === 0) {
+          this.send('loadRecordsById', id, target, property, true, recordParams);
+        } else {
+          let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            resolve(sortRecordsArray);
+          });
 
-        Ember.set(target, property, recordsArrayinPromise);
+          Ember.set(target, property, recordsArrayinPromise);
+        }
       }
     },
 

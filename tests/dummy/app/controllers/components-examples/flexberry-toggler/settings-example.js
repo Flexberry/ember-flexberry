@@ -43,6 +43,24 @@ export default Ember.Controller.extend({
   expanded: true,
 
   /**
+    If true - border with a border appears for toggler. If false - border doesn't appear.
+
+    @property hasBorder
+    @type Boolean
+    @default false
+  */
+  hasBorder: false,
+
+  /**
+   * If true - border with a subtle shadow appears for toggler. If false - shadow doesn't appear.
+
+   @property hasShadow
+   @type Boolean
+   @default false
+   */
+  hasShadow: false,
+
+  /**
     Template text for 'flexberry-textbox' component.
 
     @property componentTemplateText
@@ -56,6 +74,8 @@ export default Ember.Controller.extend({
     '  expanded=true<br>' +
     '  componentName="myToggler"<br>' +
     '  iconClass=iconClass<br>' +
+    '  hasBorder=hasBorder<br>' +
+    '  hasShadow=hasShadow<br>' +
     '}}<br>' +
     '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +
     '{{/flexberry-toggler}}'),
@@ -91,6 +111,18 @@ export default Ember.Controller.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'expanded'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'hasBorder',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'hasBorder'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'hasShadow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'hasShadow'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'iconClass',

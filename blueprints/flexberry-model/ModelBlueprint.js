@@ -2,7 +2,6 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require("path");
@@ -30,6 +29,7 @@ var ModelBlueprint = /** @class */ (function () {
             var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
             this.parentExternal = parentModel.external;
         }
+        this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
         this.enums = ModelBlueprint.loadEnums(options.metadataDir);
         this.className = model.className;
         this.namespace = model.nameSpace;
@@ -44,7 +44,13 @@ var ModelBlueprint = /** @class */ (function () {
         var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
+        if (this.hasCpValidations) {
+            this.validations = this.getValidations(model);
+        }
     }
+    ModelBlueprint.checkCpValidations = function (blueprint) {
+        return 'ember-cp-validations' in blueprint.project.dependencies();
+    };
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
         var modelFile = path.join(modelsDir, modelFileName);
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
@@ -144,10 +150,12 @@ var ModelBlueprint = /** @class */ (function () {
                         options.push("defaultValue: " + attr.defaultValue);
                         break;
                     case 'date':
-                        if (attr.defaultValue === 'Now') {
+                        // The UTC handling policy depends solely on backend configuration.
+                        if (attr.defaultValue === 'Now' || attr.defaultValue === 'UtcNow') {
                             options.push("defaultValue() { return new Date(); }");
                             break;
                         }
+                        throw new Error("The default '" + attr.defaultValue + "' value for '" + attr.name + "' attribute of 'date' type is not supported.");
                     default:
                         if (this.enums.hasOwnProperty(attr.type)) {
                             var enumName = this.enums[attr.type].className + "Enum";
@@ -166,7 +174,7 @@ var ModelBlueprint = /** @class */ (function () {
                 optionsStr = ", { " + options.join(', ') + ' }';
             }
             attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + optionsStr + ")");
-            if (attr.notNull) {
+            if (!this.hasCpValidations && attr.notNull) {
                 if (attr.type === "date") {
                     validations.push(attr.name + ": { datetime: true }");
                 }
@@ -199,31 +207,34 @@ var ModelBlueprint = /** @class */ (function () {
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
-            if (belongsTo.presence)
+            if (!this.hasCpValidations && belongsTo.presence) {
                 validations.push(belongsTo.name + ": { presence: true }");
+            }
             attrs.push(templateBelongsTo(belongsTo));
         }
         for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-        if (validations.length === 0) {
-            validationsFunc = "";
-        }
-        validationsFunc =
-            "getValidations: function () {\n" +
-                TAB + TAB + "let parentValidations = this._super();\n" +
-                TAB + TAB + "let thisValidations = {\n" +
-                validationsFunc + TAB + TAB + "};\n" +
-                TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+        if (!this.hasCpValidations) {
+            var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
+            if (validations.length === 0) {
+                validationsFunc = "";
+            }
+            validationsFunc =
+                "getValidations: function () {\n" +
+                    TAB + TAB + "let parentValidations = this._super();\n" +
+                    TAB + TAB + "let thisValidations = {\n" +
+                    validationsFunc + TAB + TAB + "};\n" +
+                    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+                    TAB + "}";
+            var initFunction = "init: function () {\n" +
+                TAB + TAB + "this.set('validations', this.getValidations());\n" +
+                TAB + TAB + "this._super.apply(this, arguments);\n" +
                 TAB + "}";
-        var initFunction = "init: function () {\n" +
-            TAB + TAB + "this.set('validations', this.getValidations());\n" +
-            TAB + TAB + "this._super.apply(this, arguments);\n" +
-            TAB + "}";
-        attrs.push(validationsFunc, initFunction);
-        return TAB + attrs.join(",\n" + TAB);
+            attrs.push(validationsFunc, initFunction);
+        }
+        return attrs.length ? "\n" + (TAB + attrs.join(",\n" + TAB)) + "\n" : '';
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -251,7 +262,7 @@ var ModelBlueprint = /** @class */ (function () {
                 attrsStr = "";
                 indentStr = "";
             }
-            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": Projection.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
+            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
         }
         return new SortedPair(Number.MAX_VALUE, "");
     };
@@ -272,10 +283,10 @@ var ModelBlueprint = /** @class */ (function () {
         }
         else {
             if (belongsTo.lookupValueField) {
-              hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
+                hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
             }
             else {
-              hiddenStr = ", { index: " + belongsTo.index + " }";
+                hiddenStr = ", { index: " + belongsTo.index + " }";
             }
         }
         var indent = [];
@@ -296,7 +307,7 @@ var ModelBlueprint = /** @class */ (function () {
             if (index == -1)
                 index = Number.MAX_VALUE;
         }
-        return new SortedPair(index, belongsTo.name + ": Projection.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
+        return new SortedPair(index, belongsTo.name + ": belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
@@ -306,7 +317,7 @@ var ModelBlueprint = /** @class */ (function () {
         else {
             hiddenStr = ", { index: " + attr.index + " }";
         }
-        return new SortedPair(attr.index, attr.name + ": Projection.attr('" + attr.caption + "'" + hiddenStr + ")");
+        return new SortedPair(attr.index, attr.name + ": attr('" + attr.caption + "'" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
         var projections = [];
@@ -347,13 +358,59 @@ var ModelBlueprint = /** @class */ (function () {
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n      ");
-                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Projection.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
             projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
-        return "\n" + projections.join("\n") + "\n";
+        return "\n" + projections.join("\n\n") + "\n";
+    };
+    ModelBlueprint.prototype.getValidations = function (model) {
+        var validators = {};
+        for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
+            var attr = _a[_i];
+            validators[attr.name] = ["validator('ds-error'),"];
+            switch (attr.type) {
+                case 'date':
+                    validators[attr.name].push("validator('date'),");
+                    if (attr.notNull) {
+                        validators[attr.name].push("validator('presence', true),");
+                    }
+                    break;
+                case 'string':
+                case 'boolean':
+                    if (attr.notNull) {
+                        validators[attr.name].push("validator('presence', true),");
+                    }
+                    break;
+                case 'number':
+                case 'decimal':
+                    var options = 'allowString: true';
+                    options += attr.notNull ? '' : ', allowBlank: true';
+                    options += attr.type === 'number' ? ', integer: true' : '';
+                    validators[attr.name].push("validator('number', { " + options + " }),");
+                    break;
+            }
+        }
+        for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
+            var belongsTo = _c[_b];
+            validators[belongsTo.name] = ["validator('ds-error'),"];
+            if (belongsTo.presence) {
+                validators[belongsTo.name].push("validator('presence', true),");
+            }
+        }
+        for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
+            var hasMany = _e[_d];
+            validators[hasMany.name] = ["validator('ds-error'),", "validator('has-many'),"];
+        }
+        var validations = [];
+        for (var validationKey in validators) {
+            var descriptionKey = "descriptionKey: 'models." + model.modelName + ".validations." + validationKey + ".__caption__',";
+            var _validators = "validators: [\n" + (TAB + TAB + TAB + validators[validationKey].join("\n" + (TAB + TAB + TAB))) + "\n" + (TAB + TAB) + "],";
+            validations.push(TAB + validationKey + ": {\n" + (TAB + TAB + descriptionKey) + "\n" + (TAB + TAB + _validators) + "\n" + TAB + "}");
+        }
+        return validations.length ? "\n" + validations.join(',\n') + ",\n" : '';
     };
     ModelBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";
@@ -364,5 +421,6 @@ var ModelBlueprint = /** @class */ (function () {
     };
     return ModelBlueprint;
 }());
+exports.__esModule = true;
 exports.default = ModelBlueprint;
 //# sourceMappingURL=ModelBlueprint.js.map

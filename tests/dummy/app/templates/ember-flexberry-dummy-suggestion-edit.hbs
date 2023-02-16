@@ -114,6 +114,7 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       preview=(action "previewLookupValue")
+      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
       readonly=readonly
       componentName="SuggestionEditAuthor"
     }}
@@ -138,7 +139,7 @@
     }}
     {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.files "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{flexberry-groupedit
       componentName="filesGroupEdit"
@@ -150,7 +151,7 @@
     }}
     {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.userVotes "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionUserVotesGroupEdit"
@@ -162,7 +163,7 @@
     }}
     {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.comments "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionCommentsGroupEdit"

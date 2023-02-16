@@ -4,7 +4,7 @@
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';
 
-executeTest('flexberry-lookup hierarchy olv test', (store, assert, app) => {
+executeTest('flexberry-lookup hierarchy olv test', (store, assert) => {
   assert.expect(16);
   const path = 'components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example';
   visit(path);

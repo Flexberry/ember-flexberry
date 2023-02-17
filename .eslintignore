@@ -454,6 +454,7 @@ tests/dummy/app/routes/components-examples/flexberry-lookup/hierarchy-olv-in-loo
 tests/dummy/app/routes/components-examples/flexberry-lookup/limit-function-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-block-form-example.js
+tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/numeric-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/settings-example.js

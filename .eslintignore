@@ -320,6 +320,7 @@ tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-lim
 tests/dummy/app/controllers/components-examples/flexberry-lookup/default-ordering-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example.js
+tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal-autocomplete.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-menu/settings-example.js

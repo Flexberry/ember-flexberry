@@ -314,7 +314,6 @@ tests/dummy/app/controllers/components-examples/flexberry-groupedit/custom-butto
 tests/dummy/app/controllers/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute.js
 tests/dummy/app/controllers/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-readonly-columns-by-configurate-row-example.js
 tests/dummy/app/controllers/components-examples/flexberry-groupedit/model-update-example.js
-tests/dummy/app/controllers/components-examples/flexberry-groupedit/multiple-lookup.js
 tests/dummy/app/controllers/components-examples/flexberry-groupedit/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/autocomplete-order-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-limit-example.js
@@ -444,7 +443,6 @@ tests/dummy/app/routes/components-examples/flexberry-groupedit/ember-flexberry-d
 tests/dummy/app/routes/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute.js
 tests/dummy/app/routes/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-readonly-columns-by-configurate-row-example.js
 tests/dummy/app/routes/components-examples/flexberry-groupedit/model-update-example.js
-tests/dummy/app/routes/components-examples/flexberry-groupedit/multiple-lookup.js
 tests/dummy/app/routes/components-examples/flexberry-groupedit/settings-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/autocomplete-order-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/autofill-by-limit-example.js

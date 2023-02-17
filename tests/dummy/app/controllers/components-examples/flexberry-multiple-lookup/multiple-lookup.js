@@ -3,8 +3,8 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
-    Flag: indicates whether 'flexberry-groupedit' component is in 'readonly' mode or not.
-   
+    Flag: indicates whether 'flexberry-multiple-lookup' component is in 'readonly' mode or not.
+
     @property readonly
     @type Boolean
    */
@@ -15,7 +15,7 @@ export default EditFormController.extend({
   init() {
     this._super(...arguments);
 
-    var store = this.get('store');
+    const store = this.get('store');
 
     this.set('baseVoteModel', store.createRecord('ember-flexberry-dummy-vote'));
   },

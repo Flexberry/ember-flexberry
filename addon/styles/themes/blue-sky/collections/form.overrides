@@ -251,3 +251,8 @@ option {
     padding: 0.7em;
     align-self: start;
 }
+
+.ui.form input:read-only {
+    color: @readonlyColor;
+    pointer-events: none;
+}

@@ -798,11 +798,8 @@ Ember.$.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
-          'captionModal': 'Кастомное модальное окно с ui-modal',
-          'captionModalDouble': 'Кастомное модальное с modal-dialog',
-          'buttonModal': 'Кастомное модальное окно с ui-modal',
-          'buttonModalDouble': 'Кастомное модальное окно с modal-dialog',
-          'buttonClose': 'Закрыть'
+          'captionModal': 'Модальное окно с ui-modal',
+          'captionModalDouble': 'Модальное с modal-dialog'
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown'

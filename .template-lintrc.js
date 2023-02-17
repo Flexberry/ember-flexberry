@@ -253,7 +253,6 @@ module.exports = {
     {
       "moduleId": "app/templates/components/flexberry-multiple-lookup",
       "only": [
-        "eol-last",
         "link-href-attributes",
         "no-invalid-interactive",
         "no-unnecessary-concat"

@@ -460,6 +460,7 @@ tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-block-form-ex
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/numeric-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/routes/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel.js

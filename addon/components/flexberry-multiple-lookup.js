@@ -229,12 +229,6 @@ export default FlexberryBaseComponent.extend({
     showLookupDialog(chooseData) {
       this.get('currentController').send('showLookupDialog', chooseData);
     },
-    removeLookupValue(removeData) {
-      //Due to some features of flexbery-lookup (such as controller dependence), removing value implemented directly
-      //TODO uncomment and reimplement when lookup will be rewritten
-      //this.get('currentController').send('removeLookupValue', removeData);
-      removeData.modelToLookup.set(removeData.relationName, undefined);
-    },
     delete(record) {
       this.delete(record);
     },

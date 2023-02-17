@@ -1,4 +1,43 @@
 export default {
+  errors: {
+    description: 'Это поле',
+    inclusion: '{{description}} не входит в список',
+    exclusion: '{{description}} зарезервировано',
+    invalid: '{{description}} недействительно',
+    confirmation: '{{description}} не соответствует {{on}}',
+    accepted: '{{description}} должно быть принято',
+    empty: '{{description}} не может быть пустым',
+    blank: '{{description}} не может быть пустым',
+    present: '{{description}} должно быть пустым',
+    collection: '{{description}} должно быть коллекцией',
+    singular: '{{description}} не может быть коллекцией',
+    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
+    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
+    before: '{{description}} должно быть до {{before}}',
+    after: '{{description}} должно быть после {{after}}',
+    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
+    wrongLength: '{{description}} неправильной длинны (должно быть {{is}} символов)',
+    notANumber: '{{description}} должно быть числом',
+    notAnInteger: '{{description}} должно быть целым числом',
+    greaterThan: '{{description}} должно быть больше {{gt}}',
+    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
+    equalTo: '{{description}} должно быть равно {{is}}',
+    lessThan: '{{description}} должно быть меньше {{lt}}',
+    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
+    otherThan: '{{description}} должно быть отличным от {{value}}',
+    odd: '{{description}} должно быть нечётным числом',
+    even: '{{description}} должно быть чётным числом',
+    positive: '{{description}} должно быть положительным числом',
+    date: '{{description}} должно быть действительной датой',
+    onOrAfter: '{{description}} должно быть не позднее {{onOrAfter}}',
+    onOrBefore: '{{description}} должно быть не раньше {{onOrBefore}}',
+    email: '{{description}} должно быть действительным адресом электронной почты',
+    phone: '{{description}} должно быть действительным номером телефона',
+    url: '{{description}} должно быть действительным URL адресом',
+    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
+    between: '{{description}} должно быть от {{min}} до {{max}} символов',
+  },
+
   'forms': {
     'edit-form': {
       'saved-message': 'Форма сохранена.',
@@ -8,7 +47,9 @@ export default {
       'save-button-text': 'Сохранить',
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
-      'close-button-text': 'Закрыть'
+      'close-button-text': 'Закрыть',
+
+      'readonly': 'только для чтения'
     },
 
     'error-form': {
@@ -26,11 +67,16 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
+    },
+
+    'loading': {
+      caption: 'Загрузка...',
     }
   },
 
   'components': {
     'flexberry-simpledatetime': {
+      placeholder: '(нет значения)',
       'scroll-caption-text': 'Используйте скролл для перемотки',
     },
 
@@ -54,14 +100,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(нет значения)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
     },
 
     'flexberry-file': {
@@ -121,7 +159,10 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'without-sorting': 'Без сортировки',
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {
@@ -161,7 +202,8 @@ export default {
         'empty': 'Не заполнен',
         'between': 'В интервале',
       },
-      'filter-condition': 'Условие'
+      'filter-condition': 'Условие',
+      'clear-filter-in-column': 'Сбросить фильтр в этой колонке',
     },
 
     'olv-filter-interval': {
@@ -200,9 +242,12 @@ export default {
       'copy': 'Копировать',
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования',
-      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
-      'check-all-button-text': 'Отметить все на всех страницах',
-      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
+      'check-all-at-page-button-text': 'Выбрать все на странице',
+      'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
+      'check-all-button-text': 'Выбрать все на всех страницах',
+      'uncheck-all-button-text': 'Отменить выбор на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию',
+      'clear-select-button-text': 'Отмена выделения'
     },
 
     'groupedit-toolbar': {
@@ -263,12 +308,10 @@ export default {
     },
 
     'filters-dialog-content': {
-      'title': 'Фильтрация по столбцам',
-      'column-name': 'Столбец для фильтрации',
-      'column-condition': 'Условие',
-      'column-value': 'Значение',
-      'clear': 'Очистить фильты',
-      'apply': 'Применить фильтры'
+      'clear-this-filter': 'Сбросить этот фильтр',
+      'title': 'Настройка фильтрации записей',
+      'clear': 'Сбросить фильтр',
+      'apply': 'Применить'
     },
 
     'form-load-time-tracker': {
@@ -356,5 +399,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  validations: {
+    'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
+  },
 };

@@ -3,17 +3,137 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
-## [2.5.0-beta.7] - 2020-07-22
 ### Added
-* The ability to optimize the loading of the hierarchical list in the `flexberry-objectlistview` component ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).
-* Mobile version of the export to `Excel` and configure list window.
+* The `flexberry-objectlistview` component:
+    * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
+* The `flexberry-lookup` component:
+    * Added support of property `filterProjectionName` of `flexberry-objectlistview` on modal window (it sets throught `lookupWindowCustomProperties`).
+* Blueprints:
+    * Add generating lookups in dropdown mode.
+
+## [2.8.0-beta.2] - 2022-10-26
+### Fixed
+* The `flexberry-lookup` component:
+    * Default user settings usage.
+
+## [2.8.0-beta.1] - 2022-10-26
+### Added
+* The `flexberry-file` component:
+    * Drag-and-drop support.
+
+## [2.7.0] - 2022-05-17
+### Added
+* The `flexberry-lookup` component:
+    * Option `emptyValueAtEnd` for the dropdown mode.
+* Optional `ember-cp-validations` support.
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+* Update dependency on `ember-flexberry-data` to version `2.7.0`.
+
+### Fixed
+* The `flexberry-objectlistview` component:
+    * Using of `perPage` setting at `developerUserSettings`.
+* Validation for deleted records in `flexberry-groupedit` on `edit-form`.
+* The `flexberry-groupedit` component:
+    * Optimized sort function.
+* The `flexberry-groupedit` component:
+    * Lookup's autocomplite and dropdown groupedit container overflow.
+
+### Breaking changes
+* Deleted `custom-inflector-rules`.
+* The `flexberry-datepicker` component was removed.
+* The `daterangepicker` `bower`-package was removed from dependencies.
+* The `moment` `bower`-package was added to dependencies.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
+
+## [2.6.1] - 2021-07-02
+### Fixed
+* The `flexberry-model` blueprint generated wrong model mixin when project contains `ember-cp-validations` dependency.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.6.0`.
+
+## [2.6.0] - 2021-06-16
+### Added
+* The `flexberry-file` component:
+    * Added upload/download file options for mobile component's menu.
+* The `flexberry-objectlistview` component:
+    * The `hierarchyAttribute` property.
+    * Default test selector.
+    * Button to clear the filter in a column.
+* The `flexberry-lookup` component:
+    * Support for component's block form, which was previously only available in the mobile version.
+    * The `lookupOnChange` event in the `LookupEvents` service, called when the value in the component changes.
+    * The `autocompleteDirection` property to set direction of autocomplete window.
+* Support of `errors` property change for `flexberry-validationsummary`.
+* The `indeterminate` mode for `flexberry-checkbox` by setting `isNullable`.
+* The `isDesktop` and `isMobile` methods for `device` service.
+* Ability to define default user settings for the type of models to be used in the lists.
+* The `hasShadow` and `hasBorder` properties for `flexberry-toggler` component.
+* The `validationObject` property, `validate` and `saveModel` methods for `edit-form` controller.
+* The localization of the `loading` template.
+
+### Fixed
+* The `device` service:
+    * `isTv` method.
+* The `edit-form-new` route:
+    * Returning promise in model.
+* The `default-user-setting` blueprint:
+    * Init component path.
+* The `flexberry-objectlistview` component:
+    * Check all rows with respect to `rowConfig.canBeSelected` option.
+    * Add ability to on and off hierarchical mode when component is in hierarchical mode initially.
+* Show save notifications on the edit form.
+* The `updateLookupAction` action in the `flexberry-lookup` component is not called when a value is selected in a modal window.
+* The `index` route is no longer generated in the `flexberry-application` blueprint. Because of this, some of the application regeneration methods did not work.
+* In the row click handler, in the `flexberry-objectlistview` component, async operations outside the ember run loop were used. Now you can just do `click(row)` in your tests.
+
+### Changed
+* Replace `semantic-ui-daterangepicker` dependency with `daterangepicker` 3.0.5.
+* Replace test models localization with separated classes.
+* Now the `flexberry-objectlistview` component is generated with the `showCheckBoxInRow` option set to `true` value on the list form.
+* The `flexberry-acceptance-test` blueprint:
+    * An `[AGAT]` tag is added to the name of each test module, which can be used to run the desired test suite. For example `ember test --filter="AGAT"`.
+    * Tests are now generated in the `acceptance\flexberry` directory and are overwritten by default on every generation.
+    * Now the generated test covers several more scenarios.
+
+### Deprecated
+* The `run.after` method, which is added by the `ember-run-after` initializer.
+
+### Breaking changes
+* The `flexberry-lookup` component:
+    * Removed mobile template.
+    * An exception will be thrown when trying to use the block form of the component with `autocomplete` or `dropdown` options.
+
+## [2.5.0] - 2020-09-10
+### Added
 * The `flexberry-file` component:
     * Type checking for files selected using the component. Use the `accept` property and the `isValidTypeFileCustom` action to configure.
     * When limiting the file size, the ability to specify the units of measurement in the `maxUploadFileSizeUnit` property.
 * In all components of lists:
+    * Mobile version of the export to `Excel` and configure list window.
     * The ability to return promises from the `confirmDeleteRow` and `confirmDeleteRows` actions, now you can not toil with the `beforeDeleteRecord` action.
     * The `confirmDeleteRow` action gets the record to be deleted as the first parameter.
+* The `useOkButton` and `useCloseButton` properties in the `flexberry-error` component to customize nested the `modal-dialog` component.
+* The `flexberry-menu` component:
+    * The ability to add buttons to menu items.
+    * The `settings` property for the dropdown from `Semantic UI`.
+* The `flexberry-objectlistview` component:
+    * The ability to optimize the loading of the hierarchical list ([learn more](https://flexberry.github.io/en/fe_setting-lists.html#configuring-a-hierarchical-list)).
+    * Page number input field to go to it.
+    * Menu for selecting rows and displaying sorting in the mobile version of the component.
+* The `flexberry-acceptance-test` blueprint for generating tests for your application.
+* Config update on install for dummy app of addon in default blueprint.
 
 ### Fixed
 * Attributes with selectors for testing are not generated correctly in the generated application.
@@ -27,11 +147,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * The `flexberry-lookup` component:
     * The modal window settings specified in the `lookupSettings.modalDialogSettings` property of the controller were not applied.
     * The modal window settings specified through the `modalDialogSettings` property are lost when switching pages.
+    * Clicking on `...` in the results for autocomplete inserts `...` into the component.
+    * Pagination in the results for autocomplete.
+* Double loading of data on the list ([PR#1150](https://github.com/Flexberry/ember-flexberry/pull/1150)).
+* Some filtering issues in modal window in `flexberry-objectlistview` component ([PR#1144](https://github.com/Flexberry/ember-flexberry/pull/1144)).
+* Generation of locales for dummy app of the generated addon.
 
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `2.5.0-beta.4`.
 * Design of an element for customizing the sorting of columns, in the export to `Excel` and configure list window. Symbols are replaced with a description.
 * For all the `button` elements used in templates, the `type` attribute with the `button` value is added.
+* In the mobile version of the `flexberry-objectlistview` component, the pagination block is now above the list and shows fewer pages.
+* Now the default value of the `searchForContentChange` property in the `flexberry-groupedit` component is `true`.
+* Update dependency on `ember-flexberry-data` to version `2.5.0`.
 
 ### Breaking changes
 * Removed the `parse-cols-config-sorting` helper.

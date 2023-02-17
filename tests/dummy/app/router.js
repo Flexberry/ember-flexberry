@@ -41,6 +41,24 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/new' });
+
   this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
   this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
 
@@ -56,9 +74,9 @@ Router.map(function() {
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');
+  this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
-  this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-dropdown/empty-value-example');
@@ -86,6 +104,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
+  this.route('components-examples/flexberry-lookup/user-settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -168,6 +187,7 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-custom-window');
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
@@ -180,14 +200,20 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
+  this.route('components-acceptance-tests/flexberry-simpledatetime/manual-enter');
+
+  this.route('components-acceptance-tests/flexberry-groupedit/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');
   this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
+  this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',

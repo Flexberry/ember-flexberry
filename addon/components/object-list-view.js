@@ -5,11 +5,13 @@ import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import getProjectionByName from '../utils/get-projection-by-name';
+import runAfter from '../utils/run-after';
 
 /**
   Object list view component.
@@ -36,14 +38,14 @@ export default FlexberryBaseComponent.extend(
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     this._setContent(this.get('componentName'));
 
-    if (this.get('allSelect'))
-    {
+    if (this.get('allSelect')) {
       let contentWithKeys = this.get('contentWithKeys');
       let checked = this.get('allSelect');
 
       contentWithKeys.forEach((item) => {
-        item.set('selected', checked);
-        item.set('rowConfig.canBeSelected', !checked);
+        if (item.get('rowConfig.canBeSelected')) {
+          item.set('selected', checked);
+        }
       });
     }
   })),
@@ -495,6 +497,13 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
+    if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
+      if (!Ember.isNone(userSettingValue)) {
+        userSettings = userSettingValue.DEFAULT
+      }
+    }
+
     let onEditForm = this.get('onEditForm');
 
     // TODO: add userSettings support on edit form.
@@ -566,7 +575,7 @@ export default FlexberryBaseComponent.extend(
       ret = cols;
     }
 
-    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(ret);
+    this.get('objectlistviewEventsService').setOlvFilterColumnsArray(this.get('componentName'), ret);
     return ret;
   }),
 
@@ -946,7 +955,7 @@ export default FlexberryBaseComponent.extend(
           customParameters: this.get('customParameters')
         });
 
-        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.sendAction('action', recordData, params);
         });
 
@@ -1063,35 +1072,38 @@ export default FlexberryBaseComponent.extend(
       let checked = false;
 
       for (let i = 0; i < contentWithKeys.length; i++) {
-        if (!contentWithKeys[i].get('selected')) {
+        if (!contentWithKeys[i].get('selected') && contentWithKeys[i].get('rowConfig.canBeSelected')) {
           checked = true;
         }
       }
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (checked) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
           }
 
-          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-            selectedRecords.pushObject(recordWithKey.data);
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+          recordWithKey.set('selected', checked);
 
-          selectedRecords.removeObject(recordWithKey.data);
+          let componentName = this.get('componentName');
+          this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
         }
-
-        recordWithKey.set('selected', checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
 
@@ -1108,6 +1120,42 @@ export default FlexberryBaseComponent.extend(
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
       this.selectedRowsChanged();
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onCheckRowMenuItemClick
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onCheckRowMenuItemClick(e) {
+      let namedItemSpans = Ember.$(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      let isUncheckAllAtPage = this.get('allSelectAtPage');
+      let checkAllAtPageTitle = isUncheckAllAtPage ? i18n.t('components.olv-toolbar.uncheck-all-at-page-button-text') :
+      i18n.t('components.olv-toolbar.check-all-at-page-button-text');
+
+      let isUncheckAll = this.get('allSelect');
+      let checkAllTitle = isUncheckAll ? i18n.t('components.olv-toolbar.uncheck-all-button-text') :
+      i18n.t('components.olv-toolbar.check-all-button-text');
+
+      switch (namedSetting) {
+        case checkAllAtPageTitle.toString(): {
+          this.send('checkAllAtPage');
+          break;
+        }
+
+        case checkAllTitle.toString(): {
+          this.send('checkAll');
+          break;
+        }
+      }
     },
 
     /**
@@ -1157,9 +1205,9 @@ export default FlexberryBaseComponent.extend(
       Called when filter condition in any column was changed by user.
 
       @method actions.filterConditionChanged
-      @param {Object} filter
-      @param {String} newCondition
-      @param {String} oldCondition
+      @param {Object} filter Object with the filter description.
+      @param {String} newCondition The new value of the filter condition.
+      @param {String} oldCondition The old value of the filter condition.
     */
     filterConditionChanged(filter, newCondition, oldCondition) {
       if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
@@ -1174,7 +1222,19 @@ export default FlexberryBaseComponent.extend(
       }
 
       Ember.setProperties(filter.component, options);
-    }
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterForColumn
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterForColumn(filter) {
+      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
+      Ember.set(filter, 'condition', null);
+      Ember.set(filter, 'pattern', null);
+    },
   },
 
   /**
@@ -1192,8 +1252,17 @@ export default FlexberryBaseComponent.extend(
         let relationships = Ember.get(model, 'relationships');
         let hierarchicalrelationships = relationships.get(modelName);
         if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
-          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
+          this.sendAction('availableHierarchicalMode', hierarchicalrelationships[0].name);
+        } else if (hierarchicalrelationships.length > 1) {
+          let hierarchyAttribute = this.get('hierarchyAttribute');
+          if (!Ember.isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = Ember.A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+            if (!Ember.isNone(hierarchyAttributeExist)) {
+              this.sendAction('availableHierarchicalMode', hierarchyAttribute);
+            } else {
+              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
+            }
+          }
         }
       }
     }
@@ -1214,6 +1283,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').on('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').on('filterConditionChanged', this, this._filterConditionChanged);
   },
 
   /**
@@ -1392,6 +1462,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('objectlistviewEventsService').off('moveRow', this, this._moveRow);
+    this.get('objectlistviewEventsService').off('filterConditionChanged', this, this._filterConditionChanged);
 
     this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
@@ -1738,9 +1809,9 @@ export default FlexberryBaseComponent.extend(
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;
@@ -1862,6 +1933,9 @@ export default FlexberryBaseComponent.extend(
 
     Ember.$.extend(true, component, options);
 
+    // Hack to restore component when clearing filter for one column.
+    component._defaultComponent = component.name;
+
     column.filter = { name, type, pattern, condition, conditions, component };
   },
 
@@ -1960,20 +2034,19 @@ export default FlexberryBaseComponent.extend(
       case 'string':
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact fluid',
+          class: 'compact',
         };
         break;
 
       case 'date':
         component.name = 'flexberry-simpledatetime';
-        component.properties = { type: 'date' };
+        component.properties = { type: 'date', removeButton: false };
         break;
 
       default:
@@ -1983,7 +2056,7 @@ export default FlexberryBaseComponent.extend(
           component.name = 'flexberry-dropdown';
           component.properties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid',
+            class: 'compact',
           };
         }
 
@@ -2200,6 +2273,7 @@ export default FlexberryBaseComponent.extend(
     // Mark previously selected records.
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {
@@ -2443,16 +2517,51 @@ export default FlexberryBaseComponent.extend(
     @return {Promise} A promise that will be resolved when relationships have been deleted
   */
   _deleteHasManyRelationships(record, immediately) {
+    /*
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM. 
+    ORM will delete all hasMany relationships on server side,
+    but it is needed to unload hasMany relationships on client side.
+
+    If ONLINE with flag NOT IMMEDIATELY then it is necessary manually to "deleteRecord"
+    of all hasMany relationships.
+
+    If OFFLINE then adapter will delete connected hasMany relationships.
+    */
+
     let promises = Ember.A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return Ember.RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the `record` and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
+    let store = this.get('store');
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        record.get(name).forEach((relRecord) => {
-          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
-        });
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i >= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
+          if (immediately) {
+            store.unloadRecord(relRecord);
+          }
+          else {
+            promises.pushObject(relRecord.deleteRecord());
+          }
+        }
       }
     });
-
-    return Ember.RSVP.all(promises);
   },
 
   /**
@@ -2469,7 +2578,8 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
+      let filterProjectionName = Ember.get(this, 'filterProjectionName');
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName, filterProjectionName);
     }
   },
 
@@ -2495,7 +2605,7 @@ export default FlexberryBaseComponent.extend(
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
   _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && !(content instanceof Ember.RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
+    if (Ember.isArray(content) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }
@@ -2616,6 +2726,7 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
 
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       let e = {
         checked: true
@@ -2654,21 +2765,23 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (selectAllParameter) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
           }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set('selected', selectAllParameter);
         }
 
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', selectAllParameter);
-        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
       if (!skipConfugureRows) {
@@ -2839,6 +2952,22 @@ export default FlexberryBaseComponent.extend(
           contentForRender.replace(newIndex, 0, temp);
         }
       });
+    }
+  },
+
+  /**
+    Calls the `filterConditionChanged` action when filters are displayed in the modal window.
+
+    @private
+    @method _filterConditionChanged
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  _filterConditionChanged(componentName, filter, newValue, oldValue) {
+    if (this.get('componentName') === componentName) {
+      this.send('filterConditionChanged', filter, newValue, oldValue);
     }
   },
 });

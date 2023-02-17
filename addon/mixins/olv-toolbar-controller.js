@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
@@ -371,9 +372,9 @@ export default Ember.Mixin.create({
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;

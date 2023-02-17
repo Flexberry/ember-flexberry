@@ -4,7 +4,7 @@
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow }}
-            {{#if (or readonly allSelect)}}
+            {{#if allSelect}}
               <button
                 type="button"
                 class="ui check-all-at-page-button {{buttonClass}} disabled button"
@@ -23,24 +23,13 @@
               </button>
             {{/if}}
             {{#if (not-eq class "groupedit-container") }}
-              {{#if readonly}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{/if}}
+              <button
+                type="button"
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
             {{/if}}
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
@@ -97,7 +86,7 @@
               {{flexberry-dropdown
                 value=column.filter.condition
                 items=column.filter.conditions
-                displayCaptions=true
+                displayCaptions=(not (is-array column.filter.conditions))
                 class="compact fluid"
                 placeholder=(t "components.object-list-view.filter-condition")
                 needChecksOnValue=false
@@ -117,14 +106,24 @@
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
-              {{component column.filter.component.name
-                value=column.filter.pattern
-                readonly=(or
-                  (eq column.filter.condition "empty")
-                  (eq column.filter.condition "nempty")
-                )
-                dynamicProperties=column.filter.component.properties
-              }}
+              <div class="fluid action input ui">
+                {{component column.filter.component.name
+                  value=column.filter.pattern
+                  readonly=(or
+                    (eq column.filter.condition "empty")
+                    (eq column.filter.condition "nempty")
+                  )
+                  dynamicProperties=column.filter.component.properties
+                }}
+                <button
+                  type="button"
+                  class="ui clear-filter button"
+                  title={{t "components.object-list-view.clear-filter-in-column"}}
+                  {{action "clearFilterForColumn" column.filter}}
+                >
+                  <i class="remove icon"></i>
+                </button>
+              </div>
             {{/if}}
           </td>
         {{/each}}
@@ -177,6 +176,7 @@
           folvComponentName=componentName
           hierarchyPaging=hierarchyPaging
           configurateRow=configurateRow
+          allSelect=allSelect
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

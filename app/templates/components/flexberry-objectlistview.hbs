@@ -78,6 +78,7 @@
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
   filterByAllWords=filterByAllWords
+  filterProjectionName = filterProjectionName
   configurateRow=this.attrs.configurateRow
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
@@ -95,6 +96,7 @@
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
+  hierarchyAttribute=hierarchyAttribute
   useRowByRowLoading=useRowByRowLoading
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
@@ -130,6 +132,27 @@
         disabled={{not hasNextPage}}
         {{action "nextPage" this.attrs.nextPage}}>
       </button>
+    </div>
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      {{input
+        type="number"
+        min=_pages.firstObject.number
+        max=_pages.lastObject.number
+        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+        value=searchPageValue
+        enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
+      }}
+      {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
+      {{input classNames=(array "hidden")}}
+      {{#if searchPageValue}}
+        <button
+          type="button"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage}}>
+        </button>
+      {{/if}}
     </div>
     <div class="right menu">
       {{#if showShowingEntries}}

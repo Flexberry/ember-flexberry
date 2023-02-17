@@ -665,7 +665,7 @@ export default FlexberryBaseComponent.extend({
 
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
-        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray();
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
 
         this.get('modelController').send('showFiltersDialog', componentName, columns);
       } else {
@@ -750,7 +750,8 @@ export default FlexberryBaseComponent.extend({
               userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
             } else {
               let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+              let perPageDefault = defaultDeveloperUserSetting.perPage;
+              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
             }
           });
           break;

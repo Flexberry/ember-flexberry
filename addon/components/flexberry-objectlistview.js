@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import runAfter from '../utils/run-after';
 
 /**
   Component to view list of object.
@@ -31,15 +32,6 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   formLoadTimeTracker: Ember.inject.service(),
-
-  /**
-    Flag used to display filters in modal.
-
-    @property showFiltersInModal
-    @type Boolean
-    @default false
-  */
-  showFiltersInModal: false,
 
   /**
     Store the action name at controller for loading records.
@@ -70,6 +62,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _switchExpandMode: 'switchExpandMode',
+
   /**
     Store the action name at controller for save the hierarchical attribute name.
 
@@ -116,6 +109,14 @@ export default FlexberryBaseComponent.extend({
       return value;
     },
   }),
+
+  /**
+    Set the attribute name to hierarchy build.
+
+    @property hierarchyAttribute
+    @type String
+  */
+  hierarchyAttribute: undefined,
 
   /**
     The name of a property in the model that determines whether any record is the parent of other records.
@@ -179,6 +180,33 @@ export default FlexberryBaseComponent.extend({
   hierarchicalIndent: undefined,
 
   /**
+    Using `ember-test-selectors`, creates `[data-test-component=flexberry-objectlistview]` selector for this component.
+
+    @property data-test-component
+    @type String
+    @default 'flexberry-objectlistview'
+  */
+  'data-test-component': 'flexberry-objectlistview',
+
+  /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryObjectlistview'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryObjectlistview',
+
+  /**
     Flag used for disable the hierarchical mode.
 
     @property disableHierarchicalMode
@@ -195,6 +223,45 @@ export default FlexberryBaseComponent.extend({
     @default 10
   */
   defaultLeftPadding: 10,
+
+  /**
+    The passed pages as Ember array.
+
+    @property _pages
+    @type Ember.Array
+  */
+  _pages: Ember.computed('pages', function () {
+    return Ember.A(this.get('pages'));
+  }),
+
+  /**
+    Number page for search.
+
+    @property searchPageValue
+    @type Number
+  */
+  searchPageValue: undefined,
+
+  /**
+    Flag used for disabling searchPageButton.
+
+    @property searchPageButtonReadonly
+    @type Boolean
+  */
+  searchPageButtonReadonly: Ember.computed('searchPageValue', '_pages.@each.isCurrent', function() {
+    const searchPageValue = this.get('searchPageValue');
+    const searchPage = parseInt(searchPageValue, 10);
+    if (isNaN(searchPage)) {
+      return true;
+    }
+
+    const pages = this.get('_pages');
+    const firstPage = pages.get('firstObject.number');
+    const lastPage = pages.get('lastObject.number');
+    const currentPage = pages.findBy('isCurrent').number;
+
+    return searchPage < firstPage || searchPage > lastPage || searchPage === currentPage;
+  }),
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -644,6 +711,16 @@ export default FlexberryBaseComponent.extend({
   filterByAllWords: false,
 
   /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
+
+  /**
     Array of pages to show.
 
     @property pages
@@ -943,7 +1020,7 @@ export default FlexberryBaseComponent.extend({
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
-        Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        runAfter(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
             this.sendAction('action', record);
           } else {
@@ -1194,6 +1271,21 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+
+    /**
+      Action search and open page.
+
+      @method actions.searchPageButtonAction
+      @param {Function} action The `goToPage` action from controller.
+    */
+    searchPageButtonAction(action) {
+      let searchPageValue = this.get('searchPageValue');
+      let searchPageNumber = parseInt(searchPageValue, 10);
+
+      if (searchPageNumber) {
+        this.send('gotoPage', action, searchPageNumber);
+      }
+    }
   },
 
   /**
@@ -1364,6 +1456,9 @@ export default FlexberryBaseComponent.extend({
         }
       });
     }
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'showFiltersInModal', defaultValue: false });
   },
 
   /**

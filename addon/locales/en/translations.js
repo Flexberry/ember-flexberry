@@ -8,7 +8,9 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -26,11 +28,16 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 
   'components': {
     'flexberry-simpledatetime': {
+      placeholder: '(no value)',
       'scroll-caption-text': 'Scroll to increment',
     },
 
@@ -54,14 +61,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
     },
 
     'flexberry-file': {
@@ -114,14 +113,16 @@ export default {
         }
       }
     },
-
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'without-sorting': 'Without sorting',
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {
@@ -161,7 +162,8 @@ export default {
         'nempty': 'Not empty',
         'between': 'Between',
       },
-      'filter-condition': 'Condition'
+      'filter-condition': 'Condition',
+      'clear-filter-in-column': 'Clear the filter in this column',
     },
 
     'olv-filter-interval': {
@@ -200,8 +202,11 @@ export default {
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy',
       'check-all-at-page-button-text': 'Check all entries on the current page',
+      'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
-      'clear-sorting-button-text': 'Set the default sorting'
+      'uncheck-all-button-text': 'Uncheck all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting',
+      'clear-select-button-text': 'Deselect'
     },
 
     'groupedit-toolbar': {
@@ -261,12 +266,10 @@ export default {
     },
 
     'filters-dialog-content': {
-      'title': 'Сolumns filtering',
-      'column-name': 'Filter column',
-      'column-condition': 'Condition',
-      'column-value': 'Value',
-      'clear': 'Clear filters',
-      'apply': 'Apply filters'
+      'clear-this-filter': 'Reset this filter',
+      'title': 'Configuring record filtering',
+      'clear': 'Reset filter',
+      'apply': 'Apply'
     },
 
     'form-load-time-tracker': {
@@ -354,5 +357,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  validations: {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

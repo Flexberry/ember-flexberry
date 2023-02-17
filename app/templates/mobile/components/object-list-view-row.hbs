@@ -11,8 +11,9 @@
         {{#if showCheckBoxInRow}}
           <div class="cell">
             {{flexberry-checkbox
-              readonly=(or readonly (not record.rowConfig.canBeSelected))
+              readonly=(or readonly (not record.rowConfig.canBeSelected) allSelect)
               onChange=(action selectRow record)
+              value=record.selected
             }}
           </div>
         {{/if}}

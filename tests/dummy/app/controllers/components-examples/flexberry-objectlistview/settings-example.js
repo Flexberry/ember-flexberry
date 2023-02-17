@@ -148,6 +148,15 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showFiltersInModal' mode or not.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+  */
+  showFiltersInModal: false,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
 
     @property enableFilters
@@ -162,6 +171,14 @@ export default ListFormController.extend({
     @type Boolean
    */
   filterButton: false,
+
+    /**
+    Name of selected detail's model projection which is usef for filtering (filtering is processed only on properties from this projection).
+
+    @property filterProjectionName
+    @type String
+   */
+  filterProjectionName: undefined,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
@@ -345,6 +362,7 @@ export default ListFormController.extend({
     '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
+    '  showFiltersInModal=showFiltersInModal<br>' +
     '  enableFilters=enableFilters<br>' +
     '  filters=filters<br>' +
     '  applyFilters=(action "applyFilters")<br>' +
@@ -365,6 +383,7 @@ export default ListFormController.extend({
     '  filterText=filter<br>' +
     '  filterByAnyWord=filterByAnyWord<br>' +
     '  filterByAllWords=filterByAllWords<br>' +
+    '  filterProjectionName=filterProjectionName<br>' + 
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
@@ -484,6 +503,12 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'deleteButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'showFiltersInModal',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showFiltersInModal'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'enableFilters',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -506,6 +531,13 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'filterByAllWords'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterProjectionName',
+      settingType: 'enumeration',
+      settingAvailableItems: this.get('_projectionsNames'),
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'filterProjectionName'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',

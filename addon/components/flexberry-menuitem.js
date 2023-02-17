@@ -32,6 +32,14 @@ export default FlexberryBaseComponent.extend({
   item: null,
 
   /**
+    Settings for the dropdown, see [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings) for more info.
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
+  /**
     Flag: indicates whether menu item has some nested subitems or not.
 
     @property hasSubitems
@@ -99,10 +107,13 @@ export default FlexberryBaseComponent.extend({
     let item = this.get('item');
     if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
+      if (item.dividing) {
+        this.$().addClass('dividing');
+      }
     } else {
       let parentView = this.get('parentView');
       parentView.$().data('flexberry-menu', item)
-                    .dropdown();
+                    .dropdown(this.get('settings'));
     }
   },
 
@@ -116,5 +127,22 @@ export default FlexberryBaseComponent.extend({
     if (this.get('tagName') !== '') {
       this.$().removeData('flexberry-menuitem.item');
     }
+  },
+
+  actions: {
+    /**
+      Action for custom button.
+
+      @method actions.itemButtonAction
+      @param {Function} action The action and only action.
+    */
+    itemButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action(this.get('item'));
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
+    },
   }
 });

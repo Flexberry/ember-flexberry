@@ -37,6 +37,11 @@
     outline: none;
 }
 
+.flexberry-lookup div.results.upward {
+    top: auto;
+    bottom: 100%;
+}
+
 .flexberry-simpledatetime .ui.fluid.action.input {
     border: none;
     border-bottom: 1px solid @inputBorderColor;
@@ -146,19 +151,108 @@ option {
         font-size: 16px;
         font-weight: bold;
     }
-    .mobile & .ui.button:first-child {
+    .mobile & .colsconfig-actions .ui.button:first-child {
         margin-left: 0;
     }
 }
 
-@media only screen and (max-width: 767px){
+.flexberry-colsconfig .fields.object-list-view-filters > .field:nth-child(2) {
+    max-width: @filterMobileConditionWidth;
+}
+
+.ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters {
+    margin-bottom: 1em;
+
+    > .field {
+        width: @oneWide;
+    }
+    .button {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.check-rows-container {
+    background: @background;
+    bottom: @checkRowsContainerBottom;
+    box-shadow: @checkRowsContainerBoxShadow;
+    display: -webkit-@checkRowsContainerDisplay;
+    display: -moz-@checkRowsContainerDisplay;
+    display: -ms-@checkRowsContainerDisplay;
+    display: -o-@checkRowsContainerDisplay;
+    display: @checkRowsContainerDisplay;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    left: @checkRowsContainerLeft;
+    min-height: @checkRowsContainerHeight;
+    position: @checkRowsContainerPosition;
+    right: @checkRowsContainerRight;
+    z-index: @checkRowsContainerZIndex;
+    .flexberry-menu {
+        height: auto;
+        border: none;
+        &::before {
+            content: @checkRowsButtonIcon;
+            font-family: @checkRowsButtonIconFont;
+            font-size: @checkRowsButtonIconFontSize;
+            color: @blue;
+        }
+        &.active {
+            background: @checkRowsButtonActiveBackground;
+            box-shadow: @checkRowsButtonActiveBoxShadow;
+        }
+    }
+    .count-selected-rows {
+        font-size: @countSelectedRowsFontSize;
+    }
+    .clear-select-button {
+        margin-left: auto;
+        border: none;
+    }
+    .flexberry-menu:hover,
+    .clear-select-button:hover {
+        background: none;
+    }
+    .ui.button.check-all-at-page-button {
+        height: auto;
+        width: auto;
+        border: none;
+    }
+}
+
+@media only screen and (max-width: @largestMobileScreen) {
+    .ui[class*="equal width"].form .flexberry-colsconfig .fields.object-list-view-filters > .field {
+        &:nth-child(1){
+            width: @filterMobilePropWidth;
+        }
+        &:nth-child(2),
+        &:nth-child(3) {
+            order: 1;
+        }
+    }
+
     .ui.form .two.fields.unstackable > .field {
         width: 50% !important;
     }
+    .ui.form .flexberry-colsconfig .fields.object-list-view-filters,
     .ui.form .fields.unstackable {
         margin: 0 -0.5em;
+        > .field {
+            padding: 0 0.5em;
+        }
     }
-    .ui.form .fields.unstackable > .field {
-        padding: 0 0.5em;
-    }
+}
+
+.flexberry-file.mobile .ui.button.flexberry-file-add-button {
+    height: auto;
+    min-height: 35px;
+    padding: 0.7em;
+    align-self: start;
+}
+
+.ui.form input:read-only {
+    color: @readonlyColor;
+    pointer-events: none;
 }

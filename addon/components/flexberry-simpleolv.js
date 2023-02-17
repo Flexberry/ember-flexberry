@@ -5,6 +5,7 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import getAttrLocaleKey from '../utils/get-attr-locale-key';
 const { getOwner } = Ember;
 
 /**
@@ -61,8 +62,9 @@ export default folv.extend(
         let checked = this.get('allSelect');
 
         contentWithKeys.forEach((item) => {
-          item.set('selected', checked);
-          item.set('rowConfig.canBeSelected', !checked);
+          if (item.get('rowConfig.canBeSelected')) {
+            item.set('selected', checked);
+          }
         });
       }
     }
@@ -1092,7 +1094,8 @@ export default folv.extend(
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting).then(() => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            let perPageDefault = defaultDeveloperUserSetting.perPage;
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
           });
           break;
         case 'unhide icon':
@@ -1190,35 +1193,37 @@ export default folv.extend(
       let checked = false;
 
       for (let i = 0; i < contentWithKeys.length; i++) {
-        if (!contentWithKeys[i].get('selected')) {
+        if (!contentWithKeys[i].get('selected') && contentWithKeys[i].get('rowConfig.canBeSelected')) {
           checked = true;
         }
       }
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (checked) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
           }
 
-          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-            selectedRecords.pushObject(recordWithKey.data);
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+          recordWithKey.set('selected', checked);
 
-          selectedRecords.removeObject(recordWithKey.data);
+          let componentName = this.get('componentName');
+          this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
         }
-
-        recordWithKey.set('selected', checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
 
@@ -1296,7 +1301,19 @@ export default folv.extend(
       }
 
       Ember.setProperties(filter.component, options);
-    }
+    },
+
+    /**
+      Cleans the filter for one column.
+
+      @method actions.clearFilterForColumn
+      @param {Object} filter Object with the filter description.
+    */
+    clearFilterForColumn(filter) {
+      Ember.set(filter, 'component.name', Ember.get(filter, 'component._defaultComponent'));
+      Ember.set(filter, 'condition', null);
+      Ember.set(filter, 'pattern', null);
+    },
   },
 
   /**
@@ -1903,9 +1920,9 @@ export default folv.extend(
           mainModelName = descriptor.type;
         }
       });
-      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(mainModelName, mainModelProjection.projectionName, bindingPath, nameRelationship);
     } else {
-      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
+      key = getAttrLocaleKey(modelName, projection.projectionName, bindingPath);
     }
 
     return key;
@@ -2017,6 +2034,9 @@ export default folv.extend(
 
     Ember.$.extend(true, component, options);
 
+    // Hack to restore component when clearing filter for one column.
+    component._defaultComponent = component.name;
+
     column.filter = { name, type, pattern, condition, conditions, component };
   },
 
@@ -2115,20 +2135,19 @@ export default folv.extend(
       case 'string':
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = { class: 'compact fluid' };
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact fluid',
+          class: 'compact',
         };
         break;
 
       case 'date':
         component.name = 'flexberry-simpledatetime';
-        component.properties = { type: 'date' };
+        component.properties = { type: 'date', removeButton: false };
         break;
 
       default:
@@ -2138,7 +2157,7 @@ export default folv.extend(
           component.name = 'flexberry-dropdown';
           component.properties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid',
+            class: 'compact',
           };
         }
 
@@ -3137,21 +3156,22 @@ export default folv.extend(
       let selectedRecords = this.get('selectedRecords');
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (selectAllParameter) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
           }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set('selected', selectAllParameter);
         }
-
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', selectAllParameter);
-        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
       if (!skipConfugureRows) {

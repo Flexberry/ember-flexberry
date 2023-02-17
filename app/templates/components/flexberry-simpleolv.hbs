@@ -286,7 +286,7 @@
                   {{flexberry-dropdown
                     value=column.filter.condition
                     items=column.filter.conditions
-                    displayCaptions=true
+                    displayCaptions=(not (is-array column.filter.conditions))
                     class="compact fluid"
                     placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false
@@ -308,14 +308,24 @@
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
-                  {{component column.filter.component.name
-                    value=column.filter.pattern
-                    readonly=(or
-                      (eq column.filter.condition "empty")
-                      (eq column.filter.condition "nempty")
-                    )
-                    dynamicProperties=column.filter.component.properties
-                  }}
+                  <div class="fluid action input ui">
+                    {{component column.filter.component.name
+                      value=column.filter.pattern
+                      readonly=(or
+                        (eq column.filter.condition "empty")
+                        (eq column.filter.condition "nempty")
+                      )
+                      dynamicProperties=column.filter.component.properties
+                    }}
+                    <button
+                      type="button"
+                      class="ui clear-filter button"
+                      title={{t "components.object-list-view.clear-filter-in-column"}}
+                      {{action "clearFilterForColumn" column.filter}}
+                    >
+                      <i class="remove icon"></i>
+                    </button>
+                  </div>
                 {{/if}}
               </td>
             {{/unless}}
@@ -346,7 +356,7 @@
                     {{#if showCheckBoxInRow}}
                       <div class="cell">
                         {{flexberry-checkbox
-                          readonly=(or readonly (not record.rowConfig.canBeSelected))
+                          readonly=(or readonly (not record.rowConfig.canBeSelected) allSelect)
                           onChange=(action "selectRow" record)
                           value=record.selected
                         }}

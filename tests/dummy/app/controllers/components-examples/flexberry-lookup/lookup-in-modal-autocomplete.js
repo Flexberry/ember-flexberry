@@ -14,7 +14,7 @@ export default EditFormController.extend({
   modalDialog: false,
 
   actions: {
-    modalWindow(style) {
+    showUiModal(style) {
       if (!Ember.isNone(style)) {
         this.set('_style', style);
       }
@@ -30,17 +30,14 @@ export default EditFormController.extend({
       this.get('repeatWindow').modal('show').modal('refresh');
     },
 
-    modalWindowDouble(style) {
-      this.set('modalDialog', !this.get('modalDialog'));
+    showSecondModal() {
+      this.send('showModalDialog', 'modal/lookup-in-modal-autocomplete-dialog', {
+        controller: 'components-examples/flexberry-lookup/lookup-in-modal-autocomplete'
+      });
     },
 
-    logOut() {
+    hideModal() {
       this.get('repeatWindow').modal('hide');
-    },
-
-    logOutDouble() {
-      this.get('repeatWindowdouble').modal('hide');
     }
-
   }
 });

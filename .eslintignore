@@ -323,6 +323,7 @@ tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-
 tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/controllers/components-examples/flexberry-menu/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js

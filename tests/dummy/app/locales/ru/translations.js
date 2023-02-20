@@ -320,6 +320,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Лукап множественного выбора',
+              'title': 'Лукап множественного выбора'
+            }
+          },
           'flexberry-menu': {
             'caption': 'flexberry-menu',
             'title': '',
@@ -815,6 +823,13 @@ Ember.$.extend(true, translations, {
         'user-settings-example': {
           'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
           'clear-user-setting': 'Сбросить настройки пользователя'
+        }
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Лукап множественного выбора',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-menu': {

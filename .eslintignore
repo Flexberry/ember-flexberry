@@ -45,6 +45,7 @@ addon/components/flexberry-jsonarea.js
 addon/components/flexberry-lookup.js
 addon/components/flexberry-menu.js
 addon/components/flexberry-menuitem.js
+addon/components/flexberry-multiple-lookup.js
 addon/components/flexberry-objectlistview.js
 addon/components/flexberry-simpledatetime.js
 addon/components/flexberry-simpleolv.js
@@ -323,6 +324,7 @@ tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-
 tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal-autocomplete.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/controllers/components-examples/flexberry-menu/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js
@@ -459,6 +461,7 @@ tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal-auto
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/numeric-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/routes/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel.js

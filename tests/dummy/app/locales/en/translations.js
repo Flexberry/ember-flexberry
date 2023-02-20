@@ -320,6 +320,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Multiple Lookup',
+              'title': 'Multiple Lookup'
+            }
+          },
           'flexberry-menu': {
             'caption': 'flexberry-menu',
             'title': '',
@@ -814,6 +822,13 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Multiple Lookup',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user',
+        }
       },
       'flexberry-menu': {
         'settings-example': {

@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry/validation-summary errors=(v-get validationModel "messages")}}
     </div>
   </div>
   <div class="field">
@@ -46,7 +46,7 @@
       label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationModel "name" "message") pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.eMail "error" ""}}">
     {{flexberry-field
@@ -54,7 +54,14 @@
       label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.eMail pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationModel "eMail" "message") pointing="pointing"}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.phone1-required-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.phone1IsRequired
+      readonly=readonly
+    }}
   </div>
   <div class="field {{if model.errors.phone1 "error" ""}}">
     {{flexberry-field
@@ -62,7 +69,7 @@
       label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.phone1 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationModel "phone1" "message") pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.phone2 "error" ""}}">
     {{flexberry-field
@@ -114,7 +121,8 @@
   </div>
   <div class="field {{if model.errors.birthday "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       value=model.birthday
       readonly=readonly
     }}

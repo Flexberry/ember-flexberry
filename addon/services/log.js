@@ -3,7 +3,9 @@
 */
 
 import Ember from 'ember';
-const { getOwner } = Ember;
+
+const { getOwner, get } = Ember;
+
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
   warn: { name: 'WARN', priority: 2 },
@@ -593,7 +595,7 @@ export default Ember.Service.extend(Ember.Evented, {
       error = new Error(error);
     }
 
-    let message = error.message || error.toString();
+    const message = get(error, 'message') || error.toString();
 
     let formattedMessageBlank = {
       name: error && error.name ? error.name : null,

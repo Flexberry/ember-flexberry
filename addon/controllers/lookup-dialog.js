@@ -34,21 +34,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   title: undefined,
 
   /**
-    Size of Semantic-UI modal.
-    [More info](http://semantic-ui.com/modules/modal.html#size).
-
-    Possible variants:
-    - **small**
-    - **large**
-    - **fullscreen**
-
-    @property sizeClass
-    @type String
-    @default 'small'
-  */
-  sizeClass: 'small',
-
-  /**
     Current lookup selected record.
     It is used to highlight selected record.
 
@@ -208,12 +193,12 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         filters: this._filtersPredicate(),
         filter: this.get('filter'),
         filterCondition: this.get('filterCondition'),
+        filterProjectionName: this.get('filterProjectionName'),
         predicate: this.get('predicate'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         hierarchyPaging: this.get('hierarchyPaging'),
 
         title: this.get('title'),
-        sizeClass: this.get('sizeClass'),
         saveTo: this.get('saveTo'),
         currentLookupRow: this.get('currentLookupRow'),
         customPropertiesData: this.get('customPropertiesData'),
@@ -289,8 +274,11 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       this.set('sort', undefined);
       this.set('filters', undefined);
       this.set('filter', undefined);
+      this.set('filterProjectionName', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);
+
+      this.set('modalDialogSettings', undefined);
     }
 
     this.set('saveTo', undefined);
@@ -314,10 +302,28 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       throw new Error('Don\'t know where to save - no saveTo data defined.');
     }
 
-    saveTo.model.set(saveTo.propName, master);
+    const updateLookupAction = saveTo.updateLookupAction;
+    const componentName = this.get('componentName');
+    if (!Ember.isBlank(updateLookupAction)) {
+      this.get('reloadContext').send(updateLookupAction,
+        {
+          relationName: saveTo.propName,
+          modelToLookup: saveTo.model,
+          newRelationValue: master,
+          componentName: componentName
+        });
+    } else {
+      Ember.deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
+        id: 'ember-flexberry.controllers.lookup-dialog',
+        until: '4.0',
+      });
 
-    // Manually make record dirty, because ember-data does not do it when relationship changes.
-    saveTo.model.makeDirty();
+      saveTo.model.set(saveTo.propName, master);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      saveTo.model.makeDirty();
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName, master);
+    }
   },
 
   /**

@@ -28,10 +28,10 @@ export default Ember.Service.extend(Ember.Evented, {
     Current model projection columns with available filters.
 
     @property _olvFilterColumnsArray
-    @type Object[]
+    @type Object
     @private
   */
-  _olvFilterColumnsArray: undefined,
+  _olvFilterColumnsArray: Ember.computed(() => ({})),
 
   /**
     Init service.
@@ -291,6 +291,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Method to fire the `filterConditionChanged` event.
+
+    @method filterConditionChangedTrigger
+    @param {String} componentName The name of the component relative to which the event occurred.
+    @param {Object} filter Object with the filter description.
+    @param {String} newValue The new value of the filter condition.
+    @param {String} oldvalue The old value of the filter condition.
+  */
+  filterConditionChangedTrigger(componentName, filter, newValue, oldvalue) {
+    this.trigger('filterConditionChanged', componentName, filter, newValue, oldvalue);
+  },
+
+  /**
     Current limit functions for OLV by componentNames.
 
     @property currentLimitFunctions
@@ -339,23 +352,25 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-    Sets olv columns with available filters.
+    Saves the set of columns with filters for the `flexberry-objectlistview` component.
 
     @method setOlvFilterColumnsArray
-    @param Object[] Olv columns with available filters.
+    @param {String} componentName The name of the component for which you want to save filters.
+    @param {Object[]} columns The set of columns with filters.
   */
-  setOlvFilterColumnsArray(columns) {
-    this.set('_olvFilterColumnsArray', columns);
+  setOlvFilterColumnsArray(componentName, columns) {
+    this.get('_olvFilterColumnsArray')[componentName] = columns;
   },
 
   /**
-    Gets olv columns with available filters.
+    Returns the set of columns with filters saved for the `flexberry-objectlistview` component.
 
     @method getOlvFilterColumnsArray
-    @param Object[] Olv columns with available filters.
+    @param {String} componentName The name of the component for which you want to get filters.
+    @return {Object[]} The set of columns with filters.
   */
-  getOlvFilterColumnsArray() {
-    return this.get('_olvFilterColumnsArray');
+  getOlvFilterColumnsArray(componentName) {
+    return this.get('_olvFilterColumnsArray')[componentName];
   },
 
   /**

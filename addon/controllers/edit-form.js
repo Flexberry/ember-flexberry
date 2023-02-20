@@ -57,6 +57,15 @@ LimitedControllerMixin,
 FlexberryOlvToolbarMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin, {
   /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
+  }).readOnly(),
+
+  /**
     Controller to show colsconfig modal window.
 
     @property lookupController
@@ -202,6 +211,27 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @default undefined
   */
   defaultDeveloperUserSettings: undefined,
+
+  /**
+    Reference to object to be validated.
+
+    @property validationObject
+    @type Any
+    @default model
+  */
+  validationObject: Ember.computed.deprecatingAlias('validationModel', {
+    id: 'ember-flexberry.edit-form-controller.validation-object-property',
+    until: '4.0.0',
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: Ember.computed.alias('model'),
 
   actions: {
     /**
@@ -368,6 +398,44 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   },
 
   /**
+    Runs validation on {{#crossLink "EditFormController/validationObject:property"}}{{/crossLink}} and returns promise.
+    Promise resolved if validation successful or rejected if validation failed.
+
+    @method validate
+    @return {RSVP.Promise}
+  */
+  validate() {
+    Ember.deprecate(`Use method 'validateModel' instead.`, false, {
+      id: 'ember-flexberry.edit-form-controller.validate-method',
+      until: '4.0.0',
+    });
+
+    return this.validateModel();
+  },
+
+  /**
+   * Runs validation on {{#crossLink "EditFormController/validationModel:property"}}{{/crossLink}} and returns promise.
+   * Promise resolved if validation successful or rejected if validation failed.
+   *
+   * @returns {Promise}
+   */
+  validateModel() {
+    const validationModel = this.get('validationModel');
+    if (validationModel) {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
+        const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+        if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
+          return Ember.RSVP.reject(validations);
+        }
+
+        return Ember.RSVP.resolve();
+      });
+    }
+
+    return Ember.RSVP.resolve();
+  },
+
+  /**
     Save object.
 
     @method save
@@ -379,42 +447,64 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
-    this.get('appState').loading();
 
-    const afterSaveModelFunction = () => {
-      this.get('appState').success();
-      this.onSaveActionFulfilled();
-      if (close) {
-        this.get('appState').reset();
-        this.close(skipTransition);
-      } else if (!skipTransition) {
-        const routeName = this.get('routeName');
-        if (routeName.indexOf('.new') > 0) {
-          const qpars = {};
-          const queryParams = this.get('queryParams');
-          queryParams.forEach(function(item) {
-            qpars[item] = this.get(item);
-          }, this);
-          let transitionQuery = {};
-          transitionQuery.queryParams = qpars;
-          transitionQuery.queryParams.recordAdded = true;
-          const parentParameters = {
-            parentRoute: this.get('parentRoute'),
-            parentRouteRecordId: this.get('parentRouteRecordId')
-          };
-          transitionQuery.queryParams.parentParameters = parentParameters;
-          this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+    return this.validateModel().then(() => {
+      this.get('appState').loading();
+
+      const afterSaveModelFunction = () => {
+        this.get('appState').success();
+        this.onSaveActionFulfilled();
+        if (close) {
+          this.get('appState').reset();
+          this.close(skipTransition);
+        } else if (!skipTransition) {
+          const routeName = this.get('routeName');
+          if (routeName.indexOf('.new') > 0) {
+            const qpars = {};
+            const queryParams = this.get('queryParams');
+            queryParams.forEach(function(item) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            transitionQuery.queryParams.recordAdded = true;
+            const parentParameters = {
+              parentRoute: this.get('parentRoute'),
+              parentRouteRecordId: this.get('parentRouteRecordId')
+            };
+            transitionQuery.queryParams.parentParameters = parentParameters;
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+          }
         }
-      }
-    };
+      };
 
-    let savePromise;
+      return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
+        this.get('appState').error();
+        this.onSaveActionRejected(errorData);
+        return Ember.RSVP.reject(errorData);
+      }).finally((data) => {
+        this.onSaveActionAlways(data);
+      });
+    }).catch((errorData) => {
+      this.get('appState').error();
+      this.onSaveActionRejected(errorData);
+      return Ember.RSVP.reject(errorData);
+    });
+  },
+
+  /**
+    The default save model logic implementation.
+
+    @method saveModel
+    @return {Promise}
+  */
+  saveModel() {
     const model = this.get('model');
 
     // This is possible when using offline mode.
     const agragatorModel = getCurrentAgregator.call(this);
     if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-      savePromise = this._saveHasManyRelationships(model).then((result) => {
+      return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
         const errors = Ember.A(result || []).filterBy('state', 'rejected');
         if (!Ember.isEmpty(errors)) {
           return Ember.RSVP.reject(errors);
@@ -425,19 +515,11 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     } else {
       const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
       if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
-        savePromise = this.get('store').batchUpdate(unsavedModels);
-      } else {
-        savePromise = model.save();
+        return this.get('store').batchUpdate(unsavedModels);
       }
-    }
 
-    return savePromise.then(afterSaveModelFunction).catch((errorData) => {
-      this.get('appState').error();
-      this.onSaveActionRejected(errorData);
-      return Ember.RSVP.reject(errorData);
-    }).finally((data) => {
-      this.onSaveActionAlways(data);
-    });
+      return model.save();
+    }
   },
 
   /**
@@ -545,7 +627,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     Ember.$('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof Errors)) {
+    const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
+    if (!(errorData instanceof Errors) && (!resultCollection || !(errorData instanceof resultCollection))) {
       this.send('handleError', errorData);
     }
   },
@@ -709,17 +792,23 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       case 'string':
       case 'number':
         break;
-      case 'boolean':
+      case 'boolean': {
         cellComponent.componentName = 'flexberry-checkbox';
         break;
-      case 'date':
+      }
+
+      case 'date': {
         cellComponent.componentName = 'flexberry-simpledatetime';
         break;
-      case 'file':
+      }
+
+      case 'file': {
         cellComponent.componentName = 'flexberry-file';
         cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
-      default:
+      }
+
+      default: {
 
         // Current cell type is possibly custom transform.
         let transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
@@ -735,6 +824,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
         }
 
         break;
+      }
     }
 
     return cellComponent;

@@ -6,6 +6,8 @@ export default ListFormController.extend({
 
   filterByAllWords: false,
 
+  filterProjectionName: undefined,
+
   /**
     Cout of list loading.
 
@@ -43,7 +45,7 @@ export default ListFormController.extend({
 
     componentForFilter(type, relation) {
       switch (type) {
-        case 'date': return { name: 'flexberry-datepicker' };
+        case 'date': return { name: 'flexberry-simpledatetime', properties: { type: 'date' } };
         case 'decimal': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
         default: return {};
       }

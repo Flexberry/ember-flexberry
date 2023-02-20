@@ -261,7 +261,10 @@ export default FlexberryBaseComponent.extend({
   _scrollToBottom() {
     Ember.run.scheduleOnce('afterRender', this, function() {
       let scrollBlock = this.$('.flexberry-colsconfig.content');
-      scrollBlock.animate({ scrollTop: scrollBlock.prop('scrollHeight') }, 1000);
+      let messageBlockTop = this.$('.ui.message', scrollBlock).offset().top;
+      if (scrollBlock.offset().top + scrollBlock.outerHeight(true) <= messageBlockTop) {
+        scrollBlock.animate({ scrollTop: messageBlockTop }, 1000);
+      }
     });
   },
 

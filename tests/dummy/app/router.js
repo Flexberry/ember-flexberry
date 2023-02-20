@@ -197,6 +197,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-events');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });

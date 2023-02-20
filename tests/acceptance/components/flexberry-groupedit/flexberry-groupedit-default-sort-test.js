@@ -3,8 +3,6 @@ import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
-let store;
-let userSettingsService;
 const testName = 'default sort test';
 
 module('Acceptance | flexberry-groupedit | ' + testName, {
@@ -16,10 +14,6 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
       // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
       let applicationController = app.__container__.lookup('controller:application');
       applicationController.set('isInAcceptanceTestMode', true);
-
-      store = app.__container__.lookup('service:store');
-
-      userSettingsService = app.__container__.lookup('service:user-settings');
     },
 
     afterEach() {

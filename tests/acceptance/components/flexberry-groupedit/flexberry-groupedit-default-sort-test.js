@@ -70,7 +70,6 @@ test(testName, (assert) => {
 
             andThen(() => {
               $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);
-              //let done1 = assert.async();
               Ember.run.later((() => {
                 currentSorting = controller.get('sorting');
                 assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc',
@@ -85,7 +84,6 @@ test(testName, (assert) => {
                   $('body').trigger(press);
                   andThen(() => {
                     $($usersVotesTable.tHead.rows[0].children[1]).trigger(press);
-                    //let done2 = assert.async();
                     Ember.run.later((() => {
                       currentSorting = controller.get('sorting');
                       assert.ok(currentSorting[0].propName === 'author', currentSorting.direction === 'asc',
@@ -97,11 +95,9 @@ test(testName, (assert) => {
                         assert.ok(currentSorting.propName === defaultSorting[0].propName,
                                   currentSorting.direction === defaultSorting[0].direction);
                       });
-                      //done2();
                     }));
                   });
                 });
-                //done1();
               }));
             });
           });

@@ -3,47 +3,22 @@
 */
 
 import Ember from 'ember';
+import runAfter from '../utils/run-after';
 
 /**
   Injects 'after' method into 'Ember.run' namespace.
 
   @for ApplicationInitializer
   @method emberRunAfter.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application.
 */
-export function initialize(application) {
+export function initialize() {
   Ember.run.after = function(context, condition, handler) {
-    let checkIntervalId;
-    let checkInterval = 50;
-
-    // Wait for condition fulfillment.
-    Ember.run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let conditionFulfilled = false;
-
-        try {
-          conditionFulfilled = condition.call(context) === true;
-        } catch (e) {
-          // Exception occurred while evaluating condition.
-          // Clear interval & rethrow error.
-          window.clearInterval(checkIntervalId);
-          throw e;
-        }
-
-        if (!conditionFulfilled) {
-          return;
-        }
-
-        // Condition is fulfilled.
-        // Stop interval.
-        window.clearInterval(checkIntervalId);
-
-        // Call handler.
-        Ember.run(() => {
-          handler.call(context);
-        });
-      }, checkInterval);
+    Ember.deprecate(`Use "import runAfter from 'ember-flexberry/utils/run-after';" instead of "run.after".`, false, {
+      id: 'ember-flexberry.initializers.ember-run-after',
+      until: '3.0',
     });
+
+    runAfter(context, condition, handler);
   };
 }
 

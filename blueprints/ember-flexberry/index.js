@@ -39,15 +39,21 @@ module.exports = {
       '      }\n' +
       '    }\n';
 
+    var appEnvironment = 'config/environment.js';
+    var addonEnvironment = 'tests/dummy/config/environment.js';
+
+    var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:6500\';\n\n' +
+      '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:6500\';\n' +
+      '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
+    var env2after = 'EmberENV: {\n';
     var env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';
 
+    var env3after = 'APP: {\n';
     var env3 ='      // Application name. Used in `user-settings` service.\n' +
       '      name: \'ember-app\',\n\n' +
       '      backendUrl: backendUrl,\n\n' +
@@ -111,9 +117,15 @@ module.exports = {
       '          showModalDialogOnUploadError: true,\n\n' +
       '          // Flag: indicates whether to show modal dialog on download errors or not.\n' +
       '          showModalDialogOnDownloadError: true,\n' +
-      '        }\n' +
+      '        },\n' +
+      '        // Settings for `flexberryObjectlistview` component.\n' +
+      '        flexberryObjectlistview: {\n' +
+      '          // Default number of records on the list page.\n'+
+      '          defaultPerPage: 5\n' +
+      '        }\n'+
       '      },\n';
 
+    var env4before = '\n  if (environment === \'development\') {\n';
     var env4 ='\n  // Read more about CSP:\n' +
       '  // http://www.ember-cli.com/#content-security-policy\n' +
       '  // https://github.com/rwjblue/ember-cli-content-security-policy\n' +
@@ -134,6 +146,8 @@ module.exports = {
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
+
+
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
@@ -204,57 +218,47 @@ module.exports = {
         }
       );
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env1,
-        {
-          after: 'module.exports = function(environment) {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env2,
-        {
-          after: 'EmberENV: {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env3,
-        {
-          after: 'APP: {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env2, { after: env2after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env4,
-        {
-          before: '\n  if (environment === \'development\') {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env2, { after: env2after });
+    }).then(function() {
+      return _this.insertIntoFile(appEnvironment, env3, { after: env3after });
+    }).then(function() {
+      return _this.insertIntoFile(addonEnvironment, env3, { after: env3after });
+    }).then(function() {
+      return _this.insertIntoFile(appEnvironment, env4, { before: env4before });
+    }).then(function() {
+      return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
+        { name: 'flatpickr-calendar', source: 'https://github.com/chmln/flatpickr.git', target: '2.6.3' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.3.4' },
-        { name: 'js-beautify', target: '1.6.4' }
+        { name: 'js-beautify', target: '1.6.4' },
+        { name: 'moment', target: '^2.9.0' }
       ]);
     }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
+      return _this.addBowerPackageToProject('semantic-ui','https://github.com/Flexberry/Semantic-UI.git#fixed-abort');
+    }).then(function() {
+      return _this.addAddonToProject({ name: 'ember-moment', target: '6.0.0' }).catch(function () {
+        return _this.removePackageFromProject('ember-cli-moment-shim').then(function () {
+          return _this.addAddonToProject({ name: 'ember-cli-moment-shim', target: '2.2.1' });
+        });
+      });
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
-          { name: 'broccoli-jscs', target: '1.2.2' },
-          { name: 'ember-browserify', target: '1.1.9' }
+          { name: 'broccoli-jscs', target: '1.4.1' },
+          { name: 'ember-browserify', target: '1.1.9' },
+          { name: 'ember-test-selectors', target: '2.1.0' }
         ]
       });
     }).then(function () {
@@ -264,7 +268,7 @@ module.exports = {
         { name: 'inflection', target: '1.10.0' }
       ]);
     }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
+      return _this.addPackageToProject('semantic-ui-ember','https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
       return _this.removePackagesFromProject([
         { name: 'ember-data' },

@@ -76,7 +76,7 @@ module.exports = {
             lodash.remove(this._files, function (v) { return v === "public/assets/images/cat.gif" || v === "public/assets/images/favicon.ico" || v === "public/assets/images/flexberry-logo.png"; });
         }
         else {
-            lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
+            lodash.remove(this._files, function (fileName) { return fileName.indexOf("tests/dummy/") === 0; });
         }
         this._excludeIfExists();
         return this._files;
@@ -111,6 +111,7 @@ module.exports = {
         }
         var coreBlueprint = new CoreBlueprint(this, options);
         return lodash.defaults({
+            projectName: this.project.pkg.name,
             children: coreBlueprint.children,
             routes: coreBlueprint.routes,
             importProperties: coreBlueprint.importProperties,
@@ -118,7 +119,6 @@ module.exports = {
             modelsImportedProperties: coreBlueprint.modelsImportedProperties,
             applicationCaption: coreBlueprint.sitemap.applicationCaption,
             applicationTitle: coreBlueprint.sitemap.applicationTitle,
-            inflectorIrregular: coreBlueprint.inflectorIrregular,
             projectTypeNameCamel: projectTypeNameCamel,
             projectTypeNameCebab: projectTypeNameCebab // for use in files\ember-cli-build.js
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
@@ -154,8 +154,6 @@ var CoreBlueprint = /** @class */ (function () {
         var importProperties = [];
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
-        var irregularRules = [];
-        var inflectorIrregular = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var formFileName = listForms_1[_i];
             var pp = path.parse(formFileName);
@@ -196,28 +194,10 @@ var CoreBlueprint = /** @class */ (function () {
             if (model.external)
                 continue;
             var modelName = pp.name;
-            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
-            var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
-            var irregularLastWordOfModelNames = irregularLastWordOfModelName.charAt(0).toUpperCase() + irregularLastWordOfModelName.slice(1) + 's';
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
-            irregularRules.push({ name: irregularLastWordOfModelName, names: irregularLastWordOfModelNames });
         }
-        inflectorIrregular = irregularRules.sort(function (a, b) {
-            if (a.name.length > b.name.length) {
-                return -1;
-            }
-            else if (a.name.length < b.name.length) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
-        }).map(function (item) {
-            return "inflector.irregular('" + item.name + "', '" + item.names + "');";
-        }).filter(function (item, index, self) {
-            return self.indexOf(item) === index;
-        });
+
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, "translations.js");
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
@@ -234,7 +214,6 @@ var CoreBlueprint = /** @class */ (function () {
         this.importProperties = importProperties.join("\n");
         this.formsImportedProperties = formsImportedProperties.join(",\n");
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
-        this.inflectorIrregular = inflectorIrregular.join("\n");
     }
     CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";

@@ -173,7 +173,7 @@ export function checkSortingList(store, projection, $olv, ordr) {
   return new Ember.RSVP.Promise((resolve) => {
     Ember.run(() => {
       let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
+      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
       builder = !ordr ? builder : builder.orderBy(ordr);
       store.query(modelName, builder.build()).then((records) => {
         let recordsArr = records.toArray();
@@ -202,7 +202,11 @@ export function addRecords(store, modelName, uuid) {
       let newRecords = Ember.A();
 
       for (let i = 0; i < howAddRec; i++) {
-        newRecords.pushObject(store.createRecord(modelName, { name: uuid }));
+        newRecords.pushObject(
+          store.createRecord(modelName, 
+            modelName == 'ember-flexberry-dummy-application-user'
+            ? { name: uuid, eMail: uuid, phone1: uuid }
+            : { name: uuid }));
       }
 
       newRecords.forEach(function(item) {

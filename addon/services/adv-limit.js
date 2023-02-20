@@ -96,7 +96,9 @@ export default Ember.Service.extend({
    @return {String}
   */
   getCurrentAppPage() {
-    return this.get('currentAppPage');
+    let currAppPage = this.get('currentAppPage');
+    currAppPage = currAppPage.replace('.', '/');
+    return currAppPage;
   },
 
   /**

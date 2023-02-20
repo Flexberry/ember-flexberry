@@ -1,3 +1,6 @@
+/* eslint-disable ember/no-test-import-export */
+/* global visit, andThen, currentURL */
+/* eslint-disable ember/no-test-and-then */
 import Ember from 'ember';
 import sinon from 'sinon';
 

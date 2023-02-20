@@ -266,7 +266,7 @@ export default {
           __caption__: 'Одобрено'
         },
         parent: {
-          __caption__: 'creator',
+          __caption__: 'Иерархия',
           name: {
             __caption__: 'Имя'
           },

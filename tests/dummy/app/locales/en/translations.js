@@ -68,10 +68,6 @@ Ember.$.extend(true, translations, {
             'caption': 'Application language',
             'placeholder': 'Choose language'
           },
-          'suggestion-file': {
-            'caption': 'Suggestion file',
-            'title': ''
-          }
         },
         'login': {
           'caption': 'Login'
@@ -135,6 +131,10 @@ Ember.$.extend(true, translations, {
           'multi': {
             'caption': 'Multi list',
             'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -174,18 +174,14 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Three-state example',
+              'title': ''
             }
           },
           'flexberry-ddau-checkbox': {
             'caption': 'flexberry-ddau-checkbox',
-            'title': '',
-            'settings-example': {
-              'caption': 'Settings example',
-              'title': ''
-            }
-          },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -303,6 +299,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Lookup in modal window',
               'title': ''
             },
+            'lookup-in-modal-aurocomplete': {
+              'caption': 'Lookup in modal with autocomplete',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -318,6 +318,14 @@ Ember.$.extend(true, translations, {
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
               'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Multiple Lookup',
+              'title': 'Multiple Lookup'
             }
           },
           'flexberry-menu': {
@@ -549,7 +557,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Karma',
       'name-validation-message-caption': 'Name is required',
-      'eMail-validation-message-caption': 'E-Mail is required'
+      'eMail-validation-message-caption': 'E-Mail is required',
+      'phone1-required-caption': 'Require filling in the "Phone1" field',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -684,16 +693,15 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        },
+        'three-state-example': {
+          'caption': 'Three-state example',
+          'indeterminate-button': 'Set blank'
         }
       },
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Settings example for flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Settings example'
         }
       },
       'flexberry-dropdown': {
@@ -799,6 +807,14 @@ Ember.$.extend(true, translations, {
           'buttonModalDouble': 'Modal window №2',
           'buttonClose': 'Close'
         },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
+          'captionModal': 'Custom modal window ui-modal',
+          'captionModalDouble': 'Custom modal window modal-dialog',
+          'buttonModal': 'Custom modal window ui-modal',
+          'buttonModalDouble': 'Custom modal window modal-dialog',
+          'buttonClose': 'Close'
+        },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Dropdown mode example'
         },
@@ -810,6 +826,13 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Multiple Lookup',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user',
+        }
       },
       'flexberry-menu': {
         'settings-example': {

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import sinon from 'sinon';
-
 import DeviceService from 'ember-flexberry/services/device';
 
 /* eslint-disable-next-line qunit/no-global-module-test */ // https://github.com/platinumazure/eslint-plugin-qunit/issues/75
@@ -48,7 +47,7 @@ test('device service isTablet work', function (assert) {
 test('device service isTv work', function (assert) {
   const service = DeviceService.create();
   const fakeTv = sinon.fake.returns(true);
-  service.tv = fakeTv;
+  service.television = fakeTv;
 
   assert.ok(service.isTv());
   assert.ok(fakeTv.called);
@@ -105,3 +104,4 @@ test('device service pathPrefixes work Tablet', function (assert) {
   assert.ok(fakeDesktop.called);
   assert.ok(fakeTablet.called);
 });
+

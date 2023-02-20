@@ -43,8 +43,9 @@ export default FlexberryBaseComponent.extend(
       let checked = this.get('allSelect');
 
       contentWithKeys.forEach((item) => {
-        item.set('selected', checked);
-        item.set('rowConfig.canBeSelected', !checked);
+        if (item.get('rowConfig.canBeSelected')) {
+          item.set('selected', checked);
+        }
       });
     }
   })),
@@ -1071,35 +1072,38 @@ export default FlexberryBaseComponent.extend(
       let checked = false;
 
       for (let i = 0; i < contentWithKeys.length; i++) {
-        if (!contentWithKeys[i].get('selected')) {
+        if (!contentWithKeys[i].get('selected') && contentWithKeys[i].get('rowConfig.canBeSelected')) {
           checked = true;
         }
       }
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (checked) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
           }
 
-          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-            selectedRecords.pushObject(recordWithKey.data);
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+          recordWithKey.set('selected', checked);
 
-          selectedRecords.removeObject(recordWithKey.data);
+          let componentName = this.get('componentName');
+          this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
         }
-
-        recordWithKey.set('selected', checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
 
@@ -2513,16 +2517,51 @@ export default FlexberryBaseComponent.extend(
     @return {Promise} A promise that will be resolved when relationships have been deleted
   */
   _deleteHasManyRelationships(record, immediately) {
+    /*
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM. 
+    ORM will delete all hasMany relationships on server side,
+    but it is needed to unload hasMany relationships on client side.
+
+    If ONLINE with flag NOT IMMEDIATELY then it is necessary manually to "deleteRecord"
+    of all hasMany relationships.
+
+    If OFFLINE then adapter will delete connected hasMany relationships.
+    */
+
     let promises = Ember.A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return Ember.RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the `record` and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
+    let store = this.get('store');
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        record.get(name).forEach((relRecord) => {
-          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
-        });
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i >= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
+          if (immediately) {
+            store.unloadRecord(relRecord);
+          }
+          else {
+            promises.pushObject(relRecord.deleteRecord());
+          }
+        }
       }
     });
-
-    return Ember.RSVP.all(promises);
   },
 
   /**
@@ -2539,7 +2578,8 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName);
+      let filterProjectionName = Ember.get(this, 'filterProjectionName');
+      this.sendAction('filterByAnyMatch', pattern, filterCondition, componentName, filterProjectionName);
     }
   },
 
@@ -2725,21 +2765,23 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (selectAllParameter) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
           }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set('selected', selectAllParameter);
         }
 
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', selectAllParameter);
-        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
       if (!skipConfugureRows) {

@@ -1,0 +1,38 @@
+<div class="field {{if model.errors.address "error" ""}}">
+  {{flexberry-field
+    value=model.address
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.text "error" ""}}">
+  {{flexberry-field
+    value=model.text
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.date "error" ""}}">
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
+  {{flexberry-simpledatetime
+    type="date"
+    value=model.date
+    readonly=readonly
+  }}
+</div>
+<div class="field {{if model.errors.votes "error" ""}}">
+  {{flexberry-field
+    value=model.votes
+    label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
+    readonly=readonly
+  }}
+</div>
+{{flexberry-groupedit
+  componentName="suggestionCommentsGroupEdit"
+  content=model.comments
+  mainModelProjection=modelProjection
+  modelProjection=modelProjection.attributes.comments
+  showDeleteButtonInRow = true
+  orderable=true
+  readonly=readonly
+}}

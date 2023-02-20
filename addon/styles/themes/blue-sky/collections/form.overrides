@@ -37,6 +37,11 @@
     outline: none;
 }
 
+.flexberry-lookup div.results.upward {
+    top: auto;
+    bottom: 100%;
+}
+
 .flexberry-simpledatetime .ui.fluid.action.input {
     border: none;
     border-bottom: 1px solid @inputBorderColor;
@@ -238,4 +243,16 @@ option {
             padding: 0 0.5em;
         }
     }
+}
+
+.flexberry-file.mobile .ui.button.flexberry-file-add-button {
+    height: auto;
+    min-height: 35px;
+    padding: 0.7em;
+    align-self: start;
+}
+
+.ui.form input:read-only {
+    color: @readonlyColor;
+    pointer-events: none;
 }

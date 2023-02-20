@@ -20,6 +20,7 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   models: {
     'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
@@ -187,14 +188,6 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
-            'title': '',
-            'settings-example': {
-              'caption': 'Пример работы с настройками',
-              'title': ''
-            }
-          },
           'flexberry-dropdown': {
             'caption': 'flexberry-dropdown',
             'title': '',
@@ -306,6 +299,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Лукап в модальном окне',
               'title': ''
             },
+            'lookup-in-modal-autocomplete': {
+              'caption': 'Лукап в модальном окне с автокомплитом',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -321,6 +318,14 @@ Ember.$.extend(true, translations, {
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Лукап множественного выбора',
+              'title': 'Лукап множественного выбора'
             }
           },
           'flexberry-menu': {
@@ -552,7 +557,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Карма',
       'name-validation-message-caption': 'Заполните поле "Имя"',
-      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"',
+      'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -644,6 +650,7 @@ Ember.$.extend(true, translations, {
       'caption': 'Несколько списков на форме',
       'multi-edit-form': 'Несколько списков на эдитформе'
     },
+
     'log-service-examples': {
       'settings-example': {
         'caption': 'Сервис логирования. Пример работы с настройками',
@@ -695,11 +702,6 @@ Ember.$.extend(true, translations, {
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Пример работы с настройками'
         }
       },
       'flexberry-dropdown': {
@@ -806,6 +808,11 @@ Ember.$.extend(true, translations, {
           'buttonModalDouble': 'Модальное окно №2',
           'buttonClose': 'Закрыть'
         },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
+          'captionModal': 'Модальное окно с ui-modal',
+          'captionModalDouble': 'Модальное с modal-dialog'
+        },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown'
         },
@@ -820,6 +827,13 @@ Ember.$.extend(true, translations, {
         'user-settings-example': {
           'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
           'clear-user-setting': 'Сбросить настройки пользователя'
+        }
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Лукап множественного выбора',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-menu': {

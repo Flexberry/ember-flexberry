@@ -4,7 +4,7 @@
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow }}
-            {{#if (or readonly allSelect)}}
+            {{#if allSelect}}
               <button
                 type="button"
                 class="ui check-all-at-page-button {{buttonClass}} disabled button"
@@ -23,24 +23,13 @@
               </button>
             {{/if}}
             {{#if (not-eq class "groupedit-container") }}
-              {{#if readonly}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{/if}}
+              <button
+                type="button"
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
             {{/if}}
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
@@ -187,6 +176,7 @@
           folvComponentName=componentName
           hierarchyPaging=hierarchyPaging
           configurateRow=configurateRow
+          allSelect=allSelect
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

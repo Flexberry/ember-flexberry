@@ -25,7 +25,7 @@
               <i class="chevron down icon"></i>
             </button>
           </td>
-          <td class="{{if colDesc.hide "disabled"}}"> 
+          <td class="{{if colDesc.hide "disabled"}}">
             {{#if model.exportParams.isExportExcel}}{{input class=(if colDesc.hide "disabled") value=colDesc.name}}{{else}}{{colDesc.name}}{{/if}}
           </td>
           <td class="sort-direction-cell">
@@ -104,7 +104,7 @@
                 value=model.settingName
                 placeholder=(t "components.colsconfig-dialog-content.enter-setting-name")
               }}
-              <div class="ui small button cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
+              <div class="ui small button cols-config-save{{if (is-blank model.settingName) " disabled"}}" {{action "saveColsSetting"}}>
                 {{t "components.colsconfig-dialog-content.save"}}
               </div>
             </div>

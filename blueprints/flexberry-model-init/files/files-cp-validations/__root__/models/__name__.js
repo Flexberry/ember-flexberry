@@ -12,8 +12,10 @@ import <%= parentClassName %>Model from <%= (parentExternal ? "set path to '/" :
 import { ValidationRules as ParentValidationRules } from <%= (parentExternal ? "set path to mixin for '/" : "'../mixins/regenerated/models/") + parentModelName + "'" %>;<%
 }
 else { %>
-import EmberFlexberryDataModel from 'ember-flexberry-data/models/model-without-validation';
-import OfflineModelMixin from 'ember-flexberry-data/mixins/offline-model';<%
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model-without-validation';<%
+}
+if (!parentModelName && additionalModelMixin && additionalModelMixinImport) { %>
+import <%= additionalModelMixin %> from <%= additionalModelMixinImport %>; <%
 } %>
 import { buildValidations } from 'ember-cp-validations';
 
@@ -21,7 +23,7 @@ const Validations = buildValidations(<%= parentModelName ? 'Ember.$.extend({}, P
   dependentKeys: ['model.i18n.locale'],
 });
 
-let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= !parentModelName ? 'OfflineModelMixin, ' : '' %><%= className %>Mixin, Validations, {
+let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= additionalModelMixin%><%= additionalModelMixin ? ', ' : '' %><%= className %>Mixin, Validations, {
 });<%
 
 if (namespace || parentModelName || projections) { %>

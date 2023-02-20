@@ -380,4 +380,15 @@ Model.defineProjection('SuggestionEWithKarma', 'ember-flexberry-dummy-suggestion
   })
 });
 
+// Projection for test on filter on folv toolbar.
+Model.defineProjection('TestFilterOnToolbarView', 'ember-flexberry-dummy-suggestion', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

@@ -53,6 +53,7 @@ export default class ModelBlueprint {
       let parentModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
       this.parentExternal = parentModel.external;
     }
+    this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
     this.enums = ModelBlueprint.loadEnums(options.metadataDir);
     this.className = model.className;
     this.namespace = model.nameSpace;
@@ -67,7 +68,6 @@ export default class ModelBlueprint {
     let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru", localePathTemplate);
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
-    this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
     if (this.hasCpValidations) {
       this.validations = this.getValidations(model);
     }

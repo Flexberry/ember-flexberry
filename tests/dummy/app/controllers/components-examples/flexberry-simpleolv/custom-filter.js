@@ -119,7 +119,6 @@ export default ListFormController.extend({
 
     componentForFilter(type, relation) {
       switch (type) {
-        case 'date': return { name: 'flexberry-datepicker' };
         case 'decimal': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
         default: return {};
       }

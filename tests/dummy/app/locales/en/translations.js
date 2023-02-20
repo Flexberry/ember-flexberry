@@ -299,6 +299,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Lookup in modal window',
               'title': ''
             },
+            'lookup-in-modal-aurocomplete': {
+              'caption': 'Lookup in modal with autocomplete',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -797,6 +801,14 @@ Ember.$.extend(true, translations, {
           'captionModalDouble': 'Custom modal window №2',
           'buttonModal': 'Modal window №1',
           'buttonModalDouble': 'Modal window №2',
+          'buttonClose': 'Close'
+        },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
+          'captionModal': 'Custom modal window ui-modal',
+          'captionModalDouble': 'Custom modal window modal-dialog',
+          'buttonModal': 'Custom modal window ui-modal',
+          'buttonModalDouble': 'Custom modal window modal-dialog',
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {

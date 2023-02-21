@@ -229,8 +229,8 @@ tests/acceptance/components/flexberry-objectlistview/folv-check-all-at-page-test
 tests/acceptance/components/flexberry-objectlistview/folv-check-config-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-checked-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-close-from-edit-form-test.js
+tests/acceptance/components/flexberry-objectlistview/folv-colsconfig-column-localization-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-column-config-save-button-test.js
-tests/acceptance/components/flexberry-objectlistview/folv-config-locales-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-configurate-row-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-date-format-moment-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-delete-before-recoed-data-cancel-test.js

@@ -8,6 +8,7 @@ export function initialize(appInstance) {
       defaultBehaviorLock: {
         openReadOnly: !!config.lock.openReadOnly,
         unlockObject: !!config.lock.unlockObject,
+        lockTime: config.lock.lockTime
       },
     });
     EditFormRoute.reopen(LockRouteMixin);

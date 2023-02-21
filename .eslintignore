@@ -190,6 +190,7 @@ tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-conditional-re
 tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-empty-value-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-default-sort-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-delete-with-details-test.js

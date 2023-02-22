@@ -38,7 +38,9 @@ export default EditFormController.extend({
       return [];
     }
 
-    return Object.keys(detailsProjections);
+    let detailsProjectionNames = Object.keys(detailsProjections);
+    detailsProjectionNames.splice(detailsProjectionNames.indexOf('modelName'), 1);
+    return detailsProjectionNames;
   }),
 
   /**
@@ -130,6 +132,15 @@ export default EditFormController.extend({
     @default true
   */
   defaultSortingButton: true,
+
+  /**
+    Flag indicates whether to fix the table head (if `true`) or not (if `false`).
+
+    @property fixedHeader
+    @type Boolean
+    @default true
+  */
+  fixedHeader: false,
 
   /**
     Flag for 'flexberry-groupedit' component 'allowColumnResize' property.
@@ -230,6 +241,7 @@ export default EditFormController.extend({
     '  rowClickable=rowClickable<br>' +
     '  immediateDelete=immediateDelete<br>' +
     '  defaultSettingsButton=defaultSettingsButton<br>' +
+    '  fixedHeader=fixedHeader<br>' +
     '}}'),
 
   /**
@@ -359,6 +371,12 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'defaultSettingsButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'fixedHeader',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'fixedHeader'
     });
 
     return componentSettingsMetadata;

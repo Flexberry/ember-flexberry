@@ -1,0 +1,41 @@
+
+
+<h3 class="ui header">{{t "forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
+  {{flexberry-lookup
+    value=model.author
+    relatedModel=model
+    relationName="author"
+    projection="ApplicationUserL"
+    displayAttributeName="karma"
+    autocomplete=true
+    showPreviewButton=true
+    previewOnSeparateRoute=true
+    previewFormRoute="ember-flexberry-dummy-application-user-edit"
+    title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    preview=(action "previewLookupValue")
+    readonly=readonly
+    componentName="SuggestionEditAuthor"
+  }}
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
+  {{flexberry-lookup
+    value=model.editor1
+    relatedModel=model
+    relationName="editor1"
+    projection="ApplicationUserL"
+    displayAttributeName="karma"
+    dropdown=true
+    showPreviewButton=true
+    previewFormRoute="ember-flexberry-dummy-application-user-edit"
+    title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    preview=(action "previewLookupValue")
+    readonly=readonly
+    componentName="SuggestionEditEditor1"
+  }}
+</form>

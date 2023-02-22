@@ -58,10 +58,6 @@ export default ListFormRoute.extend({
       return new SimplePredicate(filter.name, filter.condition, filter.pattern);
     }
 
-    if (filter.type === 'date') {
-      return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
-    }
-
     return this._super(...arguments);
   },
 

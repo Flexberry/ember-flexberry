@@ -39,17 +39,15 @@ export default Ember.Controller.extend({
       let sidebar = Ember.$('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      Ember.$('.full.height').css({
+        transition: 'width 0.35s ease-in-out 0s',
+        width: sidebar.sidebar('is visible') ? '100%' : `calc(100% - ${sidebar.width()}px)`,
+      });
+
+      Ember.$('.sidebar.icon .text_menu').toggleClass('hidden');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     },
 
     /**
@@ -60,15 +58,10 @@ export default Ember.Controller.extend({
     toggleSidebarMobile() {
       Ember.$('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-      }
+      Ember.$('.sidebar.icon').toggleClass('text-menu-show');
+      Ember.$('.sidebar.icon').toggleClass('text-menu-hide');
+      Ember.$('.sidebar.icon').toggleClass('hidden-text');
+      Ember.$('.bgw-opacity').toggleClass('hidden');
     }
   },
 
@@ -201,6 +194,16 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
+        }, {
+          link: 'ember-flexberry-dummy-multi-list',
+          caption: i18n.t('forms.application.sitemap.application.multi.caption'),
+          title: i18n.t('forms.application.sitemap.application.multi.title'),
+          children: null
+        }, {
+          link: 'ember-flexberry-dummy-suggestion-file-list',
+          caption: i18n.t('forms.application.sitemap.application.suggestion-file.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-file.title'),
+          children: null
         }]
       }, {
         link: null,
@@ -255,6 +258,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-checkbox/three-state-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -264,16 +272,6 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-ddau-checkbox/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.title'),
-            children: null
-          }]
-        }, {
-          link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.title'),
-          children: [{
-            link: 'components-examples/flexberry-datepicker/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
             children: null
           }]
         }, {
@@ -401,6 +399,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/lookup-in-modal-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/dropdown-mode-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
@@ -421,9 +424,29 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/user-settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.title'),
+          children: [{
+            link: 'components-examples/flexberry-multiple-lookup/multiple-lookup',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
             children: null
           }]
         }, {
@@ -484,6 +507,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/hierarchy-paging-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/configurate-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
@@ -512,6 +540,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/lock-services-editor-view-list',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/limited-text-size-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
           }]
         }, {
@@ -561,6 +594,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
             children: null
           }]
         }, {
@@ -642,6 +685,31 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.title'),
+          children: [{
+            link: null,
+            caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.title'),
+            children: [{
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.title'),
+              children: null
+            }]
           }]
         }]
       }, {

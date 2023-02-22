@@ -256,14 +256,14 @@ export default Ember.Service.extend({
    Get list components Names.
 
    @method getListComponentNames
-   @return {Array}
+   @return {Ember.NativeArray}
    */
   getListComponentNames() {
-    let ret = [];
+    let ret = Ember.A();
     let appPage = this.currentAppPage;
     if (appPage in this.currentUserSettings) {
       for (let componentName in this.currentUserSettings[appPage]) {
-        ret[ret.length] = componentName;
+        ret.pushObject(componentName);
       }
     }
 
@@ -445,7 +445,7 @@ export default Ember.Service.extend({
    */
   getCurrentSorting(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : [];
+    return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : Ember.A();
   },
 
   /**
@@ -458,7 +458,20 @@ export default Ember.Service.extend({
    */
   getCurrentPerPage(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : 5;
+    let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration('config:environment');
+    let defaultPerPage;
+    
+    try{
+      defaultPerPage = configEnvironmentSettings.APP.components.flexberryObjectlistview.defaultPerPage;
+      if(!defaultPerPage)
+        throw new TypeError('configEnvironmentSettings returned invalid value');
+    }
+    catch(error){
+      console.error(error.name + ': ' + error.message);
+      defaultPerPage = 5;
+    }
+
+    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : defaultPerPage;
   },
 
   /**
@@ -798,9 +811,14 @@ export default Ember.Service.extend({
     let ret = {};
     let addSettings = JSON.parse(JSON.stringify(setting2));
     for (let settingProperty in setting1) {
-      ret[settingProperty] = (settingProperty in addSettings) ?
+      if (settingProperty in addSettings) {
+        ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
         Ember.merge(setting1[settingProperty], addSettings[settingProperty]) :
-        setting1[settingProperty];
+        addSettings[settingProperty];
+      } else {
+        ret[settingProperty] = setting1[settingProperty];
+      }
+
       delete addSettings[settingProperty];
     }
 

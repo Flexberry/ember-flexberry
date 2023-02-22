@@ -1,4 +1,3 @@
-/* jshint node: true */
 'use strict';
 
 module.exports = {
@@ -31,16 +30,6 @@ module.exports = {
     app.import({
       development: 'bower_components/blueimp-file-upload/js/jquery.fileupload.js',
       production:  'bower_components/blueimp-file-upload/js/jquery.fileupload.js'
-    });
-
-    app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
-    });
-
-    app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.css',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
     });
 
     app.import({

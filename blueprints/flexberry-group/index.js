@@ -8,7 +8,8 @@ var Blueprint = require('ember-cli/lib/models/blueprint');
 module.exports = {
     description: 'Generates an group of entities for flexberry.',
     availableOptions: [
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
@@ -45,6 +46,9 @@ var GroupBlueprint = (function () {
                 this.emberGenerate("list-forms");
                 this.emberGenerate("edit-forms");
                 break;
+            case 'flexberry-acceptance-test':
+                this.emberGenerate("list-forms");
+                break;
             case 'flexberry-enum':
                 this.emberGenerate("enums");
                 break;
@@ -68,6 +72,9 @@ var GroupBlueprint = (function () {
                 break;
             case 'flexberry-serializer-init':
                 this.emberGenerate("models", true, projectTypeName + "/serializers");
+                break;
+            case 'flexberry-model-offline':
+                this.emberGenerate("models");
                 break;
             default:
                 throw new Error("Unknown blueprint: " + this.blueprintName);
@@ -98,11 +105,14 @@ var GroupBlueprint = (function () {
             if (pp.ext != ".json")
                 continue;
             var entityName = pp.name;
+
             if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 continue;
+
             var entity = JSON.parse(stripBom(fs.readFileSync(path.join(metadataSubDir, file), "utf8")));
             if (entity.external)
                 continue;
+
             var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
             this.promise = this.promise.then(GroupBlueprint.funCallback);

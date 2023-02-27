@@ -15,6 +15,9 @@ module('Acceptance | flexberry-toggler | ' + testName, {
     // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
     let applicationController = app.__container__.lookup('controller:application');
     applicationController.set('isInAcceptanceTestMode', true);
+
+    let controller = app.__container__.lookup('controller:components-examples/flexberry-toggler/settings-example-inner');
+    controller.set('duration', 0);
   },
 
   afterEach() {
@@ -49,43 +52,52 @@ test(testName, (assert) => {
       andThen(() => {
         let toggler = Ember.$('.flexberry-toggler .title');
         assert.equal(collapsedInnerCaption[0].value, toggler[1].innerText, 'Collapsed inner caption is correct');
-        click(toggler[1]);
 
-        let done = assert.async();
-        let timeout = 1000;
-        Ember.run.later((() => {
-          assert.equal(expandedInnerCaption[0].value, toggler[1].innerText, 'Expanded inner caption is correct');
-          assert.equal(expandedCaption[0].value, toggler[0].innerText, 'Expanded caption is correct');
-          let expandedCheckbox = rows[3].children[0].children[0];
-          assert.equal(expandedCheckbox.checked, true, 'expanded=true');
-          click(toggler[0]);
-          let done1 = assert.async();
-          let timeout = 2000;
-          Ember.run.later((() => {
-            assert.equal(collapsedCaption[0].value, toggler[0].innerText, 'Collapsed caption is correct');
-            assert.equal(expandedCheckbox.checked, false, 'expanded=false');
-            click(expandedCheckbox);
-            andThen(() => {
-              assert.equal(expandedCheckbox.checked, true, 'expanded=true');
-              let expandedInnerCheckbox = rows[7].children[0].children[0];
-              assert.equal(expandedInnerCheckbox.checked, true, 'inner expanded=true');
-              click(expandedInnerCheckbox);
-              andThen(() => {
-                assert.equal(expandedInnerCheckbox.checked, false, 'inner expanded=false');
-                assert.equal(expandedCheckbox.checked, true, 'expanded=true');
-                let icon = Ember.$('.flexberry-toggler .title .icon')[0];
-                assert.equal(icon.className, 'dropdown icon', 'dropdown icon');
-                let collapsedCaption = Ember.$('.ember-text-field', rows[8]);
-                fillIn(collapsedCaption, 'paw icon');
+        let promise1 = new Promise((resolve) => {
+          click(toggler[1]);
+          resolve();
+        });
+
+        promise1.then(() => {
+          let done = assert.async();
+          Ember.run(() => {
+            assert.equal(expandedInnerCaption[0].value, toggler[1].innerText, 'Expanded inner caption is correct');
+            assert.equal(expandedCaption[0].value, toggler[0].innerText, 'Expanded caption is correct');
+            let expandedCheckbox = rows[3].children[0].children[0];
+            assert.equal(expandedCheckbox.checked, true, 'expanded=true');
+
+            let promise2 = new Promise((resolve) => {
+              click(toggler[0]);
+              resolve();
+            });
+            
+            promise2.then(() => {
+              Ember.run(() => {
+                assert.equal(collapsedCaption[0].value, toggler[0].innerText, 'Collapsed caption is correct');
+                assert.equal(expandedCheckbox.checked, false, 'expanded=false');
+                click(expandedCheckbox);
                 andThen(() => {
-                  assert.equal(icon.className, 'paw icon', 'paw icon');
+                  assert.equal(expandedCheckbox.checked, true, 'expanded=true');
+                  let expandedInnerCheckbox = rows[7].children[0].children[0];
+                  assert.equal(expandedInnerCheckbox.checked, true, 'inner expanded=true');
+                  click(expandedInnerCheckbox);
+                  andThen(() => {
+                    assert.equal(expandedInnerCheckbox.checked, false, 'inner expanded=false');
+                    assert.equal(expandedCheckbox.checked, true, 'expanded=true');
+                    let icon = Ember.$('.flexberry-toggler .title .icon')[0];
+                    assert.equal(icon.className, 'dropdown icon', 'dropdown icon');
+                    let collapsedCaption = Ember.$('.ember-text-field', rows[8]);
+                    fillIn(collapsedCaption, 'paw icon');
+                    andThen(() => {
+                      assert.equal(icon.className, 'paw icon', 'paw icon');
+                    });
+                    done();
+                  });
                 });
-                done1();
-                done();
               });
             });
-          }), timeout);
-        }), timeout);
+          });
+        });
       });
     });
   });

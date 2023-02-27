@@ -181,19 +181,9 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    See {{#crossLink "FlexberryObjectlistviewComponent/customButtons:property"}}{{/crossLink}}.
 
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsArray
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -561,27 +551,24 @@ export default FlexberryBaseComponent.extend({
     */
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
         Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let modelName = this.get('modelController.modelProjection.modelName');
-
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: modelName
-        };
-
-        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -678,7 +665,7 @@ export default FlexberryBaseComponent.extend({
 
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
-        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray();
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
 
         this.get('modelController').send('showFiltersDialog', componentName, columns);
       } else {
@@ -763,7 +750,8 @@ export default FlexberryBaseComponent.extend({
               userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
             } else {
               let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+              let perPageDefault = defaultDeveloperUserSetting.perPage;
+              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
             }
           });
           break;
@@ -1072,5 +1060,29 @@ export default FlexberryBaseComponent.extend({
 
     const itemsNames = Ember.A(Object.keys(itemsNameList)).sortBy('name');
     return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect'))
+    {
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get('modelController.modelProjection.modelName');
+
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: modelName
+      };
+
+      this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+    }
   }
 });

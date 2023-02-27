@@ -71,6 +71,9 @@ class GroupBlueprint {
         this.emberGenerate("list-forms");
         this.emberGenerate("edit-forms");
         break;
+      case 'flexberry-acceptance-test':
+        this.emberGenerate("list-forms");
+        break;
       case 'flexberry-enum':
         this.emberGenerate("enums");
         break;

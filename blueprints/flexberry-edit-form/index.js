@@ -49,14 +49,14 @@ module.exports = {
         }
     },
 
-    processFiles(intoDir, templateVariables) {
-        let skipConfirmation = this.options.skipConfirmation;
-        if (skipConfirmation) {
-            return skipConfirmationFunc(this, intoDir, templateVariables);
-        }
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
-    },
+    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+  },
 
     /**
      * Blueprint Hook locals.
@@ -82,6 +82,7 @@ module.exports = {
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
             functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
+            isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
         }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -90,6 +91,7 @@ var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
+        this.isEmberCpValidationsUsed = ModelBlueprint_1.default.checkCpValidations(blueprint);
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
@@ -117,7 +119,8 @@ var EditFormBlueprint = /** @class */ (function () {
         }
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
-        return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
+        var snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+        return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
     };
     EditFormBlueprint.prototype.readHbsSnippetFile = function (componentName) {
         return this.readSnippetFile(componentName, "hbs");
@@ -162,6 +165,9 @@ var EditFormBlueprint = /** @class */ (function () {
             var attr = this.findAttr(model, projAttr.name);
             projAttr.readonly = "readonly";
             projAttr.type = attr.type;
+            projAttr.entityName = this.options.entity.name;
+            projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
+            this.calculateValidatePropertyNames(projAttr);
             this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
         }
         this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -176,6 +182,10 @@ var EditFormBlueprint = /** @class */ (function () {
             if (propertyLookup) {
                 belongsTo.projection = propertyLookup.projection;
                 belongsTo.readonly = "readonly";
+                belongsTo.entityName = this.options.entity.name;
+                belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+                belongsTo.isDropdown = belongsTo.type === 'combo';
+                this.calculateValidatePropertyNames(belongsTo);
                 this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
             }
         }
@@ -184,7 +194,10 @@ var EditFormBlueprint = /** @class */ (function () {
         for (var _d = 0, _e = proj.hasMany; _d < _e.length; _d++) {
             hasMany = _e[_d];
             hasMany.readonly = "readonly";
+            hasMany.entityName = this.options.entity.name;
+            hasMany.dashedName = (hasMany.name || '').replace(/\./g, '-');
             this.locales.setupEditFormAttribute(hasMany);
+            this.calculateValidatePropertyNames(hasMany);
             this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
         }
     };
@@ -204,7 +217,10 @@ var EditFormBlueprint = /** @class */ (function () {
                 belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
+                belongsToAttr.entityName = this.options.entity.name;
+                belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
                 this.locales.setupEditFormAttribute(belongsToAttr);
+                this.calculateValidatePropertyNames(belongsToAttr);
                 this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
             }
             this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -234,6 +250,13 @@ var EditFormBlueprint = /** @class */ (function () {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+    };
+    EditFormBlueprint.prototype.calculateValidatePropertyNames = function (attrs) {
+        var name = attrs.name;
+        var lastDotIndex = name.lastIndexOf(".");
+        var isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
+        attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
+        attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
     };
     return EditFormBlueprint;
 }());

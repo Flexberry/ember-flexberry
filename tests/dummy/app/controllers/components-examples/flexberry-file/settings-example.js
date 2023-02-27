@@ -47,6 +47,14 @@ export default EditFormController.extend({
   maxUploadFileSize: null,
 
   /**
+    Max upload file size (in bytes) for 'flexberry-file' component 'maxUploadFileSizeUnit' property.
+
+    @property maxUploadFileSizeUnit
+    @type String
+   */
+  maxUploadFileSizeUnit: 'Bt',
+
+  /**
     Flag for 'flexberry-file' component 'showPreview' property.
 
     @property showPreview
@@ -95,6 +103,12 @@ export default EditFormController.extend({
   */
   openFileInNewWindowInsteadOfLoading: false,
 
+  base64Value: null,
+
+  base64FileName: null,
+
+  base64FileExtension: null,
+
   /**
     Template text for 'flexberry-textbox' component.
 
@@ -108,6 +122,7 @@ export default EditFormController.extend({
     '  readonly=readonly<br>' +
     '  uploadUrl=uploadUrl<br>' +
     '  maxUploadFileSize=maxUploadFileSize<br>' +
+    '  maxUploadFileSizeUnit=maxUploadFileSizeUnit<br>' +
     '  showPreview=showPreview<br>' +
     '  showUploadButton=showUploadButton<br>' +
     '  showDownloadButton=showDownloadButton<br>' +
@@ -116,6 +131,9 @@ export default EditFormController.extend({
     '  inputClass=inputClass<br>' +
     '  buttonClass=buttonClass<br>' +
     '  openFileInNewWindowInsteadOfLoading=openFileInNewWindowInsteadOfLoading<br>' +
+    '  base64Value=base64Value<br>' +
+    '  base64FileName=base64FileName<br>' +
+    '  base64FileExtension=base64FileExtension<br>' +
     '}}'),
 
   /**
@@ -155,6 +173,18 @@ export default EditFormController.extend({
       settingType: 'number',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'maxUploadFileSize'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxUploadFileSizeUnit',
+      settingType: 'enumeration',
+      settingAvailableItems: [
+        'Bt',
+        'Kb',
+        'Mb',
+        'Gb'
+      ],
+      settingDefaultValue: 'Bt',
+      bindedControllerPropertieName: 'maxUploadFileSizeUnit'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showPreview',
@@ -205,6 +235,24 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'openFileInNewWindowInsteadOfLoading'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'base64Value',
+      settingType: 'string',
+      settingDefaultValue: null,
+      bindedControllerPropertieName: 'base64Value'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'base64FileName',
+      settingType: 'string',
+      settingDefaultValue: null,
+      bindedControllerPropertieName: 'base64FileName'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'base64FileExtension',
+      settingType: 'string',
+      settingDefaultValue: null,
+      bindedControllerPropertieName: 'base64FileExtension'
     });
 
     return componentSettingsMetadata;

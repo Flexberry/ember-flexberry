@@ -38,7 +38,7 @@ var CommonUtils = (function () {
         if (exclusiveFunction === void 0) { exclusiveFunction = null; }
         blueprint._super._files = null;
         blueprint._super.path = blueprint.path;
-        var files = blueprint._super.files();
+        var files = blueprint._super.files.apply(blueprint);
         blueprint._super._files = null;
         if (exclusiveFunction != null) {
             lodash.remove(files, exclusiveFunction);

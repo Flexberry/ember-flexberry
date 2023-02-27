@@ -18,6 +18,14 @@
     border-bottom: @dropdownBorderBottom;
     border-radius: @borderRadius;
     outline: none;
+    line-height: @inputLineHeight;
+}
+
+.ui.dropdown > .text {
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: top;
+    width: 100%;
 }
 
 .ui.search.dropdown > .text {
@@ -59,5 +67,12 @@
     max-width: 100%;
     div.text {
       max-width: inherit;
+    }
+}
+
+.groupedit-container .flexberry-dropdown.ui.dropdown {
+    transform: none;
+    .menu {
+        min-width: 0.071em;
     }
 }

@@ -28,11 +28,11 @@ module.exports = {
 
   isDummy: false,
 
-  files: function() {
+  files: function () {
     if (this._files) { return this._files; }
     this.isDummy = this.options.dummy;
     if (this.options.dummy) {
-      this._files=CommonUtils.getFilesForGeneration(this, function(v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
     } else {
       this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
     }
@@ -64,7 +64,7 @@ module.exports = {
    * @param {Object} options Options is an object containing general and entity-specific options.
    * @return {Object} Сustom template variables.
    */
-  locals: function(options) {
+  locals: function (options) {
     let listFormBlueprint = new ListFormBlueprint(this, options);
     return lodash.defaults({
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
@@ -77,15 +77,15 @@ module.exports = {
       importFormRoutePath: listFormBlueprint.importFormRoutePath,
       importFormControllerName: listFormBlueprint.importFormControllerName,
       importFormControllerPath: listFormBlueprint.importFormControllerPath,
-      },
+    },
       listFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
-   );
+    );
   }
 };
 
 class ListFormBlueprint {
   locales: Locales;
-  listForm: metadata.ListForm;  
+  listForm: metadata.ListForm;
   importFormRouteName: string;
   importFormRoutePath: string;
   importFormControllerName: string;
@@ -93,49 +93,50 @@ class ListFormBlueprint {
 
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
+    const entityName = options.entity.name;
+
     if (!options.file) {
-      options.file = options.entity.name + ".json";
+      options.file = entityName + ".json";
     }
-    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
-    this.locales = new Locales(options.entity.name, "ru", localePathTemplate);
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", entityName + ".js"));
+    this.locales = new Locales(entityName, "ru", localePathTemplate);
     let listFormFile = path.join(listFormsDir, options.file);
     let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
     this.listForm = JSON.parse(content);
     this.locales.setupForm(this.listForm);
 
     var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
-    if (fs.existsSync(configsFile)) {
-        var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
-        if (configs.listForms == undefined) {
-          this.importFormRouteName = 'ListFormRoute';
-          this.importFormRoutePath = 'ember-flexberry/routes/list-form';
-          this.importFormControllerName = 'ListFormController';
-          this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
-        } else {
-            if (configs.listForms[options.entity.name] != undefined) {
-              this.importFormRouteName = configs.listForms[options.entity.name].baseRoute.name;
-              this.importFormRoutePath = configs.listForms[options.entity.name].baseRoute.path;
-              this.importFormControllerName = configs.listForms[options.entity.name].baseController.name;
-              this.importFormControllerPath = configs.listForms[options.entity.name].baseController.path;
-            }
-            else if (configs.listForms.defaultForm != undefined) {
-              this.importFormRouteName = configs.listForms.defaultForm.baseRoute.name;
-              this.importFormRoutePath = configs.listForms.defaultForm.baseRoute.path;
-              this.importFormControllerName = configs.listForms.defaultForm.baseController.name;
-              this.importFormControllerPath = configs.listForms.defaultForm.baseController.path;
-            };
-        };
+    var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+    const initImports = (
+      routeName = 'ListFormRoute',
+      routePath = 'ember-flexberry/routes/list-form',
+      controllerName = 'ListFormController',
+      controllerPath = 'ember-flexberry/controllers/list-form'
+    ) => {
+      this.importFormRouteName = routeName;
+      this.importFormRoutePath = routePath;
+      this.importFormControllerName = controllerName;
+      this.importFormControllerPath = controllerPath;
+    }
+
+    if (fs.existsSync(configsFile) || configs.listForms === undefined) {
+      initImports();
     } else {
-      this.importFormRouteName = 'ListFormRoute';
-      this.importFormRoutePath = 'ember-flexberry/routes/list-form';
-      this.importFormControllerName = 'ListFormController';
-      this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
+      if (configs.listForms[entityName] !== undefined) {
+        const { baseRoute, baseController } = configs.listForms[entityName];
+        
+        initImports( baseRoute.name, baseRoute.path, baseController.name, baseController.path);
+      } else if (configs.listForms.defaultForm !== undefined) {
+        const { baseRoute, baseController } = configs.listForms.defaultForm;
+
+        initImports(baseRoute.name, baseRoute.path, baseController.name, baseController.path);
+      };
     };
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
     let targetRoot = "app"
-    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));

@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import <%=importFormRouteName%> from '<%=importFormRoutePath%>';
 
 export default ListFormRoute.extend({

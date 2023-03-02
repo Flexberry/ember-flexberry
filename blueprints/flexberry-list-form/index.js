@@ -49,7 +49,7 @@ module.exports = {
 
         return this._super(...arguments);
     },
-   
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -80,43 +80,53 @@ module.exports = {
 var ListFormBlueprint = /** @class */ (function () {
     function ListFormBlueprint(blueprint, options) {
         var listFormsDir = path.join(options.metadataDir, "list-forms");
+        const entityName = options.entity.name;
+        
         if (!options.file) {
-            options.file = options.entity.name + ".json";
+            options.file = entityName + ".json";
         }
-        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
-        this.locales = new Locales_1.default(options.entity.name, "ru", localePathTemplate);
+
+        var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", entityName + ".js"));
+        this.locales = new Locales_1.default(entityName, "ru", localePathTemplate);
         var listFormFile = path.join(listFormsDir, options.file);
         var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
         this.listForm = JSON.parse(content);
         this.locales.setupForm(this.listForm);
 
         var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        const defaultImportFormRouteName = 'ListFormRoute';
+        const defaultImportFormRoutePath = 'ember-flexberry/routes/list-form';
+        const defaultImportFormControllerName = 'ListFormController';
+        const defaultImportFormControllerPath = 'ember-flexberry/controllers/list-form';
+        
         if (fs.existsSync(configsFile)) {
             var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
-            if (configs.listForms == undefined) {
-                this.importFormRouteName = 'ListFormRoute';
-                this.importFormRoutePath = 'ember-flexberry/routes/list-form';
-                this.importFormControllerName = 'ListFormController';
-                this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
+            
+            if (configs.listForms === undefined) {
+                this.importFormRouteName = defaultImportFormRouteName;
+                this.importFormRoutePath = defaultImportFormRoutePath;
+                this.importFormControllerName = defaultImportFormControllerName;
+                this.importFormControllerPath = defaultImportFormControllerPath;
             } else {
-                if (configs.listForms[options.entity.name] != undefined) {
-                    this.importFormRouteName = configs.listForms[options.entity.name].baseRoute.name;
-                    this.importFormRoutePath = configs.listForms[options.entity.name].baseRoute.path;
-                    this.importFormControllerName = configs.listForms[options.entity.name].baseController.name;
-                    this.importFormControllerPath = configs.listForms[options.entity.name].baseController.path;
-                }
-                else if (configs.listForms.defaultForm != undefined) {
-                    this.importFormRouteName = configs.listForms.defaultForm.baseRoute.name;
-                    this.importFormRoutePath = configs.listForms.defaultForm.baseRoute.path;
-                    this.importFormControllerName = configs.listForms.defaultForm.baseController.name;
-                    this.importFormControllerPath = configs.listForms.defaultForm.baseController.path;
+                const { baseRoute, baseController } = configs.listForms.defaultForm;
+
+                if (configs.listForms[entityName] !== undefined) {
+                    this.importFormRouteName = configs.listForms[entityName].baseRoute.name;
+                    this.importFormRoutePath = configs.listForms[entityName].baseRoute.path;
+                    this.importFormControllerName = configs.listForms[entityName].baseController.name;
+                    this.importFormControllerPath = configs.listForms[entityName].baseController.path;
+                } else if (configs.listForms.defaultForm !== undefined) {
+                    this.importFormRouteName = baseRoute.name;
+                    this.importFormRoutePath = baseRoute.path;
+                    this.importFormControllerName = baseController.name;
+                    this.importFormControllerPath = baseController.path;
                 };
             };
         } else {
-            this.importFormRouteName = 'ListFormRoute';
-            this.importFormRoutePath = 'ember-flexberry/routes/list-form';
-            this.importFormControllerName = 'ListFormController';
-            this.importFormControllerPath = 'ember-flexberry/controllers/list-form';
+            this.importFormRouteName = defaultImportFormRouteName;
+            this.importFormRoutePath = defaultImportFormRoutePath;
+            this.importFormControllerName = defaultImportFormControllerName;
+            this.importFormControllerPath = defaultImportFormControllerPath;
         };
     }
     ListFormBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
@@ -125,7 +135,7 @@ var ListFormBlueprint = /** @class */ (function () {
             targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
         }
         return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
-    };    
+    };
     return ListFormBlueprint;
 }());
 //# sourceMappingURL=index.js.map

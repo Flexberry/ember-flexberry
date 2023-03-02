@@ -251,6 +251,14 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/flexberry-multiple-lookup",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "no-unnecessary-concat"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/flexberry-objectlistview",
       "only": [
         "quotes",
@@ -816,6 +824,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
       "only": [
         "eol-last"
       ]

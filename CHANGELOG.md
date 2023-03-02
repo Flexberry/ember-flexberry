@@ -3,61 +3,59 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* The `flexberry-objectlistview` component:
+    * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
+* The `flexberry-lookup` component:
+    * Added support of property `filterProjectionName` of `flexberry-objectlistview` on modal window (it sets throught `lookupWindowCustomProperties`).
+    * Event `lookupOnDataLoaded` for `flexberry-lookup` component to detect time of data loading completed.
+* Blueprints:
+    * Add generating lookups in dropdown mode.
 
-## [2.7.0-beta.7] - 2022-04-05
-### Changed
-* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
-* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
+## [2.8.0-beta.2] - 2022-10-26
+### Fixed
+* The `flexberry-lookup` component:
+    * Default user settings usage.
 
-## [2.7.0-beta.6] - 2022-02-08
+## [2.8.0-beta.1] - 2022-10-26
+### Added
+* The `flexberry-file` component:
+    * Drag-and-drop support.
+
+## [2.7.0] - 2022-05-17
 ### Added
 * The `flexberry-lookup` component:
     * Option `emptyValueAtEnd` for the dropdown mode.
-
-## [2.7.0-beta.5] - 2022-02-01
-### Added
 * Optional `ember-cp-validations` support.
+* The `fixable-component` mixin:
+    * `parentComponent` property.
+* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
+* The `validationModel` property of `edit-form` controller.
+
+### Changed
+* The `flexberry-model-init` blueprint check additional options for audit and insert necessary mixin.
+* The `flexberry-objectlistview` deletes only record itself and unloads its details (details are deleted on database by ORM or by adapter on offline).
+* The `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Rows can be selected in readonly mode.
+* Update dependency on `ember-flexberry-data` to version `2.7.0`.
 
 ### Fixed
 * The `flexberry-objectlistview` component:
     * Using of `perPage` setting at `developerUserSettings`.
 * Validation for deleted records in `flexberry-groupedit` on `edit-form`.
-
-## [2.7.0-beta.4] - 2021-10-11
-### Fixed
 * The `flexberry-groupedit` component:
     * Optimized sort function.
-
-### Breaking changes
-* Deleted `custom-inflector-rules`.
-
-## [2.7.0-beta.3] - 2021-09-28
-### Added
-* The `fixable-component` mixin:
-    * `parentComponent` property.
-
-## [2.7.0-beta.2] - 2021-09-21
-### Fixed
 * The `flexberry-groupedit` component:
     * Lookup's autocomplite and dropdown groupedit container overflow.
 
-## [2.7.0-beta.1] - 2021-09-20
-### Changed
-* The `flexberry-objectlistview` and `flexberry-groupedit` components:
-    * Rows can be selected in readonly mode.
-
-## [2.7.0-beta.0] - 2021-07-18
-### Added
-* The `flexberry-edit-form` blueprint supports `ember-cp-validations` addon.
-* The `validationModel` property of `edit-form` controller.
-
-### Deprecated
-* The `validationObject` property of `edit-form` controller.
-
 ### Breaking changes
+* Deleted `custom-inflector-rules`.
 * The `flexberry-datepicker` component was removed.
 * The `daterangepicker` `bower`-package was removed from dependencies.
 * The `moment` `bower`-package was added to dependencies.
+
+### Deprecated
+* The `validationObject` property of `edit-form` controller.
 
 ## [2.6.1] - 2021-07-02
 ### Fixed

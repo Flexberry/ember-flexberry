@@ -137,7 +137,7 @@ module.exports = function(environment) {
     ENV.locationType = 'none';
 
     // URL of the backend running in docker.
-    backendUrl = 'http://localhost:6500';
+    backendUrl = 'http://localhost:80';
     ENV.APP.backendUrl = backendUrl;
     ENV.APP.backendUrls.root = backendUrl;
     ENV.APP.backendUrls.api = backendUrl + '/odata';

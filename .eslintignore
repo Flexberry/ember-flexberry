@@ -45,6 +45,7 @@ addon/components/flexberry-jsonarea.js
 addon/components/flexberry-lookup.js
 addon/components/flexberry-menu.js
 addon/components/flexberry-menuitem.js
+addon/components/flexberry-multiple-lookup.js
 addon/components/flexberry-objectlistview.js
 addon/components/flexberry-simpledatetime.js
 addon/components/flexberry-simpleolv.js
@@ -189,9 +190,11 @@ tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-conditional-re
 tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-empty-value-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js
+tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-default-sort-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-sort-test.js
 tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-delete-with-details-test.js
+tests/acceptance/components/flexberry-simpledatetime/flexberry-simpledatetime-manual-enter-test.js
 tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js
 tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js
 tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js
@@ -200,9 +203,13 @@ tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-en-te
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-ru-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-autofill-by-limit-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-limit-function-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-events-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-custom-window-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-default-ordering-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js
 tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js
+tests/acceptance/components/flexberry-lookup/flexberry-lookup-window-search-test.js
 tests/acceptance/components/flexberry-lookup/lookup-test-functions.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-autocomplete-test.js
 tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-dropdown-test.js
@@ -212,6 +219,7 @@ tests/acceptance/components/flexberry-objectlistview/filther/folv-empty-filter-t
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-by-enther-click-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-render-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-test.js
+tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-on-toolbar-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-ge-filter-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-le-filter-test.js
 tests/acceptance/components/flexberry-objectlistview/filther/folv-like-filter-test.js
@@ -222,6 +230,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-check-all-at-page-test
 tests/acceptance/components/flexberry-objectlistview/folv-check-config-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-checked-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-close-from-edit-form-test.js
+tests/acceptance/components/flexberry-objectlistview/folv-colsconfig-column-localization-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-column-config-save-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-configurate-row-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-date-format-moment-test.js
@@ -258,6 +267,7 @@ tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js
 tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js
+tests/acceptance/components/flexberry-toggler/flexberry-toggler-with-inner-toggler-test.js
 tests/acceptance/components/readonly-test/edit-form-readonly-test.js
 tests/acceptance/edit-form-validation-test/execute-validation-test.js
 tests/acceptance/edit-form-validation-test/validation-base-test.js
@@ -272,6 +282,7 @@ tests/acceptance/edit-form-validation-test/validation-test.js
 tests/acceptance/edit-form-validation-test/validation-textarea-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-letter-test.js
 tests/acceptance/edit-form-validation-test/validation-textbox-numeric-test.js
+tests/acceptance/edit-form-validation-test/validation-textbox-unique-date-test.js
 tests/dummy/app/components/css-picker.js
 tests/dummy/app/components/number-input.js
 tests/dummy/app/controllers/application.js
@@ -279,11 +290,14 @@ tests/dummy/app/controllers/components-acceptance-tests/edit-form-readonly.js
 tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-autocomplete.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-custom-window.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-dropdown.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-limit-function.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-events.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-groupedit/delete-with-details.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/base-operations.js
 tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/delete-with-details.js
@@ -312,8 +326,10 @@ tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-lim
 tests/dummy/app/controllers/components-examples/flexberry-lookup/default-ordering-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-example.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example.js
+tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal-autocomplete.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/controllers/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/controllers/components-examples/flexberry-menu/settings-example.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js
@@ -401,8 +417,11 @@ tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/base-operati
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-actions.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-autocomplete.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-custom-window.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-dropdown.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-limit-function.js
+tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-events.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-preview.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-projection.js
 tests/dummy/app/routes/components-acceptance-tests/flexberry-lookup/settings-example-relation-name.js
@@ -444,9 +463,11 @@ tests/dummy/app/routes/components-examples/flexberry-lookup/hierarchy-olv-in-loo
 tests/dummy/app/routes/components-examples/flexberry-lookup/limit-function-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-block-form-example.js
+tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/lookup-in-modal.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/numeric-autocomplete.js
 tests/dummy/app/routes/components-examples/flexberry-lookup/settings-example.js
+tests/dummy/app/routes/components-examples/flexberry-multiple-lookup/multiple-lookup.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately.js
 tests/dummy/app/routes/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel.js

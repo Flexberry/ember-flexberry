@@ -252,7 +252,7 @@ option {
     align-self: start;
 }
 
-.ui.form input:read-only {
+.ui.form input[readonly] {
     color: @readonlyColor;
     pointer-events: none;
 }

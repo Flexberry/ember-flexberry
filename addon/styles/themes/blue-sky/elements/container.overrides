@@ -25,8 +25,8 @@
 }
 
 .pusher.mobile .ui.form .full.height {
-    height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}");
-    min-height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}");
+    height: calc(~"100vh - @{footerHeightMobile}");
+    min-height: calc(~"100vh - @{footerHeightMobile}");
 }
 
 .ui.attached.segment {

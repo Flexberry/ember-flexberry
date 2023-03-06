@@ -1434,28 +1434,39 @@ export default FlexberryBaseComponent.extend(
   didRender() {
     this._super(...arguments);
 
+    const componentTableSelector = this.get('componentTableSelector');
+    const useRowByRowLoading = this.get('useRowByRowLoading');
+    const contentForRender = this.get('contentForRender');
+    const contentLength = contentForRender.get('length')
+    const isContentForRenderExist = contentForRender && contentLength > 0;
+    const _renderedRowIndex = this.get('_renderedRowIndex'); 
+    const fixedHeader = this.get('fixedHeader');
+    const useRowByRowLoadingProgress = this.get('useRowByRowLoadingProgress');
+    const allowColumnResize = this.get('allowColumnResize');
+    const upMenuNeeds = () => {
+      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
+      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+    }
+    let $currentTable = this.$(componentTableSelector);
+
     // Start row by row rendering at first row.
-    if (this.get('useRowByRowLoading')) {
-      let contentForRender = this.get('contentForRender');
-      if (contentForRender) {
-        let contentLength = contentForRender.get('length');
-        if (contentLength > 0) {
-          let renderedRowIndex = this.get('_renderedRowIndex') + 1;
+    if (useRowByRowLoading && isContentForRenderExist) {
+      let renderedRowIndex = _renderedRowIndex + 1;
 
           if (renderedRowIndex >= contentLength) {
+        const isRowClickable = this.get('rowClickable');
             // The last menu needs will be up.
-            this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
-            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+        upMenuNeeds();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-
             this.set('_renderedRowIndex', -1);
 
-            if (this.rowClickable) {
-              let key = this._getModelKey(this.selectedRecord);
-              if (key) {
-                this._setActiveRecord(key);
+        if (isRowClickable) {
+          const keyOfRecord = this._getModelKey(this.selectedRecord);
+          
+          if (keyOfRecord) {
+            this._setActiveRecord(keyOfRecord);
               }
             }
 
@@ -1463,47 +1474,29 @@ export default FlexberryBaseComponent.extend(
           } else {
             // Start render row.
             let modelWithKey = contentForRender[renderedRowIndex];
+
             if (!modelWithKey.get('doRenderData')) {
               modelWithKey.set('doRenderData', true);
               this.set('_renderedRowIndex', renderedRowIndex);
 
-              if (renderedRowIndex === 0) {
-                if (this.get('useRowByRowLoadingProgress')) {
+          if (renderedRowIndex === 0 && useRowByRowLoadingProgress) {
                   // Set loading progress.
                   this.set('rowByRowLoadingProgress', true);
                 }
               }
             }
+    }
 
-            if (this.get('allowColumnResize')) {
+    if (allowColumnResize) {
               this._reinitResizablePlugin();
             } else {
-              let $table = this.$('table.object-list-view');
-              $table.colResizable({ disable: true });
-            }
-          }
-        }
-      }
-    } else {
-
-      if (this.get('allowColumnResize')) {
-        this._reinitResizablePlugin();
-      } else {
-        let $table = this.$('table.object-list-view');
-        $table.colResizable({ disable: true });
-      }
-
-      // The last menu needs will be up.
-      this.$('.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
-      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+      $currentTable.colResizable({ disable: true });
     }
 
     this._setCurrentColumnsWidth();
 
-    if (this.get('fixedHeader')) {
-      let $currentTable = this.$('table.object-list-view');
+    if (fixedHeader) {
       $currentTable.parent().addClass('fixed-header');
-
       this._fixedTableHead($currentTable);
     }
   },

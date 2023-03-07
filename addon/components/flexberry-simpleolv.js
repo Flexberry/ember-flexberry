@@ -6,6 +6,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
+import { getNewRouteNameOfEditForm } from '../utils/routes-names-builder';
 const { getOwner } = Ember;
 
 /**
@@ -941,7 +942,7 @@ export default folv.extend(
       let currentController = this.get('currentController');
       this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
-        currentController.transitionToRoute(editFormRoute + '.new');
+        currentController.transitionToRoute(getNewRouteNameOfEditForm(editFormRoute));
       }), 50);
     },
 

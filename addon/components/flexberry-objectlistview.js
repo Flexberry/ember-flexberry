@@ -17,6 +17,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { later } from '@ember/runloop';
 import { getOwner } from '@ember/application';
 import runAfter from '../utils/run-after';
+import { getNewRouteNameOfEditForm } from '../utils/routes-names-builder';
 
 /**
   Component to view list of object.
@@ -1189,8 +1190,8 @@ export default FlexberryBaseComponent.extend({
         }
       };
 
-      later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
+      Ember.run.later((function() {
+        modelController.transitionToRoute(getNewRouteNameOfEditForm(editFormRoute), transitionOptions);
       }), 50);
     },
 

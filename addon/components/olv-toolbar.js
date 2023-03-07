@@ -14,6 +14,7 @@ import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import { getNewRouteNameOfEditForm } from '../utils/routes-names-builder';
 import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
@@ -534,8 +535,8 @@ export default FlexberryBaseComponent.extend({
         }
       };
 
-      later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
+      Ember.run.later((function() {
+        modelController.transitionToRoute(getNewRouteNameOfEditForm(editFormRoute), transitionOptions);
       }), 50);
     },
 

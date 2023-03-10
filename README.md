@@ -63,6 +63,13 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 * `ember test`
 * `ember test --server`
 
+#### Linting
+
+* `npm run lint` - run all linters
+* `npm run lint:js` - run linter for code
+* `npm run lint:hbs` - run linter for templates
+* `npx update-todo-errors` - update list of todo errors
+
 #### Building
 
 * `ember build` (development)

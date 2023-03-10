@@ -475,6 +475,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging
@@ -502,6 +503,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging,
@@ -526,6 +528,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     currentContext.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
     currentContext.reloadList(queryParameters).then(data => {
+      currentContext.get('lookupEventsService').lookupDialogOnDataLoadedTrigger(queryParameters.componentName, data, reloadData.initialLoad);
       data.set('sorting', queryParameters.sorting);
       currentContext.send('removeModalDialog', loadingParams);
       currentContext.send('showModalDialog', lookupSettings.contentTemplate, {

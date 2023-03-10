@@ -12,6 +12,7 @@ import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { get, set } from '@ember/object';
 import Queue from 'ember-flexberry-data/utils/queue';
+import $ from 'jquery';
 
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
@@ -353,6 +354,58 @@ export default Service.extend(Evented, {
   errorMessageFilterActive: false,
 
   /**
+    Flag: indicates whether log service will send messages with http request.
+
+    @property sendMessagesWithRequest
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'sendMessagesWithRequest' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            sendMessagesWithRequest: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+    sendMessagesWithRequest: false,
+
+  /**
+    The URL of a log service.
+
+    @property serviceUrl
+    @type String
+    @default ''
+    @example
+    ```
+    // Log service 'serviceUrl' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            serviceUrl: 'http://localhost:5000/api/logservice'
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  serviceUrl: '',
+
+  /**
     Error messages which must be skipped when flag errorMessageFilterActive is true.
 
     @property errorMessageFilters
@@ -406,6 +459,8 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments));
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -425,6 +480,8 @@ export default Service.extend(Evented, {
 
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
+
+      _this._sendMessageToService(joinArguments(...arguments));
 
       return _this._queue.attach((resolve, reject) => {
         let message = joinArguments(...arguments);
@@ -455,6 +512,8 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments));
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -475,6 +534,8 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments));
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -494,6 +555,8 @@ export default Service.extend(Evented, {
 
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
+
+      _this._sendMessageToService(joinArguments(...arguments));
 
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
@@ -524,9 +587,14 @@ export default Service.extend(Evented, {
     this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
     this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
+    this.set('sendMessagesWithRequest', typeof logConfiguration.sendMessagesWithRequest === 'boolean' && logConfiguration.sendMessagesWithRequest);
 
     if (typeof logConfiguration.applicationLogModelName === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
+
+    if (typeof logConfiguration.serviceUrl === 'string') {
+      this.set('serviceUrl', logConfiguration.serviceUrl);
     }
   },
 
@@ -649,6 +717,7 @@ export default Service.extend(Evented, {
       }
 
       const message = get(error, 'message') || error.toString();
+      _this._sendMessageToService(message);
 
       let formattedMessageBlank = {
         name: error && error.name ? error.name : null,
@@ -667,5 +736,34 @@ export default Service.extend(Evented, {
         reject(reason);
       });
     });
-  }
+  },
+
+    /**
+    Sends given message to service.
+
+    @method _sendMessageToService
+    @param {String} serviceUrl url
+    @param {String} message message
+    @private
+  */
+    _sendMessageToService(message) {
+      // Send a message to some service
+      let serviceUrl = this.get('serviceUrl');
+      if (this.get('sendMessagesWithRequest')) {
+        $.ajax({
+          async: true,
+          type: 'POST',
+          url: serviceUrl,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          data: JSON.stringify({
+            LogMessage: message
+          }),
+          success: function (response) {
+          },
+          error: function () {
+          }
+        });
+      }
+    }
 });

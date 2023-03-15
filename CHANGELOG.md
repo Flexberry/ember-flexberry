@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.8.0-beta.18] - 2023-03-15
+### Fixed
+* `modal-dialog` scrolling content class.
+
 ## [3.8.0-beta.17] - 2023-02-13
 ### Added
 * `guideline-calculate` icon.

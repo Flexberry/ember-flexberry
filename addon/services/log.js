@@ -327,14 +327,14 @@ export default Service.extend(Evented, {
   showPromiseErrors: false,
 
   /**
-    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
+    Flag: indicates whether log service will skip error messages that defined in logMessageFilters array variable.
 
-    @property errorMessageFilterActive
+    @property logMessageFilterActive
     @type Boolean
     @default false
     @example
     ```
-    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
+    // Log service 'logMessageFilterActive' setting could be also defined through application config/environment.js
     module.exports = function(environment) {
       var ENV = {
         ...
@@ -342,7 +342,7 @@ export default Service.extend(Evented, {
           ...
           log: {
             enabled: true,
-            errorMessageFilterActive: true
+            logMessageFilterActive: true
           }
           ...
         }
@@ -350,17 +350,22 @@ export default Service.extend(Evented, {
     };
     ```
   */
-  errorMessageFilterActive: false,
+    logMessageFilterActive: false,
 
   /**
-    Error messages which must be skipped when flag errorMessageFilterActive is true.
+    Error messages which must be skipped when flag logMessageFilterActive is true.
 
-    @property errorMessageFilters
+    @property logMessageFilters
     @type Array
     @default [{ category: 'PROMISE', message: "TransitionAborted" }]
   */
-  errorMessageFilters: A([
-    { category: 'PROMISE', message: 'TransitionAborted' }
+  logMessageFilters: A([
+    { category: 'PROMISE', message: 'TransitionAborted' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Store::query' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Store::findRecord' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry ODataAdapter::query' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Lookup Mixin::updateLookupValue' },
+    { category: 'DEPRECATION', message: 'DEPRECATION' }
   ]),
 
   /**
@@ -406,8 +411,11 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(essageCategory.error, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.error, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -426,15 +434,20 @@ export default Service.extend(Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
+      const message = joinArguments(...arguments);
+
       return _this._queue.attach((resolve, reject) => {
-        let message = joinArguments(...arguments);
         if (message.indexOf('DEPRECATION') === 0) {
+          if (_this._checkMessageOnSkipped(messageCategory.deprecate, message)) return;
+
           return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
             resolve(result);
           }).catch((reason) => {
             reject(reason);
           });
         } else {
+          if (_this._checkMessageOnSkipped(messageCategory.warn, message)) return;
+
           return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
             resolve(result);
           }).catch((reason) => {
@@ -455,8 +468,11 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.log, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.log, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -475,8 +491,11 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.info, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.info, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -495,8 +514,11 @@ export default Service.extend(Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.debug, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.debug, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -523,7 +545,7 @@ export default Service.extend(Evented, {
     this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
     this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
-    this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
+    this.set('logMessageFilterActive', typeof logConfiguration.logMessageFilterActive === 'boolean' && logConfiguration.logMessageFilterActive);
 
     if (typeof logConfiguration.applicationLogModelName === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
@@ -559,26 +581,7 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    let isSkippedMessage = false;
-    let errorMessageFilters = this.get('errorMessageFilters');
-    let errorMessageFilterActive = this.get('errorMessageFilterActive');
-
-    if (errorMessageFilterActive) {
-      errorMessageFilters.forEach(errorMessageFilter => {
-        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
-          isSkippedMessage = true;
-        }
-      });
-    }
-
-    if (!this.get('enabled') || isSkippedMessage ||
-      category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
-      category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
-      category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
-      category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
-      category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
-      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
-      category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
+    if (this._checkMessageOnSkipped(category, message)) {
       return new RSVP.Promise((resolve) => {
         this._triggerEvent(category.name);
         resolve();
@@ -667,5 +670,34 @@ export default Service.extend(Evented, {
         reject(reason);
       });
     });
+  },
+
+  _checkMessageOnSkipped(category, message) {
+    if (!this.get('enabled')) return true;
+
+    let isSkippedMessage = false;
+    let logMessageFilters = this.get('logMessageFilters');
+    let logMessageFilterActive = this.get('logMessageFilterActive');
+
+    if (logMessageFilterActive) {
+      logMessageFilters.forEach(logMessageFilter => {
+        if (category.name === logMessageFilter.category && message.indexOf(logMessageFilter.message) !== -1) {
+          isSkippedMessage = true;
+        }
+      });
+    }
+
+    if (isSkippedMessage ||
+      category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
+      category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
+      category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
+      category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
+      category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
+      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
+      category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
+        return true;
+      }
+
+    return isSkippedMessage;
   }
 });

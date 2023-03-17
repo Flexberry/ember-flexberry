@@ -581,13 +581,6 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    let messageSkipped = this._checkMessageOnSkipped(category, message);
-    if (messageSkipped) {
-      return new RSVP.Promise((resolve) => {
-        this._triggerEvent(category.name);
-        resolve();
-      });
-    }
 
     let appConfig = getOwner(this).factoryFor('config:environment').class;
     let applicationLogProperties = {
@@ -674,7 +667,7 @@ export default Service.extend(Evented, {
   },
 
   _checkMessageOnSkipped(category, message) {
-    if (!this.get('enabled') || isSkippedMessage ||
+    if (!this.get('enabled') ||
     category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
     category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
     category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
@@ -682,6 +675,10 @@ export default Service.extend(Evented, {
     category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
     category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
     category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
+      new RSVP.Promise((resolve) => {
+        this._triggerEvent(category.name);
+        resolve();
+      });
       return true;
     }
 

@@ -350,7 +350,7 @@ export default Service.extend(Evented, {
     };
     ```
   */
-    errorMessageFilterActive: false,
+  errorMessageFilterActive: false,
 
   /**
     Error messages which must be skipped when flag errorMessageFilterActive is true.
@@ -581,7 +581,8 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    if (this._checkMessageOnSkipped(category, message)) {
+    let messageSkipped = this._checkMessageOnSkipped(category, message);
+    if (messageSkipped) {
       return new RSVP.Promise((resolve) => {
         this._triggerEvent(category.name);
         resolve();
@@ -673,7 +674,16 @@ export default Service.extend(Evented, {
   },
 
   _checkMessageOnSkipped(category, message) {
-    if (!this.get('enabled')) return true;
+    if (!this.get('enabled') || isSkippedMessage ||
+    category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
+    category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
+    category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
+    category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
+    category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
+    category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
+    category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
+      return true;
+    }
 
     let isSkippedMessage = false;
     let errorMessageFilters = this.get('errorMessageFilters');
@@ -686,17 +696,6 @@ export default Service.extend(Evented, {
         }
       });
     }
-
-    if (isSkippedMessage ||
-      category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
-      category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
-      category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
-      category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
-      category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
-      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
-      category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
-        return true;
-      }
 
     return isSkippedMessage;
   }

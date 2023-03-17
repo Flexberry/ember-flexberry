@@ -327,14 +327,14 @@ export default Service.extend(Evented, {
   showPromiseErrors: false,
 
   /**
-    Flag: indicates whether log service will skip error messages that defined in logMessageFilters array variable.
+    Flag: indicates whether log service will skip error messages that defined in errorMessageFilters array variable.
 
-    @property logMessageFilterActive
+    @property errorMessageFilterActive
     @type Boolean
     @default false
     @example
     ```
-    // Log service 'logMessageFilterActive' setting could be also defined through application config/environment.js
+    // Log service 'errorMessageFilterActive' setting could be also defined through application config/environment.js
     module.exports = function(environment) {
       var ENV = {
         ...
@@ -342,7 +342,7 @@ export default Service.extend(Evented, {
           ...
           log: {
             enabled: true,
-            logMessageFilterActive: true
+            errorMessageFilterActive: true
           }
           ...
         }
@@ -350,16 +350,16 @@ export default Service.extend(Evented, {
     };
     ```
   */
-    logMessageFilterActive: false,
+    errorMessageFilterActive: false,
 
   /**
-    Error messages which must be skipped when flag logMessageFilterActive is true.
+    Error messages which must be skipped when flag errorMessageFilterActive is true.
 
-    @property logMessageFilters
+    @property errorMessageFilters
     @type Array
     @default [{ category: 'PROMISE', message: "TransitionAborted" }]
   */
-  logMessageFilters: A([
+  errorMessageFilters: A([
     { category: 'PROMISE', message: 'TransitionAborted' },
     { category: 'DEBUG', message: 'DEBUG: Flexberry Store::query' },
     { category: 'DEBUG', message: 'DEBUG: Flexberry Store::findRecord' },
@@ -545,7 +545,7 @@ export default Service.extend(Evented, {
     this.set('storeDeprecationMessages', typeof logConfiguration.storeDeprecationMessages === 'boolean' && logConfiguration.storeDeprecationMessages);
     this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
-    this.set('logMessageFilterActive', typeof logConfiguration.logMessageFilterActive === 'boolean' && logConfiguration.logMessageFilterActive);
+    this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
 
     if (typeof logConfiguration.applicationLogModelName === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
@@ -676,12 +676,12 @@ export default Service.extend(Evented, {
     if (!this.get('enabled')) return true;
 
     let isSkippedMessage = false;
-    let logMessageFilters = this.get('logMessageFilters');
-    let logMessageFilterActive = this.get('logMessageFilterActive');
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
 
-    if (logMessageFilterActive) {
-      logMessageFilters.forEach(logMessageFilter => {
-        if (category.name === logMessageFilter.category && message.indexOf(logMessageFilter.message) !== -1) {
+    if (errorMessageFilterActive) {
+      errorMessageFilters.forEach(errorMessageFilter => {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
           isSkippedMessage = true;
         }
       });

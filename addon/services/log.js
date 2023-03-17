@@ -412,7 +412,7 @@ export default Service.extend(Evented, {
       originalEmberLoggerError(...arguments);
 
       const message = joinArguments(...arguments);
-      if (_this._checkMessageOnSkipped(essageCategory.error, message)) return;
+      if (_this._checkMessageOnSkipped(messageCategory.error, message)) return;
 
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.error, message, '').then((result) => {

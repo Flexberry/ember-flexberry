@@ -776,11 +776,7 @@ export default Service.extend(Evented, {
           url: logServiceUrl,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json',
-          data: JSON.stringify(messageData),
-          success: function (response) {
-          },
-          error: function () {
-          }
+          data: JSON.stringify(messageData)
         });
       }
     }

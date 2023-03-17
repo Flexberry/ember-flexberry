@@ -249,4 +249,10 @@ export default Component.extend(
 
     return targetObject;
   },
+
+  isNameOfCurrentComponent(componentName) {
+    const currentComponentName = this.get('componentName');
+    
+    return currentComponentName === componentName;
+  },
 });

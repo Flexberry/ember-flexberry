@@ -272,15 +272,15 @@ export default FlexberryObjectlistview.extend({
     let i18n = this.get('i18n');
     let sorting = this.get('_currecntSortingArray');
     if (sorting.length === 0) {
-      return i18n.t('components.flexberry-objectlistview.without-sorting');
+      return t('components.flexberry-objectlistview.without-sorting');
     }
 
     let sortingValue;
     sorting.forEach((column) => {
-      let columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, column.key)).string;
+      let columnHeader = t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, column.key)).string;
       if (columnHeader !== undefined) {
         let key = column.key.split('.')[0];
-        columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, key)).string;
+        columnHeader = t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, key)).string;
       }
 
       if (sortingValue  !== undefined) {

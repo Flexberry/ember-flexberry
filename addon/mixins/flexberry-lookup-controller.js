@@ -2,6 +2,8 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
 import { getOwner } from '@ember/application';
@@ -322,7 +324,7 @@ export default Mixin.create(ReloadListMixin, {
         const modalDialogSettings = merge({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
         const lookupController = this.get('lookupController');
         lookupController.setProperties({
-          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          title: t('components.flexberry-lookup.preview-button-text'),
           modalDialogSettings: modalDialogSettings,
         });
 

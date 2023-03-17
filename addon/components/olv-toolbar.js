@@ -14,6 +14,9 @@ import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import { getNewRouteNameOfEditForm } from '../utils/routes-names-builder';
+import { translationMacro as t } from 'ember-i18n';
+const { getOwner } = Ember;
 
 /**
   @class OlvToolbar
@@ -255,8 +258,7 @@ export default FlexberryBaseComponent.extend({
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
-      let i18n = this.get('i18n');
+  colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let menus = [
         { icon: 'angle right icon',
           iconAlignment: 'right',
@@ -284,7 +286,7 @@ export default FlexberryBaseComponent.extend({
       let createSettitingItem = {
         icon: 'table icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        title: t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title'
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
@@ -293,7 +295,7 @@ export default FlexberryBaseComponent.extend({
       let setDefaultItem = {
         icon: 'remove circle icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
+        title: t('components.olv-toolbar.set-default-setting-title'),
         localeKey: 'components.olv-toolbar.set-default-setting-title'
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
@@ -301,7 +303,7 @@ export default FlexberryBaseComponent.extend({
         let showDefaultItem = {
           icon: 'unhide icon',
           iconAlignment: 'left',
-          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+          title: t('components.olv-toolbar.show-default-setting-title'),
           localeKey: 'components.olv-toolbar.show-default-setting-title'
         };
         rootItem.items[rootItem.items.length] = showDefaultItem;
@@ -315,8 +317,7 @@ export default FlexberryBaseComponent.extend({
     @property advLimitItems
     @readOnly
   */
-  advLimitItems: computed('i18n.locale', 'advLimit.isAdvLimitServiceEnabled', 'namedAdvLimits', function() {
-    const i18n = this.get('i18n');
+  advLimitItems: Ember.computed('i18n.locale', 'advLimit.isAdvLimitServiceEnabled', 'namedAdvLimits', function() {
     const rootItem = {
       icon: 'dropdown icon',
       iconAlignment: 'right',
@@ -327,7 +328,7 @@ export default FlexberryBaseComponent.extend({
     const createLimitItem = {
       icon: 'flask icon',
       iconAlignment: 'left',
-      title: i18n.t('components.olv-toolbar.create-limit-title'),
+      title: t('components.olv-toolbar.create-limit-title'),
       localeKey: 'components.olv-toolbar.create-limit-title'
     };
     rootItem.items.addObject(createLimitItem);
@@ -354,7 +355,7 @@ export default FlexberryBaseComponent.extend({
     const setDefaultItem = {
       icon: 'remove circle icon',
       iconAlignment: 'left',
-      title: i18n.t('components.olv-toolbar.set-default-limit-title'),
+      title: t('components.olv-toolbar.set-default-limit-title'),
       localeKey: 'components.olv-toolbar.set-default-limit-title'
     };
     rootItem.items.addObject(setDefaultItem);
@@ -370,8 +371,7 @@ export default FlexberryBaseComponent.extend({
     @property exportExcelItems
     @readOnly
   */
-  exportExcelItems: computed(function() {
-      let i18n = this.get('i18n');
+  exportExcelItems:  Ember.computed(function() {
       let menus = [
         { icon: 'angle right icon',
           iconAlignment: 'right',
@@ -399,7 +399,7 @@ export default FlexberryBaseComponent.extend({
       let createSettitingItem = {
         icon: 'file excel outline icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        title: t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title'
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
@@ -498,7 +498,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
-    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = t('components.olv-toolbar.copy');
     oLVToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
   },
@@ -535,8 +535,8 @@ export default FlexberryBaseComponent.extend({
         }
       };
 
-      later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
+      Ember.run.later((function() {
+        modelController.transitionToRoute(getNewRouteNameOfEditForm(editFormRoute), transitionOptions);
       }), 50);
     },
 
@@ -770,7 +770,7 @@ export default FlexberryBaseComponent.extend({
         }
         case 'unhide icon': {
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + router.currentPath + '.js';
+          let caption = t('components.olv-toolbar.show-setting-caption') + router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
         }
@@ -816,9 +816,9 @@ export default FlexberryBaseComponent.extend({
           .then(() => {
             this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
             alert(
-              this.get('i18n').t('components.advlimit-dialog-content.limit') +
+              t('components.advlimit-dialog-content.limit') +
               '"' + advLimitName + '"' +
-              this.get('i18n').t('components.advlimit-dialog-content.is-deleted')
+              t('components.advlimit-dialog-content.is-deleted')
             );
           });
           break;
@@ -885,7 +885,7 @@ export default FlexberryBaseComponent.extend({
       infoModalDialog.find('.olv-toolbar-info-modal-dialog-content textarea').select();
       let copied = document.execCommand('copy');
       let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
-      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
+      oLVToolbarInfoCopyButton.get(0).innerHTML = t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     }
     /* eslint-enable no-unused-vars */
@@ -958,7 +958,7 @@ export default FlexberryBaseComponent.extend({
   */
   /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
@@ -978,14 +978,14 @@ export default FlexberryBaseComponent.extend({
       this.get('objectlistviewEventsService').updateSelectAllTrigger(this.get('componentName'), false);
     }
 
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('isDeleteButtonEnabled', false);
     }
   },
   /* eslint-enable no-unused-vars */
 
   _updateListNamedUserSettings(componentName) {
-    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && componentName === this.get('componentName'))) {
+    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && this.isNameOfCurrentComponent(componentName))) {
       return;
     }
 
@@ -1036,7 +1036,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   _deleteNamedSetting(namedSetting, componentName) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this._updateListNamedUserSettings(componentName);
     }
   },
@@ -1044,7 +1044,7 @@ export default FlexberryBaseComponent.extend({
 
   /* eslint-disable no-unused-vars */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.get('componentName')) {
+    if (this.isNameOfCurrentComponent(componentName)) {
       this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }

@@ -4,6 +4,8 @@
 
 import Mixin from '@ember/object/mixin';
 import { merge } from '@ember/polyfills';
+import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
@@ -68,7 +70,7 @@ export default Mixin.create({
           this.controller.save(false, true).then(() => {
             this.transitionTo(editFormRoute, recordId, transitionOptions);
           }).catch((errorData) => {
-            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+            this.controller.rejectError(errorData, t('forms.edit-form.save-failed-message'));
           });
         } else {
           this.transitionTo(editFormRoute, recordId, transitionOptions);

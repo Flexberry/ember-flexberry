@@ -279,13 +279,17 @@ export default FlexberryBaseComponent.extend({
       @param {DS.Model} model Model in row.
     */
     customButtonInRowAction(action, model) {
-      let actionType = typeof action;
-      if (actionType === 'function') {
-        action(model);
-      } else if (actionType === 'string') {
-        this.sendAction('customButtonInRowAction', action, model);
-      } else {
-        throw new Error('Unsupported action type for custom buttons in row.');
+      switch (typeof action) {
+        case 'function':
+          action(model);
+          break;
+        
+        case 'string':
+          this.sendAction('customButtonInRowAction', action, model);
+          break;
+        
+        default:
+          throw new Error('Unsupported action type for custom buttons in row.');
       }
     },
 

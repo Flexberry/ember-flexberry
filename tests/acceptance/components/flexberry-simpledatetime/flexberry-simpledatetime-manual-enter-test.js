@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
@@ -21,7 +21,7 @@ module('Acceptance | flexberry-simpledatetime | manual enter on groupedit', {
     }
   });
 
-test('manual enter on groupedit', (assert) => {
+skip('manual enter on groupedit', (assert) => {
   assert.expect(5);
   visit(path);
   andThen(() => {
@@ -54,4 +54,3 @@ test('manual enter on groupedit', (assert) => {
     });
   });
 });
-

@@ -93,7 +93,7 @@ test('properly init value by input', function(assert) {
 
   // Retrieve component.
   let $component = this.$();
-  let $componentInput = Ember.$('.flatpickr-input.custom-flatpickr', $component);
+  let $componentInput = Ember.$('.custom-flatpickr', $component);
 
   Ember.run(() => {
     $componentInput.val('01.01.2022');

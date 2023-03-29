@@ -28,6 +28,7 @@ export default EditFormController.extend({
           customButtons: [{
             i18n: this.get('i18n'),
             buttonName: t('components.olv-toolbar.clear-sorting-button-text'),
+            buttonClasses: 'default-sort',
             buttonAction: () => {
               let defaultUserSetting = this.get('userSettingsService').getDefaultDeveloperUserSetting(this.get('lookupComponentName'));
               this.set('lookupController.sort', serializeSortingParam(defaultUserSetting.sorting || []));

@@ -2613,7 +2613,8 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.get('filterByAnyMatch')(pattern, filterCondition, componentName);
+      let filterProjectionName = this.get('filterProjectionName');
+      this.get('filterByAnyMatch')(pattern, filterCondition, componentName, filterProjectionName);
     }
   },
 

@@ -732,6 +732,16 @@ export default FlexberryBaseComponent.extend({
   filterByAllWords: false,
 
   /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
+
+  /**
     Array of pages to show.
 
     @property pages

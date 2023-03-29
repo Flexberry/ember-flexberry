@@ -445,6 +445,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/lookup-in-modal-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/dropdown-mode-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
@@ -483,6 +488,16 @@ export default Controller.extend({
             link: 'components-examples/flexberry-lookup/user-settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.title'),
+          children: [{
+            link: 'components-examples/flexberry-multiple-lookup/multiple-lookup',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
             children: null
           }]
         }, {

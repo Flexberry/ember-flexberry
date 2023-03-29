@@ -204,6 +204,7 @@ class EditFormBlueprint {
         belongsTo.readonly = "readonly";
         belongsTo.entityName = this.options.entity.name;
         belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        belongsTo.isDropdown = belongsTo.type === 'combo';
         this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }

@@ -97,6 +97,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `3.8.0-beta.0`.
 
+## [2.8.0] - 2023-03-13
+### Added
+* The `flexberry-file` component:
+    * Drag-and-drop support.
+* The `flexberry-objectlistview` component:
+    * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
+* The `flexberry-lookup` component:
+    * Added support of property `filterProjectionName` of `flexberry-objectlistview` on modal window (it sets throught `lookupWindowCustomProperties`).
+    * Event `lookupOnDataLoaded` for `flexberry-lookup` component to detect time of data loading completed.
+* Blueprints:
+    * Add generating lookups in dropdown mode.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.8.0`.
+
+### Fixed
+* The `flexberry-lookup` component:
+    * Default user settings usage.
+
 ## [3.7.0] - 2022-05-17
 ### Added
 * Changes up to `2.7.0` version.

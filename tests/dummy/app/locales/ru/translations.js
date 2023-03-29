@@ -328,6 +328,10 @@ $.extend(true, translations, {
               'caption': 'Лукап в модальном окне',
               'title': ''
             },
+            'lookup-in-modal-autocomplete': {
+              'caption': 'Лукап в модальном окне с автокомплитом',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -347,6 +351,14 @@ $.extend(true, translations, {
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Лукап множественного выбора',
+              'title': 'Лукап множественного выбора'
             }
           },
           'flexberry-menu': {
@@ -792,6 +804,12 @@ $.extend(true, translations, {
       'flexberry-file': {
         'settings-example': {
           'caption': 'Flexberry-file. Пример работы с настройками'
+        },
+        'file-in-modal': {
+          'caption': 'Flexberry-file. Пример файла в модальном окне',
+          'captionModal': 'Flexberry-file. Пример файла в модальном окне',
+          'buttonModal': 'Модальное окно №1',
+          'buttonClose': 'Закрыть'
         }
       },
       'flexberry-groupedit': {
@@ -843,6 +861,10 @@ $.extend(true, translations, {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
         },
+        'event-example': {
+          'caption': 'Flexberry-lookup. События',
+          'titleLookup': 'Мастер'
+        },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
           'titleLookup': 'Мастер',
@@ -861,6 +883,11 @@ $.extend(true, translations, {
           'buttonModalDouble': 'Модальное окно №2',
           'buttonClose': 'Закрыть'
         },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
+          'captionModal': 'Модальное окно с ui-modal',
+          'captionModalDouble': 'Модальное с modal-dialog'
+        },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown'
         },
@@ -875,6 +902,13 @@ $.extend(true, translations, {
         'user-settings-example': {
           'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
           'clear-user-setting': 'Сбросить настройки пользователя'
+        }
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Лукап множественного выбора',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей',
         }
       },
       'flexberry-menu': {

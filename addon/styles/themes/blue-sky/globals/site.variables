@@ -1,0 +1,57 @@
+/*******************************
+         Site Settings
+*******************************/
+
+/*-------------------
+       Loader
+--------------------*/
+
+@loaderFillColor         : #CCE2FF;
+@loaderLineColor         : @primaryColor;
+
+@invertedLoaderFillColor : @primaryColor;
+@invertedLoaderLineColor : #CCE2FF;
+
+/*-------------------
+      Site Colors
+--------------------*/
+
+/*---  Colors  ---*/
+@primaryColor     : @blue;
+
+@red              : #FF7500;
+@brightRed        : #FF4800;
+@green            : #7dd4b4;
+@blue             : #7ba7d9;
+@brightBlue       : #3c87dc;
+@paleBlue         : #b1cae8;
+@whiteBlue        : #f1f7ff;
+@headerColor      : #4f73b0;
+
+/*---  Light Colors  ---*/
+@lightGreen       : #a4e1cb;
+
+/*-------------------
+        Paths
+--------------------*/
+
+/* For source only. Modified in gulp for dist */
+@imagePath : 'themes/blue-sky/assets/images';
+@fontPath  : 'themes/default/assets/fonts';
+
+/*-------------------
+        Hover
+--------------------*/
+
+/*---  Colors  ---*/
+@dropdownHoveredItemColor: #dcebfc;
+@readonlyColor: #999;
+
+/*-------------------
+        Heights
+--------------------*/
+
+@headerHeight : 80px;
+@footerHeight : 40px;
+@headerHeightMobile : 50px;
+@footerHeightMobile : 40px;

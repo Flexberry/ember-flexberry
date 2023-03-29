@@ -209,6 +209,7 @@ ErrorableRouteMixin, {
           filter: params.filter,
           filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
+          filterProjectionName: controller.get('filterProjectionName'),
           predicate: limitPredicate,
           advLimit: advLimit,
           hierarchicalAttribute: hierarchicalAttribute,

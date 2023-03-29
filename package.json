@@ -112,7 +112,7 @@
     "ember-get-config": "0.3.0"
   },
   "engines": {
-    "node": ">= 12.*"
+    "node": "10.* || >= 12.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

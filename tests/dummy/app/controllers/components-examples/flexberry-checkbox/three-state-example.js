@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { set } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   actions: {
     setIndeterminate() {
-      Ember.set(this, 'model.flag', null);
+      set(this, 'model.flag', null);
     }
   }
 });

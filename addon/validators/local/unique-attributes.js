@@ -1,18 +1,11 @@
 import Ember from 'ember';
+import { get, set } from '@ember/object';
 import BaseValidator from 'ember-validations/validators/base';
 import Messages from 'ember-validations/messages';
-import { Query } from 'ember-flexberry-data';
-
-const {
-  Builder,
-  Condition,
-  SimplePredicate,
-  ComplexPredicate,
-  FilterOperator
-} = Query;
-
-let get = Ember.get;
-let set = Ember.set;
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 const uniqueAttributes = BaseValidator.extend({
   /**

@@ -2,9 +2,14 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-const { SimplePredicate, StringPredicate, DatePredicate, NotPredicate } = Query;
+import { set } from '@ember/object';
+
+import {
+  SimplePredicate,
+  StringPredicate,
+  DatePredicate,
+  NotPredicate
+} from 'ember-flexberry-data/query/predicate';
 
 /**
   Builds predicate for filter
@@ -32,7 +37,6 @@ let predicateForFilter = function (filter) {
             return new SimplePredicate(filter.name, filter.condition, filter.pattern || null);
         }
 
-        break;
       case 'boolean':
         switch (filter.condition) {
           case 'empty':
@@ -43,7 +47,6 @@ let predicateForFilter = function (filter) {
             return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         }
 
-        break;
       case 'number':
         if (filter.condition === 'between') {
           if (!filter.pattern) {
@@ -67,7 +70,29 @@ let predicateForFilter = function (filter) {
           return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
         }
 
-        break;
+      case 'decimal':
+        if (filter.condition === 'between') {
+          if (!filter.pattern) {
+            return new SimplePredicate(filter.name, filter.condition, null);
+          } else {
+            let [from, to] = filter.pattern.split('|');
+            let isNumber = (s) => Number(s) === Number(s) && s;
+            if (isNumber(from) && isNumber(to)) {
+              return new SimplePredicate(filter.name, 'geq', Number(from)).and(
+                new SimplePredicate(filter.name, 'leq', Number(to))
+              );
+            } else if (isNumber(from)) {
+              return new SimplePredicate(filter.name, 'leq', Number(to));
+            } else if (isNumber(to)) {
+              return new SimplePredicate(filter.name, 'geq', Number(from));
+            } else {
+              return null;
+            }
+          }
+        } else {
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : null);
+        }
+
       case 'date':
         return filter.pattern ?
           new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
@@ -78,10 +103,10 @@ let predicateForFilter = function (filter) {
   } else if (filter.pattern) {
     switch (filter.type) {
       case 'string':
-        Ember.set(filter, 'condition', 'like');
+        set(filter, 'condition', 'like');
         return new StringPredicate(filter.name).contains(filter.pattern);
       case 'date':
-        Ember.set(filter, 'condition', 'eq');
+        set(filter, 'condition', 'eq');
         return new DatePredicate(filter.name, filter.condition, filter.pattern, true);
       default:
         return null;

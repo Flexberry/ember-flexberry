@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { A, isArray } from '@ember/array';
 
 /**
   Service for interaction between agregator's and detail's forms.
@@ -12,10 +13,10 @@ import Ember from 'ember';
   Warning: this service should not be used outside of addon because it can lead to unpredictable side effects.
 
   @class DetailInterationService
-  @extends Ember.Service
+  @extends Service
   @public
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Selected detail.
     Its selection triggered transition to detail's route.
@@ -85,7 +86,7 @@ export default Ember.Service.extend({
     @return {Boolean} Logic value showing if givven value is array and has values..
   */
   hasValues(currentArray) {
-    return currentArray && Ember.isArray(currentArray) && currentArray.length > 0;
+    return currentArray && isArray(currentArray) && currentArray.length > 0;
   },
 
   /**
@@ -104,7 +105,7 @@ export default Ember.Service.extend({
       currentArray.push(value);
       currentPropertyValue = currentArray;
     } else {
-      currentPropertyValue = Ember.A();
+      currentPropertyValue = A();
       currentPropertyValue.push(value);
     }
 

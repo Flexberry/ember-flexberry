@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
-const { SimplePredicate, ComplexPredicate } = Query;
-
+import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup custom window test', (store, assert, app) => {
@@ -23,7 +22,7 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
     let cp = new ComplexPredicate(Condition.And, sp1, sp2);
 
     let store = app.__container__.lookup('service:store');
-    let builder = new Query.Builder(store).from(modelName).selectByProjection('ApplicationUserL').where(cp).top(1);
+    let builder = new Builder(store).from(modelName).selectByProjection('ApplicationUserL').where(cp).top(1);
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       nameEtalone = arr.objectAt(0).get('name');
@@ -60,7 +59,7 @@ executeTest('flexberry-lookup custom window test', (store, assert, app) => {
             let currentModel = Ember.get(lookupController, 'model');
             let filteredByCommonProjectionCountN = Ember.get(currentModel, 'meta.count');
             assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${nameEtalone}".`);
-            
+
             // Close for proper initiation of filter projection name.
             let $closeIcon = Ember.$('i.close');
             Ember.run(() => {
@@ -178,7 +177,7 @@ executeTest('flexberry-lookup on groupedit custom window test', (store, assert, 
     let cp = new ComplexPredicate(Condition.And, sp1, sp2);
 
     let store = app.__container__.lookup('service:store');
-    let builder = new Query.Builder(store).from(modelName).selectByProjection('ApplicationUserL').where(cp).top(1);
+    let builder = new Builder(store).from(modelName).selectByProjection('ApplicationUserL').where(cp).top(1);
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       nameEtalone = arr.objectAt(0).get('name');
@@ -215,7 +214,7 @@ executeTest('flexberry-lookup on groupedit custom window test', (store, assert, 
             let currentModel = Ember.get(lookupController, 'model');
             let filteredByCommonProjectionCountN = Ember.get(currentModel, 'meta.count');
             assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${nameEtalone}".`);
-            
+
             let $closeIcon = Ember.$('i.close');
             Ember.run(() => {
               $closeIcon.click();

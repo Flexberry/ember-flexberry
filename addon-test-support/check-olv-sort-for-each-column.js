@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
 import { getHeaderSort } from './utils/check-olv-sort-function';
 
-Ember.Test.registerAsyncHelper('checkOlvSortForEachColumn',
+registerAsyncHelper('checkOlvSortForEachColumn',
   function(app, olvSelector, context, assert) {
     const helpers = app.testHelpers;
     const olv = helpers.findWithAssert(olvSelector, context);
@@ -20,15 +20,15 @@ Ember.Test.registerAsyncHelper('checkOlvSortForEachColumn',
 let checkColumns = function(headCells, index, olv, helpers, assert) {
   const headCell = headCells[index];
 
-  click('.ui.clear-sorting-button');
-  click(headCell);
-  andThen(() => {
+  helpers.click('.ui.clear-sorting-button');
+  helpers.click(headCell);
+  helpers.andThen(() => {
     const sortValue = getHeaderSort(olv, index, helpers);
     assert.equal('▲', sortValue.icon, 'Sorting icon is not correct');
     assert.equal(1, sortValue.index, 'Sorting index is not correct');
 
-    click(headCell);
-    andThen(() => {
+    helpers.click(headCell);
+    helpers.andThen(() => {
       const sortValue = getHeaderSort(olv, index, helpers);
       assert.equal('▼', sortValue.icon, 'Sorting icon is not correct');
       assert.equal(1, sortValue.index, 'Sorting index is not correct');

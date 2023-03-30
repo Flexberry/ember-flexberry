@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
@@ -20,7 +20,7 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
     let sp2 = new SimplePredicate('type.name', FilterOperator.Neq, '');
     let cp = new ComplexPredicate(Condition.And, sp1, sp2);
 
-    let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where(cp).top(1);
+    let builder = new Builder(store).from(modelName).selectByProjection('SuggestionL').where(cp).top(1);
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       adressEtalone = arr.objectAt(0).get('address');

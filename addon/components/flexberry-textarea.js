@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -22,6 +22,29 @@ import { translationMacro as t } from 'ember-i18n';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    Keeps `readonly` current value.
+
+    @property _readonly
+    @type Boolean
+  */
+  _readonly: undefined,
+
+  /**
+    Standard HTML attribute.
+
+    @property readonly
+    @type Boolean
+  */
+  readonly: computed('_readonly', {
+    get() {
+      return this.get('_readonly') === true ? true : undefined;
+    },
+    set(key, value) {
+      return this.set('_readonly', value === true ? true : undefined);
+    },
+  }),
+
+  /**
     Input value.
 
     @property value
@@ -40,7 +63,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array
@@ -62,7 +85,9 @@ export default FlexberryBaseComponent.extend({
     @type Integer
     @default 2
   */
-  rows: Ember.computed({
+
+  /* eslint-disable no-unused-vars */
+  rows: computed({
     get(key) {
       this._super(...arguments);
     },
@@ -76,13 +101,16 @@ export default FlexberryBaseComponent.extend({
       return value;
     }
   }),
+  /* eslint-enable no-unused-vars */
 
   /**
     Table columns related to textarea.
     @type Integer
     @default 20
   */
-  cols: Ember.computed({
+
+  /* eslint-disable no-unused-vars */
+  cols: computed({
     get(key) {
       this._super(...arguments);
     },
@@ -96,6 +124,7 @@ export default FlexberryBaseComponent.extend({
       return value;
     }
   }),
+  /* eslint-enable no-unused-vars */
 
   /**
     Initializes component.

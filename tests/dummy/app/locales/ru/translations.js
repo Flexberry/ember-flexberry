@@ -1,5 +1,4 @@
-import Ember from 'ember';
-
+import $ from 'jquery';
 import emberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
 
 import emberFlexberryDummySuggestionModel from './models/ember-flexberry-dummy-suggestion';
@@ -17,9 +16,9 @@ import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-so
 import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
-Ember.$.extend(true, translations, emberFlexberryTranslations);
+$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
 
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   models: {
@@ -46,7 +45,26 @@ Ember.$.extend(true, translations, {
       'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
     },
     'index': {
-      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
+      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!',
+      'components': 'Некоторые компоненты',
+      'log-service': {
+        'title': 'Сервис логирования',
+        'app-log': 'Лог приложения',
+        'settings-example': 'Пример работы с настройками',
+        'log-cleaning': 'Очистка лога'
+      },
+      'users': 'Пользователи приложения',
+      'localization': 'Локализация',
+      'log': 'Лог приложения',
+      'blocking': 'Список блокировок',
+      'search': {
+        'title': 'Поиск',
+        'field-label': 'Название поля',
+        'field-placeholder': 'Фамилия, имя и отчество',
+        'date-field-placeholder': 'ДД.ММ.ГГГГ или выберите в календаре',
+        'button-caption': 'Поиск',
+        'checkbox-label': 'По всем ОСЗ'
+      }
     },
 
     'application': {
@@ -56,7 +74,8 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Использовать сервис сохранения пользовательских настроек'
+            'caption': 'Сохранение настроек',
+            'title': 'Использовать сервис сохранения пользовательских настроек'
           },
           'show-menu': {
             'caption': 'Показать меню'
@@ -74,7 +93,17 @@ Ember.$.extend(true, translations, {
         },
         'logout': {
           'caption': 'Выход'
+        },
+        'profile': {
+          'caption': 'Личный кабинет'
         }
+      },
+
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Удалить',
+        'cancel-button-caption': 'Отмена',
+        'delete-at-listform-question-caption': 'Вы уверены, что хотите удалить выбранные записи?',
+        'delete-at-editform-question-caption': 'Вы уверены, что хотите удалить запись?',
       },
 
       'delete-rows-modal-dialog': {
@@ -315,6 +344,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример сортировки при автокомплите',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Пример лукапа с автокомплитом в groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
               'title': ''
@@ -463,6 +496,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
+          },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -484,6 +525,10 @@ Ember.$.extend(true, translations, {
             },
             'validation': {
               'caption': 'Валидация',
+              'title': ''
+            },
+            'theming-components': {
+              'caption': 'Темизация',
               'title': ''
             }
           },
@@ -507,6 +552,10 @@ Ember.$.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Иконки',
+            'title': 'Иконки'
+          },
         },
         'user-setting-forms': {
           'caption': 'Пользовательские настройки',
@@ -521,6 +570,26 @@ Ember.$.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Войти в систему',
+      'sign-up-caption': 'Или зарегистрироваться',
+      'enter-login-caption': 'Введите логин',
+      'enter-password-caption': 'Введите пароль',
+      'login-using-caption': 'Войти в систему с помощью',
+      'reset-password-caption': 'Забыли пароль?',
+      'login-button-caption': 'Войти'
+    },
+
+    'support-form' : {
+      'caption': 'Написать в техподдержку',
+      'contacts-caption': 'Контакты техподдержки: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Введите Ваше имя',
+      'enter-email-caption': 'Введите Вашу почту',
+      'enter-message-placeholder': 'Если вы столкнулись с проблемой, опишите подробно: как она проявляется, какие действия и в каком порядке вы совершали. По возможности приложите скриншот',
+      'send-button-caption': 'Отправить',
+      'attach-file-caption':'Прикрепить файл'
     },
 
     'edit-form': {
@@ -667,7 +736,7 @@ Ember.$.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Брошено исключение',
         'reject-rsvp-promise-button-message': 'Promise отклонен',
-        'ember-assert-button-message': 'Вызван метод Ember.assert',
+        'ember-assert-button-message': 'Вызван метод assert',
         'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
         'ember-logger-warn-button-message': 'Вызван метод Ember.warn',
         'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
@@ -899,7 +968,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Список детейлов Тип предложения'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Настройка фильтра'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра',
+          'eqAddress': 'Адресочек равен',
+          'neqAddress': 'Адресочек неравен',
+          'likeAddress': 'Адресочек содержит',
+          'nlikeAddress': 'Адресочек не содержит'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
@@ -924,35 +997,6 @@ Ember.$.extend(true, translations, {
         'lock-services-editor-view': {
           'blocked-by': 'Заблокированно пользователем',
         },
-      },
-      'flexberry-simpleolv': {
-        'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения',
-          'captionFirstLimitFunction': 'Функция ограничения №1',
-          'captionSecondLimitFunction': 'Функция ограничения №2',
-          'captionClearLimitFunction': 'Очистить функцию ограничения'
-        },
-        'settings-example': {
-          'caption': 'Flexberry-simpleolv. Пример работы с настройками'
-        },
-        'toolbar-custom-buttons-example': {
-          'caption': 'Flexberry-simpleolv. Пользовательские кнопки',
-          'custom-message': 'Привет!',
-          'custom-button-name': 'Передать привет'
-        },
-        'on-edit-form': {
-          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
-        },
-        'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Настройка фильтра',
-          'addObjects-button': 'Добавить объекты'
-        },
-        'configurate-rows': {
-          'caption': 'Flexberry-simpleolv. Раскраска строк'
-        },
-        'selected-rows': {
-          'caption': 'Flexberry-simpleolv. Выбранные строки'
-        }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
@@ -995,6 +1039,23 @@ Ember.$.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
           'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
+      },
+      'highload-edit-form-menu': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'title': '',
+      },
+      'modal-dialog': {
+        'caption': 'Примеры использования компонента {{component}}',
+        'in-current-context': 'В контексте текущего шаблона',
+        'application-context': 'В контексте шаблона приложения',
+        'open-lightbox': 'Открыть модальное окно',
+        'open-second-lightbox': 'Открыть второе модальное окно',
+        'lightbox-title': 'Модальное окно',
+        'second-lightbox-title': 'Второе модальное окно',
+        'open-sidepage': 'Открыть модальное окно в режиме «sidepage»',
+        'open-second-sidepage': 'Открыть второе модальное окно в режиме «sidepage»',
+        'sidepage-title': 'Модальное окно в режиме «sidepage»',
+        'second-sidepage-title': 'Второе модальное окно в режиме «sidepage»',
       },
       'ui-message': {
         'settings-example': {
@@ -1073,7 +1134,11 @@ Ember.$.extend(true, translations, {
             caption: 'Виды департаментов'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Иконки',
+        'title': 'Иконки'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

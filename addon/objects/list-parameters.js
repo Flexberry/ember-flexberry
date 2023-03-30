@@ -2,13 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import EmberObject, { computed } from '@ember/object';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import HierarchycalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
-export default Ember.Object.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, HierarchycalControllerMixin, {
+export default EmberObject.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, HierarchycalControllerMixin, {
   componentName: undefined,
   modelName: undefined,
   projectionName: undefined,
@@ -21,8 +21,8 @@ export default Ember.Object.extend(PaginatedControllerMixin, SortableControllerM
     @property perPageValue
     @type Number
   */
-  perPageValue: Ember.computed('perPage', {
-    get(key) {
+  perPageValue: computed('perPage', {
+    get() {
       let perPage = this.get('perPage');
 
       return perPage;

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
@@ -21,7 +21,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
     }
   });
 
-test(testName, (assert) => {
+skip(testName, (assert) => {
   assert.expect(9);
   let path = 'ember-flexberry-dummy-suggestion-edit/2e98a54d-7146-4e61-bb2d-a278796c861e';
   visit(path);

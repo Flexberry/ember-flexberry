@@ -4,8 +4,9 @@
   <button class="ui button" {{action 'modalWindow' "#example"}}>{{t "forms.components-examples.flexberry-file.file-in-modal.buttonModal"}}</button>
 </form>
 
-{{#ui-modal id="repeat-window"}}
-  <div class="header">{{t "forms.components-examples.flexberry-file.file-in-modal.captionModal"}}</div>
+<div class="ui modal repeat-window hidden">
+  <i class="close icon"></i>
+  <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModal"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
       <div class="field">
@@ -28,4 +29,4 @@
       <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-file.file-in-modal.buttonClose"}}</button>
     </div>
   </div>
-{{/ui-modal}}
+</div>

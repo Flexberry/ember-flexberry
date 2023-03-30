@@ -2,14 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 /**
   Edit forms controllers mixin which handles save/delete operations indication.
 
   @class EditFormControllerOperationsIndicationMixin
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Handler for success ui-message component 'onShow' action.
@@ -69,7 +71,7 @@ export default Ember.Mixin.create({
     @property formSuccessMessageCaption.
     @type String
   */
-  formSuccessMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
+  formSuccessMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'save') {
       return i18n.t('forms.edit-form.save-success-message-caption');
@@ -84,7 +86,7 @@ export default Ember.Mixin.create({
     @property formSuccessMessage.
     @type String
   */
-  formSuccessMessage: Ember.computed('i18n.locale', 'latestOperationType', function() {
+  formSuccessMessage: computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     let message = null;
     if (this.get('latestOperationType') === 'save') {
@@ -93,7 +95,7 @@ export default Ember.Mixin.create({
       message = i18n.t('forms.edit-form.delete-success-message');
     }
 
-    return new Ember.Handlebars.SafeString('<ul><li>' + message + '</li></ul>');
+    return new htmlSafe('<ul><li>' + message + '</li></ul>');
   }),
 
   /**
@@ -111,7 +113,7 @@ export default Ember.Mixin.create({
     @property formErrorMessageCaption.
     @type String
   */
-  formErrorMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
+  formErrorMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'save') {
       return i18n.t('forms.edit-form.save-error-message-caption');
@@ -126,16 +128,16 @@ export default Ember.Mixin.create({
     @property formErrorMessage
     @type String
   */
-  formErrorMessage: Ember.computed('errorMessages.[]', function() {
+  formErrorMessage: computed('errorMessages.[]', function() {
     let message = '';
     let errorMessages = this.get('errorMessages');
-    if (Ember.isArray(errorMessages)) {
+    if (isArray(errorMessages)) {
       errorMessages.forEach((currentErrorMessage) => {
         message += '<li>' + currentErrorMessage + '</li>';
       });
     }
 
-    return new Ember.Handlebars.SafeString('<ul>' + message + '</ul>');
+    return new htmlSafe('<ul>' + message + '</ul>');
   }),
 
   /**
@@ -167,12 +169,14 @@ export default Ember.Mixin.create({
     @method onSaveActionRejected.
     @param {Object} errorData Data about save operation fail.
   */
+  /* eslint-disable no-unused-vars */
   onSaveActionRejected(errorData) {
     this._super(...arguments);
 
     this.set('showFormSuccessMessage', false);
     this.set('showFormErrorMessage', true);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked always when save operation completed,
@@ -181,9 +185,11 @@ export default Ember.Mixin.create({
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onSaveActionAlways(data) {
     this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -214,12 +220,14 @@ export default Ember.Mixin.create({
     @method onDeleteActionRejected.
     @param {Object} errorData Data about delete operation fail.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionRejected(errorData) {
     this._super(...arguments);
 
     this.set('showFormSuccessMessage', false);
     this.set('showFormErrorMessage', true);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked always when delete operation completed,
@@ -228,9 +236,11 @@ export default Ember.Mixin.create({
     @method onDeleteActionAlways.
     @param {Object} data Data about completed delete operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
     this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before close method will be called.

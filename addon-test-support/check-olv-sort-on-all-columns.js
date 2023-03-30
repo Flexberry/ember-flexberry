@@ -1,15 +1,15 @@
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
 import { getHeaderSort } from './utils/check-olv-sort-function';
 
-Ember.Test.registerAsyncHelper('checkOlvSortOnAllColumns',
+registerAsyncHelper('checkOlvSortOnAllColumns',
   function(app, olvSelector, context, assert) {
     const helpers = app.testHelpers;
     const olv = helpers.findWithAssert(olvSelector, context);
     const headCells = helpers.find('thead .dt-head-left', olv).toArray();
 
     if (headCells.length > 0) {
-      click('.ui.clear-sorting-button');
-      andThen(() => {
+      helpers.click('.ui.clear-sorting-button');
+      helpers.andThen(() => {
         checkColumns(headCells, 0, olv, helpers, assert);
       });
     } else {
@@ -21,14 +21,14 @@ Ember.Test.registerAsyncHelper('checkOlvSortOnAllColumns',
 let checkColumns = function(headCells, index, olv, helpers, assert) {
   const headCell = headCells[index];
 
-  triggerEvent(headCell, 'click', { ctrlKey: true });
-  andThen(() => {
+  helpers.triggerEvent(headCell, 'click', { ctrlKey: true });
+  helpers.andThen(() => {
     const sortValue = getHeaderSort(olv, index, helpers);
     assert.equal('▲', sortValue.icon, 'Sorting icon is not correct');
     assert.equal(index + 1, sortValue.index, 'Sorting index is not correct');
 
-    triggerEvent(headCell, 'click', { ctrlKey: true });
-    andThen(() => {
+    helpers.triggerEvent(headCell, 'click', { ctrlKey: true });
+    helpers.andThen(() => {
       const sortValue = getHeaderSort(olv, index, helpers);
       assert.equal('▼', sortValue.icon, 'Sorting icon is not correct');
       assert.equal(index + 1, sortValue.index, 'Sorting index is not correct');

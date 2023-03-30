@@ -1,5 +1,7 @@
-import Ember from 'ember';
-import { executeTest } from './execute-validation-test';
+import { run } from '@ember/runloop';
+import RSVP from 'rsvp';
+import $ from 'jquery';
+import { executeTest} from './execute-validation-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 executeTest('check operation text+date unique', (store, assert, _app) => {
@@ -14,17 +16,17 @@ executeTest('check operation text+date unique', (store, assert, _app) => {
   dateToSet.setUTCMilliseconds(0);
 
   let initTestData = function(createdRecordsPrefix) {
-    // Add records for deleting. 
-    return Ember.RSVP.Promise.all([
+    // Add records for deleting.
+    return RSVP.Promise.all([
       store.createRecord('ember-flexberry-dummy-suggestion-type', { name: createdRecordsPrefix + "0" }).save(),
-      store.createRecord('ember-flexberry-dummy-application-user', { 
+      store.createRecord('ember-flexberry-dummy-application-user', {
                                                                     name: createdRecordsPrefix + "1",
                                                                     eMail: "1",
                                                                     phone1: "1"
                                                                    }).save()
     ])
     .then((createdCustomRecords) => {
-        return store.createRecord('ember-flexberry-dummy-suggestion', { 
+        return store.createRecord('ember-flexberry-dummy-suggestion', {
             id: '75434dbd-f00c-4fd9-8483-c35aa59a18c3',
             text: '12345',
             date: dateToSet,
@@ -35,7 +37,7 @@ executeTest('check operation text+date unique', (store, assert, _app) => {
     })
   };
 
-  Ember.run(() => {
+  run(() => {
     let path = 'components-acceptance-tests/edit-form-validation/validation';
     let done1 = assert.async();
 
@@ -45,22 +47,22 @@ executeTest('check operation text+date unique', (store, assert, _app) => {
 
         andThen(() => {
             assert.equal(currentPath(), path);
-            
+
             // text
-            let $validationField = Ember.$(Ember.$('.field.error')[2]);
+            let $validationField = $($('.field')[3]);
             let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
             let $validationFlexberryTextboxInner = $validationFlexberryTextbox.children('input');
             let $validationFlexberryErrorLabel = $validationField.children('.label');
 
             // data
-            let $validationDateField = Ember.$(Ember.$('.field.error')[4]);
-            let $validationDate = Ember.$('.flexberry-simpledatetime', $validationDateField);
-            let $validationDateFlatpickr = Ember.$('.flatpickr > input', $validationDate);
-            let $validationDateFlatpickrCustom = Ember.$('input.custom-flatpickr', $validationDate);
+            let $validationDateField = $($('.field')[5]);
+            let $validationDate = $('.flexberry-simpledatetime', $validationDateField);
+            let $validationDateFlatpickr = $('.flatpickr > input', $validationDate);
+            let $validationDateFlatpickrCustom = $('input.custom-flatpickr', $validationDate);
 
             let done2 = assert.async();
             // Insert text and date in textbox.
-            Ember.run(() => {
+            run(() => {
                 $validationDateFlatpickr[0]._flatpickr.open();
                 $validationDateFlatpickr[0]._flatpickr.setDate(new Date(2012, 1, 12));
                 $validationDateFlatpickr[0]._flatpickr.close();
@@ -75,7 +77,7 @@ executeTest('check operation text+date unique', (store, assert, _app) => {
                 assert.equal($validationFlexberryErrorLabel.text().trim(), 'Combination of attributes (Text, Date) are not unique', 'Text+date combination must be non-unique');
 
                 // Change date value.
-                Ember.run(() => {
+                run(() => {
                     $validationDateFlatpickr[0]._flatpickr.open();
                     $validationDateFlatpickr[0]._flatpickr.setDate(new Date(2012, 1, 13));
                     $validationDateFlatpickr[0]._flatpickr.close();

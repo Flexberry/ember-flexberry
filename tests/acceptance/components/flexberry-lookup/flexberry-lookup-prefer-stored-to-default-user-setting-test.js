@@ -1,7 +1,10 @@
 /* eslint-disable ember/no-test-import-export */
 /* global visit, andThen, currentURL */
 /* eslint-disable ember/no-test-and-then */
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
+
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup prefer stored to default user setting test', (store, assert) => {
@@ -12,18 +15,18 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
   andThen(function () {
     assert.equal(currentURL(), 'components-examples/flexberry-lookup/user-settings-example');
 
-    let $lookupButtouChoose = Ember.$('.ui-change');
+    let $lookupButtouChoose = $('.ui-change');
 
     // Click choose button.
-    Ember.run(() => {
+    run(() => {
       $lookupButtouChoose.click();
     });
 
-    Ember.run(() => {
+    run(() => {
       var done = assert.async();
       setTimeout(function () {
 
-        let $lookupSearch = Ember.$('.content table.object-list-view');
+        let $lookupSearch = $('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');
         let $lookupHeaders = $lookupSearchTr.children('th');
@@ -37,7 +40,7 @@ executeTest('flexberry-lookup prefer stored to default user setting test', (stor
   });
 }, (app) => {
   const service = app.__container__.lookup('service:user-settings');
-  service.getCurrentUserSetting = () => Ember.Object.create({
+  service.getCurrentUserSetting = () => EmberObject.create({
     colsOrder: [
       {
         propName: 'name'

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -16,7 +16,7 @@ export default ListFormController.extend({
   */
   loadCount: 0,
 
-  customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
+  customButtons: computed('filterByAnyWord', 'filterByAllWords', function() {
     return [{
       buttonName: 'filterByAnyWord',
       buttonAction: 'toggleFilterByAnyWord',
@@ -43,6 +43,7 @@ export default ListFormController.extend({
       }
     },
 
+    /* eslint-disable no-unused-vars */
     componentForFilter(type, relation) {
       switch (type) {
         case 'date': return { name: 'flexberry-simpledatetime', properties: { type: 'date' } };
@@ -50,6 +51,7 @@ export default ListFormController.extend({
         default: return {};
       }
     },
+    /* eslint-enable no-unused-vars */
 
     conditionsByType(type) {
       switch (type) {

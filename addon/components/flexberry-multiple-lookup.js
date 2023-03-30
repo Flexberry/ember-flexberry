@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default FlexberryBaseComponent.extend({
   classNames: ['multiple-lookup'],
@@ -115,7 +117,7 @@ export default FlexberryBaseComponent.extend({
     const sorting = this.get('sorting');
     const displayAttributeName = this.get('displayAttributeName');
 
-    const builder = new Query.Builder(store, modelName);
+    const builder = new Builder(store, modelName);
 
     if (projection) {
       builder.selectByProjection(projection);
@@ -142,7 +144,7 @@ export default FlexberryBaseComponent.extend({
     const limitArray = Ember.A();
 
     if (limitPredicate) {
-      if (limitPredicate instanceof Query.BasePredicate) {
+      if (limitPredicate instanceof BasePredicate) {
         limitArray.pushObject(limitPredicate);
       } else {
         throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
@@ -150,7 +152,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (autocompletePredicate) {
-      if (autocompletePredicate instanceof Query.BasePredicate) {
+      if (autocompletePredicate instanceof BasePredicate) {
         limitArray.pushObject(autocompletePredicate);
       } else {
         throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
@@ -161,7 +163,7 @@ export default FlexberryBaseComponent.extend({
       if ((lookupAdditionalLimitFunction instanceof Function)) {
         const compileAdditionakBasePredicate = lookupAdditionalLimitFunction(this.get('relatedModel'));
         if (compileAdditionakBasePredicate) {
-          if (compileAdditionakBasePredicate instanceof Query.BasePredicate) {
+          if (compileAdditionakBasePredicate instanceof BasePredicate) {
             limitArray.pushObject(compileAdditionakBasePredicate);
           } else {
             throw new Error('lookupAdditionalLimitFunction must return BasePredicate.');
@@ -173,7 +175,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (limitArray.length > 1) {
-      return new Query.ComplexPredicate(Query.Condition.And, ...limitArray);
+      return new ComplexPredicate(Condition.And, ...limitArray);
     } else {
       return limitArray[0];
     }
@@ -312,7 +314,7 @@ export default FlexberryBaseComponent.extend({
           const builder = _this._createQueryBuilder(store, relationModelName, autocompleteProjection, autocompleteOrder);
 
           const autocompletePredicate = settings.urlData.query ?
-            new Query.StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+            new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
             undefined;
           const resultPredicate =
             _this._conjuctPredicates(_this.get('lookupLimitPredicate'), _this.get('lookupAdditionalLimitFunction'), autocompletePredicate);

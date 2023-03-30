@@ -1,7 +1,7 @@
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import Route from '@ember/routing/route';
+import Builder from 'ember-flexberry-data/query/builder';
 
-export default Ember.Route.extend({
+export default Route.extend({
   /**
     Name of model projection to be used as record's properties limitation.
 
@@ -43,10 +43,10 @@ export default Ember.Route.extend({
 
     @method model
    */
-  model(params) {
+  model() {
     let store = this.get('store');
 
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SuggestionTypeE').top(2);
 

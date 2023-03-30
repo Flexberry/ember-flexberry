@@ -1,3 +1,5 @@
+import { computed } from '@ember/object';
+
 import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
@@ -28,7 +30,7 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, M
     @type Object
     @default {}
   */
-  developerUserSettings: { FOLVOnEditFormObjectListView: { } },
+  developerUserSettings: computed(() => ({ FOLVOnEditFormObjectListView: {} })),
 
   /**
     Name of template to be rendered.

@@ -1,5 +1,4 @@
-import Ember from 'ember';
-
+import $ from 'jquery';
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 import emberFlexberryDummySuggestionModel from './models/ember-flexberry-dummy-suggestion';
@@ -17,9 +16,9 @@ import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-so
 import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
 const translations = {};
-Ember.$.extend(true, translations, emberFlexberryTranslations);
+$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
 
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   models: {
@@ -46,7 +45,26 @@ Ember.$.extend(true, translations, {
       'spinner-caption': 'Loading stuff, please have a cold beer...'
     },
     'index': {
-      'greeting': 'Welcome to ember-flexberry test stand!'
+      'greeting': 'Welcome to ember-flexberry test stand!',
+      'components': 'Some of the components',
+      'log-service': {
+        'title': 'Log service',
+        'app-log': 'Application log',
+        'settings-example': 'Settings example',
+        'log-cleaning': 'Log cleaning'
+      },
+      'users': 'Application users',
+      'localization': 'Localization',
+      'log': 'Application log',
+      'blocking': 'Block list',
+      'search': {
+        'title': 'Search',
+        'field-label': 'Field name',
+        'field-placeholder': 'Last name, first name and middle name',
+        'date-field-placeholder': 'DD.MM.YYYY or choose from the calendar',
+        'button-caption': 'Search',
+        'checkbox-label': 'Search all pages'
+      }
     },
 
     'application': {
@@ -56,7 +74,8 @@ Ember.$.extend(true, translations, {
             'title': 'Menu'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Use service to save user settings'
+            'caption': 'Save settings',
+            'title': 'Use service to save user settings'
           },
           'show-menu': {
             'caption': 'Show menu'
@@ -74,7 +93,17 @@ Ember.$.extend(true, translations, {
         },
         'logout': {
           'caption': 'Logout'
+        },
+        'profile': {
+          'caption': 'Profile'
         }
+      },
+
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-at-listform-question-caption': 'Are you sure you want to delete the selected entries?',
+        'delete-at-editform-question-caption': 'Are you sure you want to delete entries?',
       },
 
       'delete-rows-modal-dialog': {
@@ -315,6 +344,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Example for autocomplete with order',
               'title': ''
             },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Example for autocomplete lookup in groupedit',
+              'title': ''
+            },
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
               'title': ''
@@ -463,6 +496,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
+          },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -484,6 +525,10 @@ Ember.$.extend(true, translations, {
             },
             'validation': {
               'caption': 'Validation',
+              'title': ''
+            },
+            'theming-components': {
+              'caption': 'Theming',
               'title': ''
             }
           },
@@ -507,6 +552,10 @@ Ember.$.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Icons',
+            'title': 'Icons'
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -521,6 +570,26 @@ Ember.$.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Sign in',
+      'sign-up-caption': 'Or register',
+      'enter-login-caption': 'Enter login',
+      'enter-password-caption': 'Enter password',
+      'login-using-caption': 'login using',
+      'reset-password-caption': 'Forgot your password?',
+      'login-button-caption': 'Login'
+    },
+
+    'support-form' : {
+      'caption': 'Write to tech support',
+      'contacts-caption': 'Technical support contacts: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Enter your name',
+      'enter-email-caption': 'Enter your mail',
+      'enter-message-placeholder': 'If you encounter a problem, describe in detail: how it manifests itself, what actions and in what order you performed. If possible, attach a screenshot',
+      'send-button-caption': 'Submit',
+      'attach-file-caption':'Attach file'
     },
 
     'edit-form': {
@@ -667,7 +736,7 @@ Ember.$.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Exception thrown',
         'reject-rsvp-promise-button-message': 'Promise rejected',
-        'ember-assert-button-message': 'Ember.assert called',
+        'ember-assert-button-message': 'assert called',
         'ember-logger-error-button-message': 'Ember.Logger.error called',
         'ember-logger-warn-button-message': 'Ember.warn called',
         'ember-deprecate-button-message': 'Ember.deprecate called',
@@ -897,7 +966,11 @@ Ember.$.extend(true, translations, {
           'caption': 'List of children Type'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter',
+          'eqAddress': 'Address is equal',
+          'neqAddress': 'Address is not equal',
+          'likeAddress': 'Address contains',
+          'nlikeAddress': 'Address does not contain'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
@@ -922,35 +995,6 @@ Ember.$.extend(true, translations, {
         'lock-services-editor-view': {
           'blocked-by': 'Blocked by user',
         },
-      },
-      'flexberry-simpleolv': {
-        'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Limit function example',
-          'captionFirstLimitFunction': 'Limit function №1',
-          'captionSecondLimitFunction': 'Limit function №2',
-          'captionClearLimitFunction': 'Clear limit function'
-        },
-        'settings-example': {
-          'caption': 'Flexberry-simpleolv. Settings example'
-        },
-        'toolbar-custom-buttons-example': {
-          'caption': 'Flexberry-simpleolv. Custom buttons on toolbar',
-          'custom-message': 'Hello!',
-          'custom-button-name': 'Send hello'
-        },
-        'on-edit-form': {
-          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
-        },
-        'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Custom filter',
-          'addObjects-button': 'Add objects'
-        },
-        'configurate-rows': {
-          'caption': 'Flexberry-simpleolv. Configurate rows'
-        },
-        'selected-rows': {
-          'caption': 'Flexberry-simpleolv. Setected rows'
-        }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
@@ -993,6 +1037,23 @@ Ember.$.extend(true, translations, {
           'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
+      },
+      'highload-edit-form-menu': {
+        'caption': 'Examples of using the {{component}} component',
+        'title': '',
+      },
+      'modal-dialog': {
+        'caption': 'Examples of using the {{component}} component',
+        'in-current-context': 'In the context of the current template',
+        'application-context': 'In the context of the application template',
+        'open-lightbox': 'Open modal window',
+        'open-second-lightbox': 'Open second modal window',
+        'lightbox-title': 'Modal window',
+        'second-lightbox-title': 'Second modal window',
+        'open-sidepage': 'Open modal window in «sidepage» mode',
+        'open-second-sidepage': 'Open second modal window in «sidepage» mode',
+        'sidepage-title': 'Modal window in «sidepage» mode',
+        'second-sidepage-title': 'Second modal window in «sidepage» mode',
       },
       'ui-message': {
         'settings-example': {
@@ -1071,7 +1132,11 @@ Ember.$.extend(true, translations, {
             caption: 'EmberFlexberryDummyVidDepartamentaL'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Icons',
+        'title': 'Icons'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

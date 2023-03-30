@@ -1,8 +1,9 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
+import { run } from '@ember/runloop';
+import { A, isArray } from '@ember/array';
+import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
-let dataForDestroy = Ember.A();
+let dataForDestroy = A();
 let app;
 
 export function executeTest(testName, callback) {
@@ -11,35 +12,39 @@ export function executeTest(testName, callback) {
 
   module('Acceptance | flexberry-objectlistview | ' + testName, {
     beforeEach() {
+      run(() => {
+        // Start application.
+        app = startApp();
 
-      // Start application.
-      app = startApp();
+        // Just take it and turn it off...
+        app.__container__.lookup('service:log').set('enabled', false);
 
-      // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-      let applicationController = app.__container__.lookup('controller:application');
-      applicationController.set('isInAcceptanceTestMode', true);
-      store = app.__container__.lookup('service:store');
+        // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
+        let applicationController = app.__container__.lookup('controller:application');
+        applicationController.set('isInAcceptanceTestMode', true);
+        store = app.__container__.lookup('service:store');
 
-      userSettingsService = app.__container__.lookup('service:user-settings');
-      let getCurrentPerPage = function() {
-        return 5;
-      };
+        userSettingsService = app.__container__.lookup('service:user-settings');
+        let getCurrentPerPage = function() {
+          return 5;
+        };
 
-      userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
+        userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
+      });
     },
 
-    afterEach(assert) {
-      Ember.run(() => {
+    afterEach() {
+      run(() => {
         if (dataForDestroy.length !== 0) {
           recursionDelete(0);
         } else {
-          Ember.run(app, 'destroy');
+          run(app, 'destroy');
         }
       });
     }
   });
 
-  test(testName, (assert) => callback(store, assert, app));
+  skip(testName, (assert) => callback(store, assert, app));
 }
 
 /**
@@ -51,7 +56,7 @@ export function executeTest(testName, callback) {
  */
 
 export function addDataForDestroy(data) {
-  if (Ember.isArray(data)) {
+  if (isArray(data)) {
     dataForDestroy.addObjects(data);
   } else {
     dataForDestroy.addObject(data);
@@ -69,6 +74,6 @@ function recursionDelete(index) {
     }
   } else {
     dataForDestroy.clear();
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   }
 }

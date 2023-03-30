@@ -4,13 +4,13 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
+var skipConfirmationFunc = require('../utils/skip-confirmation');
 var fs = require("fs");
 var path = require("path");
 var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
-const skipConfirmationFunc = require('../utils/skip-confirmation');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -48,16 +48,13 @@ module.exports = {
             CommonUtils_1.default.installReexportNew(options, ["controller", "route"]);
         }
     },
-
-  processFiles(intoDir, templateVariables) {
-    let skipConfirmation = this.options.skipConfirmation;
-    if (skipConfirmation) {
-      return skipConfirmationFunc(this, intoDir, templateVariables);
-    }
-
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
-  },
-
+    processFiles: function (intoDir, templateVariables) {
+        var skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+        return this._super.apply(this, arguments);
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -91,7 +88,7 @@ var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
-        this.isEmberCpValidationsUsed = ModelBlueprint_1.default.checkCpValidations(blueprint);
+        this.isEmberCpValidationsUsed = true;
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");

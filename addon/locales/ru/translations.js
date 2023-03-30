@@ -75,11 +75,6 @@ export default {
   },
 
   'components': {
-    'flexberry-simpledatetime': {
-      placeholder: '(нет значения)',
-      'scroll-caption-text': 'Используйте скролл для перемотки',
-    },
-
     'flexberry-error': {
       caption: 'Произошла ошибка',
       'show-more': 'Подробнее',
@@ -92,6 +87,12 @@ export default {
 
     'flexberry-textbox': {
       placeholder: '(нет значения)'
+    },
+
+    'flexberry-simpledatetime': {
+      placeholder: '(нет значения)',
+      'scroll-caption-text': 'Используйте скролл для перемотки',
+      'apply-button-text': 'Выбрать',
     },
 
     'flexberry-textarea': {
@@ -169,6 +170,12 @@ export default {
       'placeholder': 'Нет данных'
     },
 
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Показать все поля формы',
+      'next-button': 'Далее',
+      'prev-button': 'Назад'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Закрыть'
@@ -217,7 +224,8 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'hierarchy-button-text': 'Вкл/выкл иерархии',
-      'coll-expand-button-text':'Свернуть/развернуть все иерархии',
+      'coll-expand-button-text':'Развернуть все иерархии',
+      'coll-comspres-button-text':'Свернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
       'search-button-text': 'Поиск',
@@ -339,6 +347,9 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Главное меню'
+    }
   },
 
   'models': {
@@ -401,7 +412,7 @@ export default {
     },
   },
 
-  validations: {
+  'validations': {
     'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
   },
 };

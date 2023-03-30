@@ -2,11 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { later } from '@ember/runloop';
 
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Updates columns width in multisettings.
 
@@ -106,7 +108,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       let propName = column.propName;
       let oldSorting = settings.get(sortPath);
-      let newSorting = Ember.A();
+      let newSorting = A();
       let sortDirection;
       if (oldSorting) {
         sortDirection = 'asc';
@@ -143,7 +145,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       let propName = column.propName;
       let oldSorting = settings.get(sortPath);
-      let newSorting = Ember.A();
+      let newSorting = A();
       let changed = false;
 
       for (let i = 0; i < oldSorting.length; i++) {
@@ -176,12 +178,13 @@ export default Ember.Mixin.create({
       @method actions.showConfigDialog
       @param {String} componentName Component name.
       @param {String} settingName Current usersetting name.
+      @param {Boolean} useSidePageMode Indicates when use side page mode.
       @param {Boolean} isExportExcel Indicates when it's export dialog.
       @param {Boolean} immediateExport Indicates when need export witout config dialog.
     */
-    showConfigDialog: function(componentName, settingName, isExportExcel = false, immediateExport = false) {
+    showConfigDialog: function(componentName, settingName, useSidePageMode, isExportExcel = false, immediateExport = false) {
       let settingsSource = this.get(`multiListSettings.${componentName}`);
-      this._showConfigDialog(componentName, settingName, settingsSource, isExportExcel, immediateExport);
+      this._showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel, immediateExport);
     },
 
     /**
@@ -225,7 +228,7 @@ export default Ember.Mixin.create({
       let settings = this.get(`multiListSettings.${componentName}`);
       if (settings.get('filter') !== pattern || settings.get('filterCondition') !== filterCondition) {
         let _this = this;
-        Ember.run.later((function() {
+        later((function() {
           settings.setProperties({
             filterCondition: filterCondition,
             filter: pattern,

@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { isBlank } from '@ember/utils';
+import { deprecate } from '@ember/debug';
+import { observer } from '@ember/object';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
@@ -115,7 +118,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   actions: {
     /**
@@ -247,7 +250,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function () {
+  queryParametersChanged: observer('filter', 'page', 'perPage', 'sort', function() {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }
@@ -304,7 +307,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     const updateLookupAction = saveTo.updateLookupAction;
     const componentName = this.get('componentName');
-    if (!Ember.isBlank(updateLookupAction)) {
+    if (!isBlank(updateLookupAction)) {
       this.get('reloadContext').send(updateLookupAction,
         {
           relationName: saveTo.propName,
@@ -313,7 +316,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
           componentName: componentName
         });
     } else {
-      Ember.deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
+      deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
         id: 'ember-flexberry.controllers.lookup-dialog',
         until: '4.0',
       });

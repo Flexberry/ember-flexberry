@@ -142,13 +142,29 @@
 
     <button
       type="button"
-      class="ui delete-button {{buttonClass}} {{if readonly "disabled"}} button"
+      class="ui delete-button {{buttonClass}}{{if readonly " disabled"}} button large"
       title={{t "components.olv-toolbar.delete-button-text"}}
       disabled={{readonly}}
       {{action "deleteSelectedRow"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
         <i class="delete icon"></i>
     </button>
+    {{#if (and (eq class "groupedit-container") arrowsButtons)}}
+      <button
+        type="button"
+        class="ui ui-move-up {{buttonClass}} {{if readonly 'disabled'}} button"
+        title={{t "components.groupedit-toolbar.move-up-button-text"}}
+        {{action '_moveRow' componentName -1}}>
+        <i class="arrow up icon"></i>
+      </button>
+      <button
+        type="button"
+        class="ui ui-move-down {{buttonClass}} {{if readonly 'disabled'}} button"
+        title={{t "components.groupedit-toolbar.move-down-button-text"}}
+        {{action '_moveRow' componentName 1}}>
+        <i class="arrow down icon"></i>
+      </button>
+    {{/if}}
 
     <button
       type="button"

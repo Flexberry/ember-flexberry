@@ -61,6 +61,15 @@ export default Controller.extend({
   iconClass: '',
 
   /**
+    Text for inner 'flexberry-togggler' component 'duration' property.
+
+    @property duration
+    @type Number
+    @default 350
+  */
+    duration: 350,
+
+  /**
     Is accordion expanded?
 
     @property expanded

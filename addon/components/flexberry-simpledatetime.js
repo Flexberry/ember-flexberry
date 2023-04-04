@@ -443,6 +443,8 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
+      /* If before value was not set (undefined) then moment(this.get('_valueAsDate')) returns current date.
+        If user input current date then moment(...).isSame(date) will return TRUE while in reality it is FALSE.*/
       let valueAsDate = this.get('_valueAsDate');
       if ((isNone(valueAsDate) && !isNone(date))
             || !moment(valueAsDate).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {

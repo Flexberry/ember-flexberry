@@ -8,7 +8,9 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+
+      'readonly': 'read-only mode'
     },
 
     'error-form': {

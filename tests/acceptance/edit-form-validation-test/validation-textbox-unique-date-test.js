@@ -16,17 +16,17 @@ executeTest('check operation text+date unique', (store, assert, _app) => {
   dateToSet.setUTCMilliseconds(0);
 
   let initTestData = function(createdRecordsPrefix) {
-    // Add records for deleting. 
+    // Add records for deleting.
     return RSVP.Promise.all([
       store.createRecord('ember-flexberry-dummy-suggestion-type', { name: createdRecordsPrefix + "0" }).save(),
-      store.createRecord('ember-flexberry-dummy-application-user', { 
+      store.createRecord('ember-flexberry-dummy-application-user', {
                                                                     name: createdRecordsPrefix + "1",
                                                                     eMail: "1",
                                                                     phone1: "1"
                                                                    }).save()
     ])
     .then((createdCustomRecords) => {
-        return store.createRecord('ember-flexberry-dummy-suggestion', { 
+        return store.createRecord('ember-flexberry-dummy-suggestion', {
             id: '75434dbd-f00c-4fd9-8483-c35aa59a18c3',
             text: '12345',
             date: dateToSet,

@@ -182,15 +182,23 @@ export default Mixin.create(ReloadListMixin, {
       let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
 
-      let userSettingsService = this.get('userSettingsService');
-      userSettingsService.createDefaultUserSetting(folvComponentName);
-
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
-      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
       let relationshipsByName = get(model.constructor, 'relationshipsByName');
+
+      let userSettingsService = this.get('userSettingsService');
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
+      let userSettings;
+
+      if (options.notUseUserSettings === true) {
+        userSettings = lookupController.get('developerUserSettings');
+        userSettings = userSettings ? userSettings[folvComponentName] : undefined;
+        userSettings = userSettings ? userSettings.DEFAULT : undefined;
+      } else {
+        userSettings = userSettingsService.getCurrentUserSetting(folvComponentName);
+      }
 
       // Get relation property from model.
       let relation = relationshipsByName.get(relationName);
@@ -200,6 +208,16 @@ export default Mixin.create(ReloadListMixin, {
 
       // Get property type name.
       let relatedToType = relation.type;
+
+      if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
+        const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + relatedToType);
+        if (!Ember.isNone(userSettingValue)) {
+          userSettings = userSettingValue.DEFAULT
+        }
+      }
+
+      let sorting = userSettings.sorting || options.sorting || [];
+      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Lookup
       let lookupSettings = this.get('lookupSettings');
@@ -463,6 +481,7 @@ export default Mixin.create(ReloadListMixin, {
       filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging
@@ -490,6 +509,7 @@ export default Mixin.create(ReloadListMixin, {
       sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
+      filterProjectionName: reloadData.filterProjectionName,
       predicate: limitPredicate,
       hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
       hierarchyPaging: reloadData.hierarchyPaging,
@@ -514,7 +534,7 @@ export default Mixin.create(ReloadListMixin, {
     currentContext.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
     currentContext.reloadList(queryParameters).then(data => {
-
+      currentContext.get('lookupEventsService').lookupDialogOnDataLoadedTrigger(queryParameters.componentName, data, reloadData.initialLoad);
       if (!isNone(currentContext.get('objectlistviewEventsService'))) {
         currentContext.get('objectlistviewEventsService').setLoadingState('');
       }

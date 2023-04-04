@@ -87,8 +87,11 @@ module.exports = {
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
-      isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
-      },
+      importFormRouteName: editFormBlueprint.importFormRouteName,
+      importFormRoutePath: editFormBlueprint.importFormRoutePath,
+      importFormControllerName: editFormBlueprint.importFormControllerName,
+      importFormControllerPath: editFormBlueprint.importFormControllerPath,
+    },
       editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
   }
@@ -107,6 +110,10 @@ class EditFormBlueprint {
   private modelsDir: string;
   private blueprint;
   private options;
+  importFormRouteName: string;
+  importFormRoutePath: string;
+  importFormControllerName: string;
+  importFormControllerPath: any;
 
   constructor(blueprint, options) {
     this.isEmberCpValidationsUsed = true;
@@ -133,6 +140,39 @@ class EditFormBlueprint {
     } else {
       this.functionGetCellComponent = null;
     }
+    var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+    var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+    const initImports = (
+      routeName = 'EditFormRoute',
+      routePath = 'ember-flexberry/routes/edit-form',
+      controllerName = 'EditFormController',
+      controllerPath = 'ember-flexberry/controllers/edit-form'
+    ) => {
+      this.importFormRouteName = routeName;
+      this.importFormRoutePath = routePath;
+      this.importFormControllerName = controllerName;
+      this.importFormControllerPath = controllerPath;
+    }
+
+    if (fs.existsSync(configsFile) || configs.editForms === undefined) {
+      initImports();
+    } else {
+      if (configs.editForms[options.entity.name] !== undefined) {
+        initImports(
+          configs.editForms[options.entity.name].baseRoute.name,
+          configs.editForms[options.entity.name].baseRoute.path,
+          configs.editForms[options.entity.name].baseController.name,
+          configs.editForms[options.entity.name].baseController.path
+        );
+      } else if (configs.editForms.defaultForm !== undefined) {
+        initImports(
+          configs.editForms.defaultForm.baseRoute.name,
+          configs.editForms.defaultForm.baseRoute.path,
+          configs.editForms.defaultForm.baseController.name,
+          configs.editForms.defaultForm.baseController.path
+        );
+      };
+    };
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {
@@ -149,7 +189,7 @@ class EditFormBlueprint {
     return model;
   }
 
-  findAttr(model: metadata.Model, attrName: string){
+  findAttr(model: metadata.Model, attrName: string) {
     let modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
     if (!modelAttr) {
       model = this.loadModel(model.parentModelName);
@@ -159,7 +199,7 @@ class EditFormBlueprint {
   }
 
   loadSnippet(model: metadata.Model, attrName: string): string {
-    let modelAttr = this.findAttr(model,attrName);
+    let modelAttr = this.findAttr(model, attrName);
     let component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
     if (!component) {
       return this.readHbsSnippetFile("flexberry-dropdown");
@@ -184,7 +224,7 @@ class EditFormBlueprint {
       }
       let snippet = this.loadSnippet(model, projAttr.name);
       let attr = this.findAttr(model, projAttr.name);
-      projAttr.readonly="readonly";
+      projAttr.readonly = "readonly";
       projAttr.type = attr.type;
       projAttr.entityName = this.options.entity.name;
       projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
@@ -192,7 +232,7 @@ class EditFormBlueprint {
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
-    let belongsTo,hasMany: any;
+    let belongsTo, hasMany: any;
     for (belongsTo of proj.belongsTo) {
       this.locales.setupEditFormAttribute(belongsTo);
       if (belongsTo.hidden || belongsTo.index === -1) {
@@ -233,8 +273,8 @@ class EditFormBlueprint {
         let snippet = this.loadSnippet(model, belongsToAttr.name);
         let attr = this.findAttr(model, belongsToAttr.name);
         belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
-        belongsToAttr.readonly="true";
-        belongsToAttr.type=attr.type;
+        belongsToAttr.readonly = "true";
+        belongsToAttr.type = attr.type;
         belongsToAttr.entityName = this.options.entity.name;
         belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
         this.locales.setupEditFormAttribute(belongsToAttr);
@@ -247,7 +287,7 @@ class EditFormBlueprint {
 
   getParentRoute() {
     let parentRoute = '';
-    let listFormsDir = path.join(this.options.metadataDir, "list-forms");
+    let listFormsDir = path.join(this.options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     for (let form of listForms) {
       let pp: path.ParsedPath = path.parse(form);
@@ -265,7 +305,7 @@ class EditFormBlueprint {
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
     let targetRoot = "app"
-    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));

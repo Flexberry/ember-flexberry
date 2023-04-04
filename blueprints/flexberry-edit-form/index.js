@@ -79,7 +79,10 @@ module.exports = {
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
             functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
-            isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
+            importFormRouteName: editFormBlueprint.importFormRouteName,
+            importFormRoutePath: editFormBlueprint.importFormRoutePath,
+            importFormControllerName: editFormBlueprint.importFormControllerName,
+            importFormControllerPath: editFormBlueprint.importFormControllerPath,
         }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
@@ -114,6 +117,35 @@ var EditFormBlueprint = /** @class */ (function () {
         else {
             this.functionGetCellComponent = null;
         }
+
+        var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (fs.existsSync(configsFile)) {
+            var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+            if (configs.editForms == undefined) {
+                this.importFormRouteName = 'EditFormRoute';
+                this.importFormRoutePath = 'ember-flexberry/routes/edit-form';
+                this.importFormControllerName = 'EditFormController';
+                this.importFormControllerPath = 'ember-flexberry/controllers/edit-form';
+            } else {
+                if (configs.editForms[options.entity.name] != undefined) {
+                    this.importFormRouteName = configs.editForms[options.entity.name].baseRoute.name;
+                    this.importFormRoutePath = configs.editForms[options.entity.name].baseRoute.path;
+                    this.importFormControllerName = configs.editForms[options.entity.name].baseController.name;
+                    this.importFormControllerPath = configs.editForms[options.entity.name].baseController.path;
+                }
+                else if (configs.editForms.defaultForm != undefined) {
+                    this.importFormRouteName = configs.editForms.defaultForm.baseRoute.name;
+                    this.importFormRoutePath = configs.editForms.defaultForm.baseRoute.path;
+                    this.importFormControllerName = configs.editForms.defaultForm.baseController.name;
+                    this.importFormControllerPath = configs.editForms.defaultForm.baseController.path;
+                };
+            };
+        } else {
+            this.importFormRouteName = 'EditFormRoute';
+            this.importFormRoutePath = 'ember-flexberry/routes/edit-form';
+            this.importFormControllerName = 'EditFormController';
+            this.importFormControllerPath = 'ember-flexberry/controllers/edit-form';
+        };
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
         var snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";

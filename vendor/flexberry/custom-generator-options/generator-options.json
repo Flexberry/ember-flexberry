@@ -1,0 +1,26 @@
+{
+    "editForms": {
+        "defaultForm": {
+            "baseRoute": {
+                "name": "EditFormRoute",
+                "path": "ember-flexberry/routes/edit-form"
+            },
+            "baseController": {
+                "name": "EditFormController",
+                "path": "ember-flexberry/controllers/edit-form"
+            }
+        }       
+    },
+    "listForms": {
+        "defaultForm": {
+            "baseRoute": {
+                "name": "ListFormRoute",
+                "path": "ember-flexberry/routes/list-form"
+            },
+            "baseController": {
+                "name": "ListFormController",
+                "path": "ember-flexberry/controllers/list-form"
+            }
+        }
+    }
+}

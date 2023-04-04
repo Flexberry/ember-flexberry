@@ -28,11 +28,11 @@ module.exports = {
 
   isDummy: false,
 
-  files: function() {
+  files: function () {
     if (this._files) { return this._files; }
     this.isDummy = this.options.dummy;
     if (this.options.dummy) {
-      this._files=CommonUtils.getFilesForGeneration(this, function(v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
     } else {
       this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
     }
@@ -64,7 +64,7 @@ module.exports = {
    * @param {Object} options Options is an object containing general and entity-specific options.
    * @return {Object} Сustom template variables.
    */
-  locals: function(options) {
+  locals: function (options) {
     let listFormBlueprint = new ListFormBlueprint(this, options);
     return lodash.defaults({
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
@@ -72,33 +72,71 @@ module.exports = {
       entityName: options.entity.name,
       modelName: listFormBlueprint.listForm.projections[0].modelName,// for use in files\__root__\templates\__name__.hbs, files\__root__\routes\__name__.js
       modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js
-      caption: listFormBlueprint.listForm.caption// for use in files\__root__\templates\__name__.hbs
-      },
+      caption: listFormBlueprint.listForm.caption,// for use in files\__root__\templates\__name__.hbs
+      importFormRouteName: listFormBlueprint.importFormRouteName,
+      importFormRoutePath: listFormBlueprint.importFormRoutePath,
+      importFormControllerName: listFormBlueprint.importFormControllerName,
+      importFormControllerPath: listFormBlueprint.importFormControllerPath,
+    },
       listFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
-   );
+    );
   }
 };
 
 class ListFormBlueprint {
   locales: Locales;
   listForm: metadata.ListForm;
+  importFormRouteName: string;
+  importFormRoutePath: string;
+  importFormControllerName: string;
+  importFormControllerPath: string;
 
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
+    const entityName = options.entity.name;
+
     if (!options.file) {
-      options.file = options.entity.name + ".json";
+      options.file = entityName + ".json";
     }
-    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", options.entity.name + ".js"));
-    this.locales = new Locales(options.entity.name, "ru", localePathTemplate);
+    let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("forms", entityName + ".js"));
+    this.locales = new Locales(entityName, "ru", localePathTemplate);
     let listFormFile = path.join(listFormsDir, options.file);
     let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
     this.listForm = JSON.parse(content);
     this.locales.setupForm(this.listForm);
+
+    var configsFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+    var configs = JSON.parse(stripBom(fs.readFileSync(configsFile, "utf8")));
+    const initImports = (
+      routeName = 'ListFormRoute',
+      routePath = 'ember-flexberry/routes/list-form',
+      controllerName = 'ListFormController',
+      controllerPath = 'ember-flexberry/controllers/list-form'
+    ) => {
+      this.importFormRouteName = routeName;
+      this.importFormRoutePath = routePath;
+      this.importFormControllerName = controllerName;
+      this.importFormControllerPath = controllerPath;
+    }
+
+    if (fs.existsSync(configsFile) || configs.listForms === undefined) {
+      initImports();
+    } else {
+      if (configs.listForms[entityName] !== undefined) {
+        const { baseRoute, baseController } = configs.listForms[entityName];
+        
+        initImports( baseRoute.name, baseRoute.path, baseController.name, baseController.path);
+      } else if (configs.listForms.defaultForm !== undefined) {
+        const { baseRoute, baseController } = configs.listForms.defaultForm;
+
+        initImports(baseRoute.name, baseRoute.path, baseController.name, baseController.path);
+      };
+    };
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {
     let targetRoot = "app"
-    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));

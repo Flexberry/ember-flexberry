@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add ability to set up base objects for forms generation.
 
 ## [3.8.0-beta.18] - 2023-03-15
 ### Fixed

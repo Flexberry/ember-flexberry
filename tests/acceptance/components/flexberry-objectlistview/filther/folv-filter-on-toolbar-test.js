@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { get, set } from '@ember/object';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import Builder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
@@ -29,64 +31,64 @@ executeTest('check filter on toolbar with filter projection', (store, assert, ap
       // TODO: add proper predicate on query that "address != type.name" when it will be availible.
       assert.notEqual(adressEtalone, typeNameEtalone);
     }).then(function() {
-      let $filterInput = Ember.$('div.olv-search input');
-      let $filterApplyButton = Ember.$('div.olv-search button.search-button');
+      let $filterInput = $('div.olv-search input');
+      let $filterApplyButton = $('div.olv-search button.search-button');
 
       // 1) Filter by address as adressEtalone by common projection and get N records.
-      Ember.run(() => {
-        fillIn($filterInput, adressEtalone);
-      });
+      fillIn($filterInput, adressEtalone);
 
-      let refreshFunction =  function() {
-        $filterApplyButton.click();
-      };
+      andThen(function() {
+        let refreshFunction =  function() {
+          $filterApplyButton.click();
+        };
 
-      let controller = app.__container__.lookup('controller:' + currentRouteName());
+        let controller = app.__container__.lookup('controller:' + currentRouteName());
 
-      // Apply filter.
-      let done1 = assert.async();
-      refreshListByFunction(refreshFunction, controller).then(($list) => {
-        let currentModel = Ember.get(controller, 'model');
-        let filteredByCommonProjectionCountN = Ember.get(currentModel, 'meta.count');
-        assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${adressEtalone}".`);
-
-        // 2) Filter by type.name as typeNameEtalone by filter projection containing only type.name property and get at least 1 record.
-        Ember.run(() => {
-          Ember.set(controller, 'filterProjectionName', 'TestFilterOnToolbarView');
-        });
-
-        Ember.run(() => {
-          fillIn($filterInput, typeNameEtalone);
-        });
-
-        let done2 = assert.async();
+        // Apply filter.
+        let done1 = assert.async();
         refreshListByFunction(refreshFunction, controller).then(($list) => {
-          let currentModel = Ember.get(controller, 'model');
-          let filteredByFilterProjectionCount = Ember.get(currentModel, 'meta.count');
-          assert.ok(filteredByFilterProjectionCount >= 1, `Found ${filteredByFilterProjectionCount} records by filter projection filtered by "${typeNameEtalone}".`);
+          let currentModel = get(controller, 'model');
+          let filteredByCommonProjectionCountN = get(currentModel, 'meta.count');
+          assert.ok(filteredByCommonProjectionCountN >= 1, `Found ${filteredByCommonProjectionCountN} records by common projection filtered by "${adressEtalone}".`);
 
-          // 3) Filter by address as adressEtalone by filter projection containing only type.name property and get less than N records.
-          Ember.run(() => {
-            fillIn($filterInput, adressEtalone);
+          // 2) Filter by type.name as typeNameEtalone by filter projection containing only type.name property and get at least 1 record.
+          run(() => {
+            set(controller, 'filterProjectionName', 'TestFilterOnToolbarView');
           });
 
-          let done3 = assert.async();
+          run(() => {
+            fillIn($filterInput, typeNameEtalone);
+          });
+
+          let done2 = assert.async();
           refreshListByFunction(refreshFunction, controller).then(($list) => {
-            let currentModel = Ember.get(controller, 'model');
-            let filteredByFilterProjectionCount2 = Ember.get(currentModel, 'meta.count');
-            assert.ok(filteredByCommonProjectionCountN > filteredByFilterProjectionCount2, `Found ${filteredByFilterProjectionCount2} records by filter projection filtered by "${adressEtalone}".`);
+            let currentModel = get(controller, 'model');
+            let filteredByFilterProjectionCount = get(currentModel, 'meta.count');
+            assert.ok(filteredByFilterProjectionCount >= 1, `Found ${filteredByFilterProjectionCount} records by filter projection filtered by "${typeNameEtalone}".`);
 
-            Ember.run(() => {
-              Ember.set(controller, 'filterProjectionName', undefined);
+            // 3) Filter by address as adressEtalone by filter projection containing only type.name property and get less than N records.
+            run(() => {
+              fillIn($filterInput, adressEtalone);
             });
-            done3();
+
+            let done3 = assert.async();
+            refreshListByFunction(refreshFunction, controller).then(($list) => {
+              let currentModel = get(controller, 'model');
+              let filteredByFilterProjectionCount2 = get(currentModel, 'meta.count');
+              assert.ok(filteredByCommonProjectionCountN > filteredByFilterProjectionCount2, `Found ${filteredByFilterProjectionCount2} records by filter projection filtered by "${adressEtalone}".`);
+
+              run(() => {
+                set(controller, 'filterProjectionName', undefined);
+              });
+              done3();
+            });
+
+            done2();
           });
 
-          done2();
+          done1();
         });
-
-        done1();
-      });
+      })
     });
   });
 });

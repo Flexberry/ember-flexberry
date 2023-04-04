@@ -1,6 +1,6 @@
 import { run } from '@ember/runloop';
 import { A, isArray } from '@ember/array';
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let dataForDestroy = A();
@@ -44,7 +44,7 @@ export function executeTest(testName, callback) {
     }
   });
 
-  skip(testName, (assert) => callback(store, assert, app));
+  test(testName, (assert) => callback(store, assert, app));
 }
 
 /**

@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { merge } from '@ember/polyfills';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import OlvOnEditMixin from 'ember-flexberry/mixins/flexberry-objectlistview-on-edit-form-controller';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
-export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
+export default EditFormController.extend(OlvOnEditMixin, EditFormControllerOperationsIndicationMixin, {
   /**
    Route name for transition after close edit form.
 
@@ -13,7 +16,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
   */
   parentRoute: 'components-examples/flexberry-objectlistview/on-edit-form',
 
-  store: Ember.inject.service(),
+  store: service(),
 
   getCellComponent: null,
 
@@ -45,7 +48,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
   folvProjection: 'SuggestionTypeL',
 
   objectListViewLimitPredicate: function(options) {
-    let methodOptions = Ember.merge({
+    let methodOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       params: undefined
@@ -69,7 +72,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     @property customButtons
     @type Array
    */
-  customButtons: Ember.computed('i18n.locale', function() {
+  customButtons: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
     return [{
       buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.on-edit-form.add-button-name'),
@@ -92,12 +95,14 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
       });
     },
 
+    /* eslint-disable no-unused-vars */
     componentForFilter(type, relation) {
       switch (type) {
         case 'string': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
         default: return {};
       }
     },
+    /* eslint-enable no-unused-vars */
 
     conditionsByType(type) {
       switch (type) {

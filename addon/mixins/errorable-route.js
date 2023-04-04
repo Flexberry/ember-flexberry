@@ -1,17 +1,19 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { isArray } from '@ember/array';
 
 /**
   Mixin for handling errors.
 
   @class ErrorableRouteMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Event handler for processing promise model rejecting.
-      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
+      [More info](https://www.emberjs.com/api/ember/release/classes/Route/events/error?anchor=e
+        rror).
 
       @method actions.error
       @param {Object} error
@@ -59,7 +61,7 @@ export default Ember.Mixin.create({
   */
   _updateErrorToDisplay(errorData) {
     let msg;
-    if (Ember.isArray(errorData)) {
+    if (isArray(errorData)) {
       for (let i = 0; i < errorData.length; i++) {
         if (errorData[i].state && errorData[i].state === 'rejected') {
           msg += errorData[i].reason.message;
@@ -71,7 +73,7 @@ export default Ember.Mixin.create({
     }
 
     let message = msg ? msg.replace(/\n/g, ' ') : '';
-    if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
+    if (message.indexOf('The adapter operation was aborted') !== -1) {
       errorData.nameLocaleKey = 'forms.error-form.error';
       errorData.messageLocaleKey = 'forms.error-form.ember-data-request';
     } else if (message.indexOf('Invalid sorting value') !== -1) {
@@ -81,7 +83,9 @@ export default Ember.Mixin.create({
 
   },
 
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExiting, transition) {
+    this._super(...arguments);
     if (isExiting) {
       if (controller.get('isSortingError')) {
         controller.set('sort', null);
@@ -89,4 +93,5 @@ export default Ember.Mixin.create({
       }
     }
   }
+  /* eslint-enable no-unused-vars */
 });

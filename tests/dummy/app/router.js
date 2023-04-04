@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
-  location: config.locationType
+const Router = EmberRouter.extend({
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
 Router.map(function() {
@@ -10,6 +11,14 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-application-user-list');
   this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
   this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });
+
+  this.route('ember-flexberry-dummy-multi-list');
+  this.route('ember-flexberry-dummy-multi-list-user-edit', { path: 'ember-flexberry-dummy-multi-list-user-edit/:id' });
+  this.route('ember-flexberry-dummy-multi-list-user-edit.new', { path: 'ember-flexberry-dummy-multi-list-user-edit/new' });
+  this.route('components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit',
+    { path: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit.new',
+    { path: 'components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit/new' });
 
   this.route('ember-flexberry-dummy-comment-edit', { path: 'ember-flexberry-dummy-comment-edit/:id' });
   this.route('ember-flexberry-dummy-comment-edit.new', { path: 'ember-flexberry-dummy-comment-edit/new' });
@@ -25,9 +34,31 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-edit', { path: 'ember-flexberry-dummy-suggestion-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-edit.new', { path: 'ember-flexberry-dummy-suggestion-edit/new' });
 
+  this.route('ember-flexberry-dummy-suggestion-file-list');
+  this.route('ember-flexberry-dummy-suggestion-file-edit', { path: 'ember-flexberry-dummy-suggestion-file-edit/:id' });
+  this.route('ember-flexberry-dummy-suggestion-file-edit.new', { path: 'ember-flexberry-dummy-suggestion-file-edit/new' });
+
   this.route('ember-flexberry-dummy-suggestion-type-list');
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-e/new' });
+
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l');
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/:id' });
+  this.route('integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e.new',
+  { path: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-e/new' });
 
   this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
   this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
@@ -44,9 +75,9 @@ Router.map(function() {
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');
+  this.route('components-examples/flexberry-checkbox/three-state-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-ddau-checkbox/settings-example');
-  this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-dropdown/empty-value-example');
@@ -69,9 +100,12 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');
+  this.route('components-examples/flexberry-lookup/autocomplete-in-gropedit-example');
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list');
   this.route('components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit',
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
+  this.route('components-examples/flexberry-lookup/numeric-autocomplete');
+  this.route('components-examples/flexberry-lookup/user-settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -108,6 +142,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
+  this.route('components-examples/flexberry-objectlistview/hierarchy-paging-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
@@ -124,27 +159,28 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
+  this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
-  this.route('components-examples/flexberry-simpleolv/settings-example');
-  this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
-  this.route('components-examples/flexberry-simpleolv/limit-function-example');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form/user', { path: 'components-examples/flexberry-simpleolv/on-edit-form/user/:id' });
-  this.route('components-examples/flexberry-simpleolv/custom-filter');
-  this.route('components-examples/flexberry-simpleolv/configurate-rows');
-  this.route('components-examples/flexberry-simpleolv/selected-rows');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example-inner');
   this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
+  this.route('components-examples/highload-edit-form-menu/index');
+  this.route('components-examples/highload-edit-form-menu/on-edit-form/user', { path: 'components-examples/highload-edit-form-menu/on-edit-form/user/:id' });
+  this.route('components-examples/modal-dialog', function () {
+    this.route('index', { path: '/' });
+  });
   this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
+  this.route('integration-examples/edit-form/theming-components');
   this.route('integration-examples/edit-form/validation');
+  this.route('integration-examples/ember-flexberry-icons');
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
@@ -163,14 +199,19 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
 
+  this.route('components-acceptance-tests/flexberry-groupedit/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');
   this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
+  this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
+  this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',
@@ -185,6 +226,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox.new',
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 
+  this.route('login');
 });
 
 export default Router;

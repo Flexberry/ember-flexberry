@@ -1,14 +1,16 @@
-import Ember from 'ember';
-import ValidationData from '../objects/validation-data';
+import Mixin from '@ember/object/mixin';
+import { A, isArray } from '@ember/array';
+import { typeOf } from '@ember/utils';
+import { get } from '@ember/object';
 
 /**
   Mixin for handling errors.
 
   @class ErrorableControllerMixin
-  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @extends <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Save the error.
@@ -44,11 +46,11 @@ export default Ember.Mixin.create({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
-    this._super.apply(this, arguments);
-    this.set('errorMessages', Ember.A([]));
+    this._super(...arguments);
+    this.set('errorMessages', A([]));
   },
 
   /**
@@ -61,13 +63,11 @@ export default Ember.Mixin.create({
     @param {String} message
   */
   rejectError(errorData, message) {
-    if (errorData instanceof ValidationData) {
-      this._rejectValidationError(errorData, message);
-    } else if (errorData instanceof Error) {
+    if (errorData instanceof Error) {
       this._rejectError(errorData, message);
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
-    } else if (Ember.typeOf(errorData) === 'string') {
+    } else if (typeOf(errorData) === 'string') {
       this._rejectStringError(errorData, message);
     } else {
       this.send('addErrorMessage', 'Unknown error occurred.');
@@ -76,7 +76,7 @@ export default Ember.Mixin.create({
 
   _rejectError(errorData, message) {
     this.send('addErrorMessage', message + ' ' + errorData.message);
-    if (Ember.isArray(errorData.errors) && errorData.errors.length > 0) {
+    if (isArray(errorData.errors) && errorData.errors.length > 0) {
       let errors = errorData.errors;
       for (let i = 0, len = errors.length; i < len; i++) {
         let error = errors[i];
@@ -85,17 +85,8 @@ export default Ember.Mixin.create({
     }
   },
 
-  _rejectValidationError(validationError, message) {
-    if (validationError.anyErrors) {
-      // TODO: more detail message about validation errors.
-      this.send('addErrorMessage', message + ' There are validation errors.');
-    } else {
-      this.send('addErrorMessage', 'Unknown validation error.');
-    }
-  },
-
   _rejectAjaxError(xhr, message) {
-    let ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
+    let ajaxErrorMessage = get(xhr, 'responseJSON.error.message') || xhr.statusText;
     this.send('addErrorMessage', message + ' ' + ajaxErrorMessage);
   },
 

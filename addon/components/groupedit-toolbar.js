@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -19,18 +23,31 @@ export default FlexberryBaseComponent.extend({
     @type Service
     @private
   */
-  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+  _groupEditEventsService: service('objectlistview-events'),
 
   /**
-    Boolean flag to indicate enabled state of delete rows button.
-
-    If rows at {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} are selected this flag is enabled.
-
-    @property _isDeleteRowsEnabled
-    @type Boolean
     @private
+    @property _hasSelectedRows
+    @type Boolean
+    @default false
   */
-  _isDeleteRowsEnabled: undefined,
+  _hasSelectedRows: false,
+
+  /**
+    @private
+    @property _disableMoveUpButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveUpButton: false,
+
+  /**
+    @private
+    @property _disableMoveDownButton
+    @type Boolean
+    @default false
+  */
+  _disableMoveDownButton: false,
 
   /**
     Default class for component wrapper.
@@ -53,6 +70,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Name of action to send out, action triggered by click on user button.
+
     @property customButtonAction
     @type String
     @default 'customButtonAction'
@@ -60,18 +78,9 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...', // Button title.
-        iconClasses: '' // Css classes for icon.
-      }
-      ```
-    @property customButtonsArray
+    See {{#crossLink "FlexberryGroupeditComponent/customButtons:property"}}{{/crossLink}}.
+
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -100,8 +109,8 @@ export default FlexberryBaseComponent.extend({
 
     @property arrowsButtons
   */
-  arrowsButtons: Ember.computed('orderedProperty', function() {
-    return !Ember.isNone(this.get('orderedProperty'));
+  arrowsButtons: computed('orderedProperty', function() {
+    return !isNone(this.get('orderedProperty'));
   }),
 
   actions: {
@@ -132,15 +141,26 @@ export default FlexberryBaseComponent.extend({
       }
 
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise))) {
           return;
         }
       }
 
       let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
+        possiblePromise.then(() => {
+          this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+        });
+      } else {
+        this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+      }
     },
 
     /**
@@ -162,11 +182,13 @@ export default FlexberryBaseComponent.extend({
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting || [];
       currentUserSetting.colsOrder = defaultDeveloperUserSetting.colsOrder;
       currentUserSetting.columnWidths = defaultDeveloperUserSetting.columnWidths;
+      /* eslint-disable no-unused-vars */
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
         this.set('sorting', currentUserSetting.sorting);
         _this.get('_groupEditEventsService').updateWidthTrigger(componentName);
       });
+      /* eslint-enable no-unused-vars */
     },
 
     /**
@@ -180,7 +202,7 @@ export default FlexberryBaseComponent.extend({
       if (actionType === 'function') {
         action();
       } else if (actionType === 'string') {
-        this.sendAction('customButtonAction', action);
+        this.get('customButtonAction')(action);
       } else {
         throw new Error('Unsupported action type for custom buttons.');
       }
@@ -245,11 +267,19 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
+  /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
-    if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', count > 0);
+    if (componentName === this.get('componentName') && !this.get('isDestroying')) {
+      this.set('_hasSelectedRows', count > 0);
+
+      const $tbody = this.$().parent().find('tbody');
+      const $tr = $tbody.find('tr.active');
+
+      this.set('_disableMoveUpButton', $tr.first().get(0) === $tbody.get(0).firstElementChild);
+      this.set('_disableMoveDownButton', $tr.last().get(0) === $tbody.get(0).lastElementChild);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "selected rows has been deleted" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -260,9 +290,11 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of deleted rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
-      this.set('_isDeleteRowsEnabled', false);
+      this.set('_hasSelectedRows', false);
     }
   }
+  /* eslint-enable no-unused-vars */
 });

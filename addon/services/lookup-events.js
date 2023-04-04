@@ -2,17 +2,18 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
 
 /**
   Service for triggering lookup events.
 
   @class LookupEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
 */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   /**
     Trigger is called when a modal starts to show.
 
@@ -43,5 +44,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   lookupDialogOnHiddenTrigger(componentName) {
     this.trigger('lookupDialogOnHidden', componentName);
-  }
+  },
+
+  /**
+    Called when lookup value changed.
+
+    @method lookupOnChangeTrigger
+    @param {String} componentName Name of flexberry-lookup component.
+    @param {Model} newValue New lookup value.
+  */
+  lookupOnChangeTrigger(componentName, newValue) {
+    this.trigger('lookupOnChange', componentName, newValue);
+  },
 });

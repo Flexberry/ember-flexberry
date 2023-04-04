@@ -1,0 +1,47 @@
+{{flexberry-error error=error}}
+<h3>{{t "forms.ember-flexberry-dummy-suggestion-file-edit.header"}}</h3>
+<form class="row" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  {{flexberry-objectlistview
+    content=model
+    modelName="ember-flexberry-dummy-suggestion-file"
+    modelProjection=modelProjection
+    editFormRoute=editFormRoute
+    createNewButton=true
+    refreshButton=true
+    deleteButton=true
+    showCheckBoxInRow=true
+    sorting=computedSorting
+    orderable=true
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="fileObjectListView"
+    }}
+</form>

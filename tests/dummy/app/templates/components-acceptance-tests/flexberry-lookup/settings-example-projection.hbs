@@ -1,4 +1,5 @@
 {{flexberry-lookup
+  folvComponentName="SuggestionTypeObjectlistView"
   placeholder=placeholder
   readonly=readonly
   value=model.type
@@ -7,8 +8,8 @@
   title=title
   relatedModel=model
   relationName="type"
-  choose="showLookupDialog"
-  remove="removeLookupValue"
+  choose=(action "showLookupDialog")
+  remove=(action "removeLookupValue")
   autocomplete=autocomplete
   dropdown=dropdown
   chooseText=chooseText
@@ -16,4 +17,5 @@
   chooseButtonClass=chooseButtonClass
   removeButtonClass=removeButtonClass
   lookupLimitPredicate=lookupLimitPredicate
+  notUseUserSettings=notUseUserSettings
 }}

@@ -6,6 +6,7 @@ import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
 const stripBom = require("strip-bom");
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
 import CommonUtils from '../flexberry-common/CommonUtils';
@@ -15,7 +16,8 @@ module.exports = {
 
   availableOptions: [
     { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
+    { name: 'metadata-dir', type: String },
+    { name: 'skip-confirmation', type: Boolean }
   ],
 
   supportsAddon: function () {
@@ -43,6 +45,15 @@ module.exports = {
     }
   },
 
+  processFiles(intoDir, templateVariables) {
+    let skipConfirmation = this.options.skipConfirmation;
+    if (skipConfirmation) {
+      return skipConfirmationFunc(this, intoDir, templateVariables);
+    }
+
+    return this._super(...arguments);
+  },
+
   /**
    * Blueprint Hook locals.
    * Use locals to add custom template variables. The method receives one argument: options.
@@ -58,6 +69,7 @@ module.exports = {
     return lodash.defaults({
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
       formName: listFormBlueprint.listForm.name,// for use in files\__root__\controllers\__name__.js
+      entityName: options.entity.name,
       modelName: listFormBlueprint.listForm.projections[0].modelName,// for use in files\__root__\templates\__name__.hbs, files\__root__\routes\__name__.js
       modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js
       caption: listFormBlueprint.listForm.caption// for use in files\__root__\templates\__name__.hbs

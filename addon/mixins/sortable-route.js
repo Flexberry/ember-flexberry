@@ -2,7 +2,10 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Mixin for route, that sorting on the list form.
@@ -10,17 +13,17 @@ import Ember from 'ember';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
-    export default Ember.Controller.extend(SortableController, {
+    export default Controller.extend(SortableController, {
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-    export default Ember.Route.extend(SortableRoute, {
+    export default Route.extend(SortableRoute, {
     });
     ```
 
@@ -38,11 +41,11 @@ import Ember from 'ember';
     ```
 
   @class SortableRoute
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object
@@ -50,6 +53,14 @@ export default Ember.Mixin.create({
   queryParams: {
     sort: { refreshModel: true }
   },
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEvents
+    @type Service
+  */
+  objectlistviewEvents: service(),
 
   /**
     Apply sorting to result list.
@@ -60,7 +71,34 @@ export default Ember.Mixin.create({
     @return {DS.Model}
    */
   includeSorting(model, sorting) {
-    model.set('sorting', sorting);
+    if (model) {
+      model.set('sorting', sorting);
+    }
+
     return model;
   },
+
+  /**
+    Sets sorting and reload component content by component name.
+
+    @method setSorting
+    @param {String} componentName Component name.
+    @param {Array} sorting Sorting object.
+  */
+  setSorting(componentName, sorting) {
+    let sort = serializeSortingParam(A(sorting));
+    this.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
+  },
+
+  setupController() {
+    this._super(...arguments);
+
+    this.get('objectlistviewEvents').on('setSorting', this, this.setSorting);
+  },
+
+  resetController() {
+    this._super(...arguments);
+
+    this.get('objectlistviewEvents').off('setSorting', this, this.setSorting);
+  }
 });

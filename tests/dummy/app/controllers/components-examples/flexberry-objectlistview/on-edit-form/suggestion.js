@@ -1,10 +1,14 @@
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { merge } from '@ember/polyfills';
+import { observer } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import OlvOnEditMixin from 'ember-flexberry/mixins/flexberry-objectlistview-on-edit-form-controller';
 
 import { Query } from 'ember-flexberry-data';
 
-export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
+export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerOperationsIndicationMixin, {
   /**
     Route name for transition after close edit form.
 
@@ -39,7 +43,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    if (Ember.isNone(model)) {
+    if (isNone(model)) {
       return cellComponent;
     }
 
@@ -83,7 +87,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   },
 
   objectListViewLimitPredicate: function(options) {
-    let methodOptions = Ember.merge({
+    let methodOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       params: undefined
@@ -99,8 +103,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     return undefined;
   },
 
-  customFolvContentObserver: Ember.observer('model', 'model.type', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
-
-    Ember.run.scheduleOnce('afterRender', this, this.getCustomContent);
+  customFolvContentObserver: observer('model', 'model.type', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
+    scheduleOnce('afterRender', this, this.getCustomContent);
   }),
 });

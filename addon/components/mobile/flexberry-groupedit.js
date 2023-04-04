@@ -62,7 +62,7 @@ export default FlexberryGroupeditComponent.extend({
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -123,10 +123,7 @@ export default FlexberryGroupeditComponent.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of single column.
@@ -135,4 +132,12 @@ export default FlexberryGroupeditComponent.extend({
     @type String
   */
   singleColumnHeaderTitle: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  }
 });

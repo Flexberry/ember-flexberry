@@ -1,6 +1,6 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
-<form class="ui form flexberry-vertical-form" role="form">
+<form class="row" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -19,7 +19,6 @@
     onShow=(action "onErrorMessageShow")
     onHide=(action "onErrorMessageHide")
   }}
-  <div class="field">
   {{flexberry-objectlistview
     editFormRoute=editFormRoute
     showCheckBoxInRow=true
@@ -48,8 +47,10 @@
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
     componentName="SuggestionObjectListView"
+    showPrototypeButtonInRow=true
     showDeleteMenuItemInRow=true
     deleteButton=true
+    advLimitButton=false
+    beforeDeleteRecord=(action 'beforeDeleteRecord')
   }}
-</div>
 </form>

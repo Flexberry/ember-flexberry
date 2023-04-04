@@ -1,7 +1,7 @@
 {{flexberry-error error=error}}
 <h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  <div class="field">
+  <div class="">
     {{#settings-example
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
@@ -24,15 +24,20 @@
         deleteButton=deleteButton
         refreshButton=refreshButton
         defaultSortingButton=defaultSortingButton
+        advLimitButton=advLimitButton
+        editInModal=editInModal
+        showFiltersInModal=showFiltersInModal
         enableFilters=enableFilters
         filters=filters
         applyFilters=(action "applyFilters")
         resetFilters=(action "resetFilters")
         filterButton=filterButton
         showCheckBoxInRow=showCheckBoxInRow
-        showDeleteButtonInRow=showDeleteButtonInRow
         showEditButtonInRow=showEditButtonInRow
+        showPrototypeButtonInRow=showPrototypeButtonInRow
+        showDeleteButtonInRow=showDeleteButtonInRow
         showEditMenuItemInRow=showEditMenuItemInRow
+        showPrototypeMenuItemInRow=showPrototypeMenuItemInRow
         showDeleteMenuItemInRow=showDeleteMenuItemInRow
         rowClickable=rowClickable
         orderable=orderable
@@ -50,7 +55,7 @@
         perPageValues=perPageValues
         recordsTotalCount=recordsTotalCount
         _availableHierarchicalMode=availableHierarchicalMode
-        _availableCollExpandMode=availableCollExpandMode
+        availableCollExpandMode=availableCollExpandMode
         disableHierarchicalMode=false
         hasPreviousPage=hasPreviousPage
         hasNextPage=hasNextPage

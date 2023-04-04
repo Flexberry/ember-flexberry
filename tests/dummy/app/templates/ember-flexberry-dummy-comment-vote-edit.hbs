@@ -1,29 +1,6 @@
 <h3 class="ui header">{{t 'forms.ember-flexberry-dummy-comment-vote-edit.caption'}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
   {{flexberry-error error=error}}
-  <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
-    </div>
-  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -41,31 +18,36 @@
       </button>
     </div>
   </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
+  </div>
   <div class="field">
-  <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.voteType-caption'}}</label>
-  {{
-    flexberry-dropdown
-    items=(flexberry-enum 'ember-flexberry-dummy-vote-type')
-    value=model.voteType
-    readonly=readonly
-  }}
-  {{flexberry-validationmessage error=model.errors.voteType pointing="pointing"}}
-</div>
+    <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.voteType-caption'}}</label>
+    {{
+      flexberry-dropdown
+      items=(flexberry-enum 'ember-flexberry-dummy-vote-type')
+      value=model.voteType
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "voteType" "messages")}}
+  </div>
 
-<div class="field">
-  <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption'}}</label>
-  {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
-    value=model.applicationUser
-    displayAttributeName='name'
-    relationName='applicationUser'
-    projection='ApplicationUserL'
-    title=(t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption')
-    readonly=readonly
-  }}
-  {{flexberry-validationmessage error=model.errors.applicationUser pointing="pointing"}}
-</div>
+  <div class="field">
+    <label>{{t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption'}}</label>
+    {{
+      flexberry-lookup
+      choose='showLookupDialog'
+      remove='removeLookupValue'
+      value=model.applicationUser
+      displayAttributeName='name'
+      relationName='applicationUser'
+      projection='ApplicationUserL'
+      title=(t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption')
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "applicationUser" "messages")}}
+  </div>
 
 </form>

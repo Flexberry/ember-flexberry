@@ -2,11 +2,19 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { Promise } from 'rsvp';
+import { assert } from '@ember/debug';
+import { set, computed, observer } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isNone } from '@ember/utils';
+import { later } from '@ember/runloop';
+import { getOwner } from '@ember/application';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import EditInModalOpen from '../mixins/edit-in-modal-open';
-const { getOwner } = Ember;
 
 /**
   @class OlvToolbar
@@ -35,7 +43,15 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
+
+  /**
+    Service for managing advLimits for lists.
+
+    @property advLimit
+    @type AdvLimitService
+  */
+  advLimit: service(),
 
   /**
     Flag to use creation button at toolbar.
@@ -84,6 +100,16 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   colsConfigButton: true,
 
   /**
+    Flag to use advLimitButton button at toolbar.
+
+    @property advLimitButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  advLimitButton: false,
+
+  /**
     Flag indicates whether to show exportExcelButton button at toolbar.
 
     @property exportExcelButton
@@ -110,15 +136,23 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   */
   filterText: null,
 
-  /**
+   /**
     Flag indicate when edit form of new record must be open in modal window.
-
     @property editInModal
     @type Boolean
     @default false
     @private
   */
-  editInModal: false,
+    editInModal: false,
+
+  /**
+    Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.
+
+    @property inLookup
+    @type Boolean
+    @default false
+  */
+  inLookup: false,
 
   /**
     Used to link to objectListView with same componentName.
@@ -128,6 +162,14 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @default ''
   */
   componentName: '',
+
+  /**
+    The name of the `flexberry-lookup` component for which the `flexberry-objectlistview` component is used.
+
+    @property lookupComponentName
+    @type String
+  */
+  lookupComponentName: undefined,
 
   /**
     The flag to specify whether the delete button is enabled.
@@ -157,19 +199,9 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   customButtonAction: 'customButtonAction',
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    See {{#crossLink "FlexberryObjectlistviewComponent/customButtons:property"}}{{/crossLink}}.
 
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsArray
+    @property customButtons
     @type Array
   */
   customButtons: undefined,
@@ -179,19 +211,10 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   */
   listNamedUserSettings: undefined,
 
-  /**
-    Current store. Used for loading data for autocomplete and for dropdown.
-
-    @property store
-    @type Projection.OnlineStore
-    @readOnly
-  */
-  store: Ember.inject.service('store'),
-
-  _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
+  _listNamedUserSettings: observer('listNamedUserSettings', function() {
     let listNamedUserSettings = this.get('listNamedUserSettings');
     for (let namedSetting in listNamedUserSettings) {
-      this._addNamedSetting(namedSetting);
+      this._addNamedSetting(namedSetting, this.get('componentName'));
     }
 
     this._sortNamedSetting();
@@ -202,35 +225,47 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   */
   listNamedExportSettings: undefined,
 
-  _listNamedExportSettings: Ember.observer('listNamedExportSettings', function() {
+  _listNamedExportSettings: observer('listNamedExportSettings', function() {
     let listNamedExportSettings = this.get('listNamedExportSettings');
     for (let namedSetting in listNamedExportSettings) {
       let settName = namedSetting.split('/');
       settName.shift();
       settName = settName.join('/');
-      this._addNamedSetting(settName, true);
+      this._addNamedSetting(settName, this.get('componentName'), true);
     }
 
     this._sortNamedSetting(true);
   }),
 
   /**
+    Current adv limits.
+
+    @property namedAdvLimits
+    @type Object
+  */
+  namedAdvLimits: undefined,
+
+  /**
     @property colsConfigMenu
     @type Service
   */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
-  menus: [
+  /**
+    @property menus
+    @readOnly
+  */
+  menus: computed(() => A([
     { name: 'use', icon: 'checkmark box' },
     { name: 'edit', icon: 'setting' },
     { name: 'remove', icon: 'remove' }
-  ],
+  ])).readOnly(),
 
   /**
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems: Ember.computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
+  colsSettingsItems: computed('i18n.locale', 'userSettingsService.isUserSettingsServiceEnabled', function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -287,19 +322,65 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   ),
 
   /**
-    Observe colsSettingsItems changes.
-    @property _colsSettingsItems
+    @property advLimitItems
     @readOnly
   */
-  _colsSettingsItems: Ember.observer('colsSettingsItems', function() {
-    this._updateListNamedUserSettings();
+  advLimitItems: computed('i18n.locale', 'advLimit.isAdvLimitServiceEnabled', 'namedAdvLimits', function() {
+    const i18n = this.get('i18n');
+    const rootItem = {
+      icon: 'dropdown icon',
+      iconAlignment: 'right',
+      title: '',
+      items: A(),
+      localeKey: ''
+    };
+    const createLimitItem = {
+      icon: 'flask icon',
+      iconAlignment: 'left',
+      title: i18n.t('components.olv-toolbar.create-limit-title'),
+      localeKey: 'components.olv-toolbar.create-limit-title'
+    };
+    rootItem.items.addObject(createLimitItem);
+
+    const limitItems = this.get('namedAdvLimits');
+    const menus = this.get('menus');
+    const editMenus = A();
+    menus.forEach(menu => {
+      const menuSubitem = this._createMenuSubitems(limitItems, menu.icon + ' icon');
+      if (menuSubitem.length > 0) {
+        editMenus.addObject({
+          icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: `components.olv-toolbar.${menu.name}-limit-title`,
+          items: menuSubitem
+        });
+      }
+    }, this);
+
+    if (editMenus.length > 0) {
+      rootItem.items.addObjects(editMenus);
+    }
+
+    const setDefaultItem = {
+      icon: 'remove circle icon',
+      iconAlignment: 'left',
+      title: i18n.t('components.olv-toolbar.set-default-limit-title'),
+      localeKey: 'components.olv-toolbar.set-default-limit-title'
+    };
+    rootItem.items.addObject(setDefaultItem);
+
+    return this.get('advLimit.isAdvLimitServiceEnabled') ? A([rootItem]) : A();
+  }),
+
+  _colsSettingsItems: observer('colsSettingsItems', function() {
+    this._updateListNamedUserSettings(this.get('componentName'));
   }),
 
   /**
     @property exportExcelItems
     @readOnly
   */
-  exportExcelItems:  Ember.computed(function() {
+  exportExcelItems: computed(function() {
       let i18n = this.get('i18n');
       let menus = [
         { icon: 'angle right icon',
@@ -349,12 +430,22 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   isDeleteButtonEnabled: false,
 
   /**
+    Flag used to display filters in modal.
+
+    @property showFiltersInModal
+    @type Boolean
+    @default false
+    @private
+  */
+  showFiltersInModal: false,
+
+  /**
     Stores the text from "Filter by any match" input field.
 
     @property filterByAnyMatchText
     @type String
   */
-  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+  filterByAnyMatchText: oneWay('filterText'),
 
   /**
     Caption to be displayed in info modal dialog.
@@ -387,6 +478,18 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @private
   */
   _infoModalDialog: null,
+
+  /**
+    The name of the component for themodal window.
+    If the `flexberry-objectlistview` component is used for the `flexberry-lookup` component, we must pass the name of the `flexberry-lookup` component to the modal window.
+
+    @private
+    @property _componentNameForModalWindow
+    @type String
+  */
+  _componentNameForModalWindow: computed('inLookup', 'componentName', 'lookupComponentName', function () {
+    return this.get('inLookup') ? this.get('lookupComponentName') : this.get('componentName');
+  }),
 
   /**
    Shows info modal dialog.
@@ -430,14 +533,23 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     createNew() {
       let editFormRoute = this.get('editFormRoute');
       let modelController = this.get('modelController');
-      let editInModal = this.get('editInModal');
+      let appController = getOwner(this).lookup('controller:application');
+      let thisRouteName = appController.get('currentRouteName');
+      let thisRecordId = modelController.get('model.id');
+      let editInModal = this.get('editInModal');      
+      let transitionOptions = {
+        queryParams: {
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
+        }
+      };
       if (editInModal) {
         this.openCreateModalDialog(modelController, editFormRoute);
       } else {
-        Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
+        assert('Property editFormRoute is not defined in controller', editFormRoute);
         this.get('objectlistviewEventsService').setLoadingState('loading');
         Ember.run.later((function() {
-          modelController.transitionToRoute(editFormRoute + '.new');
+          modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
         }), 50);
       }
     },
@@ -450,27 +562,24 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     */
     delete() {
       let confirmDeleteRows = this.get('confirmDeleteRows');
+      let possiblePromise = null;
+
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows()) {
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+
+        possiblePromise = confirmDeleteRows();
+
+        if ((!possiblePromise || !(possiblePromise instanceof Promise))) {
           return;
         }
       }
 
-      let componentName = this.get('componentName');
-
-      if (!this.get('allSelect'))
-      {
-        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (possiblePromise || (possiblePromise instanceof Promise)) {
+        possiblePromise.then(() => {
+          this._confirmDeleteRows();
+        });
       } else {
-        let modelName = this.get('modelController.modelProjection.modelName');
-
-        let filterQuery = {
-          predicate: this.get('currentController.filtersPredicate'),
-          modelName: modelName
-        };
-
-        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
+        this._confirmDeleteRows();
       }
     },
 
@@ -495,9 +604,9 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     keyDownFilterAction(currentValue, e) {
       if (e.keyCode === 13) {
         this.send('filterByAnyMatch');
+        e.preventDefault();
+        return false;
       }
-
-      this._super(...arguments);
     },
 
     /**
@@ -509,9 +618,10 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     removeFilter() {
       let _this = this;
 
-      Ember.run.later((function() {
-        _this.set('filterText', null);
+      later((function() {
         _this.set('filterByAnyMatchText', null);
+        let componentName = _this.get('componentName');
+        _this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, null);
       }), 50);
     },
 
@@ -540,8 +650,39 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       @public
     */
     showConfigDialog(settingName) {
-      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+      assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settingName, this.get('useSidePageMode'));
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showAdvLimitDialog(settingName) {
+      assert('showAdvLimitDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showAdvLimitDialog', this.get('_componentNameForModalWindow'), settingName);
+    },
+
+    /**
+      Action to show filters tool.
+
+      @method actions.showFiltersTool
+      @public
+    */
+    showFiltersTool() {
+      const showFiltersInModal = this.get('showFiltersInModal');
+
+      if (showFiltersInModal) {
+        const componentName = this.get('componentName');
+        const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
+        const useSidePageMode = false;
+
+        this.get('modelController').send('showFiltersDialog', componentName, columns, useSidePageMode);
+      } else {
+        this.sendAction('toggleStateFilters');
+      }
     },
 
     /**
@@ -552,8 +693,8 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     */
     showExportDialog(settingName, immediateExport) {
       let settName = settingName ? 'ExportExcel/' + settingName : settingName;
-      Ember.assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settName, true, immediateExport);
+      assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.get('_componentNameForModalWindow'), settName, this.get('useSidePageMode'), true, immediateExport);
     },
 
     /**
@@ -564,59 +705,142 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onMenuItemClick(e) {
-      let iTags = Ember.$(e.currentTarget).find('i');
-      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      let iTags = $(e.currentTarget).find('i');
+      let namedSettingSpans = $(e.currentTarget).find('span');
       if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
         return;
       }
 
-      this._router = getOwner(this).lookup('router:main');
+      let router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName  =  this.componentName;
+      let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
-        case 'table icon':
+        case 'table icon': {
           this.send('showConfigDialog');
           break;
-        case 'checkmark box icon':
+        }
+
+        case 'checkmark box icon': {
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          /* eslint-disable no-unused-vars */
           let colsConfig = this.listNamedUserSettings[namedSetting];
-          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
+          userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
             then(record => {
-              let sort = serializeSortingParam(colsConfig.sorting);
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              let currentController = this.get('currentController');
+              let userSettingsApplyFunction = currentController.get('userSettingsApply');
+              if (userSettingsApplyFunction instanceof Function) {
+                userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
+              } else {
+                let sort = serializeSortingParam(colsConfig.sorting);
+                router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              }
             });
+          /* eslint-disable no-unused-vars */
           break;
-        case 'setting icon':
+        }
+
+        case 'setting icon': {
           this.send('showConfigDialog', namedSetting);
           break;
-        case 'remove icon':
+        }
+
+        case 'remove icon': {
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting)
           .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'remove circle icon':
+        }
+
+        case 'remove circle icon': {
           if (!userSettingsService.haveDefaultUserSetting(componentName)) {
             alert('No default usersettings');
             break;
           }
 
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          /* eslint-disable no-unused-vars */
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
-            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            let currentController = this.get('currentController');
+            let userSettingsApplyFunction = currentController.get('userSettingsApply');
+            if (userSettingsApplyFunction instanceof Function) {
+              userSettingsApplyFunction.apply(currentController, [componentName, defaultDeveloperUserSetting.sorting, defaultDeveloperUserSetting.perPage]);
+            } else {
+              let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+              let perPageDefault = defaultDeveloperUserSetting.perPage;
+              router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: perPageDefault || 5 } });
+            }
+          });
+          /* eslint-enable no-unused-vars */
+          break;
+        }
+        case 'unhide icon': {
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(componentName);
+          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + router.currentPath + '.js';
+          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+          break;
+        }
+      }
+    },
+
+    /**
+      Handler click on flexberry-menu of advLimits.
+
+      @method actions.onLimitMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onLimitMenuItemClick(e) {
+      const iTags = $(e.currentTarget).find('i');
+      const namedLimitSpans = $(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedLimitSpans.length <= 0) {
+        return;
+      }
+
+      const className = iTags.get(0).className;
+      const advLimitName = namedLimitSpans.get(0).innerText;
+      const componentName = this.get('componentName');
+      const advLimitService = this.get('advLimit');
+
+      switch (className) {
+        case 'flask icon':
+          this.send('showAdvLimitDialog');
+          break;
+        case 'checkmark box icon': {
+          const advLimit = this.get(`namedAdvLimits.${advLimitName}`);
+          advLimitService.saveAdvLimit(advLimit, componentName).
+            then(() => {
+              this.send('refresh');
+            });
+          break;
+        }
+        case 'setting icon':
+          this.send('showAdvLimitDialog', advLimitName);
+          break;
+        case 'remove icon':
+          advLimitService.deleteAdvLimit(componentName, advLimitName)
+          .then(() => {
+            this.get('colsConfigMenu').updateNamedAdvLimitTrigger(componentName);
+            alert(
+              this.get('i18n').t('components.advlimit-dialog-content.limit') +
+              '"' + advLimitName + '"' +
+              this.get('i18n').t('components.advlimit-dialog-content.is-deleted')
+            );
           });
           break;
-        case 'unhide icon':
-          let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
-          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+        case 'remove circle icon':
+          advLimitService.saveAdvLimit('', componentName)
+          .then(() => {
+            this.send('refresh');
+          });
           break;
       }
     },
@@ -629,38 +853,47 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       @param {jQuery.Event} e jQuery.Event by click on menu item
     */
     onExportMenuItemClick(e) {
-      let iTags = Ember.$(e.currentTarget).find('i');
-      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      let iTags = $(e.currentTarget).find('i');
+      let namedSettingSpans = $(e.currentTarget).find('span');
       if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
         return;
       }
 
-      this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName  =  this.componentName;
+      let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
-        case 'file excel outline icon':
+        case 'file excel outline icon': {
           this.send('showExportDialog');
           break;
-        case 'checkmark box icon':
+        }
+
+        case 'checkmark box icon': {
           this.send('showExportDialog', namedSetting, true);
           break;
-        case 'setting icon':
+        }
+
+        case 'setting icon': {
           this.send('showExportDialog', namedSetting);
           break;
-        case 'remove icon':
+        }
+
+        case 'remove icon': {
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting, true)
           .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
+        }
       }
     },
 
+    /* eslint-disable no-unused-vars */
     copyJSONContent(event) {
       let infoModalDialog = this.get('_infoModalDialog');
       infoModalDialog.find('.olv-toolbar-info-modal-dialog-content textarea').select();
@@ -669,11 +902,12 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
   */
   init() {
     this._super(...arguments);
@@ -688,8 +922,9 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+    this.get('colsConfigMenu').on('updateNamedAdvLimit', this, this._updateNamedAdvLimits);
   },
 
   didInsertElement() {
@@ -701,24 +936,25 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     infoModalDialog.modal('setting', 'closable', true);
     this.set('_infoModalDialog', infoModalDialog);
     let modelController = this.get('modelController');
-    if (Ember.isNone(modelController)) {
+    if (isNone(modelController)) {
       this.set('modelController', this.get('currentController'));
     }
 
-    this._updateListNamedUserSettings();
+    this._updateListNamedUserSettings(this.get('componentName'));
   },
 
   /**
     Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
+    this.get('colsConfigMenu').off('updateNamedAdvLimit', this, this._updateNamedAdvLimits);
     this._super(...arguments);
   },
 
@@ -734,11 +970,13 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
+  /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Handler for "Olv rows deleted" event in objectlistview.
@@ -748,6 +986,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @param {String} componentName The name of objectlistview component
     @param {Integer} count Number of deleted records
   */
+  /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
     if (this.get('allSelect')) {
       this.get('objectlistviewEventsService').updateSelectAllTrigger(this.get('componentName'), false);
@@ -757,26 +996,31 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       this.set('isDeleteButtonEnabled', false);
     }
   },
+  /* eslint-enable no-unused-vars */
 
-  _updateListNamedUserSettings() {
-    if (!this.get('userSettingsService').isUserSettingsServiceEnabled) {
+  _updateListNamedUserSettings(componentName) {
+    if (!(this.get('userSettingsService').isUserSettingsServiceEnabled && componentName === this.get('componentName'))) {
       return;
     }
 
     this._resetNamedUserSettings();
-    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-    Ember.set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));
+    set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+    set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));
   },
 
   _resetNamedUserSettings() {
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
-      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
-      Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
+      set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
+      set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
     }
   },
 
-  _addNamedSetting(namedSetting, isExportExcel) {
+  _addNamedSetting(namedSetting, componentName, isExportExcel) {
+    if (componentName !== this.get('componentName')) {
+      return;
+    }
+
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       let icon = menus[i].icon + ' icon';
@@ -796,26 +1040,30 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       }
 
       if (isExportExcel) {
-        Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', newSubItems);
+        set(this.get('exportExcelItems')[0].items[i + 1], 'items', newSubItems);
       } else {
-        Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+        set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
       }
     }
 
     this._sortNamedSetting(isExportExcel);
   },
 
-  _deleteNamedSetting(namedSetting) {
-    this._updateListNamedUserSettings();
+  _deleteNamedSetting(namedSetting, componentName) {
+    if (componentName === this.get('componentName')) {
+      this._updateListNamedUserSettings(componentName);
+    }
   },
+  /* eslint-enable no-unused-vars */
 
+  /* eslint-disable no-unused-vars */
   _selectAll(componentName, selectAllParameter, skipConfugureRows) {
-    if (componentName === this.componentName)
-    {
+    if (componentName === this.get('componentName')) {
       this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   _sortNamedSetting(isExportExcel) {
     for (let i = 0; i < this.menus.length; i++) {
@@ -824,6 +1072,64 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       } else {
         this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
       }
+    }
+  },
+
+  /**
+    Refresh current adv limits list.
+
+    @method _updateNamedAdvLimits
+
+    @param {String} componentName The name of objectlistview component
+  */
+  _updateNamedAdvLimits(componentName) {
+    const advLimitService = this.get('advLimit');
+    const thisComponentName = this.get('componentName');
+    if (!(advLimitService.get('isAdvLimitServiceEnabled') && componentName === thisComponentName)) {
+      return;
+    }
+
+    this.set('namedAdvLimits', advLimitService.getNamedAdvLimits(thisComponentName));
+  },
+
+  /**
+    Creating menu subitems.
+
+    @method _createMenuSubitems
+
+    @param {Object} itemsNameList Object with items names as keys.
+    @param {String} icon Icon class for menu items.
+  */
+  _createMenuSubitems(itemsNameList, icon) {
+    if (isNone(itemsNameList)) {
+      return A();
+    }
+
+    const itemsNames = A(Object.keys(itemsNameList)).sortBy('name');
+    return itemsNames.map(name => { return { title: name, icon: icon, iconAlignment: 'left' }; });
+  },
+
+  /**
+    Delete rows when it confirmed.
+
+    @method _confirmDeleteRows
+    @private
+  */
+  _confirmDeleteRows() {
+    let componentName = this.get('componentName');
+
+    if (!this.get('allSelect'))
+    {
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    } else {
+      let modelName = this.get('modelController.modelProjection.modelName');
+
+      let filterQuery = {
+        predicate: this.get('currentController.filtersPredicate'),
+        modelName: modelName
+      };
+
+      this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
     }
   }
 });

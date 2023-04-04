@@ -14,3 +14,11 @@
     url("fonts/crim.ttf") format('truetype'),
     url("fonts/crim.svg#icons") format('svg');
 }
+@font-face {
+  font-family: 'outline-icons';
+  src: url("fonts/outline-icons.eot");
+  src: url("fonts/outline-icons.woff2") format('woff2'),
+    url("fonts/outline-icons.woff") format('woff'),
+    url("fonts/outline-icons.ttf") format('truetype'),
+    url("fonts/outline-icons.svg#icons") format('svg');
+}

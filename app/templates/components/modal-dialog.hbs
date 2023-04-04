@@ -1,33 +1,29 @@
-{{#ui-modal class=(concat "flexberry-modal " sizeClass)}}
-  {{#if showHeader}}
+<i class="close icon"></i>
+<div class="header">{{title}}</div>
+{{#if showHeader}}
     <i class="close icon"></i>
     <div class="header">
       {{title}}
     </div>
+{{/if}}
+<div class="{{if viewImageContent "image"}} {{if _toolbarVisible "smallerContentSize"}} scrolling content">
+  {{#if viewImageContent}}
+    <div class="ui centered image">{{yield}}</div>
+  {{else}}
+    {{yield}}
   {{/if}}
-  <div class="{{if viewImageContent 'image' ''}} content">
-    {{#if viewImageContent}}
-      <div class="ui centered image">
-        {{yield}}
-      </div>
-    {{else}}
-      <div class="description">
-        {{yield}}
-      </div>
+</div>
+{{#if _toolbarVisible}}
+  <div class="actions">
+    {{#if useCloseButton}}
+      <button class="ui cancel button" type="button" data-dismiss="modal" title={{t "components.modal-dialog.close-button-text"}}>
+        {{t "components.modal-dialog.close-button-text"}}
+      </button>
+    {{/if}}
+    {{#if useOkButton}}
+      <button class="ui positive button" type="button" title={{t "components.modal-dialog.ok-button-text"}}>
+        {{t "components.modal-dialog.ok-button-text"}}
+      </button>
     {{/if}}
   </div>
-  {{#if toolbarVisible}}
-    <div class="actions">
-      {{#if useCloseButton}}
-        <button type="button" class="ui cancel button" data-dismiss="modal" title={{t "components.modal-dialog.close-button-text"}}>
-          {{t "components.modal-dialog.close-button-text"}}
-        </button>
-      {{/if}}
-      {{#if useOkButton}}
-        <button type="button" class="ui positive button" title={{t "components.modal-dialog.ok-button-text"}}>
-          {{t "components.modal-dialog.ok-button-text"}}
-        </button>
-      {{/if}}
-    </div>
-  {{/if}}
-{{/ui-modal}}
+{{/if}}

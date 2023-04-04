@@ -1,0 +1,122 @@
+<div class="ui form {{appState.state}}">
+  <div class="flexberry-colsconfig content">
+    <div class="field">
+      <button type="button" class="ui button cols-config-apply" {{action "apply"}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
+    </div>
+    <div class="ui segment">
+      <div class="field">
+        {{flexberry-field
+          class="setting-name-input fluid"
+          value=model.settingName
+          label=(t "components.colsconfig-dialog-content.enter-setting-name")
+        }}
+      </div>
+      <div class="field">
+        <button type="button" class="ui button positive cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
+          {{t "components.colsconfig-dialog-content.save"}}
+        </button>
+      </div>
+      {{ui-message
+        type=type
+        closeable=closeable
+        visible=visible
+        caption=caption
+        message=message
+      }}
+    </div>
+
+    {{#if model.exportParams.isExportExcel}}
+      <div class="field">
+        {{flexberry-checkbox
+          label=(t "components.colsconfig-dialog-content.det-separate-cols")
+          value=model.exportParams.detSeparateCols
+        }}
+      </div>
+      <div class="field">
+        {{flexberry-checkbox
+          label=(t "components.colsconfig-dialog-content.det-separate-rows")
+          value=model.exportParams.detSeparateRows
+        }}
+      </div>
+    {{else}}
+      <div class="two fields unstackable">
+        <div class="field">
+          {{flexberry-field
+            class="per-page-input"
+            value=model.perPageValue
+            label=(t "components.colsconfig-dialog-content.per-page")
+          }}
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=model.saveColWidthState
+            label=(t "components.colsconfig-dialog-content.col-width-on")
+          }}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#each model.colDescs as |colDesc n|}}
+      <div propName='{{colDesc.propName}}' class="colsconfig-prop">
+        <div class="field colsconfig-prop-name {{if colDesc.hide "disabled"}}">
+          {{#if model.exportParams.isExportExcel}}
+            <label>{{t "components.colsconfig-dialog-content.column-name"}}</label>
+            {{input class=(if colDesc.hide "disabled") value=colDesc.name}}
+          {{else}}
+            <span>{{colDesc.name}}</span>
+          {{/if}}
+        </div>
+
+        {{!-- Сортировка --}}
+        <div class="two fields unstackable">
+          {{#unless colDesc.isHasMany}}
+            <div class="sort-direction-cell field">
+              <label>{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</label>
+              <div class="ui compact selection dropdown sort-direction-dropdown {{if colDesc.hide 'disabled'}}">
+                <i class="dropdown icon"></i>
+                <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                <div class="menu">
+                  <div class="item" data-value="0">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                  <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
+                  <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
+                </div>
+              </div>
+            </div>
+          {{/unless}}
+          {{!-- Приоритет --}}
+          {{#if colDesc.sortOrder}}
+            <div class="field">
+              <label>{{t "components.colsconfig-dialog-content.sort-priority-caption"}}</label>
+              <div class="ui input {{if colDesc.hide 'disabled'}}">
+                {{input
+                  class="sort-priority-input"
+                  value=colDesc.sortPriority
+                }}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+
+        {{!-- Ширина --}}
+        <div class="field">
+          <label>{{t "components.colsconfig-dialog-content.column-width-caption"}}</label>
+          <div class="ui input {{if (or colDesc.hide (or model.exportParams.isExportExcel (or colDesc.fixed (not model.saveColWidthState)))) 'disabled'}}">
+            {{input
+              class="column-width-input"
+              value=colDesc.columnWidth
+            }}
+          </div>
+        </div>
+
+        <div class="colsconfig-actions">
+          <button type="button" {{action 'invertVisibility' n}} class="ui icon button"><i class='large {{if colDesc.hide 'hide' 'unhide'}} icon'></i></button>
+          <button type="button" {{action 'rowUp' n}} class="ui icon button{{if (eq n 0) " disabled"}}"><i class="chevron up icon"></i></button>
+          <button type="button" {{action 'rowDown' n}} class="ui icon button row-down-button no-margin{{if (eq colDesc model.colDescs.lastObject) " disabled"}}"><i class="chevron down icon"></i></button>
+        </div>
+      </div>
+    {{/each}}
+    <a class="hidden download-anchor"></a>
+  </div>
+</div>

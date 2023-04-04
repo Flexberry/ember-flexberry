@@ -5,15 +5,27 @@
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
+const skipConfirmationFunc = require('../utils/skip-confirmation');
 module.exports = {
     description: 'Generates an ember object for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
-        { name: 'metadata-dir', type: String }
+        { name: 'metadata-dir', type: String },
+        { name: 'skip-confirmation', type: Boolean }
     ],
     supportsAddon: function () {
         return false;
     },
+
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+
+        return this._super(...arguments);
+    },
+
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { isBlank } from '@ember/utils';
+import { deprecate } from '@ember/debug';
+import { observer } from '@ember/object';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
@@ -32,21 +35,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @type String
   */
   title: undefined,
-
-  /**
-    Size of Semantic-UI modal.
-    [More info](http://semantic-ui.com/modules/modal.html#size).
-
-    Possible variants:
-    - **small**
-    - **large**
-    - **fullscreen**
-
-    @property sizeClass
-    @type String
-    @default 'small'
-  */
-  sizeClass: 'small',
 
   /**
     Current lookup selected record.
@@ -130,7 +118,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   actions: {
     /**
@@ -210,15 +198,19 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         filterCondition: this.get('filterCondition'),
         predicate: this.get('predicate'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
+        hierarchyPaging: this.get('hierarchyPaging'),
 
         title: this.get('title'),
-        sizeClass: this.get('sizeClass'),
         saveTo: this.get('saveTo'),
         currentLookupRow: this.get('currentLookupRow'),
         customPropertiesData: this.get('customPropertiesData'),
         componentName: this.get('componentName'),
         folvComponentName: this.get('folvComponentName')
       };
+
+      if (reloadData.customPropertiesData) {
+        reloadData.customPropertiesData.inHierarchicalMode = this.get('inHierarchicalMode');
+      }
 
       let folvComponentName = this.get('folvComponentName');
       if (folvComponentName) {
@@ -246,7 +238,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       let params = {};
       params.hierarchicalAttribute = this.get('hierarchicalAttribute');
       params.modelName = this.get('customPropertiesData.modelName');
-      params.modelProjection = this.get('customPropertiesData.modelProjection');
+      params.projectionName = this.get('customPropertiesData.modelProjection');
       this.send('loadRecordsById', id, target, property, firstRunMode, params);
     },
   },
@@ -257,7 +249,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
+  queryParametersChanged: observer('filter', 'page', 'perPage', 'sort', function() {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }
@@ -270,7 +262,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @method clear
     @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
   */
-  clear: function(initialClear) {
+  clear: function (initialClear) {
     this.set('reloadObserverIsActive', false);
 
     if (initialClear) {
@@ -286,6 +278,8 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       this.set('filter', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);
+
+      this.set('modalDialogSettings', undefined);
     }
 
     this.set('saveTo', undefined);
@@ -309,10 +303,28 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       throw new Error('Don\'t know where to save - no saveTo data defined.');
     }
 
-    saveTo.model.set(saveTo.propName, master);
+    const updateLookupAction = saveTo.updateLookupAction;
+    const componentName = this.get('componentName');
+    if (!isBlank(updateLookupAction)) {
+      this.get('reloadContext').send(updateLookupAction,
+        {
+          relationName: saveTo.propName,
+          modelToLookup: saveTo.model,
+          newRelationValue: master,
+          componentName: componentName
+        });
+    } else {
+      deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
+        id: 'ember-flexberry.controllers.lookup-dialog',
+        until: '4.0',
+      });
 
-    // Manually make record dirty, because ember-data does not do it when relationship changes.
-    saveTo.model.makeDirty();
+      saveTo.model.set(saveTo.propName, master);
+
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      saveTo.model.makeDirty();
+      this.get('lookupEventsService').lookupOnChangeTrigger(componentName, master);
+    }
   },
 
   /**

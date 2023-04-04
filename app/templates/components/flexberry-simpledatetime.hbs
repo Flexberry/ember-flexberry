@@ -3,23 +3,33 @@
 {{else}}
   <div class="ui fluid action input flatpickr">
     <input type="text" placeholder={{placeholder}}/>
-    {{#if removeButton}}
+    {{#if openButton}}
       {{#if readonlyAttr}}
         <button
-          class="ui ui-clear disabled button"
-          title={{t "components.flexberry-lookup.remove-button-text"}}
+          class="ui ui-open disabled button"
+          title={{t "components.flexberry-simpledatetime.apply-button-text"}}
           disabled="disabled"
-          {{action "remove" bubbles=false}}>
-          <i class="remove icon"></i>
+          {{action "open" bubbles=false}}>
+          <i class="{{type}} icon"></i>
         </button>
       {{else}}
         <button
-          class="ui ui-clear button"
-          title={{t "components.flexberry-lookup.remove-button-text"}}
-          {{action "remove" bubbles=false}}>
-          <i class="remove icon"></i>
+          class="ui ui-open button"
+          title={{t "components.flexberry-simpledatetime.apply-button-text"}}
+          {{action "open" bubbles=false}}>
+          <i class="{{type}} icon"></i>
         </button>
       {{/if}}
+    {{/if}}
+    {{#if removeButton}}
+      <button
+        class="ui ui-clear {{if readonlyAttr "disabled"}} button"
+        title={{t "components.flexberry-lookup.remove-button-text"}}
+        disabled={{readonlyAttr}}
+        type="button"
+        {{action "remove" bubbles=false}}>
+        <i class="remove icon"></i>
+      </button>
     {{/if}}
   </div>
 {{/if}}

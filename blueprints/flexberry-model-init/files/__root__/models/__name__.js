@@ -1,12 +1,45 @@
-import { Model as <%= className %>Mixin<%if (namespace) {%>, defineNamespace<%}%><%if (projections) {%>, defineProjections<%}%><%if (parentModelName) {%>, defineBaseModel <%}%> } from
-  '../mixins/regenerated/models/<%= name %>';
-import <%if(parentModelName) {%><%= parentClassName %>Model from <%= (parentExternal ? "set path to '" : "'./") + parentModelName %>';<%}else{%>{ Projection } from 'ember-flexberry-data';<%}%>
-<%if(!parentModelName) {%>import { Offline } from 'ember-flexberry-data';<%}%>
-let Model = <%if(parentModelName) {%><%= parentClassName %>Model.extend<%}else{%>Projection.Model.extend<%}%>(<%if(!parentModelName) {%>Offline.ModelMixin, <%}%><%= className %>Mixin, {
+<% if (parentModelName) {
+%>import $ from 'jquery';
+<%}
 
+%>import { buildValidations } from 'ember-cp-validations';<%
+
+if (!parentModelName) { %>
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';<%
+}
+if (!parentModelName && additionalModelMixin && additionalModelMixinImport) { %>
+import <%= additionalModelMixin %> from <%= additionalModelMixinImport %>; <%
+} %>
+
+import {
+  <% if (parentModelName) { %>defineBaseModel,
+  <% } if (projections) { %>defineProjections,
+  <% } %>ValidationRules,
+  Model as <%= className %>Mixin
+} from '../mixins/regenerated/models/<%= name %>';<%
+
+if (parentModelName) { %>
+
+import <%= parentClassName %>Model from <%= (parentExternal ? "set path to '/" : "'./") + parentModelName + "'" %>;
+import { ValidationRules as ParentValidationRules } from <%= (parentExternal ? "set path to mixin for '/" : "'../mixins/regenerated/models/") + parentModelName + "'" %>;<%
+} %>
+
+const Validations = buildValidations(<%= parentModelName ? '$.extend({}, ParentValidationRules, ValidationRules)' : 'ValidationRules' %>, {
+  dependentKeys: ['model.i18n.locale'],
 });
-<%if(namespace) {%>
-defineNamespace(Model);<%}%><%if(parentModelName) {%>
-defineBaseModel(Model);<%}%><%if(projections) {%>
-defineProjections(Model);<%}%>
+
+let Model = <%= parentModelName ? parentClassName : 'EmberFlexberryData' %>Model.extend(<%= additionalModelMixin%><%= additionalModelMixin ? ', ' : '' %><%= className %>Mixin, Validations, {
+});<%
+
+if (parentModelName || projections) { %>
+<%
+}
+
+if (parentModelName) { %>
+defineBaseModel(Model);<%
+}
+if (projections) { %>
+defineProjections(Model);<%
+} %>
+
 export default Model;

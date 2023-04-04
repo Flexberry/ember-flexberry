@@ -2,15 +2,15 @@
   @module ember-flexberry-dummy
  */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 
 /**
   Settings example component.
 
   @class SettingsExampleComponent
-  @extends Ember.Component
+  @extends Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     A hash of controller properties.
 
@@ -36,4 +36,12 @@ export default Ember.Component.extend({
     @type String
    */
   componentTemplateText: null,
+
+  /**
+    Overflow style of component block.
+
+    @property componentBlockOverflow
+    @type String
+   */
+  componentBlockOverflow: 'scroll',
 });

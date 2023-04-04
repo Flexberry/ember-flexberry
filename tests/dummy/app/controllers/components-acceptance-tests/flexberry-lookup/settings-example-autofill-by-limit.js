@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
-import { Query } from 'ember-flexberry-data';
-
-const { SimplePredicate, FilterOperator } = Query;
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 export default EditFormController.extend({
 
@@ -31,7 +30,7 @@ export default EditFormController.extend({
     @type BasePredicate
     @default undefined
    */
-  lookupCustomLimitPredicate: Ember.computed(function() {
+  lookupCustomLimitPredicate: computed(function() {
     let limitValue = this.get('limitValue');
 
     return new SimplePredicate('id', FilterOperator.Eq, limitValue.get('id'));

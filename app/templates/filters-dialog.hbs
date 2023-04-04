@@ -1,0 +1,11 @@
+{{#modal-dialog
+  title=title
+  sizeClass='small'
+  close='removeModalDialog'
+  created='createdModalDialog'
+  useOkButton=false
+  useCloseButton=false
+  useSidePageMode=model.useSidePageMode
+}}
+  {{outlet 'modal-content'}}
+{{/modal-dialog}}

@@ -1,16 +1,21 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 import config from '../config/environment';
+import { isNone } from '@ember/utils';
+import $ from 'jquery';
 
 const version = config.APP.version;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Service that triggers objectlistview events.
 
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Service for managing the state of the application.
@@ -18,7 +23,7 @@ export default Ember.Controller.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   actions: {
     /**
@@ -36,20 +41,19 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebar
     */
     toggleSidebar() {
-      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      $('.full.height').toggleClass('content-opened');
+
+      $('.sidebar.icon .text_menu').toggleClass('hidden');
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**
@@ -58,18 +62,45 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebarMobile
     */
     toggleSidebarMobile() {
-      Ember.$('.ui.sidebar.main.menu').sidebar('toggle');
+      $('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.sidebar.icon').toggleClass('hidden-text');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      if (!this.get('_hideEventIsAttached')) {
+        $('.ui.sidebar.main.menu').sidebar('attach events', '.ui.sidebar.main.menu .item a', 'hide');
+        this.set('_hideEventIsAttached', true);
       }
-    }
+    },
+
+    /**
+      Осуществляет выход текущего пользователя из приложения и переход к логин-форме.
+
+      @method actions.logout
+    */
+    logout() {
+      this.transitionToRoute('login');
+    },
+
+    onMenuItemClick(e) {
+      let namedItemSpans = $(e.currentTarget).find('span');
+      if (namedItemSpans.length <= 0) {
+        return;
+      }
+
+      let i18n = this.get('i18n');
+      let namedSetting = namedItemSpans.get(0).innerText;
+
+      switch (namedSetting) {
+        case i18n.t('forms.application.header.logout.caption').toString(): {
+          this.send('logout');
+          break;
+        }
+      }
+      return null;
+    },
   },
 
   /**
@@ -96,7 +127,7 @@ export default Ember.Controller.extend({
     @property addonVersionHref
     @type String
   */
-  addonVersionHref: Ember.computed('addonVersion', function() {
+  addonVersionHref: computed('addonVersion', function() {
     let addonVersion = this.get('addonVersion');
     let commitSha = addonVersion.split('+')[1];
 
@@ -109,7 +140,7 @@ export default Ember.Controller.extend({
     @property browserIsInternetExplorer
     @type Boolean
   */
-  browserIsInternetExplorer: Ember.computed(function() {
+  browserIsInternetExplorer: computed(function() {
     let userAgent = window.navigator.userAgent;
 
     return userAgent.indexOf('MSIE ') > 0 || userAgent.indexOf('Trident/') > 0 || userAgent.indexOf('Edge/') > 0;
@@ -130,8 +161,8 @@ export default Ember.Controller.extend({
     @method _userSettingsServiceChanged
     @private
   */
-  _userSettingsServiceChanged: Ember.observer('userSettingsService.isUserSettingsServiceEnabled', function() {
-    this.get('target.router').refresh();
+  _userSettingsServiceChanged: observer('userSettingsService.isUserSettingsServiceEnabled', function() {
+    this.send('onRefresh');
   }),
 
   /**
@@ -141,7 +172,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
 
     let i18n = this.get('i18n');
-    if (Ember.isNone(i18n)) {
+    if (isNone(i18n)) {
       return;
     }
 
@@ -150,12 +181,12 @@ export default Ember.Controller.extend({
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
-    let availableLocales = Ember.A(this.get('locales'));
+    let availableLocales = A(this.get('locales'));
 
     // Force current locale to be one of available,
     // if browser's current language is not supported by dummy application,
     // or if browser's current locale is long value like 'ru-RU', 'en-GB', etc.
-    if (!availableLocales.contains(shortCurrentLocale)) {
+    if (!availableLocales.includes(shortCurrentLocale)) {
       i18n.set('locale', 'en');
     } else {
       i18n.set('locale', shortCurrentLocale);
@@ -168,7 +199,7 @@ export default Ember.Controller.extend({
     @property sitemap
     @type Object
   */
-  sitemap: Ember.computed('i18n.locale', function() {
+  sitemap: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
 
     return {
@@ -176,11 +207,13 @@ export default Ember.Controller.extend({
         link: 'index',
         caption: i18n.t('forms.application.sitemap.index.caption'),
         title: i18n.t('forms.application.sitemap.index.title'),
+        icon: 'home',
         children: null
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.application.caption'),
         title: i18n.t('forms.application.sitemap.application.title'),
+        icon: 'clock outline',
         children: [{
           link: 'ember-flexberry-dummy-application-user-list',
           caption: i18n.t('forms.application.sitemap.application.application-users.caption'),
@@ -201,31 +234,46 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
+        }, {
+          link: 'ember-flexberry-dummy-multi-list',
+          caption: i18n.t('forms.application.sitemap.application.multi.caption'),
+          title: i18n.t('forms.application.sitemap.application.multi.title'),
+          children: null
+        }, {
+          link: 'ember-flexberry-dummy-suggestion-file-list',
+          caption: i18n.t('forms.application.sitemap.application.suggestion-file.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-file.title'),
+          children: null
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),
         title: i18n.t('forms.application.sitemap.log-service-examples.title'),
+        icon: 'thumbs up',
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
-          children: null
+          children: null,
+          icon: 'clock outline'
         }, {
           link: 'log-service-examples/settings-example',
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
-          children: null
+          children: null,
+          icon: 'lock'
         }, {
           link: 'log-service-examples/clear-log-form',
           caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
-          children: null
+          children: null,
+          icon: 'comment outline'
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.lock.caption'),
         title: i18n.t('forms.application.sitemap.lock.caption'),
+        icon: 'lock',
         children: [{
           link: 'new-platform-flexberry-services-lock-list',
           caption: i18n.t('forms.application.sitemap.lock.title'),
@@ -236,6 +284,7 @@ export default Ember.Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
+        icon: 'comment outline',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.caption'),
@@ -255,6 +304,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-checkbox/three-state-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.three-state-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -264,16 +318,6 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-ddau-checkbox/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.title'),
-            children: null
-          }]
-        }, {
-          link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.title'),
-          children: [{
-            link: 'components-examples/flexberry-datepicker/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
             children: null
           }]
         }, {
@@ -416,14 +460,29 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/autocomplete-in-gropedit-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-in-groupedit-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-in-groupedit-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.compute-autocomplete.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/numeric-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.numeric-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/autofill-by-limit-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autofill-by-limit-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/user-settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
             children: null
           }]
         }, {
@@ -484,6 +543,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/hierarchy-paging-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-paging-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/configurate-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
@@ -513,44 +577,10 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.lock-services-editor-view-list.title'),
             children: null
-          }]
-        }, {
-          link: null,
-          caption: 'flexberry-simpleolv',
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.title'),
-          children: [{
-            link: 'components-examples/flexberry-simpleolv/limit-function-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
-            children: null
           }, {
-            link: 'components-examples/flexberry-simpleolv/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/toolbar-custom-buttons-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/on-edit-form',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
-          }, {
-            link: 'components-examples/flexberry-simpleolv/custom-filter',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/configurate-rows',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/selected-rows',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
+            link: 'components-examples/flexberry-objectlistview/limited-text-size-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
           }]
         }, {
@@ -561,6 +591,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
+          children: [{
+            link: 'components-examples/flexberry-text-cell/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.settings-example.title'),
             children: null
           }]
         }, {
@@ -614,6 +654,16 @@ export default Ember.Controller.extend({
             children: null
           }]
         }, {
+          link: 'components-examples/highload-edit-form-menu/index',
+          caption: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.highload-edit-form-menu.title'),
+          children: null
+        }, {
+          link: 'components-examples/modal-dialog',
+          caption: i18n.t('forms.application.sitemap.components-examples.modal-dialog.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.modal-dialog.title'),
+          children: null
+        }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
@@ -628,6 +678,7 @@ export default Ember.Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
         title: i18n.t('forms.application.sitemap.integration-examples.title'),
+        icon: 'linkify',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
@@ -642,12 +693,48 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
+          }, {
+            link: 'integration-examples/edit-form/theming-components',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.theming-components.title'),
+            children: null
           }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.title'),
+          children: [{
+            link: null,
+            caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.title'),
+            children: [{
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-sotrudnik-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.sotrudnik.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-departament-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.departament.title'),
+              children: null
+            }, {
+              link: 'integration-examples/odata-examples/get-masters/ember-flexberry-dummy-vid-departamenta-l',
+              caption: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.odata-examples.get-masters.vid-departamenta.title'),
+              children: null
+            }]
+          }]
+        }, {
+          link: 'integration-examples/ember-flexberry-icons',
+          caption: i18n.t('forms.application.sitemap.integration-examples.icons.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.icons.title'),
+          children: null
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
         title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
+        icon: 'desktop',
         children: [{
           link: 'user-setting-forms/user-setting-delete',
           caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),
@@ -656,5 +743,38 @@ export default Ember.Controller.extend({
         }]
       }]
     };
-  })
+  }),
+
+  /**
+    Application usermenu.
+
+    @property itemsUserMenu
+    @type Object
+  */
+  itemsUserMenu: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let rootItem = {
+      icon: 'dropdown icon',
+      title: i18n.t('forms.application.header.profile.caption'),
+      iconAlignment: 'right',
+      items: []
+    };
+    let device = this.get('device');
+    if (device.type() === 'phone') {
+      rootItem = {
+        icon: '',
+        title: '',
+        iconAlignment: 'right',
+        items: []
+      };
+    }
+
+    let itemsUserMenu = {
+      title: i18n.t('forms.application.header.logout.caption'),
+      items: null
+    };
+
+    rootItem.items[rootItem.items.length] = itemsUserMenu;
+    return [rootItem];
+  }),
 });

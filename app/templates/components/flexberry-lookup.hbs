@@ -7,43 +7,69 @@
     needChecksOnValue=false
     isSearch=true
     isSearchReadOnly=dropdownIsSearch
+    settings=_dropdownSettings
   }}
 {{else}}
-  <div class="ui fluid action input">
-    {{input
-      type="text"
-      class=(concat "lookup-field " (if autocomplete "prompt"))
-      placeholder=placeholder
-      value=displayValue
-      readonly=(if (or readonly (not autocomplete)) "readonly")
-    }}
+  <div data-test-lookup class="ui {{unless hasBlock "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
+    {{#if hasBlock}}
+      <div
+        {{action "choose" chooseData}}
+        class="ui transparent {{if (or readonly isBlocked) "disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) "loading"}} icon input">
+        <span class="lookup-field">
+          {{#if value}}
+            {{yield}}
+          {{else}}
+            {{placeholder}}
+          {{/if}}
+        </span>
+        {{#unless readonly}}
+          <i class="chevron right icon"></i>
+        {{/unless}}
+      </div>
+    {{else}}
+      {{input
+        type="text"
+        class=(concat "lookup-field " (if autocomplete "prompt"))
+        placeholder=placeholder
+        value=displayValue
+        focusOut=(action "onInputFocusOut")
+        readonly=(if (or readonly (not autocomplete)) "readonly")
+      }}
+    {{/if}}
     {{#if showPreviewButton }}
       {{#if (and previewFormRoute value)}}
         <button
+          data-test-lookup-preview
           class="ui ui-preview {{if isBlocked " disabled"}} {{previewButtonClass}} button"
           title={{t "components.flexberry-lookup.preview-button-text"}}
-          type={{if autocomplete "button" ""}}
+          type="button"
           {{action "preview"}}>
           {{{previewText}}}
         </button>
       {{/if}}
     {{/if}}
     <button
-      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
-      title={{t "components.flexberry-lookup.choose-button-text"}}
-      type={{if autocomplete "button" ""}}
-      {{action "choose" chooseData}}>
-      {{{chooseText}}}
-    </button>
-    <button
+      data-test-lookup-clear
       class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
-      type={{if autocomplete "button" ""}}
+      type="button"
       {{action "remove" removeData}}>
       {{{removeText}}}
     </button>
+    {{#unless hasBlock}}
+      <button
+        data-test-lookup-change
+        class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+        title={{t "components.flexberry-lookup.choose-button-text"}}
+        type="button"
+        {{action "choose" chooseData}}>
+        {{{chooseText}}}
+      </button>
+    {{/unless}}
   </div>
 {{/if}}
-{{#if (and (not readonly) autocomplete)}}
-  <div class="results"></div>
+{{#if hasBlock}}
+  {{_hasBlockSetter}}
+{{else if autocomplete}}
+  <div class="results {{if canFixElement fixedElementClass}}"></div>
 {{/if}}

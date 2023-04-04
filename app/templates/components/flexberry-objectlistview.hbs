@@ -1,40 +1,46 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  advLimitButton=advLimitButton
   enableFilters=enableFilters
   exportExcelButton=exportExcelButton
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
   resetFilters=(action "resetFilters" this.attrs.resetFilters)
   filterButton=filterButton
   filterText=filterText
-  editInModal=editInModal
   buttonClass=buttonClass
   enableDeleteButton=(not readonly)
+  inLookup=(eq componentMode "lookupform")
   componentName=componentName
+  lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  showAdvLimitDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
-  availableCollExpandMode=_availableCollExpandMode
+  availableCollExpandMode=availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
 }}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
   columnsWidthAutoresize=columnsWidthAutoresize
+  columnsResizeMode=columnsResizeMode
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -42,12 +48,15 @@
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  createNewByPrototype=(action "createNewByPrototype")
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
-  showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
+  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
@@ -62,9 +71,11 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   enableFilters=enableFilters
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
+  componentForFilterByCondition=componentForFilterByCondition
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
@@ -73,60 +84,80 @@
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
+  isParentRecordPropertyName=isParentRecordPropertyName
   hierarchicalIndent=hierarchicalIndent
-  inHierarchicalMode=_inHierarchicalMode
-  inExpandMode=_inExpandMode
+  inHierarchicalMode=inHierarchicalMode
+  inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
+  hierarchyAttribute=hierarchyAttribute
   useRowByRowLoading=useRowByRowLoading
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
-  customButtonInRowAction='customButtonInRowAction'
+  customButtonInRowAction="customButtonInRowAction"
   customButtonsInRow=customButtonsInRow
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  customParameters=customParameters
   fixedHeader=fixedHeader
 }}
-{{#unless _inHierarchicalMode}}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
-      {{#if hasPreviousPage}}
-        <button class="ui button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
-        </button>
-      {{else}}
-        <button class="ui disabled button prev-page-button" {{action 'previousPage' this.attrs.previousPage}} disabled="disabled">
-        </button>
-      {{/if}}
+      <button
+        type="button"
+        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
+        disabled={{not hasPreviousPage}}
+        {{action "previousPage" this.attrs.previousPage}}>
+      </button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
+        {{else if page.isCurrent}}
+          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
         {{else}}
-          {{#if page.isCurrent}}
-            <button class="ui disabled active button" disabled="disabled">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
-          {{/if}}
+          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
         {{/if}}
       {{/each}}
-      {{#if hasNextPage}}
-        <button class="ui button next-page-button" {{action 'nextPage' this.attrs.nextPage}}>
-        </button>
-      {{else}}
-        <button class="ui disabled button next-page-button" {{action 'nextPage' this.attrs.nextPage}} disabled="disabled">
+      <button
+        type="button"
+        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
+        disabled={{not hasNextPage}}
+        {{action "nextPage" this.attrs.nextPage}}>
+      </button>
+    </div>
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      {{input
+        type="number"
+        min=_pages.firstObject.number
+        max=_pages.lastObject.number
+        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+        value=searchPageValue
+        enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
+      }}
+      {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
+      {{input classNames=(array "hidden")}}
+      {{#if searchPageValue}}
+        <button
+          type="button"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage}}>
         </button>
       {{/if}}
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat
@@ -135,7 +166,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
-{{/unless}}
+{{/if}}

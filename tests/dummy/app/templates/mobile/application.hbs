@@ -3,51 +3,52 @@
   {{outlet "editrecord-modal"}}
   {{outlet "modal"}}
 {{else}}
-{{#ui-sidebar
+{{#flexberry-sidebar
   class="mobile inverted vertical main menu"
-  ui_context=".ember-application > .ember-view"
-  onShow=(action "updateWidth")
-  onHidden=(action "updateWidth")
+  settings=(hash
+    onShow=(action "updateWidth")
+    onHidden=(action "updateWidth")
+  )
 }}
-  <a class="item"
-    href={{addonVersionHref}}
-    target="_blank"
-    title={{t "forms.application.sitemap.application-version.title"}}>
-    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-  </a>
-  {{render "sitemap" sitemap}}
-{{/ui-sidebar}}
+  {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+  <div class="sitebar-footer">
+    <a class="item"
+      href={{addonVersionHref}}
+      target="_blank"
+      title={{t "forms.application.sitemap.application-version.title"}}>
+      {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+    </a>
+    <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
+  </div>
+{{/flexberry-sidebar}}
 <div class="bgw-fix mobile">
   <div class="background-logo mobile">
-    <div class="ui attached menu mobile">
-      <div class="ui container flex-container">
-        <a {{action 'toggleSidebarMobile'}}
-          class="launch icon item mobile"
-          title={{t "forms.application.header.menu.sitemap-button.title"}}>
-          <i class="sidebar icon text-menu-show"></i>
-          <i class="sidebar icon hidden text-menu-hide hidden-text"></i>
-        </a>
-        <div class="right item">
-          <label style="margin-right: 5px;">
-            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
-          </label>
-          {{flexberry-checkbox
-            class="toggle"
-            value=userSettingsService.isUserSettingsServiceEnabled
-          }}
-        </div>
-        <div class="right item lang">
-          <label style="margin-right: 5px;">
-            {{t "forms.application.header.menu.language-dropdown.caption"}}
-          </label>
-          {{flexberry-dropdown
-            class="compact"
-            items=locales
-            value=i18n.locale
-            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-          }}
+    <div class="ui top attached">
+      <div class="ui attached menu mobile">
+        <div class="ui container flex-container">
+          <a {{action 'toggleSidebarMobile'}}
+            class="launch icon item mobile"
+            title={{t "forms.application.header.menu.sitemap-button.title"}}>
+            <i class="sidebar icon text-menu-show"></i>
+          </a>
         </div>
       </div>
+    </div>
+    <a class="item logo"
+      href="https://github.com/flexberry"
+      target="_blank"
+      title={{t "forms.application.sitemap.application-name.title"}}>
+      <img class="ui centered image" src="assets/images/logo-mini.png" />
+    </a>
+    <a class="page-header-caption" href="https://github.com/flexberry">
+      <span class="page-header-caption-app-name">{{t "application-name"}}</span>
+    </a>
+    <div class="page-header-userbar">
+      <img src="assets/images/user-foto.jpg"/>
+      {{flexberry-menu
+        items=itemsUserMenu
+        onItemClick=(action "onMenuItemClick")
+      }}
     </div>
   </div>
 </div>

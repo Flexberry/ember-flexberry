@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -17,7 +19,7 @@ export default EditFormController.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-lookup.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-lookup.placeholder'));
     }
@@ -68,6 +70,15 @@ export default EditFormController.extend({
   dropdown: false,
 
   /**
+    Flag indicates whether 'flexberry-lookup' component  in 'dropdown' mode is search.
+
+    @property dropdownIsSearch
+    @type Boolean
+    @default false
+  */
+  dropdownIsSearch: false,
+
+  /**
     Content for 'flexberry-lookup' component 'chooseText' property.
 
     @property chooseText
@@ -113,32 +124,80 @@ export default EditFormController.extend({
   removeButtonClass: '',
 
   /**
+    Flag to show in lookup preview button.
+
+    @property showPreviewButton
+    @type Boolean
+    @default false
+  */
+  showPreviewButton: false,
+
+  /**
+    Flag to show the selected object in separate route.
+
+    @property previewOnSeparateRoute
+    @type Boolean
+    @default false
+  */
+  previewOnSeparateRoute: false,
+
+  /**
+    If `true`, page switching buttons will be available in the results for autocomplete.
+
+    @property usePaginationForAutocomplete
+    @type Boolean
+    @default false
+  */
+  usePaginationForAutocomplete: false,
+
+  /**
+    Max number of the results for autocomplete.
+
+    @property maxResults
+    @type Integer
+    @default 10
+  */
+  maxResults: 10,
+
+  /**
     Template text for 'flexberry-lookup' component.
 
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-lookup<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  value=model.type<br>' +
-    '  projection="SettingLookupExampleView"<br>' +
-    '  displayAttributeName="name"<br>' +
-    '  title="Master"<br>' +
-    '  relatedModel=model<br>' +
-    '  relationName="type"<br>' +
-    '  choose="showLookupDialog"<br>' +
-    '  remove="removeLookupValue"<br>' +
-    '  autocomplete=autocomplete<br>' +
-    '  autocompletePersistValue=autocompletePersistValue<br>' +
-    '  displayValue=model.lookupDisplayValue<br>' +
-    '  dropdown=dropdown<br>' +
-    '  chooseText=chooseText<br>' +
-    '  removeText=removeText<br>' +
-    '  chooseButtonClass=chooseButtonClass<br>' +
-    '  removeButtonClass=removeButtonClass<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-lookup<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  value=model.type<br>' +
+      '  projection="SettingLookupExampleView"<br>' +
+      '  displayAttributeName="name"<br>' +
+      '  title="Master"<br>' +
+      '  relatedModel=model<br>' +
+      '  relationName="type"<br>' +
+      '  choose=(action "showLookupDialog")<br>' +
+      '  remove=(action "removeLookupValue")<br>' +
+      '  autocomplete=autocomplete<br>' +
+      '  autocompletePersistValue=autocompletePersistValue<br>' +
+      '  autocompleteDirection=autocompleteDirection<br>' +
+      '  usePaginationForAutocomplete=usePaginationForAutocomplete<br>' +
+      '  maxResults=maxResults<br>' +
+      '  displayValue=model.lookupDisplayValue<br>' +
+      '  dropdown=dropdown<br>' +
+      '  dropdownIsSearch=dropdownIsSearch<br>' +
+      '  chooseText=chooseText<br>' +
+      '  removeText=removeText<br>' +
+      '  chooseButtonClass=chooseButtonClass<br>' +
+      '  removeButtonClass=removeButtonClass<br>' +
+      '  showPreviewButton=showPreviewButton<br>' +
+      '  previewOnSeparateRoute=previewOnSeparateRoute<br>' +
+      '  previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -146,8 +205,8 @@ export default EditFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
   */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
@@ -179,10 +238,35 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'autocompletePersistValue'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'usePaginationForAutocomplete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'usePaginationForAutocomplete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'autocompleteDirection',
+      settingType: 'enumeration',
+      settingDefaultValue: 'downward',
+      settingAvailableItems: ['downward', 'upward', 'auto'],
+      bindedControllerPropertieName: 'autocompleteDirection'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxResults',
+      settingType: 'number',
+      settingDefaultValue: 10,
+      bindedControllerPropertieName: 'maxResults'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'dropdown',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'dropdown'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'dropdownIsSearch',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'dropdownIsSearch'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'chooseText',
@@ -217,7 +301,18 @@ export default EditFormController.extend({
       settingAvailableItems: ['blue'],
       bindedControllerPropertieName: 'dropdownClass'
     });
-
+    componentSettingsMetadata.pushObject({
+      settingName: 'showPreviewButton',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showPreviewButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'previewOnSeparateRoute',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'previewOnSeparateRoute'
+    });
     return componentSettingsMetadata;
   })
 });

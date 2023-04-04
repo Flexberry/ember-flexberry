@@ -1,5 +1,5 @@
 <div class="ui {{inputClass}} action input">
-  <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
+  <input type="file" name="files[]" accept={{accept}} id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
   {{!-- value=(get this "_fileName") is a way to get one way binding, so input events will not cause _fileName mutation --}}
   {{input
     type="text"
@@ -11,7 +11,7 @@
   {{#unless readonly}}
     {{#if _addButtonIsVisible}}
       <label
-        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} button"
+        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} {{if _hasFile "hidden"}} button"
         title={{t "components.flexberry-file.add-button-title"}}
         for={{_fileInputId}}
         {{action "addButtonClick" on="click" preventDefault=false}}>
@@ -31,7 +31,7 @@
         class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless _uploadButtonIsEnabled "disabled"}} {{if _uploadIsInProgress "loading"}} button"
         title={{t "components.flexberry-file.upload-button-title"}}
         {{action "uploadButtonClick" on="click" preventDefault=false}}>
-        <i class="upload outline icon"></i>
+        <i class="upload icon"></i>
       </label>
     {{/if}}
   {{/unless}}
@@ -62,22 +62,19 @@
 <div class="flexberry-file-download-iframes-container" style="display: none;">
   {{!-- Block to which download iframes will be added --}}
 </div>
-<div class="flexberry-file-error-modal-dialog ui small basic modal">
-  <div class="ui icon header">
-    <i class="file icon"></i>
+<div class="flexberry-file-error-modal-dialog ui tiny modal">
+  <div class="ui header">
     {{_errorModalDialogCaption}}
   </div>
   <div class="content">
-    <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
+    <div class="flexberry-file-error-modal-dialog-content">
       {{_errorModalDialogContent}}
     </div>
   </div>
-  <div class="flexberry-file-error-modal-dialog-button center aligned ui grid">
-    <div class="actions">
-      <div class="ui button flexberry-file-error-modal-dialog-ok-button approve">
-        <i class="checkmark icon"></i>
-        {{t "components.flexberry-file.error-dialog-ok-button-caption"}}
-      </div>
+  <div class="flexberry-file-error-modal-dialog-button actions">
+    <div class="ui button primary flexberry-file-error-modal-dialog-ok-button approve">
+      <i class="checkmark icon"></i>
+      {{t "components.flexberry-file.error-dialog-ok-button-caption"}}
     </div>
   </div>
 </div>

@@ -2,7 +2,8 @@
   {{#if modal}}
     {{#modal-dialog
       title=(t "components.flexberry-error.caption")
-      useOkButton=false
+      useOkButton=useOkButton
+      useCloseButton=useCloseButton
       settings=(hash context=modalContext onHidden=(action "close"))
     }}
       <h2 class="ui header">
@@ -42,7 +43,7 @@
   {{else}}
     {{#ui-message
       type="negative"
-      onHide="close"
+      onHide=(action "close")
       closeable=true
     }}
       <h2 class="ui header">

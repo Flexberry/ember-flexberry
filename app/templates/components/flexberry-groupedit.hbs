@@ -7,7 +7,7 @@
   defaultSettingsButton=defaultSettingsButton
   confirmDeleteRows=confirmDeleteRows
   sorting=sorting
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   orderedProperty=orderedProperty
 }}
@@ -43,16 +43,19 @@
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
-  action='groupEditRowClick'
+  action=(action 'groupEditRowClick')
   componentName=componentName
   allowColumnResize=allowColumnResize
   configurateRow=this.attrs.configurateRow
   confirmDeleteRow=confirmDeleteRow
   configurateSelectedRows=this.attrs.configurateSelectedRows
+  customButtonInRowAction="customButtonInRowAction"
+  customButtonsInRow=customButtonsInRow
   beforeDeleteRecord=beforeDeleteRecord
   searchForContentChange=searchForContentChange
   immediateDelete=false
   notUseUserSettings=notUseUserSettings
   defaultSortingButton=defaultSortingButton
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
 }}

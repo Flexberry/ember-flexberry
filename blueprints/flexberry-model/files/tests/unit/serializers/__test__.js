@@ -1,26 +1,16 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
-moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'serializer:<%= name %>',
-    'transform:file',
-    'transform:decimal',
-    'transform:guid',
-<% if (!!needsAllEnums === true) { %>
-<%= needsAllEnums %>,
-<% } %><% if (!!needsAllObjects === true) { %>
-<%= needsAllObjects %>,
-<% } %>
-<%= needsAllModels %>
-  ]
-});
+module('Unit | Serializer | <%= name %>', function (hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it serializes records', function(assert) {
-  let record = this.subject();
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let record = run(() => store.createRecord('<%= name %>', {}));
+    let serializedRecord = record.serialize();
 
-  let serializedRecord = record.serialize();
-
-  assert.ok(serializedRecord);
+    assert.ok(serializedRecord);
+  });
 });

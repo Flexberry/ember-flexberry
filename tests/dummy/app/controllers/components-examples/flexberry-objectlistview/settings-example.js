@@ -241,6 +241,14 @@ export default ListFormController.extend({
   showDeleteMenuItemInRow: true,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+  
+    @property showEditMenuItemInRow
+    @type Boolean
+   */
+  showEditMenuItemInRow: true,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showPrototypeMenuItemInRow' mode or not.
 
     @property showPrototypeMenuItemInRow

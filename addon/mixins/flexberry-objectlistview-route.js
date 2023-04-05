@@ -44,40 +44,40 @@ export default Mixin.create(EditInModalOpen, {
 
       let editFormRoute = methodOptions.editFormRoute;
       if (methodOptions.editInModal) {
-          this.openEditModalDialog(record, editFormRoute);
-        } else {
-          let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
-          let onEditForm = methodOptions.onEditForm;
-          let recordId = record.get('id') || record.get('data.id');
-          let thisRouteName = this.get('router.currentRouteName');
-          let thisRecordId = this.get('currentModel.id');
-          let queryParams = {
+        this.openEditModalDialog(record, editFormRoute);
+      } else {
+        let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+        let onEditForm = methodOptions.onEditForm;
+        let recordId = record.get('id') || record.get('data.id');
+        let thisRouteName = this.get('router.currentRouteName');
+        let thisRecordId = this.get('currentModel.id');
+        let queryParams = {
           modelName: methodOptions.modelName,
           parentRoute: thisRouteName,
           parentRouteRecordId: thisRecordId
-          };
-          queryParams = merge(queryParams, methodOptions.customParameters);
+        };
+        queryParams = merge(queryParams, methodOptions.customParameters);
 
-          let transitionOptions = {
-            queryParams: queryParams
-          };
-          if (!editFormRoute) {
-            throw new Error('Detail\'s edit form route is undefined.');
-          }
+        let transitionOptions = {
+          queryParams: queryParams
+        };
+        if (!editFormRoute) {
+          throw new Error('Detail\'s edit form route is undefined.');
+        }
 
-          if (!onEditForm) {
+        if (!onEditForm) {
           this.transitionTo(editFormRoute, recordId, transitionOptions);
+        } else {
+          if (saveBeforeRouteLeave) {
+            this.controller.save(false, true).then(() => {
+              this.transitionTo(editFormRoute, recordId, transitionOptions);
+            }).catch((errorData) => {
+              this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+            });
           } else {
-            if (saveBeforeRouteLeave) {
-                this.controller.save(false, true).then(() => {
-                this.transitionTo(editFormRoute, recordId, transitionOptions);
-                }).catch((errorData) => {
-                this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
-                });
-            } else {
-                this.transitionTo(editFormRoute, recordId, transitionOptions);
-            }
+            this.transitionTo(editFormRoute, recordId, transitionOptions);
           }
+        }
       }
     },
 

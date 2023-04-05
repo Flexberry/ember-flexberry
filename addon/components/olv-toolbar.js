@@ -143,7 +143,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @default false
     @private
   */
-    editInModal: false,
+  editInModal: false,
 
   /**
     Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.
@@ -548,7 +548,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       } else {
         assert('Property editFormRoute is not defined in controller', editFormRoute);
         this.get('objectlistviewEventsService').setLoadingState('loading');
-        Ember.run.later((function() {
+        later((function() {
           modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
         }), 50);
       }
@@ -677,7 +677,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       if (showFiltersInModal) {
         const componentName = this.get('componentName');
         const columns = this.get('objectlistviewEventsService').getOlvFilterColumnsArray(componentName);
-        const useSidePageMode = false;
+        const useSidePageMode = this.get('useSidePageMode');
 
         this.get('modelController').send('showFiltersDialog', componentName, columns, useSidePageMode);
       } else {

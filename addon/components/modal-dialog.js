@@ -118,7 +118,7 @@ export default Component.extend({
     @type Boolean
     @default true
   */
-    showHeader: true,
+  showHeader: true,
 
   /**
     Flag indicates whether to side page or usually mode.

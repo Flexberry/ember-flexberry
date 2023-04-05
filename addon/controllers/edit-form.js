@@ -600,7 +600,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     this.onCloseActionStarted();
     let isModal = this.get('isModal');
     let modalController = this.get('modalController');
-    if (isModal && !Ember.isNone(modalController)) {
+    if (isModal && !isNone(modalController)) {
       modalController.send('onEditRecordDialogClosing');
     } else {
       if (!skipTransition) {
@@ -878,9 +878,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     Rollback current model.
     @method rollbackAll
   */
-    rollbackAll() {
-      this.get('model').rollbackAll();
-    },
+  rollbackAll() {
+    this.get('model').rollbackAll();
+  },
 
   /**
     Service that lets interact between agregator's and detail's form.

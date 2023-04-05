@@ -1,4 +1,6 @@
 import Mixin from '@ember/object/mixin';
+import { getOwner } from '@ember/application';
+import { inject as service} from '@ember/service';
 
 export default Mixin.create({
   /**
@@ -6,7 +8,7 @@ export default Mixin.create({
     @property objectlistviewEvents
     @type Service
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Name of using modal controller
@@ -65,7 +67,7 @@ export default Mixin.create({
 
     // getting parameters for main modal window
     let modalControllerName = this.get('_modalControllerName');
-    let modalController = Ember.getOwner(this).lookup('controller:' + modalControllerName);
+    let modalController = getOwner(this).lookup('controller:' + modalControllerName);
     let modalControllerOutlet = modalController.get('modalOutletName');
     let modalTemplateName = this.get('_modalTemplateName');
 
@@ -78,7 +80,7 @@ export default Mixin.create({
 
     // getting parameters for content modal window
     let modalContentControllerName = editFormRoute;
-    let modalContentController = Ember.getOwner(this).lookup('controller:' + modalContentControllerName);
+    let modalContentController = getOwner(this).lookup('controller:' + modalContentControllerName);
     let modalContentControllerOutlet = modalController.get('modalContentOutletName');
     let modalContentTemplate = editFormRoute;
 
@@ -92,7 +94,7 @@ export default Mixin.create({
     let record = (isNewRecord) ? modelObject.store.createRecord(modelName) : modelObject;
 
     //get projection from record
-    let modelProjName = Ember.getOwner(this).lookup('route:' + editFormRoute).get('modelProjection');
+    let modelProjName = getOwner(this).lookup('route:' + editFormRoute).get('modelProjection');
 
     let proj = record.get(`constructor.projections.${modelProjName}`);
 

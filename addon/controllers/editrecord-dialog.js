@@ -2,15 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as service} from '@ember/service';
 
 /**
   Controller for editing record modal window in OLV component.
 
   @class EditrecordDialog
 */
-export default Ember.Controller.extend({
-  objectlistviewEvents: Ember.inject.service(),
+export default Controller.extend({
+  objectlistviewEvents: service(),
 
   /**
     Service for managing the state of the application.
@@ -18,7 +19,7 @@ export default Ember.Controller.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Service that triggers lookup events.
@@ -26,7 +27,7 @@ export default Ember.Controller.extend({
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   /**
     Editrecord modal dialog outlet name

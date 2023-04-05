@@ -1,6 +1,5 @@
 import { get, computed } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
@@ -54,8 +53,8 @@ export default EditFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr, bindingPath, modelClass) {
-    var cellComponent = this._super(...arguments);
-    var modelAttr = !isNone(modelClass) ? get(modelClass, 'attributes').get(bindingPath) : null;
+    let cellComponent = this._super(...arguments);
+    let modelAttr = !isNone(modelClass) ? get(modelClass, 'attributes').get(bindingPath) : null;
     if (attr.kind === 'attr' && modelAttr && modelAttr.type && modelAttr.type === 'date') {
       cellComponent.componentProperties = {
         type: 'date'

@@ -208,7 +208,7 @@ export function addRecords(store, modelName, uuid) {
 
       for (let i = 0; i < howAddRec; i++) {
         newRecords.pushObject(
-          store.createRecord(modelName, 
+          store.createRecord(modelName,
             modelName == 'ember-flexberry-dummy-application-user'
             ? { name: uuid, eMail: uuid, phone1: uuid }
             : { name: uuid }));

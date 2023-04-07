@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import { get, computed } from '@ember/object';
+import { isBlank, isNone } from '@ember/utils';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
-const { getOwner } = Ember;
 
 export default EditFormController.extend({
   /**
@@ -9,16 +9,16 @@ export default EditFormController.extend({
     @property detailsProjection
     @type Object
    */
-  detailsProjection: Ember.computed(function() {
+  detailsProjection: computed(function() {
     let detailsProjectionName = 'DetailE';
-    if (Ember.isBlank(detailsProjectionName)) {
+    if (isBlank(detailsProjectionName)) {
       return null;
     }
 
     let detailsModelName = this.get('model.details.relationship.belongsToType');
-    let detailsClass = getOwner(this)._lookupFactory('model:' + detailsModelName);
-    let detailsClassProjections = Ember.get(detailsClass, 'projections');
-    if (Ember.isNone(detailsClassProjections)) {
+    let detailsClass = this.store.modelFor(detailsModelName);
+    let detailsClassProjections = get(detailsClass, 'projections');
+    if (isNone(detailsClassProjections)) {
       return null;
     }
 
@@ -53,8 +53,8 @@ export default EditFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr, bindingPath, modelClass) {
-    var cellComponent = this._super(...arguments);
-    var modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
+    let cellComponent = this._super(...arguments);
+    let modelAttr = !isNone(modelClass) ? get(modelClass, 'attributes').get(bindingPath) : null;
     if (attr.kind === 'attr' && modelAttr && modelAttr.type && modelAttr.type === 'date') {
       cellComponent.componentProperties = {
         type: 'date'

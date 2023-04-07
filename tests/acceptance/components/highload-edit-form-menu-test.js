@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { run } from '@ember/runloop';
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import wait from 'ember-test-helpers/wait';
 let app;
@@ -16,7 +16,7 @@ module('Acceptance | high-edit-form-menu', {
   },
 });
 
-skip('it properly renders', function(assert) {
+test('it properly renders', function(assert) {
   assert.expect(7);
   let done = assert.async();
 

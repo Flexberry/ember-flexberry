@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 import { executeTest } from './execute-folv-test';
 import { loadingLocales } from './folv-tests-functions';
 import RuLocale from 'dummy/locales/ru/translations';
@@ -12,28 +13,33 @@ executeTest('check colsconfig column localization test', (store, assert, app) =>
     assert.equal(currentPath(), path);
 
     function checkLocalization(currentLocale, locale) {
-      const columnsLocalization = Ember.get(currentLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
+      return new RSVP.Promise((resolve) => {
+        const columnsLocalization = Ember.get(currentLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
 
-      const $configButton = Ember.$('.config-button');
-      $configButton.click();
+        click('.config-button');
+        andThen(() => {
+          const $columns = Ember.$('.flexberry-colsconfig tbody tr');
+          $columns.each((i, column) => {
+            const cellText = column.cells[2].innerText;
+            const propname = column.getAttribute('propname').replace('.name', '');
+            const assertionMessage = `${locale} locale ${propname} ok`;
+            const caption = Ember.get(columnsLocalization, `${propname}.__caption__`);
+            assert.equal(caption, cellText, assertionMessage);
+          });
 
-      const $columns = Ember.$('.flexberry-colsconfig tbody tr');
-      $columns.each((i, column) => {
-        const cellText = column.cells[2].innerText;
-        const propname = column.getAttribute('propname').replace('.name', '');
-        const assertionMessage = `${locale} locale ${propname} ok`;
-        const caption = Ember.get(columnsLocalization, `${propname}.__caption__`);
-        assert.equal(caption, cellText, assertionMessage);
+          click('.close.icon');
+          andThen(() => {
+            resolve();
+          });
+        });
       });
-
-      const $closeModal = Ember.$('.close.icon');
-      $closeModal.click();
     }
 
     loadingLocales('en', app).then(() => {
-      checkLocalization(EnLocale, 'En');
-      loadingLocales('ru', app).then(() => {
-        checkLocalization(RuLocale, 'Ru');
+      checkLocalization(EnLocale, 'En').then(() => {
+        loadingLocales('ru', app).then(() => {
+          checkLocalization(RuLocale, 'Ru');
+        });
       });
     });
   });

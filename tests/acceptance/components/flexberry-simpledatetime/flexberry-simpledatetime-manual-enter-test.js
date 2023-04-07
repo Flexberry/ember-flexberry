@@ -1,5 +1,7 @@
-import Ember from 'ember';
-import { module, skip } from 'qunit';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { get } from '@ember/object';
+import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
@@ -17,26 +19,26 @@ module('Acceptance | flexberry-simpledatetime | manual enter on groupedit', {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     }
   });
 
-skip('manual enter on groupedit', (assert) => {
+test('manual enter on groupedit', (assert) => {
   assert.expect(5);
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path, 'Path is correct.');
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let detailModels = Ember.get(controller, 'model.details');
+    let detailModels = get(controller, 'model.details');
     assert.equal(detailModels.length, 2, 'Data contains two details as expected');
 
-    let $datePickers = Ember.$('.flatpickr-input.custom-flatpickr');
+    let $datePickers = $('.custom-flatpickr');
     assert.equal($datePickers.length, 2, 'There are two rows on groupedit.');
     fillIn($datePickers[0], '01.01.2022');
     andThen(() => {
       assert.equal(
         '2022-01-01',
-        Ember.get(detailModels.objectAt(0), 'date').toISOString().split('T')[0],
+        get(detailModels.objectAt(0), 'date').toISOString().split('T')[0],
         'Properly initiated by custom date')
       let today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
@@ -48,7 +50,7 @@ skip('manual enter on groupedit', (assert) => {
       andThen(() => {
         assert.equal(
           today.toISOString().split('T')[0],
-          Ember.get(detailModels.objectAt(1), 'date').toISOString().split('T')[0],
+          get(detailModels.objectAt(1), 'date').toISOString().split('T')[0],
           'Properly initiated by current date')
       });
     });

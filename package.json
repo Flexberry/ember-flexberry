@@ -85,7 +85,7 @@
     "ember-resolver": "^4.0.0",
     "ember-sinon": "^2.2.0",
     "ember-source": "~3.1.0",
-    "ember-source-channel-url": "^1.0.1",
+    "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^2.14.0",
     "ember-try": "^0.2.23",
     "ember-validations": "~2.0.0-alpha.5",

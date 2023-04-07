@@ -12,6 +12,7 @@ import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { get, set } from '@ember/object';
 import Queue from 'ember-flexberry-data/utils/queue';
+import $ from 'jquery';
 
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
@@ -353,6 +354,60 @@ export default Service.extend(Evented, {
   errorMessageFilterActive: false,
 
   /**
+    Flag: indicates whether log service will send messages with http request.
+
+    @property sendViaHttp
+    @type Boolean
+    @default false
+    @example
+    ```
+    // Log service 'sendViaHttp' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            sendViaHttp: true
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+    sendViaHttp: false,
+
+  /**
+    The URL of a log service.
+
+    @property httpLogServiceUrl
+    @type String
+    @default ''
+    @example
+    ```
+    // Log service 'httpLogServiceUrl' setting could be also defined through application config/environment.js
+    module.exports = function(environment) {
+      var logServiceUrl = 'http://localhost:5000/api/logs';
+
+      var ENV = {
+        ...
+        APP: {
+          ...
+          log: {
+            enabled: true,
+            httpLogServiceUrl: logServiceUrl
+          }
+          ...
+        }
+        ...
+    };
+    ```
+  */
+  httpLogServiceUrl: '',
+
+  /**
     Error messages which must be skipped when flag errorMessageFilterActive is true.
 
     @property errorMessageFilters
@@ -406,6 +461,8 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments), messageCategory.error, '');
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -426,8 +483,10 @@ export default Service.extend(Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
+      let message = joinArguments(...arguments);
+      _this._sendMessageToService(message, message.indexOf('DEPRECATION') === 0 ? messageCategory.deprecate : messageCategory.warn, '');
+
       return _this._queue.attach((resolve, reject) => {
-        let message = joinArguments(...arguments);
         if (message.indexOf('DEPRECATION') === 0) {
           return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
             resolve(result);
@@ -455,6 +514,8 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments), messageCategory.log, '');
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -475,6 +536,8 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
+      _this._sendMessageToService(joinArguments(...arguments), messageCategory.info, '');
+
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
           resolve(result);
@@ -494,6 +557,8 @@ export default Service.extend(Evented, {
 
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
+
+      _this._sendMessageToService(joinArguments(...arguments), messageCategory.debug, '');
 
       return _this._queue.attach((resolve, reject) => {
         return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
@@ -524,9 +589,14 @@ export default Service.extend(Evented, {
     this.set('storePromiseErrors', typeof logConfiguration.storePromiseErrors === 'boolean' && logConfiguration.storePromiseErrors);
     this.set('showPromiseErrors', typeof logConfiguration.showPromiseErrors === 'boolean' && logConfiguration.showPromiseErrors);
     this.set('errorMessageFilterActive', typeof logConfiguration.errorMessageFilterActive === 'boolean' && logConfiguration.errorMessageFilterActive);
+    this.set('sendViaHttp', typeof logConfiguration.sendViaHttp === 'boolean' && logConfiguration.sendViaHttp);
 
     if (typeof logConfiguration.applicationLogModelName === 'string') {
       this.set('applicationLogModelName', logConfiguration.applicationLogModelName);
+    }
+
+    if (typeof logConfiguration.httpLogServiceUrl === 'string') {
+      this.set('httpLogServiceUrl', logConfiguration.httpLogServiceUrl);
     }
   },
 
@@ -660,6 +730,7 @@ export default Service.extend(Evented, {
       };
 
       let formattedMessage = JSON.stringify(formattedMessageBlank);
+      _this._sendMessageToService(message, isPromiseError ? messageCategory.promise : messageCategory.error, formattedMessage);
 
       return _this._storeToApplicationLog(isPromiseError ? messageCategory.promise : messageCategory.error, message, formattedMessage).then((result) => {
         resolve(result);
@@ -667,5 +738,46 @@ export default Service.extend(Evented, {
         reject(reason);
       });
     });
-  }
+  },
+
+    /**
+    Sends given message to service.
+
+    @method _sendMessageToService
+    @param {String} httpLogServiceUrl url
+    @param {String} message message
+    @private
+  */
+    _sendMessageToService(message, category, formattedMessage) {
+      let logServiceUrl = this.get('httpLogServiceUrl');
+      let appConfig = getOwner(this).factoryFor('config:environment').class;
+
+      let messageData = {
+        Category: category.name,
+        EventId: 0,
+        Priority: category.priority,
+        Severity: '',
+        Title: '',
+        Timestamp: new Date(),
+        MachineName:  location.hostname,
+        AppDomainName: navigator.userAgent,
+        ProcessId: document.location.href,
+        ProcessName: 'EMBER-FLEXBERRY',
+        ThreadName: appConfig.modulePrefix,
+        Win32ThreadId: '',
+        Message: message,
+        FormattedMessage: formattedMessage
+      };
+
+      if (this.get('sendViaHttp')) {
+        $.ajax({
+          async: true,
+          type: 'POST',
+          url: logServiceUrl,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          data: JSON.stringify(messageData)
+        });
+      }
+    }
 });

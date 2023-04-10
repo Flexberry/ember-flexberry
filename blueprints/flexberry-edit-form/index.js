@@ -61,21 +61,21 @@ module.exports = {
         var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
         if (!fs.existsSync(localesFile)) {
             return files;
-        };
+        }
         var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
         if (locales.locales == undefined) {
             return files;
-        };
+        }
         if (!locales.locales.en) {
             files.splice(files.indexOf("__root__/locales/en/"), 1);
             files.splice(files.indexOf("__root__/locales/en/forms/"), 1);
             files.splice(files.indexOf("__root__/locales/en/forms/__name__.js"), 1);
-        };
+        }
         if (!locales.locales.ru) {
             files.splice(files.indexOf("__root__/locales/ru/"), 1);
             files.splice(files.indexOf("__root__/locales/ru/forms/"), 1);
             files.splice(files.indexOf("__root__/locales/ru/forms/__name__.js"), 1);
-        };
+        }
         return files;
     },
 
@@ -127,11 +127,11 @@ var EditFormBlueprint = /** @class */ (function () {
             propertyLookup = _a[_i];
             if (!propertyLookup.master)
                 continue;
-            var snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
+            let snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
             bodySwitchBindingPath.push(lodash.template(snippet)(propertyLookup));
         }
         if (bodySwitchBindingPath.length > 0) {
-            var snippet = this.readSnippetFile("getCellComponent-function", "js");
+            let snippet = this.readSnippetFile("getCellComponent-function", "js");
             this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
             this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
         }

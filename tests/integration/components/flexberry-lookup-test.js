@@ -1,5 +1,11 @@
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import { skip } from 'qunit';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { run, later } from '@ember/runloop';
+import { set } from '@ember/object';
+import { isNone } from '@ember/utils';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
@@ -19,12 +25,15 @@ moduleForComponent('flexberry-lookup', 'Integration | Component | flexberry look
     this.register('service:i18n', I18nService);
 
     this.inject.service('i18n', { as: 'i18n' });
-    Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+    Component.reopen({
+      i18n: service('i18n')
     });
 
     this.set('i18n.locale', 'ru');
     app = startApp();
+
+    // Just take it and turn it off...
+    app.__container__.lookup('service:log').set('enabled', false);
   },
   afterEach: function() {
     destroyApp(app);
@@ -34,9 +43,9 @@ moduleForComponent('flexberry-lookup', 'Integration | Component | flexberry look
 test('component renders properly', function(assert) {
   assert.expect(31);
 
-  this.render(hbs`{{#flexberry-lookup
-  placeholder='(тестовое значение)'}}
-  {{/flexberry-lookup}}`);
+  this.render(hbs`{{flexberry-lookup
+    placeholder='(тестовое значение)'
+  }}`);
 
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
@@ -97,7 +106,7 @@ test('component with readonly renders properly', function(assert) {
   assert.expect(2);
 
   this.render(hbs`{{flexberry-lookup
-  readonly=true
+    readonly=true
   }}`);
 
   // Retrieve component, it's inner <input>.
@@ -118,11 +127,10 @@ test('component with choose-text and remove-text properly', function(assert) {
   this.set('tempTextChoose', 'TempText1');
   this.set('tempTextRemove', 'TempText2');
 
-  this.render(hbs`{{#flexberry-lookup
+  this.render(hbs`{{flexberry-lookup
     chooseText=tempTextChoose
     removeText=tempTextRemove
-  }}
-  {{/flexberry-lookup}}`);
+  }}`);
 
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
@@ -136,6 +144,48 @@ test('component with choose-text and remove-text properly', function(assert) {
   assert.equal($lookupButtonClear.text().trim(), 'TempText2');
 });
 
+skip('component mode consistency', function(assert) {
+  const checkErrMsg = (err, str) => {
+    const msg = isNone(err.message) ? '' : err.message;
+    return msg.includes(str);
+  };
+
+  assert.expect(3);
+
+  // Check if both 'autocomplete' and 'dropdown' flags enabled cause an error.
+  assert.throws(
+    () => {
+      this.render(hbs`{{flexberry-lookup
+        autocomplete=true
+        dropdown=true
+      }}`);
+    },
+    (err) => checkErrMsg(err, 'flags \'autocomplete\' and \'dropdown\' enabled'),
+    'Both \'autocomplete\' and \'dropdown\' flags enabled cause an error.');
+
+  // Check if both 'dropdown' flag enabled and the block form definition cause an error.
+  assert.throws(
+    () => {
+      this.render(hbs`{{#flexberry-lookup
+        dropdown=true
+      }}
+      {{/flexberry-lookup}}`);
+    },
+    (err) => checkErrMsg(err, 'flag \'dropdown\' enabled and the block form definition'),
+    'Both \'dropdown\' flag enabled and the block form definition cause an error.');
+
+  // Check if both 'autocomplete' flag enabled and the block form definition cause an error.
+  assert.throws(
+    () => {
+      this.render(hbs`{{#flexberry-lookup
+        autocomplete=true
+      }}
+      {{/flexberry-lookup}}`);
+    },
+    (err) => checkErrMsg(err, 'flag \'autocomplete\' enabled and the block form definition'),
+    'Both \'autocomplete\' flag enabled and the block form definition cause an error.');
+});
+
 test('autocomplete doesn\'t send data-requests in readonly mode', function(assert) {
   assert.expect(1);
 
@@ -143,72 +193,61 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
 
   // Override store.query method.
   let ajaxMethodHasBeenCalled = false;
-  let originalAjaxMethod = Ember.$.ajax;
-  Ember.$.ajax = function() {
+  let originalAjaxMethod = $.ajax;
+  $.ajax = function() {
     ajaxMethodHasBeenCalled = true;
 
     return originalAjaxMethod.apply(this, arguments);
   };
 
-  // First, load model with existing master.
-  let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let query = new Query.Builder(store)
-    .from(modelName)
-    .selectByProjection('SuggestionTypeE')
-    .where('parent', Query.FilterOperator.Neq, null)
-    .top(1);
-
   let asyncOperationsCompleted = assert.async();
-  store.query(modelName, query.build()).then(suggestionTypes => {
-    suggestionTypes = suggestionTypes.toArray();
-    Ember.assert('One or more \'' + modelName + '\' must exist', suggestionTypes.length > 0);
 
-    // Remember model & render component.
-    this.set('model', suggestionTypes[0]);
+  this.set('actions.showLookupDialog', () => {});
+  this.set('actions.removeLookupValue', () => {});
 
-    this.set('actions.showLookupDialog', () => {});
-    this.set('actions.removeLookupValue', () => {});
+  this.render(hbs`{{flexberry-lookup
+    value=model.parent
+    relatedModel=model
+    relationName="parent"
+    projection="SuggestionTypeL"
+    displayAttributeName="name"
+    title="Parent"
+    choose=(action "showLookupDialog")
+    remove=(action "removeLookupValue")
+    readonly=true
+    autocomplete=true
+  }}`);
 
-    this.render(hbs`{{flexberry-lookup
-      value=model.parent
-      relatedModel=model
-      relationName="parent"
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title="Parent"
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      readonly=true
-      autocomplete=true
-    }}`);
+  // Retrieve component.
+  let $component = this.$();
+  let $componentInput = $('input', $component);
 
-    // Retrieve component.
-    let $component = this.$();
-    let $componentInput = Ember.$('input', $component);
+  run(() => {
+    this.set('model', store.createRecord('ember-flexberry-dummy-suggestion-type', {
+      name: 'TestTypeName'
+    }));
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.run(() => {
-        ajaxMethodHasBeenCalled = false;
+    let testPromise = new RSVP.Promise((resolve) => {
+      ajaxMethodHasBeenCalled = false;
 
-        // Imitate focus on component, which can cause async data-requests.
-        $componentInput.focusin();
+      // Imitate focus on component, which can cause async data-requests.
+      $componentInput.focusin();
 
-        // Wait for some time which can pass after focus, before possible async data-request will be sent.
-        Ember.run.later(() => {
-          resolve();
-        }, 300);
-      });
+      // Wait for some time which can pass after focus, before possible async data-request will be sent.
+      later(() => {
+        resolve();
+      }, 300);
     });
-  }).then(() => {
-    // Check that store.query hasn\'t been called after focus.
-    assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');
-  }).catch((e) => {
-    throw e;
-  }).finally(() => {
-    // Restore original method.
-    Ember.$.ajax = originalAjaxMethod;
 
-    asyncOperationsCompleted();
+    testPromise.then(() => {
+      // Check that store.query hasn\'t been called after focus.
+      assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');
+    }).finally(() => {
+      // Restore original method.
+      $.ajax = originalAjaxMethod;
+
+      asyncOperationsCompleted();
+    });
   });
 });
 
@@ -233,7 +272,7 @@ test('preview button renders properly', function(assert) {
 
   assert.strictEqual($lookupFluid.children('.ui-preview').length === 0, true, 'Component has inner title block');
 
-  Ember.run(() => {
+  run(() => {
     this.set('model', store.createRecord('ember-flexberry-dummy-suggestion-type', {
       name: 'TestTypeName'
     }));
@@ -260,7 +299,7 @@ test('preview button view previewButtonClass and previewText properly', function
 
   let store = app.__container__.lookup('service:store');
 
-  Ember.run(() => {
+  run(() => {
     this.set('model', store.createRecord('ember-flexberry-dummy-suggestion-type', {
       name: 'TestTypeName'
     }));
@@ -296,7 +335,7 @@ test('preview with readonly renders properly', function(assert) {
 
   let store = app.__container__.lookup('service:store');
 
-  Ember.run(() => {
+  run(() => {
     this.set('model', store.createRecord('ember-flexberry-dummy-suggestion-type', {
       name: 'TestTypeName'
     }));
@@ -319,4 +358,112 @@ test('preview with readonly renders properly', function(assert) {
 
     assert.strictEqual($lookupButtonPreview.hasClass('disabled'), false, 'Component\'s container has not \'disabled\' css-class');
   });
+});
+
+test('autocompleteDirection adds no css-class if autocompleteDirection is not defined', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')
+    }, 5000);
+});
+
+test('autocompleteDirection adds css-class if autocompleteDirection is defined as upward', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    set(this, 'autocompleteDirection', undefined);
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      autocompleteDirection="upward"
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), true, 'Autocomplete window has extra class.')
+    }, 5000);
+});
+
+test('autocompleteDirection adds no css-class if autocompleteDirection is defined as downward', function(assert) {
+  let store = app.__container__.lookup('service:store');
+
+  run(() => {
+    set(this, 'model', store.createRecord('ember-flexberry-dummy-suggestion', {
+      name: 'TestTypeName'
+    }));
+
+    this.render(hbs`{{flexberry-lookup
+      value=model.type
+      relationName="parent"
+      projection="SettingLookupExampleView"
+      displayAttributeName="name"
+      title="Parent"
+      autocomplete=true
+      autocompleteDirection="downward"
+      relatedModel=model
+      relationName="type"
+    }}`);
+  });
+
+  let $resultAutocomplete = this.$('div.results');
+  assert.equal($resultAutocomplete.length, 1, 'Component has autocomplete window.');
+  assert.equal($resultAutocomplete.hasClass('visible'), false, 'Autocomplete window is not visible until we start typing.');
+
+  let $lookupField = this.$('input.lookup-field');
+  fillIn($lookupField, 'g');
+
+  let asyncOperationsCompleted = assert.async();
+    later(function() {
+      asyncOperationsCompleted();
+      assert.equal($resultAutocomplete.hasClass('visible'), true, 'Autocomplete window is now visible.');
+      assert.equal($resultAutocomplete.hasClass('upward'), false, 'Autocomplete window has no extra class.')
+    }, 5000);
 });

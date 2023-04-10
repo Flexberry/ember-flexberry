@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
@@ -28,7 +29,7 @@ export default EditFormController.extend({
   */
   hiButtonState: true,
 
-  customButtons: Ember.computed('i18n.locale', 'hiButtonState', function() {
+  customButtons: computed('i18n.locale', 'hiButtonState', function() {
     let i18n = this.get('i18n');
     let hiButtonState = this.get('hiButtonState');
     let togglerButtonType = hiButtonState ? 'enable' : 'disable';
@@ -57,7 +58,7 @@ export default EditFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: A(),
 
   actions: {
     /**

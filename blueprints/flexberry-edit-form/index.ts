@@ -15,7 +15,7 @@ import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
   { name: "flexberry-checkbox", types: ["boolean"] },
-  { name: "flexberry-datepicker", types: ["date"] },
+  { name: "flexberry-simpledatetime", types: ["date"] },
   { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
@@ -61,7 +61,7 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 
   setLocales: function (files) {
@@ -110,6 +110,7 @@ module.exports = {
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
+      isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
       },
       editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
@@ -122,6 +123,8 @@ class EditFormBlueprint {
   parentRoute: string;
   flexberryComponents: string;
   functionGetCellComponent: string;
+  isEmberCpValidationsUsed: boolean;
+
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
   private modelsDir: string;
@@ -129,6 +132,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
+    this.isEmberCpValidationsUsed = true;
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
@@ -155,7 +159,8 @@ class EditFormBlueprint {
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {
-    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
+    let snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
   }
 
   readHbsSnippetFile(componentName: string): string {
@@ -204,6 +209,9 @@ class EditFormBlueprint {
       let attr = this.findAttr(model, projAttr.name);
       projAttr.readonly="readonly";
       projAttr.type = attr.type;
+      projAttr.entityName = this.options.entity.name;
+      projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
+      this.calculateValidatePropertyNames(projAttr);
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -217,6 +225,10 @@ class EditFormBlueprint {
       if (propertyLookup) {
         belongsTo.projection = propertyLookup.projection;
         belongsTo.readonly = "readonly";
+        belongsTo.entityName = this.options.entity.name;
+        belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        belongsTo.isDropdown = belongsTo.type === 'combo';
+        this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }
     }
@@ -224,7 +236,10 @@ class EditFormBlueprint {
     this.snippetsResult = lodash.map(this._tmpSnippetsResult, "snippetResult");
     for (hasMany of proj.hasMany) {
       hasMany.readonly = "readonly";
+      hasMany.entityName = this.options.entity.name;
+      hasMany.dashedName = (hasMany.name || '').replace(/\./g, '-');
       this.locales.setupEditFormAttribute(hasMany);
+      this.calculateValidatePropertyNames(hasMany);
       this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
     }
   }
@@ -243,7 +258,10 @@ class EditFormBlueprint {
         belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
         belongsToAttr.readonly="true";
         belongsToAttr.type=attr.type;
+        belongsToAttr.entityName = this.options.entity.name;
+        belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
         this.locales.setupEditFormAttribute(belongsToAttr);
+        this.calculateValidatePropertyNames(belongsToAttr);
         this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
       }
       this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -274,5 +292,14 @@ class EditFormBlueprint {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+  }
+
+  private calculateValidatePropertyNames(attrs) {
+    const name = attrs.name;
+    const lastDotIndex = name.lastIndexOf(".");
+    const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
+
+    attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
+    attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
   }
 }

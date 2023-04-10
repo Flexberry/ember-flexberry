@@ -1,9 +1,13 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
+import { set, get } from '@ember/object';
+import { isBlank, isNone } from '@ember/utils';
+import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
-const { getOwner } = Ember;
 
 /**
  * Columns configuration dialog Content component.
@@ -17,18 +21,18 @@ export default FlexberryBaseComponent.extend({
 
    @property colsConfigMenu
    @type {Class}
-   @default Ember.inject.service()
+   @default service()
    */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
    Service that triggers objectlistview events.
 
    @property objectlistviewEventsService
    @type {Class}
-   @default Ember.inject.service()
+   @default service()
    */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Service for managing the state of the application.
@@ -36,7 +40,7 @@ export default FlexberryBaseComponent.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Current store.
@@ -54,7 +58,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('store', this.get('model.store'));
-    this.set('model.colDescs', Ember.A(this.get('model.colDescs')));
+    this.set('model.colDescs', A(this.get('model.colDescs')));
   },
 
   didRender: function() {
@@ -69,7 +73,13 @@ export default FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super(...arguments);
     this.$('.sort-direction-dropdown').each((index, element) => {
-      Ember.$(element).dropdown('set selected', this.get(`model.colDescs.${index}.sortOrder`));
+      const colDesc = this.get(`model.colDescs.${index}`);
+      $(element).dropdown({
+        onChange: (value) => {
+          this.send('setSortOrder', colDesc, element, value);
+        }
+      });
+      $(element).dropdown('set selected', get(colDesc, 'sortOrder'));
     });
   },
 
@@ -96,20 +106,20 @@ export default FlexberryBaseComponent.extend({
     setSortOrder: function(colDesc, element, value) {
       if (colDesc.sortOrder !== parseInt(value)) {
         if (value === '0') {
-          Ember.set(colDesc, 'sortPriority', undefined);
-          Ember.set(colDesc, 'sortOrder', undefined);
+          set(colDesc, 'sortPriority', undefined);
+          set(colDesc, 'sortOrder', undefined);
         } else {
-          if (Ember.isNone(colDesc.sortPriority)) {
+          if (isNone(colDesc.sortPriority)) {
             let max = 0;
             this.get('model.colDescs').filter(c => {
               if (max < c.sortPriority) {
                 max = c.sortPriority;
               }
             });
-            Ember.set(colDesc, 'sortPriority', max + 1);
+            set(colDesc, 'sortPriority', max + 1);
           }
 
-          Ember.set(colDesc, 'sortOrder', parseInt(value));
+          set(colDesc, 'sortOrder', parseInt(value));
         }
       }
     },
@@ -153,6 +163,8 @@ export default FlexberryBaseComponent.extend({
         let colsConfig = this._getSettings();
 
         let savePromise = this._getSavePromise(undefined, colsConfig);
+
+        /* eslint-disable no-unused-vars */
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
@@ -164,15 +176,15 @@ export default FlexberryBaseComponent.extend({
             } else {
               mainController.set('sort', sort);
               mainController.set('perPage', colsConfig.perPage || 5);
-              let router = getOwner(this).lookup('router:main');
-              router.router.refresh();
+              mainController.send('refreshList', this.get('model.componentName'));
             }
           }
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
         });
+        /* eslint-enable no-unused-vars */
 
-        this.sendAction('close', colsConfig);
+        this.get('close')(colsConfig);
       } else {
         let store = this.get('store.onlineStore') || this.get('store');
         let modelName = this.get('model.modelName');
@@ -180,8 +192,8 @@ export default FlexberryBaseComponent.extend({
         let currentQuery = this._getCurrentQuery();
         adapter.query(store, modelName, currentQuery).then((result) => {
           let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          let anchor = Ember.$('.download-anchor');
-          if (!Ember.isBlank(anchor)) {
+          let anchor = $('.download-anchor');
+          if (!isBlank(anchor)) {
             if (window.navigator.msSaveOrOpenBlob) {
               let downloadFunction = function() {
                 window.navigator.msSaveOrOpenBlob(blob, 'list.xlsx');
@@ -198,7 +210,7 @@ export default FlexberryBaseComponent.extend({
             }
           }
         }).catch((reason) => {
-          this.sendAction('close');
+          this.get('close')(); // close modal window
           this.currentController.send('handleError', reason);
         }).finally(() => {
           this.get('appState').reset();
@@ -225,8 +237,9 @@ export default FlexberryBaseComponent.extend({
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
+
       savePromise.then(
-        record => {
+        () => {
           this.set('currentController.message.type', 'success');
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.setting') +
@@ -241,16 +254,19 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
           this._scrollToBottom();
-          this.sendAction('close', colsConfig);
+          this.get('close')(colsConfig); // close modal window
           this.currentController.send('handleError', error);
         }
       );
     },
 
+    /* eslint-disable no-unused-vars */
     handleError(error) {
       this._super(...arguments);
       return true;
     }
+    /* eslint-enable no-unused-vars */
+
   },
 
   /**
@@ -259,9 +275,12 @@ export default FlexberryBaseComponent.extend({
     @method _scrollToBottom
   */
   _scrollToBottom() {
-    Ember.run.scheduleOnce('afterRender', this, function() {
+    scheduleOnce('afterRender', this, function() {
       let scrollBlock = this.$('.flexberry-colsconfig.content');
-      scrollBlock.animate({ scrollTop: scrollBlock.prop('scrollHeight') }, 1000);
+      let messageBlockTop = this.$('.ui.message', scrollBlock).offset().top;
+      if (scrollBlock.offset().top + scrollBlock.outerHeight(true) <= messageBlockTop) {
+        scrollBlock.animate({ scrollTop: messageBlockTop }, 1000);
+      }
     });
   },
 
@@ -284,7 +303,11 @@ export default FlexberryBaseComponent.extend({
     let exportParams = this.get('model.exportParams') || {};
     builder.selectByProjection(exportParams.projectionName, true);
     let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
-      .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
+      .map(column => {
+        let attributeName = adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.');
+        let propName = column.name || column.propName;
+        return encodeURIComponent(attributeName) + '/' + encodeURIComponent(propName);
+      })
       .join();
     if (sortString) {
       builder.orderBy(sortString);
@@ -307,6 +330,7 @@ export default FlexberryBaseComponent.extend({
     return query;
   },
 
+  /* eslint-disable no-unused-vars */
   _getSavePromise: function(settingName, colsConfig) {
     let componentName = this.get('model.componentName');
     let isExportExcel = this.get('model.exportParams.isExportExcel');
@@ -316,6 +340,7 @@ export default FlexberryBaseComponent.extend({
       this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
     });
   },
+  /* eslint-enable no-unused-vars */
 
   _getSettings: function() {
     let colsOrder = [];
@@ -325,7 +350,7 @@ export default FlexberryBaseComponent.extend({
     let colDescs = this.get('model.colDescs');
     colDescs.forEach((colDesc) => {
       colsOrder.push({ propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() });
-      if (!Ember.isNone(colDesc.sortPriority)) {
+      if (!isNone(colDesc.sortPriority)) {
         sortSettings.push({ propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority });
       }
 

@@ -1,0 +1,78 @@
+name: DEPLOY
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature-ember-update
+      - dummy-test
+      - dummy-test-2
+      - dummy-test-3
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Tune ssh-keys
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        set -x
+        export ENCRYPTION_KEY
+        #  Recover private key
+        openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$ENCRYPTION_KEY -d -md sha1
+        # Setup SSH agent
+        export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        # Start ssh agent
+        ssh-agent -a $SSH_AUTH_SOCK #> /dev/null
+        chmod 0600 .github/workflows/secrets/id_rsa
+        ssh-add .github/workflows/secrets/id_rsa
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Install dependencies
+      run: |
+        set -x
+        npm install -g ember-cli@3.1.4
+        npm install -g bower
+        yarn install
+        bower install
+
+    - name: Run deploy script
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        set -x
+        ifs=$IFS; IFS=/; set -- $GITHUB_REF; IFS=$ifs; while [ $# -gt 1 ]; do shift; done;
+        export GITHUB_BRANCH=$1
+        export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        export SSH_AUTH_SOCK
+        # Build GH-PAGES
+        if [ "$GITHUB_EVENT_NAME" = 'push' -o  "$GITHUB_EVENT_NAME" = 'pull_request' ]
+        then
+          case "$GITHUB_BRANCH" in
+            master | develop )
+              ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
+              bash -x scripts/deploy-to-gh-pages.sh
+              ;;
+            feature-ember-update | dummy-test | dummy-test-2 | dummy-test-3 )
+              ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
+              bash -x scripts/deploy-to-gh-pages.sh no-doc
+              ;;
+          esac
+        fi
+        exit 0
+
+    - name: Cleanup
+      if: always()
+      run: |
+        rm -Rf .ssh .github *

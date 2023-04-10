@@ -1,11 +1,13 @@
-import { test, moduleForModel } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
-moduleForModel('new-platform-flexberry-flexberry-user-setting', 'Unit | Model | new-platform-flexberry-flexberry-user-setting', {
-  // Specify the other units that are required for this test.
-  needs: []
-});
+module('Unit | Model | new-platform-flexberry-flexberry-user-setting', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  var model = this.subject();
-  assert.ok(!!model);
+  test('it exists', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = run(() => store.createRecord('new-platform-flexberry-flexberry-user-setting', {}));
+    assert.ok(model);
+  });
 });

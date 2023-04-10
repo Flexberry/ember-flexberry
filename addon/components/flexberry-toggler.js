@@ -1,8 +1,10 @@
 /**
   @module ember-flexberry
  */
-
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { computed, observer } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import Component from '@ember/component';
 
 /**
   Component for expand / collapse content.
@@ -19,9 +21,9 @@ import Ember from 'ember';
     ```
 
   @class FlexberryToggler
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Current visibility state.
 
@@ -30,6 +32,24 @@ export default Ember.Component.extend({
     @default false
   */
   expanded: false,
+
+  /**
+    If true - a solid border appears for toggler container. If false - border doesn't appear.
+
+    @property hasBorder
+    @type Boolean
+    @default false
+  */
+  hasBorder: false,
+
+  /**
+    If true - border with a subtle shadow appears for toggler container. If false - shadow doesn't appear.
+
+    @property hasShadow
+    @type Boolean
+    @default false
+  */
+  hasShadow: false,
 
   /**
     Common caption in the component header.
@@ -69,7 +89,7 @@ export default Ember.Component.extend({
     @type String
     @readOnly
   */
-  currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
+  currentCaption: computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
     let defaultCaption = this.get('caption');
     let caption = this.get('expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
 
@@ -78,13 +98,22 @@ export default Ember.Component.extend({
 
   /**
     Array CSS class names.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
     @property classNames
     @type Array
     @readOnly
   */
   classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
+
+  /**
+    Array CSS class names bindings.
+    [More info](https://guides.emberjs.com/v3.1.0/components/customizing-a-components-element/).
+
+    @property classNameBindings
+    @type Array
+  */
+  classNameBindings: ['hasBorder:has-border', 'hasShadow:has-shadow'],
 
   /**
     CSS clasess for i tag.
@@ -122,7 +151,7 @@ export default Ember.Component.extend({
   */
   settingName: 'togglerStatus',
 
-  expandedChanged: Ember.observer('expanded', function() {
+  expandedChanged: observer('expanded', function() {
     this.saveStatus();
   }),
   /**
@@ -141,8 +170,8 @@ export default Ember.Component.extend({
       selector: { trigger: '> .title' },
       duration: this.get('duration'),
       onOpen: () => {
-        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        // Change of 'expanded' state may cause asynchronous animation, so we need run function here.
+        run(() => {
           this.set('expanded', true);
           if (this.get('hasResizableOLV')) {
             this.$('table.object-list-view').colResizable({ disable: true });
@@ -151,8 +180,8 @@ export default Ember.Component.extend({
         });
       },
       onClose: () => {
-        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        // Change of 'expanded' state may cause asynchronous animation, so we need run function here.
+        run(() => {
           this.set('expanded', false);
         });
       },
@@ -174,7 +203,7 @@ export default Ember.Component.extend({
   */
   saveStatus() {
     let componentName = this.get('componentName');
-    if (!Ember.isPresent(componentName)) {
+    if (!isPresent(componentName)) {
       return;
     }
 
@@ -193,7 +222,7 @@ export default Ember.Component.extend({
   */
   loadStatus() {
     let componentName = this.get('componentName');
-    if (!Ember.isPresent(componentName)) {
+    if (!isPresent(componentName)) {
       return;
     }
 

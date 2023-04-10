@@ -2,7 +2,9 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -11,17 +13,17 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
-    export default Ember.Controller.extend(SortableController, {
+    export default Controller.extend(SortableController, {
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-    export default Ember.Route.extend(SortableRoute, {
+    export default Route.extend(SortableRoute, {
     });
     ```
 
@@ -39,11 +41,11 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
     ```
 
   @class SortableRoute
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object
@@ -58,7 +60,7 @@ export default Ember.Mixin.create({
     @property objectlistviewEvents
     @type Service
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Apply sorting to result list.
@@ -69,7 +71,10 @@ export default Ember.Mixin.create({
     @return {DS.Model}
    */
   includeSorting(model, sorting) {
-    model.set('sorting', sorting);
+    if (model) {
+      model.set('sorting', sorting);
+    }
+
     return model;
   },
 
@@ -81,7 +86,7 @@ export default Ember.Mixin.create({
     @param {Array} sorting Sorting object.
   */
   setSorting(componentName, sorting) {
-    let sort = serializeSortingParam(Ember.A(sorting));
+    let sort = serializeSortingParam(A(sorting));
     this.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
   },
 

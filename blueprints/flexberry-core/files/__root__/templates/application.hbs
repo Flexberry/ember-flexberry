@@ -2,16 +2,17 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
-{{#ui-sidebar
-  class="inverted vertical main menu"
-  ui_context=".ember-application > .ember-view"
-  closable=false
-  dimPage=false
-  onShow=(action "updateWidth")
-  onHidden=(action "updateWidth")
+{{#flexberry-sidebar
+  class="inverted vertical main menu visible"
+  settings=(hash
+    closable=false
+    dimPage=false
+    onShow=(action "updateWidth")
+    onHidden=(action "updateWidth")
+  )
 }}
-  {{render "sitemap" sitemap}}
-{{/ui-sidebar}}
+  {{flexberry-sitemap sitemap=sitemap class="flexberry-sitemap"}}
+{{/flexberry-sidebar}}
 <div class="bgw-fix">
   <div class="background-logo">
     <div class="ui top attached">
@@ -20,9 +21,14 @@
           <a {{action 'toggleSidebar'}}
             class="launch icon item"
             title={{t "forms.application.header.menu.sitemap-button.title"}}>
-            {{t "forms.application.header.menu.sitemap-button.caption"}}
-            <i class="sidebar icon text-menu-show"><span class="text_menu ">{{t "forms.application.header.menu.show-menu.caption"}}</span><span class="text_menu hidden text-menu-hide">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
-            <i class="sidebar icon hidden text-menu-hide hidden-text"><span class="text_menu hidden-text">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
+            <i class="sidebar icon text-menu-hide">
+              <span class="text_menu hidden">
+                {{t "forms.application.header.menu.show-menu.caption"}}
+              </span>
+              <span class="text_menu hidden-text">
+                {{t "forms.application.header.menu.hide-menu.caption"}}
+              </span>
+            </i>
           </a>
         </div>
       </div>
@@ -34,10 +40,6 @@
       <img class="ui centered image" src="assets/images/flexberry-logo.png" />
     </a>
     <div class="page-header-caption"><a href="#">{{t "application-name"}}</a></div>
-    <div class="page-header-userbar">
-      <span id="fio" class="hidden">login</span>
-      <a id="ExitButton" class="exit-btn" href="javascript:void(0)">{{t "forms.application.header.logout.caption"}}</a>
-    </div>
   </div>
 </div>
 <div id="example" class="pusher">
@@ -68,7 +70,7 @@
           items=locales
           value=i18n.locale
           placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-          direction="upward"
+          settings=(hash direction="upward")
         }}
       </div>
     </div>

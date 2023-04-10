@@ -1,13 +1,15 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  advLimitButton=advLimitButton
   enableFilters=enableFilters
   exportExcelButton=exportExcelButton
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
   resetFilters=(action "resetFilters" this.attrs.resetFilters)
@@ -15,12 +17,15 @@
   filterText=filterText
   buttonClass=buttonClass
   enableDeleteButton=(not readonly)
+  inLookup=(eq componentMode "lookupform")
   componentName=componentName
+  lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  showAdvLimitDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
@@ -29,11 +34,52 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
 }}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <button
+      type="button"
+      class="ui {{unless colsConfigButton "disabled"}} button mobile-sorting-setting-button"
+      title={{_mobileSortingSettingsCaption}}
+      disabled={{not colsConfigButton}}
+      {{action "showConfigDialog"}}>
+        <i class={{_mobileSortingSettingsIcon}}></i>
+        {{_mobileSortingSettingsCaption}}
+    </button>
+    <div class="right menu">
+      <div class="ui basic buttons">
+        {{#each _mobilePages as |page|}}
+          {{#if (not page.isEllipsis)}}
+            {{#if page.isCurrent}}
+              <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+            {{else}}
+              <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+            {{/if}}
+          {{/if}}
+        {{/each}}
+      </div>
+      {{#if (gt _mobilePages.length 4)}}
+        <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+          {{input
+            type="number"
+            min=_pages.firstObject.number
+            max=_pages.lastObject.number
+            placeholder=_mobilePages.lastObject.number
+            enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
+            value=searchPageValue
+          }}
+          {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
+          {{input classNames=(array "hidden")}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
-  columnsWidthAutoresize=true
+  columnsWidthAutoresize=columnsWidthAutoresize
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -41,12 +87,15 @@
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  createNewByPrototype=(action "createNewByPrototype")
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
-  showDeleteButtonInRow=showDeleteButtonInRow
   showEditButtonInRow=showEditButtonInRow
+  showPrototypeButtonInRow=showPrototypeButtonInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
   showEditMenuItemInRow=showEditMenuItemInRow
+  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow
   showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
@@ -61,9 +110,11 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   enableFilters=enableFilters
   showFilters=_showFilters
+  showFiltersInModal=showFiltersInModal
   filters=filters
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
+  componentForFilterByCondition=componentForFilterByCondition
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
@@ -72,54 +123,30 @@
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
+  confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=inHierarchicalMode
   inExpandMode=inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
+  hierarchyAttribute=hierarchyAttribute
   useRowByRowLoading=useRowByRowLoading
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
   onEditForm=onEditForm
+  customButtonInRowAction="customButtonInRowAction"
+  customButtonsInRow=customButtonsInRow
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  fixedHeader=fixedHeader
+  recordsTotalCount=recordsTotalCount
 }}
-{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
-  <div class="ui secondary menu no-margin nav-bar">
-    <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
-      {{#each pages as |page|}}
-        {{#if page.isEllipsis}}
-          <div class="ui button">...</div>
-        {{else}}
-          {{#if page.isCurrent}}
-            <button class="ui active button">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
-          {{/if}}
-        {{/if}}
-      {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
-    </div>
-    <div class="right menu">
-      {{#if showShowingEntries}}
-        <div class="showing-entries">
-          {{#if (and currentIntervalRecords recordsTotalCount) }}
-            {{concat
-              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-            }}
-          {{/if}}
-        </div>
-      {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
-    </div>
-  </div>
-{{/if}}
+

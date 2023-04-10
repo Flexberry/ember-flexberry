@@ -1,13 +1,21 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import $ from 'jquery';
+import { computed, observer } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 
-export default Ember.Controller.extend({
-  sitemap: Ember.computed('i18n.locale', function () {
+
+
+export default Controller.extend({
+  sitemap: computed('i18n.locale', function () {
     let i18n = this.get('i18n');
 
     return {
       nodes: [
         {
           link: 'index',
+          icon: 'home',
           caption: i18n.t('forms.application.sitemap.index.caption'),
           title: i18n.t('forms.application.sitemap.index.title'),
           children: null
@@ -23,7 +31,7 @@ export default Ember.Controller.extend({
     @type String[]
     @default ['ru', 'en']
   */
-  locales: ['ru', 'en'],
+  locales: undefined,
 
   /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
@@ -31,7 +39,7 @@ export default Ember.Controller.extend({
     @method _userSettingsServiceChanged
     @private
   */
-  _userSettingsServiceChanged: Ember.observer('userSettingsService.isUserSettingsServiceEnabled', function() {
+  _userSettingsServiceChanged: observer('userSettingsService.isUserSettingsServiceEnabled', function() {
     this.get('target.router').refresh();
   }),
 
@@ -42,18 +50,20 @@ export default Ember.Controller.extend({
     this._super(...arguments);
 
     let i18n = this.get('i18n');
-    if (Ember.isNone(i18n)) {
+    if (isNone(i18n)) {
       return;
     }
 
+    this.set('locales', ['ru', 'en']);
+
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
-    let availableLocales = Ember.A(this.get('locales'));
+    let availableLocales = A(this.get('locales'));
 
     // Force current locale to be one of available,
     // if browser's current language is not supported by dummy application,
     // or if browser's current locale is long value like 'ru-RU', 'en-GB', etc.
-    if (!availableLocales.contains(shortCurrentLocale)) {
+    if (!availableLocales.includes(shortCurrentLocale)) {
       i18n.set('locale', 'en');
     } else {
       i18n.set('locale', shortCurrentLocale);
@@ -66,7 +76,7 @@ export default Ember.Controller.extend({
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Service for managing the state of the application.
@@ -74,7 +84,7 @@ export default Ember.Controller.extend({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   actions: {
     /**
@@ -92,20 +102,19 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebar
     */
     toggleSidebar() {
-      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
+      sidebar.toggleClass('sidebar-mini');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
-      }
+      $('.full.height').toggleClass('content-opened');
+
+      $('.sidebar.icon .text_menu').toggleClass('hidden');
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      // For reinit overflowed tabs.
+      $(window).trigger('resize');
     },
 
     /**
@@ -114,16 +123,16 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebarMobile
     */
     toggleSidebarMobile() {
-      Ember.$('.ui.sidebar.main.menu').sidebar('toggle');
+      $('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-      } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
+      $('.sidebar.icon').toggleClass('text-menu-show');
+      $('.sidebar.icon').toggleClass('text-menu-hide');
+      $('.sidebar.icon').toggleClass('hidden-text');
+      $('.bgw-opacity').toggleClass('hidden');
+
+      if (!this.get('_hideEventIsAttached')) {
+        $('.ui.sidebar.main.menu').sidebar('attach events', '.ui.sidebar.main.menu .item a', 'hide');
+        this.set('_hideEventIsAttached', true);
       }
     }
   }

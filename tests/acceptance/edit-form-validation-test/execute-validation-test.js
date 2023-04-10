@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 
@@ -27,8 +28,8 @@ export function executeTest(testName, callback) {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
-      let daterangepicker = Ember.$('.daterangepicker');
+      run(app, 'destroy');
+      let daterangepicker = $('.daterangepicker');
       daterangepicker.remove();
     }
   });

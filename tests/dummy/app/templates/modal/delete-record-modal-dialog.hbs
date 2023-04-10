@@ -1,0 +1,20 @@
+{{#modal-dialog
+  title=title
+  useOkButton=false
+  useCloseButton=false
+  close=(action "closeModalDialog")
+  settings=(hash
+    closable=false
+    onApprove=(action (or approveDeleting "approveDeleting"))
+    onDeny=(action (or denyDeleting "denyDeleting"))
+  )
+}}
+  <div class="actions">
+    <button class="ui primary approve large button">
+      {{t "forms.application.flexberry-objectlistview-modal-question-caption.confirm-button-caption"}}
+    </button>
+    <button class="ui cancel large button">
+      {{t "forms.application.flexberry-objectlistview-modal-question-caption.cancel-button-caption"}}
+    </button>
+  </div>
+{{/modal-dialog}}

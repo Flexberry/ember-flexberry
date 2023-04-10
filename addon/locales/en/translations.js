@@ -8,7 +8,9 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -26,14 +28,14 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
+    },
+
+    'loading': {
+      caption: 'Loading...',
     }
   },
 
   'components': {
-    'flexberry-simpledatetime': {
-      'scroll-caption-text': 'Scroll to increment',
-    },
-
     'flexberry-error': {
       caption: 'An error has occurred',
       'show-more': 'Show more',
@@ -48,20 +50,18 @@ export default {
       placeholder: '(no value)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(no value)',
+      'scroll-caption-text': 'Scroll to increment',
+      'apply-button-text': 'Choose',
+    },
+
     'flexberry-textarea': {
       placeholder: '(no value)'
     },
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
     },
 
     'flexberry-file': {
@@ -79,10 +79,16 @@ export default {
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Preview can not be loaded',
+      'error-dialog-size-unit-bt': 'Bytes',
+      'error-dialog-size-unit-kb': 'Kilobytes',
+      'error-dialog-size-unit-mb': 'Magabytes',
+      'error-dialog-size-unit-gb': 'Gigabytes',
 
       'add-file-error-caption': 'Add file error',
-      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
-        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} {{sizeUnit}}. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Selected file \'{{fileName}}\' has unavailable extension.',
 
       'upload-file-error-caption': 'File upload error',
       'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
@@ -108,18 +114,26 @@ export default {
         }
       }
     },
-
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
         'showing': 'Showing ',
         'of': ' of ',
         'entries': ' entries'
-      }
+      },
+      'without-sorting': 'Without sorting',
+      'search-page-placeholder': '№ page',
+      'search-button-text': 'Go to page'
     },
 
     'flexberry-groupedit': {
       'placeholder': 'There is no data'
+    },
+
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Show all forms fields',
+      'next-button': 'Next',
+      'prev-button': 'Previous'
     },
 
     'modal-dialog': {
@@ -144,6 +158,24 @@ export default {
         'plus-button-title': 'Expand',
         'minus-button-title': 'Collapse',
       },
+      'filters': {
+        'eq': 'Equals',
+        'neq': 'Not equal',
+        'le': 'Less than',
+        'ge': 'Greater than',
+        'like': 'Contains',
+        'nlike': 'Does not contain',
+        'empty': 'Empty',
+        'nempty': 'Not empty',
+        'between': 'Between',
+      },
+      'filter-condition': 'Condition',
+      'clear-filter-in-column': 'Clear the filter in this column',
+    },
+
+    'olv-filter-interval': {
+      'from': '(from)',
+      'to': '(to)'
     },
 
     'olv-toolbar': {
@@ -152,7 +184,8 @@ export default {
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
-      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'coll-expand-button-text':'Expand all hierarchies',
+      'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -177,8 +210,11 @@ export default {
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy',
       'check-all-at-page-button-text': 'Check all entries on the current page',
+      'uncheck-all-at-page-button-text': 'Uncheck all entries on the current page',
       'check-all-button-text': 'Check all on all pages',
-      'clear-sorting-button-text': 'Set the default sorting'
+      'uncheck-all-button-text': 'Uncheck all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting',
+      'clear-select-button-text': 'Deselect'
     },
 
     'groupedit-toolbar': {
@@ -198,8 +234,11 @@ export default {
       'columns-order': 'Specify the order of the columns',
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
+      'sort-direction-caption': 'Sorting',
       'sort-priority': 'Priority column sorting',
+      'sort-priority-caption': 'Priority',
       'column-width': 'Column width',
+      'column-width-caption': 'Width',
       'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
@@ -213,7 +252,10 @@ export default {
       'col-width-on': 'Enable setting column widths',
       'per-page': 'Records count on page',
       'det-separate-rows': 'List\'s properties in separate rows',
-      'det-separate-cols': 'List\'s properties in separate columns'
+      'det-separate-cols': 'List\'s properties in separate columns',
+      'sort-direction-none': 'None',
+      'sort-direction-asc': 'Ascending',
+      'sort-direction-desc': 'Descending',
     },
 
     'advlimit-dialog-content': {
@@ -229,6 +271,13 @@ export default {
       'is-deleted': ' was deleted',
       'is-correct': 'Current limit string is correct',
       'check': 'Check'
+    },
+
+    'filters-dialog-content': {
+      'clear-this-filter': 'Reset this filter',
+      'title': 'Configuring record filtering',
+      'clear': 'Reset filter',
+      'apply': 'Apply'
     },
 
     'form-load-time-tracker': {
@@ -254,6 +303,10 @@ export default {
 
     'flexberry-tree': {
       'placeholder': 'Tree nodes are not defined'
+    },
+
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Main menu'
     }
 
   },
@@ -316,5 +369,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

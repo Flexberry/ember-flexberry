@@ -3,7 +3,7 @@ var lodash = require('lodash');
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
-var Promise = require('ember-cli/lib/ext/promise');
+var Promise = require('rsvp');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 module.exports = {
     description: 'Generates an group of entities for flexberry.',
@@ -38,13 +38,8 @@ var GroupBlueprint = (function () {
             case 'transform-test':
                 this.emberGenerate("objects");
                 break;
-            case 'controller-test':
+            case 'flexberry-acceptance-test':
                 this.emberGenerate("list-forms");
-                this.emberGenerate("edit-forms");
-                break;
-            case 'route-test':
-                this.emberGenerate("list-forms");
-                this.emberGenerate("edit-forms");
                 break;
             case 'flexberry-enum':
                 this.emberGenerate("enums");
@@ -86,7 +81,7 @@ var GroupBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: this.options.project.blueprintLookupPaths()
         });
     };
     GroupBlueprint.prototype.emberGenerate = function (metadataSubDir, notOverwrite, folderJsFiles) {

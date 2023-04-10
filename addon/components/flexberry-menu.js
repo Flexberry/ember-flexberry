@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { typeOf, isNone } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { observer } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -29,12 +32,23 @@ import FlexberryBaseComponent from './flexberry-base-component';
         icon: 'trash icon',
         title: 'Delete',
       }],
+    }, {
+      title: 'Item',
+      buttons: [{
+        title: 'edit',
+        buttonClasses: 'icon',
+        iconClass: 'edit icon',
+        disabled: false,
+        buttonAction: () => {
+          window.alert('clicked edit button');
+        }
+      }]
     }],
     ...
     actions: {
       ...
       onItemClick(e) {
-        let clickedMenuItem = Ember.$(e.currentTarget);
+        let clickedMenuItem = $(e.currentTarget);
         ...
       },
       ...
@@ -56,6 +70,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    See comment on using this.
+
+    @private
+    @property _skipDropdownInit
+    @type Boolean
+    @default false
+  */
+  _skipDropdownInit: false,
+
   /**
     Flag: indicates whether to call 'items.[].onClick' callbacks or not.
 
@@ -84,8 +108,16 @@ export default FlexberryBaseComponent.extend({
   items: null,
 
   /**
+    Settings for the dropdown, see [Semantic UI API](https://semantic-ui.com/modules/dropdown.html#/settings) for more info.
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
+  /**
     Array CSS class names.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
 
     @property classNames
     @type Array
@@ -121,7 +153,7 @@ export default FlexberryBaseComponent.extend({
     // so complex properties like object or arrays, will be shared between all class instances,
     // that's why such properties should be initialized manually in 'init' method.
     let items = this.get('items');
-    if (Ember.isNone(items)) {
+    if (isNone(items)) {
       items = [];
     }
 
@@ -129,9 +161,9 @@ export default FlexberryBaseComponent.extend({
     let configurateItems = this.get('configurateItems');
 
     if (configurateItems) {
-      let configurateItemsType = Ember.typeOf(configurateItems);
+      let configurateItemsType = typeOf(configurateItems);
 
-      Ember.assert(
+      assert(
         'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
         'actual type is \'' +
         configurateItemsType +
@@ -154,8 +186,12 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on(this.get('onlyClickHandler') ? 'click' : 'click touchstart', onClickHandler);
-    this.$().dropdown();
-    this._getActionForMenu(this.get('collapseMenuOnItemClick'));
+
+    // The dropdown is also initialized in the root flexberry-menuitem component, which can cause various problems.
+    // I haven't found a way to fix this without breaking anything.
+    if (!this.get('_skipDropdownInit')) {
+      this.$().dropdown(this.get('settings'));
+    }
   },
 
   /**
@@ -184,7 +220,7 @@ export default FlexberryBaseComponent.extend({
 
       ```javascript
       // app/controllers/menu.js
-      export default Ember.Controller.extend({
+      export default Controller.extend({
       ...
         actions: {
           ...
@@ -215,7 +251,12 @@ export default FlexberryBaseComponent.extend({
   */
   _onClickHandler(e) {
     // Find clicked menu item element.
-    let itemElement = Ember.$(e.target);
+    let itemElement = $(e.target);
+
+    if (itemElement.parent().is('button') || itemElement.is('button')) {
+      return;
+    }
+
     if (!itemElement.hasClass('flexberry-menuitem')) {
       itemElement = itemElement.parents('.flexberry-menuitem');
     }
@@ -228,18 +269,18 @@ export default FlexberryBaseComponent.extend({
     e.item = item;
 
     // Call onClick handler if it is specified in the given menu item.
-    if (item && Ember.typeOf(item.onClick) === 'function' && this.get('callItemsOnClickCallbacks')) {
+    if (item && typeOf(item.onClick) === 'function' && this.get('callItemsOnClickCallbacks')) {
       item.onClick.call(e.currentTarget, e);
     }
 
     // Send 'onClick' action on clicked 'flexberry-menuitem' component.
-    this.sendAction('onItemClick', e);
+    this.get('onItemClick')(e);
   },
 
   /**
     Menu's collapseMenuOnItemClick observer.
   */
-  _collapseMenuOnItemClickDidChange: Ember.observer('collapseMenuOnItemClick', function() {
+  _collapseMenuOnItemClickDidChange: observer('collapseMenuOnItemClick', function() {
     this.$().dropdown({
       action: this._getActionForMenu(this.get('collapseMenuOnItemClick'))
     }).dropdown('clear');

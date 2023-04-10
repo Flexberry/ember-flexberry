@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
 import FlexberryBaseComponent from './flexberry-base-component';
 import cutStringByLength from '../utils/cut-string-by-length';
 
@@ -43,7 +44,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  displayValue: Ember.computed('value', 'maxTextLength', 'cutBySpaces', function() {
+  displayValue: computed('value', 'maxTextLength', 'cutBySpaces', function() {
     const value = this.get('value');
     const maxTextLength = this.get('maxTextLength');
     const cutBySpaces = this.get('cutBySpaces');
@@ -58,11 +59,11 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  titleValue: Ember.computed('value', 'displayValue', function() {
+  titleValue: computed('value', 'displayValue', function() {
     let value = this.get('value');
     const displayValue = this.get('displayValue');
 
-    if (Ember.typeOf(value) !== Ember.typeOf(displayValue)) {
+    if (typeOf(value) !== typeOf(displayValue)) {
       value = String(value);
     }
 

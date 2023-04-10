@@ -2,7 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import EmberObject, { set, computed, observer } from '@ember/object';
+import { guidFor, copy } from '@ember/object/internals'
+import { A } from '@ember/array';
+import { isBlank } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { htmlSafe } from '@ember/string';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -12,6 +18,15 @@ import FlexberryBaseComponent from './flexberry-base-component';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Indicates that child records are being loaded.
+
+    @property _recordsIsLoading
+    @type Boolean
+    @default false
+  */
+  _recordsIsLoading: false,
+
   /**
     Flag used to display embedded records.
 
@@ -27,10 +42,10 @@ export default FlexberryBaseComponent.extend({
 
     @property _hierarchicalIndent
     @type Number
-    @default 10
+    @default 20
     @private
   */
-  _hierarchicalIndent: 10,
+  _hierarchicalIndent: 20,
 
   /**
     Level nesting by default.
@@ -50,7 +65,7 @@ export default FlexberryBaseComponent.extend({
     @default 0
     @private
   */
-  _currentLevel: Ember.computed({
+  _currentLevel: computed({
     get() {
       return this.get('_level');
     },
@@ -67,7 +82,7 @@ export default FlexberryBaseComponent.extend({
     @default Empty
     @private
   */
-  _records: Ember.computed(() => Ember.A()),
+  _records: computed(() => A()),
 
   /**
     Flag: indicates whether to show validation messages or not.
@@ -105,7 +120,7 @@ export default FlexberryBaseComponent.extend({
     @property record
     @type Object
   */
-  record: Ember.computed(() => ({
+  record: computed(() => ({
     key: undefined,
     data: undefined,
     rowConfig: undefined,
@@ -118,22 +133,23 @@ export default FlexberryBaseComponent.extend({
     @type Ember.NativeArray
     @default Empty
   */
-  records: Ember.computed({
+  records: computed({
     get() {
       return this.get('_records');
     },
     set(key, value) {
+      this.set('_recordsIsLoading', true);
       value.then((records) => {
         records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
+          let config = copy(this.get('defaultRowConfig'));
           let configurateRow = this.get('configurateRow');
           if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+            assert('configurateRow must be a function', typeof configurateRow === 'function');
             configurateRow(config, record);
           }
 
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
+          let newRecord = EmberObject.create({
+            key: guidFor(record),
             data: record,
             rowConfig: config,
             doRenderData: true
@@ -141,10 +157,27 @@ export default FlexberryBaseComponent.extend({
 
           this.get('_records').pushObject(newRecord);
         });
+      }).finally(() => {
+        if (!this.get('isDestroyed')) {
+          this.set('_recordsIsLoading', false);
+        }
       });
+
       return this.get('records');
     },
   }),
+
+  /**
+    Indicates whether the record displayed on this row has child records.
+    See {{#crossLink "FlexberryObjectlistviewComponent/isParentRecordPropertyName:property"}}details here{{/crossLink}}.
+
+    @property isParentRecord
+    @type Boolean
+    @readOnly
+  */
+  isParentRecord: computed('record.data', 'isParentRecordPropertyName', function () {
+    return this.get(`record.data.${this.get('isParentRecordPropertyName')}`);
+  }).readOnly(),
 
   /**
     Flag indicate whether there nested records.
@@ -153,7 +186,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  hasRecords: Ember.computed('records.length', function() {
+  hasRecords: computed('records.length', function() {
     return this.get('records.length') > 0;
   }),
 
@@ -164,7 +197,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default ''
   */
-  hierarchicalIndent: Ember.computed({
+  hierarchicalIndent: computed({
     get() {
       let result = (this.get('_currentLevel')) * this.get('_hierarchicalIndent') + this.get('defaultLeftPadding');
       if (this.get('_currentLevel') === 0) {
@@ -182,26 +215,26 @@ export default FlexberryBaseComponent.extend({
     },
   }),
 
-  hierarchicalIndentStyle: Ember.computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
+  hierarchicalIndentStyle: computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
     let defaultLeftPadding = this.get('defaultLeftPadding');
     let hierarchicalIndent = this.get('hierarchicalIndent');
-    return Ember.String.htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
+    return htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
-  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+  defaultPaddingStyle: computed('defaultLeftPadding', function() {
     let defaultLeftPadding = this.get('defaultLeftPadding');
-    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+    return htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
   /**
     Observe inExpandMode changes.
   */
-  inExpandModeObserver: Ember.on('init', Ember.observer('inExpandMode', function() {
+  inExpandModeObserver: observer('inExpandMode', function() {
     this.set('_expanded', this.get('inExpandMode'));
-  })),
+  }),
 
   /**
-    Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
+    Tag name for the view's outer element. [More info](https://emberjs.com/api/ember/release/classes/Component#property_tagName).
 
     @property tagName
     @type String
@@ -263,8 +296,28 @@ export default FlexberryBaseComponent.extend({
     */
     expand() {
       this.toggleProperty('_expanded');
-      if (!this.get('_expanded')) {
-        this.set('inExpandMode', false);
+    },
+
+    /**
+      Loads and, by default, displays the records that are children of the record displayed on this row.
+
+      @method actions.loadChildRecords
+      @param {Boolean} [expand=true] If `true`, the child records will be displayed by sending the `expand` event.
+    */
+    loadChildRecords(expand = true) {
+      const id = this.get('record.data.id');
+      const currentLevel = this.get('_currentLevel');
+      const hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
+
+      this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
+      this.set('recordsLoaded', true);
+
+      if (currentLevel > hierarchyLoadedLevel) {
+        this.set('hierarchyLoadedLevel', currentLevel);
+      }
+
+      if (expand) {
+        this.send('expand');
       }
     },
 
@@ -290,7 +343,6 @@ export default FlexberryBaseComponent.extend({
 
     /**
       Redirect action from FlexberryLookupComponent in the controller.
-
       @method actions.previewLookupValue
       @param {Object} previewData
     */
@@ -309,37 +361,31 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      if (!Ember.isBlank(e)) {
-        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      if (!isBlank(e)) {
+        set(params, 'originalEvent', $.event.fix(e));
       }
 
-      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
-      let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
-      {
-        this.sendAction('rowClick', record, params);
-      }
+      this.get('rowClick')(record, params);
     }
+  },
+
+  init() {
+    this._super(...arguments);
+    this.get('inExpandModeObserver').apply(this);
   },
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */
   didRender() {
     this._super(...arguments);
     if (!this.get('recordsLoaded')) {
-      let id = this.get('record.data.id');
-      if (id && this.get('inHierarchicalMode')) {
-        let currentLevel = this.get('_currentLevel');
-        let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
-        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
-        this.set('recordsLoaded', true);
-        if (currentLevel > hierarchyLoadedLevel) {
-          this.set('hierarchyLoadedLevel', currentLevel);
-        }
+      const id = this.get('record.data.id');
+      if (id && this.get('inHierarchicalMode') && this.get('isParentRecord') === undefined) {
+        this.send('loadChildRecords', false);
       }
     }
   },

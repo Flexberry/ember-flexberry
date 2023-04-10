@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import serializeSortingParam from 'ember-flexberry/utils/serialize-sorting-param';
 import { translationMacro as t } from 'ember-i18n';
@@ -17,7 +17,7 @@ export default EditFormController.extend({
       @return {Object} Set of options for lookup window.
      */
     getLookupFolvProperties: function(options) {
-      let methodArgs = Ember.merge({
+      let methodArgs = merge({
         projection: undefined,
         relationName: undefined
       }, options);
@@ -28,6 +28,7 @@ export default EditFormController.extend({
           customButtons: [{
             i18n: this.get('i18n'),
             buttonName: t('components.olv-toolbar.clear-sorting-button-text'),
+            buttonClasses: 'default-sort',
             buttonAction: () => {
               let defaultUserSetting = this.get('userSettingsService').getDefaultDeveloperUserSetting(this.get('lookupComponentName'));
               this.set('lookupController.sort', serializeSortingParam(defaultUserSetting.sorting || []));

@@ -1,35 +1,21 @@
-import Ember from 'ember';
-
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+export default Controller.extend({
   /**
     Message to be displayed in 'ui-message' component.
   */
-  message: new Ember.Handlebars.SafeString(
-    '<pre><code>' +
-    '<strong>itemsArray: </strong>' +
-      '[\"itemsArray1\", \"itemsArray2\", \"itemsArray3\"]' +
-      '<br><br>' +
-      '<strong>itemsObject:</strong> {<br>' +
-        '  itemsObject1: \"itemsObject1\",<br>' +
-        '  itemsObject2: \"itemsObject2\",<br>' +
-        '  itemsObject3: \"itemsObject3\"<br>' +
-      '}' +
-    '</code></pre>'
-  ),
+  message: undefined,
 
   /**
     Items. Type array.
   */
-  itemsArray: ['itemsArray1', 'itemsArray2', 'itemsArray3'],
+  itemsArray: undefined,
 
   /**
     Items. Type object.
   */
-  itemsObject: {
-    itemsObject1: 'itemsObject1',
-    itemsObject2: 'itemsObject2',
-    itemsObject3: 'itemsObject3'
-  },
+  itemsObject: undefined,
 
   value: undefined,
 
@@ -41,7 +27,7 @@ export default Ember.Controller.extend({
   /**
     Current items in `flexberry-objectlistview`.
   */
-  currentItems: Ember.computed('usedArray', function() {
+  currentItems: computed('usedArray', function() {
     let usedArray = this.get('usedArray');
     let currentItems = null;
 
@@ -53,6 +39,28 @@ export default Ember.Controller.extend({
 
     return currentItems;
   }),
+
+  init() {
+    this._super(...arguments);
+    this.set('message', new htmlSafe(
+      '<pre><code>' +
+      '<strong>itemsArray: </strong>' +
+        '["itemsArray1", "itemsArray2", "itemsArray3"]' +
+        '<br><br>' +
+        '<strong>itemsObject:</strong> {<br>' +
+          '  itemsObject1: "itemsObject1",<br>' +
+          '  itemsObject2: "itemsObject2",<br>' +
+          '  itemsObject3: "itemsObject3"<br>' +
+        '}' +
+      '</code></pre>'
+    ));
+    this.set('itemsArray', ['itemsArray1', 'itemsArray2', 'itemsArray3']);
+    this.set('itemsObject', {
+      itemsObject1: 'itemsObject1',
+      itemsObject2: 'itemsObject2',
+      itemsObject3: 'itemsObject3'
+    });
+  },
 
   actions: {
     /**

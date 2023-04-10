@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -30,13 +31,15 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
-    LimitedSizeOlv: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+  developerUserSettings: computed(function() {
+    return {
+      LimitedSizeOlv: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+        }
       }
     }
-  },
+  }),
 
   /**
     Name of model to be used as list's records types.

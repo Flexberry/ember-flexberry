@@ -2,22 +2,28 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
-  {{#ui-sidebar
-    class="inverted vertical main menu"
-    ui_context=".ember-application > .ember-view"
-    closable=false
-    dimPage=false
-    onShow=(action "updateWidth")
-    onHidden=(action "updateWidth")
+  {{#flexberry-sidebar
+    class="inverted vertical main menu visible"
+    settings=(hash
+      closable=false
+      dimPage=false
+      onShow=(action "updateWidth")
+      onHidden=(action "updateWidth")
+    )
   }}
-    <a class="item"
-      href={{addonVersionHref}}
-      target="_blank"
-      title={{t "forms.application.sitemap.application-version.title"}}>
-      {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-    </a>
-    {{render "sitemap" sitemap}}
-  {{/ui-sidebar}}
+
+    {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
+    <div class="sitebar-footer">
+      <a class="item"
+        href={{addonVersionHref}}
+        target="_blank"
+        title={{t "forms.application.sitemap.application-version.title"}}>
+        {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+      </a>
+      <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
+    </div>
+
+  {{/flexberry-sidebar}}
   <div class="bgw-fix">
     <div class="background-logo">
       <div class="ui top attached">
@@ -26,9 +32,14 @@
             <a {{action 'toggleSidebar'}}
               class="launch icon item"
               title={{t "forms.application.header.menu.sitemap-button.title"}}>
-              {{t "forms.application.header.menu.sitemap-button.caption"}}
-              <i class="sidebar icon text-menu-show"><span class="text_menu ">{{t "forms.application.header.menu.show-menu.caption"}}</span><span class="text_menu hidden text-menu-hide">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
-              <i class="sidebar icon hidden text-menu-hide hidden-text"><span class="text_menu hidden-text">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
+              <i class="sidebar icon text-menu-hide">
+                <span class="text_menu hidden">
+                  {{t "forms.application.header.menu.show-menu.caption"}}
+                </span>
+                <span class="text_menu hidden-text">
+                  {{t "forms.application.header.menu.hide-menu.caption"}}
+                </span>
+              </i>
             </a>
           </div>
         </div>
@@ -39,7 +50,40 @@
         title={{t "forms.application.sitemap.application-name.title"}}>
         <img class="ui centered image" src="assets/images/flexberry-logo.png" />
       </a>
-      <div class="page-header-caption"><a href="https://github.com/flexberry">{{t "application-name"}}</a></div>
+      <a class="page-header-caption" href="https://github.com/flexberry">
+        <span class="page-header-caption-app-name">{{t "application-name"}}</span>
+        <span class="page-header-caption-logo">{{t "forms.application.sitemap.application-version.caption" version=addonVersion}}</span>
+      </a>
+      <div class="page-header-actions ui text menu">
+        <div class="item" title={{t "forms.application.header.menu.user-settings-service-checkbox.title"}}>
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+          </label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=userSettingsService.isUserSettingsServiceEnabled
+          }}
+        </div>
+        <div class="item lang">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.language-dropdown.caption"}}
+          </label>
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
+        </div>
+      </div>
+
+      <div class="page-header-userbar">
+        <img src="assets/images/user-foto.jpg"/>
+        {{flexberry-menu
+          items=itemsUserMenu
+          onItemClick=(action "onMenuItemClick")
+        }}
+      </div>
     </div>
   </div>
   <div id="example" class="pusher">
@@ -59,7 +103,7 @@
   <div class="ui main container">
     {{outlet "modal"}}
   </div>
-  <div class="ui vertical footer segment">
+  {{!-- <div class="ui vertical footer segment">
     <div class="ui container flex-container">
       <div class="ui text menu">
         <a class="brand item" href="#">
@@ -83,7 +127,7 @@
             items=locales
             value=i18n.locale
             placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            direction="upward"
+            settings=(hash direction="upward")
           }}
         </div>
         <div class="right menu">
@@ -96,5 +140,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 {{/if}}

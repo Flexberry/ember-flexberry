@@ -1,0 +1,4 @@
+// For example dropdownClass
+.flexberry-dropdown.search.selection.ember-view.ui.dropdown.blue {
+  background: blue;
+}

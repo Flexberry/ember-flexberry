@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import moment from 'moment';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
     Lookup events service.
   */
-  lookupEvents: Ember.inject.service('lookup-events'),
+  lookupEvents: service('lookup-events'),
 
   actions: {
     /**
@@ -13,7 +14,6 @@ export default EditFormController.extend({
     */
     showLookupDialog() {
       // Create new master & add to model.
-
       let master = this.get('store').createRecord('integration-examples/edit-form/validation/master', { text: 'Master text' });
       this.get('model').set('master', master);
 
@@ -22,6 +22,9 @@ export default EditFormController.extend({
       // Create temp file and add to model.
       let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348' };
       this.get('model').set('file', tempFile);
+
+      // Set date.
+      this.get('model').set('date', moment());
     }
   }
 });

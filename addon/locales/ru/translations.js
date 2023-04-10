@@ -1,4 +1,43 @@
 export default {
+  errors: {
+    description: 'Это поле',
+    inclusion: '{{description}} не входит в список',
+    exclusion: '{{description}} зарезервировано',
+    invalid: '{{description}} недействительно',
+    confirmation: '{{description}} не соответствует {{on}}',
+    accepted: '{{description}} должно быть принято',
+    empty: '{{description}} не может быть пустым',
+    blank: '{{description}} не может быть пустым',
+    present: '{{description}} должно быть пустым',
+    collection: '{{description}} должно быть коллекцией',
+    singular: '{{description}} не может быть коллекцией',
+    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
+    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
+    before: '{{description}} должно быть до {{before}}',
+    after: '{{description}} должно быть после {{after}}',
+    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
+    wrongLength: '{{description}} неправильной длинны (должно быть {{is}} символов)',
+    notANumber: '{{description}} должно быть числом',
+    notAnInteger: '{{description}} должно быть целым числом',
+    greaterThan: '{{description}} должно быть больше {{gt}}',
+    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
+    equalTo: '{{description}} должно быть равно {{is}}',
+    lessThan: '{{description}} должно быть меньше {{lt}}',
+    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
+    otherThan: '{{description}} должно быть отличным от {{value}}',
+    odd: '{{description}} должно быть нечётным числом',
+    even: '{{description}} должно быть чётным числом',
+    positive: '{{description}} должно быть положительным числом',
+    date: '{{description}} должно быть действительной датой',
+    onOrAfter: '{{description}} должно быть не позднее {{onOrAfter}}',
+    onOrBefore: '{{description}} должно быть не раньше {{onOrBefore}}',
+    email: '{{description}} должно быть действительным адресом электронной почты',
+    phone: '{{description}} должно быть действительным номером телефона',
+    url: '{{description}} должно быть действительным URL адресом',
+    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
+    between: '{{description}} должно быть от {{min}} до {{max}} символов',
+  },
+
   'forms': {
     'edit-form': {
       'saved-message': 'Форма сохранена.',
@@ -8,7 +47,9 @@ export default {
       'save-button-text': 'Сохранить',
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
-      'close-button-text': 'Закрыть'
+      'close-button-text': 'Закрыть',
+
+      'readonly': 'только для чтения'
     },
 
     'error-form': {
@@ -26,14 +67,14 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
+    },
+
+    'loading': {
+      caption: 'Загрузка...',
     }
   },
 
   'components': {
-    'flexberry-simpledatetime': {
-      'scroll-caption-text': 'Используйте скролл для перемотки',
-    },
-
     'flexberry-error': {
       caption: 'Произошла ошибка',
       'show-more': 'Подробнее',
@@ -48,20 +89,18 @@ export default {
       placeholder: '(нет значения)'
     },
 
+    'flexberry-simpledatetime': {
+      placeholder: '(нет значения)',
+      'scroll-caption-text': 'Используйте скролл для перемотки',
+      'apply-button-text': 'Выбрать',
+    },
+
     'flexberry-textarea': {
       placeholder: '(нет значения)'
     },
 
     'flexberry-dropdown': {
       'placeholder': '(нет значения)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
     },
 
     'flexberry-file': {
@@ -79,10 +118,16 @@ export default {
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
       'error-preview-caption': 'Предпросмотр не может быть загружен',
+      'error-dialog-size-unit-bt': 'Байт',
+      'error-dialog-size-unit-kb': 'Килобайт',
+      'error-dialog-size-unit-mb': 'Мегабайт',
+      'error-dialog-size-unit-gb': 'Гигабайт',
 
       'add-file-error-caption': 'Ошибка добавления файла',
-      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
-        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} байт.',
+      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} {{sizeUnit}}. ' +
+        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} {{sizeUnit}}.',
+
+      'file-extension-error-message': 'Выбранный файл \'{{fileName}}\' имеет недопустимое расширение.',
 
       'upload-file-error-caption': 'Ошибка отправки файла',
       'upload-file-error-message': 'Отправка файла \'{{fileName}}\' не удалась. {{errorMessage}}',
@@ -115,11 +160,20 @@ export default {
         'showing': 'Показано ',
         'of': ' из ',
         'entries': ' записей'
-      }
+      },
+      'without-sorting': 'Без сортировки',
+      'search-page-placeholder': '№ страницы',
+      'search-button-text': 'Переход на страницу'
     },
 
     'flexberry-groupedit': {
       'placeholder': 'Нет данных'
+    },
+
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Показать все поля формы',
+      'next-button': 'Далее',
+      'prev-button': 'Назад'
     },
 
     'modal-dialog': {
@@ -144,6 +198,24 @@ export default {
         'plus-button-title': 'Раскрыть',
         'minus-button-title': 'Свернуть',
       },
+      'filters': {
+        'eq': 'Равно',
+        'neq': 'Не равно',
+        'le': 'Меньше',
+        'ge': 'Больше',
+        'like': 'Содержит',
+        'nlike': 'Не содержит',
+        'nempty': 'Заполнен',
+        'empty': 'Не заполнен',
+        'between': 'В интервале',
+      },
+      'filter-condition': 'Условие',
+      'clear-filter-in-column': 'Сбросить фильтр в этой колонке',
+    },
+
+    'olv-filter-interval': {
+      'from': '(от)',
+      'to': '(до)'
     },
 
     'olv-toolbar': {
@@ -152,7 +224,8 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'hierarchy-button-text': 'Вкл/выкл иерархии',
-      'coll-expand-button-text':'Свернуть/развернуть все иерархии',
+      'coll-expand-button-text':'Развернуть все иерархии',
+      'coll-comspres-button-text':'Свернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
       'search-button-text': 'Поиск',
@@ -177,9 +250,12 @@ export default {
       'copy': 'Копировать',
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования',
-      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
-      'check-all-button-text': 'Отметить все на всех страницах',
-      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
+      'check-all-at-page-button-text': 'Выбрать все на странице',
+      'uncheck-all-at-page-button-text': 'Отменить выбор на странице',
+      'check-all-button-text': 'Выбрать все на всех страницах',
+      'uncheck-all-button-text': 'Отменить выбор на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию',
+      'clear-select-button-text': 'Отмена выделения'
     },
 
     'groupedit-toolbar': {
@@ -199,23 +275,29 @@ export default {
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
+      'sort-direction-caption': 'Сортировка',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'sort-priority-caption': 'Приоритет',
       'column-width': 'Ширина столбца',
+      'column-width-caption': 'Ширина',
       'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
-      'enter-setting-name': 'Введите название настройки',
+      'enter-setting-name': 'Название настройки',
       'use': 'Применить',
       'export': 'Выгрузить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
-      'save': 'Сохранить',
+      'save': 'Сохранить настройку',
       'have-errors': 'При сохранении настройки возникли ошибки: ',
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
-      'col-width-on': 'Включить настройку ширины столбцов',
+      'col-width-on': 'Настройка ширины столбцов',
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
       'det-separate-cols': 'Поля списков в отдельные столбцы',
-      'unresizable': 'Фиксированная ширина'
+      'unresizable': 'Фиксированная ширина',
+      'sort-direction-none': 'Нет',
+      'sort-direction-asc': 'По возрастанию',
+      'sort-direction-desc': 'По убыванию',
     },
 
     'advlimit-dialog-content': {
@@ -231,6 +313,13 @@ export default {
       'is-deleted': ' удалено',
       'is-correct': 'Текущая строка ограничения корректна',
       'check': 'Проверить'
+    },
+
+    'filters-dialog-content': {
+      'clear-this-filter': 'Сбросить этот фильтр',
+      'title': 'Настройка фильтрации записей',
+      'clear': 'Сбросить фильтр',
+      'apply': 'Применить'
     },
 
     'form-load-time-tracker': {
@@ -258,6 +347,9 @@ export default {
       'placeholder': 'Вершины дерева не заданы'
     },
 
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Главное меню'
+    }
   },
 
   'models': {
@@ -318,5 +410,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
+  },
 };

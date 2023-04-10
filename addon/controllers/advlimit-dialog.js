@@ -2,11 +2,12 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
-  message: Ember.computed(() => {
+export default Controller.extend({
+  message: computed(() => {
     const message = {
       caption: '',
       type: 'error',

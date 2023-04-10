@@ -1,286 +1,81 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
-const translations = {};
-Ember.$.extend(true, translations, emberFlexberryTranslations);
+import emberFlexberryDummySuggestionModel from './models/ember-flexberry-dummy-suggestion';
+import emberFlexberryDummySuggestionTypeModel from './models/ember-flexberry-dummy-suggestion-type';
+import emberFlexberryDummyApplicationUserModel from './models/ember-flexberry-dummy-application-user';
+import emberFlexberryDummyLocalizationModel from './models/ember-flexberry-dummy-localization';
+import emberFlexberryDummyCommentModel from './models/ember-flexberry-dummy-comment';
+import emberFlexberryDummySuggestionFileModel from './models/ember-flexberry-dummy-suggestion-file';
+import componentsExampleGroupeditDetailModel from './models/components-examples/flexberry-groupedit/shared/detail';
+import componentsExampleEditFormReadonlyModeDetailModel from './models/components-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormReadonlyModeDetailModel from './models/integration-examples/edit-form/readonly-mode/detail';
+import integrationExampleEditFormValidationBaseModel from './models/integration-examples/edit-form/validation/base';
+import emberFlexberryDummyDepartamentModel from './models/ember-flexberry-dummy-departament';
+import emberFlexberryDummySotrudnikModel from './models/ember-flexberry-dummy-sotrudnik';
+import emberFlexberryDummyVidDepartamentaModel from './models/ember-flexberry-dummy-vid-departamenta';
 
-Ember.$.extend(true, translations, {
-  'models': {
-    'ember-flexberry-dummy-suggestion': {
-      'projections': {
-        'SuggestionL': {
-          'address': {
-            __caption__: 'Address'
-          },
-          'text': {
-            __caption__: 'Text'
-          },
-          'date': {
-            __caption__: 'Date'
-          },
-          'votes': {
-            __caption__: 'Votes'
-          },
-          'author': {
-            __caption__: 'Author',
-            'eMail': {
-              __caption__: 'Email'
-            }
-          },
-          'editor1': {
-            __caption__: 'Editor',
-            'eMail': {
-              __caption__: 'Email'
-            }
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          },
-          'type': {
-            __caption__: 'Type'
-          },
-          'commentsCount': {
-            __caption__: 'Comments count'
-          },
-          'comments': {
-            __caption__: 'Comments'
-          },
-        },
-        'SuggestionE': {
-          'address': {
-            __caption__: 'Address'
-          },
-          'userVotes': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'voteType': {
-              __caption__: 'Vote type'
-            },
-            'author': {
-              __caption__: 'Application User',
-              'eMail': {
-                __caption__: 'Email'
-              }
-            }
-          },
-          'files': {
-            'order': {
-              __caption__: 'Order'
-            },
-            'file': {
-              __caption__: 'File',
-            }
-          },
-          'comments': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'text': {
-              __caption__: 'Text'
-            },
-            'votes': {
-              __caption__: 'Votes',
-            },
-            'moderated': {
-              __caption__: 'Moderated',
-            },
-            'author': {
-              __caption__: 'Application User',
-              'eMail': {
-                __caption__: 'Mail'
-              }
-            }
-          }
-        },
-        SuggestionEWithComputedField: {
-          address: {
-            __caption__: 'address'
-          },
-          text: {
-            __caption__: 'text'
-          },
-          date: {
-            __caption__: 'date'
-          },
-          votes: {
-            __caption__: 'votes'
-          },
-          moderated: {
-            __caption__: 'moderated'
-          },
-          author: {
-            __caption__: 'author',
-            name: {
-              __caption__: 'name'
-            }
-          },
-          type: {
-            __caption__: 'type',
-            name: {
-              __caption__: 'name'
-            },
-            moderated: {
-              __caption__: 'moderated'
-            },
-            computedField: {
-              __caption__: 'computedField'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          editor1: {
-            __caption__: 'editor1',
-            name: {
-              __caption__: 'name'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-        'SuggestionMainModelProjectionTest': {
-          'userVotes': {
-            'voteType': {
-              'caption': 'Temp text for test'
-            }
-          }
-        }
-      }
-    },
-    'ember-flexberry-dummy-application-user': {
-      'projections': {
-        'ApplicationUserL': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'eMail': {
-            __caption__: 'E-mail'
-          },
-          'activated': {
-            __caption__: 'Activated'
-          },
-          'birthday': {
-            __caption__: 'Birthday'
-          },
-          'gender': {
-            __caption__: 'Gender'
-          },
-          'karma': {
-            __caption__: 'Karma'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-localization': {
-      'projections': {
-        'LocalizationL': {
-          'name': {
-            __caption__: 'Name'
-          },
-        },
-      }
-    },
-    'ember-flexberry-dummy-suggestion-type': {
-      'projections': {
-        'SuggestionTypeL': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'moderated': {
-            __caption__: 'Moderated'
-          },
-          'parent': {
-            __caption__: 'Parent'
-          },
-        },
-        'SuggestionTypeE': {
-          'name': {
-            __caption__: 'Name'
-          },
-          'localizedTypes': {
-            'name': {
-              __caption__: 'Name'
-            },
-            'localization': {
-              __caption__: 'Localization',
-              'name': {
-                __caption__: 'Name'
-              }
-            }
-          },
-        },
-        SuggestionTypeEWithComputedField: {
-          name: {
-            __caption__: 'name'
-          },
-          moderated: {
-            __caption__: 'moderated'
-          },
-          computedField: {
-            __caption__: 'computedField'
-          },
-          parent: {
-            __caption__: 'parent',
-            name: {
-              __caption__: 'name'
-            },
-            moderated: {
-              __caption__: 'moderated'
-            },
-            computedField: {
-              __caption__: 'computedField'
-            },
-            creator: {
-              __caption__: 'creator'
-            }
-          },
-          createTime: {
-            __caption__: 'createTime'
-          },
-          creator: {
-            __caption__: 'creator'
-          },
-          editTime: {
-            __caption__: 'editTime'
-          },
-          editor: {
-            __caption__: 'editor'
-          }
-        },
-      }
-    },
+const translations = {};
+$.extend(true, translations, emberFlexberryTranslations);
+
+$.extend(true, translations, {
+
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+  models: {
+    'ember-flexberry-dummy-suggestion': emberFlexberryDummySuggestionModel,
+    'ember-flexberry-dummy-suggestion-type': emberFlexberryDummySuggestionTypeModel,
+    'components-examples/flexberry-groupedit/shared/detail': componentsExampleGroupeditDetailModel,
+    'components-examples/edit-form/readonly-mode/detail': componentsExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/readonly-mode/detail': integrationExampleEditFormReadonlyModeDetailModel,
+    'integration-examples/edit-form/validation/base': integrationExampleEditFormValidationBaseModel,
+    'ember-flexberry-dummy-application-user': emberFlexberryDummyApplicationUserModel,
+    'ember-flexberry-dummy-localization': emberFlexberryDummyLocalizationModel,
+    'ember-flexberry-dummy-comment': emberFlexberryDummyCommentModel,
+    'ember-flexberry-dummy-suggestion-file': emberFlexberryDummySuggestionFileModel,
+    'ember-flexberry-dummy-departament': emberFlexberryDummyDepartamentModel,
+    'ember-flexberry-dummy-sotrudnik': emberFlexberryDummySotrudnikModel,
+    'ember-flexberry-dummy-vid-departamenta': emberFlexberryDummyVidDepartamentaModel
   },
 
   'application-name': 'Test stand for ember-flexberry',
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'forms': {
     'loading': {
       'spinner-caption': 'Loading stuff, please have a cold beer...'
     },
     'index': {
-      'greeting': 'Welcome to ember-flexberry test stand!'
+      'greeting': 'Welcome to ember-flexberry test stand!',
+      'components': 'Some of the components',
+      'log-service': {
+        'title': 'Log service',
+        'app-log': 'Application log',
+        'settings-example': 'Settings example',
+        'log-cleaning': 'Log cleaning'
+      },
+      'users': 'Application users',
+      'localization': 'Localization',
+      'log': 'Application log',
+      'blocking': 'Block list',
+      'search': {
+        'title': 'Search',
+        'field-label': 'Field name',
+        'field-placeholder': 'Last name, first name and middle name',
+        'date-field-placeholder': 'DD.MM.YYYY or choose from the calendar',
+        'button-caption': 'Search',
+        'checkbox-label': 'Search all pages'
+      }
     },
 
     'application': {
       'header': {
         'menu': {
           'sitemap-button': {
-            'caption': '',
             'title': 'Menu'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Use service to save user settings'
+            'caption': 'Save settings',
+            'title': 'Use service to save user settings'
           },
           'show-menu': {
             'caption': 'Show menu'
@@ -292,17 +87,30 @@ Ember.$.extend(true, translations, {
             'caption': 'Application language',
             'placeholder': 'Choose language'
           },
-          'suggestion-file': {
-            'caption': 'Suggestion file',
-            'title': ''
-          }
         },
         'login': {
           'caption': 'Login'
         },
         'logout': {
           'caption': 'Logout'
+        },
+        'profile': {
+          'caption': 'Profile'
         }
+      },
+
+      'flexberry-objectlistview-modal-question-caption': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-at-listform-question-caption': 'Are you sure you want to delete the selected entries?',
+        'delete-at-editform-question-caption': 'Are you sure you want to delete entries?',
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-row-caption': 'Delete row ?',
+        'delete-rows-caption': 'Delete selected rows ?',
       },
 
       'footer': {
@@ -352,6 +160,10 @@ Ember.$.extend(true, translations, {
           'multi': {
             'caption': 'Multi list',
             'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -391,18 +203,14 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Three-state example',
+              'title': ''
             }
           },
           'flexberry-ddau-checkbox': {
             'caption': 'flexberry-ddau-checkbox',
-            'title': '',
-            'settings-example': {
-              'caption': 'Settings example',
-              'title': ''
-            }
-          },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -520,6 +328,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Lookup in modal window',
               'title': ''
             },
+            'lookup-in-modal-aurocomplete': {
+              'caption': 'Lookup in modal with autocomplete',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -531,6 +343,22 @@ Ember.$.extend(true, translations, {
             'autocomplete-order-example': {
               'caption': 'Example for autocomplete with order',
               'title': ''
+            },
+            'autocomplete-in-groupedit-example': {
+              'caption': 'Example for autocomplete lookup in groupedit',
+              'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Example for modal dialog olv user settiings',
+              'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Multiple Lookup',
+              'title': 'Multiple Lookup'
             }
           },
           'flexberry-menu': {
@@ -668,6 +496,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'highload-edit-form-menu': {
+            'caption': 'highload-edit-form-menu',
+            'title': '',
+          },
+          'modal-dialog': {
+            'caption': 'modal-dialog',
+            'title': '',
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -690,8 +526,36 @@ Ember.$.extend(true, translations, {
             'validation': {
               'caption': 'Validation',
               'title': ''
+            },
+            'theming-components': {
+              'caption': 'Theming',
+              'title': ''
             }
-          }
+          },
+          'odata-examples': {
+            'caption': 'Work with OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Get master from oData function',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Sotrudnik',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Departament',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Vid departamenta',
+                'title': ''
+              }
+            },
+          },
+          'icons': {
+            'caption': 'Icons',
+            'title': 'Icons'
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -706,6 +570,26 @@ Ember.$.extend(true, translations, {
           'title': '',
         },
       }
+    },
+
+    'login-form': {
+      'header': 'Sign in',
+      'sign-up-caption': 'Or register',
+      'enter-login-caption': 'Enter login',
+      'enter-password-caption': 'Enter password',
+      'login-using-caption': 'login using',
+      'reset-password-caption': 'Forgot your password?',
+      'login-button-caption': 'Login'
+    },
+
+    'support-form' : {
+      'caption': 'Write to tech support',
+      'contacts-caption': 'Technical support contacts: 8 (800) 300-44-44, rgirsk-support@ics.perm.ru',
+      'enter-name-caption': 'Enter your name',
+      'enter-email-caption': 'Enter your mail',
+      'enter-message-placeholder': 'If you encounter a problem, describe in detail: how it manifests itself, what actions and in what order you performed. If possible, attach a screenshot',
+      'send-button-caption': 'Submit',
+      'attach-file-caption':'Attach file'
     },
 
     'edit-form': {
@@ -742,7 +626,8 @@ Ember.$.extend(true, translations, {
       'vip-caption': 'VIP',
       'karma-caption': 'Karma',
       'name-validation-message-caption': 'Name is required',
-      'eMail-validation-message-caption': 'E-Mail is required'
+      'eMail-validation-message-caption': 'E-Mail is required',
+      'phone1-required-caption': 'Require filling in the "Phone1" field',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -851,7 +736,7 @@ Ember.$.extend(true, translations, {
         'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Exception thrown',
         'reject-rsvp-promise-button-message': 'Promise rejected',
-        'ember-assert-button-message': 'Ember.assert called',
+        'ember-assert-button-message': 'assert called',
         'ember-logger-error-button-message': 'Ember.Logger.error called',
         'ember-logger-warn-button-message': 'Ember.warn called',
         'ember-deprecate-button-message': 'Ember.deprecate called',
@@ -877,16 +762,15 @@ Ember.$.extend(true, translations, {
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        },
+        'three-state-example': {
+          'caption': 'Three-state example',
+          'indeterminate-button': 'Set blank'
         }
       },
       'flexberry-ddau-checkbox': {
         'settings-example': {
           'caption': 'Settings example for flexberry-ddau-checkbox'
-        }
-      },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Settings example'
         }
       },
       'flexberry-dropdown': {
@@ -899,7 +783,7 @@ Ember.$.extend(true, translations, {
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+            'after that check browser\'s console, it must be free from \'Semantic-UI\' and other errors.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Example dropdown with empty value',
@@ -919,6 +803,12 @@ Ember.$.extend(true, translations, {
       'flexberry-file': {
         'settings-example': {
           'caption': 'Flexberry-file. Settings example'
+        },
+        'file-in-modal': {
+          'caption': 'Flexberry-file. Flexberry file in modal window',
+          'captionModal': 'Flexberry-file. Flexberry file in modal window',
+          'buttonModal': 'Modal window №1',
+          'buttonClose': 'Close'
         }
       },
       'flexberry-groupedit': {
@@ -933,7 +823,8 @@ Ember.$.extend(true, translations, {
           'enable-button-name': 'Enable adjacent button',
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Configurate rows'
+          'caption': 'Flexberry-groupedit. Configurate rows',
+          'confirm': 'Are you sure ?'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',
@@ -965,6 +856,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
         },
+        'event-example': {
+          'caption': 'Flexberry-lookup. Event example',
+          'titleLookup': 'Master'
+        },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
           'titleLookup': 'Master',
@@ -977,11 +872,7 @@ Ember.$.extend(true, translations, {
           'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
-          'caption': 'Flexberry-lookup. Lookup block form example',
-          'message': 'This test only works on the mobile site. To start a mobile version should be:',
-          'paragraph1': 'Go to developer mode (press "F12").',
-          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
-          'paragraph3': 'Refresh page (press "F5")'
+          'caption': 'Flexberry-lookup. Lookup block form example'
         },
         'lookup-in-modal': {
           'caption': 'Flexberry-lookup. Lookup in modal window',
@@ -989,6 +880,14 @@ Ember.$.extend(true, translations, {
           'captionModalDouble': 'Custom modal window №2',
           'buttonModal': 'Modal window №1',
           'buttonModalDouble': 'Modal window №2',
+          'buttonClose': 'Close'
+        },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
+          'captionModal': 'Custom modal window ui-modal',
+          'captionModalDouble': 'Custom modal window modal-dialog',
+          'buttonModal': 'Custom modal window ui-modal',
+          'buttonModalDouble': 'Custom modal window modal-dialog',
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
@@ -1003,12 +902,20 @@ Ember.$.extend(true, translations, {
           'titleLookup': 'Master'
         },
       },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Multiple Lookup',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user',
+        }
+      },
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Flexberry-menu. Settings example',
           'titleIcon1': 'Left side aligned icon',
           'titleIcon2': 'Right side aligned icon',
-          'titleIcon3': 'Submenu'
+          'titleIcon3': 'Submenu',
+          'titleIcon4': 'Row buttons'
         }
       },
       'flexberry-objectlistview': {
@@ -1059,7 +966,11 @@ Ember.$.extend(true, translations, {
           'caption': 'List of children Type'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter',
+          'eqAddress': 'Address is equal',
+          'neqAddress': 'Address is not equal',
+          'likeAddress': 'Address contains',
+          'nlikeAddress': 'Address does not contain'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
@@ -1084,34 +995,6 @@ Ember.$.extend(true, translations, {
         'lock-services-editor-view': {
           'blocked-by': 'Blocked by user',
         },
-      },
-      'flexberry-simpleolv': {
-        'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Limit function example',
-          'captionFirstLimitFunction': 'Limit function №1',
-          'captionSecondLimitFunction': 'Limit function №2',
-          'captionClearLimitFunction': 'Clear limit function'
-        },
-        'settings-example': {
-          'caption': 'Flexberry-simpleolv. Settings example'
-        },
-        'toolbar-custom-buttons-example': {
-          'caption': 'Flexberry-simpleolv. Custom buttons on toolbar',
-          'custom-message': 'Hello!',
-          'custom-button-name': 'Send hello'
-        },
-        'on-edit-form': {
-          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
-        },
-        'custom-filter': {
-          'caption': 'Flexberry-simpleolv. Custom filter'
-        },
-        'configurate-rows': {
-          'caption': 'Flexberry-simpleolv. Configurate rows'
-        },
-        'selected-rows': {
-          'caption': 'Flexberry-simpleolv. Setected rows'
-        }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
@@ -1155,6 +1038,23 @@ Ember.$.extend(true, translations, {
           'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
       },
+      'highload-edit-form-menu': {
+        'caption': 'Examples of using the {{component}} component',
+        'title': '',
+      },
+      'modal-dialog': {
+        'caption': 'Examples of using the {{component}} component',
+        'in-current-context': 'In the context of the current template',
+        'application-context': 'In the context of the application template',
+        'open-lightbox': 'Open modal window',
+        'open-second-lightbox': 'Open second modal window',
+        'lightbox-title': 'Modal window',
+        'second-lightbox-title': 'Second modal window',
+        'open-sidepage': 'Open modal window in «sidepage» mode',
+        'open-second-sidepage': 'Open second modal window in «sidepage» mode',
+        'sidepage-title': 'Modal window in «sidepage» mode',
+        'second-sidepage-title': 'Second modal window in «sidepage» mode',
+      },
       'ui-message': {
         'settings-example': {
           'caption': 'Ui-message. Settings example',
@@ -1197,7 +1097,46 @@ Ember.$.extend(true, translations, {
           'master-caption': 'Master',
           'details-caption': 'Details'
         }
-      }
+      },
+      'odata-examples': {
+        'get-masters': {
+          'ember-flexberry-dummy-departament-e': {
+            caption: 'EmberFlexberryDummyDepartamentE',
+            'name-caption': 'name',
+            'vid-caption': 'vid'
+          },
+          'ember-flexberry-dummy-departament-l': {
+            caption: 'EmberFlexberryDummyDepartamentL'
+          },
+          'ember-flexberry-dummy-sotrudnik-e': {
+            caption: 'EmberFlexberryDummySotrudnikE',
+            'familiia-caption': 'familiia',
+            'name-caption': 'name',
+            'dataRozhdeniia-caption': 'dataRozhdeniia',
+            'departament-caption': 'departament'
+          },
+          'ember-flexberry-dummy-sotrudnik-l': {
+            caption: 'EmberFlexberryDummySotrudnikL',
+            'doOdataFunction': 'Do Odata function',
+            'dataReceived': 'Objects loaded',
+            'receivedMasters': 'Masters loaded',
+            'receivedMastersError': 'Error loading masters',
+            'receivedMasterMasters': 'Master masters loaded',
+            'receivedMasterMastersError': 'Error loading masters from masters'
+          },
+          'ember-flexberry-dummy-vid-departamenta-e': {
+            caption: 'EmberFlexberryDummyVidDepartamentaE',
+            'name-caption': 'name'
+          },
+          'ember-flexberry-dummy-vid-departamenta-l': {
+            caption: 'EmberFlexberryDummyVidDepartamentaL'
+          },
+        }
+      },
+      'icons': {
+        'caption': 'Icons',
+        'title': 'Icons'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {
@@ -1208,6 +1147,7 @@ Ember.$.extend(true, translations, {
     }
   },
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   'components': {
     'settings-example': {
       'component-template-caption': 'Component template',

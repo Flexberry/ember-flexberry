@@ -1,6 +1,6 @@
 import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
-
+import { computed } from '@ember/object';
 export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
   /**
     Name of model projection to be used as record's properties limitation.
@@ -29,7 +29,8 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
   */
   templateName: 'ember-flexberry-dummy-suggestion-edit',
 
-  developerUserSettings: {
+  developerUserSettings: computed(function() {
+    return {
     suggestionUserVotesGroupEdit: {
       'DEFAULT': {
         'columnWidths': [
@@ -62,5 +63,5 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
         ],
       }
     }
-  },
+  }}),
 });

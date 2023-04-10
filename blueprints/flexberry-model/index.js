@@ -53,7 +53,7 @@ module.exports = {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+        return this._super(...arguments);
     },
 
     setLocales: function (files) {        
@@ -96,6 +96,7 @@ module.exports = {
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
             projections: modelBlueprint.projections,
+            validations: modelBlueprint.validations,
             serializerAttrs: modelBlueprint.serializerAttrs,
             offlineSerializerAttrs: modelBlueprint.offlineSerializerAttrs,
             name: modelBlueprint.name,

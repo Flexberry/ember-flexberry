@@ -14,40 +14,54 @@ module.exports = {
       '  app.import(\'vendor/fonts/crim.ttf\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff2\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.eot\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.svg\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.ttf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.woff\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.woff2\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/serviceImages/close.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
-      '  app.import(\'vendor/serviceImages/plus.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
-      '  app.import(\'vendor/serviceImages/minus.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/header-bgw.png\', { destDir: \'assets/themes/orange/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/bgw-head-calendar.png\', { destDir: \'assets/themes/orange/assets/images\' });\n';
-    var options = '    jscsOptions: {\n' +
-      '      enabled: true,\n' +
-      '      esnext: true,\n' +
-      '      configPath: \'./.jscsrc\'\n' +
-      '    },\n' +
-      '    lessOptions: {\n' +
+    var options = '    lessOptions: {\n' +
       '      paths: [\n' +
-      '        \'bower_components/semantic-ui\'\n' +
+      '        \'bower_components/semantic-ui\',\n' +
+      '        \'node_modules/ember-flexberry-themes\'\n' +
       '      ]\n' +
       '    },\n' +
-      '    SemanticUI: {\n' +
-      '      import: {\n' +
-      '        css: false,\n' +
-      '        javascript: true,\n' +
-      '        images: false,\n' +
-      '        fonts: true\n' +
+      '    postcssOptions: {\n' +
+      '      compile: {\n' +
+      '        enabled: false,\n' +
+      '        browsers: [\'last 3 versions\'],\n' +
+      '      },\n' +
+      '      filter: {\n' +
+      '        enabled: true,\n' +
+      '        plugins: [\n' +
+      '          {\n' +
+      '            module: autoprefixer,\n' +
+      '            options: {\n' +
+      '              browsers: [\'last 2 versions\']\n' +
+      '            }\n' +
+      '          }\n' +
+      '        ]\n' +
       '      }\n' +
       '    }\n';
 
+    var appEnvironment = 'config/environment.js';
+    var addonEnvironment = 'tests/dummy/config/environment.js';
+
+    var env1after = 'module.exports = function(environment) {\n';
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:6500\';\n\n' +
+      '  var backendUrl = \'http://localhost:80\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:6500\';\n' +
+      '    backendUrl = \'http://localhost:80\';\n' +
       '  }\n\n';
 
+    var env2after = 'EmberENV: {\n';
     var env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';
 
+    var env3after = 'APP: {\n';
     var env3 ='      // Application name. Used in `user-settings` service.\n' +
       '      name: \'ember-app\',\n\n' +
       '      backendUrl: backendUrl,\n\n' +
@@ -69,6 +83,7 @@ module.exports = {
       '        storeDeprecationMessages: false,\n' +
       '        storePromiseErrors: true,\n' +
       '        showPromiseErrors: true,\n' +
+      '        errorMessageFilterActive: false,\n' +
       '      },\n\n' +
       '      // Options for Perforator service that can be used to calculate performance of components rendering.\n' +
       '      perf: {\n' +
@@ -110,9 +125,30 @@ module.exports = {
       '          showModalDialogOnUploadError: true,\n\n' +
       '          // Flag: indicates whether to show modal dialog on download errors or not.\n' +
       '          showModalDialogOnDownloadError: true,\n' +
-      '        }\n' +
+      '        },\n' +
+      '        // Settings for `flexberryObjectlistview` component.\n' +
+      '        flexberryObjectlistview: {\n' +
+      '          // Default number of records on the list page.\n'+
+      '          defaultPerPage: 5,\n' +
+      '          // Flag indicates whether to use side page or usual mode.\n' +
+      '          useSidePageMode: true,\n' +
+      '        },\n'+
+      '        // Settings for flexberry-lookup component.\n'+
+      '        flexberryLookup: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberryGroupedit: {\n'+
+      '          // Flag: indicates whether to use side page or usual mode.\n'+
+      '          useSidePageMode: true,\n'+
+      '        },\n'+
+      '        flexberrySimpledatetime: {\n'+
+      '          // The selector to get the element (using `jQuery`) for the `appendTo` flatpickr option, see https://flatpickr.js.org/options/.\n'+
+      '          calendarContext: undefined,\n'+
+      '        }\n'+
       '      },\n';
 
+    var env4before = '\n  if (environment === \'development\') {\n';
     var env4 ='\n  // Read more about CSP:\n' +
       '  // http://www.ember-cli.com/#content-security-policy\n' +
       '  // https://github.com/rwjblue/ember-cli-content-security-policy\n' +
@@ -126,13 +162,17 @@ module.exports = {
       '  ENV.i18n = {\n' +
       '    // Should be defined to avoid ember-i18n deprecations.\n' +
       '    // Locale will be changed then to navigator current locale (in instance initializer).\n' +
-      '    defaultLocale: \'ru\'\n' +
+      '    defaultLocale: null\n' +
       '  };\n\n' +
       '  // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.\n' +
       '  // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).\n' +
       '  ENV.moment = {\n' +
       '    outputFormat: \'L\'\n' +
       '  };\n';
+
+      var resolutions = '  "resolutions": {\n' +
+        '    "ember-get-config": "0.3.0"\n' +
+        '  },';
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
@@ -147,11 +187,13 @@ module.exports = {
         before: '\n  return app.toTree();\n'
       }
     ).then(function() {
+      return _this.insertIntoFile('ember-cli-build.js', '\nconst autoprefixer = require(\'autoprefixer\');\n\n', { before: 'module.exports = function' });
+    }).then(function() {
       return _this.insertIntoFile(
         'ember-cli-build.js',
         options,
         {
-          after: 'var app = new EmberApp(defaults, {\n'
+          after: 'let app = new EmberApp(defaults, {\n'
         }
       );
     }).then(function() {
@@ -159,7 +201,7 @@ module.exports = {
         'ember-cli-build.js',
         options,
         {
-          after: 'var app = new EmberAddon(defaults, {\n'
+          after: 'let app = new EmberAddon(defaults, {\n'
         }
       );
     }).then(function() {
@@ -173,7 +215,7 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'app/index.html',
-        '    <link rel="icon" href="assets/images/favicon.ico">\n',
+        '    <link rel="icon" href="/assets/images/favicon.ico">\n',
         {
           after: '<link rel="stylesheet" href="assets/ember-app.css">\n'
         }
@@ -197,83 +239,73 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'tests/dummy/app/index.html',
-        '    <link rel="icon" href="assets/images/favicon.ico">\n',
+        '    <link rel="icon" href="/assets/images/favicon.ico">\n',
         {
           after: '<link rel="stylesheet" href="assets/dummy.css">\n'
         }
       );
     }).then(function() {
       return _this.insertIntoFile(
-        'config/environment.js',
-        env1,
+        'package.json',
+        resolutions,
         {
-          after: 'module.exports = function(environment) {\n'
+          before: '  "engines": {'
         }
       );
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env2,
-        {
-          after: 'EmberENV: {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env3,
-        {
-          after: 'APP: {\n'
-        }
-      );
+      return _this.insertIntoFile(addonEnvironment, env1, { after: env1after });
     }).then(function() {
-      return _this.insertIntoFile(
-        'config/environment.js',
-        env4,
-        {
-          before: '\n  if (environment === \'development\') {\n'
-        }
-      );
+      return _this.insertIntoFile(appEnvironment, env2, { after: env2after });
+    }).then(function() {
+      return _this.insertIntoFile(addonEnvironment, env2, { after: env2after });
+    }).then(function() {
+      return _this.insertIntoFile(appEnvironment, env3, { after: env3after });
+    }).then(function() {
+      return _this.insertIntoFile(addonEnvironment, env3, { after: env3after });
+    }).then(function() {
+      return _this.insertIntoFile(appEnvironment, env4, { before: env4before });
+    }).then(function() {
+      return _this.insertIntoFile(addonEnvironment, env4, { before: env4before });
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
-        { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
+        { name: 'blueimp-file-upload', target: '9.11.2' },
+        { name: 'semantic-ui', target: '2.4.1' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.3.4' },
-        { name: 'js-beautify', target: '1.6.4' }
+        { name: 'js-beautify', target: '1.6.4' },
+        { name: 'moment', target: '~2.22.0' }
       ]);
-    }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-moment', target: '6.0.0' },
-          { name: 'ember-link-action', target: '0.0.34' },
-          { name: 'ember-cli-less', target: '1.5.4' },
-          { name: 'broccoli-jscs', target: '1.2.2' },
-          { name: 'ember-browserify', target: '1.1.9' }
+          { name: 'ember-browserify', target: '1.2.2' },
+          { name: 'ember-cli-less', target: '^1.5.4' },
+          { name: 'ember-cp-validations', target: '^3.5.6' },
+          { name: 'ember-i18n-cp-validations', target: '^3.1.0' },
+          { name: 'ember-link-action', target: '0.0.36' },
+          { name: 'ember-moment', target: '7.7.0' },
+          { name: 'ember-test-selectors', target: '2.1.0' }
         ]
       });
     }).then(function () {
       return _this.addPackagesToProject([
-        { name: 'dexie', target: '1.4.2' },
-        { name: 'node-uuid', target: '1.4.7' },
-        { name: 'inflection', target: '1.10.0' }
+        { name: 'dexie', target: '^2.0.2' },
+        { name: 'inflection', target: '^1.12.0' },
+        { name: 'node-uuid', target: '^1.4.7' },
+        { name: 'flatpickr', target: '4.6.1' },
+        { name: 'autoprefixer', target: '^6' },
+        { name: 'ember-flexberry-themes', target: '0.1.0-beta.20' }
       ]);
     }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
-    }).then(function () {
-      return _this.removePackagesFromProject([
-        { name: 'ember-data' },
-        { name: 'ember-inflector' }
-      ]);
+      return _this.removePackageFromProject('ember-data');
     }).then(function () {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-data', target: '2.4.3' },
-          { name: 'ember-block-slots', target: '1.1.3' }
+          { name: 'ember-data', target: '~3.1.1' },
+          { name: 'ember-block-slots', target: '1.1.11' }
         ]
       });
     });

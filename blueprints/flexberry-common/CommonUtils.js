@@ -36,10 +36,7 @@ var CommonUtils = (function () {
     };
     CommonUtils.getFilesForGeneration = function (blueprint, exclusiveFunction) {
         if (exclusiveFunction === void 0) { exclusiveFunction = null; }
-        blueprint._super._files = null;
-        blueprint._super.path = blueprint.path;
-        var files = blueprint._super.files();
-        blueprint._super._files = null;
+        var files = Blueprint.prototype.files.call(blueprint);
         if (exclusiveFunction != null) {
             lodash.remove(files, exclusiveFunction);
         }

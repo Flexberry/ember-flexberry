@@ -1,28 +1,28 @@
-<h3 class="ui header">{{<%= caption %>}}</h3>
+<h3 class="ui header">{{<%= caption %>}}{{#if readonly}} ({{t "forms.edit-form.readonly"}}){{/if}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
   <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
-    </div>
-  </div>
-  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui button save-button" {{action 'save'}}>
+        <button class="ui button save-button" {{action "save"}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
-          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
+          <button class="ui button save-del-button" {{action "delete"}}>
             {{t "forms.edit-form.delete-button-text"}}
           </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>
+      <button class="ui button close-button" {{action "close"}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
     </div>
   </div>
-  <%=flexberryComponents%>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
+  </div>
+<%=flexberryComponents%>
 </form>

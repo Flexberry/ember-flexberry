@@ -91,8 +91,6 @@ export default Component.extend({
   }),
 
   /**
-=======
->>>>>>> develop
    * Contains name of previous data-tab
    * @property prevTab
    */
@@ -232,7 +230,7 @@ export default Component.extend({
         originalEvent: event,
       };
 
-      this.sendAction('change', e);
+      this.get('change', e);
     },
   },
 

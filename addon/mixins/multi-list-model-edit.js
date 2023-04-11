@@ -65,6 +65,7 @@ export default Mixin.create({
             sorting: settings.sorting,
             filter: settings.filter,
             filterCondition: settings.filterCondition,
+            filterProjectionName: settings.filterProjectionName,
             filters: settings.filtersPredicate,
             predicate: limitPredicate,
             advLimit: advLimit,

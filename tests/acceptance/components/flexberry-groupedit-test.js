@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import { run } from '@ember/runloop';
+import { get, set } from '@ember/object';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import wait from 'ember-test-helpers/wait';
@@ -12,7 +13,7 @@ module('Acceptance | flexberry-groupedit', {
 
     // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
     let applicationController = app.__container__.lookup('controller:application');
-    applicationController.set('isInAcceptanceTestMode', true);
+    set(applicationController, 'isInAcceptanceTestMode', true);
   },
 
   afterEach() {
@@ -35,8 +36,8 @@ test('it properly rerenders', function(assert) {
     // Add record.
     let controller = app.__container__.lookup('controller:' + currentRouteName());
 
-    let detailModel =  controller.get('model.details');
-    let store = controller.get('store');
+    let detailModel =  get(controller, 'model.details');
+    let store = get(controller, 'store');
 
     let detail1 = store.createRecord('components-examples/flexberry-groupedit/shared/detail');
     let detail2 = store.createRecord('components-examples/flexberry-groupedit/shared/detail');

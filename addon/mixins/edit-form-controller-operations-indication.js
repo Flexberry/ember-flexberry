@@ -157,10 +157,10 @@ export default Mixin.create({
     @method onSaveActionFulfilled.
   */
   onSaveActionFulfilled() {
-    this._super(...arguments);
-
     this.set('showFormSuccessMessage', true);
     this.set('showFormErrorMessage', false);
+
+    this._super(...arguments);
   },
 
   /**

@@ -125,6 +125,14 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Set the attribute name to hierarchy build.
+
+    @property hierarchyAttribute
+    @type String
+  */
+  hierarchyAttribute: undefined,
+
+  /**
     The name of a property in the model that determines whether any record is the parent of other records.
     If a property value with this name is defined (not `undefined`), the button to display child records will be shown immediately, and the records will be loaded only when the button is clicked.
 
@@ -722,6 +730,16 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   filterByAllWords: false,
+
+  /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
 
   /**
     Array of pages to show.
@@ -1485,8 +1503,17 @@ export default FlexberryBaseComponent.extend({
         let relationships = get(model, 'relationships');
         let hierarchicalrelationships = relationships.get(modelName);
         if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
-          this.send('availableHierarchicalMode', hierarchicalAttribute);
+          this.send('availableHierarchicalMode', hierarchicalrelationships[0].name);
+        } else if (hierarchicalrelationships.length > 1) {
+          let hierarchyAttribute = this.get('hierarchyAttribute');
+          if (!isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+            if (!isNone(hierarchyAttributeExist)) {
+              this.send('availableHierarchicalMode', hierarchyAttribute);
+            } else {
+              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
+            }
+          }
         }
       }
     }

@@ -1,4 +1,43 @@
 export default {
+  errors: {
+    description: 'Это поле',
+    inclusion: '{{description}} не входит в список',
+    exclusion: '{{description}} зарезервировано',
+    invalid: '{{description}} недействительно',
+    confirmation: '{{description}} не соответствует {{on}}',
+    accepted: '{{description}} должно быть принято',
+    empty: '{{description}} не может быть пустым',
+    blank: '{{description}} не может быть пустым',
+    present: '{{description}} должно быть пустым',
+    collection: '{{description}} должно быть коллекцией',
+    singular: '{{description}} не может быть коллекцией',
+    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
+    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
+    before: '{{description}} должно быть до {{before}}',
+    after: '{{description}} должно быть после {{after}}',
+    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
+    wrongLength: '{{description}} неправильной длинны (должно быть {{is}} символов)',
+    notANumber: '{{description}} должно быть числом',
+    notAnInteger: '{{description}} должно быть целым числом',
+    greaterThan: '{{description}} должно быть больше {{gt}}',
+    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
+    equalTo: '{{description}} должно быть равно {{is}}',
+    lessThan: '{{description}} должно быть меньше {{lt}}',
+    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
+    otherThan: '{{description}} должно быть отличным от {{value}}',
+    odd: '{{description}} должно быть нечётным числом',
+    even: '{{description}} должно быть чётным числом',
+    positive: '{{description}} должно быть положительным числом',
+    date: '{{description}} должно быть действительной датой',
+    onOrAfter: '{{description}} должно быть не позднее {{onOrAfter}}',
+    onOrBefore: '{{description}} должно быть не раньше {{onOrBefore}}',
+    email: '{{description}} должно быть действительным адресом электронной почты',
+    phone: '{{description}} должно быть действительным номером телефона',
+    url: '{{description}} должно быть действительным URL адресом',
+    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
+    between: '{{description}} должно быть от {{min}} до {{max}} символов',
+  },
+
   'forms': {
     'edit-form': {
       'saved-message': 'Форма сохранена.',
@@ -9,7 +48,8 @@ export default {
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
       'close-button-text': 'Закрыть',
-      'more-button-text': 'Еще'
+      'more-button-text': 'Еще',
+      'readonly': 'только для чтения'
     },
 
     'error-form': {
@@ -50,7 +90,9 @@ export default {
     },
 
     'flexberry-simpledatetime': {
-      placeholder: '(нет значения)'
+      placeholder: '(нет значения)',
+      'scroll-caption-text': 'Используйте скролл для перемотки',
+      'apply-button-text': 'Выбрать',
     },
 
     'flexberry-textarea': {
@@ -59,14 +101,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(нет значения)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(нет значения)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Выбрать',
-      'cancel-button-text': 'Отмена'
     },
 
     'flexberry-file': {
@@ -134,6 +168,12 @@ export default {
 
     'flexberry-groupedit': {
       'placeholder': 'Нет данных'
+    },
+
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Показать все поля формы',
+      'next-button': 'Далее',
+      'prev-button': 'Назад'
     },
 
     'modal-dialog': {
@@ -372,42 +412,7 @@ export default {
     },
   },
 
-  errors: {
-    description: 'Это поле',
-    accepted: '{{description}} должно быть принято',
-    after: '{{description}} должно быть после {{after}}',
-    before: '{{description}} должно быть до {{before}}',
-    blank: '{{description}} не может быть пустым',
-    collection: '{{description}} должно быть коллекцией',
-    confirmation: '{{description}} не соответствует {{on}}',
-    date: '{{description}} должно быть действительной датой',
-    email: '{{description}} должно быть действительным адресом электронной почты',
-    empty: '{{description}} не может быть пустым',
-    equalTo: '{{description}} должно быть равно {{is}}',
-    even: '{{description}} должно быть четным',
-    exclusion: '{{description}} зарезервировано',
-    greaterThan: '{{description}} должно быть больше {{gt}}',
-    greaterThanOrEqualTo: '{{description}} должно быть больше или равно {{gte}}',
-    inclusion: '{{description}} не входит в список',
-    invalid: '{{description}} недействительно',
-    lessThan: '{{description}} должно быть меньше {{lt}}',
-    lessThanOrEqualTo: '{{description}} должно быть меньше или равно {{lte}}',
-    notAnInteger: '{{description}} должно быть целым числом',
-    notANumber: '{{description}} должно быть числом',
-    odd: '{{description}} должно быть не четным',
-    onOrAfter: '{{description}} должно быть равно или после {{onOrAfter}}',
-    onOrBefore: '{{description}} должно быть равно или до {{onOrBefore}}',
-    otherThan: '{{description}} должно отличаться от {{value}}',
-    phone: '{{description}} должно быть действительным номером телефона',
-    positive: '{{description}} должно быть положительным',
-    multipleOf: '{{description}} должно быть кратным {{multipleOf}}',
-    present: '{{description}} должно быть пустым',
-    singular: '{{description}} не может быть коллекцией',
-    tooLong: '{{description}} слишком длинное (максимум {{max}} символов)',
-    tooShort: '{{description}} слишком короткое (минимум {{min}} символов)',
-    between: '{{description}} должно быть от {{min}} до {{max}} символов',
-    url: '{{description}} должно быть действительным URL адресом',
-    wrongDateFormat: '{{description}} должно быть в формате {{format}}',
-    wrongLength: '{{description}} неправильной длины (должно быть {{is}} сомвол(ов))'
+  'validations': {
+    'server-side-validation-error': 'Ошибка при запросе валидации на стороне сервера'
   },
 };

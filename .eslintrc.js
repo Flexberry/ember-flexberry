@@ -1,29 +1,53 @@
+'use strict';
+
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2017,
-    sourceType: 'module'
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true
+    }
   },
   plugins: [
-    'ember'
+    'ember',
+    'hbs',
+    'jsdoc',
+    'qunit',
+    'todo-errors'
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:ember/recommended',
+    'plugin:jsdoc/recommended',
+    'plugin:qunit/two'
   ],
   env: {
     browser: true
   },
   rules: {
+    'ember/new-module-imports': 'off',
+    'ember/use-ember-data-rfc-395-imports': 'off',
+    'ember/no-get': 'off',
+    'ember/use-ember-get-and-set': ['error', { ignoreThisExpressions: true, }],
+    'ember/no-jquery': 'warn',
+    'ember/no-observers': 'warn',
+    'ember/no-mixins': 'warn',
+    'hbs/check-hbs-template-literals': 'error'
   },
+  reportUnusedDisableDirectives: true,
   overrides: [
     // node files
     {
       files: [
+        '.eslintrc.js',
+        '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
         'testem.js',
-        'blueprints/*/index.js',
+        'blueprints/**/*.js',
+        'blueprints/**/*.ts',
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],
@@ -34,49 +58,14 @@ module.exports = {
         'tests/dummy/app/**'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2015
+        sourceType: 'script'
       },
       env: {
         browser: false,
         node: true
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      })
-    },
-
-    // models of dummy application
-    {
-      files: [
-        'tests/dummy/app/models/**/*.js',
-        'tests/dummy/app/locales/**/*.js',
-      ],
-      rules: {
-        'ember/avoid-leaking-state-in-ember-objects': 'off'
-      }
-    },
-
-    {
-      files: [
-        'tests/integration/components/flexberry-ddau-checkbox-test.js',
-      ],
-      rules: {
-        'ember/new-module-imports': 'off'
-      }
-    },
-
-    {
-      files: [
-        'addon/**/components/flexberry-objectlistview.js',
-        'addon/**/components/object-list-view-row.js',
-        'addon/**/components/object-list-view.js',
-        'addon/**/components/olv-toolbar.js'
-      ],
-      rules: {
-        'ember/closure-actions': 'off'
-      }
-    },
+      extends: ['plugin:node/recommended']
+    }
   ]
 };

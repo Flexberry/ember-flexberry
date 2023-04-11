@@ -2,19 +2,21 @@
   @module ember-flexberry
 */
 
-import $ from 'jquery';
-import RSVP from 'rsvp';
-import Controller, { inject as injectController } from '@ember/controller';
-import Evented from '@ember/object/evented';
-import { inject as injectService} from '@ember/service';
-import { get, computed } from '@ember/object';
-import { A, isArray } from '@ember/array';
-import { assert } from '@ember/debug';
-import { isNone, isEmpty } from '@ember/utils';
-import { reject } from 'rsvp';
 import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/application/deprecations';
+import { A, isArray } from '@ember/array';
+import Controller, { inject as injectController } from '@ember/controller';
+import { assert } from '@ember/debug';
+import { get, computed } from '@ember/object';
+import Evented from '@ember/object/evented';
+import { inject as injectService} from '@ember/service';
+import { isNone, isEmpty } from '@ember/utils';
+
+import DS from 'ember-data';
 import ResultCollection from 'ember-cp-validations/validations/result-collection';
+import $ from 'jquery';
+import RSVP, { reject } from 'rsvp';
+
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -65,6 +67,15 @@ SortableControllerMixin,
 LimitedControllerMixin,
 FlexberryOlvToolbarMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin, {
+  /**
+   * @readonly
+   * @private
+   * @property _EmberCpValidationsResultCollectionClass
+   */
+  _EmberCpValidationsResultCollectionClass: Ember.computed(function () {
+    return getOwner(this).resolveRegistration('ember-cp-validations@validations/result-collection:main');
+  }).readOnly(),
+
   /**
     Controller to show colsconfig modal window.
 
@@ -214,7 +225,19 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type Any
     @default model
   */
-  validationObject: computed.alias('model'),
+  validationObject: computed.deprecatingAlias('validationModel', {
+    id: 'ember-flexberry.edit-form-controller.validation-object-property',
+    until: '4.0.0',
+  }),
+
+  /**
+    Reference to object to be validated.
+
+    @property validationModel
+    @type Any
+    @default model
+  */
+  validationModel: computed.alias('model'),
 
   actions: {
     /**
@@ -399,11 +422,33 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {RSVP.Promise}
   */
   validate() {
-    return new RSVP.Promise((resolve, reject) => {
-      this.get('validationObject').validate().then(({ validations }) => {
-        (validations.get('isValid') ? resolve : reject)(validations);
-      });
+    Ember.deprecate(`Use method 'validateModel' instead.`, false, {
+      id: 'ember-flexberry.edit-form-controller.validate-method',
+      until: '4.0.0',
     });
+
+    return this.validateModel();
+  },
+
+  /**
+   * Runs validation on {{#crossLink "EditFormController/validationModel:property"}}{{/crossLink}} and returns promise.
+   * Promise resolved if validation successful or rejected if validation failed.
+   *
+   * @returns {Promise}
+   */
+  validateModel() {
+    const validationModel = this.get('validationModel');
+    if (validationModel) {
+      return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
+        if (validations instanceof ResultCollection && validations.get('isInvalid')) {
+          return RSVP.reject(validations);
+        }
+
+        return RSVP.resolve();
+      });
+    }
+
+    return RSVP.resolve();
   },
 
   /**
@@ -417,8 +462,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
-    return this.validate().then(() => {
-      this.onSaveActionStarted();
+    this.onSaveActionStarted();
+
+    return this.validateModel().then(() => {
       this.get('appState').loading();
 
       const afterSaveModelFunction = () => {
@@ -440,50 +486,60 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
             transitionQuery.queryParams.recordAdded = true;
             transitionQuery.queryParams.parentRoute = this.get('parentRoute');
             transitionQuery.queryParams.parentRouteRecordId = this.get('parentRouteRecordId');
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+
+            // Refresh form model after save. For batch update.
+            const store = this.get('store');
+            const modelName = this.get('modelProjection').modelName;
+            const modelId = this.get('model.id');
+            const modelAfterSaveRefreshed = store.peekRecord(modelName , modelId);
+
+            this.transitionToRoute(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
           }
         }
       };
 
-      let savePromise;
-      const model = this.get('model');
-
-      // This is possible when using offline mode.
-      const agragatorModel = getCurrentAgregator.call(this);
-      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        savePromise = model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
-          const errors = A(result || []).filterBy('state', 'rejected');
-          if (!isEmpty(errors)) {
-            return reject(errors);
-          }
-
-          return agragatorModel.save();
-        });
-      } else {
-        const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
-        if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
-          savePromise = this.get('store').batchUpdate(unsavedModels);
-        } else {
-          savePromise = model.save();
-        }
-      }
-
-      return savePromise.then(afterSaveModelFunction).catch((errorData) => {
+      return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
         this.get('appState').error();
         this.onSaveActionRejected(errorData);
-        return RSVP.reject(errorData);
+        return reject(errorData);
       }).finally((data) => {
         this.onSaveActionAlways(data);
-      }).catch((errorData) => {
-        this.get('appState').error();
-        this.onSaveActionRejected(errorData);
-        return RSVP.reject(errorData);
       });
-    }, (reason) => {
-      this.send('error', new Error(reason.get('message')));
+    }).catch((errorData) => {
       this.get('appState').error();
-      return RSVP.reject(reason);
+      this.onSaveActionRejected(errorData);
+      return reject(errorData);
     });
+  },
+
+  /**
+    The default save model logic implementation.
+
+    @method saveModel
+    @return {Promise}
+  */
+  saveModel() {
+    const model = this.get('model');
+
+    // This is possible when using offline mode.
+    const agragatorModel = getCurrentAgregator.call(this);
+    if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+      return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
+        const errors = A(result || []).filterBy('state', 'rejected');
+        if (!isEmpty(errors)) {
+          return reject(errors);
+        }
+
+        return agragatorModel.save();
+      });
+    } else {
+      const unsavedModels = this._getModelWithHasMany(model).filterBy('hasDirtyAttributes');
+      if ((unsavedModels.length === 1 && unsavedModels[0] !== model) || unsavedModels.length > 1) {
+        return this.get('store').batchUpdate(unsavedModels);
+      }
+
+      return model.save();
+    }
   },
 
   /**
@@ -591,7 +647,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     $('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof ResultCollection)) {
+    if (!(errorData instanceof ResultCollection) && !(errorData instanceof DS.Errors)) {
       this.send('handleError', errorData);
     }
   },

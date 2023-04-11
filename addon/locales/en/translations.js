@@ -9,7 +9,8 @@ export default {
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
       'close-button-text': 'Close',
-      'more-button-text': 'More'
+      'more-button-text': 'More',
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -50,7 +51,9 @@ export default {
     },
 
     'flexberry-simpledatetime': {
-      placeholder: '(no value)'
+      placeholder: '(no value)',
+      'scroll-caption-text': 'Scroll to increment',
+      'apply-button-text': 'Choose',
     },
 
     'flexberry-textarea': {
@@ -59,14 +62,6 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
-    },
-
-    'flexberry-datepicker': {
-      placeholder: '(no value)',
-
-      // Months and days of week names are taken from moment.js.
-      'apply-button-text': 'Apply',
-      'cancel-button-text': 'Cancel'
     },
 
     'flexberry-file': {
@@ -133,6 +128,12 @@ export default {
 
     'flexberry-groupedit': {
       'placeholder': 'There is no data'
+    },
+
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Show all forms fields',
+      'next-button': 'Next',
+      'prev-button': 'Previous'
     },
 
     'modal-dialog': {
@@ -368,5 +369,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

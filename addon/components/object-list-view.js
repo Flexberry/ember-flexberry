@@ -8,7 +8,7 @@ import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { A, isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
-import { typeOf, isBlank, isNone } from '@ember/utils';
+import { typeOf, isBlank, isNone, isEmpty } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
 import { once, schedule, scheduleOnce } from '@ember/runloop';
@@ -23,6 +23,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import getProjectionByName from '../utils/get-projection-by-name';
 import runAfter from '../utils/run-after';
+import defaultConditionsByType from '../utils/default-conditions-by-type';
 
 /**
   Object list view component.
@@ -54,8 +55,9 @@ export default FlexberryBaseComponent.extend(
       let checked = this.get('allSelect');
 
       contentWithKeys.forEach((item) => {
-        item.set('selected', checked);
-        item.set('rowConfig.canBeSelected', !checked);
+        if (item.get('rowConfig.canBeSelected')) {
+          item.set('selected', checked);
+        }
       });
     }
   }),
@@ -513,6 +515,13 @@ export default FlexberryBaseComponent.extend(
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
+    }
+
+    if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
+      const userSettingValue = getOwner(this).lookup('default-user-setting:' + this.get('modelName'));
+      if (!isNone(userSettingValue)) {
+        userSettings = userSettingValue.DEFAULT
+      }
     }
 
     let onEditForm = this.get('onEditForm');
@@ -1132,35 +1141,38 @@ export default FlexberryBaseComponent.extend(
       let checked = false;
 
       for (let i = 0; i < contentWithKeys.length; i++) {
-        if (!contentWithKeys[i].get('selected')) {
+        if (!contentWithKeys[i].get('selected') && contentWithKeys[i].get('rowConfig.canBeSelected')) {
           checked = true;
         }
       }
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
+
+          if (checked) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+
+            if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+              selectedRecords.pushObject(recordWithKey.data);
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
+
+            selectedRecords.removeObject(recordWithKey.data);
           }
 
-          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-            selectedRecords.pushObject(recordWithKey.data);
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+          recordWithKey.set('selected', checked);
 
-          selectedRecords.removeObject(recordWithKey.data);
+          let componentName = this.get('componentName');
+          this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
         }
-
-        recordWithKey.set('selected', checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
     /* eslint-enable no-unused-vars */
@@ -1296,6 +1308,8 @@ export default FlexberryBaseComponent.extend(
       set(filter, 'component.name', get(filter, 'component._defaultComponent'));
       set(filter, 'condition', null);
       set(filter, 'pattern', null);
+      let options = this._getFilterComponentByCondition(undefined, "between");
+      setProperties(filter.component, options);
     },
   },
 
@@ -1965,7 +1979,7 @@ export default FlexberryBaseComponent.extend(
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type, attribute);
     } else {
-      conditions = this._conditionsByType(attribute.type);
+      conditions = defaultConditionsByType(attribute.type, this.get('i18n'));
     }
 
     let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
@@ -2029,57 +2043,6 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Return available conditions for filter.
-
-    @method _conditionsByType
-    @param {String} type
-    @return {Array} Available conditions for filter.
-  */
-  _conditionsByType(type) {
-    switch (type) {
-      case 'file':
-        return null;
-
-      case 'date':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-        };
-      case 'number':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'le': this.get('i18n').t('components.object-list-view.filters.le'),
-          'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
-          'between': this.get('i18n').t('components.object-list-view.filters.between'),
-        };
-      case 'string':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'like': this.get('i18n').t('components.object-list-view.filters.like'),
-          'nlike': this.get('i18n').t('components.object-list-view.filters.nlike')
-        };
-
-      case 'boolean':
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
-          'nempty': this.get('i18n').t('components.object-list-view.filters.nempty'),
-          'empty': this.get('i18n').t('components.object-list-view.filters.empty'),
-        };
-
-      default:
-        return {
-          'eq': this.get('i18n').t('components.object-list-view.filters.eq'),
-          'neq': this.get('i18n').t('components.object-list-view.filters.neq')
-        };
-    }
-  },
-
-  /**
     Return object with parameters for component.
 
     @method _getFilterComponent
@@ -2095,6 +2058,10 @@ export default FlexberryBaseComponent.extend(
 
       case 'string':
       case 'number':
+        component.name = 'flexberry-textbox';
+        break;
+
+      case 'decimal':
         component.name = 'flexberry-textbox';
         break;
 
@@ -2585,16 +2552,51 @@ export default FlexberryBaseComponent.extend(
     @return {Promise} A promise that will be resolved when relationships have been deleted
   */
   _deleteHasManyRelationships(record, immediately) {
+    /*
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM.
+    ORM will delete all hasMany relationships on server side,
+    but it is needed to unload hasMany relationships on client side.
+
+    If ONLINE with flag NOT IMMEDIATELY then it is necessary manually to "deleteRecord"
+    of all hasMany relationships.
+
+    If OFFLINE then adapter will delete connected hasMany relationships.
+    */
+
     let promises = A();
+    this._deleteHasManyRelationshipsRecursive(record, immediately, promises);
+    return RSVP.all(promises);
+  },
+
+  /**
+    Find all hasMany relationships in the `record` and place promises in right order.
+
+    @method _deleteHasManyRelationships
+    @private
+
+    @param {DS.Model} record A record with relationships to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+    @param {Array of Promise} promises A promises that will be resolved when relationships have been deleted.
+  */
+  _deleteHasManyRelationshipsRecursive(record, immediately, promises) {
+    let _this = this;
+    let store = this.get('store');
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
-        record.get(name).forEach((relRecord) => {
-          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
-        });
+        let recordSet = record.get(name);
+        let length = recordSet.length;
+        for (let i = length - 1; i >= 0 ; i--) {
+          let relRecord = recordSet.objectAt(i);
+          _this._deleteHasManyRelationshipsRecursive(relRecord, immediately, promises);
+          if (immediately) {
+            store.unloadRecord(relRecord);
+          }
+          else {
+            promises.pushObject(relRecord.deleteRecord());
+          }
+        }
       }
     });
-
-    return RSVP.all(promises);
   },
 
   /**
@@ -2611,7 +2613,8 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.get('filterByAnyMatch')(pattern, filterCondition, componentName);
+      let filterProjectionName = this.get('filterProjectionName');
+      this.get('filterByAnyMatch')(pattern, filterCondition, componentName, filterProjectionName);
     }
   },
 
@@ -2687,6 +2690,9 @@ export default FlexberryBaseComponent.extend(
     // Property changing displays automatically.
     let content = this.get('content');
     let contentWithKeys = this.get('contentWithKeys');
+
+    if (isNone(content) || isNone(contentWithKeys)) return;
+
     let componentName = this.get('componentName');
     let immediateDelete = this.get('immediateDelete');
     let selectedRecords = this.get('selectedRecords');
@@ -2799,21 +2805,23 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
+        if (recordWithKey.get('rowConfig.canBeSelected')) {
+          let selectedRow = this._getRowByKey(recordWithKey.key);
 
-        if (selectAllParameter) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
+          if (selectAllParameter) {
+            if (!selectedRow.hasClass('active')) {
+              selectedRow.addClass('active');
+            }
+          } else {
+            if (selectedRow.hasClass('active')) {
+              selectedRow.removeClass('active');
+            }
           }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+          recordWithKey.set('selected', selectAllParameter);
         }
 
-        selectedRecords.removeObject(recordWithKey.data);
-        recordWithKey.set('selected', selectAllParameter);
-        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
       if (!skipConfugureRows) {

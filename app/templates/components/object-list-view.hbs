@@ -98,14 +98,16 @@
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
               <div class="fluid action input ui">
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  readonly=(or
-                    (eq column.filter.condition "empty")
-                    (eq column.filter.condition "nempty")
-                  )
-                  dynamicProperties=column.filter.component.properties
-                }}
+                <div style="width: 100%">
+                  {{component column.filter.component.name
+                    value=column.filter.pattern
+                    readonly=(or
+                      (eq column.filter.condition "empty")
+                      (eq column.filter.condition "nempty")
+                    )
+                    dynamicProperties=column.filter.component.properties
+                  }}
+                </div>
                 <button
                   type="button"
                   class="ui clear-filter button"
@@ -167,6 +169,7 @@
           folvComponentName=componentName
           hierarchyPaging=hierarchyPaging
           configurateRow=configurateRow
+          allSelect=allSelect
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

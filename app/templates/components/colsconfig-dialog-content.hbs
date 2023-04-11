@@ -104,7 +104,7 @@
                 value=model.settingName
                 placeholder=(t "components.colsconfig-dialog-content.enter-setting-name")
               }}
-              <div class="ui small button cols-config-save{{unless model.settingName " disabled"}}" {{action "saveColsSetting"}}>
+              <div class="ui small button cols-config-save{{if (is-blank model.settingName) " disabled"}}" {{action "saveColsSetting"}}>
                 {{t "components.colsconfig-dialog-content.save"}}
               </div>
             </div>

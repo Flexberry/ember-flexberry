@@ -209,9 +209,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-datepicker.placeholder')'
+    @default 't('components.flexberry-simpledatetime.placeholder')'
   */
-  placeholder: t('components.flexberry-datepicker.placeholder'),
+  placeholder: t('components.flexberry-simpledatetime.placeholder'),
 
   /**
     Array CSS class names.
@@ -281,6 +281,72 @@ export default FlexberryBaseComponent.extend({
   calendarContext: undefined,
 
   /**
+    A string of characters which are used to define how the date will be displayed in the input box.
+    The supported characters are defined in [the table below](https://flatpickr.js.org/formatting/).
+
+    @property dateFormat
+    @type String
+  */
+  dateFormat: 'Y-m-d',
+
+  /**
+    A string of characters which are used to define how the date will be displayed in the input box.
+    The supported characters are defined in [the table below](https://flatpickr.js.org/formatting/).
+
+    @property dateTimeFormat
+    @type String
+  */
+  dateTimeFormat: 'Y-m-dTH:i',
+
+  /**
+    Exactly the same as date format, but for the altInput field.
+
+    @property altDateFormat
+    @type String
+  */
+  altDateFormat: 'd.m.Y',
+
+  /**
+    Exactly the same as date format, but for the altInput field.
+
+    @property altDateTimeFormat
+    @type String
+  */
+  altDateTimeFormat: 'd.m.Y H:i',
+
+  /**
+    Date mask.
+
+    @property dateMask
+    @type String
+  */
+  dateMask: '99.99.9999',
+
+  /**
+    DateTime mask.
+
+    @property dateTimeMask
+    @type String
+  */
+  dateTimeMask: '99.99.9999 99:99',
+
+  /**
+    Date format for validate.
+
+    @property validDateFormat
+    @type String
+  */
+  validDateFormat: 'DD.MM.YYYY',
+
+  /**
+    DateTime format for validate.
+
+    @property validDateTimeFormat
+    @type String
+  */
+  validDateTimeFormat: 'DD.MM.YYYY HH:mm',
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath
@@ -347,12 +413,29 @@ export default FlexberryBaseComponent.extend({
   _validationDateTime() {
     let dateIsValid = true;
     let inputValue = this.$('.custom-flatpickr')[0].value;
-    let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
+    let date = this.get('type') === 'date' ? moment(inputValue, this.validDateFormat) : moment(inputValue, this.validDateTimeFormat);
     if (date.isValid()) {
       let dateArray = inputValue.match(/(\d+)/g) || [];
       if (dateArray.length > 0) {
-        let dateValid = date.date() === Number(dateArray[0]) && (date.month() + 1) === Number(dateArray[1]) && date.year() === Number(dateArray[2]);
-        dateIsValid = this.get('type') === 'date' ? dateValid : dateValid && date.hours() === Number(dateArray[3]) &&
+        let dateFormatArray = date._f.match(/([A-Z]+)/g) || [];
+        let dateValid = dateFormatArray.find(function(item, index) {
+          let dateElement;
+          switch (item) {
+            case 'DD':
+              dateElement = date.date();
+              break;
+            case 'MM':
+              dateElement = date.month() + 1;
+              break;
+            case 'YYYY':
+              dateElement = date.year();
+              break;
+          }
+
+          return !(dateElement === Number(dateArray[index]))
+        });
+
+        dateIsValid = this.get('type') === 'date' ? !dateValid : dateValid && date.hours() === Number(dateArray[3]) &&
           date.minutes() === Number(dateArray[4]);
       }
     } else {
@@ -360,7 +443,11 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
-      if (!moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
+      /* If before value was not set (undefined) then moment(this.get('_valueAsDate')) returns current date.
+        If user input current date then moment(...).isSame(date) will return TRUE while in reality it is FALSE.*/
+      let valueAsDate = this.get('_valueAsDate');
+      if ((isNone(valueAsDate) && !isNone(date))
+            || !moment(valueAsDate).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
         this.get('_flatpickr').setDate(date.toDate());
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
@@ -368,6 +455,21 @@ export default FlexberryBaseComponent.extend({
       if (!isNone(inputValue)) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
+    }
+  },
+
+  _onChange() {
+    const oldValue = this.get('value');
+    this._validationDateTime();
+    const newValue = this.get('value');
+
+    if (newValue && newValue !== oldValue) {
+      this.set('_valueAsDate', newValue);
+
+      const onChange = this.get('onChange');
+      if (typeof onChange === 'function') {
+        onChange(newValue, oldValue);
       }
     }
   },
@@ -399,31 +501,37 @@ export default FlexberryBaseComponent.extend({
       defaultMinute: this.get('defaultMinute'),
       appendTo: calendarContext ? $(calendarContext).get(0) : undefined,
       locale: this.get('locale') || this.get('i18n.locale'),
-      altFormat: timeless ? 'd.m.Y' : 'd.m.Y H:i',
-      dateFormat: timeless ? 'Y-m-d' : 'Y-m-dTH:i',
-      onChange: (dates) => {
-        this.set('_valueAsDate', dates[0]);
+      altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
+      dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
+      onChange: () => {
+        let inputValue = this.$('.custom-flatpickr')[0].value;
+        if (!isBlank(inputValue)) {
+          this._onChange();
+        }
       },
       onClose: () => {
         this.set('canClick', true);
+        this.$('.custom-flatpickr').blur();
       },
     };
 
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
     $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
-    this.$('.custom-flatpickr').mask(timeless ? '99.99.9999' : '99.99.9999 99:99');
+    this.$('.custom-flatpickr').mask(timeless ? this.dateMask : this.dateTimeMask);
+
+    this.$('.custom-flatpickr').change($.proxy(function () {
+      this._onChange();
+    }, this));
+
     this.$('.custom-flatpickr').keydown($.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
-        this._validationDateTime();
+        this._onChange();
         return false;
       }
     }, this));
 
-    this.$('.custom-flatpickr').change($.proxy(function () {
-      this._validationDateTime();
-    }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
 
     let namespace = this.elementId;

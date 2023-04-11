@@ -590,6 +590,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     'lookupLimitPredicate',
     'relatedModel',
     'updateLookupAction',
+    'notUseUserSettings',
     '_modalDialogSettings',
     '_lookupWindowCustomPropertiesData',
     'inHierarchicalMode',
@@ -678,6 +679,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @default null
   */
   autocompleteOrder: null,
+
+  /**
+    Direction of list for autocomplete values.
+    Availible values: 'upward', 'downward', 'auto'.
+
+    @property autocompleteDirection
+    @type String
+    @default downward
+  */
+  autocompleteDirection: 'downward',
 
   /**
     Projection name for autocomplete query.
@@ -800,6 +811,12 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
   */
   dropdownSettings: undefined,
+
+  /**
+    Additional setting for dropdown.
+    Places autocomplete empty value at the end of values list.
+  */
+  emptyValueAtEnd: false,
 
   /**
     @method onShowHide
@@ -1203,19 +1220,22 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
           builder.skip(skip);
           builder.top(maxResults);
-          builder.count();
+
+          if (usePagination) builder.count();
 
           run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
 
-              if (usePagination && skip > 0) {
-                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
-              }
+              if (usePagination) {
+                if (skip > 0)
+                  results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
 
-              if (skip + records.get('length') < records.get('meta.count')) {
-                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
-                results.push({ title: title, nextPage: usePagination });
+                if (skip + records.get('length') < records.get('meta.count'))
+                  results.push({ title: '<div class="ui center aligned container"><i class="angle down icon"></i></div>', nextPage: true });
+              } else {
+                if (records.get('length') == maxResults)
+                  results.push({ title: '...', nextPage: false });
               }
 
               callback({ success: true, results: results });
@@ -1228,7 +1248,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
 
       /**
        * Handles opening of the autocomplete list.
-       * Sets current state (taht autocomplete list is opened) for future purposes.
+       * Sets current state (that autocomplete list is opened).
        */
       onResultsOpen() {
         state = 'opened';
@@ -1240,6 +1260,26 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         run.next(() => {
           _this.onShowHide();
         });
+
+        run(() => {
+          _this.onShowHide();
+        });
+
+        let autocompleteDirection = get(_this, 'autocompleteDirection');
+        if (autocompleteDirection == 'auto')
+        {
+          const { bottom } = _this.element.getBoundingClientRect();
+          let elementHeight = _this.$('div.results').outerHeight();
+          let upward = window.innerHeight - bottom < elementHeight;
+          autocompleteDirection = upward ? 'upward' : 'downward';
+        }
+
+        if (autocompleteDirection == 'upward') {
+          _this.$('div.results').addClass('upward');
+        }
+        else {
+          _this.$('div.results').removeClass('upward');
+        }
       },
 
       /**
@@ -1350,6 +1390,10 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         run.next(() => {
           _this.onShowHide();
         });
+
+        run(() => {
+          _this.onShowHide();
+        });
       }
     });
   },
@@ -1412,7 +1456,12 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
               });
 
               if (!_this.get('required')) {
-                results.unshift({ name: _this.get('placeholder'), value: null });
+                if (_this.get('emptyValueAtEnd')) {
+                  results.push({ name: _this.get('placeholder'), value: null });
+                } else {
+                  results.unshift({ name: _this.get('placeholder'), value: null });
+                }
+
                 resultArray['null'] = null;
               }
 

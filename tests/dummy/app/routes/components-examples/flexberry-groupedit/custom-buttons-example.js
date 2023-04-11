@@ -24,7 +24,7 @@ export default EditFormRoute.extend({
 
     @method model
   */
-  model(params) {
+  model() {
     var store = this.get('store');
 
     var arrRec = [];

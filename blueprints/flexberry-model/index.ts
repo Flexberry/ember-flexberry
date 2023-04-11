@@ -55,7 +55,7 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 
   /**
@@ -87,20 +87,5 @@ module.exports = {
       },
       modelBlueprint.lodashVariables
     );
-  },
-
-  /**
-   * Blueprint Hook filesPath.
-   * Override the default files directory. Useful for switching between file sets conditionally.
-   *
-   * @method filesPath
-   * @public
-   *
-   * @param {Object} options Options is an object containing general and entity-specific options.
-   * @return {String} Overridden files directory.
-   */
-  filesPath: function (options) {
-    const filesSubDir = ModelBlueprint.checkCpValidations(this) ? 'files-cp-validations' : 'files-ember-validations';
-    return path.join(this._super.filesPath.apply(this, [ options ]), filesSubDir);
   }
 };

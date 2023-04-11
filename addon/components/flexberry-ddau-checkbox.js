@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
@@ -68,21 +68,21 @@ const flexberryClassNames = {
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 
-  export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
+  export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
   });
   ```
 
   @class FlexberryDdauCheckboxComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
   @uses RequiredActionsMixin
   @uses DomActionsMixin
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryDdauCheckboxComponent = Ember.Component.extend(
+let FlexberryDdauCheckboxComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -97,7 +97,7 @@ let FlexberryDdauCheckboxComponent = Ember.Component.extend(
       @type String[]
       @default ['change']
     */
-    _requiredActionNames: ['change'],
+    _requiredActionNames: undefined,
 
     /**
       Reference to component's CSS-classes names.
@@ -168,7 +168,7 @@ let FlexberryDdauCheckboxComponent = Ember.Component.extend(
         let checked = e.target.checked === true;
 
         // Invoke component's custom 'change' action.
-        this.sendAction('change', {
+        this.sendDynamicAction('change', {
           newValue: checked,
           originalEvent: e
         });
@@ -177,6 +177,14 @@ let FlexberryDdauCheckboxComponent = Ember.Component.extend(
         // otherwise component's outer 'change' action handler will be called twice.
         return false;
       }
+    },
+
+    /**
+      An overridable method called when objects are instantiated.
+    */
+    init() {
+      this._super(...arguments);
+      this.set('_requiredActionNames', ['change']);
     },
 
     /**

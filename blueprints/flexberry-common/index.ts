@@ -6,7 +6,7 @@ module.exports = {
     return false;
   },
 
-  availableOptions: [,
+  availableOptions: [
     { name: 'skip-confirmation', type: Boolean }
   ],
 
@@ -16,6 +16,6 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 };

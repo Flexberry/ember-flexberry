@@ -1,21 +1,21 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 <%= importProperties %>
 
 const translations = {};
-Ember.$.extend(true, translations, EmberFlexberryTranslations);
+$.extend(true, translations, EmberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
   models: {
-<%= modelsImportedProperties %>,
+<%= modelsImportedProperties %>
   },
 
-  'application-name': 'Application caption',
+  'application-name': '<%= applicationCaption %>',
 
   forms: {
     loading: {
-      'spinner-caption': 'Loading stuff, please have a cold beer...'
+      'spinner-caption': 'Loading stuff, please wait for a moment...'
     },
     index: {
       greeting: 'Welcome to ember-flexberry test stand!'
@@ -50,7 +50,7 @@ Ember.$.extend(true, translations, {
       },
 
       footer: {
-        'application-name': 'Application caption',
+        'application-name': '<%= applicationCaption %>',
         'application-version': {
           caption: 'Addon version {{version}}',
           title: 'It is version of ember-flexberry addon, which uses in this dummy application ' +
@@ -61,8 +61,8 @@ Ember.$.extend(true, translations, {
 
       sitemap: {
         'application-name': {
-          caption: 'Application caption',
-          title: 'Application title'
+          caption: '<%= applicationCaption %>',
+          title: '<%= applicationCaption %>'
         },
         'application-version': {
           caption: 'Addon version {{version}}',
@@ -74,7 +74,7 @@ Ember.$.extend(true, translations, {
           caption: 'Home',
           title: ''
         },
-<%= enApplicationMenu %>,
+<%= ruApplicationMenu %>
       }
     },
 
@@ -86,7 +86,7 @@ Ember.$.extend(true, translations, {
       'delete-success-message': 'Object deleted',
       'delete-error-message-caption': 'Delete operation failed'
     },
-<%= formsImportedProperties %>,
+<%= formsImportedProperties %>
   },
 
 });

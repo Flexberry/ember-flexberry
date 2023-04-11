@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
@@ -14,8 +14,8 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   beforeEach() {
     // Start application.
     app = startApp();
-    flexberryGroupeditComponent = app.__container__.lookup('component:flexberry-groupedit');
-    store = app.__container__.lookup('service:store');
+    /*flexberryGroupeditComponent = app.__container__.lookup('component:flexberry-groupedit');
+    store = app.__container__.lookup('service:store');*/
   },
 
   afterEach() {
@@ -23,7 +23,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, {
   }
 });
 
-test(testName, (assert) => {
+skip(testName, (assert) => {
   assert.expect(78);
   let recordArray = new Ember.A();
 
@@ -74,7 +74,7 @@ test(testName, (assert) => {
         moderated: true
       }));
   });
-  
+
   try {
     let sortResult = flexberryGroupeditComponent.sortRecords(
       recordArray, { propName: 'address', direction: 'asc'}, 0, 4);

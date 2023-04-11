@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed  } from '@ember/object';
 import FlexberryFile from './../flexberry-file';
 
 /**
@@ -31,7 +31,7 @@ export default FlexberryFile.extend({
     @type Object[]
     @private
   */
-  _menuItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', '_uploadButtonIsVisible', '_downloadButtonIsVisible', function() {
+  _menuItems: computed('showPreview', 'readonly', 'i18n.locale', '_uploadButtonIsVisible', '_downloadButtonIsVisible', function() {
     let menuSubItems = [];
     if (this.get('showPreview')) {
       menuSubItems.push({

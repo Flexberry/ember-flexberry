@@ -89,7 +89,7 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 
   /**
@@ -283,6 +283,7 @@ class SitemapItemExt {
 
     const INDENT = "";
     this.sitemap = `{\n${INDENT}${indentStr}link: ${this.quoteIfNotNull(this.baseItem.link)},\n` +
+      (level > 5 ? '' : `${INDENT}${indentStr}icon: 'list',\n`) +
       `${INDENT}${indentStr}caption: i18n.t('${translationProp}.caption'),\n` +
       `${INDENT}${indentStr}title: i18n.t('${translationProp}.title'),\n` +
       `${INDENT}${indentStr}children: ${sitemapChildrenStr}\n${INDENT}${indentStr2}}`;

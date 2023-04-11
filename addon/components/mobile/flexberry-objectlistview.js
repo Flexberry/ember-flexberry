@@ -2,9 +2,10 @@
   @module ember-flexberry
 */
 
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
 import FlexberryObjectlistview from './../flexberry-objectlistview';
 import getAttrLocaleKey from '../../utils/get-attr-locale-key';
-import Ember from 'ember';
 
 /**
   Mobile version of flexberry-objectlistview (with mobile-specific defaults).
@@ -29,7 +30,7 @@ export default FlexberryObjectlistview.extend({
     @type Boolean
     @default false
   */
-  showCheckBoxInRow: true,
+  showCheckBoxInRow: false,
 
   /**
     Flag indicates whether to show delete button in first column of every row.
@@ -119,10 +120,7 @@ export default FlexberryObjectlistview.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of single column.
@@ -133,6 +131,23 @@ export default FlexberryObjectlistview.extend({
   singleColumnHeaderTitle: undefined,
 
   /**
+    Flag indicates whether table are striped.
+
+    @property tableStriped
+    @type Boolean
+    @default false
+  */
+  tableStriped: false,
+
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  },
+
+  /**
     Indicates whether or not autoresize columns for fit the page width.
 
     @property columnsWidthAutoresize
@@ -140,6 +155,16 @@ export default FlexberryObjectlistview.extend({
     @default true
   */
   columnsWidthAutoresize: true,
+
+  /**
+    Array CSS class names.
+    [More info](https://emberjs.com/api/ember/release/classes/Component#property_classNames).
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: ['mobile'],
 
   /**
     Array of objects corresponding to list of pages.
@@ -154,9 +179,9 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  _mobilePages: Ember.computed('pages', function() {
-    let mobilePages = Ember.A();
-    let pages = Ember.A(this.get('pages'));
+  _mobilePages: computed('pages', function() {
+    let mobilePages = A();
+    let pages = A(this.get('pages'));
 
     if (pages.length <= 4) {
       return pages;
@@ -194,9 +219,9 @@ export default FlexberryObjectlistview.extend({
     @type Array
     @readOnly
   */
-  _currecntSortingArray: Ember.computed('sorting',  function() {
+  _currecntSortingArray: computed('sorting',  function() {
     let sorting = this.get('sorting');
-    let columns = Ember.A();
+    let columns = A();
     if (sorting === null) {
       return columns;
     }
@@ -224,7 +249,7 @@ export default FlexberryObjectlistview.extend({
     @type String
     @readOnly
   */
-  _mobileSortingSettingsIcon: Ember.computed('_currecntSortingArray',  function() {
+  _mobileSortingSettingsIcon: computed('_currecntSortingArray',  function() {
     let icon = 'sort content descending';
     let firstColumn = this.get('_currecntSortingArray')[0];
 
@@ -243,7 +268,7 @@ export default FlexberryObjectlistview.extend({
     @type String
     @readOnly
   */
-  _mobileSortingSettingsCaption: Ember.computed('_currecntSortingArray', 'i18n.locale',  function() {
+  _mobileSortingSettingsCaption: computed('_currecntSortingArray', 'i18n.locale',  function() {
     let i18n = this.get('i18n');
     let sorting = this.get('_currecntSortingArray');
     if (sorting.length === 0) {
@@ -267,9 +292,10 @@ export default FlexberryObjectlistview.extend({
 
     return sortingValue;
   }),
+
   actions: {
     showConfigDialog() {
-      this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, false, false);
+      this.get('currentController').send('showConfigDialog', this.get('componentName'), undefined, this.get('useSidePageMode'), false);
     }
   }
 });

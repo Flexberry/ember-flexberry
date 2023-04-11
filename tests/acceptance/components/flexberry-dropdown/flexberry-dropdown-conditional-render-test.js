@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import { run, later } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
+import $ from 'jquery';
 
 let app;
 const path = 'components-examples/flexberry-dropdown/conditional-render-example';
@@ -18,7 +19,7 @@ module('Acceptance | flexberry-dropdown | ' + testName, {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     }
   });
 
@@ -29,7 +30,7 @@ test(testName, (assert) => {
   andThen(() => {
     assert.equal(currentPath(), path, 'Path is correctly');
 
-    let $dropdown = Ember.$('.flexberry-dropdown');
+    let $dropdown = $('.flexberry-dropdown');
     assert.equal($dropdown.length, 1, 'Dropdown is render');
 
     // Select dropdown item.
@@ -37,11 +38,11 @@ test(testName, (assert) => {
 
     let done = assert.async();
     let timeout = 100;
-    Ember.run.later((() => {
-      let $dropdown = Ember.$('.flexberry-dropdown');
+    later((() => {
+      let $dropdown = $('.flexberry-dropdown');
       assert.equal($dropdown.length, 0, 'Dropdown isn\'t render');
 
-      let $span = Ember.$('div.field span');
+      let $span = $('div.field span');
       assert.equal($span.text(), 'Enum value №1', 'Span is render');
       done();
     }), timeout);

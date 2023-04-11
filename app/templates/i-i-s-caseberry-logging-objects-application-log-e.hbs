@@ -109,7 +109,7 @@
     <span style="color:red">{{model.errors.timestamp}}</span>
   {{/if}}
   {{flexberry-simpledatetime
-    type="date"
+    type="datetime-local"
     readonly=readonly
     value=model.timestamp
     class=(if model.errors.timestamp "error" "")

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   queryParams: ['sort'],
   sort: null,
   message: {
@@ -32,9 +32,11 @@ export default Ember.Mixin.create({
       this.set('_openedModalDialog', modalDialog);
     },
 
+    /* eslint-disable no-unused-vars */
     sortByColumnsConfig: function (colsConfig) {
       this.closeModalDialog();
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**

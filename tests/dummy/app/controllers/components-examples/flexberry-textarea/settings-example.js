@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Text for 'flexberry-textarea' component 'placeholder' property.
 
@@ -15,7 +18,7 @@ export default Ember.Controller.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-textarea.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-textarea.placeholder'));
     }
@@ -27,11 +30,7 @@ export default Ember.Controller.extend({
     @property _selectionDirections
     @type String[]
    */
-  _selectionDirections: [
-    'forward',
-    'backward',
-    'none'
-  ],
+  _selectionDirections: undefined,
 
   /**
     Possible wrap values.
@@ -39,11 +38,7 @@ export default Ember.Controller.extend({
     @property _wrapValues
     @type String[]
    */
-  _wrapValues: [
-    'soft',
-    'hard',
-    'off'
-  ],
+  _wrapValues: undefined,
 
   /**
     Flag: indicates whether 'flexberry-textarea' component is in 'readonly' mode or not.
@@ -123,24 +118,39 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{textarea<br>' +
-    '  value=model.text<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  class=class<br>' +
-    '  required=required<br>' +
-    '  rows=rows<br>' +
-    '  cols=cols<br>' +
-    '  disabled=disabled<br>' +
-    '  maxlength=maxlength<br>' +
-    '  selectionStart=selectionStart<br>' +
-    '  selectionEnd=selectionEnd<br>' +
-    '  selectionDirection=selectionDirection<br>' +
-    '  wrap=wrap<br>' +
-    '  autofocus=autofocus<br>' +
-    '  spellcheck=spellcheck<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('_selectionDirections', [
+      'forward',
+      'backward',
+      'none'
+    ]);
+    this.set('_wrapValues', [
+      'soft',
+      'hard',
+      'off'
+    ]);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{textarea<br>' +
+      '  value=model.text<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  class=class<br>' +
+      '  required=required<br>' +
+      '  rows=rows<br>' +
+      '  cols=cols<br>' +
+      '  disabled=disabled<br>' +
+      '  maxlength=maxlength<br>' +
+      '  selectionStart=selectionStart<br>' +
+      '  selectionEnd=selectionEnd<br>' +
+      '  selectionDirection=selectionDirection<br>' +
+      '  wrap=wrap<br>' +
+      '  autofocus=autofocus<br>' +
+      '  spellcheck=spellcheck<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -148,8 +158,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    var componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',

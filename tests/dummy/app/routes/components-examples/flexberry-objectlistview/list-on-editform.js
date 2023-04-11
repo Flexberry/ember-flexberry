@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -31,7 +32,9 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVListOnEditformObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVListOnEditformObjectListView: { } };
+  }),
 
   /**
     Name of model to be used as list's records types.

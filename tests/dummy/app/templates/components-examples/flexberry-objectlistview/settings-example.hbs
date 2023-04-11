@@ -1,7 +1,7 @@
 {{flexberry-error error=error}}
 <h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  <div class="field">
+  <div class="">
     {{#settings-example
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
@@ -45,6 +45,7 @@
         filterText=filter
         filterByAnyWord=filterByAnyWord
         filterByAllWords=filterByAllWords
+        filterProjectionName = filterProjectionName
         sorting=computedSorting
         sortByColumn=(action "sortByColumn")
         addColumnToSorting=(action "addColumnToSorting")

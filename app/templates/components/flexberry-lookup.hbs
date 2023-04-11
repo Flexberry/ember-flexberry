@@ -7,6 +7,7 @@
     needChecksOnValue=false
     isSearch=true
     isSearchReadOnly=dropdownIsSearch
+    settings=_dropdownSettings
   }}
 {{else}}
   <div data-test-lookup class="ui {{unless hasBlock "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
@@ -47,6 +48,14 @@
         </button>
       {{/if}}
     {{/if}}
+    <button
+      data-test-lookup-clear
+      class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+      title={{t "components.flexberry-lookup.remove-button-text"}}
+      type="button"
+      {{action "remove" removeData}}>
+      {{{removeText}}}
+    </button>
     {{#unless hasBlock}}
       <button
         data-test-lookup-change
@@ -57,14 +66,6 @@
         {{{chooseText}}}
       </button>
     {{/unless}}
-    <button
-      data-test-lookup-clear
-      class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
-      title={{t "components.flexberry-lookup.remove-button-text"}}
-      type="button"
-      {{action "remove" removeData}}>
-      {{{removeText}}}
-    </button>
   </div>
 {{/if}}
 {{#if hasBlock}}

@@ -2,14 +2,19 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
+import { isNone } from '@ember/utils';
+import $ from 'jquery';
+import { A } from '@ember/array';
 import ListParameters from '../objects/list-parameters';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
-import { Query } from 'ember-flexberry-data';
-const { Condition, ComplexPredicate } = Query;
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import Condition from 'ember-flexberry-data/query/condition';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Settings for all lists on form.
 
@@ -24,7 +29,7 @@ export default Ember.Mixin.create({
     @property objectlistviewEvents
     @type Service
   */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: service(),
 
   /**
     Service for managing advLimits for lists.
@@ -32,7 +37,7 @@ export default Ember.Mixin.create({
     @property advLimit
     @type AdvLimitService
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   init() {
     this._super(...arguments);
@@ -40,12 +45,12 @@ export default Ember.Mixin.create({
     this.set('multiListSettings', {});
   },
 
-  setupController: function(controller, model) {
+  setupController: function(controller) {
     this._super(...arguments);
 
     let multiListSettings = this.get('multiListSettings');
     for (let componentName in multiListSettings) {
-      let settings = Ember.get(multiListSettings, `${componentName}`);
+      let settings = get(multiListSettings, `${componentName}`);
       let modelClass = this.store.modelFor(settings.get('modelName'));
       let proj = modelClass.projections.get(settings.get('projectionName'));
       settings.set('modelProjection', proj);
@@ -62,14 +67,14 @@ export default Ember.Mixin.create({
     controller.set('userSettings', this.userSettings);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('_filtersPredicate', this.get('_filtersPredicate').bind(this));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
 
     this.get('objectlistviewEvents').on('refreshListOnly', this, this._reloadListByName);
   },
 
-  resetController: function(controller) {
+  resetController: function() {
     this._super(...arguments);
 
     this.get('objectlistviewEvents').off('refreshListOnly', this, this._reloadListByName);
@@ -84,8 +89,8 @@ export default Ember.Mixin.create({
   */
   setSorting(componentName, sorting) {
     let settings = this.get(`multiListSettings.${componentName}`);
-    if (!Ember.isNone(settings)) {
-      let sort = serializeSortingParam(Ember.A(sorting));
+    if (!isNone(settings)) {
+      let sort = serializeSortingParam(A(sorting));
       settings.set('sorting', sorting);
       settings.set('model.sorting', sorting);
       settings.set('sort', sort);
@@ -138,7 +143,7 @@ export default Ember.Mixin.create({
   _filtersPredicate(componentName) {
     let filters = this.get(`multiListSettings.${componentName}.filters`);
     if (filters) {
-      let predicates = Ember.A();
+      let predicates = A();
       for (let filter in filters) {
         if (filters.hasOwnProperty(filter)) {
           let predicate = this.predicateForFilter(filters[filter], componentName);

@@ -1,14 +1,14 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 <%= importProperties %>
 
 const translations = {};
-Ember.$.extend(true, translations, EmberFlexberryTranslations);
+$.extend(true, translations, EmberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
   models: {
-<%= modelsImportedProperties %>,
+<%= modelsImportedProperties %>
   },
 
   'application-name': 'Application caption',
@@ -75,7 +75,7 @@ Ember.$.extend(true, translations, {
           caption: 'Home',
           title: ''
         },
-<%= enApplicationMenu %>,
+<%= ruApplicationMenu %>
       }
     },
 
@@ -87,7 +87,7 @@ Ember.$.extend(true, translations, {
       'delete-success-message': 'Object deleted',
       'delete-error-message-caption': 'Delete operation failed'
     },
-<%= formsImportedProperties %>,
+<%= formsImportedProperties %>
   },
 
 });

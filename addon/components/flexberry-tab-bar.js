@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, set } from '@ember/object';
+import { A, isArray } from '@ember/array';
 
 /**
   Component's CSS-classes names.
@@ -25,9 +27,9 @@ const flexberryClassNames = {
 /**
  * FlexberryTabBarComponent
  * Component to display semantic ui tabs
- * @extends Ember.Component
+ * @extends Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],
 
   /**
@@ -89,6 +91,8 @@ export default Ember.Component.extend({
   }),
 
   /**
+=======
+>>>>>>> develop
    * Contains name of previous data-tab
    * @property prevTab
    */
@@ -202,17 +206,18 @@ export default Ember.Component.extend({
     */
     change(currentTab, event) {
       let prevTab = this.get('prevTab');
+      let tabName = currentTab.selector;
       let changed = false;
 
-      if (prevTab !== currentTab) {
-        this.set('prevTab', currentTab);
+      if (prevTab !== tabName) {
+        this.set('prevTab', tabName);
         changed = true;
       }
 
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        this.$('.item.active').removeClass('active');
+        set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -221,7 +226,7 @@ export default Ember.Component.extend({
       }
 
       let e = {
-        tabName: currentTab,
+        tabName: tabName,
         prevTab: prevTab,
         changed: changed,
         originalEvent: event,

@@ -60,7 +60,7 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 
   /**
@@ -109,7 +109,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
-    this.isEmberCpValidationsUsed = ModelBlueprint.checkCpValidations(blueprint);
+    this.isEmberCpValidationsUsed = true;
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
@@ -204,6 +204,7 @@ class EditFormBlueprint {
         belongsTo.readonly = "readonly";
         belongsTo.entityName = this.options.entity.name;
         belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        belongsTo.isDropdown = belongsTo.type === 'combo';
         this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }

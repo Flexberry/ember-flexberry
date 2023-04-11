@@ -1,11 +1,12 @@
 'use strict';
 
 const RSVP = require('rsvp');
+const existsSync = require('exists-sync');
 const minimatch = require('minimatch');
 const fs = require('fs-extra');
 const stat = RSVP.denodeify(fs.stat);
 const Blueprint = require('ember-cli/lib/models/blueprint');
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 
 module.exports = function skipConfirmation(context, intoDir, templateVariables) {
     let files = context._getFilesForInstall(templateVariables.targetFiles);
@@ -14,8 +15,19 @@ module.exports = function skipConfirmation(context, intoDir, templateVariables) 
 
     context._ignoreUpdateFiles();
 
-    return Promise.filter(fileInfos, isValidFile).
-      map(prepareInfos);
+    let fileInfosToRemove = context._getFileInfos(context.filesToRemove, intoDir, templateVariables);
+    fileInfosToRemove = finishProcessingForUninstall(fileInfosToRemove);
+
+    return RSVP.filter(fileInfos, isValidFile)
+      .then(promises => RSVP.map(promises, prepareInfos))
+      .then(fileInfos => fileInfos.concat(fileInfosToRemove));
+};
+
+function finishProcessingForUninstall(infos) {
+    let validInfos = infos.filter(info => existsSync(info.outputPath));
+    validInfos.forEach((info) => info.action = 'remove');
+
+    return validInfos;
 };
 
 function isValidFile(fileInfo) {

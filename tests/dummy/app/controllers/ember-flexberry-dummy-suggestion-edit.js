@@ -1,5 +1,7 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import { merge } from '@ember/polyfills';
+import { translationMacro as t } from 'ember-i18n';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -46,6 +48,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
 
+  title: t('forms.application.flexberry-objectlistview-modal-question-caption.delete-at-editform-question-caption'),
+
   /**
     Function for check uploaded file type.
 
@@ -53,17 +57,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @param {String} fileType file type as MIME TYPES.
     @param {String} accept available MIME TYPES.
    */
-  checkFileType: function(fileType, accept) {
+  checkFileType() {
     return true;
-  },
-
-  actions: {
-
-    getLookupFolvProperties: function() {
-      return {
-        colsConfigButton: true
-      };
-    }
   },
 
   /**
@@ -79,6 +74,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
+    let i18n = this.get('i18n');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
@@ -87,6 +83,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             remove: 'removeLookupValue',
             preview: 'previewLookupValue',
             displayAttributeName: 'name',
+            title: i18n.t('forms.ember-flexberry-dummy-application-user-list.caption'),
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
@@ -129,5 +126,54 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
+  },
+
+  actions: {
+    /**
+      This method returns custom properties for lookup window.
+      @method getLookupFolvProperties
+
+      @param {Object} options Parameters of lookup that called this method.
+      @param {String} [options.projection] Lookup projection.
+      @param {String} [options.relationName] Lookup relation name.
+      @return {Object} Set of options for lookup window.
+     */
+    getLookupFolvProperties: function(options) {
+      let methodArgs = merge({
+        projection: undefined,
+        relationName: undefined
+      }, options);
+
+      if (methodArgs.relationName === 'editor1' || methodArgs.relationName === 'author') {
+        return {
+          refreshButton:true,
+          enableFilters: true,
+          filterButton: true,
+          colsConfigButton: true
+        };
+      }
+    },
+
+    /**
+      Show delete modal dialog before deleting.
+    */
+    delete(skipTransition) {
+      this.set('approveDeleting', () => {this.delete(skipTransition)});
+      this.set('denyDeleting',() => {});
+
+      this.send('showModalDialog', 'modal/delete-record-modal-dialog', {
+        controller: 'ember-flexberry-dummy-suggestion-edit'
+      });
+    },
+
+    /**
+      Close modal dialog and clear actions.
+    */
+    closeModalDialog() {
+      this.set('approveDeleting', null);
+      this.set('denyDeleting', null);
+
+      this.send('removeModalDialog');
+    }
   }
 });

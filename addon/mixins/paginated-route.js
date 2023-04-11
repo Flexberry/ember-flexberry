@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /*
   Mixin for route, that pagination support.
@@ -10,17 +10,17 @@ import Ember from 'ember';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
-    export default Ember.Controller.extend(PaginatedController, {
+    export default Controller.extend(PaginatedController, {
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
-    export default Ember.Route.extend(PaginatedRoute, {
+    export default Route.extend(PaginatedRoute, {
     });
     ```
 
@@ -43,11 +43,11 @@ import Ember from 'ember';
     ```
 
   @class PaginatedRoute
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object

@@ -2,29 +2,76 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
 
 /**
-  ModalDialog component for Semantic UI.
+  Modal dialog component based on Semantic UI Modal module.
 
   @example
     ```handlebars
     {{#modal-dialog
-      title='Title'
-      sizeClass='large'
-      close='removeModalDialog'
-      created='createdModalDialog'
+      title="Title"
+      sizeClass="large"
+      close=(action "removeModalDialog")
+      created=(action "createdModalDialog")
       useOkButton=false
       useCloseButton=false
+      settings=(hash
+        duration=500
+      )
     }}
       {{outlet 'modal-content'}}
     {{/modal-dialog}}
     ```
 
   @class ModalDialog
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
+  /**
+    Service that triggers lookup events.
+
+    @private
+    @property _lookupEvents
+    @type Service
+  */
+  _lookupEvents: service('lookup-events'),
+
+  /**
+    @private
+    @property _toolbarVisible
+    @type Boolean
+    @readOnly
+  */
+  _toolbarVisible: computed.or('useOkButton', 'useCloseButton').readOnly(),
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+  */
+  classNameBindings: ['sizeClass'],
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['ui', 'modal', 'flexberry-modal'],
+
+  /**
+    See [Semantic UI API](http://semantic-ui.com/modules/modal.html#settings).
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
   /**
     Size of Semantic UI modal.
     Possible variants:
@@ -66,32 +113,13 @@ export default Ember.Component.extend({
   useCloseButton: true,
 
   /**
-    Flag indicates toolbar visibility, `true` if at least one of buttons is visible.
+    Flag indicates whether to side page or usually mode.
 
-    @property toolbarVisible
+    @property useSidePageMode
     @type Boolean
-    @readOnly
-  */
-  toolbarVisible: Ember.computed('useOkButton', 'useCloseButton', function () {
-    return this.get('useOkButton') || this.get('useCloseButton');
-  }),
-
-  /**
-    Semantic UI Modal settings, [more info here](http://semantic-ui.com/modules/modal.html#settings).
-
-    @property settings
-    @type Object
-    @default {}
-  */
-  settings: {},
-
-  /**
-    Service that triggers lookup events.
-
-    @property lookupEventsService
-    @type Service
-  */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+    @default false
+   */
+  useSidePageMode: false,
 
   /**
     Used to identify lookup on the page.
@@ -102,43 +130,59 @@ export default Ember.Component.extend({
   componentName: undefined,
 
   /**
-    Initializes DOM-related component's logic.
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method didInsertElement
   */
   didInsertElement() {
     this._super(...arguments);
-    let _this = this;
-    let componentName = this.get('componentName');
-    let modalSettings = Ember.$.extend({
-        observeChanges: true,
-        detachable: false,
-        allowMultiple: true,
-        context: '.ember-application > .ember-view',
 
-        onApprove: function () {
-          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
-          Ember.run(() => {
-            _this.sendAction('ok');
-            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
-          });
-        },
-        onHidden: function () {
-          Ember.run(() => {
-            _this.sendAction('close');
+    let transitionMode = "scale";
 
-            // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
-            Ember.$(this).remove();
-            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
-          });
-        },
-        onVisible: function () {
-          // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
-          Ember.run(() => {
-            _this.sendAction('created', Ember.$(this));
-          });
-        }
+    if (this.get('useSidePageMode')) {
+      this.element.classList.add('flexberry-sidepage');
+      transitionMode = "slide left";
+    }
+
+    let settings = $.extend({
+      observeChanges: true,
+      detachable: false,
+      allowMultiple: true,
+      context: '.ember-application > .ember-view',
+      transition: transitionMode,
+      autofocus: false,
+      onApprove: () => {
+        // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so run function is necessary.
+        run(() => {
+          if (!isEmpty(this.get('ok'))) {
+            this.get('ok')();
+          }
+
+          this.get('_lookupEvents').lookupDialogOnHiddenTrigger(this.get('componentName'));
+        });
       },
-      _this.get('settings'));
+      onHidden: () => {
+        run(() => {
 
-    this.$('.ui.modal').modal(modalSettings).modal('show');
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('close'); //TODO
+          /* eslint-enable ember/closure-actions */
+
+          // IE doesn't support "this.remove()", that's why "this.$().remove()" is used.
+          $(this).remove();
+          this.get('_lookupEvents').lookupDialogOnHiddenTrigger(this.get('componentName'));
+        });
+      },
+      onVisible: () => {
+        // Handler of 'created' action causes asynchronous animation, so run function is necessary.
+        run(() => {
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('created', this.$()); //TODO
+          /* eslint-enable ember/closure-actions */
+        });
+      }
+    }, this.get('settings'));
+
+    this.$().modal(settings).modal('show');
   },
 });

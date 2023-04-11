@@ -5,7 +5,8 @@
   <button class="ui button" {{action 'modalWindowDouble' "#example-mobile"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
 </form>
 
-{{#ui-modal id="repeat-window"}}
+<div class="ui modal repeat-window hidden">
+  <i class="close icon"></i>
   <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModal"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
@@ -24,9 +25,10 @@
       <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
-{{/ui-modal}}
+</div>
 
-{{#ui-modal id="repeat-window-double"}}
+<div class="ui modal repeat-window-double hidden">
+  <i class="close icon"></i>
   <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModalDouble"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
@@ -45,4 +47,4 @@
       <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
-{{/ui-modal}}
+</div>

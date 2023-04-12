@@ -60,11 +60,11 @@ export default FlexberryBaseComponent.extend({
     @type Number
     @private
   */
-  _buttonDropdownWidth: computed('_menuButtons.length', function() {
-    return (this.get('_menuButtons.length') > 0 &&
-      $(this.element).find('.button-dropdown.menu-buttons').length > 0) ?
-      $(this.element).find('.button-dropdown.menu-buttons').outerWidth(true)
-      : 225;
+  _buttonDropdownWidth: computed('_menuButtons.length', 'element', function() {
+    const menuButtonsLength = this.get('_menuButtons.length');
+    const menuButtonsElement = $(this.element).find('.menu-buttons.group-toolbar');
+
+    return ( menuButtonsLength > 0 && menuButtonsElement.length > 0) ? menuButtonsElement.outerWidth(true) : 60;
   }),
 
   /**
@@ -217,7 +217,7 @@ export default FlexberryBaseComponent.extend({
     Handles DOM-related component's properties after each render.
   */
   didRender() {
-    this.$('.ui.dropdown.selection.group-toolbar').dropdown();
+    this.$('.ui.dropdown.group-toolbar').dropdown();
   },
 
   /**

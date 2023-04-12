@@ -10,9 +10,12 @@
             buttons=button.buttons
           }}
         {{else}}
-          <button id="{{button.id}}" type="{{if button.type button.type "button"}}" class="ui button {{button.class}}" {{action "sendButtonAction" button.action}} title="{{button.title}}">
-            {{button.text}}
-          </button>
+          <button
+            id="{{button.id}}"
+            type="{{if button.type button.type "button"}}"
+            class="ui button {{button.class}}"
+            {{action "sendButtonAction" button.action}}
+            title="{{button.title}}">{{#if button.icon}}<i class="{{button.icon}}"></i>{{/if}}{{button.text}}</button>
         {{/if}}
       {{/if}}
     {{/each}}
@@ -20,7 +23,7 @@
 
   {{#if menuButtonsSorted}}
     {{flexberry-button-dropdown
-      title=(t "forms.edit-form.more-button-text")
+      title=(if (eq panelButtonsSorted.length 0) (t "forms.edit-form.only-more-button-text") (t "forms.edit-form.more-button-text"))
       deepMount=deepMount
       buttons=menuButtonsSorted
       classNames="menu-buttons"

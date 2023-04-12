@@ -1,8 +1,6 @@
-<div class="ui dropdown selection group-toolbar {{if readonly "disabled"}}">
-  <span class="text">{{title}}</span>
-  <i class="icon dropdown"></i>
-  {{button-dropdown-menu
-    buttons=buttons
-    sendButtonAction=(action "sendButtonAction")
-  }}
-</div>
+<span class="text">{{title}}</span>
+<i class="icon dropdown"></i>
+{{button-dropdown-menu
+  buttons=buttons
+  sendButtonAction=(action "sendButtonAction")
+}}

@@ -8,7 +8,9 @@ import { isNone } from '@ember/utils';
 
 export default FlexberryBaseComponent.extend({
 
-  classNames: ['button-dropdown'],
+  classNames: ['ui dropdown group-toolbar'],
+
+  classNameBindings: ['readonly:disabled'],
 
   title: '',
 

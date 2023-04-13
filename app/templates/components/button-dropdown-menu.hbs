@@ -1,7 +1,7 @@
 {{#each buttons as |button|}}
-  {{#if (not button.disabled)}}
-    <div class="item {{button.class}}"
-      onclick={{if (not button.buttons) (action sendButtonAction button.action)}}>
+  {{#unless button.disabled}}
+    <div role="button" class="item {{button.class}}"
+      onclick={{unless button.buttons (action sendButtonAction button.action)}}>
       {{#if button.buttons}}
         {{button-dropdown-menu
           buttons=button.buttons
@@ -11,10 +11,10 @@
       {{/if}}
       <div class="menu-item">
         {{#if button.icon}}
-          <i class="{{button.icon}}"></i>
+          <i class={{button.icon}}></i>
         {{/if}}
         <span class="text">{{button.text}}</span>
       </div>
     </div>
-  {{/if}}
+  {{/unless}}
 {{/each}}

@@ -1,23 +1,24 @@
 {{#unless readonly}}
   {{#if panelButtonsSorted}}
-    {{#each panelButtonsSorted as |button|}}
-      {{#if (not button.disabled)}}
-        {{#if button.buttons}}
+    {{#each panelButtonsSorted as |panelButton|}}
+      {{#unless panelButton.disabled}}
+        {{#if panelButton.buttons}}
           {{flexberry-button-dropdown
-            title=button.text
-            elementId=button.id
+            title=panelButton.text
+            elementId=panelButton.id
             deepMount=deepMount
-            buttons=button.buttons
+            buttons=panelButton.buttons
           }}
         {{else}}
-          <button
-            id="{{button.id}}"
-            type="{{if button.type button.type "button"}}"
-            class="ui button {{button.class}}"
-            {{action "sendButtonAction" button.action}}
-            title="{{button.title}}">{{#if button.icon}}<i class="{{button.icon}}"></i>{{/if}}{{button.text}}</button>
+          <button id={{panelButton.id}}
+            type={{if panelButton.type panelButton.type "button"}}
+            class="ui button {{panelButton.class}}"
+            title={{panelButton.title}}
+            {{action "sendButtonAction" panelButton.action}}>
+            {{#if panelButton.icon}}<i class={{panelButton.icon}}></i>{{/if}}{{panelButton.text}}
+          </button>
         {{/if}}
-      {{/if}}
+      {{/unless}}
     {{/each}}
   {{/if}}
 

@@ -108,7 +108,7 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/edit-panel",
+      "moduleId": "app/templates/components/flexberry-edit-panel",
       "only": [
         // don't delete, exception for text in button.
         "block-indentation"

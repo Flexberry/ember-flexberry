@@ -158,12 +158,14 @@ export default FlexberryBaseComponent.extend({
       let isButtonsPanelFull = false;
 
       this.get('buttons').forEach(btn => {
-        isButtonsPanelFull = currentButtonsWidth + btn.width <= maxWidthForButtonsPanel && !isButtonsPanelFull;
-        if (isButtonsPanelFull) {
-          btnInPanel.pushObject(btn);
-          currentButtonsWidth += btn.width;
-        } else {
-          btnInMenu.pushObject(btn);
+        if (!btn.disabled) {
+          if (currentButtonsWidth + btn.width <= maxWidthForButtonsPanel && !isButtonsPanelFull) {
+            btnInPanel.pushObject(btn);
+            currentButtonsWidth += btn.width;
+          } else {
+            isButtonsPanelFull = true;
+            btnInMenu.pushObject(btn);
+          }
         }
       });
     }

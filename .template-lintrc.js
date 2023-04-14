@@ -108,6 +108,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/edit-panel",
+      "only": [
+        // don't delete, exception for text in button.
+        "block-indentation"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/filters-dialog-content",
       "only": [
         "block-indentation",
@@ -528,8 +535,7 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-edit",
       "only": [
         "eol-last",
-        "quotes",
-        "simple-unless"
+        "quotes"
       ]
     },
     {

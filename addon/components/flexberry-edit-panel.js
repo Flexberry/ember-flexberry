@@ -30,9 +30,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _buttonsWidth: computed('buttons.@each.width', function() {
-    return this.get('buttons')
-    .map(btn => btn.width)
-    .reduce((prev, curr) => prev + curr);
+    return this.get('buttons').map(btn => btn.width).reduce((prev, curr) => prev + curr);
   }),
 
   /**
@@ -127,6 +125,14 @@ export default FlexberryBaseComponent.extend({
   showCloseButton: false,
 
   /**
+    Close button action name.
+
+    @property closeAction
+    @type string
+  */
+  closeAction: 'close',
+
+  /**
     Flag, the component is embedded in another component, for example, in the flexberry-olv toolbar.
     Set to send action in the controller.
 
@@ -147,19 +153,16 @@ export default FlexberryBaseComponent.extend({
     if (this.get('_buttonsWidth') + this.get('_closeButtonWidth') + this.get('_marginWidth') <= this.get('_editPanelWidth')) {
       btnInPanel = this.get('buttons');
     } else {
-      let maxWidthForButtonsPanel = this.get('_editPanelWidth') -
-        (this.get('_buttonDropdownWidth') +
-        this.get('_closeButtonWidth') +
-        this.get('_marginWidth'));
+      let maxWidthForButtonsPanel = this.get('_editPanelWidth') - (this.get('_buttonDropdownWidth') + this.get('_closeButtonWidth') + this.get('_marginWidth'));
       let currentButtonsWidth = 0;
       let isButtonsPanelFull = false;
 
       this.get('buttons').forEach(btn => {
-        if (currentButtonsWidth + btn.width <= maxWidthForButtonsPanel && !isButtonsPanelFull) {
+        isButtonsPanelFull = currentButtonsWidth + btn.width <= maxWidthForButtonsPanel && !isButtonsPanelFull;
+        if (isButtonsPanelFull) {
           btnInPanel.pushObject(btn);
           currentButtonsWidth += btn.width;
         } else {
-          isButtonsPanelFull = true;
           btnInMenu.pushObject(btn);
         }
       });
@@ -191,9 +194,7 @@ export default FlexberryBaseComponent.extend({
     const $editPanel = $(this.element);
     this.set('_editPanelWidth', $editPanel.outerWidth());
 
-    let closeButtonWidth = this.get('showCloseButton') ?
-    $editPanel.find('.ui.button.close-button').outerWidth(true)
-      : 0;
+    let closeButtonWidth = this.get('showCloseButton') ? $editPanel.find('.ui.button.close-button').outerWidth() : 0;
     this.set('_closeButtonWidth', closeButtonWidth);
 
     // get and save button width

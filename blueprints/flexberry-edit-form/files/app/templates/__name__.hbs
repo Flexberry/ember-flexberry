@@ -3,21 +3,21 @@
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
   <div class="field">
-    {{edit-panel
+    {{flexberry-edit-panel
       showCloseButton=true
       deepMount=true
       buttons=(array
         (hash
           type="submit"
           class="save-button"
-          disabled=(and hasParentRoute (not saveBeforeRouteLeave))
+          disabled=(readonly)
           text=(t "forms.edit-form.save-button-text")
           icon="icon icon-save"
           action="save")
         (hash
           type="submit"
           class="save-close-button"
-          disabled=(and hasParentRoute (not saveBeforeRouteLeave))
+          disabled=(readonly)
           text=(t "forms.edit-form.saveAndClose-button-text")
           icon="icon icon-save-close"
           action="saveAndClose"

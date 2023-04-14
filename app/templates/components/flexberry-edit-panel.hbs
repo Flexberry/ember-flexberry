@@ -14,8 +14,7 @@
             type={{if panelButton.type panelButton.type "button"}}
             class="ui button {{panelButton.class}}"
             title={{panelButton.title}}
-            {{action "sendButtonAction" panelButton.action}}>
-            {{#if panelButton.icon}}<i class={{panelButton.icon}}></i>{{/if}}{{panelButton.text}}
+            {{action "sendButtonAction" panelButton.action}}>{{#if panelButton.icon}}<i class={{panelButton.icon}}></i>{{/if}}{{panelButton.text}}
           </button>
         {{/if}}
       {{/unless}}
@@ -33,5 +32,5 @@
 {{/unless}}
 
 {{#if showCloseButton}}
-  <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+  <button type="submit" class="ui button close-button" {{action "sendButtonAction" closeAction}}>{{t "forms.edit-form.close-button-text"}}</button>
 {{/if}}

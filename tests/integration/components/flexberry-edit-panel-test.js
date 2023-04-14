@@ -128,7 +128,7 @@ test('flexberry-edit-panel with defaut buttons renders properly', function(asser
 
 
 test('flexberry-edit-panel with custom buttons renders properly', function(assert) {
-  assert.expect(19);
+  assert.expect(24);
 
   // Create objects for testing.
   this.set('panelButtons', panelButtons);

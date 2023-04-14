@@ -8,6 +8,7 @@ import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
 import { sort } from '@ember/object/computed';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
+import { set } from '@ember/object';
 
 export default FlexberryBaseComponent.extend({
 
@@ -181,7 +182,7 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
 
     this.set('_buttonsSorting', ['id:asc']);
-    this.get('buttons').forEach((btn, i) => btn.id = `edit_btn${i}`);
+    this.get('buttons').forEach((btn, i) => set(btn, 'id', `edit_btn${i}`));
     this.set('_panelButtons', this.get('buttons'));
     this.set('_menuButtons', A());
 

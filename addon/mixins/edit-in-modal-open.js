@@ -1,6 +1,7 @@
 import Mixin from '@ember/object/mixin';
 import { getOwner } from '@ember/application';
 import { inject as service} from '@ember/service';
+import { get, set } from '@ember/object';
 
 export default Mixin.create({
   /**
@@ -60,15 +61,16 @@ export default Mixin.create({
     @param {Object} modelObject record or model controller, when record is created.
     @param {String} editFormRoute name of edit record route for modal content.
     @param {Boolean} isNewRecord flag indicates when modal record open fo create new record.
+    @param {Boolean} useSidePageMode Indicates when use side page mode.
     @private
   */
-  _openModalDialog(modelObject, editFormRoute, isNewRecord) {
+  _openModalDialog(modelObject, editFormRoute, isNewRecord, useSidePageMode) {
     let controllerForShowModalAction = isNewRecord ? modelObject : this;
 
     // getting parameters for main modal window
     let modalControllerName = this.get('_modalControllerName');
     let modalController = getOwner(this).lookup('controller:' + modalControllerName);
-    let modalControllerOutlet = modalController.get('modalOutletName');
+    let modalControllerOutlet = get(modalController, 'modalOutletName');
     let modalTemplateName = this.get('_modalTemplateName');
 
     let loadingParams = {
@@ -81,7 +83,7 @@ export default Mixin.create({
     // getting parameters for content modal window
     let modalContentControllerName = editFormRoute;
     let modalContentController = getOwner(this).lookup('controller:' + modalContentControllerName);
-    let modalContentControllerOutlet = modalController.get('modalContentOutletName');
+    let modalContentControllerOutlet = get(modalController, 'modalContentOutletName');
     let modalContentTemplate = editFormRoute;
 
     loadingParams = {
@@ -90,18 +92,20 @@ export default Mixin.create({
     };
 
     //setting data for modal content
-    let modelName = (isNewRecord) ? modelObject.get('modelProjection.modelName') : modelObject.constructor.modelName;
+    let modelName = (isNewRecord) ? get(modelObject, 'modelProjection.modelName') : modelObject.constructor.modelName;
     let record = (isNewRecord) ? modelObject.store.createRecord(modelName) : modelObject;
 
     //get projection from record
-    let modelProjName = getOwner(this).lookup('route:' + editFormRoute).get('modelProjection');
+    let modelProjName = get(getOwner(this).lookup('route:' + editFormRoute), 'modelProjection');
 
-    let proj = record.get(`constructor.projections.${modelProjName}`);
+    let proj = get(record, `constructor.projections.${modelProjName}`);
 
     //set parameters in modal content controller
-    modalContentController.set('modelProjection', proj);
-    modalContentController.set('isModal', true);
-    modalContentController.set('modalController', modalController);
+    set(modalController, 'useSidePageMode', useSidePageMode);
+    set(modalContentController, 'modelProjection', proj);
+    set(modalContentController, 'isModal', true);
+    set(modalContentController, 'modalController', modalController);
+
     this.get('objectlistviewEvents').one('editRecordDialogHidden', modalContentController, modalContentController.rollbackAll);
 
     //show content modal window
@@ -109,8 +113,8 @@ export default Mixin.create({
       controllerForShowModalAction.send('showModalDialog', modalContentTemplate,
         { controller: modalContentController, model: record }, loadingParams);
     } else {
-      let recordId = record.get('id') || record.get('data.id');
-      this.store.findRecord(modelName, recordId, { projection: modelProjName }).then((findingRecord) => {
+      let recordId = get(record, 'id') || get(record, 'data.id');
+      this.store.findRecord(modelName, recordId, { projection: modelProjName }).then((findingRecord) => { 
         controllerForShowModalAction.send('showModalDialog', modalContentTemplate,
         { controller: modalContentController, model: findingRecord }, loadingParams);
       });
@@ -123,10 +127,11 @@ export default Mixin.create({
     @method openEditModalDialog
     @param {Object} record Record.
     @param {String} editFormRoute name of edit record route for modal content.
+    @param {Boolean} useSidePageMode Indicates when use side page mode.
   */
-  openEditModalDialog(record, editFormRoute) {
+  openEditModalDialog(record, editFormRoute, useSidePageMode) {
     let openModalForCreateNew = false;
-    this._openModalDialog(record, editFormRoute, openModalForCreateNew);
+    this._openModalDialog(record, editFormRoute, openModalForCreateNew, useSidePageMode);
   },
 
   /**

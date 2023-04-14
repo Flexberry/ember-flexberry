@@ -136,14 +136,14 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   */
   filterText: null,
 
-   /**
-    Flag indicate when edit form of new record must be open in modal window.
+  /**
+    Flag indicate when edit form must be open in modal window.
     @property editInModal
     @type Boolean
     @default false
     @private
   */
-  editInModal: false,
+    editInModal: false,
 
   /**
     Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.

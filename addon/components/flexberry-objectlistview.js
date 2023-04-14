@@ -1079,12 +1079,13 @@ export default FlexberryBaseComponent.extend({
           } else {
             let editFormRoute = this.get('editFormRoute');
             let editInModal = this.get('editInModal');
+            let useSidePageMode = this.get('useSidePageMode');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
             if (isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
             } else {
-              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal });
+              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
             }
 
             /* eslint-disable ember/closure-actions */

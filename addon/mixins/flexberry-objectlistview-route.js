@@ -4,6 +4,7 @@
 
 import Mixin from '@ember/object/mixin';
 import { merge } from '@ember/polyfills';
+import { get } from '@ember/object';
 import EditInModalOpen from '../mixins/edit-in-modal-open';
 
 /**
@@ -44,11 +45,11 @@ export default Mixin.create(EditInModalOpen, {
 
       let editFormRoute = methodOptions.editFormRoute;
       if (methodOptions.editInModal) {
-        this.openEditModalDialog(record, editFormRoute);
+        this.openEditModalDialog(record, editFormRoute, methodOptions.useSidePageMode);
       } else {
         let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
         let onEditForm = methodOptions.onEditForm;
-        let recordId = record.get('id') || record.get('data.id');
+        let recordId = get(record, 'id') || get(record, 'data.id');
         let thisRouteName = this.get('router.currentRouteName');
         let thisRecordId = this.get('currentModel.id');
         let queryParams = {

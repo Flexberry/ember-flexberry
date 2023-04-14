@@ -242,7 +242,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
-  
+
     @property showEditMenuItemInRow
     @type Boolean
    */
@@ -341,6 +341,14 @@ export default ListFormController.extend({
     editInModal: false,
 
   /**
+    Flag indicates whether to side page or usually mode.
+
+    @property useSidePageMode
+    @type Boolean
+   */
+    useSidePageMode: true,
+
+  /**
     Current records.
 
     @property _records
@@ -416,6 +424,7 @@ export default ListFormController.extend({
       '  fixedHeader=fixedHeader<br>' +
       '  advLimitButton=advLimitButton<br>' +
       '  editInModal=editInModal<br>' +
+      '  useSidePageMode=useSidePageMode<br>' +
       '}}'));
   },
 
@@ -658,6 +667,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'editInModal'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'useSidePageMode',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'useSidePageMode'
     });
 
     return componentSettingsMetadata;

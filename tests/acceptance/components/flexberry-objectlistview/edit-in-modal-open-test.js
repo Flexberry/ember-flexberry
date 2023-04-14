@@ -1,7 +1,7 @@
 import { executeTest } from './execute-folv-test';
 import $ from 'jquery';
 
-executeTest('check edit in modal open', (store, assert, app) => { 
+executeTest('check edit in modal open', (store, assert) => { 
   assert.expect(3);
   const path = 'ember-flexberry-dummy-suggestion-list';
   visit(path);

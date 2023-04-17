@@ -1,6 +1,7 @@
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
-import { A, isArray } from '@ember/array';
+import { get, set, computed } from '@ember/object';
+import { A } from '@ember/array';
+import $ from "jquery"
 
 /**
   Component's CSS-classes names.
@@ -53,35 +54,35 @@ export default Component.extend({
    * @property tabs
    * @type {Array}
    */
-  tabs: Ember.computed('items.[]', 'items.@each.active', function () {
+  tabs: computed('items.{[],@each.active}', function () {
     let active = false;
-    let items = this.get('items') || Ember.A();
-    let result = Ember.A();
+    let items = this.get('items') || A();
+    let result = A();
 
     items.forEach((item) => {
-      let itemIsActive = Ember.get(item, 'active');
+      let itemIsActive = get(item, 'active');
       if (itemIsActive) {
         if (!active) {
           active = true;
 
-          let itemClass = Ember.get(item, 'class') || '';
+          let itemClass = get(item, 'class') || '';
           let regEx = /\sactive(\s|$)/;
           if (!regEx.test(itemClass)) {
             itemClass += ' active';
           }
 
-          Ember.set(item, 'class', itemClass);
+          set(item, 'class', itemClass);
           this.set('prevTab', item.selector);
-          Ember.$.tab('change tab', item.selector);
+          $.tab('change tab', item.selector);
         }
       }
 
-      Ember.set(item, 'active', false);
+      set(item, 'active', false);
 
-      if (Ember.get(item, 'iconClass')) {
-        Ember.set(item, '_hasIcon', true);
+      if (get(item, 'iconClass')) {
+        set(item, '_hasIcon', true);
       } else {
-        Ember.set(item, '_hasIcon', false);
+        set(item, '_hasIcon', false);
       }
 
       result.pushObject(item);
@@ -114,7 +115,7 @@ export default Component.extend({
     );
     const tab = document.querySelector('.flexberry-tab-bar-tab.tab.item');
 
-    if (tab.clientWidth * this.items.length > tabContainer.clientWidth) {
+    if (tab != null && tab.clientWidth * this.items.length > tabContainer.clientWidth) {
       this.$(this.navDropdownDomString).show();
     } else {
       this.$(this.navDropdownDomString).hide();
@@ -204,7 +205,7 @@ export default Component.extend({
     */
     change(currentTab, event) {
       let prevTab = this.get('prevTab');
-      let tabName = currentTab.selector;
+      let tabName = currentTab;
       let changed = false;
 
       if (prevTab !== tabName) {
@@ -215,7 +216,7 @@ export default Component.extend({
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        set(currentTab, 'active', false);
+        this.set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -318,7 +319,7 @@ export default Component.extend({
       transition: 'drop',
       action: 'activate',
       onChange(newTab) {
-        this.$.tab('change tab', newTab);
+        $.tab('change tab', newTab);
       },
     });
   },

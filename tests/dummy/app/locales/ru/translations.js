@@ -1024,6 +1024,11 @@ $.extend(true, translations, {
           'tab_8': 'Вкладка №8',
           'tab_9': 'Вкладка №9',
           'tab_10': 'Вкладка №10',
+          'tab_11': 'Вкладка №11',
+          'tab_12': 'Вкладка №12',
+          'tab_13': 'Вкладка №13',
+          'tab_14': 'Вкладка №14',
+          'tab_15': 'Вкладка №15',
           'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },

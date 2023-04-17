@@ -8,6 +8,7 @@ import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { run } from '@ember/runloop';
 
 moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry edit panel', {
   integration: true,
@@ -50,7 +51,7 @@ const panelButtons = [{
   class:  'button-one-class',
   disabled: false,
   text: 'buttonOneCaption',
-  action: 'save',
+  action: 'firstButtonClick',
 }, {
   type: 'submit',
   class: 'button-two-class',
@@ -62,7 +63,7 @@ const panelButtons = [{
   class: 'button-three-class',
   disabled: false,
   text: 'buttonThreeCaption',
-  action: 'save',
+  action: 'threeButtonClick',
 }, {
   type: 'submit',
   class: 'button-four-class',
@@ -125,7 +126,6 @@ test('flexberry-edit-panel with defaut buttons renders properly', function(asser
   const $panelButtons = $component.children('button');
   checkPanelButtons($panelButtons, panelButtons, assert);
 });
-
 
 test('flexberry-edit-panel with custom buttons renders properly', function(assert) {
   assert.expect(24);
@@ -199,4 +199,35 @@ test('flexberry-edit-panel with custom buttons and dropdown renders properly', f
   });
 });
 
+test('flexberry-edit-panel with custom buttons and dropdown actions', function(assert) {
+  assert.expect(1);
+
+  this.set('actions.buttonClick', (className) => {
+    $('.button-two-class').addClass(className);
+  });
+
+  panelButtons[0].action = 'firstButtonClick';
+  panelButtons[2].action = 'threeButtonClick';
+
+  // Create objects for testing.
+  this.set('panelButtons', panelButtons);
+
+  // Render component.
+  this.render(hbs`{{flexberry-edit-panel
+    showCloseButton=false
+    deepMount=false
+    buttons=panelButtons
+    firstButtonClick=(action "buttonClick" "first-button-clicked")
+  }}`);
+
+  // Retrieve component.
+  const $component = this.$().children();
+
+  const $panelButtons = $component.children('button');
+
+  run(() => {
+    $panelButtons[0].click();
+    assert.ok($('.button-two-class').hasClass('first-button-clicked'), 'Component has css-class \'first-button-clicked\' after click');
+  });
+});
 

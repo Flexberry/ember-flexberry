@@ -72,7 +72,7 @@ var EnumBlueprint = (function () {
                 caption = "'" + key + "'";
             values.push(key + ": " + caption);
         }
-        this.enumObjects = "{\n  " + values.join(",\n  ") + "\n}";
+        this.enumObjects = "{\n  " + values.join(",\n  ") + ",\n}";
     }
     return EnumBlueprint;
 }());

@@ -106,10 +106,6 @@ var Locales = /** @class */ (function () {
             }
             strings.push(str + ",");
         });
-        if (strings.length) {
-            var last = strings.length - 1;
-            strings[last] = strings[last].slice(0, -1);
-        }
         return strings.join('\n');
     };
     Locales.prototype.parseMergeSnippet = function (content) {

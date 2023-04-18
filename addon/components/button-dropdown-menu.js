@@ -8,9 +8,7 @@ export default FlexberryBaseComponent.extend({
      * Call action of a clicked button.
      */
     sendButtonAction() {
-      /* eslint-disable ember/closure-actions */
-      this.sendAction('sendButtonAction', ...arguments);
-      /* eslint-enable ember/closure-actions */
+      this.get('sendButtonAction')(...arguments);
     }
   }
 });

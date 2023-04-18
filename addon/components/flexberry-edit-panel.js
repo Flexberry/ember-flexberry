@@ -257,9 +257,7 @@ export default FlexberryBaseComponent.extend({
       if (this.get('deepMount')) {
         this.currentController.send(actionName, ...actionParams);
       } else {
-        /* eslint-disable ember/closure-actions */
-        this.sendAction(actionName, ...actionParams);
-        /* eslint-enable ember/closure-actions */
+        this.get(actionName)(...actionParams);
       }
     }
   }

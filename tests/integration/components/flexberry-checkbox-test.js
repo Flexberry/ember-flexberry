@@ -18,6 +18,8 @@ test('Component renders properly', function(assert) {
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
   let $checkboxInput = $component.children('input');
+  let isCheckboxDisplayed = $checkboxInput.css('display') !== 'none';
+
 
   // Check wrapper <div>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -32,7 +34,7 @@ test('Component renders properly', function(assert) {
     $checkboxInput.hasClass('flexberry-checkbox-input'),
     true,
     'Component\'s inner checkbox <input> has flexberry-checkbox-input css-class');
-  assert.strictEqual($checkboxInput.hasClass('hidden'), true, 'Component\'s inner checkbox <input> has \'hidden\' css-class');
+  assert.strictEqual(isCheckboxDisplayed, true, 'Component can\'t be focused');
   assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked');
 
   // Check wrapper's additional CSS-classes.

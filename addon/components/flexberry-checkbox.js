@@ -127,6 +127,8 @@ export default FlexberryBaseComponent.extend({
     if (this.get('value')) {
       this.$().checkbox('set checked');
     }
+
+    this.$().children('input').removeClass('hidden');
   },
 
   /**

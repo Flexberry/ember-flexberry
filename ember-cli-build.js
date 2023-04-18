@@ -8,7 +8,7 @@ module.exports = function(defaults) {
     lessOptions: {
       paths: [
           'bower_components/semantic-ui',
-          'bower_components/ember-flexberry-themes',
+          'node_modules/ember-flexberry-themes',
       ]
     },
     postcssOptions: {
@@ -53,7 +53,7 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/outline-icons.woff2', { destDir: 'assets/fonts' });
 
   // GOSTUI2
-  const ghostThemeAssetsDir = 'bower_components/ember-flexberry-themes/src/themes/ghost/assets';
+  const ghostThemeAssetsDir = 'node_modules/ember-flexberry-themes/src/themes/ghost/assets';
   app.import(`${ghostThemeAssetsDir}/fonts.css`);
   app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.eot`, { destDir: 'assets/fonts' });
   app.import(`${ghostThemeAssetsDir}/fonts/GOSTUI2/GOSTUI2-w170-regular_g_temp.ttf`, { destDir: 'assets/fonts' });

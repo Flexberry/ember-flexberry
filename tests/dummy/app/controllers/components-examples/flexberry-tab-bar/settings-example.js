@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Array of tabs.
 

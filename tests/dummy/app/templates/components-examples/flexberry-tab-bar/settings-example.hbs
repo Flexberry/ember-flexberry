@@ -3,12 +3,12 @@
   <div class="field">
     <div class="ui segments">
       {{#if componentTemplateText}}
-      <div class="ui segment">
         <div class="ui segment">
-          <h4 class="ui header">{{t "components.settings-example.component-template-caption"}}</h4>
-          <pre><code>{{componentTemplateText}}</code></pre>
+          <div class="ui segment">
+            <h4 class="ui header">{{t "components.settings-example.component-template-caption"}}</h4>
+            <pre><code>{{componentTemplateText}}</code></pre>
+          </div>
         </div>
-      </div>
       {{/if}}
       {{flexberry-tab-bar items=items}}
       <div class="ui bottom attached tab active segment" data-tab="tab1">

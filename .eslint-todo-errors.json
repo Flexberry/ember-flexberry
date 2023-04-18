@@ -152,6 +152,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 72 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 111 }
   ],
+  "addon/components/flexberry-tab-bar.js": [
+    { "ruleId": "ember/no-side-effects", "line": 75, "column": 11 }
+  ],
   "addon/components/flexberry-textarea.js": [
     { "ruleId": "ember/require-return-from-computed", "line": 91, "column": 8 },
     { "ruleId": "ember/require-return-from-computed", "line": 114, "column": 8 }
@@ -1492,7 +1495,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 769, "column": 18 }
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 779, "column": 18 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },

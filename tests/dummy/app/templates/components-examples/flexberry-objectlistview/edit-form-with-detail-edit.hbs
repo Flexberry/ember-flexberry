@@ -1,23 +1,25 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
+  <div class="edit-form-message">
+    {{ui-message
+      type="success"
+      closeable=true
+      visible=showFormSuccessMessage
+      caption=formSuccessMessageCaption
+      message=formSuccessMessage
+      onShow=(action "onSuccessMessageShow")
+      onHide=(action "onSuccessMessageHide")
+    }}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=showFormErrorMessage
+      caption=formErrorMessageCaption
+      message=formErrorMessage
+      onShow=(action "onErrorMessageShow")
+      onHide=(action "onErrorMessageHide")
+    }}
+  </div>
   <div class="field">
     <div class="sixteen wide">
       {{flexberry-validationsummary errors=(v-get validationObject "messages")}}

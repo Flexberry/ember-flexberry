@@ -536,7 +536,8 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       let appController = getOwner(this).lookup('controller:application');
       let thisRouteName = appController.get('currentRouteName');
       let thisRecordId = modelController.get('model.id');
-      let editInModal = this.get('editInModal');      
+      let editInModal = this.get('editInModal');
+      let useSidePageMode = this.get('useSidePageMode');
       let transitionOptions = {
         queryParams: {
           parentRoute: thisRouteName,
@@ -544,7 +545,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
         }
       };
       if (editInModal) {
-        this.openCreateModalDialog(modelController, editFormRoute);
+        this.openCreateModalDialog(modelController, editFormRoute, useSidePageMode);
       } else {
         assert('Property editFormRoute is not defined in controller', editFormRoute);
         this.get('objectlistviewEventsService').setLoadingState('loading');

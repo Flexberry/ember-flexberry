@@ -140,9 +140,10 @@ export default Mixin.create({
     @method openCreateModalDialog
     @param {Object} modelController parent model controller.
     @param {String} editFormRoute name of edit record route for modal content.
+    @param {Boolean} useSidePageMode Indicates when use side page mode.
   */
-  openCreateModalDialog(modelController, editFormRoute) {
+  openCreateModalDialog(modelController, editFormRoute, useSidePageMode) {
     let openModalForCreateNew = true;
-    this._openModalDialog(modelController, editFormRoute, openModalForCreateNew);
+    this._openModalDialog(modelController, editFormRoute, openModalForCreateNew, useSidePageMode);
   }
 });

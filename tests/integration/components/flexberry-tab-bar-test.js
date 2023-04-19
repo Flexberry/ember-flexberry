@@ -10,7 +10,7 @@ moduleForComponent('flexberry-tab-bar', 'Integration | Component | flexberry-tab
 test('it renders properly', function(assert) {
   assert.expect(5);
 
-  this.render(hbs`{{flexberry-tab-bar}}`);
+  this.render(hbs`{{flexberry-tab-bar isOverflowedTabs=true}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -37,7 +37,7 @@ test('it renders items', function(assert) {
   ];
   this.set('items', items);
 
-  this.render(hbs`{{flexberry-tab-bar items=items}}`);
+  this.render(hbs`{{flexberry-tab-bar items=items isOverflowedTabs=true}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -84,7 +84,7 @@ test('tabs are switched in menu and in dropdown list', function(assert) {
   ];
   this.set('items', items);
 
-  this.render(hbs`{{flexberry-tab-bar items=items}}
+  this.render(hbs`{{flexberry-tab-bar items=items isOverflowedTabs=true}}
     <div class="ui bottom attached tab active segment" data-tab="tab1">
       <h4>Tab №1</h4>
     </div>

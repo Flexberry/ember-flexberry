@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-edit-panel` component for responsive edit panel buttons.
+* Generated `flexberry-edit-panel` to edit form blueprint.
 
 ## [3.8.0-beta.18] - 2023-03-15
 ### Fixed

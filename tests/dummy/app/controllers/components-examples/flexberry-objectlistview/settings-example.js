@@ -333,6 +333,22 @@ export default ListFormController.extend({
   advLimitButton: false,
 
   /**
+    Flag indicate when edit form must be open in modal window.
+
+    @property editInModal
+    @type Boolean
+  */
+    editInModal: false,
+
+  /**
+    Flag indicates whether to side page or usually mode.
+
+    @property useSidePageMode
+    @type Boolean
+   */
+    useSidePageMode: true,
+
+  /**
     Current records.
 
     @property _records
@@ -407,6 +423,8 @@ export default ListFormController.extend({
       '  nextPage=(action "nextPage")<br>' +
       '  fixedHeader=fixedHeader<br>' +
       '  advLimitButton=advLimitButton<br>' +
+      '  editInModal=editInModal<br>' +
+      '  useSidePageMode=useSidePageMode<br>' +
       '}}'));
   },
 
@@ -643,6 +661,18 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'advLimitButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editInModal',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'editInModal'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'useSidePageMode',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'useSidePageMode'
     });
 
     return componentSettingsMetadata;

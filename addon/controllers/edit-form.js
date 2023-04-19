@@ -470,10 +470,11 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       const afterSaveModelFunction = () => {
         this.get('appState').success();
         this.onSaveActionFulfilled();
+        let isModal = this.get('isModal');
         if (close) {
           this.get('appState').reset();
           this.close(skipTransition);
-        } else if (!skipTransition) {
+        } else if (!skipTransition && !isModal) {
           const routeName = this.get('routeName');
           if (routeName.indexOf('.new') > 0) {
             const qpars = {};
@@ -597,8 +598,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   close(skipTransition, rollBackModel) {
     this.get('appState').reset();
     this.onCloseActionStarted();
-    if (!skipTransition) {
-      this.transitionToParentRoute(skipTransition, rollBackModel);
+    let isModal = this.get('isModal');
+    let modalController = this.get('modalController');
+    if (isModal && !isNone(modalController)) {
+      modalController.send('onEditRecordDialogClosing');
+    } else {
+      if (!skipTransition) {
+        this.transitionToParentRoute(skipTransition, rollBackModel);
+      }
     }
   },
 
@@ -865,6 +872,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   rollbackHasManyRelationships(model) {
     deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
+  },
+
+  /**
+    Rollback current model.
+    @method rollbackAll
+  */
+  rollbackAll() {
+    this.get('model').rollbackAll();
   },
 
   /**

@@ -14,12 +14,13 @@ import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import EditInModalOpen from '../mixins/edit-in-modal-open';
 
 /**
   @class OlvToolbar
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(EditInModalOpen, {
   /**
     Controller for model.
 
@@ -134,6 +135,15 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   filterText: null,
+
+  /**
+    Flag indicate when edit form must be open in modal window.
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+    editInModal: false,
 
   /**
     Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.
@@ -522,22 +532,27 @@ export default FlexberryBaseComponent.extend({
     */
     createNew() {
       let editFormRoute = this.get('editFormRoute');
-      assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('modelController');
-      this.get('objectlistviewEventsService').setLoadingState('loading');
       let appController = getOwner(this).lookup('controller:application');
       let thisRouteName = appController.get('currentRouteName');
       let thisRecordId = modelController.get('model.id');
+      let editInModal = this.get('editInModal');
+      let useSidePageMode = this.get('useSidePageMode');
       let transitionOptions = {
         queryParams: {
           parentRoute: thisRouteName,
           parentRouteRecordId: thisRecordId
         }
       };
-
-      later((function() {
-        modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
-      }), 50);
+      if (editInModal) {
+        this.openCreateModalDialog(modelController, editFormRoute, useSidePageMode);
+      } else {
+        assert('Property editFormRoute is not defined in controller', editFormRoute);
+        this.get('objectlistviewEventsService').setLoadingState('loading');
+        later((function() {
+          modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
+        }), 50);
+      }
     },
 
     /**

@@ -164,6 +164,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-tab-bar/settings-example');
   this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

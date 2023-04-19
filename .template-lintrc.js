@@ -264,15 +264,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-tab-bar",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "link-href-attributes",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-text-cell",
       "only": [
         "eol-last"

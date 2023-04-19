@@ -610,6 +610,16 @@ export default Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.title'),
+          children: [{
+            link: 'components-examples/flexberry-tab-bar/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-text-cell.title'),
           children: [{

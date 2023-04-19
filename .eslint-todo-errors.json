@@ -152,6 +152,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 72 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 111 }
   ],
+  "addon/components/flexberry-tab-bar.js": [
+    { "ruleId": "ember/no-side-effects", "line": 77, "column": 11 }
+  ],
   "addon/components/flexberry-textarea.js": [
     { "ruleId": "ember/require-return-from-computed", "line": 91, "column": 8 },
     { "ruleId": "ember/require-return-from-computed", "line": 114, "column": 8 }
@@ -1498,7 +1501,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 769, "column": 18 }
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 779, "column": 18 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },
@@ -1921,6 +1924,15 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 9, "column": 15 },
     { "ruleId": "ember/no-test-this-render", "line": 12, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
+  ],
+  "tests/integration/components/flexberry-tab-bar-test.js": [
+    { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },
+    { "ruleId": "ember/no-test-this-render", "line": 13, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 13, "column": 15 },
+    { "ruleId": "ember/no-test-this-render", "line": 40, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 40, "column": 15 },
+    { "ruleId": "ember/no-test-this-render", "line": 87, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 87, "column": 15 }
   ],
   "tests/integration/components/flexberry-textarea-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 14, "column": 1 },

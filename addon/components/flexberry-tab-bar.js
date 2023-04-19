@@ -33,6 +33,8 @@ const flexberryClassNames = {
 export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],
 
+  classNameBindings: ['isOverflowedTabs:overflowed'],
+
   /**
     Reference to component's CSS-classes names.
     Must be also a component's instance property to be available from component's .hbs template.
@@ -102,6 +104,8 @@ export default Component.extend({
    * @property dropdownDomString
    */
   navDropdownDomString: '.ui.compact.pointing.top.right.dropdown.link.item',
+
+  isOverflowedTabs: false,
 
   /**
    * Checks if sum of tabs width is greater than tab container.
@@ -216,7 +220,7 @@ export default Component.extend({
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        this.set(currentTab, 'active', false);
+        set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -244,65 +248,67 @@ export default Component.extend({
     // initialize semantic ui tabs
     this.$('.item').tab();
 
-    // Dragscroll inplementation for tabs
-    const slider = document.querySelector('.dragscroll');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+    if (this.get('isOverflowedTabs')) {
+      // Dragscroll inplementation for tabs
+      const slider = document.querySelector('.dragscroll');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
 
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
 
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
 
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
 
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) {
-        return false;
-      } else {
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) {
+          return false;
+        } else {
+          e.preventDefault();
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          slider.scrollLeft = scrollLeft - walk;
+        }
+      });
+
+      slider.addEventListener('wheel', (e) => {
+
+        // Prevent default.
         e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        slider.scrollLeft = scrollLeft - walk;
-      }
-    });
+        e.stopPropagation();
 
-    slider.addEventListener('wheel', (e) => {
+        // Stop link scroll.
+        this.$('body').stop();
 
-      // Prevent default.
-      e.preventDefault();
-      e.stopPropagation();
+        // Calculate delta, direction.
+        var n = this.normalizeWheel(e);
+        var x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
+        var delta = Math.min(Math.abs(x), 150);
+        var direction = x > 0 ? 1 : -1;
 
-      // Stop link scroll.
-      this.$('body').stop();
+        // Scroll page.
+        this.$('.dragscroll').scrollLeft(this.$('.dragscroll').scrollLeft() + delta * direction);
+      });
 
-      // Calculate delta, direction.
-      var n = this.normalizeWheel(e);
-      var x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
-      var delta = Math.min(Math.abs(x), 150);
-      var direction = x > 0 ? 1 : -1;
+      // Dropdown visibility implementation
+      window.addEventListener('resize', () => {
+        this.setNavDropdownVisibility();
+      });
 
-      // Scroll page.
-      this.$('.dragscroll').scrollLeft(this.$('.dragscroll').scrollLeft() + delta * direction);
-    });
-
-    // Dropdown visibility implementation
-    window.addEventListener('resize', () => {
       this.setNavDropdownVisibility();
-    });
-
-    this.setNavDropdownVisibility();
+    }
   },
 
   /**
@@ -314,14 +320,16 @@ export default Component.extend({
     // Initialize possibly added new tabs.
     this.$('.item').tab();
 
-    // Inititalize semantic ui dropdown (hidden by default)
-    this.$(this.navDropdownDomString).dropdown({
-      transition: 'drop',
-      action: 'activate',
-      onChange(newTab) {
-        $.tab('change tab', newTab);
-      },
-    });
+    if (this.get('isOverflowedTabs')) {
+      // Inititalize semantic ui dropdown (hidden by default)
+      this.$(this.navDropdownDomString).dropdown({
+        transition: 'drop',
+        action: 'activate',
+        onChange(newTab) {
+          $.tab('change tab', newTab);
+        },
+      });
+    }
   },
 
   /**

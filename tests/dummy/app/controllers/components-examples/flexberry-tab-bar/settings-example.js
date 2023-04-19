@@ -1,8 +1,18 @@
 import Controller from '@ember/controller';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { next } from '@ember/runloop';
 
 export default Controller.extend({
+  /**
+    Reload tabs flag.
+
+    @property reloadTabs
+    @type boolean
+  */
+  reloadTabs: true,
+
   /**
     Array of tabs.
 
@@ -44,11 +54,35 @@ export default Controller.extend({
     this.set('componentTemplateText', new htmlSafe(
       '{{#flexberry-tab-bar<br>' +
       '  items=items<br>' +
+      '  isOverflowedTabs=isOverflowedTabs<br>' +
       '}}<br>' +
       '{{/flexberry-tab-bar}}'));
   },
 
+  /**
+    Component settings metadata.
+    @property componentSettingsMetadata
+    @type Object[]
+  */
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
+
+    componentSettingsMetadata.pushObject({
+      settingName: 'isOverflowedTabs',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'isOverflowedTabs'
+    });
+    return componentSettingsMetadata;
+  }),
+
   actions: {
+    reloadTabs(){
+      this.set('reloadTabs', false);
+      next(() => {
+        this.set('reloadTabs', true);
+      })
     }
+  }
 });
 

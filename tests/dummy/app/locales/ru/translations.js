@@ -1013,6 +1013,8 @@ $.extend(true, translations, {
       },
       'flexberry-tab-bar': {
         'settings-example': {
+          'reload-button-text': 'Обновить',
+          'instruction-text': 'Нажмите кнопку "Обновить" после смены свойства контроллера <code>isOverflowedTabs</code>',
           'caption': 'Flexberry-tab-bar. Пример работы с настройками',
           'tab_1': 'Вкладка №1',
           'tab_2': 'Вкладка №2',

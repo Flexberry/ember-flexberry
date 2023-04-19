@@ -153,7 +153,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 111 }
   ],
   "addon/components/flexberry-tab-bar.js": [
-    { "ruleId": "ember/no-side-effects", "line": 75, "column": 11 }
+    { "ruleId": "ember/no-side-effects", "line": 77, "column": 11 }
   ],
   "addon/components/flexberry-textarea.js": [
     { "ruleId": "ember/require-return-from-computed", "line": 91, "column": 8 },

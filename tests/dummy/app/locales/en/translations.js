@@ -1012,6 +1012,8 @@ $.extend(true, translations, {
       'flexberry-tab-bar': {
         'settings-example': {
           'caption': 'Flexberry-tab-bar. Settings example',
+          'reload-button-text': 'Reload',
+          'instruction-text': 'Click the "Reload" button after changing the <code>isOverflowedTabs</code> controller properties',
           'tab_1': 'Tab №1',
           'tab_2': 'Tab №2',
           'tab_3': 'Tab №3',

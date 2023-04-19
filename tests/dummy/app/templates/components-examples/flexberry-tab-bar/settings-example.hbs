@@ -1,76 +1,77 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-tab-bar.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    <div class="ui segments">
-      {{#if componentTemplateText}}
-        <div class="ui segment">
-          <div class="ui segment">
-            <h4 class="ui header">{{t "components.settings-example.component-template-caption"}}</h4>
-            <pre><code>{{componentTemplateText}}</code></pre>
-          </div>
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+      componentBlockOverflow="visible"
+    }}
+      <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.instruction-text"}}</p>
+      <button type="button" class="ui primary button" {{action "reloadTabs"}}>{{t "forms.components-examples.flexberry-tab-bar.settings-example.reload-button-text"}}</button>
+      {{#if reloadTabs}}
+        {{flexberry-tab-bar items=items isOverflowedTabs=isOverflowedTabs}}
+        <div class="ui bottom attached tab active segment" data-tab="tab1">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_1"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab2">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_2"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab3">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_3"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab4">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_4"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab5">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_5"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab6">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_6"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab7">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_7"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab8">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_8"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab9">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_9"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab10">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_10"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab11">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_11"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab12">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_12"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab13">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_13"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab14">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_14"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="tab15">
+          <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_15"}}</h4>
+          <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
         </div>
       {{/if}}
-      {{flexberry-tab-bar items=items}}
-      <div class="ui bottom attached tab active segment" data-tab="tab1">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_1"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab2">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_2"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab3">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_3"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab4">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_4"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab5">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_5"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab6">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_6"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab7">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_7"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab8">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_8"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab9">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_9"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab10">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_10"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab11">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_11"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab12">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_12"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab13">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_13"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab14">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_14"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="tab15">
-        <h4>{{t "forms.components-examples.flexberry-tab-bar.settings-example.tab_15"}}</h4>
-        <p>{{t "forms.components-examples.flexberry-tab-bar.settings-example.lorem"}}</p>
-      </div>
-    </div>
+    {{/settings-example}}
   </div>
 </form>

@@ -133,13 +133,13 @@ export default Component.extend({
    * @method normalizeWheel
    */
   normalizeWheel: function (event) {
-    var pixelStep = 10;
-    var lineHeight = 40;
-    var pageHeight = 800;
-    var sX = 0;
-    var sY = 0;
-    var pX = 0;
-    var pY = 0;
+    const pixelStep = 10;
+    const lineHeight = 40;
+    const pageHeight = 800;
+    let sX = 0;
+    let sY = 0;
+    let pX = 0;
+    let pY = 0;
 
     // Legacy.
     if ('detail' in event) {
@@ -293,10 +293,10 @@ export default Component.extend({
         this.$('body').stop();
 
         // Calculate delta, direction.
-        var n = this.normalizeWheel(e);
-        var x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
-        var delta = Math.min(Math.abs(x), 150);
-        var direction = x > 0 ? 1 : -1;
+        const n = this.normalizeWheel(e);
+        const x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
+        const delta = Math.min(Math.abs(x), 150);
+        const direction = x > 0 ? 1 : -1;
 
         // Scroll page.
         this.$('.dragscroll').scrollLeft(this.$('.dragscroll').scrollLeft() + delta * direction);

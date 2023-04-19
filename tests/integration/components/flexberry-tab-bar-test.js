@@ -51,14 +51,14 @@ test('it renders items', function(assert) {
     let $item = $(this);
 
     // Check that the captions matches the array.
-    assert.strictEqual($item.attr('data-tab'), 'tab' + new Number(i + 1), 'Component\'s item\'s сaptions matches the array');
+    assert.strictEqual($item.attr('data-tab'), `tab${i + 1}`, 'Component\'s item\'s сaptions matches the array');
   });
 
   $dropdownItems.each(function(i) {
     let $item = $(this);
 
     // Check that the captions matches the array.
-    assert.strictEqual($item.attr('data-tab'), 'tab' + new Number(i + 1), 'Component\'s item\'s сaptions matches the array');
+    assert.strictEqual($item.attr('data-tab'), `tab${i + 1}`, 'Component\'s item\'s сaptions matches the array');
   });
 });
 

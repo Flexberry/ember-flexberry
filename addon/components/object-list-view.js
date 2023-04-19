@@ -968,6 +968,18 @@ export default FlexberryBaseComponent.extend(
     @default ''
   */
   componentName: '',
+  
+  /**
+   * Clears selection from row
+   * 
+   * @param {DS.Model} recordWithKey Model in row
+   */
+  clearSelectionFromRow(recordWithKey) {
+    if (recordWithKey) {
+      set(recordWithKey, 'selected', false);
+      this.send('selectRow', recordWithKey, { checked: false });
+    }
+  },
 
   actions: {
     /**
@@ -1088,7 +1100,10 @@ export default FlexberryBaseComponent.extend(
       } else {
         this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
       }
+
+      this.clearSelectionFromRow(recordWithKey);
     },
+    
     /* eslint-enable no-unused-vars */
 
     /**

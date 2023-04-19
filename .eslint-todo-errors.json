@@ -1066,8 +1066,8 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/edit-in-modal-open-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 5 }
+    { "ruleId": "ember/no-test-and-then", "line": 10, "column": 3 },
+    { "ruleId": "ember/no-test-and-then", "line": 14, "column": 5 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/execute-folv-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 9, "column": 1 },

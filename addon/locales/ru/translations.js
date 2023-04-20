@@ -48,7 +48,8 @@ export default {
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
       'close-button-text': 'Закрыть',
-
+      'more-button-text': 'Еще',
+      'only-more-button-text': 'Действия',
       'readonly': 'только для чтения'
     },
 

@@ -449,6 +449,14 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-tab-bar': {
+            'caption': 'flexberry-tab-bar',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-text-cell': {
             'caption': 'flexberry-text-cell',
             'title': '',
@@ -1001,6 +1009,29 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
+        }
+      },
+      'flexberry-tab-bar': {
+        'settings-example': {
+          'reload-button-text': 'Обновить',
+          'instruction-text': 'Нажмите кнопку "Обновить" после смены свойства контроллера <code>isOverflowedTabs</code>',
+          'caption': 'Flexberry-tab-bar. Пример работы с настройками',
+          'tab_1': 'Вкладка №1',
+          'tab_2': 'Вкладка №2',
+          'tab_3': 'Вкладка №3',
+          'tab_4': 'Вкладка №4',
+          'tab_5': 'Вкладка №5',
+          'tab_6': 'Вкладка №6',
+          'tab_7': 'Вкладка №7',
+          'tab_8': 'Вкладка №8',
+          'tab_9': 'Вкладка №9',
+          'tab_10': 'Вкладка №10',
+          'tab_11': 'Вкладка №11',
+          'tab_12': 'Вкладка №12',
+          'tab_13': 'Вкладка №13',
+          'tab_14': 'Вкладка №14',
+          'tab_15': 'Вкладка №15',
+          'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },
       'flexberry-text-cell': {

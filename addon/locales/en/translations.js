@@ -9,7 +9,8 @@ export default {
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
       'close-button-text': 'Close',
-
+      'more-button-text': 'More',
+      'only-more-button-text': 'Actions',
       'readonly': 'read-only mode'
     },
 

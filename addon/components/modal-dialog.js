@@ -113,6 +113,14 @@ export default Component.extend({
   useCloseButton: true,
 
   /**
+    Flag indicates whether to show header or not.
+    @property showHeader
+    @type Boolean
+    @default true
+  */
+  showHeader: true,
+
+  /**
     Flag indicates whether to side page or usually mode.
 
     @property useSidePageMode

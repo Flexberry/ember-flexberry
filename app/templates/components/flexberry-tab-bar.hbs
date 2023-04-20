@@ -1,12 +1,28 @@
-{{#each items as |item|}}
-  <a class="{{concat flexberryClassNames.tab " tab item " item.class (if item.active " active")}}"
-    title="{{item.caption}}"
-    data-tab="{{item.selector}}"
-    {{action "change" item on="click"}}>
-    {{#if item.iconClass}}
-      <i class="{{concat flexberryClassNames.tabIcon " " item.iconClass}}"></i>
-    {{else}}
-      {{item.caption}}
-    {{/if}}
-  </a>
-{{/each}}
+<div class="ui top attached tabular menu dragscroll">
+  {{#each tabs as |item|}}
+    <button type="button" class={{concat flexberryClassNames.tab " tab item " item.class}}
+      title={{item.caption}}
+      draggable="false"
+      data-tab={{item.selector}}
+      {{action "change" item.selector on="click"}}>
+      {{#if item._hasIcon}}
+        <i class={{concat flexberryClassNames.tabIcon " " item.iconClass}}></i>
+      {{else}}
+        {{item.caption}}
+      {{/if}}
+    </button>
+  {{/each}}
+</div>
+{{#if isOverflowedTabs}}
+  <div class="ui compact attached pointing top right dropdown link item">
+    <i class="clone outline icon"></i>
+    <i class="caret down icon"></i>
+    <div class="menu">
+      {{#each tabs as |item|}}
+        <button type="button" class="item" data-tab={{item.selector}} {{action "change" item.selector on="click"}}>
+          {{item.caption}}
+        </button>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}

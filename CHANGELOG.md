@@ -5,7 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * `flexberry-edit-panel` component for responsive edit panel buttons.
-* Generated `flexberry-edit-panel` to edit form blueprint.
+* Blueprints:
+    * Add ability to exclude localization on generation.
+    * Generated `flexberry-edit-panel` to edit.
 
 ## [3.8.0-beta.18] - 2023-03-15
 ### Fixed

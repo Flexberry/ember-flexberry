@@ -240,8 +240,8 @@ class CoreBlueprint {
     this.children = children.join(", ");
     this.routes = routes.join("\n");
     this.importProperties = importProperties.join("\n");
-    this.formsImportedProperties = formsImportedProperties.join(",\n");
-    this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+    this.formsImportedProperties = formsImportedProperties.join(",\n") + ",";
+    this.modelsImportedProperties = modelsImportedProperties.join(",\n") + ",";
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {

@@ -813,10 +813,10 @@
   ],
   "blueprints/flexberry-core/Locales.js": [
     { "ruleId": "no-prototype-builtins", "line": 8, "column": 50 },
-    { "ruleId": "no-unused-vars", "line": 213, "column": 13 },
-    { "ruleId": "no-unused-vars", "line": 214, "column": 13 },
-    { "ruleId": "no-redeclare", "line": 356, "column": 17 },
-    { "ruleId": "no-redeclare", "line": 361, "column": 17 }
+    { "ruleId": "no-unused-vars", "line": 209, "column": 13 },
+    { "ruleId": "no-unused-vars", "line": 210, "column": 13 },
+    { "ruleId": "no-redeclare", "line": 352, "column": 17 },
+    { "ruleId": "no-redeclare", "line": 357, "column": 17 }
   ],
   "blueprints/flexberry-core-offline/index.js": [
     { "ruleId": "no-mixed-spaces-and-tabs", "line": 67, "column": 4 }

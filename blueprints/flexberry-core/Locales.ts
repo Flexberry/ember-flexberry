@@ -115,11 +115,6 @@ export default class Locales {
       }
       strings.push(`${str},`);
     })
-
-    if (strings.length) {
-      let last = strings.length - 1;
-      strings[last] = strings[last].slice(0, -1);
-    }
     return strings.join('\n');
   }
 

@@ -76,12 +76,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "app/templates/new-platform-flexberry-services-lock-list",
       "only": [
         "eol-last"

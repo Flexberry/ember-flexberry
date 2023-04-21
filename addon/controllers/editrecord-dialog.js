@@ -67,9 +67,9 @@ export default Controller.extend({
 
     @property sizeClass
     @type String
-    @default 'small editrecord-dialog'
+    @default 'editrecord-dialog'
   */
-  sizeClass: 'small editrecord-dialog',
+  sizeClass: 'editrecord-dialog',
 
   actions: {
     /**

@@ -665,6 +665,7 @@ export default FlexberryBaseComponent.extend({
 
         flatpickr.setDate(value, false);
         flatpickr.clear();
+        this._onChange();
       }
     },
 

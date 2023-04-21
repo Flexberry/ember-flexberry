@@ -414,13 +414,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/mobile/components/flexberry-sitemap-guideline",
-      "only": [
-        "eol-last",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
         "eol-last",

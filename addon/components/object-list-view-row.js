@@ -45,7 +45,7 @@ export default FlexberryBaseComponent.extend({
     @default 20
     @private
   */
-  _hierarchicalIndent: 20,
+  _hierarchicalIndent: 16,
 
   /**
     Level nesting by default.

@@ -174,7 +174,7 @@
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 164, "column": 39 }
   ],
   "addon/components/mobile/flexberry-objectlistview.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 271, "column": 34 }
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 272, "column": 34 }
   ],
   "addon/components/mobile/object-list-view-row.js": [
     { "ruleId": "ember/require-computed-property-dependencies", "line": 32, "column": 23 }

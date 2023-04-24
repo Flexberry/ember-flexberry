@@ -21,6 +21,9 @@ export default {
       },
       editor1: {
         __caption__: 'Редактор',
+        name: {
+          __caption__: 'Редактор'
+        },
         eMail: {
           __caption__: 'Почта'
         }
@@ -29,7 +32,10 @@ export default {
         __caption__: 'Одобрено'
       },
       type: {
-        __caption__: 'Тип предложения'
+        __caption__: 'Тип предложения',
+        name: {
+          __caption__: 'Тип предложения'
+        },
       },
       commentsCount: {
         __caption__: 'Количество комментариев'

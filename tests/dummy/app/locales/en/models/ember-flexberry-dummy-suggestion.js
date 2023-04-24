@@ -15,18 +15,12 @@ export default {
       },
       author: {
         __caption__: 'Author',
-        name: {
-          __caption__: 'Author'
-        },
         eMail: {
           __caption__: 'Email'
         }
       },
       editor1: {
         __caption__: 'Editor',
-        name: {
-          __caption__: 'Editor'
-        },
         eMail: {
           __caption__: 'Email'
         }
@@ -35,10 +29,7 @@ export default {
         __caption__: 'Moderated'
       },
       type: {
-        __caption__: 'Type',
-        name: {
-          __caption__: 'Type'
-        },
+        __caption__: 'Type'
       },
       commentsCount: {
         __caption__: 'Comments count'

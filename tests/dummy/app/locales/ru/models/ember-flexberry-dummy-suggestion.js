@@ -15,6 +15,9 @@ export default {
       },
       author: {
         __caption__: 'Автор',
+        name: {
+          __caption__: 'Автор'
+        },
         eMail: {
           __caption__: 'Почта'
         }

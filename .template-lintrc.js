@@ -76,12 +76,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "app/templates/new-platform-flexberry-services-lock-list",
       "only": [
         "eol-last"
@@ -264,15 +258,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-tab-bar",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "link-href-attributes",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-text-cell",
       "only": [
         "eol-last"
@@ -420,13 +405,6 @@ module.exports = {
         "eol-last",
         "quotes",
         "no-negated-condition"
-      ]
-    },
-    {
-      "moduleId": "app/templates/mobile/components/flexberry-sitemap-guideline",
-      "only": [
-        "eol-last",
-        "no-invalid-interactive"
       ]
     },
     {

@@ -5095,6 +5095,11 @@ ember-flexberry-data@~3.8.0-beta.1:
     ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.1"
 
+ember-flexberry-themes@0.1.0-beta.30:
+  version "0.1.0-beta.30"
+  resolved "https://registry.yarnpkg.com/ember-flexberry-themes/-/ember-flexberry-themes-0.1.0-beta.30.tgz#f3fee8aef59de2f75b417efe2cea91a40e55a9fd"
+  integrity sha512-W0Gmckn/uR56AnltUU1HLp7LynEOKope983A44qEIXd8KVLeovmr0hy32NH6yaQB3W9M1S/UeYrIzpG4UN/Kjg==
+
 ember-get-config@, ember-get-config@0.3.0, ember-get-config@^0.2.2:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.3.0.tgz#a73a1a87b48d9dde4c66a0e52ed5260b8a48cfbd"

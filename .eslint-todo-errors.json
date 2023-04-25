@@ -152,6 +152,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 72 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 111 }
   ],
+  "addon/components/flexberry-tab-bar.js": [
+    { "ruleId": "ember/no-side-effects", "line": 77, "column": 11 }
+  ],
   "addon/components/flexberry-textarea.js": [
     { "ruleId": "ember/require-return-from-computed", "line": 91, "column": 8 },
     { "ruleId": "ember/require-return-from-computed", "line": 114, "column": 8 }
@@ -171,7 +174,7 @@
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 164, "column": 39 }
   ],
   "addon/components/mobile/flexberry-objectlistview.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 271, "column": 34 }
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 272, "column": 34 }
   ],
   "addon/components/mobile/object-list-view-row.js": [
     { "ruleId": "ember/require-computed-property-dependencies", "line": 32, "column": 23 }
@@ -207,43 +210,43 @@
     { "ruleId": "ember/require-computed-property-dependencies", "line": 668, "column": 22 },
     { "ruleId": "ember/require-computed-macros", "line": 734, "column": 15 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 889, "column": 33 },
-    { "ruleId": "ember/closure-actions", "line": 981, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1144, "column": 33 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1144, "column": 71 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1152, "column": 27 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1171, "column": 25 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1209, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1437, "column": 46 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1462, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1463, "column": 28 },
-    { "ruleId": "no-prototype-builtins", "line": 1788, "column": 23 },
-    { "ruleId": "no-prototype-builtins", "line": 1991, "column": 28 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2042, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2089, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2264, "column": 39 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2265, "column": 79 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2267, "column": 33 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2268, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2269, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2286, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2293, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2294, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2297, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2298, "column": 12 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2322, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2323, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2325, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2352, "column": 22 },
-    { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 2462, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2586, "column": 32 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2705, "column": 28 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2714, "column": 25 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2808, "column": 27 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2822, "column": 25 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2985, "column": 49 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2986, "column": 51 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2987, "column": 32 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 2988, "column": 29 }
+    { "ruleId": "ember/closure-actions", "line": 993, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1159, "column": 33 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1159, "column": 71 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1167, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1186, "column": 25 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1224, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1452, "column": 46 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1477, "column": 31 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1478, "column": 28 },
+    { "ruleId": "no-prototype-builtins", "line": 1803, "column": 23 },
+    { "ruleId": "no-prototype-builtins", "line": 2006, "column": 28 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2057, "column": 37 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2104, "column": 38 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2279, "column": 39 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2280, "column": 79 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2282, "column": 33 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2283, "column": 31 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2284, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2301, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2308, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2309, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2312, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2313, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2337, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2338, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2340, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2367, "column": 22 },
+    { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 2477, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2601, "column": 32 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2720, "column": 28 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2729, "column": 25 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2823, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 2837, "column": 25 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 3000, "column": 49 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 3001, "column": 51 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 3002, "column": 32 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 3003, "column": 29 }
   ],
   "addon/components/olv-toolbar.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 258, "column": 19 },
@@ -810,10 +813,10 @@
   ],
   "blueprints/flexberry-core/Locales.js": [
     { "ruleId": "no-prototype-builtins", "line": 8, "column": 50 },
-    { "ruleId": "no-unused-vars", "line": 213, "column": 13 },
-    { "ruleId": "no-unused-vars", "line": 214, "column": 13 },
-    { "ruleId": "no-redeclare", "line": 356, "column": 17 },
-    { "ruleId": "no-redeclare", "line": 361, "column": 17 }
+    { "ruleId": "no-unused-vars", "line": 209, "column": 13 },
+    { "ruleId": "no-unused-vars", "line": 210, "column": 13 },
+    { "ruleId": "no-redeclare", "line": 352, "column": 17 },
+    { "ruleId": "no-redeclare", "line": 357, "column": 17 }
   ],
   "blueprints/flexberry-core-offline/index.js": [
     { "ruleId": "no-mixed-spaces-and-tabs", "line": 67, "column": 4 }
@@ -1066,8 +1069,8 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/edit-in-modal-open-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 5 }
+    { "ruleId": "ember/no-test-and-then", "line": 10, "column": 3 },
+    { "ruleId": "ember/no-test-and-then", "line": 14, "column": 5 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/execute-folv-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 9, "column": 1 },
@@ -1498,7 +1501,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 769, "column": 18 }
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 779, "column": 18 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },
@@ -1921,6 +1924,15 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 9, "column": 15 },
     { "ruleId": "ember/no-test-this-render", "line": 12, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
+  ],
+  "tests/integration/components/flexberry-tab-bar-test.js": [
+    { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },
+    { "ruleId": "ember/no-test-this-render", "line": 13, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 13, "column": 15 },
+    { "ruleId": "ember/no-test-this-render", "line": 40, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 40, "column": 15 },
+    { "ruleId": "ember/no-test-this-render", "line": 87, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 87, "column": 15 }
   ],
   "tests/integration/components/flexberry-textarea-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 14, "column": 1 },

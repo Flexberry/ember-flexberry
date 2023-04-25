@@ -449,6 +449,14 @@ $.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-tab-bar': {
+            'caption': 'flexberry-tab-bar',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-text-cell': {
             'caption': 'flexberry-text-cell',
             'title': '',
@@ -999,6 +1007,29 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-tab-bar': {
+        'settings-example': {
+          'caption': 'Flexberry-tab-bar. Settings example',
+          'reload-button-text': 'Reload',
+          'instruction-text': 'Click the "Reload" button after changing the <code>isOverflowedTabs</code> controller properties',
+          'tab_1': 'Tab №1',
+          'tab_2': 'Tab №2',
+          'tab_3': 'Tab №3',
+          'tab_4': 'Tab №4',
+          'tab_5': 'Tab №5',
+          'tab_6': 'Tab №6',
+          'tab_7': 'Tab №7',
+          'tab_8': 'Tab №8',
+          'tab_9': 'Tab №9',
+          'tab_10': 'Tab №10',
+          'tab_11': 'Tab №11',
+          'tab_12': 'Tab №12',
+          'tab_13': 'Tab №13',
+          'tab_14': 'Tab №14',
+          'tab_15': 'Tab №15',
+          'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },
       'flexberry-text-cell': {

@@ -26,8 +26,9 @@ module.exports = {
         '.jscsrc',
 
         //'__root__/app.js',
+        //'__root__/templates/application.hbs',
+        
         '__root__/adapters/application.js',
-        '__root__/templates/application.hbs',
         '__root__/templates/mobile/application.hbs',
     ],
     getFileMap: function () {

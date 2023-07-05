@@ -44,7 +44,7 @@
           ></i>
         {{/unless}}
       </a>
-    {{else unless isChooseComponentVisible}}
+    {{else if (not isChooseComponentVisible)}}
       <span class="italic" data-test-no-data>
         {{t "components.flexberry-multiple-lookup.no-data"}}
       </span>

@@ -357,8 +357,8 @@ $.extend(true, translations, {
             'caption': 'flexberry-multiple-lookup',
             'title': '',
             'multiple-lookup': {
-              'caption': 'Лукап множественного выбора',
-              'title': 'Лукап множественного выбора'
+              'caption': 'Пример работы с настройками',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -914,9 +914,9 @@ $.extend(true, translations, {
       },
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
-          'caption': 'Лукап множественного выбора',
+          'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
           'lookup-caption': 'Заполнение пользователей',
-          'lookup-title': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
         }
       },
       'flexberry-menu': {

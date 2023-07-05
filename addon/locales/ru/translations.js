@@ -155,6 +155,10 @@ export default {
       }
     },
 
+    'flexberry-multiple-lookup': {
+      'no-data': 'Нет данных'
+    },
+
     'flexberry-objectlistview': {
       'placeholder': 'Нет данных',
       'showing-entries': {

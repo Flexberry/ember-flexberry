@@ -1,4 +1,9 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { computed, observer } from '@ember/object';
+import { inject as service} from '@ember/service';
+import { run } from '@ember/runloop';
+import { isNone } from '@ember/utils';
+import { debug } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import Builder from 'ember-flexberry-data/query/builder';
@@ -7,7 +12,7 @@ import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberr
 
 export default FlexberryBaseComponent.extend({
   classNames: ['multiple-lookup'],
-  store: Ember.inject.service(),
+  store: service(),
 
   /**
    * All records.
@@ -17,7 +22,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Filtered records.
    */
-  filteredRecords: Ember.computed('records.@each.isDeleted', function () {
+  filteredRecords: computed('records.@each.isDeleted', function () {
     return this.get('records').filterBy('isDeleted', false);
   }),
 
@@ -64,7 +69,16 @@ export default FlexberryBaseComponent.extend({
   /**
    * Lookup visibility.
    */
-  isLookupVisible: true,
+  chooseComponentVisibility: true,
+
+  /**
+   * Lookup visibility based on readonly and visibility flags.
+   */
+  isChooseComponentVisible: computed('chooseComponentVisibility', 'readonly', function () {
+    const isVisible = this.get('chooseComponentVisibility');
+    const readonly = this.get('readonly');
+    return isVisible && !readonly;
+  }),
 
   /**
    * Add new record by value.
@@ -77,7 +91,7 @@ export default FlexberryBaseComponent.extend({
    * Initialization of adding a record by field relatedModel.{relationName}.
    */
   initAddNewRecordByNewValuePropertyName() {
-    Ember.run.debounce(this, this.addNewRecordByNewValuePropertyName, 500);
+    run.debounce(this, this.addNewRecordByNewValuePropertyName, 500);
   },
 
   /**
@@ -94,8 +108,8 @@ export default FlexberryBaseComponent.extend({
    */
   addNewRecord(propertyPath) {
     const newValue = this.get(propertyPath);
-    if (!Ember.isNone(newValue)) {
-      if (Ember.isNone(this.get('filteredRecords').findBy(`${this.get('relationName')}.id`, newValue.get('id')))) {
+    if (!isNone(newValue)) {
+      if (isNone(this.get('filteredRecords').findBy(`${this.get('relationName')}.id`, newValue.get('id')))) {
         this.add(newValue);
       }
 
@@ -141,7 +155,7 @@ export default FlexberryBaseComponent.extend({
     @throws {Error} Throws error if any of parameter predicates has wrong type.
    */
   _conjuctPredicates(limitPredicate, lookupAdditionalLimitFunction, autocompletePredicate) {
-    const limitArray = Ember.A();
+    const limitArray = A();
 
     if (limitPredicate) {
       if (limitPredicate instanceof BasePredicate) {
@@ -184,7 +198,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Building a property to display selected values.
    */
-  buildDisplayValue: Ember.observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
+  buildDisplayValue: observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
     this.get('filteredRecords').forEach((record) =>
       record.set('tagDisplayValue', this.getRecordDisplayValue(record))
     );
@@ -197,7 +211,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
    */
-  removeData: Ember.computed('relationName', 'relatedModel', function () {
+  removeData: computed('relationName', 'relatedModel', function () {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')
@@ -210,7 +224,7 @@ export default FlexberryBaseComponent.extend({
    * @param record
    */
   getRecordDisplayValue(record) {
-    return !Ember.isNone(this.get('tagDisplayAttributeName'))
+    return !isNone(this.get('tagDisplayAttributeName'))
       ? record.get(this.get('tagDisplayAttributeName'))
       : record.get(this.get('relationName') + '.' + this.get('displayAttributeName'));
   },
@@ -245,7 +259,7 @@ export default FlexberryBaseComponent.extend({
     const relatedModel = this.get('relatedModel');
 
     const relationName = this.get('relationName');
-    if (Ember.isNone(relationName)) {
+    if (isNone(relationName)) {
       // We consider that the component works in block form.
       return;
     }
@@ -327,7 +341,7 @@ export default FlexberryBaseComponent.extend({
           builder.top(maxRes + 1);
           builder.count();
 
-          Ember.run(() => {
+          run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               callback({
                 success: true,
@@ -360,8 +374,8 @@ export default FlexberryBaseComponent.extend({
       onResultsOpen() {
         state = 'opened';
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
       },
 
@@ -374,7 +388,7 @@ export default FlexberryBaseComponent.extend({
       onSelect(result) {
         state = 'selected';
 
-        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+        debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
         _this.set('value', result.instance);
 
         // Removing focus is necessary to clear the text in the input field.
@@ -395,8 +409,8 @@ export default FlexberryBaseComponent.extend({
         _this.$('.ui.search').search('set value', '');
         state = 'closed';
 
-        Ember.run(() => {
-          Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        run(() => {
+          debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
       }
     });

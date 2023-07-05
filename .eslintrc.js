@@ -34,6 +34,7 @@ module.exports = {
     'ember/no-jquery': 'warn',
     'ember/no-observers': 'warn',
     'ember/no-mixins': 'warn',
+    'ember/require-computed-property-dependencies': 'warn',
     'hbs/check-hbs-template-literals': 'error'
   },
   reportUnusedDisableDirectives: true,

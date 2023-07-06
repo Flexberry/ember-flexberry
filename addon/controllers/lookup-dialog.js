@@ -198,8 +198,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
           }
         }
       }
-
-      let a = this.get('currentLookupRow');
   
       this.get('objectlistviewEventsService').clearMultiSelectedRecords();
       this._closeModalDialog();

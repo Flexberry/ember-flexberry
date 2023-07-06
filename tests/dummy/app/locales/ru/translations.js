@@ -440,6 +440,10 @@ $.extend(true, translations, {
               'caption': 'Пример ограничения длины текста в ячейках',
               'title': ''
             },
+            'toolbar-custom-components-example': {
+              'caption': 'Пример встраивания пользовательских компонентов в olv-toolbar',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
@@ -959,6 +963,9 @@ $.extend(true, translations, {
         },
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar',
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',

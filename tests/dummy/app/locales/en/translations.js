@@ -440,6 +440,10 @@ $.extend(true, translations, {
               'caption': 'Limited text size example',
               'title': ''
             },
+            'toolbar-custom-components-example': {
+              'caption': 'Example of embedding custom components in olv-toolbar',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
@@ -957,6 +961,9 @@ $.extend(true, translations, {
         },
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Example of embedding custom components in olv-toolbar',
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',

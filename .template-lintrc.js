@@ -1184,6 +1184,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/toolbar-custom-components-example",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/list-on-editform",
       "only": [
         "block-indentation",

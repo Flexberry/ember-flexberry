@@ -411,6 +411,13 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       contentTemplate: 'lookup-dialog-content',
       loaderTemplate: 'loading'
     });
+
+    this.set('lookupMultiGESettings', {
+      controllerName: 'lookup-dialog',
+      template: 'lookup-dialog',
+      contentTemplate: 'ge-multi-lookup-dialog-content',
+      loaderTemplate: 'loading'
+    });
   },
 
   /**

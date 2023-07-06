@@ -1,0 +1,34 @@
+<h3 class="ui header">{{t "forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-objectlistview
+      editFormRoute=editFormRoute
+      showCheckBoxInRow=true
+      modelName="ember-flexberry-dummy-suggestion"
+      modelProjection=modelProjection
+      content=model
+      createNewButton=false
+      refreshButton=true
+      exportExcelButton=true
+      sorting=computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="SuggestionObjectListView"
+      showDeleteMenuItemInRow=true
+      showEditMenuItemInRow=true
+      deleteButton=true
+    }}
+  </div>
+</form>
+<div class="row">{{messageForUser}}</div>

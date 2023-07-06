@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Custom user buttons example',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Groupedit with multiselect in lookup function example',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''

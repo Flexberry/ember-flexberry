@@ -256,7 +256,8 @@ export default {
       'check-all-button-text': 'Выбрать все на всех страницах',
       'uncheck-all-button-text': 'Отменить выбор на всех страницах',
       'clear-sorting-button-text': 'Установить сортировку по умолчанию',
-      'clear-select-button-text': 'Отмена выделения'
+      'clear-select-button-text': 'Отмена выделения',
+      pullUpLookupValues: 'Использовать все выбранные записи',
     },
 
     'groupedit-toolbar': {

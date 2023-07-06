@@ -14,6 +14,10 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
+const {
+  Object: EmberObject
+} = Ember;
+
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
 
@@ -253,6 +257,113 @@ export default Mixin.create(ReloadListMixin, {
       this._reloadModalData(this, reloadData);
     },
 
+    showLookupMultiSelectDialog(chooseData) {
+      let lookupController = this.get('lookupController');
+      let options = Ember.$.extend(true, {
+        projection: undefined,
+        relationName: undefined,
+        title: undefined,
+        predicate: undefined,
+        modelToLookup: undefined,
+        lookupWindowCustomPropertiesData: undefined,
+        componentName: undefined,
+        folvComponentName: undefined,
+        notUseUserSettings: undefined,
+        perPage: this.get('lookupModalWindowPerPage'),
+        sorting: undefined,
+        hierarchicalAttribute: lookupController.get('hierarchicalAttribute'),
+        updateLookupAction: undefined
+      }, chooseData);
+
+      let disableHierarchy = Ember.get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
+      lookupController.set('disableHierarchicalMode', !Ember.isNone(disableHierarchy));
+
+      let customInHierarchicalMode = Ember.get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
+      lookupController.set('inHierarchicalMode', customInHierarchicalMode);
+
+      let projectionName = options.projection;
+      Ember.assert('ProjectionName is undefined.', projectionName);
+
+      let limitPredicate = options.predicate;
+      if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+        throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+      }
+
+      let relationName = options.relationName;
+      let title = options.title;
+      let modelToLookup = options.modelToLookup;
+      let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
+      let componentName = options.componentName;
+      let folvComponentName = options.folvComponentName;
+      let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
+      let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
+      const updateLookupAction = options.updateLookupAction;
+
+      let userSettingsService = this.get('userSettingsService');
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
+      let model = modelToLookup ? modelToLookup : this.get('model');
+      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
+      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+
+      // Get ember static function to get relation by name.
+      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
+      // Get relation property from model.
+      let relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+      }
+
+      const relName = get(this.get('model').constructor, 'relationships').get(model.constructor.modelName)[0].name;
+      this.get('model.' + relName).forEach(m => {
+        const relationModel = m.get(relationName);
+        let recordWithKey = EmberObject.create({});
+        recordWithKey.set('key', Ember.guidFor(relationModel));
+        recordWithKey.set('data', relationModel);
+        this.get('objectlistviewEventsService').rowSelectedTrigger(folvComponentName, relationModel, 1, true, recordWithKey);
+      });
+
+      // Get property type name.
+      let relatedToType = relation.type;
+
+      // Lookup
+      let lookupSettings = this.get('lookupMultiGESettings');
+      Ember.assert('Lookup settings are undefined.', lookupSettings);
+
+      let reloadData = {
+        initialLoad: true,
+        relatedToType: relatedToType,
+        projectionName: projectionName,
+
+        perPage: perPage,
+        page: 1,
+        sorting: sorting,
+        filter: undefined,
+        predicate: limitPredicate,
+        hierarchicalAttribute: hierarchicalAttribute,
+        hierarchyPaging: hierarchyPaging,
+
+        title: title,
+        saveTo: {
+          model: model,
+          propName: relationName,
+          updateLookupAction: updateLookupAction
+        },
+        currentLookupRow: model.get(relationName),
+        customPropertiesData: lookupWindowCustomPropertiesData,
+        componentName: componentName,
+        folvComponentName: folvComponentName,
+        notUseUserSettings: options.notUseUserSettings,
+        modalDialogSettings: options.modalDialogSettings,
+      };
+
+      reloadData.modalDialogSettings.lookupSettings = lookupSettings;
+
+      this._reloadModalData(this, reloadData);
+    },
+
     /**
       Handlers corresponding route's willTransition action.
       It sends message about transition to showing lookup modal window controller.
@@ -422,7 +533,7 @@ export default Mixin.create(ReloadListMixin, {
     @param {Boolean} [options.notUseUserSettings] Not use user settings in the list component on lookup window.
   */
   _reloadModalData(currentContext, options) {
-    let lookupSettings = currentContext.get('lookupSettings');
+    let lookupSettings = get(options, 'modalDialogSettings.lookupSettings') || currentContext.get('lookupSettings');
     assert('Lookup settings are undefined.', lookupSettings);
     assert('Lookup template is undefined.', lookupSettings.template);
     assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
@@ -450,6 +561,7 @@ export default Mixin.create(ReloadListMixin, {
       componentName: undefined,
       folvComponentName: undefined,
       notUseUserSettings: undefined,
+      lookupSettings
     }, options);
 
     assert('Reload data are not defined fully.',
@@ -490,6 +602,7 @@ export default Mixin.create(ReloadListMixin, {
     controller.clear(reloadData.initialLoad);
 
     const modalDialogSettings = controller.get('modalDialogSettings') || merge(merge({}, reloadData.modalDialogSettings), {
+      lookupSettings,
       settings: merge(merge({}, lookupSettings.modalDialogSettings), reloadData.modalDialogSettings.settings),
     });
 

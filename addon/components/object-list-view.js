@@ -1535,6 +1535,10 @@ export default FlexberryBaseComponent.extend(
     For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
+    if (this.get('skipSelectedRecords')) {
+      this.get('objectlistviewEventsService').holdMultiSelectedRecords(this.get('componentName'));
+    }
+
     this.removeObserver('content.[]', this, this._contentDidChangeProxy);
 
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
@@ -2114,6 +2118,8 @@ export default FlexberryBaseComponent.extend(
   },
   /* eslint-enable no-unused-vars */
 
+  skipSelectedRecords: true,
+
   /**
     Alter filter component depending on condition chosen by user.
 
@@ -2320,9 +2326,15 @@ export default FlexberryBaseComponent.extend(
 
     // Mark previously selected records.
     let componentName = this.get('componentName');
-    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    let selectedRecords = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    let multiSelectedRecords = this.get('objectlistviewEventsService').getMultiSelectedRecords(componentName);
+   
+    let selectedRecordsToRestore = multiSelectedRecords ? multiSelectedRecords : selectedRecords;
 
-    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      if (selectedRecordsToRestore && 
+        selectedRecordsToRestore.size && 
+        selectedRecordsToRestore.size > 0 && 
+        this.get('skipSelectedRecords') === false) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {

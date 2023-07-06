@@ -2,6 +2,7 @@
   @module ember-flexberry
  */
 
+import Ember from 'ember';
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
@@ -11,6 +12,10 @@ import { deprecatingAlias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+
+const {
+  Object: EmberObject,
+} = Ember;
 
 /**
   Service for triggering objectlistview events.
@@ -48,6 +53,25 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
     this.set('_selectedRecords', []);
+    this.set('_multiRows', []);
+  },
+
+  getMultiSelectedRecords(componentName) {
+    return this.get('_multiRows')[componentName];
+  },
+
+  clearMultiSelectedRecords() {
+    this.set('_multiRows', []);
+  },
+
+  holdMultiSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = Ember.Map.create();
+    }
+
+    (this.getSelectedRecords(componentName) || []).forEach((v, i) => {
+      this.get('_multiRows')[componentName].set(i, v);
+    });
   },
 
   /**
@@ -133,6 +157,12 @@ export default Service.extend(Evented, {
     this.trigger('filterByAnyMatch', componentName, pattern);
   },
 
+  goBackTrigger(componentName) {
+    this.trigger('goBack', componentName);
+  },
+
+  _multiRows: null,
+
   /**
     Trigger for "new row has been added" event in objectlistview.
     Event name: olvRowAdded.
@@ -187,6 +217,18 @@ export default Service.extend(Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = Ember.Map.create();
+    }
+
+    if (recordWithKey) {
+      if (checked) {
+        this.get('_multiRows')[componentName].set(recordWithKey.key, recordWithKey);
+      } else {
+        this.get('_multiRows')[componentName].delete(recordWithKey.key);
+      }
+    }
+
     if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
         this.get('_selectedRecords')[componentName] = EmberMap.create();
@@ -201,6 +243,19 @@ export default Service.extend(Evented, {
     }
 
     this.trigger('olvRowSelected', componentName, record, count, checked, recordWithKey);
+  },
+
+  restoreSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = Ember.Map.create();
+    }
+
+    this.get('_multiRows')[componentName].forEach((v, i) => {
+      let recordWithKey = EmberObject.create({});
+      recordWithKey.set('key', i);
+      recordWithKey.set('data', v.data);
+      this.get('_selectedRecords')[componentName].set(i, recordWithKey);
+    });
   },
 
   /**

@@ -220,6 +220,10 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
   this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
 
+  this.route('components-examples/flexberry-groupedit/groupedit-with-multiselect-list');
+  this.route('components-examples/flexberry-groupedit/groupedit-with-multiselect-edit',
+  { path: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-edit/:id' });
+
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',
   { path: 'components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute/:id' });

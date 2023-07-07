@@ -44,6 +44,7 @@ module.exports = {
     } else {
       this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
     }
+    this.setLocales(this._files);
     return this._files;
   },
 
@@ -60,8 +61,30 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
+
+  setLocales: function (files) {
+    var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+    if (!fs.existsSync(localesFile)) {
+        return files;
+    };
+    var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+    if (locales.locales == undefined) {
+        return files;
+    };
+    if (!locales.locales.en) {
+        files.splice(files.indexOf("__root__/locales/en/"), 1);
+        files.splice(files.indexOf("__root__/locales/en/forms/"), 1);
+        files.splice(files.indexOf("__root__/locales/en/forms/__name__.js"), 1);
+    };
+    if (!locales.locales.ru) {
+        files.splice(files.indexOf("__root__/locales/ru/"), 1);
+        files.splice(files.indexOf("__root__/locales/ru/forms/"), 1);
+        files.splice(files.indexOf("__root__/locales/ru/forms/__name__.js"), 1);
+    };
+    return files;
+},
 
   /**
    * Blueprint Hook locals.
@@ -87,6 +110,7 @@ module.exports = {
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
+      isEmberCpValidationsUsed: editFormBlueprint.isEmberCpValidationsUsed,
       },
       editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
@@ -99,6 +123,8 @@ class EditFormBlueprint {
   parentRoute: string;
   flexberryComponents: string;
   functionGetCellComponent: string;
+  isEmberCpValidationsUsed: boolean;
+
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
   private modelsDir: string;
@@ -106,6 +132,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
+    this.isEmberCpValidationsUsed = true;
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
@@ -132,7 +159,8 @@ class EditFormBlueprint {
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {
-    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
+    let snippetsFolder = this.isEmberCpValidationsUsed ? "ember-cp-validations" : "ember-validations";
+    return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", snippetsFolder, fileName + "." + fileExt), "utf8"));
   }
 
   readHbsSnippetFile(componentName: string): string {
@@ -183,6 +211,7 @@ class EditFormBlueprint {
       projAttr.type = attr.type;
       projAttr.entityName = this.options.entity.name;
       projAttr.dashedName = (projAttr.name || '').replace(/\./g, '-');
+      this.calculateValidatePropertyNames(projAttr);
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
@@ -198,6 +227,8 @@ class EditFormBlueprint {
         belongsTo.readonly = "readonly";
         belongsTo.entityName = this.options.entity.name;
         belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        belongsTo.isDropdown = belongsTo.type === 'combo';
+        this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }
     }
@@ -208,6 +239,7 @@ class EditFormBlueprint {
       hasMany.entityName = this.options.entity.name;
       hasMany.dashedName = (hasMany.name || '').replace(/\./g, '-');
       this.locales.setupEditFormAttribute(hasMany);
+      this.calculateValidatePropertyNames(hasMany);
       this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
     }
   }
@@ -229,6 +261,7 @@ class EditFormBlueprint {
         belongsToAttr.entityName = this.options.entity.name;
         belongsToAttr.dashedName = (belongsToAttr.name || '').replace(/\./g, '-');
         this.locales.setupEditFormAttribute(belongsToAttr);
+        this.calculateValidatePropertyNames(belongsToAttr);
         this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
       }
       this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -259,5 +292,14 @@ class EditFormBlueprint {
       targetRoot = isDummy ? path.join("tests/dummy", targetRoot) : "addon";
     }
     return lodash.template(path.join(targetRoot, "locales", "${ locale }", localePathSuffix));
+  }
+
+  private calculateValidatePropertyNames(attrs) {
+    const name = attrs.name;
+    const lastDotIndex = name.lastIndexOf(".");
+    const isHaveMaster = lastDotIndex > 0 && lastDotIndex < (name.length - 1);
+
+    attrs.propertyMaster = (isHaveMaster) ? "." + name.substring(0, lastDotIndex) : "";
+    attrs.propertyName = (isHaveMaster) ? name.substring(lastDotIndex + 1, name.length) : name;
   }
 }

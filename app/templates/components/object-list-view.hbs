@@ -3,44 +3,24 @@
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
-          {{#if showCheckBoxInRow }}
-            {{#if (or readonly allSelect)}}
-              <button
-                type="button"
-                class="ui check-all-at-page-button {{buttonClass}} disabled button"
-                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-                disabled="disabled"
-                {{action "checkAllAtPage"}}>
-                  <i class="check-square-o icon"></i>
-              </button>
+          {{#if showCheckBoxInRow}}
+            {{#if (not-eq class "groupedit-container")}}
+              <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
+                {{#if checkRowsSettingsItems}}
+                  {{flexberry-menu
+                    items=checkRowsSettingsItems
+                    onItemClick=(action "onCheckRowMenuItemClick")
+                  }}
+                {{/if}}
+              </div>
             {{else}}
               <button
                 type="button"
-                class="ui check-all-at-page-button {{buttonClass}} button"
+                class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>
               </button>
-            {{/if}}
-            {{#if (not-eq class "groupedit-container") }}
-              {{#if readonly}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} disabled button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  disabled="disabled"
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{else}}
-                <button
-                  type="button"
-                  class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-                  title={{t "components.olv-toolbar.check-all-button-text"}}
-                  {{action "checkAll"}}>
-                    <i class="check-all-square-o icon"></i>
-                </button>
-              {{/if}}
             {{/if}}
             {{#if (and defaultSortingButton (not orderedProperty))}}
               <button
@@ -65,14 +45,14 @@
             {{/if}}
             </span>
             {{#if column.sorted}}
-              <div class="object-list-view-order-icon" style="float:right;">
+              <div class="object-list-view-order-icon">
                 {{#if column.sortAscending}}
                   <div title="{{t 'components.object-list-view.sort-ascending'}}">
-                  ▲{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="ascending icon"></i>
                   </div>
                 {{else}}
                   <div title="{{t 'components.object-list-view.sort-descending'}}">
-                  ▼{{column.sortNumber}}
+                    {{column.sortNumber}}<i class="descending icon"></i>
                   </div>
                 {{/if}}
               </div>
@@ -95,9 +75,9 @@
           <td style={{defaultPaddingStyle}} class="overflowed-cell">
             {{#if column.filter.conditions}}
               {{flexberry-dropdown
+                displayCaptions=(not (is-array column.filter.conditions))
                 value=column.filter.condition
                 items=column.filter.conditions
-                displayCaptions=(not (is-array column.filter.conditions))
                 class="compact fluid"
                 placeholder=(t "components.object-list-view.filter-condition")
                 needChecksOnValue=false
@@ -118,14 +98,16 @@
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
               <div class="fluid action input ui">
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  readonly=(or
-                    (eq column.filter.condition "empty")
-                    (eq column.filter.condition "nempty")
-                  )
-                  dynamicProperties=column.filter.component.properties
-                }}
+                <div style="width: 100%">
+                  {{component column.filter.component.name
+                    value=column.filter.pattern
+                    readonly=(or
+                      (eq column.filter.condition "empty")
+                      (eq column.filter.condition "nempty")
+                    )
+                    dynamicProperties=column.filter.component.properties
+                  }}
+                </div>
                 <button
                   type="button"
                   class="ui clear-filter button"
@@ -173,7 +155,7 @@
           isParentRecordPropertyName=isParentRecordPropertyName
           hierarchicalIndent=hierarchicalIndent
           inHierarchicalMode=inHierarchicalMode
-          inExpandMode=(unbound inExpandMode)
+          inExpandMode=inExpandMode
           loadRecords=loadRecords
           doRenderData=record.doRenderData
           rowClick=(action "rowClick")
@@ -187,6 +169,7 @@
           folvComponentName=componentName
           hierarchyPaging=hierarchyPaging
           configurateRow=configurateRow
+          allSelect=allSelect
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

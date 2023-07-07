@@ -2,11 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import Mixin from '@ember/object/mixin';
+
 import { predicateForFilter } from 'ember-flexberry/utils/filter';
 
-const { Condition, ComplexPredicate } = Query;
+import Condition from 'ember-flexberry-data/query/condition';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -14,18 +15,18 @@ const { Condition, ComplexPredicate } = Query;
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
-    export default Ember.Controller.extend(LimitedController, {
+    export default Controller.extend(LimitedController, {
       ...
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-    export default Ember.Route.extend(LimitedRoute, {
+    export default Route.extend(LimitedRoute, {
       ...
     });
     ```
@@ -49,11 +50,11 @@ const { Condition, ComplexPredicate } = Query;
     ```
 
   @class LimitedRouteMixin
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+    Configuration hash for this route's queryParams. [More info](https://www.emberjs.com/api/ember/release/classes/Route/properties/queryParams?anchor=queryParams).
 
     @property queryParams
     @type Object

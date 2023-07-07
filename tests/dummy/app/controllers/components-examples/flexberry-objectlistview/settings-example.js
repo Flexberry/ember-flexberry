@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { isBlank, isNone } from '@ember/utils';
+import { get, computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -18,11 +21,11 @@ export default ListFormController.extend({
     @property _projections
     @type Object[]
    */
-  _projections: Ember.computed('model.[]', function() {
+  _projections: computed('model.[]', function() {
     let records = this.get('model');
-    let modelClass = Ember.get(records, 'length') > 0 ? Ember.get(records, 'firstObject').constructor : {};
+    let modelClass = get(records, 'length') > 0 ? get(records, 'firstObject').constructor : {};
 
-    return Ember.get(modelClass, 'projections');
+    return get(modelClass, 'projections');
   }),
 
   /**
@@ -31,9 +34,9 @@ export default ListFormController.extend({
     @property _projectionsNames
     @type String[]
    */
-  _projectionsNames: Ember.computed('_projections.[]', function() {
+  _projectionsNames: computed('_projections.[]', function() {
     let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
+    if (isNone(projections)) {
       return [];
     }
 
@@ -46,18 +49,18 @@ export default ListFormController.extend({
     @property projection
     @type Object
    */
-  projection: Ember.computed('_projections.[]', '_projectionName', function() {
+  projection: computed('_projections.[]', '_projectionName', function() {
     let projectionName = this.get('_projectionName');
-    if (Ember.isBlank(projectionName)) {
+    if (isBlank(projectionName)) {
       return null;
     }
 
     let projections = this.get('_projections');
-    if ((Ember.isNone(projections)) && (this.get('model.content') === undefined)) {
+    if ((isNone(projections)) && (this.get('model.content') === undefined)) {
       return {}; // модель не загрузилась ещё, свойство пересчитывается, потому что грузится страница.
     }
 
-    if (Ember.isNone(projections)) {
+    if (isNone(projections)) {
       return null;
     }
 
@@ -85,7 +88,7 @@ export default ListFormController.extend({
     @method _placeholderChanged
     @private
   **/
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
     }
@@ -171,6 +174,14 @@ export default ListFormController.extend({
     @type Boolean
    */
   filterButton: false,
+
+    /**
+    Name of selected detail's model projection which is usef for filtering (filtering is processed only on properties from this projection).
+
+    @property filterProjectionName
+    @type String
+   */
+  filterProjectionName: undefined,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
@@ -322,6 +333,22 @@ export default ListFormController.extend({
   advLimitButton: false,
 
   /**
+    Flag indicate when edit form must be open in modal window.
+
+    @property editInModal
+    @type Boolean
+  */
+    editInModal: false,
+
+  /**
+    Flag indicates whether to side page or usually mode.
+
+    @property useSidePageMode
+    @type Boolean
+   */
+    useSidePageMode: true,
+
+  /**
     Current records.
 
     @property _records
@@ -329,7 +356,7 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
 
   /**
     Template text for 'flexberry-objectlistview' component.
@@ -337,60 +364,69 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-objectlistview<br>' +
-    '  componentName=\"SuggestionsObjectListView\"<br>' +
-    '  colsConfigButton=colsConfigButton<br>' +
-    '  exportExcelButton=exportExcelButton<br>' +
-    '  content=model<br>' +
-    '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  modelProjection=projection<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  tableStriped=tableStriped<br>' +
-    '  allowColumnResize=allowColumnResize<br>' +
-    '  minAutoColumnWidth=minAutoColumnWidth<br>' +
-    '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
-    '  createNewButton=createNewButton<br>' +
-    '  deleteButton=deleteButton<br>' +
-    '  showFiltersInModal=showFiltersInModal<br>' +
-    '  enableFilters=enableFilters<br>' +
-    '  filters=filters<br>' +
-    '  applyFilters=(action "applyFilters")<br>' +
-    '  resetFilters=(action "resetFilters")<br>' +
-    '  refreshButton=refreshButton<br>' +
-    '  defaultSortingButton=defaultSortingButton<br>' +
-    '  filterButton=filterButton<br>' +
-    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '  showEditButtonInRow=showEditButtonInRow<br>' +
-    '  showPrototypeButtonInRow=showPrototypeButtonInRow<br>' +
-    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow<br>' +
-    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  rowClickable=rowClickable<br>' +
-    '  orderable=orderable<br>' +
-    '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
-    '  filterText=filter<br>' +
-    '  filterByAnyWord=filterByAnyWord<br>' +
-    '  filterByAllWords=filterByAllWords<br>' +
-    '  sorting=computedSorting<br>' +
-    '  sortByColumn=(action \"sortByColumn\")<br>' +
-    '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
-    '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
-    '  availableCollExpandMode=availableCollExpandMode<br>' +
-    '  pages=pages<br>' +
-    '  perPageValue=perPageValue<br>' +
-    '  perPageValues=perPageValues<br>' +
-    '  hasPreviousPage=hasPreviousPage<br>' +
-    '  hasNextPage=hasNextPage<br>' +
-    '  previousPage=(action \"previousPage\")<br>' +
-    '  gotoPage=(action \"gotoPage\")<br>' +
-    '  nextPage=(action \"nextPage\")<br>' +
-    '  fixedHeader=fixedHeader<br>' +
-    '  advLimitButton=advLimitButton<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-objectlistview<br>' +
+      '  componentName="SuggestionsObjectListView"<br>' +
+      '  colsConfigButton=colsConfigButton<br>' +
+      '  exportExcelButton=exportExcelButton<br>' +
+      '  content=model<br>' +
+      '  modelName="ember-flexberry-dummy-suggestion"<br>' +
+      '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
+      '  modelProjection=projection<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  tableStriped=tableStriped<br>' +
+      '  allowColumnResize=allowColumnResize<br>' +
+      '  minAutoColumnWidth=minAutoColumnWidth<br>' +
+      '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
+      '  createNewButton=createNewButton<br>' +
+      '  deleteButton=deleteButton<br>' +
+      '  showFiltersInModal=showFiltersInModal<br>' +
+      '  enableFilters=enableFilters<br>' +
+      '  filters=filters<br>' +
+      '  applyFilters=(action "applyFilters")<br>' +
+      '  resetFilters=(action "resetFilters")<br>' +
+      '  refreshButton=refreshButton<br>' +
+      '  defaultSortingButton=defaultSortingButton<br>' +
+      '  filterButton=filterButton<br>' +
+      '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+      '  showEditButtonInRow=showEditButtonInRow<br>' +
+      '  showPrototypeButtonInRow=showPrototypeButtonInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+      '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showPrototypeMenuItemInRow=showPrototypeMenuItemInRow<br>' +
+      '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+      '  rowClickable=rowClickable<br>' +
+      '  orderable=orderable<br>' +
+      '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
+      '  filterText=filter<br>' +
+      '  filterByAnyWord=filterByAnyWord<br>' +
+      '  filterByAllWords=filterByAllWords<br>' +
+      '  filterProjectionName=filterProjectionName<br>' +
+      '  sorting=computedSorting<br>' +
+      '  sortByColumn=(action "sortByColumn")<br>' +
+      '  addColumnToSorting=(action "addColumnToSorting")<br>' +
+      '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
+      '  availableCollExpandMode=availableCollExpandMode<br>' +
+      '  pages=pages<br>' +
+      '  perPageValue=perPageValue<br>' +
+      '  perPageValues=perPageValues<br>' +
+      '  hasPreviousPage=hasPreviousPage<br>' +
+      '  hasNextPage=hasNextPage<br>' +
+      '  previousPage=(action "previousPage")<br>' +
+      '  gotoPage=(action "gotoPage")<br>' +
+      '  nextPage=(action "nextPage")<br>' +
+      '  fixedHeader=fixedHeader<br>' +
+      '  advLimitButton=advLimitButton<br>' +
+      '  editInModal=editInModal<br>' +
+      '  useSidePageMode=useSidePageMode<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -398,8 +434,8 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -524,6 +560,13 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'filterByAllWords'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'filterProjectionName',
+      settingType: 'enumeration',
+      settingAvailableItems: this.get('_projectionsNames'),
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'filterProjectionName'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -619,11 +662,23 @@ export default ListFormController.extend({
       settingDefaultValue: false,
       bindedControllerPropertieName: 'advLimitButton'
     });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editInModal',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'editInModal'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'useSidePageMode',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'useSidePageMode'
+    });
 
     return componentSettingsMetadata;
   }),
 
-  _enableFilters: Ember.observer('enableFilters', function() {
+  _enableFilters: observer('enableFilters', function() {
     if (this.get('enableFilters')) {
       this.set('refreshButton', true);
     }

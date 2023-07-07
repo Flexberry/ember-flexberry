@@ -1,7 +1,95 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-let Model = Projection.Model.extend({
+const Validations = buildValidations({
+  flag: {
+    lazy: false,
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Flag is required',
+      }),
+      validator('inclusion', {
+        in: [true],
+        message: `Flag must be 'true' only`,
+      }),
+    ],
+  },
+  number: {
+    lazy: false,
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Number is required',
+      }),
+      validator('number', {
+        allowString: true,
+        odd: true,
+        integer: true,
+        message(type) {
+          let message = 'Number is invalid';
+          if (type === 'odd') {
+            message = 'Number must be an odd';
+          }
+
+          return message;
+        },
+      }),
+    ],
+  },
+  text: {
+    lazy: false,
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Text is required',
+      }),
+      validator('length', {
+        allowNone: false,
+        min: 5,
+        message: 'Text length must be >= 5',
+      }),
+      validator('uniqueAttributes', {
+        secondProperty: 'date',
+        modelName: 'ember-flexberry-dummy-suggestion',
+        view: 'SuggestionL',
+        message: 'Combination of attributes (Text, Date) are not unique',
+        debounce: 300
+      }),
+    ],
+  },
+  longText: validator('presence', {
+    presence: true,
+    message: 'Long text is required',
+  }),
+  date: [
+    validator('presence', {
+      presence: true,
+      message: 'Date is required',
+    }),
+    validator('date', {
+      allowBlank: false,
+      message: 'Date is invalid',
+    })
+  ],
+  enumeration: validator('presence', {
+    presence: true,
+    message: 'Enumeration is required',
+  }),
+  file: validator('presence', {
+    presence: true,
+    message: 'File is required',
+  }),
+  master: validator('presence', {
+    presence: true,
+    message: 'Master is required',
+  }),
+  details: validator('has-many'),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   flag: DS.attr('boolean'),
   number: DS.attr('number'),
   text: DS.attr('string'),
@@ -21,96 +109,28 @@ let Model = Projection.Model.extend({
     inverse: 'aggregator',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    flag: {
-      presence: {
-        message: 'Flag is required'
-      },
-      inclusion: {
-        in: [true],
-        message: 'Flag must be \'true\' only'
-      }
-    },
-    number: {
-      presence: {
-        message: 'Number is required'
-      },
-      numericality: {
-        odd: true,
-        onlyInteger: true,
-        messages: {
-          numericality: 'Number is invalid',
-          odd: 'Number must be an odd',
-          onlyInteger: 'Number must be an integer'
-        }
-      }
-    },
-    text: {
-      presence: {
-        message: 'Text is required'
-      },
-      allowBlank: false,
-      length: {
-        minimum: 5,
-        messages: {
-          tooShort: 'Text length must be >= 5'
-        }
-      }
-    },
-    longText: {
-      presence: {
-        message: 'Long text is required'
-      }
-    },
-    date: {
-      datetime: {
-        allowBlank: false,
-        messages: {
-          blank: 'Date is required',
-          invalid: 'Date is invalid'
-        }
-      }
-    },
-    enumeration: {
-      presence: {
-        message: 'Enumeration is required'
-      }
-    },
-    file: {
-      presence: {
-        message: 'File is required'
-      }
-    },
-    master: {
-      presence: {
-        message: 'Master is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'integration-examples/edit-form/validation/base', {
-  flag: Projection.attr('Flag'),
-  number: Projection.attr('Number'),
-  text: Projection.attr('Text'),
-  longText: Projection.attr('Long text'),
-  date: Projection.attr('Date'),
-  enumeration: Projection.attr('Enumeration'),
-  file: Projection.attr('File'),
-  master: Projection.belongsTo('integration-examples/edit-form/validation/master', 'Master', {
-    text: Projection.attr('Text', {
+  flag: attr('Flag'),
+  number: attr('Number'),
+  text: attr('Text'),
+  longText: attr('Long text'),
+  date: attr('Date'),
+  enumeration: attr('Enumeration'),
+  file: attr('File'),
+  master: belongsTo('integration-examples/edit-form/validation/master', 'Master', {
+    text: attr('Text', {
       hidden: true
     })
   }, {
     displayMemberPath: 'text'
   }),
-  details: Projection.hasMany('integration-examples/edit-form/validation/detail', 'details', {
-    flag: Projection.attr('Flag'),
-    number: Projection.attr('Number'),
-    text: Projection.attr('Text')
+  details: hasMany('integration-examples/edit-form/validation/detail', 'details', {
+    flag: attr('Flag'),
+    number: attr('Number'),
+    text: attr('Text')
   })
 });
 

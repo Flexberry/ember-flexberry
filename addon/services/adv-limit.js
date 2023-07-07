@@ -2,8 +2,14 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
+import Service from '@ember/service';
+import { inject as service } from '@ember/service';
+import { getOwner } from '@ember/application';
+import { get, computed } from '@ember/object';
+import { resolve, all } from 'rsvp';
+import { isArray, A } from '@ember/array';
+import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
 import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
@@ -15,14 +21,14 @@ const defaultSettingName = 'DEFAULT';
   @class AdvLimitService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Ember data store.
 
     @property store
     @type DS.Store
   */
-  store: Ember.inject.service(),
+  store: service(),
 
   /**
     Flag: indicates whether to use adv limit service.
@@ -39,9 +45,9 @@ export default Ember.Service.extend({
 
     @property currentAppPage
     @type String
-    @default ''
+    @default undefined
   */
-  currentAppPage: '',
+  currentAppPage: undefined,
 
   /**
     Adv limit model name.
@@ -68,13 +74,13 @@ export default Ember.Service.extend({
     @type Object
     @default {}
   */
-  currentAdvLimits: Ember.computed(() => { return {}; }).readOnly(),
+  currentAdvLimits: computed(() => { return {}; }).readOnly(),
 
   init() {
     this._super(...arguments);
-    const appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
-    const useAdvLimitService = Ember.get(appConfig, 'APP.useAdvLimitService');
-    if (!Ember.isNone(useAdvLimitService)) {
+    const appConfig = getOwner(this).factoryFor('config:environment').class;
+    const useAdvLimitService = get(appConfig, 'class.APP.useAdvLimitService');
+    if (!isNone(useAdvLimitService)) {
       this.set('isAdvLimitServiceEnabled', useAdvLimitService);
     }
   },
@@ -97,7 +103,11 @@ export default Ember.Service.extend({
   */
   getCurrentAppPage() {
     let currAppPage = this.get('currentAppPage');
-    currAppPage = currAppPage.replace('.', '/');
+	
+	if (currAppPage) {
+		currAppPage = currAppPage.replace('.', '/');
+	}
+
     return currAppPage;
   },
 
@@ -112,11 +122,11 @@ export default Ember.Service.extend({
       return this._getAdvLimits(componentNames).then(
         advLimits => {
           const ret = {};
-          if (Ember.isArray(advLimits)) {
-            advLimits.forEach(({ record }) => {
-              let advLimitValue = record.get('value');
-              let advLimitName = record.get('name') || defaultSettingName;
-              let componentName = record.get('module').split('@')[1];
+          if (isArray(advLimits)) {
+            advLimits.forEach(limit => {
+              const advLimitValue = limit.get('value');
+              const advLimitName = limit.get('name') || defaultSettingName;
+              const componentName = limit.get('module').split('@')[1];
 
               if (advLimitValue) {
                 if (!(componentName in ret)) {
@@ -135,7 +145,7 @@ export default Ember.Service.extend({
       });
     }
 
-    return Ember.RSVP.resolve(undefined);
+    return resolve(undefined);
   },
 
   /**
@@ -145,7 +155,7 @@ export default Ember.Service.extend({
    @return {Array}
   */
   getListComponentNames() {
-    const ret = Ember.A();
+    const ret = A();
     const appPage = this.getCurrentAppPage();
     if (appPage in this.get('currentAdvLimits')) {
       for (let componentName in this.get(`currentAdvLimits.${appPage}`)) {
@@ -223,8 +233,8 @@ export default Ember.Service.extend({
    @return {Promise}
   */
   deleteAdvLimit(componentName, settingName = defaultSettingName) {
-    Ember.assert('deleteAdvLimit:: Adv limit componentName is not defined.', componentName);
-    Ember.assert('deleteAdvLimit:: Adv limit name is not defined.', settingName);
+    assert('deleteAdvLimit:: Adv limit componentName is not defined.', componentName);
+    assert('deleteAdvLimit:: Adv limit name is not defined.', settingName);
 
     const appPage = this.getCurrentAppPage();
     const currentAdvLimits = this.get(`currentAdvLimits.${appPage}.${componentName}`) || {};
@@ -233,7 +243,7 @@ export default Ember.Service.extend({
     }
 
     if (!this.get('isAdvLimitServiceEnabled')) {
-      return Ember.RSVP.resolve(undefined);
+      return resolve(undefined);
     }
 
     return this._deleteExistingRecord(componentName, settingName);
@@ -249,9 +259,9 @@ export default Ember.Service.extend({
    @return {Promise} Save operation promise.
   */
   saveAdvLimit(advLimit, componentName, settingName = defaultSettingName) {
-    Ember.assert('saveAdvLimit:: componentName is not defined.', componentName);
-    Ember.assert('saveAdvLimit:: Adv limit data are not defined.', !Ember.isNone(advLimit));
-    Ember.assert('saveAdvLimit:: Limit name is not defined.', !Ember.isNone(settingName));
+    assert('saveAdvLimit:: componentName is not defined.', componentName);
+    assert('saveAdvLimit:: Adv limit data are not defined.', !isNone(advLimit));
+    assert('saveAdvLimit:: Limit name is not defined.', !isNone(settingName));
 
     const currentAppPage = this.getCurrentAppPage();
 
@@ -265,14 +275,14 @@ export default Ember.Service.extend({
 
     this.set(`currentAdvLimits.${currentAppPage}.${componentName}.${settingName}`, advLimit);
     if (!this.get('isAdvLimitServiceEnabled')) {
-      return Ember.RSVP.resolve();
+      return resolve();
     }
 
     const store = this.get('store');
     return this._getExistingRecord(componentName, settingName).then(
       (foundRecord) => {
         if (!foundRecord) {
-          const userService = Ember.getOwner(this).lookup('service:user');
+          const userService = getOwner(this).lookup('service:user');
           const currentUserName = userService.getCurrentUserName();
           foundRecord = store.createRecord(this.get('avdLimitModelName'));
           foundRecord.set('user', currentUserName);
@@ -295,16 +305,16 @@ export default Ember.Service.extend({
   */
   _getAdvLimits(componentNames) {
     if (!this.get('isAdvLimitServiceEnabled')) {
-      return Ember.RSVP.resolve(Ember.A());
+      return resolve(A());
     }
 
-    const promises = Ember.A();
+    const promises = A();
     componentNames.forEach(componentName => {
       promises.pushObject(this._getExistingLimits(componentName));
     });
 
-    return Ember.RSVP.all(promises).then(results => {
-      const records = Ember.A();
+    return all(promises).then(results => {
+      const records = A();
       results.forEach(result => {
         records.addObjects(result);
       });
@@ -325,7 +335,7 @@ export default Ember.Service.extend({
 
     let currentAdvLimits = this.get(`currentAdvLimits.${appPage}`);
 
-    if (Ember.isNone(currentAdvLimits)) {
+    if (isNone(currentAdvLimits)) {
       currentAdvLimits = {};
       this.set(`currentAdvLimits.${appPage}`, currentAdvLimits);
     }
@@ -349,14 +359,14 @@ export default Ember.Service.extend({
   _deleteExistingRecord(componentName, settingName) {
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        const delPromises = Ember.A();
-        const foundRecords = result.get('content');
-        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          foundRecords.forEach(({ record }) => {
-            delPromises.addObject(record.destroyRecord());
+        const delPromises = A();
+        const foundRecords = result.toArray();
+        if (isArray(foundRecords) && foundRecords.length > 0) {
+          foundRecords.forEach(limit => {
+            delPromises.addObject(limit.destroyRecord());
           }, this);
 
-          return Ember.RSVP.all(delPromises);
+          return all(delPromises);
         }
       }
 
@@ -377,13 +387,13 @@ export default Ember.Service.extend({
   _getExistingRecord(componentName, settingName) {
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        const foundRecords = result.get('content');
-        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
+        const foundRecords = result.toArray();
+        if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i].record.destroyRecord();
+            foundRecords[i].destroyRecord();
           }
 
-          return foundRecords[0].record;
+          return foundRecords[0];
         }
       }
 
@@ -403,9 +413,9 @@ export default Ember.Service.extend({
   _getExistingLimits(componentName, settingName) {
     return this._getLimitFromStore(componentName, settingName).then((result) => {
       if (result) {
-        let foundRecords = result.get('content');
-        if (!Ember.isArray(foundRecords)) {
-          foundRecords = Ember.A();
+        let foundRecords = result.toArray();
+        if (!isArray(foundRecords)) {
+          foundRecords = A();
         }
 
         return foundRecords;
@@ -445,13 +455,13 @@ export default Ember.Service.extend({
    @private
   */
   _getSearchPredicate(componentName, settingName) {
-    Ember.assert('Can\'t find adv limit for undefined componentName', !Ember.isNone(componentName));
+    assert('Can\'t find adv limit for undefined componentName', !isNone(componentName));
     let searchPredicate;
-    const userService = Ember.getOwner(this).lookup('service:user');
+    const userService = getOwner(this).lookup('service:user');
     const currentUserName = userService.getCurrentUserName();
     const p1 = new SimplePredicate('user', 'eq', currentUserName);
     const p2 = new SimplePredicate('module', 'eq', `${this.getCurrentAppPage()}@${componentName}`);
-    if (!Ember.isNone(settingName)) {
+    if (!isNone(settingName)) {
       const p3 = new SimplePredicate('name', 'eq', settingName);
       searchPredicate = new ComplexPredicate('and', p1, p2, p3);
     } else {

@@ -14,7 +14,8 @@ module.exports = {
     'ember',
     'hbs',
     'jsdoc',
-    'qunit'
+    'qunit',
+    'todo-errors'
   ],
   extends: [
     'eslint:recommended',
@@ -27,8 +28,9 @@ module.exports = {
   },
   rules: {
     'ember/new-module-imports': 'off',
+    'ember/use-ember-data-rfc-395-imports': 'off',
     'ember/no-get': 'off',
-    'ember/use-ember-get-and-set': 'off',
+    'ember/use-ember-get-and-set': ['error', { ignoreThisExpressions: true, }],
     'ember/no-jquery': 'warn',
     'ember/no-observers': 'warn',
     'ember/no-mixins': 'warn',
@@ -45,6 +47,7 @@ module.exports = {
         'index.js',
         'testem.js',
         'blueprints/**/*.js',
+        'blueprints/**/*.ts',
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],

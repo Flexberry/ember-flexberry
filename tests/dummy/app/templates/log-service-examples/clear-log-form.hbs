@@ -1,28 +1,30 @@
 <h3>Batch clear log records</h3>
-<p>
-  Log records total count: {{logRecordsTotalCount}}
-</p>
-<p>
-  Clear log records older:
-  {{flexberry-simpledatetime
-    type="date"
-    value=logRecordsOlderDate
-    readonly=false
-    class="example-simpledatetime"
-  }}
-</p>
-{{#if logRecordsOlderDate}}
-<p>
-  Log records older this date count: {{logRecordsOlderDateCount}}
-</p>
-{{/if}}
-<p>
-<button type="submit" class="ui refresh-counts button" {{action "getCounts"}}>Refresh counts</button>
-<button type="submit" class="ui clear-all-log button" {{action "clearLogRecords"}}>Clear
-  {{#if logRecordsOlderDate}} {{logRecordsOlderDateCount}} {{else}} all {{/if}} log records</button>
-</p>
-{{#if queryInExecutingState}}
-<p>
-  Executing query...
-</p>
-{{/if}}
+<div class="row">
+  <p>
+    Log records total count: {{logRecordsTotalCount}}
+  </p>
+  <p>
+    Clear log records older:
+    {{flexberry-simpledatetime
+      type="date"
+      value=logRecordsOlderDate
+      readonly=false
+      class="example-simpledatetime"
+    }}
+  </p>
+  {{#if logRecordsOlderDate}}
+    <p>
+      Log records older this date count: {{logRecordsOlderDateCount}}
+    </p>
+  {{/if}}
+  <p>
+    <button type="submit" class="ui refresh-counts button" {{action "getCounts"}}>Refresh counts</button>
+    <button type="submit" class="ui clear-all-log button" {{action "clearLogRecords"}}>Clear
+      {{#if logRecordsOlderDate}} {{logRecordsOlderDateCount}} {{else}} all {{/if}} log records</button>
+    </p>
+  {{#if queryInExecutingState}}
+  <p>
+    Executing query...
+  </p>
+  {{/if}}
+</div>

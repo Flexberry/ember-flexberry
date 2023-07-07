@@ -1,4 +1,9 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { merge } from '@ember/polyfills';
+import { later } from '@ember/runloop';
+
 import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 
 /**
@@ -6,10 +11,10 @@ import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
   to support work with {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
 
   @class FlexberryGroupeditRouteMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -19,7 +24,7 @@ export default Ember.Mixin.create({
     @type Service
     @default ObjectlistviewEventsService
   */
-  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+  _groupEditEventsService: service('objectlistview-events'),
 
   /**
     Service for managing the state of the application.
@@ -27,7 +32,7 @@ export default Ember.Mixin.create({
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Service that lets interact between agregator's and detail's form.
@@ -37,7 +42,7 @@ export default Ember.Mixin.create({
     @type Service
     @default DetailInteractionService
   */
-  flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
+  flexberryDetailInteractionService: service('detail-interaction'),
 
   actions: {
     /**
@@ -45,7 +50,7 @@ export default Ember.Mixin.create({
       It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
 
       @method actions.groupEditRowClick
-      @param {Ember.Object} record Record related to clicked table row.
+      @param {EmberObject} record Record related to clicked table row.
       @param {Object} [options] Record related to clicked table row.
       @param {Boolean} options.saveBeforeRouteLeave Flag: indicates whether to save current model before going to the detail's route.
       @param {Boolean} options.editOnSeparateRoute Flag: indicates whether to edit detail on separate route.
@@ -62,7 +67,7 @@ export default Ember.Mixin.create({
         editFormRoute: undefined,
         readonly: false
       };
-      methodOptions = Ember.merge(methodOptions, options);
+      methodOptions = merge(methodOptions, options);
       let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
       let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
 
@@ -104,7 +109,7 @@ export default Ember.Mixin.create({
 
         if (record.get('isNew')) {
           let newModelPath = _this.newRoutePath(editFormRoute);
-          Ember.run.later((function() {
+          later((function() {
             _this.transitionTo(newModelPath).then((newRoute) => {
               newRoute.controller.set('readonly', methodOptions.readonly);
             });
@@ -118,8 +123,8 @@ export default Ember.Mixin.create({
 
       if (saveBeforeRouteLeave) {
         let model = this.controller.get('model');
-        let isModelChanged = !Ember.$.isEmptyObject(model.changedAttributes()) ||
-         !Ember.$.isEmptyObject(model.changedBelongsTo()) || !Ember.$.isEmptyObject(model.changedHasMany());
+        let isModelChanged = !$.isEmptyObject(model.changedAttributes()) ||
+         !$.isEmptyObject(model.changedBelongsTo()) || !$.isEmptyObject(model.changedHasMany());
         let isModelNew = model.get('isNew');
         if (isModelNew || isModelChanged) {
           this.controller.save(false, true).then(() => {
@@ -191,10 +196,12 @@ export default Ember.Mixin.create({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {DS.Model} record The model corresponding to added row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowAdded(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "row has been deleted" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -205,10 +212,12 @@ export default Ember.Mixin.create({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {DS.Model} record The model corresponding to deleted row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowDeleted(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "model(s) corresponding to some row(s) was changed" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -218,8 +227,10 @@ export default Ember.Mixin.create({
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowChanged(componentName) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   }
+  /* eslint-enable no-unused-vars */
 });

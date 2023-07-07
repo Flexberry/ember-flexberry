@@ -1,0 +1,342 @@
+<h3 class="ui header">{{t "forms.components-examples.highload-edit-form-menu.caption" component="{{highload-edit-form-menu}}"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#if (or (not hasParentRoute) saveBeforeRouteLeave)}}
+          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/if}}
+        {{#if (or (not hasParentRoute) saveBeforeRouteLeave)}}
+          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/if}}
+        {{#if (or (not model.isNew) (and hasParentRoute (not saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/if}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}--></button>
+    </div>
+  </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=validationModel.errors isVisible=validationModel.isInvalid}}
+    </div>
+  </div>
+
+  {{#highload-edit-form-menu
+    menu=(array
+      (hash razdelName="Razdel1" children=(array
+        (hash selector="gruppa1.1" gruppaPolejVvodaName="gruppa1.1" active=true showAsterisk=true)
+        (hash selector="gruppa1.2" gruppaPolejVvodaName="gruppa1.2" active=false showAsterisk=true)
+      ))
+      (hash razdelName="Razdel2" children=(array
+        (hash selector="gruppa2.1" gruppaPolejVvodaName="gruppa2.1" active=false showAsterisk=false)
+        (hash selector="gruppa2.2" gruppaPolejVvodaName="gruppa2.2" active=false showAsterisk=true)
+      ))
+    )
+  }}
+
+    <div data-tab="gruppa1.1" class="ui tab gruppaPolejVvoda active">
+      {{!-- template-lint-disable  --}}
+      <h4>gruppa1.1</h4>
+      <div class="field">
+        {{flexberry-field
+          value=model.name
+          class=(if validationModel.errors.name "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.name}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
+          {{flexberry-simpledatetime
+            type="date"
+            value=model.birthday
+            class=(if validationModel.errors.birthday "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.birthday}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
+          {{flexberry-dropdown
+            items=(flexberry-enum "ember-flexberry-dummy-gender")
+            value=model.gender
+            class=(if validationModel.errors.gender "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.gender}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.karma
+          class=(if validationModel.errors.karma "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.karma}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.activated
+            class=(if validationModel.errors.activated "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.activated}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.vip
+            class=(if validationModel.errors.vip "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.vip}}
+        </div>
+      </div>
+    </div>
+    <div data-tab="gruppa1.2" class="ui tab gruppaPolejVvoda">
+      {{!-- template-lint-disable  --}}
+      <h4>gruppa1.2</h4>
+      <div class="field">
+        {{flexberry-field
+          value=model.phone1
+          class=(if validationModel.errors.phone1 "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.phone1}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.ember-flexberry-dummy-application-user-edit.phone1-required-caption"}}</label>
+        {{flexberry-checkbox
+          value=model.phone1IsRequired
+          readonly=readonly
+        }}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.phone2
+            class=(if validationModel.errors.phone2 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone2}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.phone3
+            class=(if validationModel.errors.phone3 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone3}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.eMail
+          class=(if validationModel.errors.eMail "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.eMail}}
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.vK
+          class=(if validationModel.errors.vK "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.vK}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.facebook
+            class=(if validationModel.errors.facebook "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.facebook}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.twitter
+            class=(if validationModel.errors.twitter "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.twitter}}
+        </div>
+      </div>
+    </div>
+    <div data-tab="gruppa2.1" class="ui tab gruppaPolejVvoda">
+      {{!-- template-lint-disable  --}}
+      <h4>gruppa2.1</h4>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
+          {{flexberry-simpledatetime
+            type="date"
+            value=model.birthday
+            class=(if validationModel.errors.birthday "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.birthday}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
+          {{flexberry-dropdown
+            items=(flexberry-enum "ember-flexberry-dummy-gender")
+            value=model.gender
+            class=(if validationModel.errors.gender "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.gender}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.karma
+          class=(if validationModel.errors.karma "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.karma}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.activated
+            class=(if validationModel.errors.activated "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.activated}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.vip
+            class=(if validationModel.errors.vip "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.vip}}
+        </div>
+      </div>
+      <div class="row">
+        {{#with multiListSettings.MultiUserListOnEdit as |settings|}}
+        {{flexberry-objectlistview
+          modelName=settings.modelName
+          modelProjection=settings.modelProjection
+          editFormRoute=settings.editFormRoute
+          content=settings.model
+          createNewButton=true
+          refreshButton=true
+          sorting=settings.computedSorting
+          orderable=true
+          sortByColumn=(action "sortByColumn")
+          addColumnToSorting=(action "addColumnToSorting")
+          beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+          pages=settings.pages
+          perPageValue=settings.perPageValue
+          perPageValues=settings.perPageValues
+          recordsTotalCount=settings.recordsTotalCount
+          hasPreviousPage=settings.hasPreviousPage
+          hasNextPage=settings.hasNextPage
+          previousPage=(action "previousPage")
+          gotoPage=(action "gotoPage")
+          nextPage=(action "nextPage")
+          componentName=settings.componentName
+        }}
+      {{/with}}
+      </div>
+    </div>
+    <div data-tab="gruppa2.2" class="ui tab gruppaPolejVvoda">
+      {{!-- template-lint-disable  --}}
+      <h4>gruppa2.2</h4>
+      <div class="field">
+        {{flexberry-field
+          value=model.phone1
+          class=(if validationModel.errors.phone1 "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.phone1}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.ember-flexberry-dummy-application-user-edit.phone1-required-caption"}}</label>
+        {{flexberry-checkbox
+          value=model.phone1IsRequired
+          readonly=readonly
+        }}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.phone2
+            class=(if validationModel.errors.phone2 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone2}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.phone3
+            class=(if validationModel.errors.phone3 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone3}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.eMail
+          class=(if validationModel.errors.eMail "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.eMail}}
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.vK
+          class=(if validationModel.errors.vK "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.vK}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.facebook
+            class=(if validationModel.errors.facebook "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.facebook}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.twitter
+            class=(if validationModel.errors.twitter "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.twitter}}
+        </div>
+      </div>
+    </div>
+  {{/highload-edit-form-menu}}
+</form>

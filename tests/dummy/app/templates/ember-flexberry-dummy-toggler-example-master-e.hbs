@@ -3,11 +3,6 @@
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
   <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
-    </div>
-  </div>
-  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         <button type="submit" class="ui button save-button" {{action "save"}}>
@@ -24,6 +19,11 @@
       </button>
     </div>
   </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
+  </div>
   <div class="field">
   <label>{{t "forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-master-property-caption"}}</label>
   {{
@@ -33,11 +33,11 @@
     required=true
     value=model.togglerExampleMasterProperty
   }}
-  {{flexberry-validationmessage error=model.errors.togglerExampleMasterProperty pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "togglerExampleMasterProperty" "messages")}}
 </div>
 {{#flexberry-toggler}}
   <div class="field {{if model.errors.togglerExampleDetail "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption"}}</label>
+    <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption'}}</label>
     {{flexberry-groupedit
       componentName="togglerExampleDetailGroupEdit"
       content=model.togglerExampleDetail

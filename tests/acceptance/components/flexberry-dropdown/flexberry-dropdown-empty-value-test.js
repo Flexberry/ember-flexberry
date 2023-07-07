@@ -1,6 +1,7 @@
-import Ember from 'ember';
 import { module, test } from 'qunit';
+import { run } from '@ember/runloop';
 import startApp from '../../../helpers/start-app';
+import $ from 'jquery';
 
 let app;
 const path = 'components-examples/flexberry-dropdown/empty-value-example';
@@ -18,7 +19,7 @@ module('Acceptance | flexberry-dropdown | ' + testName, {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     }
   });
 
@@ -29,7 +30,7 @@ test(testName, (assert) => {
   andThen(() => {
     assert.equal(currentPath(), path, 'Path is correctly');
 
-    let $dropdown = Ember.$('.flexberry-dropdown');
+    let $dropdown = $('.flexberry-dropdown');
     assert.equal($dropdown.length, 1, 'Dropdown is render');
     assert.equal($dropdown[0].innerText, 'Enum value №2', 'Dropdown value is "Enum value №2"');
   });

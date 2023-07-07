@@ -2,7 +2,8 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import $ from 'jquery';
 
 /**
   Mixin contains actions for open and close modal window.
@@ -10,10 +11,10 @@ import Ember from 'ember';
   @example
     ```javascript
     // app/routes/application.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import ModalApplicationRouteMixin from 'ember-flexberry/mixins/modal-application-route';
 
-    export default Ember.Route.extend(ModalApplicationRouteMixin, {
+    export default Route.extend(ModalApplicationRouteMixin, {
     ...
     });
     ```
@@ -57,7 +58,7 @@ import Ember from 'ember';
 
   @class ModalApplicationRoute
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Action to show modal-dialog by name.
@@ -65,7 +66,7 @@ export default Ember.Mixin.create({
       @method actions.showModalDialog
       @param {String} modalDialogName Template name modal window.
       @param {Object} [data] Data for transfer to modal window.
-      @param {Ember.Controller} data.controller [Controller](http://emberjs.com/api/classes/Ember.Controller.html).
+      @param {Controller} data.controller [Controller](https://emberjs.com/api/ember/release/classes/Controller).
       @param {DS.Model} data.model [Model](http://emberjs.com/api/data/classes/DS.Model.html).
       @param {Object} [modalParams] Object with parameters for modal window.
       @param {String} [modalParams.outlet] Outlet name.
@@ -73,7 +74,7 @@ export default Ember.Mixin.create({
      */
     showModalDialog(modalDialogName, data, modalParams) {
       modalParams = this._getModalParams(modalParams);
-      let params = Ember.$.extend({
+      let params = $.extend({
         into: modalParams.view,
         outlet: modalParams.outlet
       }, data);

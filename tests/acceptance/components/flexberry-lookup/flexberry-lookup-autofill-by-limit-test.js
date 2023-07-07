@@ -1,30 +1,33 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { isBlank } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { get } from '@ember/object';
 import { executeTest } from './execute-flexberry-lookup-test';
 
-executeTest('flexberry-lookup autofillByLimit in readonly test', (store, assert, app) => {
+executeTest('flexberry-lookup autofillByLimit in readonly test', (store, assert) => {
   assert.expect(1);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
-    let $lookupField = Ember.$('.isreadonly .lookup-field');
+    let $lookupField = $('.isreadonly .lookup-field');
     let value = $lookupField.val();
-    assert.ok(Ember.isBlank(value), 'Value was changed');
+    assert.ok(isBlank(value), 'Value was changed');
   });
 });
 
-executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert, app) => {
+executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert) => {
   assert.expect(2);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
-    let $lookupField = Ember.$('.isclean .lookup-field');
+    let $lookupField = $('.isclean .lookup-field');
     let value = $lookupField.val();
-    assert.notOk(Ember.isBlank(value), 'Value wasn\'t changed');
+    assert.notOk(isBlank(value), 'Value wasn\'t changed');
 
-    Ember.run(() => {
+    run(() => {
       click('.isclean .ui-clear');
       andThen(function() {
-        let $lookupFieldUpdate = Ember.$('.isclean .lookup-field');
+        let $lookupFieldUpdate = $('.isclean .lookup-field');
         let valueUpdate = $lookupFieldUpdate.val();
-        assert.ok(Ember.isBlank(valueUpdate), 'Value isn\'t empty');
+        assert.ok(isBlank(valueUpdate), 'Value isn\'t empty');
       });
     });
   });
@@ -35,9 +38,9 @@ executeTest('flexberry-lookup autofillByLimit changes select value test', (store
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let defaultValue = Ember.get(controller, 'defaultValue.name');
+    let defaultValue = get(controller, 'defaultValue.id');
 
-    let $lookupField = Ember.$('.exist .lookup-field');
+    let $lookupField = $('.exist .lookup-field');
     let value = $lookupField.val();
 
     assert.notEqual(

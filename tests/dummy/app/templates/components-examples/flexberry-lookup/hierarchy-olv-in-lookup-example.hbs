@@ -42,13 +42,15 @@
       displayAttributeName="name"
       title=(t "forms.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.titleLookup")
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       lookupWindowCustomProperties=(action "getLookupFolvProperties")
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true
+      inHierarchicalMode=true
+      hierarchicalAttribute="parent"
     }}
   </div>
 </form>

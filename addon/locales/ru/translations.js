@@ -104,6 +104,10 @@ export default {
       'placeholder': '(нет значения)'
     },
 
+    'flexberry-required-marker': {
+      title: 'Поле, обязательное для заполнения'
+    },
+
     'flexberry-file': {
       placeholder: '(нет файла)',
 

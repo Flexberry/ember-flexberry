@@ -2,20 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { deprecate } from '@ember/debug';
 import { observer } from '@ember/object';
+import { get } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
-
-const {
-  get,
-  run: { scheduleOnce, },
-} = Ember;
 
 /**
   Controller to support a modal windows in FlexberryLookup component.

@@ -216,7 +216,7 @@ export default {
       'uncheck-all-button-text': 'Uncheck all on all pages',
       'clear-sorting-button-text': 'Set the default sorting',
       'clear-select-button-text': 'Deselect',
-      pullUpLookupValues: 'Use all selected records',
+      pullUpLookupValues: 'Use all selected records'
     },
 
     'groupedit-toolbar': {

@@ -6,17 +6,14 @@ import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
 import { getOwner } from '@ember/application';
 import { merge } from '@ember/polyfills';
-import { get } from '@ember/object';
+import EmberObject, { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
 import { isNone } from '@ember/utils';
+import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-
-const {
-  Object: EmberObject
-} = Ember;
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
@@ -259,7 +256,7 @@ export default Mixin.create(ReloadListMixin, {
 
     showLookupMultiSelectDialog(chooseData) {
       let lookupController = this.get('lookupController');
-      let options = Ember.$.extend(true, {
+      let options = $.extend(true, {
         projection: undefined,
         relationName: undefined,
         title: undefined,
@@ -275,14 +272,14 @@ export default Mixin.create(ReloadListMixin, {
         updateLookupAction: undefined
       }, chooseData);
 
-      let disableHierarchy = Ember.get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
-      lookupController.set('disableHierarchicalMode', !Ember.isNone(disableHierarchy));
+      let disableHierarchy = get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
+      lookupController.set('disableHierarchicalMode', !isNone(disableHierarchy));
 
-      let customInHierarchicalMode = Ember.get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
+      let customInHierarchicalMode = get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
       lookupController.set('inHierarchicalMode', customInHierarchicalMode);
 
       let projectionName = options.projection;
-      Ember.assert('ProjectionName is undefined.', projectionName);
+      assert('ProjectionName is undefined.', projectionName);
 
       let limitPredicate = options.predicate;
       if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
@@ -295,9 +292,9 @@ export default Mixin.create(ReloadListMixin, {
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let componentName = options.componentName;
       let folvComponentName = options.folvComponentName;
-      let customHierarchicalAttribute = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
-      let hierarchicalAttribute = Ember.isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
-      let hierarchyPaging = Ember.get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
+      let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
+      let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
 
       let userSettingsService = this.get('userSettingsService');
@@ -308,7 +305,7 @@ export default Mixin.create(ReloadListMixin, {
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
-      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      let relationshipsByName = get(model.constructor, 'relationshipsByName');
 
       // Get relation property from model.
       let relation = relationshipsByName.get(relationName);
@@ -320,7 +317,7 @@ export default Mixin.create(ReloadListMixin, {
       this.get('model.' + relName).forEach(m => {
         const relationModel = m.get(relationName);
         let recordWithKey = EmberObject.create({});
-        recordWithKey.set('key', Ember.guidFor(relationModel));
+        recordWithKey.set('key', guidFor(relationModel));
         recordWithKey.set('data', relationModel);
         this.get('objectlistviewEventsService').rowSelectedTrigger(folvComponentName, relationModel, 1, true, recordWithKey);
       });
@@ -330,7 +327,7 @@ export default Mixin.create(ReloadListMixin, {
 
       // Lookup
       let lookupSettings = this.get('lookupMultiGESettings');
-      Ember.assert('Lookup settings are undefined.', lookupSettings);
+      assert('Lookup settings are undefined.', lookupSettings);
 
       let reloadData = {
         initialLoad: true,

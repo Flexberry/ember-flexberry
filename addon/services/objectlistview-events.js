@@ -2,20 +2,15 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
-import { computed } from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { deprecatingAlias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
-
-const {
-  Object: EmberObject,
-} = Ember;
 
 /**
   Service for triggering objectlistview events.
@@ -56,14 +51,29 @@ export default Service.extend(Evented, {
     this.set('_multiRows', []);
   },
 
+  /**
+    Returns a list of selected rows from component.
+
+    @method getMultiSelectedRecords
+  */
   getMultiSelectedRecords(componentName) {
     return this.get('_multiRows')[componentName];
   },
 
+  /**
+    Removes all rows from list of selected rows from component.
+
+    @method clearMultiSelectedRecords
+  */
   clearMultiSelectedRecords() {
     this.set('_multiRows', []);
   },
 
+  /**
+    Remembers all selected rows to keep them when page is changing.
+
+    @method holdMultiSelectedRecords
+  */
   holdMultiSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
       this.get('_multiRows')[componentName] = Ember.Map.create();
@@ -157,10 +167,6 @@ export default Service.extend(Evented, {
     this.trigger('filterByAnyMatch', componentName, pattern);
   },
 
-  goBackTrigger(componentName) {
-    this.trigger('goBack', componentName);
-  },
-
   _multiRows: null,
 
   /**
@@ -245,6 +251,11 @@ export default Service.extend(Evented, {
     this.trigger('olvRowSelected', componentName, record, count, checked, recordWithKey);
   },
 
+  /**
+    Creates records with all remembered multiselected rows.
+
+    @method restoreSelectedRecords
+  */
   restoreSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
       this.get('_multiRows')[componentName] = Ember.Map.create();

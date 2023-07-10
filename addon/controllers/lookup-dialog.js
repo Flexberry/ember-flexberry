@@ -5,8 +5,7 @@
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { deprecate } from '@ember/debug';
-import { observer } from '@ember/object';
-import { get } from '@ember/object';
+import { observer, get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
@@ -38,6 +37,10 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
   */
   title: undefined,
 
+  /**
+    Flag which indicates that several rows were selected.
+    Shows whether multiselect in groupedit is available.
+  */
   isPullUpActive: false,
 
   /**

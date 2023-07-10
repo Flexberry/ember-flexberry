@@ -8,7 +8,10 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+      'more-button-text': 'More',
+      'only-more-button-text': 'Actions',
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -496,11 +499,6 @@ export default {
   },
 
   'components': {
-    'flexberry-simpledatetime': {
-      placeholder: '(no value)',
-      'scroll-caption-text': 'Scroll to increment',
-    },
-
     'flexberry-error': {
       caption: 'An error has occurred',
       'show-more': 'Show more',
@@ -513,6 +511,12 @@ export default {
 
     'flexberry-textbox': {
       placeholder: '(no value)'
+    },
+
+    'flexberry-simpledatetime': {
+      placeholder: '(no value)',
+      'scroll-caption-text': 'Scroll to increment',
+      'apply-button-text': 'Choose',
     },
 
     'flexberry-textarea': {
@@ -589,6 +593,12 @@ export default {
       'placeholder': 'There is no data'
     },
 
+    'highload-edit-form-menu': {
+      'show-all-forms-button': 'Show all forms fields',
+      'next-button': 'Next',
+      'prev-button': 'Previous'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Close'
@@ -637,7 +647,8 @@ export default {
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
-      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'coll-expand-button-text':'Expand all hierarchies',
+      'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -763,6 +774,9 @@ export default {
       'errMsgTwo': ' did not match anything.',
       'suggestion': 'Try changing your query.'
     },
+    'flexberry-sitemap-guideline': {
+      'main-menu-caption': 'Main menu'
+    }
 
   },
 
@@ -824,5 +838,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

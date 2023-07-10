@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 let getHeaderSort = function(olv, index, helpers) {
   const headCells = helpers.find('thead .dt-head-left', olv).toArray();
   const headCell = headCells[index];

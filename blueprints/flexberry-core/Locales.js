@@ -39,14 +39,14 @@ var Locales = /** @class */ (function () {
             form.caption = "";
         var value = this.escapeValue(form.caption);
         this.push("caption: '" + value + "'", "caption: '" + form.name + "'");
-        form.caption = "t 'forms." + this.entityName + ".caption'";
+        form.caption = "t \"forms." + this.entityName + ".caption\"";
     };
     Locales.prototype.setupEditFormAttribute = function (projAttr) {
         if (!projAttr.caption)
             projAttr.caption = "";
         var value = this.escapeValue(projAttr.caption);
         this.push("'" + projAttr.name + "-caption': '" + value + "'", "'" + projAttr.name + "-caption': '" + projAttr.name + "'");
-        projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
+        projAttr.caption = "t \"forms." + this.entityName + "." + projAttr.name + "-caption\"";
     };
     Locales.prototype.push = function (currentLocaleStr, otherLocalesStr) {
         this.translations[this.currentLocale].push(currentLocaleStr);
@@ -106,10 +106,6 @@ var Locales = /** @class */ (function () {
             }
             strings.push(str + ",");
         });
-        if (strings.length) {
-            var last = strings.length - 1;
-            strings[last] = strings[last].slice(0, -1);
-        }
         return strings.join('\n');
     };
     Locales.prototype.parseMergeSnippet = function (content) {
@@ -213,9 +209,6 @@ var ModelLocales = /** @class */ (function (_super) {
         var projections = [];
         var projectionsOtherLocales = [];
         var projName;
-        if (model.projections.length === 0) {
-            return null;
-        }
         for (var _i = 0, _a = model.projections; _i < _a.length; _i++) {
             var proj = _a[_i];
             var projAttrs = [];
@@ -259,14 +252,19 @@ var ModelLocales = /** @class */ (function (_super) {
             var attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
             _this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
         }
+        this.validations = this.getValidationLocales(model);
         return _this;
     }
     ModelLocales.prototype.getProperties = function (locale) {
-        var translation = this.translations[locale].join(",\n    ");
-        if (translation != "") {
-            translation = "    " + translation;
+        var translation = this.translations[locale].join(",\n" + (TAB + TAB));
+        if (translation !== '') {
+            translation = "\n" + (TAB + TAB) + translation + ",\n" + TAB;
         }
-        return "  projections: {\n" + translation + "\n  }";
+        var validations = this.validations[locale].join(",\n" + (TAB + TAB));
+        if (validations !== '') {
+            validations = "\n" + (TAB + TAB) + validations + ",\n" + TAB;
+        }
+        return TAB + "projections: {" + translation + "},\n" + TAB + "validations: {" + validations + "},";
     };
     ModelLocales.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -336,6 +334,56 @@ var ModelLocales = /** @class */ (function (_super) {
         indent.pop();
         var indentStr2 = indent.join("");
         return new SortedPair(attr.index, attr.name + ": {\n" + indentStr + "__caption__: '" + this.escapeValue(attr.caption) + "'\n" + indentStr2 + "}", attr.name + ": {\n" + indentStr + "__caption__: '" + attr.name + "'\n" + indentStr2 + "}");
+    };
+    ModelLocales.prototype.getValidationLocales = function (model) {
+        var locales = {};
+        locales[this.currentLocale] = [];
+        for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
+            var locale = _a[_i];
+            locales[locale] = [];
+        }
+        for (var _b = 0, _c = model.attrs; _b < _c.length; _b++) {
+            var attr = _c[_b];
+            var caption = this.findCaption(model, attr.name);
+            this.fillValidationTranslations(locales, attr.name, caption || attr.name);
+        }
+        for (var _d = 0, _e = model.belongsTo; _d < _e.length; _d++) {
+            var belongsTo = _e[_d];
+            var caption = this.findCaption(model, belongsTo.name);
+            this.fillValidationTranslations(locales, belongsTo.name, caption || belongsTo.name);
+        }
+        for (var _f = 0, _g = model.hasMany; _f < _g.length; _f++) {
+            var hasMany = _g[_f];
+            var caption = this.findCaption(model, hasMany.name);
+            this.fillValidationTranslations(locales, hasMany.name, caption || hasMany.name);
+        }
+        return locales;
+    };
+    ModelLocales.prototype.findCaption = function (model, propertyName) {
+        var attrs = [];
+        for (var _i = 0, _a = model.projections; _i < _a.length; _i++) {
+            var projection = _a[_i];
+            attrs = projection.attrs.filter(function (a) { return a.name === propertyName; });
+            if (attrs.length === 0) {
+                attrs = projection.belongsTo.filter(function (b) { return b.name === propertyName; });
+            }
+            if (attrs.length === 0) {
+                attrs = projection.hasMany.filter(function (b) { return b.name === propertyName; });
+            }
+            if (attrs.length !== 0) {
+                break;
+            }
+        }
+        return attrs.length === 1 ? attrs[0].caption : null;
+    };
+    ModelLocales.prototype.fillValidationTranslations = function (locales, attrName, caption) {
+        var translation = attrName + ": {\n" + (TAB + TAB + TAB) + "__caption__: '" + this.escapeValue(caption) + "',\n" + (TAB + TAB) + "}";
+        var otherTranslation = attrName + ": {\n" + (TAB + TAB + TAB) + "__caption__: '" + this.escapeValue(attrName) + "',\n" + (TAB + TAB) + "}";
+        locales[this.currentLocale].push(translation);
+        for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
+            var locale = _a[_i];
+            locales[locale].push(otherTranslation);
+        }
     };
     return ModelLocales;
 }(Locales));

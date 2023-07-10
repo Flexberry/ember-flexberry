@@ -31,7 +31,6 @@ export default class ModelBlueprint {
   className: string;
   namespace: string;
   projections: string;
-  hasCpValidations: boolean;
   validations: string;
   name: string;
   needsAllModels: string;
@@ -53,7 +52,6 @@ export default class ModelBlueprint {
       let parentModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
       this.parentExternal = parentModel.external;
     }
-    this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
     this.enums = ModelBlueprint.loadEnums(options.metadataDir);
     this.className = model.className;
     this.namespace = model.nameSpace;
@@ -68,13 +66,7 @@ export default class ModelBlueprint {
     let localePathTemplate: lodash.TemplateExecutor = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru", localePathTemplate);
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
-    if (this.hasCpValidations) {
-      this.validations = this.getValidations(model);
-    }
-  }
-
-  static checkCpValidations(blueprint): boolean {
-    return 'ember-cp-validations' in blueprint.project.dependencies();
+    this.validations = this.getValidations(model);
   }
 
   static loadModel(modelsDir: string, modelFileName: string): metadata.Model {
@@ -152,7 +144,7 @@ export default class ModelBlueprint {
   }
 
   getJSForModel(model: metadata.Model): string {
-    let attrs: string[] = [], validations: string[] = [];
+    let attrs: string[] = [];
     let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
     let attr: metadata.DSattr;
@@ -175,12 +167,11 @@ export default class ModelBlueprint {
             options.push(`defaultValue: ${attr.defaultValue}`);
             break;
           case 'date':
-            // The UTC handling policy depends solely on backend configuration.
-            if (attr.defaultValue === 'Now' || attr.defaultValue === 'UtcNow') {
+            if (attr.defaultValue === 'Now') {
               options.push(`defaultValue() { return new Date(); }`);
               break;
             }
-            throw new Error(`The default '${attr.defaultValue}' value for '${attr.name}' attribute of 'date' type is not supported.`);
+            break;
           default:
             if (this.enums.hasOwnProperty(attr.type)) {
               let enumName = `${this.enums[attr.type].className}Enum`;
@@ -198,13 +189,6 @@ export default class ModelBlueprint {
           optionsStr = ", { " + options.join(', ') + ' }';
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${optionsStr})`);
-      if (!this.hasCpValidations && attr.notNull) {
-        if (attr.type === "date") {
-          validations.push(attr.name + ": { datetime: true }");
-        } else {
-          validations.push(attr.name + ": { presence: true }");
-        }
-      }
       if (attr.stored)
         continue;
       let methodToSetNotStoredProperty =
@@ -216,8 +200,8 @@ export default class ModelBlueprint {
         TAB + TAB + "@private\n" +
         TAB + TAB + "@example\n" +
         TAB + TAB + TAB + "```javascript\n" +
-        TAB + TAB + TAB + `_${attr.name}Changed: Ember.on('init', Ember.observer('${attr.name}', function() {\n` +
-        TAB + TAB + TAB + TAB + `Ember.run.once(this, '_${attr.name}Compute');\n` +
+        TAB + TAB + TAB + `_${attr.name}Changed: on('init', observer('${attr.name}', function() {\n` +
+        TAB + TAB + TAB + TAB + `once(this, '_${attr.name}Compute');\n` +
         TAB + TAB + TAB + "}))\n" +
         TAB + TAB + TAB + "```\n" +
         TAB + "*/\n" +
@@ -230,32 +214,10 @@ export default class ModelBlueprint {
     }
     let belongsTo: metadata.DSbelongsTo;
     for (belongsTo of model.belongsTo) {
-      if (!this.hasCpValidations && belongsTo.presence) {
-        validations.push(belongsTo.name + ": { presence: true }");
-      }
       attrs.push(templateBelongsTo(belongsTo));
     }
     for (let hasMany of model.hasMany) {
       attrs.push(templateHasMany(hasMany));
-    }
-    if (!this.hasCpValidations) {
-      let validationsFunc=TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-      if(validations.length===0){
-        validationsFunc="";
-      }
-      validationsFunc =
-        "getValidations: function () {\n" +
-        TAB + TAB + "let parentValidations = this._super();\n" +
-        TAB + TAB + "let thisValidations = {\n" +
-        validationsFunc + TAB + TAB + "};\n" +
-        TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-        TAB + "}";
-      let initFunction =
-        "init: function () {\n" +
-        TAB + TAB + "this.set('validations', this.getValidations());\n" +
-        TAB + TAB + "this._super.apply(this, arguments);\n" +
-        TAB + "}";
-      attrs.push(validationsFunc, initFunction);
     }
     return attrs.length ? `\n${TAB + attrs.join(`,\n${TAB}`)}\n` : '';
   }

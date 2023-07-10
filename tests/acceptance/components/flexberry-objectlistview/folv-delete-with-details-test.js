@@ -11,34 +11,38 @@ executeTest('check delete with details', (store, assert, app) => {
   let modelName = 'ember-flexberry-dummy-suggestion';
   let commentModelName = 'ember-flexberry-dummy-comment';
   let commentVoteModelName = 'ember-flexberry-dummy-comment-vote';
-
+  let mainSuggestionTypeRecord;
+  let mainApplicationUserRecord;
   let initTestData = function(createdRecordsPrefix) {
-    // Add records for deleting. 
+    // Add records for deleting.
     return Ember.RSVP.Promise.all([
       store.createRecord('ember-flexberry-dummy-suggestion-type', { name: createdRecordsPrefix + "0" }).save(),
-      store.createRecord('ember-flexberry-dummy-application-user', { 
+      store.createRecord('ember-flexberry-dummy-application-user', {
                                                                     name: createdRecordsPrefix + "1",
                                                                     eMail: "1",
                                                                     phone1: "1"
                                                                    }).save()
     ])
-    .then((createdCustomRecords) => 
-      Ember.RSVP.Promise.all([
+    .then((createdCustomRecords) => {
+      mainSuggestionTypeRecord = createdCustomRecords[0];
+      mainApplicationUserRecord = createdCustomRecords[1];
+
+      return Ember.RSVP.Promise.all([
         store.createRecord(modelName, { text: createdRecordsPrefix + "0", type: createdCustomRecords[0], author: createdCustomRecords[1], editor1: createdCustomRecords[1] }).save(),
         store.createRecord(modelName, { text: createdRecordsPrefix + "1", type: createdCustomRecords[0], author: createdCustomRecords[1], editor1: createdCustomRecords[1] }).save(),
         store.createRecord(modelName, { text: createdRecordsPrefix + "2", type: createdCustomRecords[0], author: createdCustomRecords[1], editor1: createdCustomRecords[1] }).save()])
-      .then((suggestions) => 
+      .then((suggestions) =>
         Ember.RSVP.Promise.all([
           store.createRecord(commentModelName, { text: createdRecordsPrefix + "0", suggestion: suggestions[0], author: createdCustomRecords[1] }).save(),
           store.createRecord(commentModelName, { text: createdRecordsPrefix + "1", suggestion: suggestions[0], author: createdCustomRecords[1] }).save(),
           store.createRecord(commentModelName, { text: createdRecordsPrefix + "2", suggestion: suggestions[1], author: createdCustomRecords[1] }).save(),
           store.createRecord(commentModelName, { text: createdRecordsPrefix + "3", suggestion: suggestions[1], author: createdCustomRecords[1] }).save()])
-        .then((comments) => 
+        .then((comments) =>
           Ember.RSVP.Promise.all([
             store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "0", comment: comments[0], applicationUser: createdCustomRecords[1] }).save(),
             store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "1", comment: comments[0], applicationUser: createdCustomRecords[1] }).save(),
             store.createRecord(commentVoteModelName, { name: createdRecordsPrefix + "2", comment: comments[1], applicationUser: createdCustomRecords[1] }).save()])
-        )))
+        )) })
     };
 
   let getRows = function(){
@@ -79,7 +83,7 @@ executeTest('check delete with details', (store, assert, app) => {
   let lookAtLocalStore = function(modelName, searchedField, searchedValue) {
     let currentLoadedData = store.peekAll(modelName);
     for (let i = 0; i < currentLoadedData.content.length; i++) {
-      if (currentLoadedData.content[i].record.get(searchedField) == searchedValue) {
+      if (currentLoadedData.objectAt(i).get(searchedField) == searchedValue) {
         return true;
       }
     }
@@ -114,7 +118,7 @@ executeTest('check delete with details', (store, assert, app) => {
             assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "0"), 0, 1 + ' record deleted');
             assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "1") > 0, true, 2 + ' still on OLV');
             assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2") > 0, true, 3 + ' still on OLV');
-            
+
             // Check local storage.
             assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "0"), "1 suggestion deleted on store");
             assert.ok(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "1"), "2 suggestion still on store");
@@ -144,7 +148,7 @@ executeTest('check delete with details', (store, assert, app) => {
               wait().then(() => {
                 assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "1"), 0, 2 + ' record deleted');
                 assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2") > 0, true, 3 + ' still on OLV');
-                
+
                 // Check local storage.
                 assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "1"), "2 suggestion deleted on store");
                 assert.ok(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "2"), "3 suggestion still on store");
@@ -160,10 +164,13 @@ executeTest('check delete with details', (store, assert, app) => {
                 });
                 wait().then(() => {
                   assert.equal(checkRecordsWereAdded(createdRecordsPrefix + "2"), 0, 3 + ' record deleted');
-                  
+
                   // Check local storage.
                   assert.notOk(lookAtLocalStore(modelName, 'text', createdRecordsPrefix + "2"), "3 suggestion deleted on store");
-                  done5();
+
+                  Ember.RSVP.Promise.all([
+                    mainSuggestionTypeRecord.destroyRecord(),
+                    mainApplicationUserRecord.destroyRecord()]).then(() => done5());
                 });
                 done4();
               });

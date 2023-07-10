@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed, get } from '@ember/object';
+import { A } from '@ember/array';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -32,8 +33,8 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'maxTextLength',
       settingType: 'number',
@@ -66,7 +67,7 @@ export default ListFormController.extend({
       componentProperties: {
         maxTextLength: this.get('maxTextLength'),
         cutBySpaces: this.get('cutBySpaces'),
-        displayMemberPath: Ember.get(attr, 'options.displayMemberPath')
+        displayMemberPath: get(attr, 'options.displayMemberPath')
       }
     };
 

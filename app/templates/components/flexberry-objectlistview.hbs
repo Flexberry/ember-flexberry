@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -21,7 +21,7 @@
   componentName=componentName
   lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
@@ -34,11 +34,14 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
+  editInModal=editInModal
 }}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
   columnsWidthAutoresize=columnsWidthAutoresize
+  columnsResizeMode=columnsResizeMode
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -78,12 +81,13 @@
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
   filterByAllWords=filterByAllWords
+  filterProjectionName = filterProjectionName
   configurateRow=this.attrs.configurateRow
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
@@ -105,6 +109,7 @@
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  customParameters=customParameters
   fixedHeader=fixedHeader
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
@@ -141,7 +146,7 @@
         value=searchPageValue
         enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
       }}
-      {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
+      {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
       {{input classNames=(array "hidden")}}
       {{#if searchPageValue}}
         <button
@@ -154,7 +159,7 @@
       {{/if}}
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat
@@ -163,7 +168,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
     </div>
   </div>
 {{/if}}

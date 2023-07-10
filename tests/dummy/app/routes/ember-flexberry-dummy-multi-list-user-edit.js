@@ -2,6 +2,7 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import MultiListModelEdit from 'ember-flexberry/mixins/multi-list-model-edit';
+import { computed } from '@ember/object';
 
 export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, {
   /**
@@ -13,7 +14,9 @@ export default EditFormRoute.extend(MultiListRoute, MultiListModelEdit, {
    */
   modelProjection: 'ApplicationUserE',
 
-  developerUserSettings: { MultiUserListOnEdit: {}, MultiUserList2OnEdit: {}, MultiSuggestionListOnEdit: {}, MultiHierarchyListOnEdit: {} },
+  developerUserSettings: computed(function() {
+    return { MultiUserListOnEdit: {}, MultiUserList2OnEdit: {}, MultiSuggestionListOnEdit: {}, MultiHierarchyListOnEdit: {} }
+  }),
 
   /**
     Name of model to be used as form's record type.

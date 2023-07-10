@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import { Promise } from 'rsvp';
+import EmberObject from '@ember/object';
+import { isNone } from '@ember/utils';
+import { run } from '@ember/runloop';
 import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
-import { Projection } from 'ember-flexberry-data';
+import Model from 'ember-flexberry-data/models/model';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import destroyApp from '../../helpers/destroy-app';
@@ -9,11 +12,11 @@ let app;
 let getConfiguredTestRoute = function(modelCurrentNotSaved, modelSelectedDetail) {
   let route = EditFormNewRoute.create();
 
-  let model = Projection.Model;
+  let model = Model;
   model.defineProjection('testProjection', 'test-model');
-  let detailInteractionServiceMock = Ember.Object.create({
-    modelCurrentNotSaved: !Ember.isNone(modelCurrentNotSaved) && modelCurrentNotSaved ? model : null,
-    modelSelectedDetail: !Ember.isNone(modelSelectedDetail) && modelSelectedDetail ? model : null,
+  let detailInteractionServiceMock = EmberObject.create({
+    modelCurrentNotSaved: !isNone(modelCurrentNotSaved) && modelCurrentNotSaved ? model : null,
+    modelSelectedDetail: !isNone(modelSelectedDetail) && modelSelectedDetail ? model : null,
   });
 
   let store = app.__container__.lookup('service:store');
@@ -27,56 +30,57 @@ let getConfiguredTestRoute = function(modelCurrentNotSaved, modelSelectedDetail)
   return route;
 };
 
-module('Unit | Route | edit form new', {
-  beforeEach: function () {
+module('Unit | Route | edit form new', function(hooks) {
+  hooks.beforeEach(() => {
     app = startApp();
-  },
-  afterEach: function() {
+  });
+
+  hooks.afterEach(() => {
     destroyApp(app);
-  }
-});
-
-test('it exists', function(assert) {
-  var route = EditFormNewRoute.create();
-  assert.ok(route);
-});
-
-test('return model as Promise main', function(assert) {
-  let route = getConfiguredTestRoute();
-
-  assert.ok(route);
-  Ember.run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Ember.RSVP.Promise, true);
   });
-});
-
-test('return model as Promise modelCurrentNotSaved', function(assert) {
-  let route = getConfiguredTestRoute(true);
-
-  assert.ok(route);
-  Ember.run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Ember.RSVP.Promise, true);
+    
+  test('it exists', function(assert) {
+    var route = EditFormNewRoute.create();
+    assert.ok(route);
   });
-});
 
-test('return model as Promise modelSelectedDetail', function(assert) {
-  let route = getConfiguredTestRoute(false, true);
+  test('return model as Promise main', function(assert) {
+    let route = getConfiguredTestRoute();
 
-  assert.ok(route);
-  Ember.run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Ember.RSVP.Promise, true);
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
   });
-});
 
-test('return model as Promise prototypeId', function(assert) {
-  let route = getConfiguredTestRoute();
+  test('return model as Promise modelCurrentNotSaved', function(assert) {
+    let route = getConfiguredTestRoute(true);
 
-  assert.ok(route);
-  Ember.run(() => {
-    let record = route.model({}, { queryParams: { prototypeId: 'test-id' } });
-    assert.equal(record instanceof Ember.RSVP.Promise, true);
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
+  });
+
+  test('return model as Promise modelSelectedDetail', function(assert) {
+    let route = getConfiguredTestRoute(false, true);
+
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
+  });
+
+  test('return model as Promise prototypeId', function(assert) {
+    let route = getConfiguredTestRoute();
+
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { prototypeId: 'test-id' } });
+      assert.equal(record instanceof Promise, true);
+    });
   });
 });

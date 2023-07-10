@@ -1,81 +1,81 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 <%= importProperties %>
 
 const translations = {};
-Ember.$.extend(true, translations, EmberFlexberryTranslations);
+$.extend(true, translations, EmberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
   models: {
-<%= modelsImportedProperties %>,
+<%= modelsImportedProperties %>
   },
 
-  'application-name': 'Application caption',
+  'application-name': '<%= applicationCaption %>',
 
   forms: {
     loading: {
-      'spinner-caption': 'Loading stuff, please have a cold beer...'
+      'spinner-caption': 'Loading stuff, please wait for a moment...',
     },
     index: {
-      greeting: 'Welcome to ember-flexberry test stand!'
+      greeting: 'Welcome to ember-flexberry test stand!',
     },
 
     application: {
       header: {
         menu: {
           'sitemap-button': {
-            title: 'Menu'
+            title: 'Menu',
           },
           'user-settings-service-checkbox': {
-            caption: 'Use service to save user settings'
+            caption: 'Use service to save user settings',
           },
           'show-menu': {
-            caption: 'Show menu'
+            caption: 'Show menu',
           },
           'hide-menu': {
-            caption: 'Hide menu'
+            caption: 'Hide menu',
           },
           'language-dropdown': {
             caption: 'Application language',
-            placeholder: 'Choose language'
-          }
+            placeholder: 'Choose language',
+          },
         },
         login: {
-          caption: 'Login'
+          caption: 'Login',
         },
         logout: {
-          caption: 'Logout'
-        }
+          caption: 'Logout',
+        },
       },
 
       footer: {
-        'application-name': 'Application caption',
+        'application-name': '<%= applicationCaption %>',
         'application-version': {
           caption: 'Addon version {{version}}',
           title: 'It is version of ember-flexberry addon, which uses in this dummy application ' +
           '(npm version + commit sha). ' +
-          'Click to open commit on GitHub.'
-        }
+          'Click to open commit on GitHub.',
+        },
       },
 
       sitemap: {
         'application-name': {
-          caption: 'Application caption',
-          title: 'Application title'
+          caption: '<%= applicationCaption %>',
+          title: '<%= applicationCaption %>',
         },
         'application-version': {
           caption: 'Addon version {{version}}',
           title: 'It is version of ember-flexberry addon, which uses in this dummy application ' +
           '(npm version + commit sha). ' +
-          'Click to open commit on GitHub.'
+          'Click to open commit on GitHub.',
         },
         index: {
           caption: 'Home',
-          title: ''
+          title: '',
         },
-<%= enApplicationMenu %>,
-      }
+<%= ruApplicationMenu %>
+      },
     },
 
     'edit-form': {
@@ -84,9 +84,9 @@ Ember.$.extend(true, translations, {
       'save-error-message-caption': 'Save operation failed',
       'delete-success-message-caption': 'Delete operation succeed',
       'delete-success-message': 'Object deleted',
-      'delete-error-message-caption': 'Delete operation failed'
+      'delete-error-message-caption': 'Delete operation failed',
     },
-<%= formsImportedProperties %>,
+<%= formsImportedProperties %>
   },
 
 });

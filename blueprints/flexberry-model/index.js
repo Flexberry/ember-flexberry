@@ -2,6 +2,9 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
+const stripBom = require("strip-bom");
+const fs = require("fs");
+Object.defineProperty(exports, "__esModule", { value: true });
 var ModelBlueprint_1 = require("./ModelBlueprint");
 var lodash = require("lodash");
 var path = require("path");
@@ -14,11 +17,9 @@ module.exports = {
         { name: 'metadata-dir', type: String },
         { name: 'skip-confirmation', type: Boolean }
     ],
-
     supportsAddon: function () {
         return false;
     },
-
     _files: null,
     isDummy: false,
     files: function () {
@@ -37,21 +38,44 @@ module.exports = {
         else {
             this._files = CommonUtils_1.default.getFilesForGeneration(this);
         }
+        this.setLocales(this._files);
         return this._files;
     },
-
     afterInstall: function (options) {
         if (this.project.isEmberCLIAddon()) {
             CommonUtils_1.default.installFlexberryAddon(options, ["model", "serializer"]);
         }
     },
 
-    processFiles: function (intoDir, templateVariables) {
-        const skipConfirmation = this.options.skipConfirmation;
+    processFiles(intoDir, templateVariables) {
+        let skipConfirmation = this.options.skipConfirmation;
         if (skipConfirmation) {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+
+        return this._super(...arguments);
+    },
+
+    setLocales: function (files) {        
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (!fs.existsSync(localesFile)) {
+            return files;
+        }
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (locales.locales == undefined) {
+            return files;
+        }
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/models/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/models/__name__.js"), 1);
+        }
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/models/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/models/__name__.js"), 1);
+        }
+        return files;
     },
 
     /**
@@ -79,23 +103,8 @@ module.exports = {
             needsAllModels: modelBlueprint.needsAllModels,
             needsAllEnums: modelBlueprint.needsAllEnums,
             needsAllObjects: modelBlueprint.needsAllObjects,
-            enumImports: modelBlueprint.enumImports
+            enumImports: modelBlueprint.enumImports,
         }, modelBlueprint.lodashVariables);
-    },
-
-    /**
-     * Blueprint Hook filesPath.
-     * Override the default files directory. Useful for switching between file sets conditionally.
-     *
-     * @method filesPath
-     * @public
-     *
-     * @param {Object} options Options is an object containing general and entity-specific options.
-     * @return {String} Overridden files directory.
-     */
-    filesPath: function (options) {
-        const filesSubDir = ModelBlueprint_1.default.checkCpValidations(this) ? 'files-cp-validations' : 'files-ember-validations';
-        return path.join(this._super.filesPath.apply(this, [ options ]), filesSubDir);
     }
 };
 //# sourceMappingURL=index.js.map

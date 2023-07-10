@@ -2,8 +2,21 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import Errors from 'ember-validations/errors';
+import { getOwner } from '@ember/application';
+import { deprecate } from '@ember/application/deprecations';
+import { A, isArray } from '@ember/array';
+import Controller, { inject as injectController } from '@ember/controller';
+import { assert } from '@ember/debug';
+import { get, computed } from '@ember/object';
+import Evented from '@ember/object/evented';
+import { inject as injectService} from '@ember/service';
+import { isNone, isEmpty } from '@ember/utils';
+
+import DS from 'ember-data';
+import ResultCollection from 'ember-cp-validations/validations/result-collection';
+import $ from 'jquery';
+import RSVP, { reject } from 'rsvp';
+
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -14,8 +27,6 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
-
-const { getOwner } = Ember;
 
 /**
   Base controller for the Edit Forms.
@@ -40,14 +51,14 @@ const { getOwner } = Ember;
     ```
 
   @class EditFormController
-  @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
-  @uses <a href="http://emberjs.com/api/classes/Ember.Evented.html">Ember.Evented</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Controller">Controller</a>
+  @uses <a href="https://emberjs.com/api/ember/release/classes/Evented">Evented</a>
   @uses FlexberryLookupMixin
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
 */
-export default Ember.Controller.extend(
-Ember.Evented,
+export default Controller.extend(
+Evented,
 FlexberryLookupMixin,
 ErrorableControllerMixin,
 FlexberryFileControllerMixin,
@@ -72,7 +83,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('colsconfig-dialog')
   */
-  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  colsconfigController: injectController('colsconfig-dialog'),
 
   /**
     Flag to enable return to agregator's path if possible.
@@ -122,7 +133,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: injectService(),
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -134,7 +145,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @default undefined
     @readOnly
   */
-  readonlyAttr: Ember.computed('readonly', function() {
+  readonlyAttr: computed('readonly', function() {
     return this.get('readonly') ? 'readonly' : undefined;
   }),
 
@@ -150,12 +161,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @property lookupSettings
     @type Object
   */
-  lookupSettings: {
-    controllerName: 'lookup-dialog',
-    template: 'lookup-dialog',
-    contentTemplate: 'lookup-dialog-content',
-    loaderTemplate: 'loading'
-  },
+  lookupSettings: undefined,
 
   /**
     If `true`, all details will be deleted along with the main model.
@@ -170,10 +176,10 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     Controller to show lookup modal window.
 
     @property lookupController
-    @type Ember.Controller
+    @type Controller
     @default LookupDialog
   */
-  lookupController: Ember.inject.controller('lookup-dialog'),
+  lookupController: injectController('lookup-dialog'),
 
   /**
     Flag to cancel rollback of model on controller resetting.
@@ -186,7 +192,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   modelNoRollBack: false,
 
   /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array
@@ -219,7 +225,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type Any
     @default model
   */
-  validationObject: Ember.computed.deprecatingAlias('validationModel', {
+  validationObject: computed.deprecatingAlias('validationModel', {
     id: 'ember-flexberry.edit-form-controller.validation-object-property',
     until: '4.0.0',
   }),
@@ -231,7 +237,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @type Any
     @default model
   */
-  validationModel: Ember.computed.alias('model'),
+  validationModel: computed.alias('model'),
 
   actions: {
     /**
@@ -373,7 +379,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     */
     beforeDeleteAllRecords(modelName, data) {
       data.cancel = true;
-      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+      assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
     },
 
     /**
@@ -397,9 +403,20 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     },
   },
 
+  init() {
+    this._super(...arguments);
+    this.set('lookupSettings', {
+      controllerName: 'lookup-dialog',
+      template: 'lookup-dialog',
+      contentTemplate: 'lookup-dialog-content',
+      loaderTemplate: 'loading'
+    });
+  },
+
   /**
     Runs validation on {{#crossLink "EditFormController/validationObject:property"}}{{/crossLink}} and returns promise.
     Promise resolved if validation successful or rejected if validation failed.
+    Promise always settled with [ResultCollection](http://offirgolan.github.io/ember-cp-validations/docs/classes/ResultCollection.html) object.
 
     @method validate
     @return {RSVP.Promise}
@@ -423,16 +440,15 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     const validationModel = this.get('validationModel');
     if (validationModel) {
       return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
-        const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
-        if (resultCollection && validations instanceof resultCollection && validations.get('isInvalid')) {
-          return Ember.RSVP.reject(validations);
+        if (validations instanceof ResultCollection && validations.get('isInvalid')) {
+          return RSVP.reject(validations);
         }
 
-        return Ember.RSVP.resolve();
+        return RSVP.resolve();
       });
     }
 
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   },
 
   /**
@@ -454,10 +470,11 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       const afterSaveModelFunction = () => {
         this.get('appState').success();
         this.onSaveActionFulfilled();
+        let isModal = this.get('isModal');
         if (close) {
           this.get('appState').reset();
           this.close(skipTransition);
-        } else if (!skipTransition) {
+        } else if (!skipTransition && !isModal) {
           const routeName = this.get('routeName');
           if (routeName.indexOf('.new') > 0) {
             const qpars = {};
@@ -468,12 +485,16 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
             let transitionQuery = {};
             transitionQuery.queryParams = qpars;
             transitionQuery.queryParams.recordAdded = true;
-            const parentParameters = {
-              parentRoute: this.get('parentRoute'),
-              parentRouteRecordId: this.get('parentRouteRecordId')
-            };
-            transitionQuery.queryParams.parentParameters = parentParameters;
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
+            transitionQuery.queryParams.parentRoute = this.get('parentRoute');
+            transitionQuery.queryParams.parentRouteRecordId = this.get('parentRouteRecordId');
+
+            // Refresh form model after save. For batch update.
+            const store = this.get('store');
+            const modelName = this.get('modelProjection').modelName;
+            const modelId = this.get('model.id');
+            const modelAfterSaveRefreshed = store.peekRecord(modelName , modelId);
+
+            this.transitionToRoute(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
           }
         }
       };
@@ -481,14 +502,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       return this.saveModel().then(afterSaveModelFunction).catch((errorData) => {
         this.get('appState').error();
         this.onSaveActionRejected(errorData);
-        return Ember.RSVP.reject(errorData);
+        return reject(errorData);
       }).finally((data) => {
         this.onSaveActionAlways(data);
       });
     }).catch((errorData) => {
       this.get('appState').error();
       this.onSaveActionRejected(errorData);
-      return Ember.RSVP.reject(errorData);
+      return reject(errorData);
     });
   },
 
@@ -505,9 +526,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     const agragatorModel = getCurrentAgregator.call(this);
     if (needSaveCurrentAgregator.call(this, agragatorModel)) {
       return model.save().then(() => this._saveHasManyRelationships(model)).then((result) => {
-        const errors = Ember.A(result || []).filterBy('state', 'rejected');
-        if (!Ember.isEmpty(errors)) {
-          return Ember.RSVP.reject(errors);
+        const errors = A(result || []).filterBy('state', 'rejected');
+        if (!isEmpty(errors)) {
+          return reject(errors);
         }
 
         return agragatorModel.save();
@@ -577,8 +598,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
   close(skipTransition, rollBackModel) {
     this.get('appState').reset();
     this.onCloseActionStarted();
-    if (!skipTransition) {
-      this.transitionToParentRoute(skipTransition, rollBackModel);
+    let isModal = this.get('isModal');
+    let modalController = this.get('modalController');
+    if (isModal && !isNone(modalController)) {
+      modalController.send('onEditRecordDialogClosing');
+    } else {
+      if (!skipTransition) {
+        this.transitionToParentRoute(skipTransition, rollBackModel);
+      }
     }
   },
 
@@ -626,9 +653,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    Ember.$('.ui.form .full.height').scrollTop(0);
-    const resultCollection = this.get('_EmberCpValidationsResultCollectionClass');
-    if (!(errorData instanceof Errors) && (!resultCollection || !(errorData instanceof resultCollection))) {
+    $('.ui.form .full.height').scrollTop(0);
+    if (!(errorData instanceof ResultCollection) && !(errorData instanceof DS.Errors)) {
       this.send('handleError', errorData);
     }
   },
@@ -648,8 +674,10 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onSaveActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -716,8 +744,10 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before close method will be called.
@@ -746,9 +776,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       let parentRoute = this.get('parentRoute');
-      Ember.assert('Parent route must be defined.', parentRoute);
+      assert('Parent route must be defined.', parentRoute);
       let parentRouteRecordId = this.get('parentRouteRecordId');
-      if (Ember.isNone(parentRouteRecordId)) {
+      if (isNone(parentRouteRecordId)) {
         this.transitionToRoute(parentRoute);
       } else {
         this.transitionToRoute(parentRoute, parentRouteRecordId);
@@ -776,12 +806,12 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       return cellComponent;
     }
 
-    let modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
+    let modelAttr = !isNone(modelClass) ? get(modelClass, 'attributes').get(bindingPath) : null;
     if (!(attr.kind === 'attr' && modelAttr && modelAttr.type)) {
       return cellComponent;
     }
 
-    let modelAttrOptions = Ember.get(modelAttr, 'options');
+    let modelAttrOptions = get(modelAttr, 'options');
 
     // Handle order attributes (they must be readonly).
     if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
@@ -799,6 +829,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
 
       case 'date': {
         cellComponent.componentName = 'flexberry-simpledatetime';
+        cellComponent.componentProperties = { type: 'date' };
         break;
       }
 
@@ -812,14 +843,14 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
 
         // Current cell type is possibly custom transform.
         let transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
-        let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
         // Handle enums (extended from transforms/flexberry-enum.js).
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid'
+            class: 'compact fluid ui dropdown flexberry-dropdown selection'
           };
         }
 
@@ -839,19 +870,27 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @deprecated Use `rollbackHasMany` from model.
   */
   rollbackHasManyRelationships(model) {
-    Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
+    deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
+  },
+
+  /**
+    Rollback current model.
+    @method rollbackAll
+  */
+  rollbackAll() {
+    this.get('model').rollbackAll();
   },
 
   /**
     Service that lets interact between agregator's and detail's form.
 
     @property flexberryDetailInteractionService
-    @type Ember.Service
+    @type Service
     @readOnly
     @private
   */
-  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
+  _flexberryDetailInteractionService: injectService('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.
@@ -863,17 +902,17 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @private
   */
   _saveHasManyRelationships(model) {
-    let promises = Ember.A();
+    let promises = A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
           let promise = record.save().then((record) => {
             return this._saveHasManyRelationships(record).then((result) => {
-              if (result && Ember.isArray(result) && result.length > 0) {
-                let arrayWrapper = Ember.A();
+              if (result && isArray(result) && result.length > 0) {
+                let arrayWrapper = A();
                 arrayWrapper.addObjects(result);
                 let errors = arrayWrapper.filterBy('state', 'rejected');
-                return errors.length > 0 ? Ember.RSVP.reject(errors) : record;
+                return errors.length > 0 ? RSVP.reject(errors) : record;
               } else {
                 return record;
               }
@@ -885,7 +924,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       }
     });
 
-    return Ember.RSVP.allSettled(promises);
+    return RSVP.allSettled(promises);
   },
 
   /**
@@ -896,7 +935,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {Ember.NativeArray} An array with the model and all its `hasMany` relationships.
   */
   _getModelWithHasMany(model) {
-    const models = Ember.A([model]);
+    const models = A([model]);
 
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
@@ -920,7 +959,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @return {Promise} A promise that will be resolved to array of destroyed records.
   */
   _destroyHasManyRelationships(model) {
-    let promises = Ember.A();
+    let promises = A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).forEach((record) => {
@@ -933,6 +972,6 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       }
     });
 
-    return Ember.RSVP.allSettled(promises);
+    return RSVP.allSettled(promises);
   },
 });

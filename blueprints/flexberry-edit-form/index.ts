@@ -44,6 +44,7 @@ module.exports = {
     } else {
       this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
     }
+    this.setLocales(this._files);
     return this._files;
   },
 
@@ -60,8 +61,30 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
+
+  setLocales: function (files) {
+    var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+    if (!fs.existsSync(localesFile)) {
+        return files;
+    };
+    var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+    if (locales.locales == undefined) {
+        return files;
+    };
+    if (!locales.locales.en) {
+        files.splice(files.indexOf("__root__/locales/en/"), 1);
+        files.splice(files.indexOf("__root__/locales/en/forms/"), 1);
+        files.splice(files.indexOf("__root__/locales/en/forms/__name__.js"), 1);
+    };
+    if (!locales.locales.ru) {
+        files.splice(files.indexOf("__root__/locales/ru/"), 1);
+        files.splice(files.indexOf("__root__/locales/ru/forms/"), 1);
+        files.splice(files.indexOf("__root__/locales/ru/forms/__name__.js"), 1);
+    };
+    return files;
+},
 
   /**
    * Blueprint Hook locals.
@@ -109,7 +132,7 @@ class EditFormBlueprint {
   private options;
 
   constructor(blueprint, options) {
-    this.isEmberCpValidationsUsed = ModelBlueprint.checkCpValidations(blueprint);
+    this.isEmberCpValidationsUsed = true;
     this.blueprint = blueprint;
     this.options = options;
     this.modelsDir = path.join(options.metadataDir, "models");
@@ -204,6 +227,7 @@ class EditFormBlueprint {
         belongsTo.readonly = "readonly";
         belongsTo.entityName = this.options.entity.name;
         belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+        belongsTo.isDropdown = belongsTo.type === 'combo';
         this.calculateValidatePropertyNames(belongsTo);
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }

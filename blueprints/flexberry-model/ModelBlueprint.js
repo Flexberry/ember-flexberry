@@ -2,6 +2,7 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require("path");
@@ -29,7 +30,6 @@ var ModelBlueprint = /** @class */ (function () {
             var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
             this.parentExternal = parentModel.external;
         }
-        this.hasCpValidations = ModelBlueprint.checkCpValidations(options);
         this.enums = ModelBlueprint.loadEnums(options.metadataDir);
         this.className = model.className;
         this.namespace = model.nameSpace;
@@ -44,13 +44,8 @@ var ModelBlueprint = /** @class */ (function () {
         var localePathTemplate = this.getLocalePathTemplate(options, blueprint.isDummy, path.join("models", options.entity.name + ".js"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru", localePathTemplate);
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
-        if (this.hasCpValidations) {
-            this.validations = this.getValidations(model);
-        }
+        this.validations = this.getValidations(model);
     }
-    ModelBlueprint.checkCpValidations = function (blueprint) {
-        return 'ember-cp-validations' in blueprint.project.dependencies();
-    };
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
         var modelFile = path.join(modelsDir, modelFileName);
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
@@ -126,7 +121,7 @@ var ModelBlueprint = /** @class */ (function () {
         return "      " + attrs.join(",\n      ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
-        var attrs = [], validations = [];
+        var attrs = [];
         var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
         var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
         var attr;
@@ -150,12 +145,11 @@ var ModelBlueprint = /** @class */ (function () {
                         options.push("defaultValue: " + attr.defaultValue);
                         break;
                     case 'date':
-                        // The UTC handling policy depends solely on backend configuration.
-                        if (attr.defaultValue === 'Now' || attr.defaultValue === 'UtcNow') {
+                        if (attr.defaultValue === 'Now') {
                             options.push("defaultValue() { return new Date(); }");
                             break;
                         }
-                        throw new Error("The default '" + attr.defaultValue + "' value for '" + attr.name + "' attribute of 'date' type is not supported.");
+                        break;
                     default:
                         if (this.enums.hasOwnProperty(attr.type)) {
                             var enumName = this.enums[attr.type].className + "Enum";
@@ -174,14 +168,6 @@ var ModelBlueprint = /** @class */ (function () {
                 optionsStr = ", { " + options.join(', ') + ' }';
             }
             attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + optionsStr + ")");
-            if (!this.hasCpValidations && attr.notNull) {
-                if (attr.type === "date") {
-                    validations.push(attr.name + ": { datetime: true }");
-                }
-                else {
-                    validations.push(attr.name + ": { presence: true }");
-                }
-            }
             if (attr.stored)
                 continue;
             var methodToSetNotStoredProperty = "/**\n" +
@@ -192,8 +178,8 @@ var ModelBlueprint = /** @class */ (function () {
                 TAB + TAB + "@private\n" +
                 TAB + TAB + "@example\n" +
                 TAB + TAB + TAB + "```javascript\n" +
-                TAB + TAB + TAB + ("_" + attr.name + "Changed: Ember.on('init', Ember.observer('" + attr.name + "', function() {\n") +
-                TAB + TAB + TAB + TAB + ("Ember.run.once(this, '_" + attr.name + "Compute');\n") +
+                TAB + TAB + TAB + ("_" + attr.name + "Changed: on('init', observer('" + attr.name + "', function() {\n") +
+                TAB + TAB + TAB + TAB + ("once(this, '_" + attr.name + "Compute');\n") +
                 TAB + TAB + TAB + "}))\n" +
                 TAB + TAB + TAB + "```\n" +
                 TAB + "*/\n" +
@@ -207,32 +193,11 @@ var ModelBlueprint = /** @class */ (function () {
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
-            if (!this.hasCpValidations && belongsTo.presence) {
-                validations.push(belongsTo.name + ": { presence: true }");
-            }
             attrs.push(templateBelongsTo(belongsTo));
         }
         for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
-        }
-        if (!this.hasCpValidations) {
-            var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-            if (validations.length === 0) {
-                validationsFunc = "";
-            }
-            validationsFunc =
-                "getValidations: function () {\n" +
-                    TAB + TAB + "let parentValidations = this._super();\n" +
-                    TAB + TAB + "let thisValidations = {\n" +
-                    validationsFunc + TAB + TAB + "};\n" +
-                    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-                    TAB + "}";
-            var initFunction = "init: function () {\n" +
-                TAB + TAB + "this.set('validations', this.getValidations());\n" +
-                TAB + TAB + "this._super.apply(this, arguments);\n" +
-                TAB + "}";
-            attrs.push(validationsFunc, initFunction);
         }
         return attrs.length ? "\n" + (TAB + attrs.join(",\n" + TAB)) + "\n" : '';
     };
@@ -283,10 +248,10 @@ var ModelBlueprint = /** @class */ (function () {
         }
         else {
             if (belongsTo.lookupValueField) {
-                hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
+              hiddenStr = ", { index: " + belongsTo.index + ", displayMemberPath: '" + belongsTo.lookupValueField + "' }";
             }
             else {
-                hiddenStr = ", { index: " + belongsTo.index + " }";
+              hiddenStr = ", { index: " + belongsTo.index + " }";
             }
         }
         var indent = [];
@@ -408,7 +373,7 @@ var ModelBlueprint = /** @class */ (function () {
         for (var validationKey in validators) {
             var descriptionKey = "descriptionKey: 'models." + model.modelName + ".validations." + validationKey + ".__caption__',";
             var _validators = "validators: [\n" + (TAB + TAB + TAB + validators[validationKey].join("\n" + (TAB + TAB + TAB))) + "\n" + (TAB + TAB) + "],";
-            validations.push(TAB + validationKey + ": {\n" + (TAB + TAB + descriptionKey) + "\n" + (TAB + TAB + _validators) + "\n" + TAB + "}");
+            validations.push((TAB + validationKey) + ": {\n" + (TAB + TAB + descriptionKey) + "\n" + (TAB + TAB + _validators) + "\n" + TAB + "}");
         }
         return validations.length ? "\n" + validations.join(',\n') + ",\n" : '';
     };
@@ -421,6 +386,5 @@ var ModelBlueprint = /** @class */ (function () {
     };
     return ModelBlueprint;
 }());
-exports.__esModule = true;
 exports.default = ModelBlueprint;
 //# sourceMappingURL=ModelBlueprint.js.map

@@ -37,12 +37,12 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: '12.x'
 
     - name: Install dependencies
       run: |
         set -x
-        npm install -g ember-cli@2.4.3
+        npm install -g ember-cli@3.1.4
         npm install -g bower
         yarn install
         bower install
@@ -60,11 +60,11 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = 'push' -o  "$GITHUB_EVENT_NAME" = 'pull_request' ]
         then
           case "$GITHUB_BRANCH" in
-            master | develop | feature-ember-update )
+            master | develop )
               ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
               bash -x scripts/deploy-to-gh-pages.sh
               ;;
-            dummy-test | dummy-test-2 | dummy-test-3 )
+            feature-ember-update | dummy-test | dummy-test-2 | dummy-test-3 )
               ember build --gh-pages --gh-pages-branch=$GITHUB_BRANCH
               bash -x scripts/deploy-to-gh-pages.sh no-doc
               ;;

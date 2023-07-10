@@ -39,29 +39,43 @@ Information on how to contribute to the project you can find [here](https://gith
 
 You will need the following things properly installed on your computer.
 
-* [Git](http://git-scm.com/)
+* [Git](https://git-scm.com/)
 * [Node.js (v10.*)](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI (v2.4.3)](http://www.ember-cli.com/)
+* [Bower](https://bower.io/)
+* [Ember CLI](http://www.ember-cli.com/)
+* [Google Chrome](https://www.google.ru/chrome/index.html)
 
 #### Installation
 
-* `git clone` this repository
-* `npm install`
+* `git clone <repository-url>` this repository
+* `cd ember-flexberry`
+* `yarn install`
 * `bower install`
 
 #### Running Dummy Application
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `ember serve`
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
 #### Running Tests
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `ember try:each` – Runs the test suite against multiple Ember versions
+
+#### Linting
+
+* `yarn lint:js`
+* `yarn lint:js --fix`
+
+#### Linting
+
+* `npm run lint` - run all linters
+* `npm run lint:js` - run linter for code
+* `npm run lint:hbs` - run linter for templates
+* `npx update-todo-errors` - update list of todo errors
 
 #### Building
 
@@ -97,7 +111,11 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 ## Further Reading / Useful Links
 
 * [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
+* [ember-cli](https://www.ember-cli.com/)
 * Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+  * [Ember Inspector for Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
+  * [Ember Inspector for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).

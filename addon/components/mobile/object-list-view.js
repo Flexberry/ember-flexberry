@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { Promise } from 'rsvp';
+
+import { assert } from '@ember/debug';
+import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
 
 /**
@@ -20,7 +23,7 @@ export default ObjectListViewComponent.extend({
     @type Boolean
     @readOnly
   */
-  _selectedMobileMenu: Ember.computed('selectedRecords.length', 'allSelect', function() {
+  _selectedMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
     return this.get('selectedRecords.length') > 0 || this.get('allSelect');
   }),
 
@@ -32,7 +35,7 @@ export default ObjectListViewComponent.extend({
     @type Number
     @readOnly
   */
-  _selectedCountMobileMenu: Ember.computed('selectedRecords.length', 'allSelect', function() {
+  _selectedCountMobileMenu: computed('selectedRecords.length', 'allSelect', function() {
     if (this.get('allSelect')) {
       return this.get('recordsTotalCount');
     }
@@ -56,10 +59,7 @@ export default ObjectListViewComponent.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of middlee column.
@@ -76,7 +76,7 @@ export default ObjectListViewComponent.extend({
     @type Number
     @readOnly
   */
-  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
+  colspan: computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
     let columnsCount = 1;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;
@@ -89,12 +89,20 @@ export default ObjectListViewComponent.extend({
     return columnsCount;
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  },
+
   /**
     @private
     @property _checkRowsSettingsItems
     @readOnly
   */
-  _checkRowsSettingsItems: Ember.computed(
+  _checkRowsSettingsItems: computed(
     'i18n.locale',
     'userSettingsService.isUserSettingsServiceEnabled',
     'readonly',
@@ -156,16 +164,16 @@ export default ObjectListViewComponent.extend({
       let possiblePromise = null;
 
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
 
         possiblePromise = confirmDeleteRows();
 
-        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise))) {
+        if ((!possiblePromise || !(possiblePromise instanceof Promise))) {
           return;
         }
       }
 
-      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      if (possiblePromise || (possiblePromise instanceof Promise)) {
         possiblePromise.then(() => {
           this._confirmDeleteRows();
         });

@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { assert } from '@ember/debug';
 
 /**
   Used for getting projection object by projection name.
@@ -14,10 +15,10 @@ import Ember from 'ember';
   @return {Object} Projection by name.
 */
 export default function getProjectionByName(projectionName, modelName, store) {
-  Ember.assert('For define projection by name, model name is required.', modelName);
-  Ember.assert('For define projection by name, store is required.', store);
+  assert('For define projection by name, model name is required.', modelName);
+  assert('For define projection by name, store is required.', store);
   let modelConstructor = store.modelFor(modelName);
-  Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
+  assert(`Model with name '${modelName}' is not found.`, modelConstructor);
 
-  return Ember.get(modelConstructor, `projections.${projectionName}`);
+  return get(modelConstructor, `projections.${projectionName}`);
 }

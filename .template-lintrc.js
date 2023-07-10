@@ -27,15 +27,13 @@ module.exports = {
     {
       "moduleId": "app/templates/colsconfig-dialog-content",
       "only": [
-        "eol-last",
-        "quotes"
+        "eol-last"
       ]
     },
     {
       "moduleId": "app/templates/colsconfig-dialog",
       "only": [
-        "eol-last",
-        "quotes"
+        "eol-last"
       ]
     },
     {
@@ -78,42 +76,9 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "app/templates/new-platform-flexberry-services-lock-list",
       "only": [
         "eol-last"
-      ]
-    },
-    {
-      "moduleId": "app/templates/sitemap-node-content",
-      "only": [
-        "quotes",
-        "deprecated-render-helper",
-        "no-invalid-interactive"
-      ]
-    },
-    {
-      "moduleId": "app/templates/sitemap-node",
-      "only": [
-        "block-indentation",
-        "eol-last",
-        "quotes",
-        "no-invalid-interactive",
-        "no-partial"
-      ]
-    },
-    {
-      "moduleId": "app/templates/sitemap",
-      "only": [
-        "block-indentation",
-        "eol-last",
-        "deprecated-render-helper"
       ]
     },
     {
@@ -128,13 +93,19 @@ module.exports = {
       "moduleId": "app/templates/components/colsconfig-dialog-content",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-unnecessary-concat",
         "quotes",
         "link-href-attributes",
         "no-inline-styles",
         "no-invalid-interactive",
         "no-quoteless-attributes"
+      ]
+    },
+    {
+      "moduleId": "app/templates/components/flexberry-edit-panel",
+      "only": [
+        // don't delete, exception for text in button.
+        "block-indentation"
       ]
     },
     {
@@ -184,9 +155,8 @@ module.exports = {
     {
       "moduleId": "app/templates/components/flexberry-dropdown",
       "only": [
-        "eol-last",
         "no-unnecessary-concat",
-        "quotes"
+        "eol-last"
       ]
     },
     {
@@ -251,6 +221,14 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/flexberry-multiple-lookup",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "no-unnecessary-concat"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/flexberry-objectlistview",
       "only": [
         "quotes",
@@ -261,47 +239,26 @@ module.exports = {
       "moduleId": "app/templates/components/flexberry-simpledatetime",
       "only": [
         "eol-last",
-        "self-closing-void-elements"
+        "self-closing-void-elements",
+        "require-button-type"
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-simpleolv",
+      "moduleId": "app/templates/components/flexberry-sitemap-guideline",
       "only": [
         "block-indentation",
-        "eol-last",
-        "no-unnecessary-concat",
-        "quotes",
-        "self-closing-void-elements",
-        "no-attrs-in-components",
-        "no-inline-styles",
-        "no-invalid-interactive",
-        "simple-unless",
-        "no-bare-strings"
+        "eol-last"
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-tab-bar",
+      "moduleId": "app/templates/components/flexberry-sitemap",
       "only": [
         "eol-last",
-        "no-unnecessary-concat",
-        "link-href-attributes",
         "no-invalid-interactive"
       ]
     },
     {
       "moduleId": "app/templates/components/flexberry-text-cell",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-textarea",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-textbox",
       "only": [
         "eol-last"
       ]
@@ -331,18 +288,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-validationmessage",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-validationsummary",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/form-load-time-tracker",
       "only": [
         "eol-last"
@@ -357,10 +302,10 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/modal-dialog",
+      "moduleId": "app/templates/components/highload-edit-form-menu",
       "only": [
-        "eol-last",
-        "quotes"
+        "link-href-attributes",
+        "no-invalid-interactive"
       ]
     },
     {
@@ -375,8 +320,8 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "no-unnecessary-concat",
-        "no-invalid-interactive",
-        "no-unbound"
+        "quotes",
+        "no-invalid-interactive"
       ]
     },
     {
@@ -395,9 +340,7 @@ module.exports = {
         "quotes",
         "no-inline-styles",
         "no-invalid-interactive",
-        "no-unbound",
-        "simple-unless",
-        "no-bare-strings"
+        "simple-unless"
       ]
     },
     {
@@ -437,16 +380,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/mobile/sitemap-node",
-      "only": [
-        "block-indentation",
-        "eol-last",
-        "quotes",
-        "no-invalid-interactive",
-        "no-partial"
-      ]
-    },
-    {
       "moduleId": "app/templates/mobile/components/colsconfig-dialog-content",
       "only": [
         "eol-last",
@@ -475,28 +408,11 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/mobile/components/flexberry-simpleolv",
-      "only": [
-        "block-indentation",
-        "eol-last",
-        "no-unnecessary-concat",
-        "quotes",
-        "self-closing-void-elements",
-        "no-inline-styles",
-        "no-invalid-interactive",
-        "no-unnecessary-component-helper",
-        "simple-unless",
-        "no-bare-strings"
-      ]
-    },
-    {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
         "eol-last",
-        "no-unnecessary-concat",
         "no-inline-styles",
         "no-invalid-interactive",
-        "no-unbound",
         "style-concatenation"
       ]
     },
@@ -509,7 +425,6 @@ module.exports = {
         "quotes",
         "no-inline-styles",
         "no-invalid-interactive",
-        "no-unbound",
         "simple-unless"
       ]
     },
@@ -519,7 +434,6 @@ module.exports = {
         "eol-last",
         "quotes",
         "self-closing-void-elements",
-        "deprecated-render-helper",
         "link-rel-noopener",
         "link-href-attributes",
         "no-invalid-interactive",
@@ -529,11 +443,9 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/application",
       "only": [
-        "block-indentation",
         "eol-last",
         "quotes",
         "self-closing-void-elements",
-        "deprecated-render-helper",
         "link-rel-noopener",
         "link-href-attributes",
         "no-inline-styles",
@@ -545,14 +457,15 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-edit",
       "only": [
         "eol-last",
-        "simple-unless"
+        "simple-unless",
+        "no-bare-strings"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-list",
       "only": [
-        "block-indentation",
-        "eol-last"
+        "eol-last",
+        "no-trailing-spaces"
       ]
     },
     {
@@ -566,7 +479,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-comment-vote-edit",
       "only": [
-        "block-indentation",
         "eol-last",
         "quotes"
       ]
@@ -598,17 +510,10 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-edit",
       "only": [
         "eol-last",
-        "quotes",
-        "simple-unless"
+        "quotes"
       ]
     },
     {
@@ -622,15 +527,14 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-file-list",
       "only": [
-        "block-indentation",
         "eol-last"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-list",
       "only": [
-        "block-indentation",
-        "eol-last"
+        "eol-last",
+        "quotes"
       ]
     },
     {
@@ -657,13 +561,27 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/index",
       "only": [
-        "eol-last"
+        "eol-last",
+        "quotes",
+        "require-button-type",
+        "no-bare-strings"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/loading",
       "only": [
-        "eol-last"
+        "eol-last",
+        "no-bare-strings"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/login",
+      "only": [
+        "eol-last",
+        "quotes",
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "require-valid-alt-text"
       ]
     },
     {
@@ -678,7 +596,6 @@ module.exports = {
       "only": [
         "eol-last",
         "quotes",
-        "deprecated-render-helper",
         "link-href-attributes",
         "no-invalid-interactive",
         "no-bare-strings"
@@ -691,12 +608,10 @@ module.exports = {
         "eol-last",
         "quotes",
         "self-closing-void-elements",
-        "deprecated-render-helper",
         "link-rel-noopener",
         "link-href-attributes",
         "no-invalid-interactive",
-        "require-valid-alt-text",
-        "no-bare-strings"
+        "require-valid-alt-text"
       ]
     },
     {
@@ -717,24 +632,20 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/edit-form-readonly",
       "only": [
-        "eol-last",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/log-service-examples/clear-log-form",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-bare-strings"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/log-service-examples/settings-example",
       "only": [
-        "block-indentation",
         "eol-last",
-        "quotes",
         "no-duplicate-attributes",
         "no-inline-styles",
         "no-bare-strings"
@@ -746,11 +657,44 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "quotes",
-        "deprecated-render-helper",
+        "self-closing-void-elements",
         "link-rel-noopener",
         "link-href-attributes",
-        "no-inline-styles",
-        "no-invalid-interactive"
+        "no-invalid-interactive",
+        "require-valid-alt-text"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/mobile/index",
+      "only": [
+        "block-indentation",
+        "eol-last",
+        "quotes",
+        "link-href-attributes",
+        "require-button-type",
+        "no-bare-strings"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/modal/delete-record-modal-dialog",
+      "only": [
+        "eol-last",
+        "require-button-type"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/modal/ember-flexberry-support-modal",
+      "only": [
+        "quotes",
+        "require-button-type"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/modal/modal-dialog",
+      "only": [
+        "block-indentation",
+        "no-trailing-spaces",
+        "require-button-type"
       ]
     },
     {
@@ -766,7 +710,6 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "quotes",
-        "deprecated-render-helper",
         "link-rel-noopener",
         "link-href-attributes",
         "no-inline-styles",
@@ -795,6 +738,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/properly-rerenders",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/base-operations",
       "only": [
         "eol-last"
@@ -803,8 +752,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-actions",
       "only": [
-        "eol-last",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {
@@ -816,6 +764,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
       "only": [
         "eol-last"
       ]
@@ -990,8 +950,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/configurate-row-example",
       "only": [
-        "eol-last",
-        "no-duplicate-attributes"
+        "eol-last"
       ]
     },
     {
@@ -1290,57 +1249,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/configurate-rows",
-      "only": [
-        "eol-last",
-        "quotes",
-        "require-button-type",
-        "no-bare-strings"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/custom-filter",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/limit-function-example",
-      "only": [
-        "block-indentation",
-        "quotes",
-        "require-button-type"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/on-edit-form",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/selected-rows",
-      "only": [
-        "eol-last",
-        "no-bare-strings"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/settings-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/toolbar-custom-buttons-example",
-      "only": [
-        "block-indentation",
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-text-cell/settings-example",
       "only": [
         "block-indentation",
@@ -1372,10 +1280,11 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-tree/settings-example",
+      "moduleId": "tests/dummy/app/templates/components-examples/modal-dialog/index",
       "only": [
-        "eol-last",
-        "link-href-attributes"
+        "block-indentation",
+        "no-trailing-spaces",
+        "require-button-type"
       ]
     },
     {
@@ -1390,7 +1299,17 @@ module.exports = {
       "only": [
         "block-indentation",
         "eol-last",
-        "no-duplicate-attributes",
+        "no-bare-strings"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/theming-components",
+      "only": [
+        "eol-last",
+        "no-multiple-empty-lines",
+        "link-href-attributes",
+        "require-button-type",
+        "require-valid-alt-text",
         "no-bare-strings"
       ]
     },
@@ -1526,15 +1445,6 @@ module.exports = {
       "only": [
         "block-indentation",
         "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-simpleolv/on-edit-form/user",
-      "only": [
-        "eol-last",
-        "self-closing-void-elements",
-        "no-inline-styles",
-        "simple-unless"
       ]
     },
     {

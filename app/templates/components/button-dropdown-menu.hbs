@@ -1,0 +1,18 @@
+{{#each buttons as |button|}}
+  {{#unless button.disabled}}
+    <div role="button" class="item {{button.class}}" onclick={{unless button.buttons (action sendButtonAction button.action)}}>
+      <div class="menu-item">
+        {{#if button.buttons}}
+          <i class="left dropdown icon"></i>
+        {{/if}}
+        {{#if button.icon}}<i class={{button.icon}}></i>{{/if}}<span class="text">{{button.text}}</span>
+      </div>
+      {{#if button.buttons}}
+        {{button-dropdown-menu
+          buttons=button.buttons
+          sendButtonAction=(action "sendButtonAction")
+        }}
+      {{/if}}
+    </div>
+  {{/unless}}
+{{/each}}

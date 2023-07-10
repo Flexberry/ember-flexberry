@@ -1,7 +1,7 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
@@ -85,11 +85,11 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
    * @function model
    */
   model(params) {
-    const store = Ember.get(this, 'store');
-    let modelName = Ember.get(this, 'modelName')
+    const store = this.get('store');
+    let modelName = this.get('modelName')
     let createdRecordsPrefix = (params != undefined && params['createdRecordsPrefix'] != undefined) ? params['createdRecordsPrefix'] : 'delete-with-details' + generateUniqueId();
-    
-    let query = new Query.Builder(store)
+
+    let query = new Builder(store)
       .from(modelName)
       .where(new SimplePredicate('text', "==", createdRecordsPrefix + "0"))
       .selectByProjection('SuggestionE').top(2);

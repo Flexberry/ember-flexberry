@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Datetime picker type.
 
@@ -34,7 +37,7 @@ export default Ember.Controller.extend({
     @property value
     @type Date
   */
-  value: Ember.computed('_value', '__value', {
+  value: computed('_value', '__value', {
     get() {
       let value = this.get('__value');
       if (value === undefined) {
@@ -69,7 +72,7 @@ export default Ember.Controller.extend({
     @type Date
     @default 'seven days under'
   */
-  min: Ember.computed('_min', {
+  min: computed('_min', {
     get() {
       let min = new Date();
       min.setDate(min.getDate() - 7);
@@ -99,7 +102,7 @@ export default Ember.Controller.extend({
     @type Date
     @default 'seven days older'
    */
-  max: Ember.computed('_max', {
+  max: computed('_max', {
     get() {
       let max = new Date();
       max.setDate(max.getDate() + 7);
@@ -135,15 +138,20 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-simpledatetime<br>' +
-    '  type=type<br>' +
-    '  removeButton=removeButton<br>' +
-    '  value=model.date<br>' +
-    '  min=min<br>' +
-    '  max=max<br>' +
-    '  readonly=readonly<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-simpledatetime<br>' +
+      '  type=type<br>' +
+      '  removeButton=removeButton<br>' +
+      '  value=model.date<br>' +
+      '  min=min<br>' +
+      '  max=max<br>' +
+      '  readonly=readonly<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -151,8 +159,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'type',

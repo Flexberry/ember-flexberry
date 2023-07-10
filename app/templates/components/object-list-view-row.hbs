@@ -1,21 +1,12 @@
 {{#if doRenderData}}
-  <tr class="{{record.rowConfig.customClass}}">
+  <tr class="{{record.rowConfig.customClass}}{{if record.selected " active"}}{{if record.data.hasDirtyAttributes " groupedit-new-row"}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
-      {{#each customButtonsInRow as |customButtonInRow|}}
-          <button
-            type="button"
-            class="ui {{customButtonInRow.buttonClasses}} button"
-            title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
-            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
-            <i class={{customButtonInRow.buttonIcon}}></i>
-          </button>
-      {{/each}}
-      {{#if showHelperColumn}}
-        <div class="object-list-view-helper-column-cell">
-          {{#if showAsteriskInRow}}
+      <div class="object-list-view-helper-column-cell">
+        {{#if showHelperColumn}}
+          {{#if (and showAsteriskInRow record.data.hasDirtyAttributes)}}
             <div class="cell asterisk-cell">
-              <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "transparent"}}"></i>
+              <i class="asterisk small red icon"></i>
             </div>
           {{/if}}
           {{#if showCheckBoxInRow}}
@@ -90,51 +81,63 @@
               {{/if}}
             </div>
           {{/if}}
-        </div>
-      {{/if}}
+        {{/if}}
+        {{#each customButtonsInRow as |customButtonInRow|}}
+            <button
+              type="button"
+              class="ui {{customButtonInRow.buttonClasses}} button"
+              title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+              {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
+              <i class={{customButtonInRow.buttonIcon}}></i>
+            </button>
+        {{/each}}
+      </div>
     </td>
     {{#each columns as |column index|}}
       <td
         {{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+        class="field {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
-            {{#component column.cellComponent.componentName
-              dynamicProperties=column.cellComponent.componentProperties
-              relatedModel=record.data
-              value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
-              required=required
-              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
-            }}
-              {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
-                <button
-                  type="button"
-                  class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
-                  title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
-                  {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
-                >
-                  <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
-                </button>
-              {{/if}}
-            {{/component}}
-          {{else}}
-            {{component column.cellComponent.componentName
-              dynamicProperties=column.cellComponent.componentProperties
-              relatedModel=record.data
-              value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
-              required=required
-              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
-              canFixElement=(or (eq column.cellComponent.componentName "flexberry-dropdown") (eq column.cellComponent.componentName "flexberry-lookup"))
-            }}
-            {{#if showValidationMessages}}
-              {{flexberry-validationmessage
-                error=(get record.data (concat "errors." column.propName))
-                pointing="pointing"
+            {{#with (if column.relationshipPath (get record.data column.relationshipPath) record.data) as |relation|}}
+              {{#component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=record.data
+                value=(mut (get record.data column.propName))
+                class=(if (and showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
+                required=required
+                componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
               }}
-            {{/if}}
+                {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
+                  <button
+                    type="button"
+                    class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
+                    title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
+                    {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
+                  >
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                  </button>
+                {{/if}}
+              {{/component}}
+            {{/with}}
+          {{else}}
+            {{#with (if column.relationshipPath (get record.data column.relationshipPath) record.data) as |relation|}}
+              {{component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=record.data
+                value=(mut (get record.data column.propName))
+                class=(if (and showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
+                required=required
+                componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+                canFixElement=(or (eq column.cellComponent.componentName 'flexberry-dropdown') (eq column.cellComponent.componentName 'flexberry-lookup'))
+              }}
+              {{#if showValidationMessages}}
+                {{flexberry-validationmessage error=(v-get relation column.attrName "message")}}
+              {{/if}}
+            {{/with}}
           {{/if}}
         {{else}}
           <div class="oveflow-text">
@@ -160,7 +163,7 @@
       <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
         <div class="right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
-          <div class="left menu">
+          <div class="right menu">
             {{#if showEditMenuItemInRow}}
               {{#if readonly}}
                 <div class="item disabled edit-menu">
@@ -231,7 +234,7 @@
         showDeleteButtonInRow=showDeleteButtonInRow
         isParentRecordPropertyName=isParentRecordPropertyName
         inHierarchicalMode=inHierarchicalMode
-        inExpandMode=(unbound inExpandMode)
+        inExpandMode=inExpandMode
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick

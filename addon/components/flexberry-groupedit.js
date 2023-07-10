@@ -2,7 +2,14 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { get, observer, computed } from '@ember/object';
+import { inject as service} from '@ember/service';
+import { A, isArray } from '@ember/array';
+import { copy } from '@ember/object/internals';
+import { assert } from '@ember/debug';
+import { merge } from '@ember/polyfills';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import Information from 'ember-flexberry-data/utils/information';
 import { translationMacro as t } from 'ember-i18n';
@@ -34,7 +41,7 @@ export default FlexberryBaseComponent.extend({
     @property store
     @type Service
   */
-  store: Ember.inject.service('store'),
+  store: service(),
 
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
@@ -43,7 +50,7 @@ export default FlexberryBaseComponent.extend({
     @type Service
     @private
   */
-  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+  _groupEditEventsService: service('objectlistview-events'),
 
   /**
     Name of action to handle row click.
@@ -81,10 +88,7 @@ export default FlexberryBaseComponent.extend({
     @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null
-  },
+  cellComponent: undefined,
 
   /**
     Content to be displayed (models collection).
@@ -338,13 +342,32 @@ export default FlexberryBaseComponent.extend({
   showValidationMessagesInRow: true,
 
   /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
     Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
     @default true
   */
-  showAsteriskInRow: true,
+  showAsteriskInRow: undefined,
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryGroupedit'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryGroupedit',
 
   /**
     Flag: indicates whether to show checkbox in first column of every row.
@@ -406,9 +429,9 @@ export default FlexberryBaseComponent.extend({
 
     @property tableStriped
     @type Boolean
-    @default true
+    @default false
   */
-  tableStriped: true,
+  tableStriped: false,
 
   /**
     Minimum column width, if width isn't defined in userSettings.
@@ -433,9 +456,9 @@ export default FlexberryBaseComponent.extend({
 
     @property overflowedComponents
     @type Array
-    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+    @default A(['flexberry-dropdown', 'flexberry-lookup'])
   */
-  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+  overflowedComponents: A(['flexberry-dropdown', 'flexberry-lookup']),
 
   /**
     Flag indicates whether to fix the table head (if `true`) or not (if `false`).
@@ -457,18 +480,20 @@ export default FlexberryBaseComponent.extend({
       let sortAscending = column.sortAscending;
       let columnName = column.propName;
       let attributePath = columnName;
-      if (Ember.get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
-        let diplayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
+      if (get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
+        let diplayAttribute = get(column, 'cellComponent.componentProperties.displayAttributeName');
         attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
       }
 
-      if (Ember.isNone(sortAscending)) {
+      if (isNone(sortAscending)) {
         this.set('sorting', [{ propName: columnName, direction: 'asc', attributePath: attributePath }]);
       } else if (sortAscending) {
         this.set('sorting', [{ propName: columnName, direction: 'desc', attributePath: attributePath }]);
       } else {
         this.set('sorting', []);
       }
+
+      this.get('_groupEditEventsService').setLoadingState('')
     },
 
     /**
@@ -481,12 +506,12 @@ export default FlexberryBaseComponent.extend({
       let sortAscending = column.sortAscending;
       let columnName = column.propName;
       let attributePath = columnName;
-      if (Ember.get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
-        let diplayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
+      if (get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
+        let diplayAttribute = get(column, 'cellComponent.componentProperties.displayAttributeName');
         attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
       }
 
-      let sorting = Ember.copy(this.get('sorting'), true) || [];
+      let sorting = copy(this.get('sorting'), true) || [];
       for (let i = 0; i < sorting.length; i++) {
         if (sorting[i].propName === 'id') {
           sorting.splice(i, 1);
@@ -494,7 +519,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
 
-      if (Ember.isNone(sortAscending)) {
+      if (isNone(sortAscending)) {
         sorting.push({ propName: columnName, direction: 'asc', attributePath: attributePath });
         this.set('sorting', sorting);
         this.sortingFunction();
@@ -520,6 +545,8 @@ export default FlexberryBaseComponent.extend({
         this.set('sorting', sorting);
         this.sortingFunction();
       }
+
+      this.get('_groupEditEventsService').setLoadingState('')
     },
 
     /**
@@ -533,11 +560,13 @@ export default FlexberryBaseComponent.extend({
     groupEditRowClick(record, options) {
       if (this.get('editOnSeparateRoute')) {
         let editFormRoute = this.get('editFormRoute');
-        Ember.assert('Edit form route must be defined for flexberry-groupedit', editFormRoute);
-        options = Ember.merge(options, { editFormRoute: editFormRoute });
+        assert('Edit form route must be defined for flexberry-groupedit', editFormRoute);
+        options = merge(options, { editFormRoute: editFormRoute });
       }
 
-      this.sendAction('action', record, options);
+      /* eslint-disable ember/closure-actions */
+      this.sendAction('action', record, options); //TODO Action groupEditRowClick from route in controller and fix .eslintrc
+      /* eslint-enable ember/closure-actions */
     },
 
     /**
@@ -548,7 +577,7 @@ export default FlexberryBaseComponent.extend({
       @param {DS.Model} record
     */
     sendMenuItemAction(actionName, record) {
-      this.sendAction(actionName, record);
+      this.get(actionName)(record);
     },
 
     /**
@@ -557,16 +586,31 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {String} actionName The name of action
     */
-    customButtonAction: function customButtonAction(actionName) {
+    customButtonAction(actionName) {
       if (!actionName) {
         throw new Error('No handler for custom button of flexberry-groupedit toolbar was found.');
       }
 
-      this.sendAction(actionName);
+      this.get(actionName)();
+    },
+
+    /**
+      Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-groupedit row was found.');
+      }
+
+      this.sendAction(actionName, model);
     },
   },
 
-  sortingObserver: Ember.observer('sorting', function() {
+  sortingObserver: observer('sorting', function() {
     this.sortingFunction();
   }),
 
@@ -576,14 +620,14 @@ export default FlexberryBaseComponent.extend({
     @property orderedProperty
     @type computed
   */
-  orderedProperty: Ember.computed('modelProjection', function() {
+  orderedProperty: computed('modelProjection', function() {
     let projection = this.get('modelProjection');
     if (typeof projection === 'string') {
       let modelName = this.get('modelName');
       projection = getProjectionByName(projection, modelName, this.get('store'));
     }
 
-    if (Ember.isNone(projection)) {
+    if (isNone(projection)) {
       return;
     }
 
@@ -594,7 +638,12 @@ export default FlexberryBaseComponent.extend({
     let order = attributesKeys.find((key) => {
       let attrubute = attributes[key];
       if (attrubute.kind === 'attr' && information.isOrdered(projection.modelName, key)) {
-        this.set('sorting', [{ direction: 'asc', propName: key }]);
+        once(this, function() {
+          /* eslint-disable ember/no-side-effects */
+          this.set('sorting', [{ direction: 'asc', propName: key }]);
+          /* eslint-enable ember/no-side-effects */
+        });
+
         return key;
       }
     });
@@ -609,7 +658,7 @@ export default FlexberryBaseComponent.extend({
   */
   sortingFunction() {
     let records = this.get('content');
-    if (Ember.isArray(records) && records.length > 1) {
+    if (isArray(records) && records.length > 1) {
       let sorting = this.get('sorting') || [];
       if (sorting.length === 0) {
         sorting = [{ propName: 'id', direction: 'asc' }];
@@ -679,11 +728,11 @@ export default FlexberryBaseComponent.extend({
       let firstProp = hashArray[koef1].hash;
       let secondProp = hashArray[koef2].hash;
       if (sortDef.direction === 'asc') {
-        return Ember.isNone(secondProp) && !Ember.isNone(firstProp) ? true : firstProp > secondProp;
+        return isNone(secondProp) && !isNone(firstProp) ? true : firstProp > secondProp;
       }
 
       if (sortDef.direction === 'desc') {
-        return !Ember.isNone(secondProp) && Ember.isNone(firstProp) ? true : firstProp < secondProp;
+        return !isNone(secondProp) && isNone(firstProp) ? true : firstProp < secondProp;
       }
 
       return false;
@@ -695,17 +744,17 @@ export default FlexberryBaseComponent.extend({
       let min = i;
       for(let j = i + 1; j < hashArrayLength; j++) {
         if(condition(min, j)) {
-          min = j; 
+          min = j;
         }
       }
       if (min != i) {
         // Exchange current with minimum.
-        let tmp = hashArray[i]; 
+        let tmp = hashArray[i];
         hashArray[i] = hashArray[min];
-        hashArray[min] = tmp;      
+        hashArray[min] = tmp;
       }
     }
-    
+
     // Remove unsorted part.
     recordsSort.removeAt(start, end - start + 1);
 
@@ -717,10 +766,23 @@ export default FlexberryBaseComponent.extend({
     return recordsSort;
   },
 
+  init() {
+    this._super(...arguments);
+
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null
+    });
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
+    this.initProperty({ propertyName: 'showAsteriskInRow', defaultValue: true });
+  },
+
   didInsertElement() {
     this._super(...arguments);
 
-    if (Ember.isNone(this.get('orderedProperty'))) {
+    if (isNone(this.get('orderedProperty'))) {
       let developerUserSettings = this.currentController;
       developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
       developerUserSettings = developerUserSettings[this.componentName] || {};

@@ -2,18 +2,25 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import EmberMap from '@ember/map';
+import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { deprecatingAlias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
 
   @class ObjectlistviewEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
  */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   /**
     Current set of selected records for all list components.
@@ -31,7 +38,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @type Object
     @private
   */
-  _olvFilterColumnsArray: Ember.computed(() => ({})),
+  _olvFilterColumnsArray: computed(() => ({})),
 
   /**
     Init service.
@@ -180,9 +187,9 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
-    if (count > 0 || !Ember.isNone(recordWithKey)) {
+    if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
-        this.get('_selectedRecords')[componentName] = Ember.Map.create();
+        this.get('_selectedRecords')[componentName] = EmberMap.create();
       }
 
       if (checked) {
@@ -310,7 +317,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @type Object
     @default {}
   */
-  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
+  currentLimitFunctions: computed(() => { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -318,7 +325,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property loadingState
     @type string
   */
-  loadingState: Ember.computed.deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
 
   /**
     Service for managing the state of the application.
@@ -326,7 +333,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Sets current limit function for OLV.
@@ -337,7 +344,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} componentName Component name.
   */
   setLimitFunction(limitFunction, componentName) {
-    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
+    this.get('currentLimitFunctions')[componentName] = limitFunction instanceof BasePredicate ? limitFunction : undefined;
   },
 
   /**
@@ -348,7 +355,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @return {BasePredicate} Current limit function.
   */
   getLimitFunction(componentName) {
-    return this.get(`currentLimitFunctions.${componentName}`);
+    return this.get('currentLimitFunctions')[componentName];
   },
 
   /**
@@ -381,7 +388,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    Ember.deprecate('This method is deprecated, use app state service.', false, {
+    deprecate('This method is deprecated, use app state service.', false, {
       id: 'service.app-state',
       until: '1.0.0',
     });
@@ -437,5 +444,23 @@ export default Ember.Service.extend(Ember.Evented, {
     typeof this.get('_selectedRecords')[componentName].clear === 'function') {
       this.get('_selectedRecords')[componentName].clear();
     }
-  }
+  },
+
+  /**
+    Triggers when edit record dialog was created.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogCreatedTrigger() {
+    this.trigger('editRecordDialogCreated');
+  },
+
+  /**
+    Triggers when edit record dialog was hidden.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogHiddenTrigger() {
+    this.trigger('editRecordDialogHidden');
+  },
 });

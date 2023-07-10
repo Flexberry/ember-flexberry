@@ -2,17 +2,20 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { merge } from '@ember/polyfills';
+import { get } from '@ember/object';
+import EditInModalOpen from '../mixins/edit-in-modal-open';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
   to support work with {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
 
   @class FlexberryObjectlistviewRouteMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create(EditInModalOpen, {
   actions: {
     /**
       Table row click handler.
@@ -20,7 +23,7 @@ export default Ember.Mixin.create({
       @method actions.objectListViewRowClick
       @public
 
-      @param {Ember.Object} record Record related to clicked table row
+      @param {EmberObject} record Record related to clicked table row
     */
     objectListViewRowClick(record, options) {
       let methodOptions = {
@@ -34,43 +37,47 @@ export default Ember.Mixin.create({
         goToEditForm: undefined,
         customParameters: undefined
       };
-      methodOptions = Ember.merge(methodOptions, options);
+      methodOptions = merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
       if (goToEditForm === false) {
         return;
       }
 
-      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
-      let onEditForm = methodOptions.onEditForm;
       let editFormRoute = methodOptions.editFormRoute;
-      let recordId = record.get('id') || record.get('data.id');
-      let thisRouteName = this.get('router.currentRouteName');
-      let thisRecordId = this.get('currentModel.id');
-      let transitionOptions = {
-        queryParams: {
-          modelName: methodOptions.modelName,
-          customParameters:  methodOptions.customParameters,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
-        }
-      };
-      if (!editFormRoute) {
-        throw new Error('Detail\'s edit form route is undefined.');
-      }
-
-      if (!onEditForm) {
-        this.transitionTo(editFormRoute, recordId, transitionOptions);
+      if (methodOptions.editInModal) {
+        this.openEditModalDialog(record, editFormRoute, methodOptions.useSidePageMode);
       } else {
-        if (saveBeforeRouteLeave) {
-          this.controller.save(false, true).then(() => {
-            this.transitionTo(editFormRoute, recordId, transitionOptions);
-          }).catch((errorData) => {
-            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
-          });
-        } else {
+        let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+        let onEditForm = methodOptions.onEditForm;
+        let recordId = get(record, 'id') || get(record, 'data.id');
+        let thisRouteName = this.get('router.currentRouteName');
+        let thisRecordId = this.get('currentModel.id');
+        let queryParams = {
+          modelName: methodOptions.modelName,
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
+        };
+        queryParams = merge(queryParams, methodOptions.customParameters);
+
+        let transitionOptions = {
+          queryParams: queryParams
+        };
+        if (!editFormRoute) {
+          throw new Error('Detail\'s edit form route is undefined.');
+        }
+
+        if (!onEditForm) {
           this.transitionTo(editFormRoute, recordId, transitionOptions);
+        } else {
+          if (saveBeforeRouteLeave) {
+            this.controller.save(false, true).then(() => {
+              this.transitionTo(editFormRoute, recordId, transitionOptions);
+            }).catch((errorData) => {
+              this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+            });
+          } else {
+            this.transitionTo(editFormRoute, recordId, transitionOptions);
+          }
         }
       }
     },
@@ -85,9 +92,11 @@ export default Ember.Mixin.create({
       this.refresh();
     },
 
+    /* eslint-disable no-unused-vars */
     saveAgregator(agregatorModel) {
       return false;
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -99,11 +108,8 @@ export default Ember.Mixin.create({
     @example
       ``` js
       // app/routes/limit-function-example.js
-      import Ember from 'ember';
       import ListFormRoute from 'ember-flexberry/routes/list-form';
-      import { Query } from 'ember-flexberry-data';
-
-      const { StringPredicate } = Query;
+      import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
       export default ListFormRoute.extend({
         modelProjection: 'FolvWithLimitFunctionExampleView',
@@ -111,7 +117,7 @@ export default Ember.Mixin.create({
         modelName: 'ember-flexberry-dummy-suggestion',
 
         objectListViewLimitPredicate: function(options) {
-          let methodOptions = Ember.merge({
+          let methodOptions = merge({
             modelName: undefined,
             projectionName: undefined,
             params: undefined
@@ -140,7 +146,9 @@ export default Ember.Mixin.create({
   @param {String} [options.params] Current route query parameters
   @return {BasePredicate} The predicate to limit loaded data
   */
+  /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate(options) {
     return undefined;
   }
+  /* eslint-enable no-unused-vars */
 });

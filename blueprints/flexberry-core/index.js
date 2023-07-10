@@ -27,7 +27,8 @@ module.exports = {
 
         //'__root__/app.js',
         //'__root__/templates/application.hbs',
-
+        
+        '__root__/adapters/application.js',
         '__root__/templates/mobile/application.hbs',
     ],
     getFileMap: function () {
@@ -79,6 +80,7 @@ module.exports = {
             lodash.remove(this._files, function (fileName) { return fileName.indexOf("tests/dummy/") === 0; });
         }
         this._excludeIfExists();
+        this.setLocales(this._files);
         return this._files;
     },
 
@@ -88,7 +90,29 @@ module.exports = {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+        return this._super(...arguments);
+    },
+
+    setLocales: function (files) {
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (!fs.existsSync(localesFile)) {
+            return files;
+        }
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (locales.locales == undefined) {
+            return files;
+        }
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/translations.js"), 1);
+        }
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/translations.js"), 1);
+        }
+        return files;
     },
 
     /**
@@ -155,12 +179,12 @@ var CoreBlueprint = /** @class */ (function () {
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
-            var formFileName = listForms_1[_i];
-            var pp = path.parse(formFileName);
+            let formFileName = listForms_1[_i];
+            let pp = path.parse(formFileName);
             if (pp.ext != ".json")
                 continue;
             var listFormFile = path.join(listFormsDir, formFileName);
-            var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+            let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
             if (listForm.external)
                 continue;
@@ -172,12 +196,12 @@ var CoreBlueprint = /** @class */ (function () {
             formsImportedProperties.push("    '" + listFormName + "': " + listForm.name + "Form");
         }
         for (var _a = 0, editForms_1 = editForms; _a < editForms_1.length; _a++) {
-            var formFileName = editForms_1[_a];
-            var pp = path.parse(formFileName);
+            let formFileName = editForms_1[_a];
+            let pp = path.parse(formFileName);
             if (pp.ext != ".json")
                 continue;
             var editFormFile = path.join(editFormsDir, formFileName);
-            var content = stripBom(fs.readFileSync(editFormFile, "utf8"));
+            let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
             var editForm = JSON.parse(content);
             if (editForm.external)
                 continue;
@@ -187,7 +211,7 @@ var CoreBlueprint = /** @class */ (function () {
         }
         for (var _b = 0, models_1 = models; _b < models_1.length; _b++) {
             var modelFileName = models_1[_b];
-            var pp = path.parse(modelFileName);
+            let pp = path.parse(modelFileName);
             if (pp.ext != ".json")
                 continue;
             var model = ModelBlueprint_1.default.loadModel(modelsDir, modelFileName);
@@ -212,8 +236,8 @@ var CoreBlueprint = /** @class */ (function () {
         this.children = children.join(", ");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
-        this.formsImportedProperties = formsImportedProperties.join(",\n");
-        this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+        this.formsImportedProperties = formsImportedProperties.join(",\n") + ",";
+        this.modelsImportedProperties = modelsImportedProperties.join(",\n") + ",";
     }
     CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";
@@ -237,6 +261,15 @@ var SitemapItemExt = /** @class */ (function () {
         else {
             translationName = this.baseItem.link;
         }
+
+        var nodeIcon;
+        if (this.baseItem.link !== null) {
+            var icons = ['list', 'archive', 'phone', 'address card', 'book', 'calendar', 'building',
+                'briefcase', 'chart bar', 'chart line', 'edit', 'file', 'folder', 'paperclip', 'folder open', 'suitcase', 'tasks', 'tags', 'table'];
+            var randomIndex = Math.floor(Math.random() * (icons.length + 1));
+            nodeIcon = icons[randomIndex];
+        }
+
         translationProp = parentTranslationProp + "." + translationName;
         var childrenTranslation = [];
         var childrenTranslationOtherLocales = [];
@@ -272,8 +305,10 @@ var SitemapItemExt = /** @class */ (function () {
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
         this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
+            (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
             ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
             ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
+            (nodeIcon === undefined ? '' : ("" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(nodeIcon) + ",\n")) +
             ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");
     };
     SitemapItemExt.prototype.escapeValue = function (value) {

@@ -4,13 +4,13 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
+var skipConfirmationFunc = require('../utils/skip-confirmation');
 var fs = require("fs");
 var path = require("path");
 var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var CommonUtils_1 = require("../flexberry-common/CommonUtils");
 var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
-const skipConfirmationFunc = require('../utils/skip-confirmation');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -40,6 +40,7 @@ module.exports = {
         else {
             this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
         }
+        this.setLocales(this._files);
         return this._files;
     },
     afterInstall: function (options) {
@@ -48,15 +49,35 @@ module.exports = {
             CommonUtils_1.default.installReexportNew(options, ["controller", "route"]);
         }
     },
+    processFiles: function (intoDir, templateVariables) {
+        var skipConfirmation = this.options.skipConfirmation;
+        if (skipConfirmation) {
+            return skipConfirmationFunc(this, intoDir, templateVariables);
+        }
+        return this._super.apply(this, arguments);
+    },
 
-  processFiles(intoDir, templateVariables) {
-    let skipConfirmation = this.options.skipConfirmation;
-    if (skipConfirmation) {
-      return skipConfirmationFunc(this, intoDir, templateVariables);
-    }
-
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
-  },
+    setLocales: function (files) {
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (!fs.existsSync(localesFile)) {
+            return files;
+        }
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (locales.locales == undefined) {
+            return files;
+        }
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/forms/"), 1);
+            files.splice(files.indexOf("__root__/locales/en/forms/__name__.js"), 1);
+        }
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/forms/"), 1);
+            files.splice(files.indexOf("__root__/locales/ru/forms/__name__.js"), 1);
+        }
+        return files;
+    },
 
     /**
      * Blueprint Hook locals.
@@ -91,7 +112,7 @@ var EditFormBlueprint = /** @class */ (function () {
     function EditFormBlueprint(blueprint, options) {
         this.snippetsResult = [];
         this._tmpSnippetsResult = [];
-        this.isEmberCpValidationsUsed = ModelBlueprint_1.default.checkCpValidations(blueprint);
+        this.isEmberCpValidationsUsed = true;
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
@@ -106,11 +127,11 @@ var EditFormBlueprint = /** @class */ (function () {
             propertyLookup = _a[_i];
             if (!propertyLookup.master)
                 continue;
-            var snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
+            let snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
             bodySwitchBindingPath.push(lodash.template(snippet)(propertyLookup));
         }
         if (bodySwitchBindingPath.length > 0) {
-            var snippet = this.readSnippetFile("getCellComponent-function", "js");
+            let snippet = this.readSnippetFile("getCellComponent-function", "js");
             this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
             this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
         }
@@ -184,6 +205,7 @@ var EditFormBlueprint = /** @class */ (function () {
                 belongsTo.readonly = "readonly";
                 belongsTo.entityName = this.options.entity.name;
                 belongsTo.dashedName = (belongsTo.name || '').replace(/\./g, '-');
+                belongsTo.isDropdown = belongsTo.type === 'combo';
                 this.calculateValidatePropertyNames(belongsTo);
                 this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
             }

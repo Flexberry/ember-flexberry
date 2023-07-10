@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { run, later } from '@ember/runloop';
 
 /**
   Runs `handler` after `condition` is met.
@@ -20,11 +20,11 @@ export default function runAfter(context, condition, handler) {
 
   const checkCondition = () => {
     if (condition.call(context) === true) {
-      Ember.run(context, handler);
+      run(context, handler);
     } else {
-      Ember.run.later(checkCondition, checkInterval);
+      later(checkCondition, checkInterval);
     }
   };
 
-  Ember.run.later(checkCondition, checkInterval);
+  later(checkCondition, checkInterval);
 }

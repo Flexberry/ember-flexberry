@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -30,13 +31,15 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
-    SOLVSuggestionTypeObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 90 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+  developerUserSettings: computed(function() {
+    return {
+      SOLVSuggestionTypeObjectListView: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 90 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+        }
       }
     }
-  },
+  }),
 
   /**
     Name of model to be used as list's records types.

@@ -2,15 +2,15 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Mixin for components which need to be FlexberryLookup compatible.
 
   @class FlexberryLookupCompatibleComponent
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Open modal window for select value.

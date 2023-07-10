@@ -1,12 +1,16 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
-moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
-});
+module('Unit | Controller | detail edit form', function (hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let controller = this.subject();
-  assert.ok(controller);
+  test('it exists', function(assert) {
+    let controller;
+    run(() => {
+      controller = this.owner.lookup('controller:detail-edit-form');
+    });
+  
+    assert.ok(controller);
+  });
 });

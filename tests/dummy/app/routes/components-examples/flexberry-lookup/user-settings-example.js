@@ -1,5 +1,6 @@
+import { get, set } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import Ember from 'ember';
+
 export default EditFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -26,13 +27,13 @@ export default EditFormRoute.extend({
    * @function model
    */
   model() {
-    const store = Ember.get(this, 'store');
+    const store = get(this, 'store');
     const base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;
   },
 
   init() {
-    Ember.set(this, 'developerUserSettings', {
+    set(this, 'developerUserSettings', {
       ApplicationUserObjectlistView: {
         DEFAULT: {
           colsOrder: [
@@ -40,16 +41,6 @@ export default EditFormRoute.extend({
               propName: "name",
               name: "Name"
             },
-            {
-              propName: "activated",
-              hide: true,
-              name: "Activated"
-            },
-            {
-              propName: "gender",
-              hide: true,
-              name: "Gender"
-            }
           ]
         }
       }

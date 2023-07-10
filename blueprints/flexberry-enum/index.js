@@ -26,7 +26,7 @@ module.exports = {
             return skipConfirmationFunc(this, intoDir, templateVariables);
         }
 
-        return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+        return this._super(...arguments);
     },
 
     /**
@@ -72,7 +72,7 @@ var EnumBlueprint = (function () {
                 caption = "'" + key + "'";
             values.push(key + ": " + caption);
         }
-        this.enumObjects = "{\n  " + values.join(",\n  ") + "\n}";
+        this.enumObjects = "{\n  " + values.join(",\n  ") + ",\n}";
     }
     return EnumBlueprint;
 }());

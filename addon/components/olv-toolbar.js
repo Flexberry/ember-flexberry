@@ -207,9 +207,9 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
   customButtons: undefined,
 
   /**
-    See {{#crossLink "FlexberryObjectlistviewComponent/customToolbarComponents:property"}}{{/crossLink}}.
+    See {{#crossLink "FlexberryObjectlistviewComponent/customComponents:property"}}{{/crossLink}}.
 
-    @property customToolbarComponents
+    @property customComponents
     @type Array<Object>
   */
   customComponents: undefined,

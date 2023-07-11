@@ -27,13 +27,13 @@ module('Unit | Controller | lookup dialog', function(hooks) {
     const saveTo = {
       model: model,
       propName: 'testProperty',
-      updateLookupAction: 'updateLookupAction'
+      updateLookupAction: 'updateLookupAction',
+      componentContext: reloadContext
     };
 
     const controller = this.owner.lookup('controller:lookup-dialog');
     
     controller.set('saveTo', saveTo);
-    controller.set('reloadContext', reloadContext);
 
     sinon.stub(model, 'makeDirty');
     sinon.stub(controller, '_closeModalDialog');

@@ -8,7 +8,10 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+      'more-button-text': 'More',
+      'only-more-button-text': 'Actions',
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -367,5 +370,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

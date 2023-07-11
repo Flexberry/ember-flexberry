@@ -76,12 +76,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "app/templates/new-platform-flexberry-services-lock-list",
       "only": [
         "eol-last"
@@ -105,6 +99,13 @@ module.exports = {
         "no-inline-styles",
         "no-invalid-interactive",
         "no-quoteless-attributes"
+      ]
+    },
+    {
+      "moduleId": "app/templates/components/flexberry-edit-panel",
+      "only": [
+        // don't delete, exception for text in button.
+        "block-indentation"
       ]
     },
     {
@@ -220,6 +221,14 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/flexberry-multiple-lookup",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "no-unnecessary-concat"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/flexberry-objectlistview",
       "only": [
         "quotes",
@@ -245,15 +254,6 @@ module.exports = {
       "moduleId": "app/templates/components/flexberry-sitemap",
       "only": [
         "eol-last",
-        "no-invalid-interactive"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-tab-bar",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "link-href-attributes",
         "no-invalid-interactive"
       ]
     },
@@ -408,13 +408,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/mobile/components/flexberry-sitemap-guideline",
-      "only": [
-        "eol-last",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
         "eol-last",
@@ -520,8 +513,7 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-edit",
       "only": [
         "eol-last",
-        "quotes",
-        "simple-unless"
+        "quotes"
       ]
     },
     {
@@ -772,6 +764,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
       "only": [
         "eol-last"
       ]

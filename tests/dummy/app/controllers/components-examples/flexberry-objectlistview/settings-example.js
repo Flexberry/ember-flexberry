@@ -175,6 +175,14 @@ export default ListFormController.extend({
    */
   filterButton: false,
 
+    /**
+    Name of selected detail's model projection which is usef for filtering (filtering is processed only on properties from this projection).
+
+    @property filterProjectionName
+    @type String
+   */
+  filterProjectionName: undefined,
+
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
 
@@ -325,6 +333,22 @@ export default ListFormController.extend({
   advLimitButton: false,
 
   /**
+    Flag indicate when edit form must be open in modal window.
+
+    @property editInModal
+    @type Boolean
+  */
+    editInModal: false,
+
+  /**
+    Flag indicates whether to side page or usually mode.
+
+    @property useSidePageMode
+    @type Boolean
+   */
+    useSidePageMode: true,
+
+  /**
     Current records.
 
     @property _records
@@ -383,6 +407,7 @@ export default ListFormController.extend({
       '  filterText=filter<br>' +
       '  filterByAnyWord=filterByAnyWord<br>' +
       '  filterByAllWords=filterByAllWords<br>' +
+      '  filterProjectionName=filterProjectionName<br>' +
       '  sorting=computedSorting<br>' +
       '  sortByColumn=(action "sortByColumn")<br>' +
       '  addColumnToSorting=(action "addColumnToSorting")<br>' +
@@ -398,6 +423,8 @@ export default ListFormController.extend({
       '  nextPage=(action "nextPage")<br>' +
       '  fixedHeader=fixedHeader<br>' +
       '  advLimitButton=advLimitButton<br>' +
+      '  editInModal=editInModal<br>' +
+      '  useSidePageMode=useSidePageMode<br>' +
       '}}'));
   },
 
@@ -533,6 +560,13 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'filterByAllWords'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'filterProjectionName',
+      settingType: 'enumeration',
+      settingAvailableItems: this.get('_projectionsNames'),
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'filterProjectionName'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -627,6 +661,18 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'advLimitButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editInModal',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'editInModal'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'useSidePageMode',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'useSidePageMode'
     });
 
     return componentSettingsMetadata;

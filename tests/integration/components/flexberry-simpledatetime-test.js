@@ -78,3 +78,26 @@ test('render with type afther value', function(assert) {
   // Check calendar.
   assert.strictEqual($calendar.hasClass('flatpickr-calendar'), true, 'Component\'s wrapper has \' flatpickr-calendar\' css-class');
 });
+
+test('properly init value by input', function(assert) {
+  assert.expect(1);
+  let typeName = 'date';
+  Ember.set(this, 'type', typeName);
+  Ember.set(this, 'dateValue', undefined);
+
+  // Render component.
+  this.render(hbs`{{flexberry-simpledatetime
+      type=type
+      value=dateValue
+    }}`);
+
+  // Retrieve component.
+  let $component = this.$();
+  let $componentInput = Ember.$('.custom-flatpickr', $component);
+
+  Ember.run(() => {
+    $componentInput.val('01.01.2022');
+    $componentInput.change();
+    assert.equal(Ember.get(this, 'dateValue').toISOString().split('T')[0], '2022-01-01');
+  });
+});

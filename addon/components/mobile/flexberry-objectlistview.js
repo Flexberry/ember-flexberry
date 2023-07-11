@@ -4,6 +4,7 @@
 
 import { A } from '@ember/array';
 import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
 import FlexberryObjectlistview from './../flexberry-objectlistview';
 import getAttrLocaleKey from '../../utils/get-attr-locale-key';
 
@@ -278,7 +279,7 @@ export default FlexberryObjectlistview.extend({
     let sortingValue;
     sorting.forEach((column) => {
       let columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, column.key)).string;
-      if (columnHeader !== undefined) {
+      if (isNone(columnHeader)) {
         let key = column.key.split('.')[0];
         columnHeader = i18n.t(getAttrLocaleKey(this.get('modelName'), this.get('modelProjection').projectionName, key)).string;
       }

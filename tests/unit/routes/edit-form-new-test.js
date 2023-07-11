@@ -30,56 +30,57 @@ let getConfiguredTestRoute = function(modelCurrentNotSaved, modelSelectedDetail)
   return route;
 };
 
-module('Unit | Route | edit form new', {
-  beforeEach: function () {
+module('Unit | Route | edit form new', function(hooks) {
+  hooks.beforeEach(() => {
     app = startApp();
-  },
-  afterEach: function() {
+  });
+
+  hooks.afterEach(() => {
     destroyApp(app);
-  }
-});
-
-test('it exists', function(assert) {
-  var route = EditFormNewRoute.create();
-  assert.ok(route);
-});
-
-test('return model as Promise main', function(assert) {
-  let route = getConfiguredTestRoute();
-
-  assert.ok(route);
-  run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Promise, true);
   });
-});
-
-test('return model as Promise modelCurrentNotSaved', function(assert) {
-  let route = getConfiguredTestRoute(true);
-
-  assert.ok(route);
-  run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Promise, true);
+    
+  test('it exists', function(assert) {
+    var route = EditFormNewRoute.create();
+    assert.ok(route);
   });
-});
 
-test('return model as Promise modelSelectedDetail', function(assert) {
-  let route = getConfiguredTestRoute(false, true);
+  test('return model as Promise main', function(assert) {
+    let route = getConfiguredTestRoute();
 
-  assert.ok(route);
-  run(() => {
-    let record = route.model({}, { queryParams: { } });
-    assert.equal(record instanceof Promise, true);
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
   });
-});
 
-test('return model as Promise prototypeId', function(assert) {
-  let route = getConfiguredTestRoute();
+  test('return model as Promise modelCurrentNotSaved', function(assert) {
+    let route = getConfiguredTestRoute(true);
 
-  assert.ok(route);
-  run(() => {
-    let record = route.model({}, { queryParams: { prototypeId: 'test-id' } });
-    assert.equal(record instanceof Promise, true);
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
+  });
+
+  test('return model as Promise modelSelectedDetail', function(assert) {
+    let route = getConfiguredTestRoute(false, true);
+
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { } });
+      assert.equal(record instanceof Promise, true);
+    });
+  });
+
+  test('return model as Promise prototypeId', function(assert) {
+    let route = getConfiguredTestRoute();
+
+    assert.ok(route);
+    run(() => {
+      let record = route.model({}, { queryParams: { prototypeId: 'test-id' } });
+      assert.equal(record instanceof Promise, true);
+    });
   });
 });

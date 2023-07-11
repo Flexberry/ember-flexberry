@@ -49,6 +49,7 @@ export default Mixin.create({
    * @param {String} [options.page] Current page.
    * @param {String} [options.sorting] Current sorting.
    * @param {String} [options.filter] Current filter.
+   * @param {String} [options.filterProjectionName] Name of model projection which should be used for filtering throught search-element on toolbar. Filtering is processed only by properties defined in this projection.
    * @param {String} [options.predicate] Predicate to limit records.
    * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
    */
@@ -81,7 +82,16 @@ export default Mixin.create({
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
 
-    let allPredicates = A();
+    let filterProjectionName = reloadOptions.filterProjectionName;
+    let filterProjection = undefined;
+    if (filterProjectionName) {
+      filterProjection = get(modelConstructor, 'projections')[filterProjectionName];
+      if (!filterProjection) {
+        throw new Error(`No projection with '${filterProjection}' name defined in '${modelName}' model.`);
+      }
+    }
+
+    let allPredicates = Ember.A();
 
     if (reloadOptions.predicate && !(reloadOptions.predicate instanceof BasePredicate)) {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
@@ -137,7 +147,11 @@ export default Mixin.create({
 
     const filter = reloadOptions.filter;
     const filterCondition = reloadOptions.filterCondition;
-    const filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
+    const filterPredicate = filter
+            ? this._getFilterPredicate(
+                      filterProjection ? filterProjection : projection,
+                      { filter, filterCondition })
+            : undefined;
     allPredicates.addObject(filterPredicate);
     allPredicates = allPredicates.compact();
     const resultPredicate = allPredicates.length > 1 ?

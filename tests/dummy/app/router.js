@@ -97,6 +97,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');
   this.route('components-examples/flexberry-lookup/lookup-block-form-example');
   this.route('components-examples/flexberry-lookup/lookup-in-modal');
+  this.route('components-examples/flexberry-lookup/lookup-in-modal-autocomplete');
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-lookup/autocomplete-order-example');
@@ -106,6 +107,7 @@ Router.map(function() {
     { path: 'components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit/:id' });
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
   this.route('components-examples/flexberry-lookup/user-settings-example');
+  this.route('components-examples/flexberry-multiple-lookup/multiple-lookup');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -162,6 +164,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
 
   this.route('components-examples/flexberry-simpledatetime/settings-example');
+  this.route('components-examples/flexberry-tab-bar/settings-example');
   this.route('components-examples/flexberry-text-cell/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
@@ -187,6 +190,7 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-custom-window');
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
@@ -195,9 +199,12 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-events');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
   { path: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page/:id' });
+
+  this.route('components-acceptance-tests/flexberry-simpledatetime/manual-enter');
 
   this.route('components-acceptance-tests/flexberry-groupedit/delete-with-details');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');

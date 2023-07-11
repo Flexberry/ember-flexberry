@@ -32,7 +32,8 @@ module.exports = {
 
     //'__root__/app.js',
     //'__root__/templates/application.hbs',
-
+    
+    '__root__/adapters/application.js',
     '__root__/templates/mobile/application.hbs',
   ],
 
@@ -80,6 +81,7 @@ module.exports = {
         lodash.remove(this._files, function (fileName: string) { return fileName.indexOf("tests/dummy/") === 0; });
     }
     this._excludeIfExists();
+    this.setLocales(this._files);
     return this._files;
   },
 
@@ -91,6 +93,28 @@ module.exports = {
 
     return this._super(...arguments);
   },
+
+  setLocales: function (files) {
+    var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+    if (!fs.existsSync(localesFile)) {
+        return files;
+    };
+    var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+    if (locales.locales == undefined) {
+        return files;
+    };
+    if (!locales.locales.en) {
+        files.splice(files.indexOf("__root__/locales/en/"), 1);
+        files.splice(files.indexOf("addon/locales/en/"), 1);
+        files.splice(files.indexOf("addon/locales/en/translations.js"), 1);
+    };
+    if (!locales.locales.ru) {
+        files.splice(files.indexOf("__root__/locales/ru/"), 1);
+        files.splice(files.indexOf("addon/locales/ru/"), 1);
+        files.splice(files.indexOf("addon/locales/ru/translations.js"), 1);
+    };
+    return files;
+},
 
   /**
    * Blueprint Hook locals.
@@ -217,8 +241,8 @@ class CoreBlueprint {
     this.children = children.join(", ");
     this.routes = routes.join("\n");
     this.importProperties = importProperties.join("\n");
-    this.formsImportedProperties = formsImportedProperties.join(",\n");
-    this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+    this.formsImportedProperties = formsImportedProperties.join(",\n") + ",";
+    this.modelsImportedProperties = modelsImportedProperties.join(",\n") + ",";
   }
 
   private getLocalePathTemplate(options, isDummy, localePathSuffix: string): lodash.TemplateExecutor {

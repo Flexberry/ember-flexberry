@@ -968,6 +968,18 @@ export default FlexberryBaseComponent.extend(
     @default ''
   */
   componentName: '',
+  
+  /**
+   * Clears selection from row
+   * 
+   * @param {DS.Model} recordWithKey Model in row
+   */
+  clearSelectionFromRow(recordWithKey) {
+    if (recordWithKey) {
+      set(recordWithKey, 'selected', false);
+      this.send('selectRow', recordWithKey, { checked: false });
+    }
+  },
 
   actions: {
     /**
@@ -1088,7 +1100,10 @@ export default FlexberryBaseComponent.extend(
       } else {
         this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
       }
+
+      this.clearSelectionFromRow(recordWithKey);
     },
+    
     /* eslint-enable no-unused-vars */
 
     /**
@@ -2613,7 +2628,8 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.get('filterByAnyMatch')(pattern, filterCondition, componentName);
+      let filterProjectionName = this.get('filterProjectionName');
+      this.get('filterByAnyMatch')(pattern, filterCondition, componentName, filterProjectionName);
     }
   },
 

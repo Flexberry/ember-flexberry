@@ -1,5 +1,6 @@
 import { A, isArray } from '@ember/array';
 import $ from 'jquery';
+import { isNone } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { get, set, trySet } from '@ember/object';
@@ -296,7 +297,11 @@ export default Component.extend({
       get(this, 'routeHistory').pushRoute(lastRoute.routeName, lastRoute.contexts, _menu);
     }
     const scrollClass = get(this, 'scrollClass');
-    document.getElementsByClassName(scrollClass)[0].removeEventListener('wheel', this.wheelHandler);
+    const scrollElement = document.getElementsByClassName(scrollClass)[0];
+    if (!isNone(scrollElement)) {
+      scrollElement.removeEventListener('wheel', this.wheelHandler);
+    }
+
     set(this, 'wheelHandler', undefined);
   },
 

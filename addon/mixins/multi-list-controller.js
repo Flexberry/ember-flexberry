@@ -222,8 +222,9 @@ export default Mixin.create({
       @param {String} pattern A substring that is searched in objects while filtering.
       @param {String} filterCondition Condition for predicate, can be `or` or `and`.
       @param {String} componentName Component name.
+      @param {String} filterProjectionName Name of model projection which should be used for filtering throught search-element on toolbar. Filtering is processed only by properties defined in this projection.
     */
-    filterByAnyMatch(pattern, filterCondition, componentName) {
+    filterByAnyMatch(pattern, filterCondition, componentName, filterProjectionName) {
       let settings = this.get(`multiListSettings.${componentName}`);
       if (settings.get('filter') !== pattern || settings.get('filterCondition') !== filterCondition) {
         let _this = this;
@@ -231,7 +232,8 @@ export default Mixin.create({
           settings.setProperties({
             filterCondition: filterCondition,
             filter: pattern,
-            page: 1
+            page: 1,
+            filterProjectionName: filterProjectionName
           });
 
           _this.send('reloadListByName', componentName);

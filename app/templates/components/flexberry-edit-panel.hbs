@@ -1,0 +1,36 @@
+{{#unless readonly}}
+  {{#if panelButtonsSorted}}
+    {{#each panelButtonsSorted as |panelButton|}}
+      {{#unless panelButton.disabled}}
+        {{#if panelButton.buttons}}
+          {{flexberry-button-dropdown
+            title=panelButton.text
+            elementId=panelButton.id
+            deepMount=deepMount
+            buttons=panelButton.buttons
+          }}
+        {{else}}
+          <button id={{panelButton.id}}
+            type={{if panelButton.type panelButton.type "button"}}
+            class="ui button {{panelButton.class}}"
+            title={{panelButton.title}}
+            {{action "sendButtonAction" panelButton.action}}>{{#if panelButton.icon}}<i class={{panelButton.icon}}></i>{{/if}}{{panelButton.text}}
+          </button>
+        {{/if}}
+      {{/unless}}
+    {{/each}}
+  {{/if}}
+
+  {{#if menuButtonsSorted}}
+    {{flexberry-button-dropdown
+      title=(if (eq panelButtonsSorted.length 0) (t "forms.edit-form.only-more-button-text") (t "forms.edit-form.more-button-text"))
+      deepMount=deepMount
+      buttons=menuButtonsSorted
+      classNames="menu-buttons"
+    }}
+  {{/if}}
+{{/unless}}
+
+{{#if showCloseButton}}
+  <button type="submit" class="ui button close-button" {{action "sendButtonAction" closeAction}}>{{t "forms.edit-form.close-button-text"}}</button>
+{{/if}}

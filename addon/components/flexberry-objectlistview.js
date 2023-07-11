@@ -459,6 +459,15 @@ export default FlexberryBaseComponent.extend({
   showPrototypeMenuItemInRow: false,
 
   /**
+    Flag indicate when edit form must be open in modal window.
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+    editInModal: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @example
@@ -730,6 +739,16 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   filterByAllWords: false,
+
+  /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
 
   /**
     Array of pages to show.
@@ -1059,12 +1078,14 @@ export default FlexberryBaseComponent.extend({
             /* eslint-enable ember/closure-actions */
           } else {
             let editFormRoute = this.get('editFormRoute');
+            let editInModal = this.get('editInModal');
+            let useSidePageMode = this.get('useSidePageMode');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
             if (isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
             } else {
-              options = merge(options, { editFormRoute: editFormRoute });
+              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
             }
 
             /* eslint-disable ember/closure-actions */

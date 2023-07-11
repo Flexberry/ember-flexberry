@@ -4,72 +4,54 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [3.8.0-beta.13] - 2022-12-02
+## [3.8.0] - 2023-04-25
+### Added
+* `guideline-calculate` icon.
+* `flexberry-simpledatetime` `onChange` function.
+* `flexberry-simpledatetime` custom date format support.
+* Addon order with `ember-flexberry-data`.
+* The `highload-edit-form-menu` component.
+* `route-history` service.
+* `flexberry-groupedit`'s custom buttons in row.
+* `flexberry-edit-panel` component for responsive edit panel buttons.
+* Blueprints:
+    * Add ability to exclude localization on generation.
+    * Generate `flexberry-edit-panel` on edit form.
+
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `3.8.0`.
+* Generated unit tests blueprint.
 * The `flexberry-objectlistview` component:
     * Moved `_conditionsByType` function with default filter conditions to utils.
 
-## [3.8.0-beta.12] - 2022-11-30
-### Added
-* `flexberry-simpledatetime` `onChange` function.
-
-## [3.8.0-beta.11] - 2022-11-10
-### Added
-* `flexberry-simpledatetime` custom date format support.
-
-## [3.8.0-beta.10] - 2022-11-08
-### Added
-* Addon order with `ember-flexberry-data`.
-
 ### Fixed
-* The `highload-edit-form-menu` component errors.
-
-## [3.8.0-beta.9] - 2022-10-28
-### Fixed
+* `modal-dialog` scrolling content class.
+* `controller` usage in `list-form` route model.
 * Locks creating.
-
-## [3.8.0-beta.8] - 2022-10-27
-### Fixed
 * Batch save for detail on separate route.
-
-## [3.8.0-beta.7] - 2022-10-19
-### Fixed
-* The `highload-edit-form-menu` component errors.
-
-## [3.8.0-beta.6] - 2022-10-11
-### Fixed
-* The `highload-edit-form-menu` component errors.
-
-## [3.8.0-beta.5] - 2022-10-07
-### Added
-* `route-history` service.
-
-### Fixed
-* `flexberry-groupedit`'s custom buttons in row styles.
-
-## [3.8.0-beta.4] - 2022-10-05
-### Added
-* `flexberry-groupedit`'s custom buttons in row.
-
-## [3.8.0-beta.3] - 2022-09-25
-### Fixed
 * `flexberry-simpledatetime` current date manual enter.
-
-## [3.8.0-beta.2] - 2022-09-16
-### Added
-* The `highload-edit-form-menu` component.
-
-### Fixed
 * Filter for `decimal` and `between`.
-
-## [3.8.0-beta.1] - 2022-08-24
-### Fixed
 * The `flexberry-objectlistview` component:
     * `simpledatetime` in filter.
 
-## [3.8.0-beta.0] - 2022-07-07
+## [2.8.0] - 2023-03-13
+### Added
+* The `flexberry-file` component:
+    * Drag-and-drop support.
+* The `flexberry-objectlistview` component:
+    * Added property `filterProjectionName` to limit applied to properties list for filter on toolbar.
+* The `flexberry-lookup` component:
+    * Added support of property `filterProjectionName` of `flexberry-objectlistview` on modal window (it sets throught `lookupWindowCustomProperties`).
+    * Event `lookupOnDataLoaded` for `flexberry-lookup` component to detect time of data loading completed.
+* Blueprints:
+    * Add generating lookups in dropdown mode.
+
 ### Changed
-* Update dependency on `ember-flexberry-data` to version `3.8.0-beta.0`.
+* Update dependency on `ember-flexberry-data` to version `2.8.0`.
+
+### Fixed
+* The `flexberry-lookup` component:
+    * Default user settings usage.
 
 ## [3.7.0] - 2022-05-17
 ### Added

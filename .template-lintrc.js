@@ -475,12 +475,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-comment-vote-edit",
-      "only": [
-        "block-indentation"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-localization-edit",
       "only": [
         "simple-unless"
@@ -710,21 +704,9 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/base-operations",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autocomplete",
       "only": [
         "no-duplicate-attributes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit",
-      "only": [
-        "eol-last"
       ]
     },
     {

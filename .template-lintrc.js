@@ -687,7 +687,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox",
       "only": [
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1007,7 +1006,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit",
       "only": [
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1060,7 +1058,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/lock-services-editor-view-edit",
       "only": [
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1279,7 +1276,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/on-edit-form/suggestion",
       "only": [
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1296,7 +1292,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit",
       "only": [
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1310,7 +1305,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/mobile/components-examples/flexberry-lookup/lookup-in-modal",
       "only": [
-        "quotes",
         "require-button-type"
       ]
     }

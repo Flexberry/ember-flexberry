@@ -309,7 +309,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     const componentContext = saveTo.componentContext;
     const componentName = this.get('componentName');
     if (!isBlank(updateLookupAction)) {
-      componentContext.sendAction(updateLookupAction,
+      componentContext.send(updateLookupAction,
         {
           relationName: saveTo.propName,
           modelToLookup: saveTo.model,

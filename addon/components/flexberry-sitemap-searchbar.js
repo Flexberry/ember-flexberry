@@ -1,9 +1,13 @@
 /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
 /* eslint-disable ember/use-ember-get-and-set */
-import Ember from 'ember';
+import Component from "@ember/component";
+import { computed } from "@ember/object";
+import { isEmpty } from "@ember/utils";
+import $ from "jquery";
+import { run } from "@ember/runloop";
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Component.extend({
+export default Component.extend({
 
   /**
     Array of search objects.
@@ -44,10 +48,10 @@ export default Ember.Component.extend({
     @property noHits
     @type boolean
    */
-  noHits: Ember.computed('_results', 'userQuery', function() {
+  noHits: computed('_results', 'userQuery', function() {
     const results = this.get('_results');
     if (results) {
-      return results.length === 0 && !Ember.isEmpty(this.get('userQuery'));
+      return results.length === 0 && !isEmpty(this.get('userQuery'));
     }
 
     return undefined;
@@ -83,7 +87,7 @@ export default Ember.Component.extend({
 
     currentTree.forEach(element => {
       if (this._elementMatchesRegex(regexQuery, element)) {
-        let matchingNode = Ember.$.extend(true, {}, element);
+        let matchingNode = $.extend(true, {}, element);
         resultTree.push(matchingNode);
       } else if (this._elementHasChildren(element)) {
         let resultChildren = this._searchTree(regexQuery, element.children);
@@ -122,7 +126,7 @@ export default Ember.Component.extend({
    * @function _elementHasChildren
    */
   _elementHasChildren(element) {
-    return (typeof element === 'object') && (!Ember.isEmpty(element.children));
+    return (typeof element === 'object') && (!isEmpty(element.children));
   },
 
   actions: {
@@ -138,7 +142,7 @@ export default Ember.Component.extend({
 
       if (query) {
         // Recursive search will be initiated only if last keypress happened more than 200 ms ago (for performance reasons).
-        Ember.run.debounce(this, () => {
+        run.debounce(this, () => {
           let regexQuery = new RegExp(`${query}`, 'gi');
 
           this.set('_results', this._searchTree(regexQuery, this.get('sitemap')));

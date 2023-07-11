@@ -12,6 +12,8 @@
       onHidden=(action "updateWidth")
     )
   }}
+    {{flexberry-sitemap-searchbar
+    sitemap=sitemap.nodes}}
 
     {{flexberry-sitemap-guideline sitemap=sitemap class="flexberry-sitemap"}}
     <div class="sitebar-footer">
@@ -21,8 +23,6 @@
         title={{t "forms.application.sitemap.application-version.title"}}>
         {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
       </a>
-      {{flexberry-sitemap-searchbar
-      sitemap=sitemap.nodes}}
       <a {{action 'showModalSupport'}} class="item" title={{t "forms.support-form.caption"}}>{{t "forms.support-form.caption"}}</a>
     </div>
 

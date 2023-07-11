@@ -2,20 +2,21 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
+import Mixin from '@ember/object/mixin';
+
 import { predicateForFilter } from 'ember-flexberry/utils/filter';
 
-const { Condition, ComplexPredicate } = Query;
+import Condition from 'ember-flexberry-data/query/condition';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Mixin contains functions for predicate build from filters object.
 
   @class PredicateFromFiltersMixin
-  @extends Ember.Mixin
+  @extends Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Builds predicate for filter.
 

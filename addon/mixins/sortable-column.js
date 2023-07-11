@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Sortable column?
@@ -10,9 +10,9 @@ import Ember from 'ember';
   # Could not find an example of using.
 
   @class SortableColumn
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Sorted.
 

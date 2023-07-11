@@ -1,0 +1,86 @@
+<h3 class="ui header">{{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.caption"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui button save-button" {{action "save"}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+        {{#unless model.isNew}}
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>
+            {{t "forms.edit-form.delete-button-text"}}
+          </button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action "close"}}>
+        {{t "forms.edit-form.close-button-text"}}
+      </button>
+    </div>
+  </div>
+  <div class="field">
+    {{
+      flexberry-field
+      placeholder=(t "components.flexberry-field.placeholder")
+      readonly=readonly
+      required=true
+      value=model.familiia
+      class=(if model.errors.familiia "error" "")
+      label=(t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.familiia-caption")
+      data-test-ember-flexberry-dummy-sotrudnik-e-familiia=true
+    }}
+    {{flexberry-validationmessage error=model.errors.familiia pointing="pointing"}}
+  </div>
+
+  <div class="field">
+    {{
+      flexberry-field
+      placeholder=(t "components.flexberry-field.placeholder")
+      readonly=readonly
+      required=true
+      value=model.name
+      class=(if model.errors.name "error" "")
+      label=(t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.name-caption")
+      data-test-ember-flexberry-dummy-sotrudnik-e-name=true
+    }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+
+  <div class="field">
+    <label>{{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.dataRozhdeniia-caption"}}</label>
+    {{
+      flexberry-simpledatetime
+      readonly=readonly
+      value=model.dataRozhdeniia
+      class=(if model.errors.dataRozhdeniia "error" "")
+      data-test-ember-flexberry-dummy-sotrudnik-e-dataRozhdeniia=true
+    }}
+    {{flexberry-validationmessage error=model.errors.dataRozhdeniia pointing="pointing"}}
+  </div>
+
+  <div class="field">
+    <label>{{t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.departament-caption"}}</label>
+    {{
+      flexberry-lookup
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      value=model.departament
+      displayAttributeName="name"
+      autocomplete=true
+      relationName="departament"
+      projection="DepartamentL"
+      title=(t "forms.integration-examples.odata-examples.get-masters.ember-flexberry-dummy-sotrudnik-e.departament-caption")
+      readonly=readonly
+      componentName="departamentLookup"
+      data-test-ember-flexberry-dummy-sotrudnik-e-departament=true
+    }}
+    {{flexberry-validationmessage error=model.errors.departament pointing="pointing"}}
+  </div>
+
+</form>

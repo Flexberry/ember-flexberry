@@ -1,29 +1,6 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-comment-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
   {{flexberry-error error=error}}
-  <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
-    </div>
-  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -40,34 +17,43 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.text "error" ""}}">
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
+  </div>
+  <div class="field">
     {{flexberry-field
       value=model.text
+      class=(if (v-get validationObject "text" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-comment-edit.text-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "text" "message")}}
   </div>
-  <div class="field {{if model.errors.votes "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.votes
+      class=(if (v-get validationObject "votes" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "votes" "message")}}
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
+      class=(if (v-get validationObject "moderated" "isInvalid") "error")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "moderated" "message")}}
   </div>
-  <div class="field {{if model.errors.author "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
     {{flexberry-lookup
       value=model.author
+      class=(if (v-get validationObject "author" "isInvalid") "error")
       relatedModel=model
       relationName="author"
       projection="ApplicationUserL"
@@ -78,9 +64,9 @@
       updateLookupValue=(action "updateLookupValue")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
   </div>
-  <div class="field {{if model.errors.userVotes "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="commentUserVotesGroupEdit"
@@ -95,6 +81,6 @@
       orderable=false
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
   </div>
 </form>

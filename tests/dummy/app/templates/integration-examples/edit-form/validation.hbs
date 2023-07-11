@@ -1,84 +1,97 @@
 <h3 class="ui header">{{t "forms.integration-examples.edit-form.validation.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <div class="ui two column grid stackable">
+    <div class="column">
+      <div class="field">
+        <div class="sixteen wide">
+          {{flexberry-validationsummary
+            header=(t "forms.integration-examples.edit-form.validation.summary-caption")
+            errors=(v-get validationObject "messages")
+          }}
+        </div>
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.validation.flag-caption"}}</label>
+        {{flexberry-checkbox
+          value=model.flag
+          class=(if (v-get validationObject "flag" "isInvalid") "error")
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "flag" "messages") pointing="left pointing"}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.validation.number-caption"}}</label>
+        {{flexberry-textbox
+          value=model.number
+          class=(if (v-get validationObject "number" "isInvalid") "error")
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "number" "messages")}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.validation.text-caption"}}</label>
+        {{flexberry-textbox
+          value=model.text
+          class=(if (v-get validationObject "text" "isInvalid") "error")
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
+      </div>
+      <div class="field">
+      <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
+        {{flexberry-textarea
+          value=model.longText
+          class=(if (v-get validationObject "longText" "isInvalid") "error")
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "longText" "messages")}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
+          {{flexberry-simpledatetime
+            type="date"
+            value=model.date
+            class=(if (v-get validationObject "date" "isInvalid") "error")
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "date" "messages")}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>
+          {{flexberry-dropdown
+            items=(flexberry-enum "integration-examples/edit-form/validation/enumeration")
+            value=model.enumeration
+            class=(if (v-get validationObject "enumeration" "isInvalid") "error")
+          }}
+          {{flexberry-validationmessage error=(v-get validationObject "enumeration" "messages")}}
+        </div>
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.validation.file-caption"}}</label>
+        {{flexberry-file
+          value=model.file
+          class=(if (v-get validationObject "file" "isInvalid") "error")
+          showUploadButton=false
+          showDownloadButton=false
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "file" "messages")}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
+        {{flexberry-lookup
+          componentName="IntegrationExamplesValidationsMaster"
+          value=model.master
+          class=(if (v-get validationObject "master" "isInvalid") "error")
+          relatedModel=model
+          relationName="master"
+          projection="MasterL"
+          displayAttributeName="text"
+          title=(t "forms.integration-examples.edit-form.validation.master-caption")
+          choose=(action "showLookupDialog")
+          remove=(action "removeLookupValue")
+          updateLookupValue=(action "updateLookupValue")
+        }}
+        {{flexberry-validationmessage error=(v-get validationObject "master" "messages")}}
+      </div>
+    </div>
+  </div>
   <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary
-        headerText=(t "forms.integration-examples.edit-form.validation.summary-caption")
-        errors=model.errors
-      }}
-    </div>
-  </div>
-  <div class="field {{if model.errors.flag "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.flag-caption"}}</label>
-    {{flexberry-checkbox
-      value=model.flag
-    }}
-    {{flexberry-validationmessage error=model.errors.flag pointing="left pointing"}}
-  </div>
-  <div class="field {{if model.errors.number "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.number-caption"}}</label>
-    {{flexberry-textbox
-      value=model.number
-    }}
-    {{flexberry-validationmessage error=model.errors.number pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.text "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.text-caption"}}</label>
-    {{flexberry-textbox
-      value=model.text
-    }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.longText "error" ""}}">
-  <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
-    {{flexberry-textarea
-      value=model.longText
-    }}
-    {{flexberry-validationmessage error=model.errors.longText pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.date "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
-    <div class="inline fields">
-    {{flexberry-validationmessage error=model.errors.date pointing="right pointing"}}
-    {{flexberry-datepicker
-      value=model.date
-    }}
-    </div>
-  </div>
-  <div class="field {{if model.errors.enumeration "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>
-    {{flexberry-dropdown
-      items=(flexberry-enum "integration-examples/edit-form/validation/enumeration")
-      value=model.enumeration
-    }}
-    {{flexberry-validationmessage error=model.errors.enumeration pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.file "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.file-caption"}}</label>
-    {{flexberry-file
-      value=model.file
-      showUploadButton=false
-      showDownloadButton=false
-    }}
-    {{flexberry-validationmessage error=model.errors.file pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.master "error" ""}}">
-    <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
-    {{flexberry-lookup
-      componentName="IntegrationExamplesValidationsMaster"
-      value=model.master
-      relatedModel=model
-      relationName="master"
-      projection="MasterL"
-      displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.validation.master-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      updateLookupValue=(action "updateLookupValue")
-    }}
-    {{flexberry-validationmessage error=model.errors.master pointing="pointing"}}
-  </div>
-  <div class="field {{if model.errors.details "error" ""}}">
     <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
     {{flexberry-groupedit
       componentName="IntegrationExamplesEditFormValidationsDetails"
@@ -88,20 +101,20 @@
       orderable=false
     }}
   </div>
-    <div  class="ui segment">
-    {{#flexberry-toggler expanded=true}}
-      <div class="field {{if model.errors.details "error" ""}}">
-        <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
-        {{flexberry-groupedit
-          componentName="IntegrationExamplesEditFormValidationsDetails"
-          content=model.details
-          mainModelProjection=modelProjection
-          modelProjection=modelProjection.attributes.details
-          orderable=false
-          showValidationMessagesInRow=false
-        }}
-        {{flexberry-validationmessage error=model.errors.details pointing="pointing"}}
-      </div>
-    {{/flexberry-toggler}}
-  </div>
+  {{#flexberry-toggler
+    caption=(t "forms.integration-examples.edit-form.validation.details-caption")
+    expanded=true }}
+    <div class="field">
+      {{flexberry-groupedit
+        componentName="IntegrationExamplesEditFormValidationsDetails"
+        content=model.details
+        mainModelProjection=modelProjection
+        modelProjection=modelProjection.attributes.details
+        orderable=false
+        showValidationMessagesInRow=false
+        class=(if (v-get validationObject "details" "isInvalid") "error")
+      }}
+      {{flexberry-validationmessage error=(v-get validationObject "details" "messages")}}
+    </div>
+  {{/flexberry-toggler}}
 </form>

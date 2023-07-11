@@ -74,7 +74,7 @@
           {{#unless colDesc.isHasMany}}
             <div class="sort-direction-cell field">
               <label>{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</label>
-              {{#ui-dropdown class=(concat "ui compact selection dropdown sort-direction-dropdown" (if colDesc.hide ' disabled') (if colDesc.isHasMany ' hidden')) onChange=(action "setSortOrder" colDesc)}}
+              <div class="ui compact selection dropdown sort-direction-dropdown {{if colDesc.hide 'disabled'}}">
                 <i class="dropdown icon"></i>
                 <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
                 <div class="menu">
@@ -82,7 +82,7 @@
                   <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
                   <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
                 </div>
-              {{/ui-dropdown}}
+              </div>
             </div>
           {{/unless}}
           {{!-- Приоритет --}}

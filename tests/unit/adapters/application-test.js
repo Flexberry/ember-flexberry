@@ -1,15 +1,11 @@
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('adapter:application', 'ApplicationAdapter', {
-  // Specify the other units that are required for this test.
-  // needs: ['serializer:foo']
-});
-
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  var adapter = this.subject();
-  assert.ok(adapter);
+module('ApplicationAdapter', function (hooks) {
+  setupTest(hooks);
+  
+  test('it exists', function(assert) {
+    let adapter = this.owner.lookup('adapter:application');
+    assert.ok(adapter);
+  });
 });

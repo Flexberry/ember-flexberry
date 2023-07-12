@@ -35,7 +35,7 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
           relationName: 'applicationUser',
           choose: 'showLookupDialog',
           remove: 'removeLookupValue',
-          updateLookupValue: updateLookupValue,
+          updateLookupValue: updateLookupValue
         };
       }
     }

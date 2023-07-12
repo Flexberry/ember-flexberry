@@ -35,7 +35,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           relationName: 'localization',
           choose: 'showLookupDialog',
           remove: 'removeLookupValue',
-          updateLookupValue: updateLookupValue,
+          updateLookupValue: updateLookupValue
         };
       }
     }

@@ -7,6 +7,6 @@
             relationName: '<%= master %>',
             projection: '<%= projection %>',
             autocomplete: true,
-            updateLookupValue: updateLookupValue,
+            updateLookupValue: updateLookupValue
           };
           break;

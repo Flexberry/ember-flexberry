@@ -1501,7 +1501,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
             modelToLookup: relatedModel,
             newRelationValue: newValue,
             componentName: _this.get('componentName')
-        });
+          });
       },
       onHide() {
         _this.$('.flexberry-dropdown input.search').val('');

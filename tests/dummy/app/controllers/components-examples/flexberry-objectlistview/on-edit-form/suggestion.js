@@ -58,7 +58,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            updateLookupValue: updateLookupValue,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -71,7 +71,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            updateLookupValue: updateLookupValue,
+            updateLookupValue: updateLookupValue
           };
           break;
 

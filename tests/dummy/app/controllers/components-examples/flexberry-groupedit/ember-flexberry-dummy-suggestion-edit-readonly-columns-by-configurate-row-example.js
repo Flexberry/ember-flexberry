@@ -51,7 +51,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             lookupLimitPredicate: limitFunction,
             computedProperties: { thisController: this },
             readonly: false,
-            updateLookupValue: updateLookupValue,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -64,7 +64,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            updateLookupValue: updateLookupValue,
+            updateLookupValue: updateLookupValue
           };
           break;
 

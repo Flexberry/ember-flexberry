@@ -50,7 +50,7 @@ export default EditFormController.extend(MultiListController, EditFormController
               autocomplete: true,
               showPreviewButton: true,
               previewFormRoute: 'ember-flexberry-dummy-application-user-edit',
-              updateLookupValue: updateLookupValue,
+              updateLookupValue: updateLookupValue
             };
             break;
 
@@ -63,7 +63,7 @@ export default EditFormController.extend(MultiListController, EditFormController
               relationName: 'author',
               projection: 'ApplicationUserL',
               autocomplete: true,
-              updateLookupValue: updateLookupValue,
+              updateLookupValue: updateLookupValue
             };
             break;
 

@@ -1925,7 +1925,7 @@
     { "ruleId": "ember/no-test-this-render", "line": 12, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
   ],
-  "tests/integration/components/flexberry-sitemap-searchbar.js": [
+  "tests/integration/components/flexberry-sitemap-searchbar-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 13, "column": 1 },
     { "ruleId": "ember/no-test-this-render", "line": 605, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 605, "column": 15 },

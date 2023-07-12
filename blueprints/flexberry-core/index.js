@@ -229,7 +229,7 @@ var CoreBlueprint = /** @class */ (function () {
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
-            var childItemExt = new SitemapItemExt(item, options);
+            const childItemExt = new SitemapItemExt(item, options);
             childItemExt.process("forms.application.sitemap", 5);
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);

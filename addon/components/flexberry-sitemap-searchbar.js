@@ -178,7 +178,7 @@ export default Component.extend({
         !e.target.classList.contains('sitemap-search-input');
         if (clickTargetIsNotComponent) {
           this.set('isShowingResults', false);
-      }      
+        }      
       } catch (err) {      
         return;      
       }

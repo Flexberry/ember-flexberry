@@ -4,7 +4,7 @@ import Component from "@ember/component";
 import { computed } from "@ember/object";
 import { isEmpty } from "@ember/utils";
 import $ from "jquery";
-import { run } from "@ember/runloop";
+import { scheduleOnce } from "@ember/runloop";
 import { translationMacro as t } from 'ember-i18n';
 
 export default Component.extend({
@@ -129,6 +129,18 @@ export default Component.extend({
     return (typeof element === 'object') && (!isEmpty(element.children));
   },
 
+  /**
+   * Runs search once in a while.
+   *
+   * @private
+   * @function _startSearch
+   */
+  _startSearch() {
+    let query = this.get('userQuery').toLowerCase();
+    let regexQuery = new RegExp(`${query}`, 'gi');
+    this.set('_results', this._searchTree(regexQuery, this.get('sitemap')));
+  },
+
   actions: {
     /**
      Initiate sitemap search.
@@ -142,11 +154,8 @@ export default Component.extend({
 
       if (query) {
         // Recursive search will be initiated only if last keypress happened more than 200 ms ago (for performance reasons).
-        run.debounce(this, () => {
-          let regexQuery = new RegExp(`${query}`, 'gi');
 
-          this.set('_results', this._searchTree(regexQuery, this.get('sitemap')));
-        }, 200);
+        scheduleOnce('afterRender', this, this._startSearch);
 
       } else {
         this.set('_results', this.get('sitemap'));

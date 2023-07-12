@@ -227,7 +227,7 @@ var CoreBlueprint = /** @class */ (function () {
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
-            var childItemExt = new SitemapItemExt(item);
+            var childItemExt = new SitemapItemExt(item, options);
             childItemExt.process("forms.application.sitemap", 5);
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
@@ -249,8 +249,9 @@ var CoreBlueprint = /** @class */ (function () {
     return CoreBlueprint;
 }());
 var SitemapItemExt = /** @class */ (function () {
-    function SitemapItemExt(baseItem) {
+    function SitemapItemExt(baseItem, options) {
         this.baseItem = baseItem;
+		this.options = options;
     }
     SitemapItemExt.prototype.process = function (parentTranslationProp, level) {
         var translationProp;
@@ -277,7 +278,7 @@ var SitemapItemExt = /** @class */ (function () {
         if (this.baseItem.children) {
             for (var _i = 0, _a = this.baseItem.children; _i < _a.length; _i++) {
                 var childItem = _a[_i];
-                var childItemExt = new SitemapItemExt(childItem);
+                var childItemExt = new SitemapItemExt(childItem, this.options);
                 childItemExt.process(translationProp, level + 1);
                 childrenTranslation.push(childItemExt.translation);
                 childrenTranslationOtherLocales.push(childItemExt.translationOtherLocales);
@@ -304,12 +305,46 @@ var SitemapItemExt = /** @class */ (function () {
         this.translationOtherLocales = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
-        this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
-            (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
-            ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
-            ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
-            (nodeIcon === undefined ? '' : ("" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(nodeIcon) + ",\n")) +
-            ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");
+
+        var sitemapLink = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n";
+		var levelIcon = level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n");
+		var caption = "" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n";
+		var title = "" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n";
+		
+		var icon = '';
+		if (nodeIcon !== undefined) {
+			var existIcon = this.existIconInApplication(sitemapLink, this.options);
+			var resultIcon = existIcon !== '' ? existIcon : nodeIcon;
+			icon = "" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(resultIcon) + ",\n";
+		}
+
+		var children = "" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}";
+
+        this.sitemap = sitemapLink +
+			levelIcon +
+			caption +
+			title +
+			icon +
+			children;
+    };
+	SitemapItemExt.prototype.existIconInApplication = function (value, options) {
+        var icon = '';
+		
+		if (options) {
+			var applicationFilePath = this.options.target + path.sep + "app" + path.sep + "controllers" + path.sep + "application.js";
+			
+			if (fs.existsSync(applicationFilePath)) {
+				var content = stripBom(fs.readFileSync(applicationFilePath, "utf8"));
+
+				var startPosition = content.indexOf(value);
+				var contentAfterPosition = startPosition !== -1 ? content.substring(startPosition, content.length) : '';
+				var existIconFinded = contentAfterPosition.match(/icon: '(.*)'[,|\n]/);
+				
+				icon = existIconFinded !== null && existIconFinded.length > 0 ? existIconFinded.pop(): icon;
+			}
+		}
+		
+		return icon;
     };
     SitemapItemExt.prototype.escapeValue = function (value) {
         return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");

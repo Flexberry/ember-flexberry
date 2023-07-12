@@ -25,7 +25,6 @@
   <div class="ui one column grid stackable">
     <div class="column">
       <div class="field">
-        {{flexberry-required-marker readonly=readonly}}
         {{flexberry-field
           value=model.name
           class=(if (v-get validationModel "name" "isInvalid") "error")

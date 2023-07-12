@@ -172,11 +172,15 @@ export default Component.extend({
     this.$(document).on('click', e => {
       e.stopPropagation();
 
-      let clickTargetIsNotComponent = !e.target.offsetParent.classList.contains('sitemap-search-results-list') &&
-      !e.target.classList.contains('sitemap-search-results-list') &&
-      !e.target.classList.contains('sitemap-search-input');
-      if (clickTargetIsNotComponent) {
-        this.set('isShowingResults', false);
+      try {
+        let clickTargetIsNotComponent = !e.target.offsetParent.classList.contains('sitemap-search-results-list') &&
+        !e.target.classList.contains('sitemap-search-results-list') &&
+        !e.target.classList.contains('sitemap-search-input');
+        if (clickTargetIsNotComponent) {
+          this.set('isShowingResults', false);
+      }      
+      } catch (err) {      
+        return;      
       }
     });
   }

@@ -189,11 +189,6 @@ export default Mixin.create(ReloadListMixin, {
       // Get ember static function to get relation by name.
       let relationshipsByName = get(model.constructor, 'relationshipsByName');
 
-      let model = modelToLookup ? modelToLookup : this.get('model');
-
-      // Get ember static function to get relation by name.
-      let relationshipsByName = get(model.constructor, 'relationshipsByName');
-
       let userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
 

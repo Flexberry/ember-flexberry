@@ -222,6 +222,23 @@ export default FlexberryBaseComponent.extend({
   showFiltersInModal: undefined,
 
   /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath

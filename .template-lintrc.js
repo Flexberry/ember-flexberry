@@ -721,6 +721,18 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-dropdown",
       "only": [
         "no-duplicate-attributes"
@@ -747,6 +759,18 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/base-operations",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/delete-with-details",
       "only": [
         "eol-last"
       ]

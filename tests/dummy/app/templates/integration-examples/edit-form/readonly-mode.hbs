@@ -83,6 +83,7 @@
           title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
+          updateLookupValue=(action "updateLookupValue")
           readonly=readonly
         }}
       </div>
@@ -97,6 +98,7 @@
           title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
+          updateLookupValue=(action "updateLookupValue")
           dropdown=true
           readonly=readonly
         }}
@@ -106,52 +108,6 @@
       <h4>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-value-segment-caption"}}</h4>
       readonly={{to-string readonly}}
     </div>
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.enumeration-caption"}}</label>
-    {{flexberry-dropdown
-      items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
-      value=model.enumeration
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.file-caption"}}</label>
-    {{flexberry-file
-      value=model.file
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-caption"}}</label>
-    {{flexberry-lookup
-      value=model.master
-      relatedModel=model
-      relationName="master"
-      projection="MasterL"
-      displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      updateLookupValue=(action "updateLookupValue")
-      readonly=readonly
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption"}}</label>
-    {{flexberry-lookup
-      value=model.masterDropdown
-      relatedModel=model
-      relationName="masterDropdown"
-      projection="MasterDropdownL"
-      displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
-      choose=(action "showLookupDialog")
-      remove=(action "removeLookupValue")
-      updateLookupValue=(action "updateLookupValue")
-      dropdown=true
-      readonly=readonly
-    }}
   </div>
   <div class="field">
     {{flexberry-groupedit

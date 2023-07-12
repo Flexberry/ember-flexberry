@@ -32,7 +32,7 @@ module('Unit | Controller | lookup dialog', function(hooks) {
     };
 
     const controller = this.owner.lookup('controller:lookup-dialog');
-    
+
     controller.set('saveTo', saveTo);
 
     sinon.stub(model, 'makeDirty');

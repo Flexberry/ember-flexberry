@@ -32,7 +32,9 @@ module.exports = {
         '__root__/templates/mobile/application.hbs',
     ],
     getFileMap: function () {
-        var moduleName = this.options.entity && this.options.entity.name || this.packageName;
+        var moduleName = this.options.entity &&
+			this.options.entity.name ||
+			this.packageName;
         var fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
         return this.generateFileMap(fileMapVariables);
     },
@@ -278,7 +280,7 @@ var SitemapItemExt = /** @class */ (function () {
         if (this.baseItem.children) {
             for (var _i = 0, _a = this.baseItem.children; _i < _a.length; _i++) {
                 var childItem = _a[_i];
-                var childItemExt = new SitemapItemExt(childItem, this.options);
+                const childItemExt = new SitemapItemExt(childItem, this.options);
                 childItemExt.process(translationProp, level + 1);
                 childrenTranslation.push(childItemExt.translation);
                 childrenTranslationOtherLocales.push(childItemExt.translationOtherLocales);
@@ -306,19 +308,19 @@ var SitemapItemExt = /** @class */ (function () {
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
 
-        var sitemapLink = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n";
-		var levelIcon = level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n");
-		var caption = "" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n";
-		var title = "" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n";
+        const sitemapLink = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n";
+		const levelIcon = level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n");
+		const caption = "" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n";
+		const title = "" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n";
 		
-		var icon = '';
+		let icon = '';
 		if (nodeIcon !== undefined) {
-			var existIcon = this.existIconInApplication(sitemapLink, this.options);
-			var resultIcon = existIcon !== '' ? existIcon : nodeIcon;
+			const existIcon = this.existIconInApplication(sitemapLink, this.options);
+			const resultIcon = existIcon !== '' ? existIcon : nodeIcon;
 			icon = "" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(resultIcon) + ",\n";
 		}
 
-		var children = "" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}";
+		const children = "" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}";
 
         this.sitemap = sitemapLink +
 			levelIcon +
@@ -328,17 +330,17 @@ var SitemapItemExt = /** @class */ (function () {
 			children;
     };
 	SitemapItemExt.prototype.existIconInApplication = function (value, options) {
-        var icon = '';
+        let icon = '';
 		
 		if (options) {
-			var applicationFilePath = this.options.target + path.sep + "app" + path.sep + "controllers" + path.sep + "application.js";
+			const applicationFilePath = this.options.target + path.sep + "app" + path.sep + "controllers" + path.sep + "application.js";
 			
 			if (fs.existsSync(applicationFilePath)) {
-				var content = stripBom(fs.readFileSync(applicationFilePath, "utf8"));
+				const content = stripBom(fs.readFileSync(applicationFilePath, "utf8"));
 
-				var startPosition = content.indexOf(value);
-				var contentAfterPosition = startPosition !== -1 ? content.substring(startPosition, content.length) : '';
-				var existIconFinded = contentAfterPosition.match(/icon: '(.*)'[,|\n]/);
+				const startPosition = content.indexOf(value);
+				const contentAfterPosition = startPosition !== -1 ? content.substring(startPosition, content.length) : '';
+				const existIconFinded = contentAfterPosition.match(/icon: '(.*)'[,|\n]/);
 				
 				icon = existIconFinded !== null && existIconFinded.length > 0 ? existIconFinded.pop(): icon;
 			}

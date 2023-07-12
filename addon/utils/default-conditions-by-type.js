@@ -55,7 +55,7 @@ export default function defaultConditionsByType(type, i18n) {
       let transformInstance = owner.lookup('transform:' + type);
       let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
-      if (transformClass?.conditionsForFilter) {
+      if (transformClass && transformClass.conditionsForFilter) {
         return transformClass.conditionsForFilter();
       }
 

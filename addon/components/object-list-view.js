@@ -2019,7 +2019,7 @@ export default FlexberryBaseComponent.extend(
     let transformInstance = getOwner(this).lookup('transform:' + attribute.type);
     let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
-    if (transformClass?.componentForFilter) {
+    if (transformClass && transformClass.componentForFilter) {
       $.extend(true, component, transformClass.componentForFilter(relation));
     }
 

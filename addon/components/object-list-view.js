@@ -2010,7 +2010,6 @@ export default FlexberryBaseComponent.extend(
 
     let component = this._getFilterComponent(type);
     let componentForFilter = this.get('componentForFilter');
-    let componentForFilterValue = null;
 
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
@@ -2020,7 +2019,7 @@ export default FlexberryBaseComponent.extend(
     let transformInstance = getOwner(this).lookup('transform:' + attribute.type);
     let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
-    if (transformClass && transformClass.componentForFilter) {
+    if (transformClass?.componentForFilter) {
       $.extend(true, component, transformClass.componentForFilter(relation));
     }
 

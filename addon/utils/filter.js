@@ -105,7 +105,7 @@ let predicateForFilter = function (filter) {
         let transformInstance = owner.lookup('transform:' + filter.type);
         let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
-        if (transformClass && transformClass.predicateForFilter) {
+        if (transformClass?.predicateForFilter) {
           return transformClass.predicateForFilter(filter);
         }
 

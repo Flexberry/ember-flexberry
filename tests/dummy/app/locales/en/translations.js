@@ -963,7 +963,7 @@ $.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Limited text size example'
         },
         'toolbar-custom-components-example': {
-          'caption': 'Flexberry-objectlistview. Example of embedding custom components in olv-toolbar',
+          'caption': 'Flexberry-objectlistview. Example of embedding custom components in olv-toolbar'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',

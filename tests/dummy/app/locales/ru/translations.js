@@ -965,7 +965,7 @@ $.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
         },
         'toolbar-custom-components-example': {
-          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar',
+          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',

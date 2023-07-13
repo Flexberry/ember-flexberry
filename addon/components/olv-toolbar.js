@@ -277,8 +277,6 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
         rootElementsLength: undefined
       };
       let createSettitingItem = {
-        icon: 'table icon',
-        iconAlignment: 'left',
         title: i18n.t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title',
         dividing: true
@@ -286,23 +284,21 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       rootItem.items[rootItem.items.length] = createSettitingItem;
 
       let setDefaultItem = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
         title: i18n.t('components.olv-toolbar.set-default-setting-title'),
         localeKey: 'components.olv-toolbar.set-default-setting-title',
         dividing: true
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
       rootItem.rootElementsLength = rootItem.items.length;
-      // if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
-      //   let showDefaultItem = {
-      //     icon: 'unhide icon',
-      //     iconAlignment: 'left',
-      //     title: i18n.t('components.olv-toolbar.show-default-setting-title'),
-      //     localeKey: 'components.olv-toolbar.show-default-setting-title'
-      //   };
-      //   rootItem.items[rootItem.items.length] = showDefaultItem;
-      // }
+      if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
+        let showDefaultItem = {
+          icon: 'unhide icon',
+          iconAlignment: 'left',
+          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+          localeKey: 'components.olv-toolbar.show-default-setting-title'
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
 
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
@@ -378,8 +374,6 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
         rootElementsLength: undefined
       };
       let createSettitingItem = {
-        icon: 'file excel outline icon',
-        iconAlignment: 'left',
         title: i18n.t('components.olv-toolbar.create-setting-title'),
         localeKey: 'components.olv-toolbar.create-setting-title',
         dividing: true
@@ -994,6 +988,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       return;
     }
 
+    const i18n = this.get('i18n');
     let itemsName = isExportExcel ? 'exportExcelItems': 'colsSettingsItems';
     let subItems = this.get(itemsName)[0].items;
     let newSubItems = subItems.slice();
@@ -1003,10 +998,11 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
       newSubItems.push({ 
         title: namedSetting,
         buttons: [{
-          buttonClasses: 'icon',
+          buttonClasses: 'icon delete',
           iconClass: 'icon-guideline-delete icon',
           iconAlignment: 'right floated',
           disabled: false,
+          buttonTitle: i18n.t('components.olv-toolbar.remove-setting-title'),
           buttonAction: (namedSetting) => {
             /* eslint-disable no-unused-vars */
             this.get('userSettingsService').deleteUserSetting(componentName, namedSetting.title, isExportExcel)
@@ -1021,6 +1017,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
           iconClass: 'icon-guideline-edit icon',
           iconAlignment: 'right floated',
           disabled: false,
+          buttonTitle: i18n.t('components.olv-toolbar.edit-setting-title'),
           buttonAction: (namedSetting) => {
             if (isExportExcel) {
               this.send('showExportDialog', namedSetting.title);

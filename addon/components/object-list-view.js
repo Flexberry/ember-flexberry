@@ -2118,6 +2118,9 @@ export default FlexberryBaseComponent.extend(
   },
   /* eslint-enable no-unused-vars */
 
+  /**
+    Flag to highlight selected records in modal window.
+  */
   skipSelectedRecords: true,
 
   /**

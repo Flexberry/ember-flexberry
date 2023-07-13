@@ -941,8 +941,8 @@ export default FlexberryBaseComponent.extend({
   store: service('store'),
 
   /**
-   * Flag to highlight selected records in modal window
-   */
+    Flag to highlight selected records in modal window.
+  */
   skipSelectedRecords: true,
 
   /**

@@ -7,29 +7,29 @@ import {
 } from 'ember-flexberry-data/query/predicate';
 
 /**
-  Test transform for JSON value.
+  Transform for Text value.
 
-  @class FlexberryJsonTransform
+  @class FlexberryTextTransform
   @extends <a href="http://emberjs.com/api/data/classes/DS.Transform.html">DS.Transform</a>
 */
-let FlexberryJsonTransform = DS.Transform.extend({
-  deserialize: function(json) {
-    return isNone(json) ? null : String(json);
+let FlexberryTextTransform = DS.Transform.extend({
+  deserialize: function(serialized) {
+    return isNone(serialized) ? null : String(serialized);
   },
 
-  serialize: function(js) {
-    return isNone(js) ? null : String(js);
+  serialize: function(deserialized) {
+    return isNone(deserialized) ? null : String(deserialized);
   },
 });
 
-FlexberryJsonTransform.reopenClass({
+FlexberryTextTransform.reopenClass({
   conditionsForFilter() {
     return {
-      'eq': 'JSON equal',
-      'neq': 'JSON not equal',
-      'like': 'JSON like',
-      'nlike': 'JSON not like',
-      'hasAttr': 'JSON has attribute',
+      'eq': 'Text equal',
+      'neq': 'Text not equal',
+      'like': 'Text like',
+      'nlike': 'Text not like',
+      'hasAttr': 'Text has attribute',
     };
   },
 
@@ -53,6 +53,10 @@ FlexberryJsonTransform.reopenClass({
   componentForFilter() {
     return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
   },
+
+  getOdataValue(predicateValue) {
+    return `'${String(predicateValue).replace(/'/g, `''`)}'`;
+  }
 });
 
-export default FlexberryJsonTransform;
+export default FlexberryTextTransform;

@@ -13,7 +13,7 @@ import { isNone } from '@ember/utils';
   @return {Array} Available conditions for filter.
 */
 export default function defaultConditionsByType(type, i18n) {
-  let owner =  this != undefined ? getOwner(this) : getOwner(i18n);
+  let owner = this != undefined ? getOwner(this) : getOwner(i18n);
 
   switch (type) {
     case 'file':

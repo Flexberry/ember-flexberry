@@ -27,7 +27,7 @@ import {
   @return {BasePredicate|null} Predicate to filter through.
 */
 let predicateForFilter = function (filter) {
-  let owner =  getOwner(this);
+  let owner = getOwner(this);
 
   if (filter.condition) {
     switch (filter.type) {

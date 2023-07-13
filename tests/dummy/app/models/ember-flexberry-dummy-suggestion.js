@@ -24,7 +24,7 @@ const Validations = buildValidations({
 
 let Model = EmberFlexberryDataModel.extend(Validations, {
   address: DS.attr('string'),
-  text: DS.attr('ember-flexberry-dummy-json'),
+  text: DS.attr('ember-flexberry-dummy-text'),
   date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),

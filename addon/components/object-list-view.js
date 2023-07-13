@@ -2331,10 +2331,7 @@ export default FlexberryBaseComponent.extend(
    
     let selectedRecordsToRestore = multiSelectedRecords ? multiSelectedRecords : selectedRecords;
 
-      if (selectedRecordsToRestore && 
-        selectedRecordsToRestore.size && 
-        selectedRecordsToRestore.size > 0 && 
-        this.get('skipSelectedRecords') === false) {
+      if (this.get('skipSelectedRecords') === false && !isEmpty(selectedRecordsToRestore)) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {

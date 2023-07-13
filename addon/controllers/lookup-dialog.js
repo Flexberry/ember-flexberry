@@ -171,12 +171,12 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     },
 
     pullUpLookupValues() {
-      let currentLookupRow = this.get('currentLookupRow');
+      const currentLookupRow = this.get('currentLookupRow');
       let selected = this.get('objectlistviewEventsService').getMultiSelectedRecords(this.get('folvComponentName'));
       const contextModel = this.get('reloadContext.model');
       const lookupModelName = this.get('saveTo.model.constructor.modelName');
       const relName = get(contextModel.constructor, 'relationships').get(lookupModelName)[0].name;
-      const detail = contextModel.get(relName);
+      let detail = contextModel.get(relName);
       if (selected) {
         if (currentLookupRow) {
           selected.forEach(({ data }) => detail.pushObject(this.store.createRecord(lookupModelName, {

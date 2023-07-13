@@ -969,6 +969,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/groupedit-with-multiselect-edit",
+      "only": [
+        "simple-unless"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-readonly-columns-by-configurate-row-example",
       "only": [
         "eol-last",

@@ -76,7 +76,7 @@ export default Service.extend(Evented, {
   */
   holdMultiSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = Ember.Map.create();
+      this.get('_multiRows')[componentName] = EmberMap.create();
     }
 
     (this.getSelectedRecords(componentName) || []).forEach((v, i) => {
@@ -167,6 +167,13 @@ export default Service.extend(Evented, {
     this.trigger('filterByAnyMatch', componentName, pattern);
   },
 
+  /**
+    Set of rows for multiselect function in groupedit.
+
+    @property _multiRows
+    @type Array
+    @default null
+  */
   _multiRows: null,
 
   /**
@@ -224,7 +231,7 @@ export default Service.extend(Evented, {
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = Ember.Map.create();
+      this.get('_multiRows')[componentName] = EmberMap.create();
     }
 
     if (recordWithKey) {
@@ -258,7 +265,7 @@ export default Service.extend(Evented, {
   */
   restoreSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = Ember.Map.create();
+      this.get('_multiRows')[componentName] = EmberMap.create();
     }
 
     this.get('_multiRows')[componentName].forEach((v, i) => {
@@ -383,7 +390,7 @@ export default Service.extend(Evented, {
     @type Object
     @default {}
   */
-  currentLimitFunctions: computed(() => { return {}; }).readOnly(),
+  currentLimitFunctions: computed(function () { return {}; }).readOnly(),
 
   /**
     Form's loading state.

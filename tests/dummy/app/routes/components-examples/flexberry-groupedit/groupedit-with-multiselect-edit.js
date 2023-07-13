@@ -75,5 +75,4 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @default 'ember-flexberry-dummy-suggestion'
    */
   modelName: 'ember-flexberry-dummy-suggestion'
-
 });

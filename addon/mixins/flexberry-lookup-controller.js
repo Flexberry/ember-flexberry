@@ -8,7 +8,7 @@ import { getOwner } from '@ember/application';
 import { merge } from '@ember/polyfills';
 import EmberObject, { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import ReloadListMixin from '../mixins/reload-list-mixin';
@@ -210,9 +210,9 @@ export default Mixin.create(ReloadListMixin, {
       // Get property type name.
       let relatedToType = relation.type;
 
-      if (Ember.isNone(userSettings) || Ember.isEmpty(Object.keys(userSettings))) {
-        const userSettingValue = Ember.getOwner(this).lookup('default-user-setting:' + relatedToType);
-        if (!Ember.isNone(userSettingValue)) {
+      if (isNone(userSettings) || isEmpty(Object.keys(userSettings))) {
+        const userSettingValue = getOwner(this).lookup('default-user-setting:' + relatedToType);
+        if (!isNone(userSettingValue)) {
           userSettings = userSettingValue.DEFAULT
         }
       }
@@ -272,49 +272,49 @@ export default Mixin.create(ReloadListMixin, {
         updateLookupAction: undefined
       }, chooseData);
 
-      let disableHierarchy = get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
+      const disableHierarchy = get(options, 'lookupWindowCustomPropertiesData.disableHierarchicalMode');
       lookupController.set('disableHierarchicalMode', !isNone(disableHierarchy));
 
-      let customInHierarchicalMode = get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
+      const customInHierarchicalMode = get(options, 'lookupWindowCustomPropertiesData.inHierarchicalMode');
       lookupController.set('inHierarchicalMode', customInHierarchicalMode);
 
-      let projectionName = options.projection;
+      const projectionName = options.projection;
       assert('ProjectionName is undefined.', projectionName);
 
-      let limitPredicate = options.predicate;
+      const limitPredicate = options.predicate;
       if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
         throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
       }
 
-      let relationName = options.relationName;
-      let title = options.title;
-      let modelToLookup = options.modelToLookup;
-      let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
-      let componentName = options.componentName;
-      let folvComponentName = options.folvComponentName;
-      let customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
-      let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
-      let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
+      const relationName = options.relationName;
+      const title = options.title;
+      const modelToLookup = options.modelToLookup;
+      const lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
+      const componentName = options.componentName;
+      const folvComponentName = options.folvComponentName;
+      const customHierarchicalAttribute = get(options, 'lookupWindowCustomPropertiesData.hierarchicalAttribute');
+      const hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
+      const hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
 
-      let userSettingsService = this.get('userSettingsService');
+      const userSettingsService = this.get('userSettingsService');
       userSettingsService.createDefaultUserSetting(folvComponentName);
 
-      let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
-      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
+      const model = modelToLookup ? modelToLookup : this.get('model');
+      const sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
+      const perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
-      let relationshipsByName = get(model.constructor, 'relationshipsByName');
+      const relationshipsByName = get(model.constructor, 'relationshipsByName');
 
       // Get relation property from model.
-      let relation = relationshipsByName.get(relationName);
+      const relation = relationshipsByName.get(relationName);
       if (!relation) {
         throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
       }
 
-      const relName = get(this.get('model').constructor, 'relationships').get(model.constructor.modelName)[0].name;
-      this.get('model.' + relName).forEach(m => {
+      const relationModelName = get(this.get('model').constructor, 'relationships').get(model.constructor.modelName)[0].name;
+      this.get('model.' + relationModelName).forEach(m => {
         const relationModel = m.get(relationName);
         let recordWithKey = EmberObject.create({});
         recordWithKey.set('key', guidFor(relationModel));
@@ -323,10 +323,10 @@ export default Mixin.create(ReloadListMixin, {
       });
 
       // Get property type name.
-      let relatedToType = relation.type;
+      const relatedToType = relation.type;
 
       // Lookup
-      let lookupSettings = this.get('lookupMultiGESettings');
+      const lookupSettings = this.get('lookupMultiGESettings');
       assert('Lookup settings are undefined.', lookupSettings);
 
       let reloadData = {

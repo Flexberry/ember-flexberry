@@ -33,7 +33,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
-    let i18n = this.get('i18n');
+    const i18n = this.get('i18n');
+    const lookupMultiGESettings = this.get('lookupMultiGESettings');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
@@ -53,11 +54,10 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           break;
 
         case 'ember-flexberry-dummy-comment+author':
-          let lookupSettings = this.get('lookupMultiGESettings');          
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
             modalDialogSettings: {
-              lookupSettings: lookupSettings,
+              lookupSettings: lookupMultiGESettings,
             }, 
             remove: 'removeLookupValue',
             displayAttributeName: 'name',

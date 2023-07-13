@@ -77,6 +77,7 @@ export default FlexberryBaseComponent.extend({
   isChooseComponentVisible: computed('chooseComponentVisibility', 'readonly', function () {
     const isVisible = this.get('chooseComponentVisibility');
     const readonly = this.get('readonly');
+
     return isVisible && !readonly;
   }),
 

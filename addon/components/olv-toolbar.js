@@ -5,7 +5,7 @@
 import $ from 'jquery';
 import { Promise } from 'rsvp';
 import { assert } from '@ember/debug';
-import { set, computed, observer } from '@ember/object';
+import { set, computed, observer, get } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
@@ -749,7 +749,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
           userSettingsService.saveUserSetting(componentName, undefined, colsConfig).
             then(record => {
               let currentController = this.get('currentController');
-              let userSettingsApplyFunction = currentController.get('userSettingsApply');
+              let userSettingsApplyFunction = get(currentController, 'userSettingsApply');
               if (userSettingsApplyFunction instanceof Function) {
                 userSettingsApplyFunction.apply(currentController, [componentName, colsConfig.sorting, colsConfig.perPage]);
               } else {

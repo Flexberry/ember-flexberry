@@ -2062,19 +2062,21 @@ export default FlexberryBaseComponent.extend(
     @return {Promise}
   */
   _initDdlFilterSettings() {
-    if (isEmpty(this.ddlFilterSettings)) {
+    const ddlFilterSettings = this.get('ddlFilterSettings');
+    if (isEmpty(ddlFilterSettings)) {
       return;
     }
 
-    const promises =  A([]);
+    const promises =  A();
     const store = this.get('store');
-    this.get('ddlFilterSettings').map(obj => {
+    ddlFilterSettings.map(obj => {
       const builder = new Builder(store, obj.modelName).selectByProjection(obj.projectionName);
       const promise = store.query(obj.modelName, builder.build()).then(items => {
         obj.items = items.map(item => {
           return get(item, obj.propName);
         });
       });
+
       promises.push(promise);
     });
 
@@ -2090,21 +2092,22 @@ export default FlexberryBaseComponent.extend(
   */
   _getComponentForDdlFilter(bindingPath) {
     const ddlFilterSettings = this.get('ddlFilterSettings');
-
     if (isEmpty(ddlFilterSettings)) {
       return;
     }
 
-    const element = ddlFilterSettings.find(obj => obj.bindingPath === bindingPath);
-    if (element) {
+    const filterSettings = ddlFilterSettings.find(obj => obj.bindingPath === bindingPath);
+    if (filterSettings) {
       return {
         name: 'flexberry-dropdown',
         properties: {
-          items: element.items,
+          items: filterSettings.items,
           class: 'compact'
         }
       };
     }
+
+    return;
   },
 
   /**

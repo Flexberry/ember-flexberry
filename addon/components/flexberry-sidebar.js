@@ -1,0 +1,57 @@
+/**
+  @module ember-flexberry
+*/
+
+import $ from 'jquery';
+import Component from '@ember/component';
+import { get } from '@ember/object';
+
+/**
+  Sidebar component based on Semantic UI Sidebar module.
+  See [Semantic UI API](https://semantic-ui.com/modules/sidebar.html) and [EmberJS API](https://emberjs.com/api/).
+
+  @class FlexberrySidebarComponent
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
+*/
+export default Component.extend({
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['ui', 'sidebar'],
+
+  /**
+    See [Semantic UI API](https://semantic-ui.com/modules/sidebar.html).
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method didInsertElement
+  */
+  didInsertElement() {
+    this._super(...arguments);
+
+    let settings = $.extend({
+      context: '.ember-application > .ember-view',
+    }, get(this, 'settings'));
+
+    this.$().sidebar(settings);
+  },
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method willDestroyElement
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    this.$().sidebar('destroy');
+  },
+});

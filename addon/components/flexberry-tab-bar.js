@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, set, computed } from '@ember/object';
+import { A } from '@ember/array';
+import $ from "jquery"
 
 /**
   Component's CSS-classes names.
@@ -25,10 +28,12 @@ const flexberryClassNames = {
 /**
  * FlexberryTabBarComponent
  * Component to display semantic ui tabs
- * @extends Ember.Component
+ * @extends Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],
+
+  classNameBindings: ['isOverflowedTabs:overflowed'],
 
   /**
     Reference to component's CSS-classes names.
@@ -51,36 +56,35 @@ export default Ember.Component.extend({
    * @property tabs
    * @type {Array}
    */
-  tabs: Ember.computed('items.[]', 'items.@each.active', function () {
+  tabs: computed('items.{[],@each.active}', function () {
     let active = false;
-    let items = this.get('items') || Ember.A();
-    let result = Ember.A();
+    let items = this.get('items') || A();
+    let result = A();
 
     items.forEach((item) => {
-      let itemIsActive = Ember.get(item, 'active');
+      let itemIsActive = get(item, 'active');
       if (itemIsActive) {
         if (!active) {
           active = true;
 
-          let itemClass = Ember.get(item, 'class') || '';
+          let itemClass = get(item, 'class') || '';
           let regEx = /\sactive(\s|$)/;
           if (!regEx.test(itemClass)) {
             itemClass += ' active';
           }
 
-          Ember.set(item, 'class', itemClass);
-
+          set(item, 'class', itemClass);
           this.set('prevTab', item.selector);
-          this.$().tab('change tab', item.selector);
+          $.tab('change tab', item.selector);
         }
       }
 
-      Ember.set(item, 'active', false);
+      set(item, 'active', false);
 
-      if (Ember.get(item, 'iconClass')) {
-        Ember.set(item, '_hasIcon', true);
+      if (get(item, 'iconClass')) {
+        set(item, '_hasIcon', true);
       } else {
-        Ember.set(item, '_hasIcon', false);
+        set(item, '_hasIcon', false);
       }
 
       result.pushObject(item);
@@ -95,6 +99,107 @@ export default Ember.Component.extend({
    */
   prevTab: undefined,
 
+  /**
+   * String with dropdown selector for working with jQuery
+   * @property dropdownDomString
+   */
+  navDropdownDomString: '.ui.compact.pointing.top.right.dropdown.link.item',
+
+  isOverflowedTabs: false,
+
+  /**
+   * Checks if sum of tabs width is greater than tab container.
+   * If true - dropdown becomes visible.
+   * If false - dropdown dissapears.
+   * @method setDropdownVisibility
+   */
+  setNavDropdownVisibility: function () {
+    const tabContainer = document.querySelector(
+      '.ui.tabular.menu.flexberry-tab-bar'
+    );
+    const tab = document.querySelector('.flexberry-tab-bar-tab.tab.item');
+
+    if (tab != null && tab.clientWidth * this.items.length > tabContainer.clientWidth) {
+      this.$(this.navDropdownDomString).show();
+    } else {
+      this.$(this.navDropdownDomString).hide();
+    }
+  },
+
+  /**
+   * Enables scroll wheel for dragscroll.
+   * Based on code by @miorel + @pieterv of Facebook.
+	 * github.com/facebook/fixed-data-table/blob/master/src/vendor_upstream/dom/normalizeWheel.js
+   * @method normalizeWheel
+   */
+  normalizeWheel: function (event) {
+    const pixelStep = 10;
+    const lineHeight = 40;
+    const pageHeight = 800;
+    let sX = 0;
+    let sY = 0;
+    let pX = 0;
+    let pY = 0;
+
+    // Legacy.
+    if ('detail' in event) {
+      sY = event.detail;
+    } else if ('wheelDelta' in event) {
+      sY = event.wheelDelta / -120;
+    } else if ('wheelDeltaY' in event) {
+      sY = event.wheelDeltaY / -120;
+    }
+
+    if ('wheelDeltaX' in event) {
+      sX = event.wheelDeltaX / -120;
+    }
+
+    // Side scrolling on FF with DOMMouseScroll.
+    if ('axis' in event && event.axis === event.HORIZONTAL_AXIS) {
+      sX = sY;
+      sY = 0;
+    }
+
+    // Calculate.
+    pX = sX * pixelStep;
+    pY = sY * pixelStep;
+
+    if ('deltaY' in event) {
+      pY = event.deltaY;
+    }
+
+    if ('deltaX' in event) {
+      pX = event.deltaX;
+    }
+
+    if ((pX || pY) && event.deltaMode) {
+      if (event.deltaMode === 1) {
+        pX *= lineHeight;
+        pY *= lineHeight;
+      } else {
+        pX *= pageHeight;
+        pY *= pageHeight;
+      }
+    }
+
+    // Fallback if spin cannot be determined.
+    if (pX && !sX) {
+      sX = pX < 1 ? -1 : 1;
+    }
+
+    if (pY && !sY) {
+      sY = pY < 1 ? -1 : 1;
+    }
+
+    // Return.
+    return {
+      spinX: sX,
+      spinY: sY,
+      pixelX: pX,
+      pixelY: pY,
+    };
+  },
+
   actions: {
     /**
         Handles tab 'click' action.
@@ -104,17 +209,18 @@ export default Ember.Component.extend({
     */
     change(currentTab, event) {
       let prevTab = this.get('prevTab');
+      let tabName = currentTab;
       let changed = false;
 
-      if (prevTab !== currentTab) {
-        this.set('prevTab', currentTab);
+      if (prevTab !== tabName) {
+        this.set('prevTab', tabName);
         changed = true;
       }
 
       // if data-tab stays the same - disable it
       if (!changed) {
         this.set('prevTab', undefined);
-        this.$('.item.active').removeClass('active');
+        set(currentTab, 'active', false);
       }
 
       //if data-tab changed but there was not prev one
@@ -123,14 +229,14 @@ export default Ember.Component.extend({
       }
 
       let e = {
-        tabName: currentTab,
+        tabName: tabName,
         prevTab: prevTab,
         changed: changed,
-        originalEvent: event
+        originalEvent: event,
       };
 
-      this.sendAction('change', e);
-    }
+      this.get('change', e);
+    },
   },
 
   /**
@@ -141,6 +247,68 @@ export default Ember.Component.extend({
 
     // initialize semantic ui tabs
     this.$('.item').tab();
+
+    if (this.get('isOverflowedTabs')) {
+      // Dragscroll inplementation for tabs
+      const slider = document.querySelector('.dragscroll');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) {
+          return false;
+        } else {
+          e.preventDefault();
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          slider.scrollLeft = scrollLeft - walk;
+        }
+      });
+
+      slider.addEventListener('wheel', (e) => {
+
+        // Prevent default.
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Stop link scroll.
+        this.$('body').stop();
+
+        // Calculate delta, direction.
+        const n = this.normalizeWheel(e);
+        const x = n.pixelX !== 0 ? n.pixelX : n.pixelY;
+        const delta = Math.min(Math.abs(x), 150);
+        const direction = x > 0 ? 1 : -1;
+
+        // Scroll page.
+        this.$('.dragscroll').scrollLeft(this.$('.dragscroll').scrollLeft() + delta * direction);
+      });
+
+      // Dropdown visibility implementation
+      window.addEventListener('resize', () => {
+        this.setNavDropdownVisibility();
+      });
+
+      this.setNavDropdownVisibility();
+    }
   },
 
   /**
@@ -151,6 +319,17 @@ export default Ember.Component.extend({
 
     // Initialize possibly added new tabs.
     this.$('.item').tab();
+
+    if (this.get('isOverflowedTabs')) {
+      // Inititalize semantic ui dropdown (hidden by default)
+      this.$(this.navDropdownDomString).dropdown({
+        transition: 'drop',
+        action: 'activate',
+        onChange(newTab) {
+          $.tab('change tab', newTab);
+        },
+      });
+    }
   },
 
   /**
@@ -161,7 +340,7 @@ export default Ember.Component.extend({
 
     // destroy semantic ui tabs
     this.$('.item').tab('destroy');
-  }
+  },
 
   /**
     Component's action invoking when tab was clicked and it's 'active' state changed.

@@ -1,4 +1,4 @@
-{{#ui-sidebar class="inverted vertical main menu"}}
+{{#flexberry-sidebar class="inverted vertical main menu"}}
   <a class="item"
      href="https://github.com/flexberry"
      target="_blank"
@@ -11,8 +11,8 @@
      title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
-  {{render "sitemap" sitemap}}
-{{/ui-sidebar}}
+  {{flexberry-sitemap sitemap=sitemap}}
+{{/flexberry-sidebar}}
 <div id="example-with-submenu" class="pusher">
   <div class="full height">
     <div class="ui fixed main menu">
@@ -28,7 +28,7 @@
       <div class="ui close left rail">
         <div class="ui sticky transition visible">
           <div class="flexberry-submenu ui large violet pointing secondary vertical following fluid menu">
-            {{render "sitemap" sitemap}}
+            {{flexberry-sitemap sitemap=sitemap}}
           </div>
         </div>
       </div>

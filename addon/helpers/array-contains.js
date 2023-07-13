@@ -2,11 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
+import { isNone } from '@ember/utils';
 
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute([array, element]) {
-    if (!Ember.isNone(element)) {
+    if (!isNone(element)) {
       return array.indexOf(element) >= 0;
     }
 

@@ -1,0 +1,39 @@
+# unconventional js
+/blueprints/*/files/
+/vendor/
+
+# compiled output
+/dist/
+/tmp/
+
+# dependencies
+/bower_components/
+/node_modules/
+
+# ember-try
+/.node_modules.ember-try/
+/bower.json.ember-try
+/package.json.ember-try
+
+# our unconventional js
+/blueprints/flexberry-edit-form/snippets/
+
+# definitions for TypeScript in blueprints
+/blueprints/typings/
+
+# problems with TypeScript and ESLint configs
+blueprints/flexberry-application/index.ts
+blueprints/flexberry-common/CommonUtils.ts
+blueprints/flexberry-core/Locales.ts
+blueprints/flexberry-core/index.ts
+blueprints/flexberry-edit-form/index.ts
+blueprints/flexberry-enum/index.ts
+blueprints/flexberry-group/index.ts
+blueprints/flexberry-list-form/index.ts
+blueprints/flexberry-model-init/index.ts
+blueprints/flexberry-model-offline/index.ts
+blueprints/flexberry-model/ModelBlueprint.ts
+blueprints/flexberry-model/index.ts
+blueprints/flexberry-object-init/index.ts
+blueprints/flexberry-object/index.ts
+blueprints/flexberry-serializer-init/index.ts

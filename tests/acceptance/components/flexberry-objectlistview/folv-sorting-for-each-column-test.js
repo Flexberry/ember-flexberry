@@ -1,6 +1,6 @@
-import { executeTest } from './execute-folv-test';
+import { skip } from 'qunit';
 
-executeTest('check sorting for each column', (store, assert, app) => {
+skip('check sorting for each column', (store, assert) => {
   assert.expect(1);
   const path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);

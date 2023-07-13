@@ -20,6 +20,11 @@
     onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry/validation-summary errors=(v-get validationModel "messages")}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
@@ -46,6 +51,7 @@
       class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
     }}
+    {{flexberry-validationmessage error=(v-get validationModel "name" "message") pointing="pointing"}}
   </div>
   <div class="field">
     {{#if model.errors.eMail}}
@@ -58,6 +64,7 @@
       class=(if model.errors.eMail "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
     }}
+    {{flexberry-validationmessage error=(v-get validationModel "eMail" "message") pointing="pointing"}}
   </div>
   <div class="field">
     {{#if model.errors.phone1}}
@@ -143,7 +150,8 @@
     {{#if model.errors.birthday}}
       <span style="color:red">{{model.errors.birthday}}</span>
     {{/if}}
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       readonly=readonly
       value=model.birthday
       class=(if model.errors.birthday "error" "")

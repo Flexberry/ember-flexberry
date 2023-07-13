@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for aggregator.details.
   // It's not a property for flexberry-lookup component.
   aggregator: DS.belongsTo('components-examples/flexberry-groupedit/shared/aggregator', {
@@ -24,13 +25,13 @@ var Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/shared/detail', {
-  flag: Projection.attr('Flag'),
-  text: Projection.attr('Text'),
-  date: Projection.attr('Date'),
-  enumeration: Projection.attr('Enumeration'),
-  file: Projection.attr('File'),
-  master: Projection.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
-    text: Projection.attr('Text', {
+  flag: attr('Flag'),
+  text: attr('Text'),
+  date: attr('Date'),
+  enumeration: attr('Enumeration'),
+  file: attr('File'),
+  master: belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
+    text: attr('Text', {
       hidden: true
     })
   }, {
@@ -40,15 +41,15 @@ Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/share
 
 // Edit form short projection.
 Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/shared/detail', {
-  flag: Projection.attr('Flag'),
-  text: Projection.attr('Text'),
-  enumeration: Projection.attr('Enumeration'),
+  flag: attr('Flag'),
+  text: attr('Text'),
+  enumeration: attr('Enumeration'),
 });
 
 // Edit form ultra short projection.
 Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/shared/detail', {
-  flag: Projection.attr('Flag'),
-  enumeration: Projection.attr('Enumeration'),
+  flag: attr('Flag'),
+  enumeration: attr('Enumeration'),
 });
 
 export default Model;

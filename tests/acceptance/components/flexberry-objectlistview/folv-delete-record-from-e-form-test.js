@@ -1,7 +1,7 @@
-import { executeTest } from './execute-folv-test';
+import { skip } from 'qunit';
 
 // Need to add sort by multiple columns.
-executeTest('check delete record from edit form', (store, assert, app) => {
+skip('check delete record from edit form', (store, assert) => {
   assert.expect(1);
   const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);

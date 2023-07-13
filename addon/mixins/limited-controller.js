@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { later } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 
 /**
   Mixin for controller, that restrictions on the list form.
@@ -10,18 +12,18 @@ import Ember from 'ember';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
-    export default Ember.Controller.extend(LimitedController, {
+    export default Controller.extend(LimitedController, {
       ...
     });
     ```
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-    export default Ember.Route.extend(LimitedRoute, {
+    export default Route.extend(LimitedRoute, {
       ...
     });
     ```
@@ -45,11 +47,11 @@ import Ember from 'ember';
     ```
 
   @class LimitedController
-  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses <a href="https://www.emberjs.com/api/ember/release/classes/Mixin">Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+    Defines which query parameters the controller accepts. [More info.](https://emberjs.com/api/ember/release/classes/Controller#property_queryParams).
 
     @property queryParams
     @type Array
@@ -107,7 +109,7 @@ export default Ember.Mixin.create({
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   actions: {
     /**
@@ -141,15 +143,18 @@ export default Ember.Mixin.create({
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
       @param {String} filterCondition Condition for predicate, can be `or` or `and`.
+      @param {String} componentName Component name.
+      @param {String} filterProjectionName Name of model projection which should be used for filtering throught search-element on toolbar. Filtering is processed only by properties defined in this projection.
     */
-    filterByAnyMatch(pattern, filterCondition) {
+    filterByAnyMatch(pattern, filterCondition, componentName, filterProjectionName) {
       if (this.get('filter') !== pattern || this.get('filterCondition') !== filterCondition) {
         let _this = this;
-        Ember.run.later((function() {
+        later((function() {
           _this.setProperties({
             filterCondition: filterCondition,
             filter: pattern,
-            page: 1
+            page: 1,
+            filterProjectionName: filterProjectionName
           });
         }), 50);
       }

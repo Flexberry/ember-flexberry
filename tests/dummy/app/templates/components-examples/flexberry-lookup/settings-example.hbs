@@ -16,8 +16,8 @@
         title=title
         relatedModel=model
         relationName="type"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
         autocomplete=autocomplete
         autocompletePersistValue=autocompletePersistValue
         usePaginationForAutocomplete=usePaginationForAutocomplete
@@ -35,6 +35,7 @@
         previewOnSeparateRoute=previewOnSeparateRoute
         previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"
         preview=(action "previewLookupValue")
+        autocompleteDirection=autocompleteDirection
       }}
     {{/settings-example}}
   </div>

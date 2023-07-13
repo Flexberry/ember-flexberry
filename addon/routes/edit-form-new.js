@@ -2,7 +2,10 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
+import { resolve } from 'rsvp';
+import { get } from '@ember/object';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import EditFormRoute from './edit-form';
@@ -42,7 +45,7 @@ export default EditFormRoute.extend({
 
   /**
     A hook you can implement to convert the URL into the model for this route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/model?anchor=model).
 
     @method model
     @param {Object} params
@@ -53,7 +56,7 @@ export default EditFormRoute.extend({
     let prototypeId = transition.queryParams.prototypeId;
     let store = this.get('store');
 
-    if (Ember.isNone(prototypeId))
+    if (isNone(prototypeId))
     {
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
       let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
@@ -62,14 +65,20 @@ export default EditFormRoute.extend({
       flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
 
       if (modelCurrentNotSaved) {
-        return modelCurrentNotSaved;
+        return this.returnNewModel(modelCurrentNotSaved);
       }
 
       if (modelSelectedDetail) {
-        return modelSelectedDetail;
+        if (get(modelSelectedDetail, 'isNew') && isNone(get(modelSelectedDetail, 'id'))) {
+          modelSelectedDetail.set('id', generateUniqueId());
+        }
+
+        return this.returnNewModel(modelSelectedDetail);
       }
 
-      return store.createRecord(modelName, { id: generateUniqueId() });
+      let model = store.createRecord(modelName, { id: generateUniqueId() });
+
+      return this.returnNewModel(model);
     }
 
     // Get the copyable instance.
@@ -77,7 +86,7 @@ export default EditFormRoute.extend({
 
     let promise = prototype.copy(this.get('prototypeProjection'));
     return promise.then(record => {
-      if (Ember.isNone(record)) {
+      if (isNone(record)) {
         transition.queryParams.prototypeId = undefined;
         return this.model(...arguments);
       }
@@ -87,8 +96,18 @@ export default EditFormRoute.extend({
   },
 
   /**
+    Return model as Primese.
+
+    @method returnNewModel
+    @param {Object} model
+   */
+  returnNewModel(value) {
+    return resolve(value);
+  },
+
+  /**
     A hook you can use to render the template for the current route.
-    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate).
+    [More info](https://www.emberjs.com/api/ember/release/classes/Route/methods/renderTemplate?anchor=renderTemplate).
 
     @method renderTemplate
     @param {Object} controller
@@ -96,7 +115,7 @@ export default EditFormRoute.extend({
    */
   renderTemplate(controller, model) {
     const templateName = this.get('templateName');
-    Ember.assert('Template name must be defined.', templateName);
+    assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,
       controller,

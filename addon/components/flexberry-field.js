@@ -4,6 +4,8 @@
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { isBlank } from '@ember/utils';
+import { computed, get } from '@ember/object';
 
 /**
   Field component for Semantic UI.
@@ -44,13 +46,21 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info.](https://emberjs.com/api/ember/release/classes/Component#property_classNames)
 
     @property classNames
     @type Array
     @readOnly
   */
   classNames: ['flexberry-field', 'ui', 'field'],
+
+  /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+  */
+  classNameBindings: ['hasText'],
 
   /**
     Type of html input.
@@ -79,6 +89,17 @@ export default FlexberryBaseComponent.extend({
     @default 'APP.components.flexberryField'
   */
   appConfigSettingsPath: 'APP.components.flexberryField',
+
+  /**
+    Indicates if field has text.
+
+    @property hasText
+    @type Boolean
+    @default false
+  */
+  hasText: computed('value', function () {
+    return !isBlank(get(this, 'value'));
+  }),
 
   /**
     Initializes component.

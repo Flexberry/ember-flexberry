@@ -1,0 +1,62 @@
+<div class="ui two column grid">
+  <div class="five wide column">
+    <div class="ui fixed">
+      <div class="ui two column grid highloaded-menu">
+        {{#each menu as |item index|}}
+          <div class="highloaded-menu-cell">
+            {{#if razdelNumeration}}
+              <h3 class="ui header highloaded-menu-number">{{increase-number index}}</h3>
+            {{/if}}
+            <div>
+              <h3 class="ui header title">{{item.razdelName}}</h3>
+              <ul class={{concat "list" (if item.active " active")}}>
+                {{#each item.children as |child|}}
+                  <li class="tab-item-container">
+                    <a class={{concat "tab item" item.class (if child.active " active")}}
+                      title={{child.gruppaPolejVvodaName}}
+                      data-tab={{child.selector}}
+                      {{action "change" child on="click"}}>
+                      {{child.gruppaPolejVvodaName}}
+                    </a>
+                    {{#if child.showAsterisk}}
+                      <div class="cell asterisk-cell">
+                        <i class="asterisk small red icon"></i>
+                      </div>
+                    {{/if}}
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <div>
+        {{flexberry-button
+          class="showAllFormsButton ui empty button show-all"
+          iconClass="icon-guideline-list icon"
+          caption=(t "components.highload-edit-form-menu.show-all-forms-button")
+          tooltip=(t "components.highload-edit-form-menu.show-all-forms-button")
+          readonly=readonly
+          click=(action "showAllForms")
+        }}
+      </div>
+    </div>
+  </div>
+  <div class="eleven wide column">
+    {{yield}}
+    {{flexberry-button
+      class="tabsNavigation primary"
+      iconClass="icon icon-guideline-navigate-arrow-down"
+      caption=(t "components.highload-edit-form-menu.next-button")
+      readonly=readonly
+      click=(action "showNextGroupForms")
+    }}
+    {{flexberry-button
+      class="empty tabsNavigation"
+      iconClass="icon icon-guideline-navigate-arrow-up"
+      caption=(t "components.highload-edit-form-menu.prev-button")
+      readonly=readonly
+      click=(action "showPrevGroupForms")
+    }}
+  </div>
+</div>

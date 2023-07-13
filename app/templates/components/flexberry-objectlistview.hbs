@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class='ui secondary menu no-margin'
+  class='ui secondary menu no-margin flexberry-olv-toolbar'
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -21,7 +21,7 @@
   componentName=componentName
   lookupComponentName=lookupComponentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction=(action 'customButtonAction')
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
@@ -34,6 +34,8 @@
   switchHierarchicalMode=(action "switchHierarchicalMode")
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
+  useSidePageMode=useSidePageMode
+  editInModal=editInModal
 }}
 {{#if (not bottomPagination)}}
   {{olv-pagination
@@ -61,6 +63,7 @@
   placeholder=placeholder
   readonly=readonly
   columnsWidthAutoresize=columnsWidthAutoresize
+  columnsResizeMode=columnsResizeMode
   minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -100,12 +103,13 @@
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   filterByAnyWord=filterByAnyWord
   filterByAllWords=filterByAllWords
+  filterProjectionName = filterProjectionName
   configurateRow=this.attrs.configurateRow
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow
   beforeDeleteRecord=beforeDeleteRecord
+  action=(action 'objectListViewRowClick')
   beforeDeleteAllRecords=beforeDeleteAllRecords
-  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
@@ -117,6 +121,7 @@
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
+  hierarchyAttribute=hierarchyAttribute
   useRowByRowLoading=useRowByRowLoading
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
@@ -126,28 +131,66 @@
   defaultSortingButton=defaultSortingButton
   defaultLeftPadding=defaultLeftPadding
   overflowedComponents=overflowedComponents
+  customParameters=customParameters
   fixedHeader=fixedHeader
 }}
-{{#if bottomPagination}}
-  {{olv-pagination
-    inHierarchicalMode=inHierarchicalMode
-    hierarchyPaging=hierarchyPaging
-    pages=pages
-    _pages=_pages
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    gotoPage=(action "gotoPage" this.attrs.gotoPage)
-    nextPage=(action "nextPage" this.attrs.nextPage)
-    previousPage=(action "previousPage" this.attrs.previousPage)
-    searchPageButtonAction=(action "searchPageButtonAction" this.attrs.gotoPage)
-    perPageClick=(action "perPageClick")
-    componentName=componentName
-    searchPageValue=searchPageValue
-    searchPageButtonReadonly=searchPageButtonReadonly
-    showShowingEntries=showShowingEntries
-    currentIntervalRecords=currentIntervalRecords
-    recordsTotalCount=recordsTotalCount
-    perPageValues =perPageValues
-    perPageValue=perPageValue
-  }}
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <div class="ui basic buttons">
+      <button
+        type="button"
+        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
+        disabled={{not hasPreviousPage}}
+        {{action "previousPage" this.attrs.previousPage}}>
+      </button>
+      {{#each pages as |page|}}
+        {{#if page.isEllipsis}}
+          <div class="ui button">...</div>
+        {{else if page.isCurrent}}
+          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+        {{else}}
+          <button type="button" class="ui button" {{action "gotoPage" this.attrs.gotoPage page.number}}>{{page.number}}</button>
+        {{/if}}
+      {{/each}}
+      <button
+        type="button"
+        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
+        disabled={{not hasNextPage}}
+        {{action "nextPage" this.attrs.nextPage}}>
+      </button>
+    </div>
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+      {{input
+        type="number"
+        min=_pages.firstObject.number
+        max=_pages.lastObject.number
+        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+        value=searchPageValue
+        enter=(action 'searchPageButtonAction' this.attrs.gotoPage)
+      }}
+      {{!-- TODO: I still do not understand why, but without this, ~~in the Ember 2.x version,~~ the form submitting is faster than processing the `enter` event. --}}
+      {{input classNames=(array "hidden")}}
+      {{#if searchPageValue}}
+        <button
+          type="button"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action 'searchPageButtonAction' this.attrs.gotoPage}}>
+        </button>
+      {{/if}}
+    </div>
+    <div class="right menu">
+      {{#if (and showShowingEntries recordsTotalCount)}}
+        <div class="showing-entries">
+          {{#if (and currentIntervalRecords recordsTotalCount) }}
+            {{concat
+              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+            }}
+          {{/if}}
+        </div>
+      {{/if}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") settings=(hash direction="upward")}}
+    </div>
+  </div>
 {{/if}}

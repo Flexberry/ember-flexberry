@@ -5,9 +5,8 @@ import metadata = require('MetadataClasses');
 import fs = require("fs");
 import path = require('path');
 import child_process = require('child_process');
-const stripBom = require("strip-bom");
 const Blueprint = require('ember-cli/lib/models/blueprint');
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 const skipConfirmationFunc = require('../utils/skip-confirmation');
 import lodash = require('lodash');
 
@@ -36,7 +35,7 @@ module.exports = {
       return skipConfirmationFunc(this, intoDir, templateVariables);
     }
 
-    return this._super.processFiles.apply(this, [intoDir, templateVariables]);
+    return this._super(...arguments);
   },
 
   /**
@@ -76,9 +75,9 @@ class ElapsedTime {
   }
 
   public static format(sec: number): string {
-    let hours = Math.floor(sec / 3600);
-    let min = Math.floor((sec - hours * 3600) / 60);
-    let sec2 = sec - hours * 3600 - min * 60;
+    //let hours = Math.floor(sec / 3600);
+    //let min = Math.floor((sec - hours * 3600) / 60);
+    //let sec2 = sec - hours * 3600 - min * 60;
     //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
     return `${ElapsedTime.formatterFrac.format(sec)} sec`;
   }
@@ -107,8 +106,6 @@ class ApplicationBlueprint {
     this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
     this.promise = this.emberGenerateFlexberryGroup("transform");
     this.promise = this.emberGenerateFlexberryGroup("transform-test");
-    this.promise = this.emberGenerateFlexberryGroup("controller-test");
-    this.promise = this.emberGenerateFlexberryGroup("route-test");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-acceptance-test");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
@@ -129,7 +126,7 @@ class ApplicationBlueprint {
       ui: undefined,
       analytics: undefined,
       project: undefined,
-      paths: ["node_modules/ember-flexberry/blueprints"]
+      paths: this.options.project.blueprintLookupPaths()
     });
   }
 

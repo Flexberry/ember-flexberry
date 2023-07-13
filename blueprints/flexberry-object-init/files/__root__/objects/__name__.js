@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import ObjectFromEmber from '@ember/object';
 import { ObjectMix as <%= className %>Mixin } from
   '../mixins/regenerated/objects/<%= name %>';
 
-let EmberObject = Ember.Object.extend(<%= className %>Mixin, {
+let EmberObject = ObjectFromEmber.extend(<%= className %>Mixin, {
 
 });
 

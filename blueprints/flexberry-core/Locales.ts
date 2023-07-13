@@ -38,7 +38,7 @@ export default class Locales {
       `caption: '${value}'`,
       `caption: '${form.name}'`
     );
-    form.caption = `t 'forms.${this.entityName}.caption'`;
+    form.caption = `t "forms.${this.entityName}.caption"`;
   }
 
   setupEditFormAttribute(projAttr: metadata.ProjAttr) {
@@ -49,7 +49,7 @@ export default class Locales {
       `'${projAttr.name}-caption': '${value}'`,
       `'${projAttr.name}-caption': '${projAttr.name}'`
     );
-    projAttr.caption = `t 'forms.${this.entityName}.${projAttr.name}-caption'`;
+    projAttr.caption = `t "forms.${this.entityName}.${projAttr.name}-caption"`;
   }
 
   push(currentLocaleStr: string, otherLocalesStr: string) {
@@ -115,11 +115,6 @@ export default class Locales {
       }
       strings.push(`${str},`);
     })
-
-    if (strings.length) {
-      let last = strings.length - 1;
-      strings[last] = strings[last].slice(0, -1);
-    }
     return strings.join('\n');
   }
 
@@ -231,13 +226,20 @@ export class ApplicationMenuLocales extends Locales {
 }
 
 export class ModelLocales extends Locales {
+  protected validations: Map<string[]>;
 
   protected getProperties(locale: string) {
-    let translation = this.translations[locale].join(",\n    ");
-    if (translation != "") {
-      translation = `    ${translation}`;
+    let translation = this.translations[locale].join(`,\n${TAB + TAB}`);
+    if (translation !== '') {
+      translation = `\n${TAB + TAB}${translation},\n${TAB}`;
     }
-    return `  projections: {\n${translation}\n  }`;
+
+    let validations = this.validations[locale].join(`,\n${TAB + TAB}`);
+    if (validations !== '') {
+      validations = `\n${TAB + TAB}${validations},\n${TAB}`;
+    }
+
+    return `${TAB}projections: {${translation}},\n${TAB}validations: {${validations}},`;
   }
 
   constructor(model: metadata.Model, modelsDir: string, currentLocale: string, targetPathTemplate: lodash.TemplateExecutor) {
@@ -245,9 +247,7 @@ export class ModelLocales extends Locales {
     let projections: string[] = [];
     let projectionsOtherLocales: string[] = [];
     let projName: string;
-    if (model.projections.length === 0) {
-      return null;
-    }
+
     for (let proj of model.projections) {
       let projAttrs: SortedPair[] = [];
       for (let attr of proj.attrs) {
@@ -291,6 +291,8 @@ export class ModelLocales extends Locales {
         `${proj.name}: {\n      ${attrsStrOtherLocales}\n    }`
       );
     }
+
+    this.validations = this.getValidationLocales(model);
   }
 
   joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
@@ -370,6 +372,62 @@ export class ModelLocales extends Locales {
       `${attr.name}: {\n${indentStr}__caption__: '${attr.name}'\n${indentStr2}}`
     );
   }
+
+  getValidationLocales(model: metadata.Model): Map<string[]> {
+    let locales: Map<string[]> = {};
+    locales[this.currentLocale] = [];
+    for (let locale of this.locales) {
+      locales[locale] = [];
+    }
+
+    for (let attr of model.attrs) {
+      let caption = this.findCaption(model, attr.name);
+      this.fillValidationTranslations(locales, attr.name, caption || attr.name);
+    }
+
+    for (let belongsTo of model.belongsTo) {
+      let caption = this.findCaption(model, belongsTo.name);
+      this.fillValidationTranslations(locales, belongsTo.name, caption || belongsTo.name);
+    }
+
+    for (let hasMany of model.hasMany) {
+      let caption = this.findCaption(model, hasMany.name);
+      this.fillValidationTranslations(locales, hasMany.name, caption || hasMany.name);
+    }
+
+    return locales;
+  }
+
+  findCaption(model: metadata.Model, propertyName: string): string {
+    let attrs = [];
+    for (let projection of model.projections) {
+      attrs = projection.attrs.filter(a => a.name === propertyName);
+      if (attrs.length === 0) {
+        attrs = projection.belongsTo.filter(b => b.name === propertyName);
+      }
+
+      if (attrs.length === 0) {
+        attrs = projection.hasMany.filter(b => b.name === propertyName);
+      }
+
+      if (attrs.length !== 0) {
+        break;
+      }
+    }
+
+    return attrs.length === 1 ? attrs[0].caption : null;
+  }
+
+  fillValidationTranslations(locales: Map<string[]>, attrName: string, caption: string) {
+    let translation = `${attrName}: {\n${TAB + TAB + TAB}__caption__: '${this.escapeValue(caption)}',\n${TAB + TAB}}`;
+    let otherTranslation = `${attrName}: {\n${TAB + TAB + TAB}__caption__: '${this.escapeValue(attrName)}',\n${TAB + TAB}}`;
+
+    locales[this.currentLocale].push(translation);
+    for (let locale of this.locales) {
+      locales[locale].push(otherTranslation);
+    }
+  }
+
 }
 
 class SortedPair {

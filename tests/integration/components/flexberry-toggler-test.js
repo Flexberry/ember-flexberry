@@ -1,8 +1,11 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run, later } from '@ember/runloop';
+import RSVP from 'rsvp';
+import { A } from '@ember/array';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const animationDuration = Ember.$.fn.accordion.settings.duration + 100;
+const animationDuration = $.fn.accordion.settings.duration + 100;
 
 moduleForComponent('flexberry-toggler', 'Integration | Component | flexberry toggler', {
   integration: true
@@ -11,7 +14,7 @@ moduleForComponent('flexberry-toggler', 'Integration | Component | flexberry tog
 // Common expand/collapse test method.
 let expandCollapseTogglerWithStateChecks = function(assert, captions) {
   assert.expect(10);
-
+  let endFunction = assert.async();
   let content = 'Toggler\'s content';
 
   captions = captions || {};
@@ -42,12 +45,13 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
   // Check that component is collapsed by default.
   assert.strictEqual($componentTitle.hasClass('active'), false);
   assert.strictEqual($componentContent.hasClass('active'), false);
-  assert.strictEqual(Ember.$.trim($componentCaption.text()), collapsedCaption);
+  assert.strictEqual($.trim($componentCaption.text()), collapsedCaption);
 
-  let expandAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+  /* eslint-disable no-unused-vars */
+  let expandAnimationCompleted = new RSVP.Promise((resolve, reject) => {
     // Try to expand component.
-    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
-    Ember.run(() => {
+    // Semantic UI will start asynchronous animation after click, so we need run function here.
+    run(() => {
       $componentTitle.click();
     });
 
@@ -55,13 +59,13 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
     assert.strictEqual($componentContent.hasClass('animating'), true);
 
     // Wait for expand animation to be completed & check component's state.
-    Ember.run(() => {
+    run(() => {
       let animationCompleted = assert.async();
       setTimeout(() => {
         // Check that component is expanded now.
         assert.strictEqual($componentTitle.hasClass('active'), true);
         assert.strictEqual($componentContent.hasClass('active'), true);
-        assert.strictEqual(Ember.$.trim($componentCaption.text()), expandedCaption);
+        assert.strictEqual($.trim($componentCaption.text()), expandedCaption);
 
         // Tell to test method that asynchronous operation completed.
         animationCompleted();
@@ -71,25 +75,27 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
       }, animationDuration);
     });
   });
+  /* eslint-enable no-unused-vars */
 
   // Wait for expand animation to be completed (when resolve will be called inside previous timeout).
   // Then try to collapse component.
   expandAnimationCompleted.then(() => {
-    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
-    Ember.run(() => {
+    // Semantic UI will start asynchronous animation after click, so we need run function here.
+    run(() => {
       $componentTitle.click();
     });
 
     // Wait for collapse animation to be completed & check component's state.
-    Ember.run(() => {
+    run(() => {
       let animationCompleted = assert.async();
       setTimeout(() => {
         // Check that component is expanded now.
         assert.strictEqual($componentTitle.hasClass('active'), false);
         assert.strictEqual($componentContent.hasClass('active'), false);
-        assert.strictEqual(Ember.$.trim($componentCaption.text()), collapsedCaption);
+        assert.strictEqual($.trim($componentCaption.text()), collapsedCaption);
 
         animationCompleted();
+        endFunction();
       }, animationDuration);
     });
   });
@@ -143,20 +149,24 @@ test('component renders properly', function(assert) {
   let additioanlCssClasses = 'firstClass secondClass';
   this.set('class', additioanlCssClasses);
 
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('component\'s icon can be customized', function(assert) {
@@ -256,19 +266,19 @@ test('changes in \'expanded\' property causes changing of component\'s expand/co
   // Check that component is collapsed by default.
   assert.strictEqual($togglerTitle.hasClass('active'), false);
   assert.strictEqual($togglerContent.hasClass('active'), false);
-  assert.strictEqual(Ember.$.trim($togglerCaption.text()), collapsedCaption);
+  assert.strictEqual($.trim($togglerCaption.text()), collapsedCaption);
 
   // Expand & check that component is expanded.
   this.set('expanded', true);
   assert.strictEqual($togglerTitle.hasClass('active'), true);
   assert.strictEqual($togglerContent.hasClass('active'), true);
-  assert.strictEqual(Ember.$.trim($togglerCaption.text()), expandedCaption);
+  assert.strictEqual($.trim($togglerCaption.text()), expandedCaption);
 
   // Collapse & check that component is collapsed.
   this.set('expanded', false);
   assert.strictEqual($togglerTitle.hasClass('active'), false);
   assert.strictEqual($togglerContent.hasClass('active'), false);
-  assert.strictEqual(Ember.$.trim($togglerCaption.text()), collapsedCaption);
+  assert.strictEqual($.trim($togglerCaption.text()), collapsedCaption);
 });
 
 test('disabled animation', function(assert) {
@@ -300,11 +310,41 @@ test('loong animation speed', function(assert) {
   this.$('.flexberry-toggler .title').click();
 
   assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
-  Ember.run.later(() => {
+  later(() => {
     assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
-  }, 400);
-  Ember.run.later(() => {
+  }, 500);
+  later(() => {
     assert.notOk(this.$('.flexberry-toggler .content').hasClass('animating'));
     done();
   }, 1000);
+});
+
+test('Components property hasShadow works properly', function(assert) {
+  this.set('hasShadow', true);
+  this.render(hbs`
+  {{#flexberry-toggler
+    caption="Click me!"
+    hasShadow=hasShadow
+  }}
+    Hello!
+  {{/flexberry-toggler}}`);
+
+  assert.ok(this.$('.flexberry-toggler').hasClass('has-shadow'));
+  this.set('hasShadow', false);
+  assert.notOk(this.$('.flexberry-toggler').hasClass('has-shadow'));
+});
+
+test('Components property hasBorder works properly', function(assert) {
+  this.set('hasBorder', true);
+  this.render(hbs`
+  {{#flexberry-toggler
+    caption="Click me!"
+    hasBorder=hasBorder
+  }}
+    Hello!
+  {{/flexberry-toggler}}`);
+
+  assert.ok(this.$('.flexberry-toggler').hasClass('has-border'));
+  this.set('hasBorder', false);
+  assert.notOk(this.$('.flexberry-toggler').hasClass('has-border'));
 });

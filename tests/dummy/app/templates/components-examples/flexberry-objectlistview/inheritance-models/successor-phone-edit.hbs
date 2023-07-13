@@ -20,7 +20,7 @@
   }}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -39,36 +39,40 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.name "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.name
+      class=(if (v-get validationObject "name" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
   </div>
-  <div class="field {{if model.errors.phone1 "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.phone1
+      class=(if (v-get validationObject "phone1" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.phone1-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.phone1 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "phone1" "message")}}
   </div>
-  <div class="field {{if model.errors.phone2 "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.phone2
+      class=(if (v-get validationObject "phone2" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.phone2-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.phone2 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "phone2" "message")}}
   </div>
-  <div class="field {{if model.errors.phone3 "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.phone3
+      class=(if (v-get validationObject "phone3" "isInvalid") "error")
       label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.phone3-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.phone3 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "phone3" "message")}}
   </div>
 </form>

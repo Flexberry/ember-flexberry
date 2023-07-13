@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 // Requirement of ember-browserify.
 // In order to use NPM pacakges inside the addon, we have to import
 // them from somewhere in /app directory.

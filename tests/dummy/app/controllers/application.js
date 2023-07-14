@@ -385,6 +385,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
@@ -597,7 +602,13 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
-          }]
+          }, {
+            link: 'components-examples/flexberry-objectlistview/toolbar-custom-components-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.title'),
+            children: null
+          }
+        ]
         }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),

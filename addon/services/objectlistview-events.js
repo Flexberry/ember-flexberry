@@ -5,7 +5,7 @@
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import EmberMap from '@ember/map';
-import { computed } from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { deprecatingAlias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
@@ -48,6 +48,40 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
     this.set('_selectedRecords', []);
+    this.set('_multiRows', []);
+  },
+
+  /**
+    Returns a list of selected rows from component.
+
+    @method getMultiSelectedRecords
+  */
+  getMultiSelectedRecords(componentName) {
+    return this.get('_multiRows')[componentName];
+  },
+
+  /**
+    Removes all rows from list of selected rows from component.
+
+    @method clearMultiSelectedRecords
+  */
+  clearMultiSelectedRecords() {
+    this.set('_multiRows', []);
+  },
+
+  /**
+    Remembers all selected rows to keep them when page is changing.
+
+    @method holdMultiSelectedRecords
+  */
+  holdMultiSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    (this.getSelectedRecords(componentName) || []).forEach((v, i) => {
+      this.get('_multiRows')[componentName].set(i, v);
+    });
   },
 
   /**
@@ -134,6 +168,15 @@ export default Service.extend(Evented, {
   },
 
   /**
+    Set of rows for multiselect function in groupedit.
+
+    @property _multiRows
+    @type Array
+    @default null
+  */
+  _multiRows: null,
+
+  /**
     Trigger for "new row has been added" event in objectlistview.
     Event name: olvRowAdded.
 
@@ -187,6 +230,18 @@ export default Service.extend(Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    if (recordWithKey) {
+      if (checked) {
+        this.get('_multiRows')[componentName].set(recordWithKey.key, recordWithKey);
+      } else {
+        this.get('_multiRows')[componentName].delete(recordWithKey.key);
+      }
+    }
+
     if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
         this.get('_selectedRecords')[componentName] = EmberMap.create();
@@ -201,6 +256,24 @@ export default Service.extend(Evented, {
     }
 
     this.trigger('olvRowSelected', componentName, record, count, checked, recordWithKey);
+  },
+
+  /**
+    Creates records with all remembered multiselected rows.
+
+    @method restoreSelectedRecords
+  */
+  restoreSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    this.get('_multiRows')[componentName].forEach((v, i) => {
+      let recordWithKey = EmberObject.create({});
+      recordWithKey.set('key', i);
+      recordWithKey.set('data', v.data);
+      this.get('_selectedRecords')[componentName].set(i, recordWithKey);
+    });
   },
 
   /**
@@ -317,7 +390,7 @@ export default Service.extend(Evented, {
     @type Object
     @default {}
   */
-  currentLimitFunctions: computed(() => { return {}; }).readOnly(),
+  currentLimitFunctions: computed(function () { return {}; }).readOnly(),
 
   /**
     Form's loading state.

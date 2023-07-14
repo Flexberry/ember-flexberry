@@ -969,6 +969,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/groupedit-with-multiselect-edit",
+      "only": [
+        "simple-unless"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-readonly-columns-by-configurate-row-example",
       "only": [
         "eol-last",
@@ -1184,6 +1190,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/toolbar-custom-components-example",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/list-on-editform",
       "only": [
         "block-indentation",
@@ -1311,13 +1323,6 @@ module.exports = {
         "require-button-type",
         "require-valid-alt-text",
         "no-bare-strings"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/validation",
-      "only": [
-        "block-indentation",
-        "eol-last"
       ]
     },
     {

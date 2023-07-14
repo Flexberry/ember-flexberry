@@ -162,6 +162,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
   this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
   this.route('components-examples/flexberry-objectlistview/limited-text-size-example');
+  this.route('components-examples/flexberry-objectlistview/toolbar-custom-components-example');
 
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-tab-bar/settings-example');
@@ -219,6 +220,10 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-objectlistview/custom-filter');
   this.route('components-acceptance-tests/flexberry-groupedit/properly-rerenders');
   this.route('components-acceptance-tests/flexberry-objectlistview/ember-flexberry-dummy-multi-list');
+
+  this.route('components-examples/flexberry-groupedit/groupedit-with-multiselect-list');
+  this.route('components-examples/flexberry-groupedit/groupedit-with-multiselect-edit',
+  { path: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-edit/:id' });
 
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute');
   this.route('components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute',

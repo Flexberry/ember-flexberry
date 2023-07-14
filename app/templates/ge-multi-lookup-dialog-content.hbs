@@ -1,0 +1,54 @@
+<div id="lookup-list" class="list-group">
+  {{flexberry-objectlistview
+    class="ui bottom attached"
+    modelProjection=modelProjection
+    content=model
+    selectedRecord=currentLookupRow
+    componentMode="lookupform"
+    componentName=folvComponentName
+    loadingFlags=loadingFlags
+
+    showEditMenuItemInRow=false
+
+    showCheckBoxInRow=true
+    colsConfigButton=false
+    columnsWidthAutoresize=true
+
+    filterByAnyMatch=(action "filterByAnyMatch")
+    filterText=filter
+    filters=filters
+    applyFilters=(action "applyFilters")
+    resetFilters=(action "resetFilters")
+
+    customProperties=customPropertiesData
+
+    customButtons=(array
+      (hash
+        buttonName=(t "components.olv-toolbar.pullUpLookupValues")
+        buttonAction=(action "pullUpLookupValues")
+      )
+    )
+    pullUpLookupValues="pullUpLookupValues"
+    createNewButton=false
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+
+    disableHierarchicalMode=disableHierarchicalMode
+    sorting=computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    notUseUserSettings=notUseUserSettings
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+
+    skipSelectedRecords=skipSelectedRecords
+    useSidePageMode=false
+  }}
+</div>

@@ -1577,6 +1577,10 @@
   "tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-example.js": [
     { "ruleId": "ember/require-computed-property-dependencies", "line": 14, "column": 31 }
   ],
+  "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/block-form-example.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 97, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 111, "column": 105 }
+  ],
   "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 42 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 41, "column": 105 }

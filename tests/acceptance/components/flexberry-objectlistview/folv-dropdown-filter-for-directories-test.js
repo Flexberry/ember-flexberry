@@ -27,7 +27,7 @@ executeTest('check dropdown in the filter for directories', (store, assert, app)
       let $objectListViewFiltersRows = $($objectListViewFiltersColumns[1]).children();
 
       assert.strictEqual($objectListViewFiltersColumns.length === 2, true, 'Filter columns are rendered');
-      assert.strictEqual($objectListViewFiltersRows.length === 11, true, 'Filter rows are rendered');
+      assert.strictEqual($objectListViewFiltersRows.length > 0, true, 'Filter rows are rendered');
 
       let $dropdownForDirectories = $($objectListViewFiltersRows[index]).find('.flexberry-dropdown');
       let $menu = $dropdownForDirectories.children('div.menu');

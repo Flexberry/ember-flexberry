@@ -17,6 +17,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
+import Builder from 'ember-flexberry-data/query/builder';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
@@ -427,6 +428,23 @@ export default FlexberryBaseComponent.extend(
     @default false
   */
   showFiltersInModal: false,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
 
   /**
     Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
@@ -1336,6 +1354,8 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
     assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
+    this._initDdlFilterSettings();
+
     this.set('selectedRecords', A());
     this.set('cellComponent', {
       componentName: undefined,
@@ -2012,7 +2032,12 @@ export default FlexberryBaseComponent.extend(
       condition = filters[name].condition;
     }
 
-    let component = this._getFilterComponent(type);
+    let component = this._getComponentForDdlFilter(bindingPath);
+    if (!component)
+    {
+      component = this._getFilterComponent(type);
+    }
+
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
@@ -2032,6 +2057,61 @@ export default FlexberryBaseComponent.extend(
     component._defaultComponent = component.name;
 
     column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Initializes a list of values for the specified filters.
+
+    @method _initDdlFilterSettings
+    @return {Promise}
+  */
+  _initDdlFilterSettings() {
+    const ddlFilterSettings = this.get('ddlFilterSettings');
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const promises =  A();
+    const store = this.get('store');
+    ddlFilterSettings.map(obj => {
+      const builder = new Builder(store, obj.modelName).selectByProjection(obj.projectionName);
+      const promise = store.query(obj.modelName, builder.build()).then(items => {
+        obj.items = items.map(item => {
+          return get(item, obj.propName);
+        });
+      });
+
+      promises.push(promise);
+    });
+
+    return RSVP.all(promises);
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getComponentForDdlFilter
+    @param {String} bindingPath
+    @return {Object} Object with parameters for component.
+  */
+  _getComponentForDdlFilter(bindingPath) {
+    const ddlFilterSettings = this.get('ddlFilterSettings');
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const filterSettings = ddlFilterSettings.find(obj => obj.bindingPath === bindingPath);
+    if (filterSettings) {
+      return {
+        name: 'flexberry-dropdown',
+        properties: {
+          items: filterSettings.items,
+          class: 'compact'
+        }
+      };
+    }
+
+    return;
   },
 
   /**

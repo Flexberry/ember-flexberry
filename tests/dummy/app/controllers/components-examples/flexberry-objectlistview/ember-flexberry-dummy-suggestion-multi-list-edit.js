@@ -36,6 +36,7 @@ export default EditFormController.extend(MultiListController, EditFormController
     let cellComponent = this._super(...arguments);
     if (model !== null) {
       if (attr.kind === 'belongsTo') {
+        let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
         switch (`${model.modelName}+${bindingPath}`) {
           case 'ember-flexberry-dummy-vote+author':
             cellComponent.componentProperties = {
@@ -48,7 +49,8 @@ export default EditFormController.extend(MultiListController, EditFormController
               projection: 'ApplicationUserL',
               autocomplete: true,
               showPreviewButton: true,
-              previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
+              previewFormRoute: 'ember-flexberry-dummy-application-user-edit',
+              updateLookupValue: updateLookupValue
             };
             break;
 
@@ -61,6 +63,7 @@ export default EditFormController.extend(MultiListController, EditFormController
               relationName: 'author',
               projection: 'ApplicationUserL',
               autocomplete: true,
+              updateLookupValue: updateLookupValue
             };
             break;
 

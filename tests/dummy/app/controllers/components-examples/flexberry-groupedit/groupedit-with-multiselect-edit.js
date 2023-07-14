@@ -7,9 +7,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
     @property parentRoute
     @type String
-    @default 'ember-flexberry-dummy-suggestion-list'
+    @default 'groupedit-with-multiselect-list'
    */
-  parentRoute: 'components-examples/flexberry-objectlistview/lock-services-editor-view-list',
+  parentRoute: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list',
 
   /**
     Name of model.comments edit route.
@@ -33,38 +33,42 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
+    const i18n = this.get('i18n');
+    const lookupMultiGESettings = this.get('lookupMultiGESettings');
     if (attr.kind === 'belongsTo') {
-      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
             remove: 'removeLookupValue',
+            preview: 'previewLookupValue',
             displayAttributeName: 'name',
+            title: i18n.t('forms.ember-flexberry-dummy-application-user-list.caption'),
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            updateLookupValue: updateLookupValue
+            showPreviewButton: true,
+            previewFormRoute: 'ember-flexberry-dummy-application-user-edit',
           };
           break;
 
         case 'ember-flexberry-dummy-comment+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
+            modalDialogSettings: {
+              lookupSettings: lookupMultiGESettings,
+            }, 
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            updateLookupValue: updateLookupValue
           };
           break;
-
       }
     }
-
     return cellComponent;
   }
 });

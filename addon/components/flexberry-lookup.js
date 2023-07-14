@@ -612,6 +612,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         modalDialogSettings: this.get('_modalDialogSettings'),
         updateLookupAction: this.get('updateLookupAction'),
+        componentContext: this
       };
     }),
 
@@ -943,6 +944,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
         this.set('displayValue', null);
       }
+    },
+
+    /**
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData
+    */
+    updateLookupValue(updateData) {
+      this.sendAction(this.get('updateLookupAction'), updateData);
     }
   },
 
@@ -1297,7 +1308,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
             debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
             _this.set('value', result.instance);
-            _this.get('currentController').send(_this.get('updateLookupAction'),
+            _this.send(_this.get('updateLookupAction'),
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
@@ -1363,7 +1374,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
                     _this.sendAction('remove', _this.get('removeData'));
                   } else {
                     _this.set('value', record);
-                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                    _this.send(_this.get('updateLookupAction'),
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
@@ -1484,13 +1495,13 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           }
         }
 
-        _this.get('currentController').send(_this.get('updateLookupAction'),
-        {
-          relationName: relationName,
-          modelToLookup: relatedModel,
+        _this.send(_this.get('updateLookupAction'),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
             newRelationValue: newValue,
             componentName: _this.get('componentName')
-        });
+          });
       },
       onHide() {
         _this.$('.flexberry-dropdown input.search').val('');
@@ -1688,7 +1699,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       if (get(records, 'length') === 1) {
         let record = records.objectAt(0);
         _this.set('value', record);
-        _this.get('currentController').send(_this.get('updateLookupAction'),
+        _this.send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

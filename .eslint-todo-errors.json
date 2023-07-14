@@ -1344,6 +1344,11 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 37 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 20 }
   ],
+  "tests/acceptance/components/flexberry-objectlistview/folv-dropdown-filter-for-directories-test.js": [
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
+    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 },
+    { "ruleId": "ember/no-test-and-then", "line": 23, "column": 5 }
+  ],
   "tests/acceptance/components/flexberry-simpledatetime/flexberry-simpledatetime-manual-enter-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 29 },
     { "ruleId": "ember/no-test-and-then", "line": 29, "column": 3 },

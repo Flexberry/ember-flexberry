@@ -31,10 +31,10 @@ module.exports = {
     'ember/use-ember-data-rfc-395-imports': 'off',
     'ember/no-get': 'off',
     'ember/use-ember-get-and-set': ['error', { ignoreThisExpressions: true, }],
-    'ember/no-jquery': 'warn',
+    'ember/no-jquery': 'off',
     'ember/no-observers': 'warn',
-    'ember/no-mixins': 'warn',
-    'ember/require-computed-property-dependencies': 'warn',
+    'ember/no-mixins': 'off',
+    'ember/require-computed-property-dependencies': 'off',
     'hbs/check-hbs-template-literals': 'error'
   },
   reportUnusedDisableDirectives: true,

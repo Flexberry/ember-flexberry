@@ -24,7 +24,7 @@ const Validations = buildValidations({
 
 let Model = EmberFlexberryDataModel.extend(Validations, {
   address: DS.attr('string'),
-  text: DS.attr('string'),
+  text: DS.attr('ember-flexberry-dummy-text'),
   date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
@@ -274,6 +274,7 @@ Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestio
 // Example custom filter.
 Model.defineProjection('FlexberryObjectlistviewCustomFilter', 'ember-flexberry-dummy-suggestion', {
   address: attr('Address'),
+  text: attr('Text'),
   date: attr('Date'),
   votes: attr('Votes'),
   type: belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {

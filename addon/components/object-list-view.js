@@ -2039,9 +2039,17 @@ export default FlexberryBaseComponent.extend(
     }
 
     let componentForFilter = this.get('componentForFilter');
+
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+    } 
+    
+    let transformInstance = getOwner(this).lookup('transform:' + attribute.type);
+    let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+    if (transformClass && transformClass.componentForFilter) {
+      $.extend(true, component, transformClass.componentForFilter(relation));
     }
 
     let options = this._getFilterComponentByCondition(condition, null);

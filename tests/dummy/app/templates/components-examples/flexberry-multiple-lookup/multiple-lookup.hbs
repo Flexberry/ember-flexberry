@@ -1,7 +1,13 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-multiple-lookup.multiple-lookup.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    {{flexberry-multiple-lookup
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+      componentBlockOverflow="visible"
+    }}
+      {{flexberry-multiple-lookup
         componentName="MultipleLookupGroupedit"
         folvComponentName="folvMultipleLookupGroupedit"
         caption=(t "forms.components-examples.flexberry-multiple-lookup.multiple-lookup.lookup-caption")
@@ -21,8 +27,10 @@
         dynamicProperties=dynamicProperties
         title=(t "forms.components-examples.flexberry-multiple-lookup.multiple-lookup.lookup-title")
         lookupWindowCustomProperties=lookupWindowCustomProperties
+        chooseComponentVisibility=chooseComponentVisibility
         readonly=readonly
         usePaginationForAutocomplete=true
-    }}
+      }}
+    {{/settings-example}}
   </div>
 </form>

@@ -357,8 +357,8 @@ $.extend(true, translations, {
             'caption': 'flexberry-multiple-lookup',
             'title': '',
             'multiple-lookup': {
-              'caption': 'Multiple Lookup',
-              'title': 'Multiple Lookup'
+              'caption': 'Settings example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -916,9 +916,9 @@ $.extend(true, translations, {
       },
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
-          'caption': 'Multiple Lookup',
+          'caption': 'Flexberry-multiple-lookup. Settings example',
           'lookup-caption': 'Choose user',
-          'lookup-title': 'Choose user',
+          'lookup-title': 'Choose user'
         }
       },
       'flexberry-menu': {

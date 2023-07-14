@@ -143,7 +143,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @default false
     @private
   */
-    editInModal: false,
+  editInModal: false,
 
   /**
     Indicates that the `flexberry-objectlistview` component is used for the `flexberry-lookup` component.
@@ -205,6 +205,14 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
     @type Array
   */
   customButtons: undefined,
+
+  /**
+    See {{#crossLink "FlexberryObjectlistviewComponent/customComponents:property"}}{{/crossLink}}.
+
+    @property customComponents
+    @type Array<Object>
+  */
+  customComponents: undefined,
 
   /**
     @property listNamedUserSettings

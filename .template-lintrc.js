@@ -1314,13 +1314,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/validation",
-      "only": [
-        "block-indentation",
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit",
       "only": [
         "eol-last",

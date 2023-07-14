@@ -65,6 +65,10 @@ export default {
       'placeholder': '(no value)'
     },
 
+    'flexberry-required-marker': {
+      title: 'Required field'
+    },
+
     'flexberry-file': {
       placeholder: '(no file)',
 

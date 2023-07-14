@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Пользовательские кнопки',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Пример групэдита с мультиселектом в лукапе',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''

@@ -1,0 +1,138 @@
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
+    {{flexberry-lookup
+      value=model.type
+      class=(if (v-get validationObject "type" "isInvalid") "error")
+      relatedModel=model
+      relationName="type"
+      projection="SuggestionTypeL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      dropdown=true
+      readonly=readonly
+      direction="upward"
+      componentName="SuggestionEditType"
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "type" "message")}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
+    {{flexberry-lookup
+      value=model.author
+      class=(if (v-get validationObject "author" "isInvalid") "error")
+      relatedModel=model
+      relationName="author"
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      componentName="SuggestionEditAuthor"
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
+    {{flexberry-lookup
+      value=model.editor1
+      class=(if (v-get validationObject "editor1" "isInvalid") "error")
+      relatedModel=model
+      relationName="editor1"
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      componentName="SuggestionEditEditor1"
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "editor1" "message")}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="filesGroupEdit"
+      content=model.files
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.files
+      orderable=true
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "files" "messages")}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionCommentsGroupEdit"
+      content=model.comments
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.comments
+
+      orderable=true
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "comments" "messages")}}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionUserVotesGroupEdit"
+      content=model.userVotes
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.userVotes
+      orderable=true
+      readonly=readonly
+      createNewButton=true
+      deleteButton=true
+      showAsteriskInRow=true
+      showCheckBoxInRow=true
+      skipSelectedRecords=false
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
+  </div>
+</form>

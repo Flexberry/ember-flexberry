@@ -385,6 +385,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),

@@ -2331,10 +2331,10 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
     let selectedRecords = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
     let multiSelectedRecords = this.get('objectlistviewEventsService').getMultiSelectedRecords(componentName);
-   
+
     let selectedRecordsToRestore = multiSelectedRecords ? multiSelectedRecords : selectedRecords;
 
-      if (this.get('skipSelectedRecords') === false && !isEmpty(selectedRecordsToRestore)) {
+    if (this.get('skipSelectedRecords') === false && !isEmpty(selectedRecordsToRestore)) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {

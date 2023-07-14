@@ -38,7 +38,7 @@
   editInModal=editInModal
   customComponents=customToolbarComponents
 }}
-{{#if (not bottomPagination)}}
+{{#unless bottomPagination}}
   {{olv-pagination
     inHierarchicalMode=inHierarchicalMode
     hierarchyPaging=hierarchyPaging
@@ -59,7 +59,7 @@
     perPageValues =perPageValues
     perPageValue=perPageValue
   }}
-{{/if}}
+{{/unless}}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly

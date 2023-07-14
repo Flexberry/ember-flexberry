@@ -23,7 +23,7 @@
         {{action nextPage}}>
       </button>
     </div>
-    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) 'error' }}">
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) "error" }}">
       {{input
         type="number"
         min=_pages.firstObject.number
@@ -37,7 +37,7 @@
       {{#if searchPageValue}}
         <button
           type="button"
-          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly 'disabled' 'primary'}} goto-page-button small"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly "disabled" "primary"}} goto-page-button small"
           title={{t "components.flexberry-objectlistview.search-button-text"}}
           disabled={{searchPageButtonReadonly}}
           {{action searchPageButtonAction}}>

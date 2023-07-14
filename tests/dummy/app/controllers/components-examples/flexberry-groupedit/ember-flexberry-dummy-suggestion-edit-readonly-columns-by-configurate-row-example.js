@@ -37,6 +37,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     let cellComponent = this._super(...arguments);
     let limitFunction = new StringPredicate('name').contains('Vasya');
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -50,6 +51,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             lookupLimitPredicate: limitFunction,
             computedProperties: { thisController: this },
             readonly: false,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -62,6 +64,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 

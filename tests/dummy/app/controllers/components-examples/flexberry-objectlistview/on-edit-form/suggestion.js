@@ -47,6 +47,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
     }
 
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -57,6 +58,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -69,6 +71,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 

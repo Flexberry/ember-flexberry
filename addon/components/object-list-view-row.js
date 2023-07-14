@@ -331,6 +331,10 @@ export default FlexberryBaseComponent.extend({
       this.get('currentController').send('showLookupDialog', chooseData);
     },
 
+    showLookupMultiSelectDialog(chooseData) {
+      this.get('currentController').send('showLookupMultiSelectDialog', chooseData);
+    },
+
     /**
       Redirect action from FlexberryLookupComponent in the controller.
 

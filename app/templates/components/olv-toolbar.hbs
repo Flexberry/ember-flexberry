@@ -112,6 +112,9 @@
     </button>
   </div>
 {{/if}}
+{{#each customComponents as |customComponent|}}
+  {{component customComponent.name dynamicProperties=customComponent.properties}}
+{{/each}}
 {{#if exportExcelButton}}
   <div class="ui buttons export-config">
     <button

@@ -14,7 +14,7 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field flexberry-validationsummary-container">
@@ -52,6 +52,7 @@
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
           preview=(action "previewLookupValue")
+          updateLookupValue=(action "updateLookupValue")
           readonly=readonly
           componentName="Suggestion"
         }}

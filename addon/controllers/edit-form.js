@@ -411,6 +411,13 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       contentTemplate: 'lookup-dialog-content',
       loaderTemplate: 'loading'
     });
+
+    this.set('lookupMultiGESettings', {
+      controllerName: 'lookup-dialog',
+      template: 'lookup-dialog',
+      contentTemplate: 'ge-multi-lookup-dialog-content',
+      loaderTemplate: 'loading'
+    });
   },
 
   /**
@@ -441,6 +448,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     if (validationModel) {
       return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
         if (validations instanceof ResultCollection && validations.get('isInvalid')) {
+          this.get('appState').validationShow();
+
           return RSVP.reject(validations);
         }
 

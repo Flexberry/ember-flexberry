@@ -14,12 +14,12 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field flexberry-validationsummary-container">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
+      {{flexberry-validationsummary errors=(v-get validationModel "messages")}}
     </div>
   </div>
   <div class="ui one column grid stackable">
@@ -27,11 +27,11 @@
       <div class="field">
         {{flexberry-field
           value=model.name
-          class=(if (v-get validationObject "name" "isInvalid") "error")
+          class=(if (v-get validationModel "name" "isInvalid") "error")
           label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
           readonly=readonly
         }}
-        {{flexberry-validationmessage error=(v-get validationObject "name" "message")}}
+        {{flexberry-validationmessage error=(v-get validationModel "name" "message")}}
       </div>
     </div>
   </div>

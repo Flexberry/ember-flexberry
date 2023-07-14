@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Пользовательские кнопки',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Пример групэдита с мультиселектом в лукапе',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
@@ -357,8 +361,8 @@ $.extend(true, translations, {
             'caption': 'flexberry-multiple-lookup',
             'title': '',
             'multiple-lookup': {
-              'caption': 'Лукап множественного выбора',
-              'title': 'Лукап множественного выбора'
+              'caption': 'Пример работы с настройками',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -438,6 +442,10 @@ $.extend(true, translations, {
             },
             'limited-text-size-example': {
               'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
+            'toolbar-custom-components-example': {
+              'caption': 'Пример встраивания пользовательских компонентов в olv-toolbar',
               'title': ''
             },
           },
@@ -914,9 +922,9 @@ $.extend(true, translations, {
       },
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
-          'caption': 'Лукап множественного выбора',
+          'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
           'lookup-caption': 'Заполнение пользователей',
-          'lookup-title': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
         }
       },
       'flexberry-menu': {
@@ -959,6 +967,9 @@ $.extend(true, translations, {
         },
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',

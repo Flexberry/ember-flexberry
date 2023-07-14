@@ -37,7 +37,7 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field">
@@ -98,6 +98,7 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       dropdown=true
       readonly=readonly
       direction="upward"
@@ -117,6 +118,7 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       componentName="SuggestionEditAuthor"
     }}
@@ -134,6 +136,7 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       componentName="SuggestionEditEditor1"
     }}
@@ -148,7 +151,7 @@
       modelProjection=modelProjection.attributes.files
       orderable=true
       readonly=readonly
-      configurateRow=(action 'configurateFilesRow')
+      configurateRow=(action "configurateFilesRow")
     }}
     {{flexberry-validationmessage error=(v-get validationObject "files" "messages")}}
   </div>
@@ -161,7 +164,7 @@
       modelProjection=modelProjection.attributes.userVotes
       orderable=true
       readonly=readonly
-      configurateRow=(action 'configurateVotesRow')
+      configurateRow=(action "configurateVotesRow")
     }}
     {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
   </div>

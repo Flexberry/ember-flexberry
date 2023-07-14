@@ -222,6 +222,23 @@ export default FlexberryBaseComponent.extend({
   showFiltersInModal: undefined,
 
   /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath
@@ -941,6 +958,11 @@ export default FlexberryBaseComponent.extend({
   store: service('store'),
 
   /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
+
+  /**
     Array of custom user buttons.
 
     @example
@@ -1011,6 +1033,71 @@ export default FlexberryBaseComponent.extend({
     @type Array
   */
   customButtons: undefined,
+
+  /**
+    Custom components in the toolbar.
+
+    @example
+      ```
+      [
+        {
+          name: '...', // Component name.
+          properties: {...} // Component properties.
+        },
+        ...
+      ]
+      ```
+
+    @example
+      Example of how to add custom components:
+      1) it has to be defined computed property at corresponding controller.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        customToolbarComponents: computed('dropdownValue', function() {
+          return [{
+            name: 'flexberry-dropdown',
+            properties: {
+              items: this.get('dropdownItems'),
+              value: this.get('dropdownValue'),
+              onChange: this.get('onChange').bind(this)
+            }
+          }];
+        })
+      });
+      ```
+
+      2) in the controller, you must specify the `onChange` method.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        dropdownValue: null,
+        dropdownItems: null,
+
+        onChange: function(value) {
+          this.set('dropdownValue', value);
+        },
+      });
+      ```
+
+      3) the `customToolbarComponents` property must be specified in the list template.
+      ```
+      {{flexberry-objectlistview
+        ...
+        customToolbarComponents=customToolbarComponents
+      }}
+      ```
+
+    @property customToolbarComponents
+    @type Array<Object>
+  */
+  customToolbarComponents: undefined,
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
@@ -1111,8 +1198,10 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1130,8 +1219,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1150,8 +1241,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(pageNumber, this.get('componentName'));
     },

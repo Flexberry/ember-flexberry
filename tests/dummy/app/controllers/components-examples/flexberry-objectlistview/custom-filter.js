@@ -11,6 +11,21 @@ export default ListFormController.extend({
   filterCondition: undefined,
 
   /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+  */
+  ddlFilterSettings: computed(function () {
+    return [{
+      modelName: 'ember-flexberry-dummy-suggestion-type',
+      projectionName: 'SuggestionTypeL',
+      propName: 'name',
+      bindingPath: 'type'
+    }]
+  }),
+
+  /**
     Observes current state of FilterCondition parameter
     & set right filter option after reload page.
 

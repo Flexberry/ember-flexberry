@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Custom user buttons example',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Groupedit with multiselect in lookup function example',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
@@ -357,8 +361,8 @@ $.extend(true, translations, {
             'caption': 'flexberry-multiple-lookup',
             'title': '',
             'multiple-lookup': {
-              'caption': 'Multiple Lookup',
-              'title': 'Multiple Lookup'
+              'caption': 'Settings example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -438,6 +442,10 @@ $.extend(true, translations, {
             },
             'limited-text-size-example': {
               'caption': 'Limited text size example',
+              'title': ''
+            },
+            'toolbar-custom-components-example': {
+              'caption': 'Example of embedding custom components in olv-toolbar',
               'title': ''
             },
           },
@@ -912,9 +920,9 @@ $.extend(true, translations, {
       },
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
-          'caption': 'Multiple Lookup',
+          'caption': 'Flexberry-multiple-lookup. Settings example',
           'lookup-caption': 'Choose user',
-          'lookup-title': 'Choose user',
+          'lookup-title': 'Choose user'
         }
       },
       'flexberry-menu': {
@@ -957,6 +965,9 @@ $.extend(true, translations, {
         },
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Limited text size example'
+        },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Example of embedding custom components in olv-toolbar'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',

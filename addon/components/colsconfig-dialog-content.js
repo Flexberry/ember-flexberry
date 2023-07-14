@@ -236,7 +236,7 @@ export default FlexberryBaseComponent.extend({
 
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
-      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'));
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName, this.get('model.componentName'), this.get('model.exportParams.isExportExcel'));
 
       savePromise.then(
         () => {

@@ -104,12 +104,12 @@
     { "ruleId": "ember/require-computed-macros", "line": 174, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 283, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 284, "column": 28 },
-    { "ruleId": "ember/closure-actions", "line": 1251, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1268, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1269, "column": 42 },
-    { "ruleId": "ember/closure-actions", "line": 1359, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1580, "column": 55 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1624, "column": 37 }
+    { "ruleId": "ember/closure-actions", "line": 1262, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1279, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1280, "column": 42 },
+    { "ruleId": "ember/closure-actions", "line": 1370, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1591, "column": 55 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1635, "column": 37 }
   ],
   "addon/components/flexberry-simpledatetime.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 42, "column": 26 },
@@ -239,13 +239,13 @@
   ],
   "addon/controllers/edit-form.js": [
     { "ruleId": "no-undef", "line": 75, "column": 45 },
-    { "ruleId": "no-undef", "line": 425, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 443, "column": 68 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 811, "column": 73 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 854, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 910, "column": 15 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 944, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 967, "column": 15 }
+    { "ruleId": "no-undef", "line": 432, "column": 5 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 450, "column": 68 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 818, "column": 73 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 861, "column": 38 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 917, "column": 15 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 951, "column": 31 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 974, "column": 15 }
   ],
   "addon/controllers/lookup-dialog.js": [
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 172, "column": 35 },

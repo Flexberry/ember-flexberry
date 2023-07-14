@@ -8,13 +8,12 @@ import { assert } from '@ember/debug';
 import { set, computed, observer, get } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
 import { later } from '@ember/runloop';
 import { getOwner } from '@ember/application';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-import { isEmpty } from '@ember/utils';
 import EditInModalOpen from '../mixins/edit-in-modal-open';
 
 /**
@@ -1066,9 +1065,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
 
   _sortNamedSetting(isExportExcel) {
     let itemsName = isExportExcel ? 'exportExcelItems': 'colsSettingsItems';
-    this.get(itemsName)[0].items.sort((a, b) => {
-        a.title > b.title
-    });
+    this.get(itemsName)[0].items.sort((a, b) => a.title > b.title);
   },
 
   /**

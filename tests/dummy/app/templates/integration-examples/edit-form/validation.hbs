@@ -1,8 +1,18 @@
 <h3 class="ui header">{{t "forms.integration-examples.edit-form.validation.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="button" class="ui button save-button" {{action "save"}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+      {{/unless}}
+    </div>
+  </div>
   <div class="ui two column grid stackable">
     <div class="column">
-      <div class="field">
+      <div class="field flexberry-validationsummary-container">
         <div class="sixteen wide">
           {{flexberry-validationsummary
             header=(t "forms.integration-examples.edit-form.validation.summary-caption")
@@ -35,7 +45,7 @@
         {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
       </div>
       <div class="field">
-      <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
+        <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
         {{flexberry-textarea
           value=model.longText
           class=(if (v-get validationObject "longText" "isInvalid") "error")

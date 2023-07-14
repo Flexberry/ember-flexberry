@@ -602,7 +602,13 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
-          }]
+          }, {
+            link: 'components-examples/flexberry-objectlistview/toolbar-custom-components-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.title'),
+            children: null
+          }
+        ]
         }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),

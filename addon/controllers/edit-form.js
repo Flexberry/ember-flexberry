@@ -448,6 +448,8 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     if (validationModel) {
       return validationModel.validate({ validateDeleted: false }).then(({ validations }) => {
         if (validations instanceof ResultCollection && validations.get('isInvalid')) {
+          this.get('appState').validationShow();
+
           return RSVP.reject(validations);
         }
 

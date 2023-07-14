@@ -16,6 +16,7 @@ if (lookupValueField) { %>
     title=(<%= caption %>)
     readonly=<%= readonly %>
     componentName="<%= name %>Lookup"
+    updateLookupValue=(action 'updateLookupValue')
     data-test-<%= entityName %>-<%= dashedName %>=true
   }}
   {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}

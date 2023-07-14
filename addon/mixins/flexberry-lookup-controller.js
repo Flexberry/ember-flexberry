@@ -152,7 +152,8 @@ export default Mixin.create(ReloadListMixin, {
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
         hierarchicalAttribute: undefined,
-        updateLookupAction: undefined
+        updateLookupAction: undefined,
+        componentContext: undefined
       }, chooseData);
 
       let lookupController = this.get('lookupController');
@@ -182,6 +183,7 @@ export default Mixin.create(ReloadListMixin, {
       let hierarchicalAttribute = isNone(options.hierarchicalAttribute) ? customHierarchicalAttribute : options.hierarchicalAttribute;
       let hierarchyPaging = get(options, 'lookupWindowCustomPropertiesData.hierarchyPaging');
       const updateLookupAction = options.updateLookupAction;
+      const componentContext = options.componentContext;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
 
@@ -241,7 +243,8 @@ export default Mixin.create(ReloadListMixin, {
         saveTo: {
           model: model,
           propName: relationName,
-          updateLookupAction: updateLookupAction
+          updateLookupAction: updateLookupAction,
+          componentContext: componentContext
         },
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,

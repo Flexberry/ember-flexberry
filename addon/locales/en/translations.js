@@ -65,6 +65,10 @@ export default {
       'placeholder': '(no value)'
     },
 
+    'flexberry-required-marker': {
+      title: 'Required field'
+    },
+
     'flexberry-file': {
       placeholder: '(no file)',
 
@@ -115,6 +119,11 @@ export default {
         }
       }
     },
+
+    'flexberry-multiple-lookup': {
+      'no-data': 'No value'
+    },
+
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {

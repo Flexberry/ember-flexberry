@@ -17,17 +17,11 @@
   "addon/components/flexberry-dropdown.js": [
     { "ruleId": "no-prototype-builtins", "line": 174, "column": 21 }
   ],
-  "addon/components/flexberry-error.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 49, "column": 27 }
-  ],
   "addon/components/flexberry-file.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 37, "column": 28 },
     { "ruleId": "ember/require-computed-macros", "line": 200, "column": 24 },
     { "ruleId": "ember/require-computed-macros", "line": 225, "column": 27 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 237, "column": 27 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 264, "column": 27 },
     { "ruleId": "ember/require-computed-macros", "line": 279, "column": 29 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 292, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 719, "column": 26 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 728, "column": 35 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 735, "column": 28 },
@@ -38,7 +32,6 @@
   ],
   "addon/components/flexberry-groupedit.js": [
     { "ruleId": "ember/closure-actions", "line": 609, "column": 7 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 623, "column": 20 },
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 641, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 675, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 675, "column": 100 },
@@ -46,11 +39,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 787, "column": 77 }
   ],
   "addon/components/flexberry-lookup.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 120, "column": 25 },
     { "ruleId": "ember/require-return-from-computed", "line": 387, "column": 47 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 560, "column": 38 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 586, "column": 15 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 665, "column": 25 },
     { "ruleId": "ember/require-computed-macros", "line": 792, "column": 14 },
     { "ruleId": "ember/require-return-from-computed", "line": 1016, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1171, "column": 22 },
@@ -108,37 +97,19 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 1691, "column": 51 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1696, "column": 34 }
   ],
-  "addon/components/flexberry-multiple-lookup.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 98, "column": 102 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 189, "column": 14 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 214, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 215, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 224, "column": 14 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 283, "column": 24 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 307, "column": 21 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 311, "column": 48 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 312, "column": 43 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 320, "column": 44 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 320, "column": 79 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 325, "column": 32 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 335, "column": 43 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 378, "column": 15 }
-  ],
   "addon/components/flexberry-objectlistview.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 116, "column": 25 },
     { "ruleId": "ember/closure-actions", "line": 122, "column": 7 },
     { "ruleId": "ember/require-computed-macros", "line": 152, "column": 23 },
     { "ruleId": "ember/require-computed-macros", "line": 163, "column": 17 },
     { "ruleId": "ember/require-computed-macros", "line": 174, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 283, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 284, "column": 28 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 833, "column": 27 },
-    { "ruleId": "ember/closure-actions", "line": 1186, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1203, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1204, "column": 42 },
-    { "ruleId": "ember/closure-actions", "line": 1294, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1515, "column": 55 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1559, "column": 37 }
+    { "ruleId": "ember/closure-actions", "line": 1251, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1268, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1269, "column": 42 },
+    { "ruleId": "ember/closure-actions", "line": 1359, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1580, "column": 55 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1624, "column": 37 }
   ],
   "addon/components/flexberry-simpledatetime.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 42, "column": 26 },
@@ -146,7 +117,6 @@
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 64, "column": 26 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 75, "column": 26 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 101, "column": 18 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 118, "column": 10 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 232, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 502, "column": 54 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 541, "column": 72 },
@@ -159,10 +129,6 @@
     { "ruleId": "ember/require-return-from-computed", "line": 91, "column": 8 },
     { "ruleId": "ember/require-return-from-computed", "line": 114, "column": 8 }
   ],
-  "addon/components/flexberry-tree.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 132, "column": 17 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 160, "column": 17 }
-  ],
   "addon/components/groupedit-toolbar.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 189, "column": 15 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 278, "column": 52 },
@@ -173,31 +139,17 @@
   "addon/components/highload-edit-form-menu.js": [
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 164, "column": 39 }
   ],
-  "addon/components/mobile/flexberry-objectlistview.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 272, "column": 34 }
-  ],
-  "addon/components/mobile/object-list-view-row.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 32, "column": 23 }
-  ],
   "addon/components/mobile/object-list-view.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 38, "column": 29 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 105, "column": 28 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 196, "column": 24 }
   ],
   "addon/components/object-list-view-cell.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 74, "column": 19 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 105, "column": 17 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 113, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 138, "column": 39 }
   ],
   "addon/components/object-list-view-row.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 68, "column": 18 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 85, "column": 22 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 123, "column": 20 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 136, "column": 12 },
     { "ruleId": "ember/require-computed-macros", "line": 189, "column": 15 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 200, "column": 23 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 218, "column": 28 },
     { "ruleId": "ember/closure-actions", "line": 286, "column": 9 },
     { "ruleId": "ember/closure-actions", "line": 312, "column": 7 }
   ],
@@ -205,9 +157,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 58, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 16 },
     { "ruleId": "ember/require-computed-macros", "line": 477, "column": 19 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 499, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 613, "column": 27 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 668, "column": 22 },
     { "ruleId": "ember/require-computed-macros", "line": 734, "column": 15 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 889, "column": 33 },
     { "ruleId": "ember/closure-actions", "line": 993, "column": 7 },
@@ -249,34 +198,30 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 3003, "column": 29 }
   ],
   "addon/components/olv-toolbar.js": [
-    { "ruleId": "ember/no-arrow-function-computed-properties", "line": 258, "column": 19 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 328, "column": 18 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 383, "column": 21 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 511, "column": 30 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 537, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 538, "column": 42 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 623, "column": 15 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 624, "column": 35 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 625, "column": 15 },
-    { "ruleId": "ember/closure-actions", "line": 641, "column": 9 },
-    { "ruleId": "ember/closure-actions", "line": 685, "column": 9 },
-    { "ruleId": "ember/no-private-routing-service", "line": 715, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 716, "column": 29 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 717, "column": 44 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 735, "column": 65 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 774, "column": 63 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 809, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 810, "column": 44 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 863, "column": 29 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 864, "column": 44 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 903, "column": 32 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1089, "column": 27 }
+    { "ruleId": "ember/no-arrow-function-computed-properties", "line": 266, "column": 19 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 490, "column": 30 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 516, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 517, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 602, "column": 15 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 603, "column": 35 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 604, "column": 15 },
+    { "ruleId": "ember/closure-actions", "line": 620, "column": 9 },
+    { "ruleId": "ember/closure-actions", "line": 664, "column": 9 },
+    { "ruleId": "ember/no-private-routing-service", "line": 694, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 695, "column": 29 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 696, "column": 44 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 733, "column": 63 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 787, "column": 31 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 788, "column": 44 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 841, "column": 29 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 842, "column": 44 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 881, "column": 32 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1081, "column": 27 }
   ],
   "addon/controllers/advlimit-dialog.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 10, "column": 21 }
   ],
   "addon/controllers/detail-edit-form.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 36, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 38, "column": 66 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 114, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 219, "column": 43 },
@@ -296,11 +241,11 @@
     { "ruleId": "no-undef", "line": 75, "column": 45 },
     { "ruleId": "no-undef", "line": 425, "column": 5 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 443, "column": 68 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 809, "column": 73 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 852, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 908, "column": 15 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 942, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 965, "column": 15 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 811, "column": 73 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 854, "column": 38 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 910, "column": 15 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 944, "column": 31 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 967, "column": 15 }
   ],
   "addon/controllers/lookup-dialog.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 324, "column": 20 }
@@ -440,7 +385,6 @@
   "addon/mixins/flexberry-objectlistview-on-edit-form-controller.js": [
     { "ruleId": "ember/no-new-mixins", "line": 23, "column": 16 },
     { "ruleId": "ember/require-computed-macros", "line": 75, "column": 22 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 75, "column": 22 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 133, "column": 15 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 143, "column": 11 }
   ],
@@ -586,7 +530,6 @@
   "addon/mixins/paginated-controller.js": [
     { "ruleId": "ember/no-new-mixins", "line": 50, "column": 16 },
     { "ruleId": "ember/require-computed-macros", "line": 129, "column": 22 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 129, "column": 22 },
     { "ruleId": "ember/require-computed-macros", "line": 153, "column": 20 }
   ],
   "addon/mixins/paginated-route.js": [
@@ -627,42 +570,42 @@
   ],
   "addon/routes/edit-form.js": [
     { "ruleId": "ember/no-controller-access-in-routes", "line": 65, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 189, "column": 66 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 65 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 191, "column": 93 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 213, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 66 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 191, "column": 65 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 93 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 214, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 215, "column": 45 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 219, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 215, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 216, "column": 45 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 220, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 223, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 224, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 230, "column": 28 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 262, "column": 39 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 263, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 221, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 224, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 225, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 231, "column": 28 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 263, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 264, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 265, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 266, "column": 27 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 267, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 274, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 266, "column": 16 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 267, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 268, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 275, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 279, "column": 71 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 280, "column": 67 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 281, "column": 68 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 282, "column": 66 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 284, "column": 39 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 276, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 280, "column": 71 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 281, "column": 67 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 282, "column": 68 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 283, "column": 66 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 285, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 286, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 287, "column": 39 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 289, "column": 39 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 288, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 290, "column": 39 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 293, "column": 36 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 293, "column": 79 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 294, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 299, "column": 45 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 306, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 291, "column": 39 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 294, "column": 36 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 294, "column": 79 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 295, "column": 38 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 300, "column": 45 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 307, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 308, "column": 18 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 308, "column": 18 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 309, "column": 18 }
   ],
   "addon/routes/list-form.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 114, "column": 37 },
@@ -805,12 +748,6 @@
   "blueprints/flexberry-common/CommonUtils.js": [
     { "ruleId": "node/no-unpublished-require", "line": 5, "column": 25 }
   ],
-  "blueprints/flexberry-core/index.js": [
-    { "ruleId": "no-redeclare", "line": 175, "column": 17 },
-    { "ruleId": "no-redeclare", "line": 176, "column": 17 },
-    { "ruleId": "no-redeclare", "line": 180, "column": 17 },
-    { "ruleId": "no-redeclare", "line": 190, "column": 17 }
-  ],
   "blueprints/flexberry-core/Locales.js": [
     { "ruleId": "no-prototype-builtins", "line": 8, "column": 50 },
     { "ruleId": "no-unused-vars", "line": 209, "column": 13 },
@@ -820,9 +757,6 @@
   ],
   "blueprints/flexberry-core-offline/index.js": [
     { "ruleId": "no-mixed-spaces-and-tabs", "line": 67, "column": 4 }
-  ],
-  "blueprints/flexberry-edit-form/index.js": [
-    { "ruleId": "no-redeclare", "line": 110, "column": 17 }
   ],
   "blueprints/flexberry-group/index.js": [
     { "ruleId": "node/no-extraneous-require", "line": 6, "column": 23 },
@@ -1298,6 +1232,11 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 188, "column": 78 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 237, "column": 12 }
   ],
+  "tests/acceptance/components/flexberry-objectlistview/folv-toolbar-custom-components-test.js": [
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
+    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
+    { "ruleId": "ember/no-test-and-then", "line": 24, "column": 5 }
+  ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 },
@@ -1500,8 +1439,7 @@
   "tests/dummy/app/controllers/application.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 779, "column": 18 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },
@@ -1513,18 +1451,13 @@
     { "ruleId": "no-unused-vars", "line": 60, "column": 37 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 33, "column": 31 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 36, "column": 68 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/flexberry-objectlistview/folv-user-settings.js": [
     { "ruleId": "ember/avoid-leaking-state-in-ember-objects", "line": 165, "column": 3 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 12, "column": 22 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 73 }
-  ],
-  "tests/dummy/app/controllers/components-examples/flexberry-dropdown/items-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 30, "column": 17 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-file/flexberry-file-in-modal.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 55, "column": 29 }
@@ -1533,7 +1466,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 42, "column": 45 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 44, "column": 28 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 53, "column": 66 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-readonly-columns-by-configurate-row-example.js": [
@@ -1544,20 +1476,18 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 48, "column": 54 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/settings-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 56, "column": 22 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 262, "column": 30 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 438, "column": 14 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-limit-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 52, "column": 31 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 68 }
   ],
-  "tests/dummy/app/controllers/components-examples/flexberry-lookup/limit-function-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 14, "column": 31 }
+  "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/block-form-example.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 97, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 111, "column": 105 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 42 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 41, "column": 105 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 89, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 103, "column": 105 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 16, "column": 46 }
@@ -1585,16 +1515,6 @@
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-objectlistview/on-edit-form/user.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 29 }
-  ],
-  "tests/dummy/app/controllers/components-examples/flexberry-objectlistview/settings-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 52, "column": 15 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 437, "column": 30 }
-  ],
-  "tests/dummy/app/controllers/components-examples/flexberry-simpledatetime/settings-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 162, "column": 30 }
-  ],
-  "tests/dummy/app/controllers/components-examples/flexberry-textarea/settings-example.js": [
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 161, "column": 30 }
   ],
   "tests/dummy/app/controllers/integration-examples/edit-form/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 19, "column": 25 }

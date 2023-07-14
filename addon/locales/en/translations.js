@@ -119,6 +119,11 @@ export default {
         }
       }
     },
+
+    'flexberry-multiple-lookup': {
+      'no-data': 'No value'
+    },
+
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {

@@ -871,6 +871,10 @@
     { "ruleId": "ember/no-test-and-then", "line": 39, "column": 5 },
     { "ruleId": "ember/no-test-and-then", "line": 43, "column": 5 }
   ],
+  "tests/acceptance/components/flexberry-groupedit/groupedit-with-multiselect-test.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 20, "column": 27 },
+    { "ruleId": "ember/no-test-and-then", "line": 28, "column": 3 }
+  ],
   "tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 119, "column": 3 },

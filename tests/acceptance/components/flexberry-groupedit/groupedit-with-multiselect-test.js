@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import wait from 'ember-test-helpers/wait';
+import { click } from '@ember/test-helpers';
 import startApp from '../../../helpers/start-app';
 
 let app;
@@ -32,8 +33,8 @@ test(testName, (assert) => {
     run(() => {
       let done = assert.async();
       click($tbody);
-      andThen(() => {
-        const children = Ember.$('tbody', Ember.$('div.groupedit-container')[1])[0];
+      wait().then(() => {
+        const children = $('tbody', $('div.groupedit-container')[1])[0];
         let startChildrenCount;
 
         if (children.children[0].cells.length == 1) {
@@ -41,33 +42,33 @@ test(testName, (assert) => {
         } else {            
           startChildrenCount = children.childElementCount;
         }
-        let $addButton = Ember.$('button.ui.ui-add.button')[1];
+        let $addButton = $('button.ui.ui-add.button')[1];
 
         if (startChildrenCount == 0) {
           run(() => {
-            $addButton.click();
+            click($addButton);
           });
         }
 
-        andThen(() => {
-          let $lookupButton = Ember.$('button.ui.ui-change.button')[2];
+        wait().then(() => {
+          let $lookupButton = $('button.ui.ui-change.button')[2];
           run(() => {
-            $lookupButton.click();
+            click($lookupButton);
           });
           wait().then(() => {
-            let $modal = Ember.$('div.flexberry-modal')[0];
-            let $checkbox1 = Ember.$('div.flexberry-checkbox.ui', $modal)[0];
-            let $checkbox2 = Ember.$('div.flexberry-checkbox.ui', $modal)[1];
+            let $modal = $('div.flexberry-modal')[0];
+            let $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
+            let $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
-            $checkbox1.click();
-            $checkbox2.click();
+            click($checkbox1);
+            click($checkbox2);
             wait().then(() => {
-              $modal = Ember.$('div.flexberry-modal')[0];
-              let $addRecords = Ember.$('button.ui.button', $modal)[0];
+              $modal = $('div.flexberry-modal')[0];
+              let $addRecords = $('button.ui.button', $modal)[0];
               run(() => {
                 click($addRecords);
               });
-              andThen(() => {
+              wait().then(() => {
                 assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
                 
                 wait().then(() => {

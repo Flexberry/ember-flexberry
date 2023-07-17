@@ -157,7 +157,7 @@ export default Controller.extend({
       "icon-guideline-error",
       "icon-guideline-menu-ellipsis-vertical",
       "icon-guideline-gear",
-      "icon-guideline-save",
+      "icon-guideline-save"
       ]
   })
 });

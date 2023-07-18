@@ -19,6 +19,7 @@ export default EditFormController.extend({
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -29,7 +30,8 @@ export default EditFormController.extend({
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            lookupWindowCustomProperties: Ember.get(this, 'actions.getLookupFolvPropertiesForAuthor')
+            lookupWindowCustomProperties: Ember.get(this, 'actions.getLookupFolvPropertiesForAuthor'),
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -42,7 +44,8 @@ export default EditFormController.extend({
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            lookupWindowCustomProperties: Ember.get(this, 'actions.getLookupFolvPropertiesForGroupEdit')
+            lookupWindowCustomProperties: Ember.get(this, 'actions.getLookupFolvPropertiesForGroupEdit'),
+            updateLookupValue: updateLookupValue
           };
           break;
 

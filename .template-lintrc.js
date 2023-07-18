@@ -883,13 +883,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/flexberry-file-in-modal",
-      "only": [
-        "eol-last",
-        "require-button-type"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/settings-example",
       "only": [
         "eol-last"

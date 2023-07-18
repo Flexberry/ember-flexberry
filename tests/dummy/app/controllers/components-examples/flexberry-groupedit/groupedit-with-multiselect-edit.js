@@ -36,6 +36,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     const i18n = this.get('i18n');
     const lookupMultiGESettings = this.get('lookupMultiGESettings');
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get("actions.updateLookupValue").bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -50,6 +51,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             autocomplete: true,
             showPreviewButton: true,
             previewFormRoute: 'ember-flexberry-dummy-application-user-edit',
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -58,13 +60,14 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             choose: 'showLookupDialog',
             modalDialogSettings: {
               lookupSettings: lookupMultiGESettings,
-            }, 
+            },
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
       }

@@ -3,12 +3,12 @@
     { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 186, "column": 39 }
   ],
   "addon/components/colsconfig-dialog-content.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 173, "column": 60 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 177, "column": 30 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 174, "column": 60 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 178, "column": 30 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 203, "column": 22 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 209, "column": 22 },
-    { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 278, "column": 39 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 179, "column": 30 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 204, "column": 22 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 210, "column": 22 },
+    { "ruleId": "ember/no-incorrect-calls-with-inline-anonymous-functions", "line": 279, "column": 39 }
   ],
   "addon/components/flexberry-base-component.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 134, "column": 40 },

@@ -829,7 +829,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Settings example'
+          'caption': 'Flexberry-groupedit. Settings example',
+          'remove-class-button-name': 'Remove class "new"'
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Custom buttons example',

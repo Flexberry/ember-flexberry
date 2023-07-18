@@ -6,6 +6,7 @@ import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
+import $ from 'jquery';
 
 export default EditFormController.extend({
   /**
@@ -425,7 +426,31 @@ export default EditFormController.extend({
   */
   lookupEvents: service('lookup-events'),
 
+  customButtons: computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let removeClassButtonText = i18n.t('forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name');
+    return [{
+      buttonName: removeClassButtonText,
+      buttonAction: 'removeClassButtonAction',
+      buttonClasses: 'test-click-button',
+      buttonTitle: removeClassButtonText,
+      disabled: false,
+    }];
+  }),
+
   actions: {
+    /**
+      Handler for click on custom user button.
+
+      @method actions.removeClassButtonAction
+    */
+    removeClassButtonAction() {
+      let $columns = $('tr.groupedit-new-row');
+      $.each($columns, (key, item) => {
+        item.className = '';
+      });
+    },
+
     /**
       Handles click on lookup's choose button.
     */

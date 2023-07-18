@@ -105,8 +105,8 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 1296, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1297, "column": 42 },
     { "ruleId": "ember/closure-actions", "line": 1387, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1608, "column": 55 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1652, "column": 37 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1609, "column": 55 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1653, "column": 37 }
   ],
   "addon/components/flexberry-simpledatetime.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 42, "column": 26 },

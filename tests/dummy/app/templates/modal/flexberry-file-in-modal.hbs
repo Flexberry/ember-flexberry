@@ -1,0 +1,23 @@
+{{#modal-dialog
+  title=(t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModal")
+  useOkButton=false
+  useCloseButton=false
+  close="closeModalDialog"
+}}
+  <div class="field">
+    {{flexberry-file
+      value=model.file
+      placeholder=placeholder
+      readonly=readonly
+      uploadUrl=uploadUrl
+      maxUploadFileSize=maxUploadFileSize
+      showPreview=showPreview
+      showUploadButton=showUploadButton
+      showDownloadButton=showDownloadButton
+      showModalDialogOnUploadError=showModalDialogOnUploadError
+      showModalDialogOnDownloadError=showModalDialogOnDownloadError
+      inputClass=inputClass
+      buttonClass=buttonClass
+    }}
+  </div>
+{{/modal-dialog}}

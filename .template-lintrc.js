@@ -886,7 +886,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/flexberry-file-in-modal",
       "only": [
         "eol-last",
-        "quotes",
         "require-button-type"
       ]
     },

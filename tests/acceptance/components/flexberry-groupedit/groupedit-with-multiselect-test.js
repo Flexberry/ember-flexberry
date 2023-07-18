@@ -25,7 +25,7 @@ test(testName, (assert) => {
   assert.expect(2);
   visit(path);
 
-  andThen(() => {
+  wait().then(() => {
     assert.equal(currentPath(), path);
 
     let $olv = $('.object-list-view ');

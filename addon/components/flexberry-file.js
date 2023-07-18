@@ -1221,24 +1221,27 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Upload data change handler.
+    Selected file change handler.
 
-    @method _uploadDataDidChange
+    @method _selectedFileDidChange
     @private
   */
-  _uploadDataDidChange: observer('_uploadData', function() {
-    if (this.get('_uploadData')) {
-      this.set('_previewImageAsBase64String', null);
-    }
-
+  _selectedFileDidChange: observer('_selectedFile', function() {
     run(() => {
-      let file = this.get('_selectedFile');
+      const file = this.get('_selectedFile');
+
       if (!isNone(file)) {
-        this.set('value', JSON.stringify({
+        const fileJson = JSON.stringify({
           fileName: file.name,
           fileSize: file.size,
           fileMimeType: file.type
-        }));
+        })
+
+        if (fileJson !== this.get('value')) this.set('_previewImageAsBase64String', null);
+
+        this.set('value', fileJson);
+      } else {
+        this.set('_previewImageAsBase64String', null);
       }
     });
   }),

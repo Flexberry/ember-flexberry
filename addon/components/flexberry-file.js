@@ -1237,7 +1237,9 @@ export default FlexberryBaseComponent.extend({
           fileMimeType: file.type
         })
 
-        if (fileJson !== this.get('value')) this.set('_previewImageAsBase64String', null);
+        if (fileJson !== this.get('value')) {
+          this.set('_previewImageAsBase64String', null);
+        }
 
         this.set('value', fileJson);
       } else {

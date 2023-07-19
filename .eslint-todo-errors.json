@@ -1491,7 +1491,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 48, "column": 54 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/settings-example.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 463, "column": 14 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 451, "column": 14 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-limit-example.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 68 }

@@ -41,14 +41,14 @@ export default EditFormRoute.extend({
   */
   resetController(controller) {
     let repeatWindow = get(controller, 'repeatWindow');
-    let repeatWindowdouble = get(controller, 'repeatWindowdouble');
+    let repeatWindowDouble = get(controller, 'repeatWindowDouble');
 
     if (!isNone(repeatWindow)) {
       repeatWindow.modal('hide');
     }
 
-    if (!isNone(repeatWindowdouble)) {
-      repeatWindowdouble.modal('hide');
+    if (!isNone(repeatWindowDouble)) {
+      repeatWindowDouble.modal('hide');
     }
 
     return this._super(...arguments);

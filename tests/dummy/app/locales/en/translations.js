@@ -644,6 +644,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Name is required',
       'eMail-validation-message-caption': 'E-Mail is required',
       'phone1-required-caption': 'Require filling in the "Phone1" field',
+      'profile': 'Profile',
+      'contact-info': 'Contact Information',
     },
 
     'ember-flexberry-dummy-comment-edit': {

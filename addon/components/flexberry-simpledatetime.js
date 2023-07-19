@@ -528,7 +528,6 @@ export default FlexberryBaseComponent.extend({
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._onChange();
-        return false;
       }
     }, this));
 

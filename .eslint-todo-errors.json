@@ -147,8 +147,8 @@
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 85, "column": 22 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 123, "column": 20 },
     { "ruleId": "ember/require-computed-macros", "line": 189, "column": 15 },
-    { "ruleId": "ember/closure-actions", "line": 286, "column": 9 },
-    { "ruleId": "ember/closure-actions", "line": 312, "column": 7 }
+    { "ruleId": "ember/closure-actions", "line": 290, "column": 9 },
+    { "ruleId": "ember/closure-actions", "line": 316, "column": 7 }
   ],
   "addon/components/object-list-view.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 18 },

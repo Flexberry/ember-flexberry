@@ -1,19 +1,8 @@
-import { isNone } from '@ember/utils';
-import { computed } from '@ember/object';
-import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import config from 'dummy/config/environment';
+import { computed } from '@ember/object';
 
 export default EditFormController.extend({
-  /**
-    Defaul style of modal context.
-
-    @property readonly
-    @type String
-    @default #example
-  */
-  _style: '#example',
-
   /**
     File upload URL for 'flexberry-file' component 'uploadUrl' property.
 
@@ -47,36 +36,23 @@ export default EditFormController.extend({
   showDownloadButton: true,
 
   /**
-    Settings for preview modal dialog.
+    Modal dialog loading params
 
-    @property previewSettings
+    @property loadingParams
     @type Object
   */
-  previewSettings: computed(() => ({
-    detachable: true,
-    context: 'body',
-  })),
+  loadingParams: computed(function () {
+    return {outlet: 'editrecord-modal'}
+  }),
 
   actions: {
-    modalWindow(style) {
-      if (!isNone(style)) {
-        this.set('_style', style);
-      }
-
-      let repeatWindow = $('.repeat-window').modal({
-          closable: false,
-          autofocus: false,
-          detachable: true,
-          allowMultiple: true,
-          context: 'body',
-        });
-
-      this.set('repeatWindow', repeatWindow);
-      this.get('repeatWindow').modal('show').modal('refresh');
+    showModal() {
+      this.send('showModalDialog', 'modal/flexberry-file-in-modal', { controller: 'components-examples/flexberry-file/flexberry-file-in-modal' }, this.get('loadingParams'));
     },
 
-    logOut() {
-      this.get('repeatWindow').modal('hide');
+    closeModalDialog() {
+      //close this modal window
+      this.send('removeModalDialog', this.get('loadingParams'));
     },
   }
 });

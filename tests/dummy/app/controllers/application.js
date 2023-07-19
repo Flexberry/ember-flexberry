@@ -255,19 +255,19 @@ export default Controller.extend({
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
           children: null,
-          icon: 'icon-guideline-edit-note'
+          icon: 'icon-guideline-edit-note',
         }, {
           link: 'log-service-examples/settings-example',
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null,
-          icon: 'icon-guideline-setting'
+          icon: 'icon-guideline-setting',
         }, {
           link: 'log-service-examples/clear-log-form',
           caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
           children: null,
-          icon: 'icon-guideline-delete'
+          icon: 'icon-guideline-delete',
         }],
       }, {
         link: null,

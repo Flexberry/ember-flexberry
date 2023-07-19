@@ -59,8 +59,10 @@ test(testName, (assert) => {
           let $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
           let $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
-          click($checkbox1);
-          click($checkbox2);
+          run( function () {
+            click($checkbox1);
+            click($checkbox2);
+          });
           wait().then(() => {
             $modal = $('div.flexberry-modal')[0];
             let $addRecords = $('button.ui.button', $modal)[0];

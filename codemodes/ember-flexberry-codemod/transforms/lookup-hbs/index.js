@@ -18,7 +18,7 @@ function updateLookupValueProperty(node, builders) {
 }
 
 // Если встречается элемент с фигурными скобками, в пути которого встречается 'flexberry-lookup',
-// то для такого элемента добавляется свойство updateLookupValue
+// то для такого элемента добавляется свойство updateLookupValue.
 module.exports = function ({ source }, { parse, visit }) {
   const ast = parse(source);
   debugger;
@@ -30,6 +30,7 @@ module.exports = function ({ source }, { parse, visit }) {
         if (node.path.original === 'flexberry-lookup') {
           updateLookupValueProperty(node, builders);
         }
+
         return node;
       },
     };

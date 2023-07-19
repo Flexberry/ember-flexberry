@@ -30,11 +30,11 @@ module.exports = function transformer(file, api) {
     }
   );
 
-  // Применяем необходимые изменения к каждому файлу
+  // Применяем необходимые изменения к каждому файлу.
   attKindISbelongsTo.forEach((path) => {
     const ifStatementNode = path.node;
 
-    // Проверяем, содержит ли уже тело блока if переменную updateLookupValue
+    // Проверяем, содержит ли уже тело блока if переменную updateLookupValue.
     const ifBody = ifStatementNode.consequent.body;
     const existingUpdateLookupValueIndex = ifBody.findIndex((stmt) =>
       stmt.type === 'VariableDeclaration' &&
@@ -43,7 +43,7 @@ module.exports = function transformer(file, api) {
       )
     );
 
-    // Если переменная updateLookupValue не существует, добавляем ее в начало
+    // Если переменная updateLookupValue не существует, добавляем ее в начало.
     if (existingUpdateLookupValueIndex === -1) {
       const updateLookupValueNode = j.variableDeclaration('let', [
         j.variableDeclarator(
@@ -99,7 +99,7 @@ module.exports = function transformer(file, api) {
   cellComponentComponentProperties.forEach((property) => {
     let objectProperties = j(property).find(j.ObjectProperty);
 
-    let updateLookupValueProperties = objectProperties.paths().find((prop) => prop.value.key.name === 'updateLookupValue');
+    const updateLookupValueProperties = objectProperties.paths().find((prop) => prop.value.key.name === 'updateLookupValue');
 
     if (updateLookupValueProperties === undefined || updateLookupValueProperties === null) {
       objectProperties.at(objectProperties.length - 1).get().insertAfter("updateLookupValue: updateLookupValue");

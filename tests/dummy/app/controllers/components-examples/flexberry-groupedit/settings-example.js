@@ -427,8 +427,8 @@ export default EditFormController.extend({
   lookupEvents: service('lookup-events'),
 
   customButtons: computed('i18n.locale', function() {
-    let i18n = this.get('i18n');
-    let removeClassButtonText = i18n.t('forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name');
+    const i18n = this.get('i18n');
+    const removeClassButtonText = i18n.t('forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name');
     return [{
       buttonName: removeClassButtonText,
       buttonAction: 'removeClassButtonAction',

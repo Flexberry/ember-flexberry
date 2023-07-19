@@ -48,7 +48,8 @@ export default EditFormRoute.extend({
     }
 
     // Aggregator with details.
-    let aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', { details: arrRec });
+    const aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', { details: arrRec });
+
     return aggregator;
   }
   /* eslint-enable no-unused-vars */

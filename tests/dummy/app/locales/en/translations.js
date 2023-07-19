@@ -189,6 +189,14 @@ $.extend(true, translations, {
         'components-examples': {
           'caption': 'Components examples',
           'title': '',
+          'sections': {
+            'base': 'Basic components',
+            'forms': 'Forms components',
+            'menu': 'Menu organization',
+            'text': 'Work with text',
+            'popups': 'Popups',
+            'special-types': 'For special types',
+          },
           'flexberry-button': {
             'caption': 'flexberry-button',
             'title': '',

@@ -1,3 +1,5 @@
+import { isNone } from '@ember/utils';
+import { get } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
@@ -29,6 +31,26 @@ export default EditFormRoute.extend({
     let store = this.get('store');
     let base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;
-  }
+  },
   /* eslint-enable no-unused-vars */
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method resetController
+  */
+  resetController(controller) {
+    let repeatWindow = get(controller, 'repeatWindow');
+    let repeatWindowdouble = get(controller, 'repeatWindowdouble');
+
+    if (!isNone(repeatWindow)) {
+      repeatWindow.modal('hide');
+    }
+
+    if (!isNone(repeatWindowdouble)) {
+      repeatWindowdouble.modal('hide');
+    }
+
+    return this._super(...arguments);
+  }
 });

@@ -1474,9 +1474,6 @@
   "tests/dummy/app/controllers/components-acceptance-tests/flexberry-simpledatetime/manual-enter.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 73 }
   ],
-  "tests/dummy/app/controllers/components-examples/flexberry-file/flexberry-file-in-modal.js": [
-    { "ruleId": "ember/no-arrow-function-computed-properties", "line": 55, "column": 29 }
-  ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/configurate-row-example.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 42, "column": 45 }
   ],

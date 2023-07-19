@@ -1221,12 +1221,12 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Selected file change handler.
+    Upload data change handler.
 
-    @method _selectedFileDidChange
+    @method _uploadDataDidChange
     @private
   */
-  _selectedFileDidChange: observer('_selectedFile', function() {
+  _uploadDataDidChange: observer('_uploadData', function() {
     run(() => {
       const file = this.get('_selectedFile');
 

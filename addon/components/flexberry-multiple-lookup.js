@@ -244,12 +244,18 @@ export default FlexberryBaseComponent.extend({
   },
 
   actions: {
+    updateLookupValue(updateData) {
+      this.sendAction('updateLookupValue', updateData);
+    },
+
     showLookupDialog(chooseData) {
       this.get('currentController').send('showLookupDialog', chooseData);
     },
+
     delete(record) {
       this.delete(record);
     },
+
     preview(record) {
       this.preview(record);
     },

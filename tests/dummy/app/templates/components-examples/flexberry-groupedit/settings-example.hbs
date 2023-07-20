@@ -6,9 +6,9 @@
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
     }}
-    <div class="field">
-      <button class="ui button remove-class-new" {{action 'removeClassButtonAction'}}>{{t "forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name"}}</button>
-    </div>
+      <div class="field">
+        <button type="button" class="ui button remove-class-new" {{action "removeClassButtonAction"}}>{{t "forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name"}}</button>
+      </div>
       {{flexberry-groupedit
         componentName="aggregatorDetailsGroupedit"
         content=model.details

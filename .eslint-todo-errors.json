@@ -94,9 +94,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 1702, "column": 26 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1707, "column": 34 }
   ],
-  "addon/components/flexberry-multiple-lookup.js": [
-    { "ruleId": "ember/closure-actions", "line": 248, "column": 7 }
-  ],
   "addon/components/flexberry-objectlistview.js": [
     { "ruleId": "ember/closure-actions", "line": 122, "column": 7 },
     { "ruleId": "ember/require-computed-macros", "line": 152, "column": 23 },

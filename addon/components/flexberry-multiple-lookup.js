@@ -245,7 +245,7 @@ export default FlexberryBaseComponent.extend({
 
   actions: {
     updateLookupValue(updateData) {
-      this.sendAction('updateLookupValue', updateData);
+      this.get('currentController').send('updateLookupValue', updateData);
     },
 
     showLookupDialog(chooseData) {

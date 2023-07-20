@@ -986,10 +986,10 @@ export default FlexberryBaseComponent.extend(
     @default ''
   */
   componentName: '',
-  
+
   /**
    * Clears selection from row
-   * 
+   *
    * @param {DS.Model} recordWithKey Model in row
    */
   clearSelectionFromRow(recordWithKey) {
@@ -1121,7 +1121,7 @@ export default FlexberryBaseComponent.extend(
 
       this.clearSelectionFromRow(recordWithKey);
     },
-    
+
     /* eslint-enable no-unused-vars */
 
     /**
@@ -2039,9 +2039,17 @@ export default FlexberryBaseComponent.extend(
     }
 
     let componentForFilter = this.get('componentForFilter');
+
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+    }
+
+    let transformInstance = getOwner(this).lookup('transform:' + attribute.type);
+    let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+    if (transformClass && transformClass.componentForFilter) {
+      $.extend(true, component, transformClass.componentForFilter(relation));
     }
 
     let options = this._getFilterComponentByCondition(condition, null);
@@ -2156,12 +2164,15 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'string':
-      case 'number':
         component.name = 'flexberry-textbox';
         break;
 
+      case 'number':
       case 'decimal':
         component.name = 'flexberry-textbox';
+        component.properties = {
+          type: 'number',
+        };
         break;
 
       case 'boolean': {

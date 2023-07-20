@@ -644,6 +644,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Заполните поле "Имя"',
       'eMail-validation-message-caption': 'Заполните поле "E-mail"',
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
+      'profile': 'Профиль',
+      'contact-info': 'Контактная информация',
     },
 
     'ember-flexberry-dummy-comment-edit': {

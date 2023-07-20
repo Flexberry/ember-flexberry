@@ -3,6 +3,8 @@
 */
 
 import { set } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { isNone } from '@ember/utils';
 
 import {
   SimplePredicate,
@@ -25,6 +27,8 @@ import {
   @return {BasePredicate|null} Predicate to filter through.
 */
 let predicateForFilter = function (filter) {
+  let owner = getOwner(this);
+
   if (filter.condition) {
     switch (filter.type) {
       case 'string':
@@ -97,8 +101,16 @@ let predicateForFilter = function (filter) {
         return filter.pattern ?
           new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
           new SimplePredicate(filter.name, filter.condition, null);
-      default:
+      default: {
+        let transformInstance = owner.lookup('transform:' + filter.type);
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+        if (transformClass && transformClass.predicateForFilter) {
+          return transformClass.predicateForFilter(filter);
+        }
+
         return null;
+      }
     }
   } else if (filter.pattern) {
     switch (filter.type) {

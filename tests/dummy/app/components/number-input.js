@@ -3,7 +3,6 @@
  */
 
 import Component from '@ember/component';
-import { observer } from '@ember/object';
 import { isNone } from '@ember/utils';
 
 /**
@@ -39,14 +38,6 @@ export default Component.extend({
   value: undefined,
 
   /**
-    Handles changes in inputValue.
-   */
-  inputValueDidChange: observer('inputValue', function() {
-    let value = parseInt(this.get('inputValue'), 10);
-    this.set('value', isNaN(value) ? undefined : value);
-  }),
-
-  /**
     Initializes component.
    */
   init() {
@@ -56,5 +47,15 @@ export default Component.extend({
     if (!isNone(value)) {
       this.set('inputValue', '' + value);
     }
+  },
+
+  actions: {
+    /**
+     * Handles changes in inputValue.
+     */
+    inputValueDidChange() {
+      let value = parseInt(this.get('inputValue'), 10);
+      this.set('value', isNaN(value) ? undefined : value);
+    },
   }
 });

@@ -112,8 +112,9 @@ export default FlexberryBaseComponent.extend({
           if (isNone(colDesc.sortPriority)) {
             let max = 0;
             this.get('model.colDescs').filter(c => {
-              if (max < c.sortPriority) {
-                max = c.sortPriority;
+              let sortPriority = parseInt(c.sortPriority);
+              if (max < sortPriority) {
+                max = sortPriority;
               }
             });
             set(colDesc, 'sortPriority', max + 1);

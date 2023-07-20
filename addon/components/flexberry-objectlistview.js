@@ -1436,6 +1436,7 @@ export default FlexberryBaseComponent.extend({
 
       if (searchPageNumber) {
         this.send('gotoPage', action, searchPageNumber);
+        this.set('searchPageValue', undefined);
       }
     }
   },

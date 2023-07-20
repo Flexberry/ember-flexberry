@@ -37,10 +37,20 @@ export default EditFormRoute.extend({
    */
   /* eslint-disable no-unused-vars */
   model(params) {
-    var store = this.get('store');
+    const store = this.get('store');
+    let arrRec = [];
+    for (let i = 1; i < 10; i++) {
+      let newRecord = store.createRecord('components-examples/flexberry-groupedit/shared/detail', {
+        text: i + 'test',
+        flag: i % 2,
+      });
+      arrRec.push(newRecord);
+    }
 
-    // Empty aggregator without details.
-    return store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', {});
+    // Aggregator with details.
+    const aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', { details: arrRec });
+
+    return aggregator;
   }
   /* eslint-enable no-unused-vars */
 });

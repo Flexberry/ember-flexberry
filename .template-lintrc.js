@@ -938,12 +938,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/settings-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
       "only": [
         "block-indentation",

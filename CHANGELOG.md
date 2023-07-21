@@ -13,9 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added multiselect for details.
 * The `flexberry-lookup` component:
     * Added lookup action `updateLookupValue`.
-* The `flexberry-lookup` component:
-    * Added lookup action `updateLookupValue`.
-* Added ability to add custom attributes types
+* Added ability to add custom attributes types.
 
 ### Changed
 * Updated validation visibility call and add required marker.

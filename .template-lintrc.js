@@ -938,13 +938,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
-      "only": [
-        "block-indentation",
-        "no-bare-strings"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example",
       "only": [
         "require-button-type"

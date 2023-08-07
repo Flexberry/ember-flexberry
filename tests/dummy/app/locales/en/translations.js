@@ -910,7 +910,10 @@ $.extend(true, translations, {
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Dropdown mode example'
+          'caption': 'Flexberry-lookup. Dropdown mode example',
+          'fieldMinCharacters': 'minCharacters - minimum characters for autocomplete search',
+          'lookupSearch': 'dropdownIsSearch=true, dropdownSettings=(hash direction="downward"), minCharacters=',
+          'lookup': 'dropdownIsSearch=false, dropdownSettings=(hash direction="upward")'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',

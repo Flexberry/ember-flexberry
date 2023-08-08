@@ -1498,10 +1498,10 @@
     { "ruleId": "ember/no-test-and-then", "line": 48, "column": 9 }
   ],
   "tests/dummy/app/controllers/application.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 },
-    { "ruleId": "ember/require-computed-property-dependencies", "line": 779, "column": 18 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 103, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 199, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 201, "column": 12 },
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 788, "column": 18 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },

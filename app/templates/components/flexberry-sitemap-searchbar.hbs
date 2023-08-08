@@ -7,6 +7,7 @@
   value=userQuery
   placeholder=placeholder
   }}
+  <i class="icon icon-guideline-search sitemap-search-icon" onclick={{action "clickSearchIcon" preventDefault=false}}></i>
   {{#if isShowingResults}}
     <div class="sitemap-search-results-list">
       {{#each _results as |node|}}

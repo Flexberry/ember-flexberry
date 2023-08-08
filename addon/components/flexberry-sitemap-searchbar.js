@@ -43,6 +43,15 @@ export default Component.extend({
   isShowingResults: false,
 
   /**
+    Default class for component wrapper.
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: ['sitemap-searchbar', 'ui', 'search'],
+
+  /**
     Flag for showing error message if user query doesn't get any hits.
 
     @property noHits
@@ -169,7 +178,20 @@ export default Component.extend({
      @function toggleResultsList
      */
     toggleResultsList() {
+      if (!$('.icon-guideline-search').hasClass('visible')) {
+        this.toggleProperty('isShowingResults');
+      }
+    },
+
+    /**
+     Click on the search icon handler.
+
+     @private
+     @function clickSearchIcon
+     */
+     clickSearchIcon() {
       this.toggleProperty('isShowingResults');
+      $('.sitemap-search-input').toggleClass('hidden');
     }
   },
   /**
@@ -184,6 +206,8 @@ export default Component.extend({
       try {
         let clickTargetIsNotComponent = !e.target.offsetParent.classList.contains('sitemap-search-results-list') &&
         !e.target.classList.contains('sitemap-search-results-list') &&
+        !e.target.classList.contains('sitemap-search-input') &&
+        !e.target.classList.contains('sitemap-search-icon') &&
         !e.target.classList.contains('sitemap-search-input');
         if (clickTargetIsNotComponent) {
           this.set('isShowingResults', false);

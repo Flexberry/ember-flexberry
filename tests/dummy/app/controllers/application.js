@@ -45,12 +45,21 @@ export default Controller.extend({
       sidebar.sidebar('toggle');
       sidebar.toggleClass('sidebar-mini');
 
+      let $sitemapSearchInput = $('.sitemap-search-input');
+
+      if (sidebar.hasClass('sidebar-mini')) {
+        $sitemapSearchInput.addClass('hidden');
+      } else {
+        $sitemapSearchInput.removeClass('hidden');
+      }
+
       $('.full.height').toggleClass('content-opened');
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
+      $('.icon-guideline-search').toggleClass('visible');
 
       // For reinit overflowed tabs.
       $(window).trigger('resize');

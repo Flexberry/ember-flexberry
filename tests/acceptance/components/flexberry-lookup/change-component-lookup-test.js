@@ -152,9 +152,9 @@ executeTest('changes in component\'s value causes changes in related model\'s sp
         chosenRecordDisplayAttribute,
         'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
 
-      let chosenRecordUpdateLookupAction = get(controller, 'updateLookupValueTest');
+      let updateLookupValueTestUpdated = get(controller, 'updateLookupValueTest');
       assert.strictEqual(
-        chosenRecordUpdateLookupAction,
+        updateLookupValueTestUpdated,
         'updated',
         'updateLookupValue action was called');
 

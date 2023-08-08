@@ -230,7 +230,11 @@ export default FlexberryBaseComponent.extend({
     Observe inExpandMode changes.
   */
   inExpandModeObserver: observer('inExpandMode', function() {
-    this.set('_expanded', this.get('inExpandMode'));
+    if (!this.get('recordsLoaded')) {
+      this.send('loadChildRecords');
+    } else {
+      this.set('_expanded', this.get('inExpandMode'));
+    }
   }),
 
   /**
@@ -375,7 +379,6 @@ export default FlexberryBaseComponent.extend({
 
   init() {
     this._super(...arguments);
-    this.get('inExpandModeObserver').apply(this);
   },
 
   /**

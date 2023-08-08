@@ -41,8 +41,8 @@ export default EditFormController.extend({
         allowMultiple: true,
         context: this.get('_style'),
       });
-      this.set('repeatWindowdouble', repeatWindow);
-      this.get('repeatWindowdouble').modal('show').modal('refresh');
+      this.set('repeatWindowDouble', repeatWindow);
+      this.get('repeatWindowDouble').modal('show').modal('refresh');
     },
 
     logOut() {
@@ -50,7 +50,7 @@ export default EditFormController.extend({
     },
 
     logOutDouble() {
-      this.get('repeatWindowdouble').modal('hide');
+      this.get('repeatWindowDouble').modal('hide');
     }
 
   }

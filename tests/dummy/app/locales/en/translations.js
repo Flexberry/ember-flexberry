@@ -644,6 +644,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Name is required',
       'eMail-validation-message-caption': 'E-Mail is required',
       'phone1-required-caption': 'Require filling in the "Phone1" field',
+      'profile': 'Profile',
+      'contact-info': 'Contact Information',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -829,7 +831,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Settings example'
+          'caption': 'Flexberry-groupedit. Settings example',
+          'remove-class-button-name': 'Remove class "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Custom buttons example',

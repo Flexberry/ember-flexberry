@@ -117,5 +117,21 @@ export default EditFormController.extend({
     @type String
     @default 'type'
   */
-  relationName: 'type'
+  relationName: 'type',
+
+  /**
+    Property for updateLookupValue action test.
+
+    @property updateLookupValueTest
+    @type String
+    @default 'base'
+  */
+  updateLookupValueTest: 'base',
+
+  actions: {
+    updateLookupValue() {
+      this._super(...arguments);
+      this.set('updateLookupValueTest', 'updated');
+    }
+  }
 });

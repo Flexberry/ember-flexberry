@@ -772,6 +772,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Component docs link',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Settings example for flexberry-button'

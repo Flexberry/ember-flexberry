@@ -772,6 +772,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Ссылка на документацию компонента',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-button'

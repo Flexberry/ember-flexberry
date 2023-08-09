@@ -1,36 +1,34 @@
-<div class="sitemap-searchbar ui search">
-  {{input
+{{input
   class="sitemap-search-input"
   type="text"
   input=(action "startSearch")
   click=(action "toggleResultsList")
   value=userQuery
   placeholder=placeholder
-  }}
-  <i class="icon icon-guideline-search sitemap-search-icon" onclick={{action "clickSearchIcon" preventDefault=false}}></i>
-  {{#if isShowingResults}}
-    <div class="sitemap-search-results-list">
-      {{#each _results as |node|}}
-        {{searchbar-node
+}}
+<button onclick={{action "clickSearchIcon"}}>
+  <i class="icon icon-guideline-search sitemap-search-icon"></i>
+</button>
+{{#if isShowingResults}}
+  <div class="sitemap-search-results-list">
+    {{#each _results as |node|}}
+      {{searchbar-node
         node=node
         classNames="match-card"
       }}
-      {{/each}}
-      {{!-- If search gets no hits, display error message instead --}}
-      {{#if noHits}}
-        <div class="ui message">
-          <div class="header">
-            {{t "components.flexberry-sitemap-searchbar.errMsgOne"}}
-            <span>
-              {{userQuery}}
-            </span>
-            {{t "components.flexberry-sitemap-searchbar.errMsgTwo"}}
-          </div>
-          <ul class="list">
-            <li>{{t "components.flexberry-sitemap-searchbar.suggestion"}}</li>
-          </ul>
+    {{/each}}
+    {{!-- If search gets no hits, display error message instead --}}
+    {{#if noHits}}
+      <div class="ui message">
+        <div class="header">
+          {{t "components.flexberry-sitemap-searchbar.errMsgOne"}}
+          <span>{{userQuery}}</span>
+          {{t "components.flexberry-sitemap-searchbar.errMsgTwo"}}
         </div>
-      {{/if}}
-    </div>
-  {{/if}}
-</div>
+        <ul class="list">
+          <li>{{t "components.flexberry-sitemap-searchbar.suggestion"}}</li>
+        </ul>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

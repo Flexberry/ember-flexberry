@@ -258,12 +258,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/flexberry-sitemap-searchbar",
-      "only": [
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/flexberry-text-cell",
       "only": [
         "eol-last"

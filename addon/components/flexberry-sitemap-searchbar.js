@@ -211,6 +211,9 @@ export default Component.extend({
         !e.target.classList.contains('sitemap-search-input');
         if (clickTargetIsNotComponent) {
           this.set('isShowingResults', false);
+          if ($('.ui.sidebar.main.menu').hasClass('sidebar-mini')) {
+            $('.sitemap-search-input').addClass('hidden');
+          }          
         }      
       } catch (err) {      
         return;      

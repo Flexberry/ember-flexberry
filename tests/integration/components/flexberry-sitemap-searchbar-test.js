@@ -608,7 +608,7 @@ test('it renders properly', function(assert) {
   assert.equal(this.$().text().trim(), '');
 
   // Retrieve component.
-  const $component = this.$().children().children('.sitemap-searchbar.ui.search');
+  const $component = this.$().children('.sitemap-searchbar.ui.search');
   $component[0].firstElementChild.click();
   const results = $component.children('.sitemap-search-results-list');
 

@@ -363,6 +363,10 @@ $.extend(true, translations, {
             'multiple-lookup': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Пример кастомизации тегов',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -926,6 +930,11 @@ $.extend(true, translations, {
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
           'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Пример кастомизации тегов',
           'lookup-caption': 'Заполнение пользователей',
           'lookup-title': 'Заполнение пользователей'
         }

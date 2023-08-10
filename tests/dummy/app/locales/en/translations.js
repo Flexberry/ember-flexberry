@@ -363,6 +363,10 @@ $.extend(true, translations, {
             'multiple-lookup': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Example of tag customization',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -924,6 +928,11 @@ $.extend(true, translations, {
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
           'caption': 'Flexberry-multiple-lookup. Settings example',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Example of tag customization',
           'lookup-caption': 'Choose user',
           'lookup-title': 'Choose user'
         }

@@ -1006,6 +1006,10 @@
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 }
   ],
+  "tests/acceptance/components/flexberry-multiple-lookup/flexberry-multiple-lookup-configurate-tags-test.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 17, "column": 27 },
+    { "ruleId": "ember/no-test-and-then", "line": 30, "column": 3 }
+  ],
   "tests/acceptance/components/flexberry-objectlistview/checkbox-at-editform-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 10, "column": 3 },
@@ -1492,6 +1496,10 @@
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-lookup/autofill-by-limit-example.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 68 }
+  ],
+  "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/configurate-tags.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 104, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 118, "column": 105 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 89, "column": 42 },

@@ -770,9 +770,7 @@ export default {
 
     'flexberry-sitemap-searchbar': {
       'placeholder': 'Find section...',
-      'errMsgOne': 'Your search - ',
-      'errMsgTwo': ' did not match anything.',
-      'suggestion': 'Try changing your query.'
+      'notFoundMsg': 'Not found'
     },
     'flexberry-sitemap-guideline': {
       'main-menu-caption': 'Main menu'

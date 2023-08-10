@@ -629,7 +629,8 @@ test('it renders properly', function(assert) {
       // let $field = $('div.ui.action.input');
       assert.equal($input[0].value, value);
       assert.equal(results[0].children.length, 1);
-      assert.equal(results.find('.header')[0].innerText, 'По запросу ' + value + ' ничего не найдено.');
+      const notFoundMsg = this.get('i18n').t('components.flexberry-sitemap-searchbar.notFoundMsg');
+      assert.equal(results.find('.header')[0].innerText, notFoundMsg);
     });
   });
 });

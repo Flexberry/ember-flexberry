@@ -17,17 +17,11 @@
         classNames="match-card"
       }}
     {{/each}}
-    {{!-- If search gets no hits, display error message instead --}}
     {{#if noHits}}
       <div class="ui message">
         <div class="header">
-          {{t "components.flexberry-sitemap-searchbar.errMsgOne"}}
-          <span>{{userQuery}}</span>
-          {{t "components.flexberry-sitemap-searchbar.errMsgTwo"}}
+          {{t "components.flexberry-sitemap-searchbar.notFoundMsg"}}
         </div>
-        <ul class="list">
-          <li>{{t "components.flexberry-sitemap-searchbar.suggestion"}}</li>
-        </ul>
       </div>
     {{/if}}
   </div>

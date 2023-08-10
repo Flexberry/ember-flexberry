@@ -259,16 +259,16 @@ export default FlexberryBaseComponent.extend({
   */
   buildConfigurateTags: observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
     let configurateTag = this.get('configurateTag');
-    if (configurateTag) {
-      this.get('filteredRecords').forEach((record) => {
+
+    this.get('filteredRecords').forEach((record) => {
+      let tagConfig = copy(this.get('defaultTagConfig'));
+      set(record, 'tagConfig', tagConfig);
+
+      if (configurateTag) {
         assert('configurateTag must be a function', typeof configurateTag === 'function');
-
-        let tagConfig = copy(this.get('defaultTagConfig'));
-
-        set(record, 'tagConfig', tagConfig);
         configurateTag(tagConfig, record);
-      });
-    }
+      }
+    });
   }),
 
   /**

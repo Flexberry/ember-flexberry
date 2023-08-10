@@ -25,6 +25,8 @@ export default Controller.extend({
   */
   appState: service(),
 
+  router: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -101,6 +103,20 @@ export default Controller.extend({
       }
       return null;
     },
+
+    /**
+      Select themes.
+      @method actions.changeTheme
+    */
+    changeTheme(value) {
+      let sheet = document.querySelector('#theme');
+      if (!sheet) {
+        return;
+      }
+
+      let rootURL = this.get('router.location.location.origin') + config.rootURL;
+      sheet.setAttribute('href', `${rootURL}assets/${value}.css`);
+    }
   },
 
   /**
@@ -156,6 +172,14 @@ export default Controller.extend({
   locales: undefined,
 
   /**
+    Themes supported by application.
+    @property themes
+    @type String[]
+    @default ['purple', 'dark', 'default']
+  */
+  themes: undefined,
+
+  /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
 
     @method _userSettingsServiceChanged
@@ -170,6 +194,8 @@ export default Controller.extend({
   */
   init() {
     this._super(...arguments);
+
+    this.set('themes', ['purple', 'dark', 'default']);
 
     let i18n = this.get('i18n');
     if (isNone(i18n)) {

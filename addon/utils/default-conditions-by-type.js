@@ -20,12 +20,6 @@ export default function defaultConditionsByType(type, i18n) {
       return null;
 
     case 'date':
-      return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq'),
-        'le': i18n.t('components.object-list-view.filters.le'),
-        'ge': i18n.t('components.object-list-view.filters.ge'),
-      };
     case 'number':
     case 'decimal':
       return {

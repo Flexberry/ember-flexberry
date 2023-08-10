@@ -911,9 +911,7 @@ $.extend(true, translations, {
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Dropdown mode example',
-          'fieldMinCharacters': 'minCharacters - minimum characters for autocomplete search',
-          'lookupSearch': 'dropdownIsSearch=true, dropdownSettings=(hash direction="downward"), minCharacters=',
-          'lookup': 'dropdownIsSearch=false, dropdownSettings=(hash direction="upward")'
+          'fieldMinCharacters': 'minCharacters - minimum number of characters to activate the search function'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',

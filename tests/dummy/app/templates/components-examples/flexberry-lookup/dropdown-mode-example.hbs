@@ -11,7 +11,7 @@
   </div>
   {{#if rerender}}
     <div class="field">
-      <label>{{t "forms.components-examples.flexberry-lookup.dropdown-mode-example.lookupSearch"}}{{minCharacters}}</label>
+      <label>dropdownIsSearch=true, minCharacters={{minCharacters}}, dropdownSettings=(hash direction="downward")</label>
       {{flexberry-lookup
         value=model.type
         projection="DropDownLookupExampleView"
@@ -31,7 +31,7 @@
     </div>
   {{/if}}
   <div class="field">
-    <label>{{t "forms.components-examples.flexberry-lookup.dropdown-mode-example.lookup"}}</label>
+    <label>dropdownIsSearch=false, dropdownSettings=(hash direction="upward")</label>
     {{flexberry-lookup
       value=model.type
       projection="DropDownLookupExampleView"

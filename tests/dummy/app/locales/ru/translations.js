@@ -909,9 +909,7 @@ $.extend(true, translations, {
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown',
-          'fieldMinCharacters': 'minCharacters - минимальное количество символов для автозаполнения поиска',
-          'lookupSearch': 'dropdownIsSearch=true, dropdownSettings=(hash direction="downward"), minCharacters=',
-          'lookup': 'dropdownIsSearch=false, dropdownSettings=(hash direction="upward")'
+          'fieldMinCharacters': 'minCharacters - минимальное количество символов для активации функции поиска'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',

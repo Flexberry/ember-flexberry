@@ -1452,9 +1452,10 @@
     { "ruleId": "ember/no-test-and-then", "line": 48, "column": 9 }
   ],
   "tests/dummy/app/controllers/application.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 12 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 12 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 105, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 225, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 227, "column": 12 },
+    { "ruleId": "ember/require-computed-property-dependencies", "line": 825, "column": 18 }
   ],
   "tests/dummy/app/controllers/components-acceptance-tests/edit-form-validation/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 25 },
@@ -1852,6 +1853,13 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 9, "column": 15 },
     { "ruleId": "ember/no-test-this-render", "line": 12, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
+  ],
+  "tests/integration/components/flexberry-sitemap-searchbar-test.js": [
+    { "ruleId": "ember/no-test-module-for", "line": 13, "column": 1 },
+    { "ruleId": "ember/no-test-this-render", "line": 605, "column": 3 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 605, "column": 15 },
+    { "ruleId": "ember/no-test-and-then", "line": 620, "column": 3 },
+    { "ruleId": "ember/no-test-and-then", "line": 628, "column": 5 }
   ],
   "tests/integration/components/flexberry-tab-bar-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },

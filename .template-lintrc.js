@@ -940,7 +940,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
       "only": [
-        "block-indentation",
         "no-bare-strings"
       ]
     },

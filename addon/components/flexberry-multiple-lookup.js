@@ -308,7 +308,7 @@ export default FlexberryBaseComponent.extend({
     this.set('defaultTagConfig', {
       canBeDeleted: true,
       canBeSelected: true,
-      customClass: ''
+      customClass: '',
     });
     this.addObserver('value', this.addNewRecordByValue);
     this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);

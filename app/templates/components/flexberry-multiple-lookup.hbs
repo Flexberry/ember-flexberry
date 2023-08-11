@@ -35,13 +35,9 @@
     {{#each filteredRecords as |record|}}
       <a class="{{record.tagConfig.customClass}} ui label" data-test-tag>
         {{#if record.tagConfig.canBeSelected}}
-          <span class="normal-weight" onClick={{action "preview" record}}>
-            {{record.tagDisplayValue}}
-          </span>
+          <span class="normal-weight" onClick={{action "preview" record}}>{{record.tagDisplayValue}}</span>
         {{else}}
-          <span class="normal-weight">
-            {{record.tagDisplayValue}}
-          </span>
+          <span class="normal-weight">{{record.tagDisplayValue}}</span>
         {{/if}}
 
         {{#unless readonly}}

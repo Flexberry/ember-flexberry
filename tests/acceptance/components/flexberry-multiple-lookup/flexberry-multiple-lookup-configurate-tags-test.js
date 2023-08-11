@@ -31,8 +31,8 @@ test(testName, (assert) => {
   wait().then(() => {
     assert.equal(currentPath(), path, 'Path is correct');
 
-    let $lookup = $('.flexberry-lookup');
-    let $lookupButtouChoose = $lookup.find('.ui-change');
+    const $lookup = $('.flexberry-lookup');
+    const $lookupButtouChoose = $lookup.find('.ui-change');
 
     run(() => $lookupButtouChoose.click());
 
@@ -55,36 +55,35 @@ test(testName, (assert) => {
         run(() => $deleteIcon.click());
 
         wait().then(() => {
-          let $tags = $('div a.ui.label');
+          $tags = $('div a.ui.label');
 
           assert.strictEqual($tags.length, 0, 'Tag removed');
 
-          let $table = $('table.ui.celled.table.flexberry-word-break');
-          let $fields = $table.find('.ember-text-field');
-          let $checkboxes = $table.find('.ember-checkbox');
+          const $table = $('table.ui.celled.table.flexberry-word-break');
+          const $fields = $table.find('.ember-text-field');
+          const $checkboxes = $table.find('.ember-checkbox');
 
           fillIn($fields[0], username);
           fillIn($fields[1], 'red');
 
           run(() => $checkboxes[0].click());
           run(() => $checkboxes[1].click());
-
           run(() => $lookupButtouChoose.click());
 
           wait().then(() => {
-            let $olv = $('.object-list-view');
-            let $tbody = $olv.find('td');
+            $olv = $('.object-list-view');
+            $tbody = $olv.find('td');
 
             run(() => $tbody[1].click());
 
             wait().then(() => {
-              let $tags = $('div a.ui.label');
+              $tags = $('div a.ui.label');
 
               assert.strictEqual($tags.length, 1, 'Tag is rendered');
 
               assert.strictEqual($($tags[0]).hasClass('red'), true, 'Component\'s wrapper has \'red\' css-class');
 
-              let $deleteIcon = $($tags[0]).children('i.delete.icon');
+              $deleteIcon = $($tags[0]).children('i.delete.icon');
 
               assert.strictEqual($deleteIcon.length, 0, 'Delete icon is not rendered');
             });

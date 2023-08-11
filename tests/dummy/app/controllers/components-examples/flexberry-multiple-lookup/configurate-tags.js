@@ -73,25 +73,25 @@ export default EditFormController.extend({
       settingName: 'configurateTagByValue',
       settingType: 'string',
       settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'configurateTagByValue'
+      bindedControllerPropertieName: 'configurateTagByValue',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'canBeDeleted',
       settingType: 'boolean',
       settingDefaultValue: true,
-      bindedControllerPropertieName: 'canBeDeleted'
+      bindedControllerPropertieName: 'canBeDeleted',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'canBeSelected',
       settingType: 'boolean',
       settingDefaultValue: true,
-      bindedControllerPropertieName: 'canBeSelected'
+      bindedControllerPropertieName: 'canBeSelected',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'customClass',
       settingType: 'string',
       settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'customClass'
+      bindedControllerPropertieName: 'customClass',
     });
 
     return componentSettingsMetadata;
@@ -127,6 +127,6 @@ export default EditFormController.extend({
         set(tagConfig, 'canBeSelected', this.get('canBeSelected'));
         set(tagConfig, 'customClass', this.get('customClass'));
       }
-    }
-  }
+    },
+  },
 });

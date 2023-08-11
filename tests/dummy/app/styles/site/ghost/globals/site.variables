@@ -1,2 +1,5 @@
-@primaryColor          : #7309AA;
-@accentColor           : #FF1E00;
+/*---------------
+    THEME
+----------------*/
+
+@import (optional) '@{Theme}';

@@ -1,20 +1,35 @@
 // Main
-@defaultColor   : fade(#000, 20%);
-@primaryColor          : #7309AA;
-@accentColor           : #FF1E00;
-@dimmerBackgroundColor: rgba(0, 0, 0, 0.3);
+@defaultColor          : fade(#000, 10%);
+@controlColor          : fade(#000, 15%);
+@dimmerBackgroundColor : rgba(0, 0, 0, 0.3);
 
 // Sidebar
-@sidebarBackgroundColor         : #353535;
+@sidebarBackgroundColor: #353535;
 
 // Page
-@textColor      : rgba(255, 255, 255, 0.65);
-@selectedTextColor: rgba(255, 255, 255, 0.75);
-@pageBackground : #3e3e3e;
+@textColor             : rgba(255, 255, 255, 0.65);
+@selectedTextColor     : rgba(255, 255, 255, 0.75);
+@pageBackground        : #3e3e3e;
 
-@inputHoverBorderColor: @defaultColor;
-@defaultInputFocusBackground    : @defaultColor;
+@inputHoverBorderColor  : @defaultColor;
+@inputReadonlyBackground: fade(#000, 15%);
+
+@defaultInputFocusBackground: @defaultColor;
+
+/*-------------------
+    Scroll Bars
+--------------------*/
+
+@customScrollbarWidth: 12px;
+@customScrollbarHeight: 12px;
+
+@trackBooxShadow: inset 0 0 10px 10px fade(#000, 15%);
+@thumbBackground: @lightGrayishBlue;
+
+@thumbInactiveBackground: @lightGrayishBlue;
+@thumbHoverBackground: @lightGrayishBlue;
+@thumbBorder: 4px solid transparent;
 
 // OLV
-@olvRowActiveBackground: fade(#ECF2FB, 20%);
+@olvRowActiveBackground        : fade(#ECF2FB, 20%);
 @olvContainerBorderColorDefault: rgba(0, 0, 0, 0.14);

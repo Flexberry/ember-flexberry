@@ -101,7 +101,7 @@ export default EditFormController.extend({
     addMultipleValue(authorValue) {
       if (isNone(this.get('model.userVotes')
         .filterBy('isDeleted', false)
-        .findBy('author.id', authorValue.get('id')))) {
+        .findBy('author.id', get(authorValue, 'id')))) {
         this.get('model.userVotes').addObject(
           this.get('store').createRecord('ember-flexberry-dummy-vote', {
             author: authorValue
@@ -115,7 +115,7 @@ export default EditFormController.extend({
     },
 
     previewMultipleValue(voteRecord) {
-      window.open(this.get('target').generate('ember-flexberry-dummy-application-user-edit', voteRecord.get('author.id'), { queryParams: { readonly: true } }));
+      window.open(this.get('target').generate('ember-flexberry-dummy-application-user-edit', get(voteRecord, 'author.id'), { queryParams: { readonly: true } }));
     },
 
     /**

@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
+import { set } from '@ember/object';
 
 let app;
 const path = 'components-examples/flexberry-multiple-lookup/configurate-tags';
@@ -14,7 +15,7 @@ module('Acceptance | flexberry-multiple-lookup | ' + testName, {
 
     // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
     let applicationController = app.__container__.lookup('controller:application');
-    applicationController.set('isInAcceptanceTestMode', true);
+    set(applicationController, 'isInAcceptanceTestMode', true);
   },
 
   afterEach() {
@@ -27,7 +28,7 @@ test(testName, (assert) => {
 
   visit(path);
 
-  andThen(() => {
+  wait().then(() => {
     assert.equal(currentPath(), path, 'Path is correct');
 
     let $lookup = $('.flexberry-lookup');

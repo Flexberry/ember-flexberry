@@ -36,6 +36,7 @@
   readonly=readonly
   useSidePageMode=useSidePageMode
   editInModal=editInModal
+  customComponents=customToolbarComponents
 }}
 {{object-list-view
   placeholder=placeholder
@@ -74,6 +75,7 @@
   showFilters=_showFilters
   showFiltersInModal=showFiltersInModal
   filters=filters
+  ddlFilterSettings=ddlFilterSettings
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
   componentForFilterByCondition=componentForFilterByCondition
@@ -111,6 +113,7 @@
   overflowedComponents=overflowedComponents
   customParameters=customParameters
   fixedHeader=fixedHeader
+  skipSelectedRecords=skipSelectedRecords
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">

@@ -566,6 +566,10 @@ export default {
       'placeholder': '(нет значения)'
     },
 
+    'flexberry-required-marker': {
+      title: 'Поле, обязательное для заполнения'
+    },
+
     'flexberry-file': {
       placeholder: '(нет файла)',
 
@@ -615,6 +619,10 @@ export default {
           'noResults': 'Значения не найдены'
         }
       }
+    },
+
+    'flexberry-multiple-lookup': {
+      'no-data': 'Нет данных'
     },
 
     'flexberry-objectlistview': {
@@ -718,7 +726,8 @@ export default {
       'check-all-button-text': 'Выбрать все на всех страницах',
       'uncheck-all-button-text': 'Отменить выбор на всех страницах',
       'clear-sorting-button-text': 'Установить сортировку по умолчанию',
-      'clear-select-button-text': 'Отмена выделения'
+      'clear-select-button-text': 'Отмена выделения',
+      'pullUpLookupValues': 'Использовать все выбранные записи'
     },
 
     'groupedit-toolbar': {

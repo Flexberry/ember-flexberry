@@ -14,7 +14,7 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field flexberry-validationsummary-container">
@@ -61,6 +61,7 @@
       title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}

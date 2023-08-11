@@ -1,190 +1,169 @@
-{{flexberry-error error=error}}
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
-  <div class="field">
-    <div class="sixteen wide">
-      {{flexberry/validation-summary errors=(v-get validationModel "messages")}}
-    </div>
-  </div>
+  {{flexberry-error error=error}}
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
-        {{/unless}}
-        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
-        {{/unless}}
-        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+        <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{#unless model.isNew}}
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.name}}
-      <span style ="color:red">{{model.errors.name}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.name
-      class=(if model.errors.name "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
-    }}
-    {{flexberry-validationmessage error=(v-get validationModel "name" "message") pointing="pointing"}}
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=validationModel.errors isVisible=validationModel.isInvalid}}
+    </div>
   </div>
-  <div class="field">
-    {{#if model.errors.eMail}}
-      <span style ="color:red">{{model.errors.eMail}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.eMail
-      class=(if model.errors.eMail "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
-    }}
-    {{flexberry-validationmessage error=(v-get validationModel "eMail" "message") pointing="pointing"}}
-  </div>
-  <div class="field">
-    {{#if model.errors.phone1}}
-      <span style ="color:red">{{model.errors.phone1}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.phone1
-      class=(if model.errors.phone1 "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.phone2}}
-      <span style ="color:red">{{model.errors.phone2}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.phone2
-      class=(if model.errors.phone2 "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.phone3}}
-      <span style ="color:red">{{model.errors.phone3}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.phone3
-      class=(if model.errors.phone3 "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
-    {{#if model.errors.activated}}
-      <span style="color:red">{{model.errors.activated}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.activated}}
-  </div>
-  <div class="field">
-    {{#if model.errors.vK}}
-      <span style ="color:red">{{model.errors.vK}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.vK
-      class=(if model.errors.vK "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.facebook}}
-      <span style ="color:red">{{model.errors.facebook}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.facebook
-      class=(if model.errors.facebook "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.twitter}}
-      <span style ="color:red">{{model.errors.twitter}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.twitter
-      class=(if model.errors.twitter "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
-    {{#if model.errors.birthday}}
-      <span style="color:red">{{model.errors.birthday}}</span>
-    {{/if}}
-    {{flexberry-simpledatetime
-      type="date"
-      readonly=readonly
-      value=model.birthday
-      class=(if model.errors.birthday "error" "")
-    }}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
-    {{#if model.errors.gender}}
-      <span style="color:red">{{model.errors.gender}}</span>
-    {{/if}}
-    {{flexberry-dropdown items=(flexberry-enum "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
-  </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
-    {{#if model.errors.vip}}
-      <span style="color:red">{{model.errors.vip}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.vip}}
-  </div>
-  <div class="field">
-    {{#if model.errors.karma}}
-      <span style ="color:red">{{model.errors.karma}}</span>
-    {{/if}}
-    {{flexberry-field
-      readonly=readonly
-      required=true
-      value=model.karma
-      class=(if model.errors.karma "error" "")
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
-    }}
+  <div class="ui two column grid stackable">
+    <div class="column">
+      <h4>{{t "forms.ember-flexberry-dummy-application-user-edit.profile"}}</h4>
+      <div class="field">
+        {{flexberry-field
+          value=model.name
+          class=(if validationModel.errors.name "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.name}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
+          {{flexberry-simpledatetime
+            type="date"
+            value=model.birthday
+            class=(if validationModel.errors.birthday "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.birthday}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
+          {{flexberry-dropdown
+            items=(flexberry-enum "ember-flexberry-dummy-gender")
+            value=model.gender
+            class=(if validationModel.errors.gender "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.gender}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.karma
+          class=(if validationModel.errors.karma "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.karma}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.activated
+            class=(if validationModel.errors.activated "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.activated}}
+        </div>
+        <div class="field">
+          <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
+          {{flexberry-checkbox
+            value=model.vip
+            class=(if validationModel.errors.vip "error")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.vip}}
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <h4>{{t "forms.ember-flexberry-dummy-application-user-edit.contact-info"}}</h4>
+      <div class="field">
+        {{flexberry-field
+          value=model.phone1
+          class=(if validationModel.errors.phone1 "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.phone1}}
+      </div>
+      <div class="field">
+        <label>{{t "forms.ember-flexberry-dummy-application-user-edit.phone1-required-caption"}}</label>
+        {{flexberry-checkbox
+          value=model.phone1IsRequired
+          readonly=readonly
+        }}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.phone2
+            class=(if validationModel.errors.phone2 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone2}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.phone3
+            class=(if validationModel.errors.phone3 "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.phone3}}
+        </div>
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.eMail
+          class=(if validationModel.errors.eMail "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.eMail}}
+      </div>
+      <div class="field">
+        {{flexberry-field
+          value=model.vK
+          class=(if validationModel.errors.vK "error")
+          label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=validationModel.errors.vK}}
+      </div>
+      <div class="two fields">
+        <div class="field">
+          {{flexberry-field
+            value=model.facebook
+            class=(if validationModel.errors.facebook "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.facebook}}
+        </div>
+        <div class="field">
+          {{flexberry-field
+            value=model.twitter
+            class=(if validationModel.errors.twitter "error")
+            label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
+            readonly=readonly
+          }}
+          {{flexberry-validationmessage error=validationModel.errors.twitter}}
+        </div>
+      </div>
+    </div>
+
   </div>
   <hr/>
-    <h3>{{t 'forms.ember-flexberry-dummy-multi-list.caption'}}</h3>
+    <h3>{{t "forms.ember-flexberry-dummy-multi-list.caption"}}</h3>
     <div class="row">
       {{#with multiListSettings.MultiUserListOnEdit as |settings|}}
         {{flexberry-objectlistview
@@ -249,7 +228,7 @@
           enableFilters=true
           filters=settings.filters
           filterButton=true
-          filterByAnyMatch=(action 'filterByAnyMatch')
+          filterByAnyMatch=(action "filterByAnyMatch")
           filterText=settings.filter
           refreshButton=true
           exportExcelButton=true

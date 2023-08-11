@@ -17,6 +17,7 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
+import Builder from 'ember-flexberry-data/query/builder';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
@@ -427,6 +428,23 @@ export default FlexberryBaseComponent.extend(
     @default false
   */
   showFiltersInModal: false,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
 
   /**
     Flag indicates whether to show dropdown menu with prototype menu item, in last column of every row.
@@ -968,10 +986,10 @@ export default FlexberryBaseComponent.extend(
     @default ''
   */
   componentName: '',
-  
+
   /**
    * Clears selection from row
-   * 
+   *
    * @param {DS.Model} recordWithKey Model in row
    */
   clearSelectionFromRow(recordWithKey) {
@@ -1103,7 +1121,7 @@ export default FlexberryBaseComponent.extend(
 
       this.clearSelectionFromRow(recordWithKey);
     },
-    
+
     /* eslint-enable no-unused-vars */
 
     /**
@@ -1336,6 +1354,8 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
     assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
+    this._initDdlFilterSettings();
+
     this.set('selectedRecords', A());
     this.set('cellComponent', {
       componentName: undefined,
@@ -1535,6 +1555,10 @@ export default FlexberryBaseComponent.extend(
     For more information see [willDestroy](https://emberjs.com/api/ember/release/classes/Component#method_willDestroy) method of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroy() {
+    if (this.get('skipSelectedRecords')) {
+      this.get('objectlistviewEventsService').holdMultiSelectedRecords(this.get('componentName'));
+    }
+
     this.removeObserver('content.[]', this, this._contentDidChangeProxy);
 
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
@@ -2008,11 +2032,24 @@ export default FlexberryBaseComponent.extend(
       condition = filters[name].condition;
     }
 
-    let component = this._getFilterComponent(type);
+    let component = this._getComponentForDdlFilter(bindingPath);
+    if (!component)
+    {
+      component = this._getFilterComponent(type);
+    }
+
     let componentForFilter = this.get('componentForFilter');
+
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+    }
+
+    let transformInstance = getOwner(this).lookup('transform:' + attribute.type);
+    let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+    if (transformClass && transformClass.componentForFilter) {
+      $.extend(true, component, transformClass.componentForFilter(relation));
     }
 
     let options = this._getFilterComponentByCondition(condition, null);
@@ -2028,6 +2065,61 @@ export default FlexberryBaseComponent.extend(
     component._defaultComponent = component.name;
 
     column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Initializes a list of values for the specified filters.
+
+    @method _initDdlFilterSettings
+    @return {Promise}
+  */
+  _initDdlFilterSettings() {
+    const ddlFilterSettings = this.get('ddlFilterSettings');
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const promises =  A();
+    const store = this.get('store');
+    ddlFilterSettings.map(obj => {
+      const builder = new Builder(store, obj.modelName).selectByProjection(obj.projectionName);
+      const promise = store.query(obj.modelName, builder.build()).then(items => {
+        obj.items = items.map(item => {
+          return get(item, obj.propName);
+        });
+      });
+
+      promises.push(promise);
+    });
+
+    return RSVP.all(promises);
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getComponentForDdlFilter
+    @param {String} bindingPath
+    @return {Object} Object with parameters for component.
+  */
+  _getComponentForDdlFilter(bindingPath) {
+    const ddlFilterSettings = this.get('ddlFilterSettings');
+    if (isEmpty(ddlFilterSettings)) {
+      return;
+    }
+
+    const filterSettings = ddlFilterSettings.find(obj => obj.bindingPath === bindingPath);
+    if (filterSettings) {
+      return {
+        name: 'flexberry-dropdown',
+        properties: {
+          items: filterSettings.items,
+          class: 'compact'
+        }
+      };
+    }
+
+    return;
   },
 
   /**
@@ -2072,12 +2164,15 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'string':
-      case 'number':
         component.name = 'flexberry-textbox';
         break;
 
+      case 'number':
       case 'decimal':
         component.name = 'flexberry-textbox';
+        component.properties = {
+          type: 'number',
+        };
         break;
 
       case 'boolean': {
@@ -2113,6 +2208,11 @@ export default FlexberryBaseComponent.extend(
     return component;
   },
   /* eslint-enable no-unused-vars */
+
+  /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
 
   /**
     Alter filter component depending on condition chosen by user.
@@ -2320,9 +2420,12 @@ export default FlexberryBaseComponent.extend(
 
     // Mark previously selected records.
     let componentName = this.get('componentName');
-    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    let selectedRecords = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    let multiSelectedRecords = this.get('objectlistviewEventsService').getMultiSelectedRecords(componentName);
 
-    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+    let selectedRecordsToRestore = multiSelectedRecords ? multiSelectedRecords : selectedRecords;
+
+    if (this.get('skipSelectedRecords') === false && !isEmpty(selectedRecordsToRestore)) {
       /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {

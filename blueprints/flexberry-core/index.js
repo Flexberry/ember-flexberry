@@ -32,7 +32,9 @@ module.exports = {
         '__root__/templates/mobile/application.hbs',
     ],
     getFileMap: function () {
-        var moduleName = this.options.entity && this.options.entity.name || this.packageName;
+        var moduleName = this.options.entity &&
+			this.options.entity.name ||
+			this.packageName;
         var fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
         return this.generateFileMap(fileMapVariables);
     },
@@ -227,7 +229,7 @@ var CoreBlueprint = /** @class */ (function () {
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
-            var childItemExt = new SitemapItemExt(item);
+            const childItemExt = new SitemapItemExt(item, options);
             childItemExt.process("forms.application.sitemap", 5);
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
@@ -249,8 +251,9 @@ var CoreBlueprint = /** @class */ (function () {
     return CoreBlueprint;
 }());
 var SitemapItemExt = /** @class */ (function () {
-    function SitemapItemExt(baseItem) {
+    function SitemapItemExt(baseItem, options) {
         this.baseItem = baseItem;
+		this.options = options;
     }
     SitemapItemExt.prototype.process = function (parentTranslationProp, level) {
         var translationProp;
@@ -277,7 +280,7 @@ var SitemapItemExt = /** @class */ (function () {
         if (this.baseItem.children) {
             for (var _i = 0, _a = this.baseItem.children; _i < _a.length; _i++) {
                 var childItem = _a[_i];
-                var childItemExt = new SitemapItemExt(childItem);
+                const childItemExt = new SitemapItemExt(childItem, this.options);
                 childItemExt.process(translationProp, level + 1);
                 childrenTranslation.push(childItemExt.translation);
                 childrenTranslationOtherLocales.push(childItemExt.translationOtherLocales);
@@ -304,12 +307,46 @@ var SitemapItemExt = /** @class */ (function () {
         this.translationOtherLocales = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
-        this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
-            (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
-            ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
-            ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
-            (nodeIcon === undefined ? '' : ("" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(nodeIcon) + ",\n")) +
-            ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");
+
+        const sitemapLink = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n";
+		const levelIcon = level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n");
+		const caption = "" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n";
+		const title = "" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n";
+		
+		let icon = '';
+		if (nodeIcon !== undefined) {
+			const existIcon = this.existIconInApplication(sitemapLink, this.options);
+			const resultIcon = existIcon !== '' ? existIcon : nodeIcon;
+			icon = "" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(resultIcon) + ",\n";
+		}
+
+		const children = "" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}";
+
+        this.sitemap = sitemapLink +
+			levelIcon +
+			caption +
+			title +
+			icon +
+			children;
+    };
+	SitemapItemExt.prototype.existIconInApplication = function (value, options) {
+        let icon = '';
+		
+		if (options) {
+			const applicationFilePath = this.options.target + path.sep + "app" + path.sep + "controllers" + path.sep + "application.js";
+			
+			if (fs.existsSync(applicationFilePath)) {
+				const content = stripBom(fs.readFileSync(applicationFilePath, "utf8"));
+
+				const startPosition = content.indexOf(value);
+				const contentAfterPosition = startPosition !== -1 ? content.substring(startPosition, content.length) : '';
+				const existIconFinded = contentAfterPosition.match(/icon: '(.*)'[,|\n]/);
+				
+				icon = existIconFinded !== null && existIconFinded.length > 0 ? existIconFinded.pop(): icon;
+			}
+		}
+		
+		return icon;
     };
     SitemapItemExt.prototype.escapeValue = function (value) {
         return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");

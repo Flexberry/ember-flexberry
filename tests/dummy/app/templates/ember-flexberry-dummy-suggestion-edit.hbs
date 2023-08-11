@@ -70,6 +70,7 @@
             readonly=readonly
             direction="upward"
             componentName="SuggestionEditType"
+            updateLookupValue=(action "updateLookupValue")
           }}
           {{flexberry-validationmessage error=(v-get validationObject "type" "message")}}
         </div>
@@ -121,9 +122,10 @@
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
           preview=(action "previewLookupValue")
-          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+          lookupWindowCustomProperties=(action "getLookupFolvProperties")
           readonly=readonly
           componentName="SuggestionEditAuthor"
+          updateLookupValue=(action "updateLookupValue")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
       </div>
@@ -144,7 +146,8 @@
           preview=(action "previewLookupValue")
           readonly=readonly
           componentName="SuggestionEditEditor1"
-          lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+          lookupWindowCustomProperties=(action "getLookupFolvProperties")
+          updateLookupValue=(action "updateLookupValue")
         }}
         {{flexberry-validationmessage error=(v-get validationObject "editor1" "message")}}
       </div>

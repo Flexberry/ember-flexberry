@@ -25,6 +25,8 @@ export default Controller.extend({
   */
   appState: service(),
 
+  router: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -110,6 +112,20 @@ export default Controller.extend({
       }
       return null;
     },
+
+    /**
+      Select themes.
+      @method actions.changeTheme
+    */
+    changeTheme(value) {
+      let sheet = document.querySelector('#theme');
+      if (!sheet) {
+        return;
+      }
+
+      let rootURL = this.get('router.location.location.origin') + config.rootURL;
+      sheet.setAttribute('href', `${rootURL}assets/${value}.css`);
+    }
   },
 
   /**
@@ -165,6 +181,14 @@ export default Controller.extend({
   locales: undefined,
 
   /**
+    Themes supported by application.
+    @property themes
+    @type String[]
+    @default ['purple', 'dark', 'default']
+  */
+  themes: undefined,
+
+  /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
 
     @method _userSettingsServiceChanged
@@ -179,6 +203,8 @@ export default Controller.extend({
   */
   init() {
     this._super(...arguments);
+
+    this.set('themes', ['purple', 'dark', 'default']);
 
     let i18n = this.get('i18n');
     if (isNone(i18n)) {
@@ -394,6 +420,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
@@ -606,7 +637,13 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
-          }]
+          }, {
+            link: 'components-examples/flexberry-objectlistview/toolbar-custom-components-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.title'),
+            children: null
+          }
+        ]
         }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),

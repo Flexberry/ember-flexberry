@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.limit-function-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef2_lookup-component.html#задание-ограничений">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-lookup
       value=model.type
@@ -9,8 +12,9 @@
       relationName="type"
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true
     }}

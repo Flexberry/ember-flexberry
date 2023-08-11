@@ -1,9 +1,9 @@
 <div class="field no-margin">
-  <div class="field {{if readonly "no-margin"}}">
+  <div class="field {{unless isChooseComponentVisible "no-margin"}}">
     <label data-test-caption>
       {{caption}}
     </label>
-    {{#unless readonly}}
+    {{#if isChooseComponentVisible}}
       {{#if hasBlock}}
         {{yield value}}
       {{else}}
@@ -12,6 +12,7 @@
           folvComponentName=folvComponentName
           choose=choose
           remove=remove
+          updateLookupValue=updateLookupValue
           removeButtonClass="hidden"
           value=value
           autocomplete=true
@@ -28,7 +29,7 @@
           usePaginationForAutocomplete=usePaginationForAutocomplete
         }}
       {{/if}}
-    {{/unless}}
+    {{/if}}
   </div>
   <div class="{{if isColumnMode "flex-column"}}">
     {{#each filteredRecords as |record|}}
@@ -44,9 +45,9 @@
           ></i>
         {{/unless}}
       </a>
-    {{else if readonly}}
+    {{else if (not isChooseComponentVisible)}}
       <span class="italic" data-test-no-data>
-        {{t "components.multiple-lookup.no-data"}}
+        {{t "components.flexberry-multiple-lookup.no-data"}}
       </span>
     {{/each}}
   </div>

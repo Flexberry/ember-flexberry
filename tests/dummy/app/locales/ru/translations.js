@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Пользовательские кнопки',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Пример групэдита с мультиселектом в лукапе',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
@@ -357,8 +361,8 @@ $.extend(true, translations, {
             'caption': 'flexberry-multiple-lookup',
             'title': '',
             'multiple-lookup': {
-              'caption': 'Лукап множественного выбора',
-              'title': 'Лукап множественного выбора'
+              'caption': 'Пример работы с настройками',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -438,6 +442,10 @@ $.extend(true, translations, {
             },
             'limited-text-size-example': {
               'caption': 'Пример ограничения длины текста в ячейках',
+              'title': ''
+            },
+            'toolbar-custom-components-example': {
+              'caption': 'Пример встраивания пользовательских компонентов в olv-toolbar',
               'title': ''
             },
           },
@@ -636,6 +644,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Заполните поле "Имя"',
       'eMail-validation-message-caption': 'Заполните поле "E-mail"',
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
+      'profile': 'Профиль',
+      'contact-info': 'Контактная информация',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -762,6 +772,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Ссылка на документацию компонента',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-button'
@@ -822,7 +833,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Пример работы с настройками'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками',
+          'remove-class-button-name': 'Убрать класс "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Пользовательские кнопки',
@@ -897,7 +909,8 @@ $.extend(true, translations, {
           'captionModalDouble': 'Модальное с modal-dialog'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Режим dropdown'
+          'caption': 'Flexberry-lookup. Режим dropdown',
+          'fieldMinCharacters': 'minCharacters - минимальное количество символов для активации функции поиска'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
@@ -914,9 +927,9 @@ $.extend(true, translations, {
       },
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
-          'caption': 'Лукап множественного выбора',
+          'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
           'lookup-caption': 'Заполнение пользователей',
-          'lookup-title': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
         }
       },
       'flexberry-menu': {
@@ -959,6 +972,9 @@ $.extend(true, translations, {
         },
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
+        },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar'
         },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',

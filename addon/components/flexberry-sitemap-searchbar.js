@@ -139,7 +139,7 @@ export default Component.extend({
   },
 
   /**
-   * Runs search once in a while.
+   * Runs search.
    *
    * @private
    * @function _startSearch

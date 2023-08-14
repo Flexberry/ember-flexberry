@@ -37,3 +37,5 @@ blueprints/flexberry-model/index.ts
 blueprints/flexberry-object-init/index.ts
 blueprints/flexberry-object/index.ts
 blueprints/flexberry-serializer-init/index.ts
+
+/codemodes

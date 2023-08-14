@@ -2,10 +2,27 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.9.0] - 2023-07-20
 ### Added
 * The `flexberry-multiple-lookup` component:
-    * Add `chooseComponentVisibility` property.
+    * Added `chooseComponentVisibility` property.
+* The `flexberry-objectlistview` component:
+    * Added functionality to embed custom components in the `olv-toolbar`.
+    * Added dropdown in the filter for directories.
+* The `flexberry-groupedit` component:
+    * Added multiselect for details.
+* The `flexberry-lookup` component:
+    * Added lookup action `updateLookupValue`.
+* Added ability to add custom attributes types.
+
+### Changed
+* Updated validation visibility call and add required marker.
+* The `flexberry-objectlistview` component:
+    * Updated flexberry-menu structure in the `olv-toolbar`.
+
+### Fixed
+* Blueprints:
+    * Check existing icons in application controller.
 
 ## [3.8.0] - 2023-04-25
 ### Added

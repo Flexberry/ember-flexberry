@@ -458,7 +458,6 @@ module.exports = {
       "only": [
         "eol-last",
         "simple-unless",
-        "no-bare-strings"
       ]
     },
     {
@@ -492,8 +491,6 @@ module.exports = {
       "only": [
         "block-indentation",
         "self-closing-void-elements",
-        "no-inline-styles",
-        "simple-unless"
       ]
     },
     {
@@ -883,14 +880,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/flexberry-file-in-modal",
-      "only": [
-        "eol-last",
-        "quotes",
-        "require-button-type"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/settings-example",
       "only": [
         "eol-last"
@@ -946,12 +935,6 @@ module.exports = {
       "only": [
         "no-duplicate-attributes",
         "require-button-type"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/settings-example",
-      "only": [
-        "eol-last"
       ]
     },
     {
@@ -1031,12 +1014,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/edit-form-with-detail-list",
       "only": [
         "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit",
-      "only": [
-        "simple-unless"
       ]
     },
     {

@@ -13,6 +13,7 @@
 bower.json
 ember-cli-build.js
 testem.js
+/codemodes
 
 # ember-try
 .node_modules.ember-try/

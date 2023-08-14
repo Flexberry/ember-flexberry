@@ -46,6 +46,7 @@
       projection="ApplicationUserL"
       title=(t "forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption")
       readonly=readonly
+      updateLookupValue=(action "updateLookupValue")
     }}
     {{flexberry-validationmessage error=(v-get validationObject "applicationUser" "messages")}}
   </div>

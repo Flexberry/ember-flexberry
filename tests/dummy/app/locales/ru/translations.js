@@ -644,6 +644,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Заполните поле "Имя"',
       'eMail-validation-message-caption': 'Заполните поле "E-mail"',
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
+      'profile': 'Профиль',
+      'contact-info': 'Контактная информация',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -830,7 +832,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Пример работы с настройками'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками',
+          'remove-class-button-name': 'Убрать класс "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Пользовательские кнопки',

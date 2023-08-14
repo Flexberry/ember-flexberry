@@ -1227,18 +1227,23 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _uploadDataDidChange: observer('_uploadData', function() {
-    if (this.get('_uploadData')) {
-      this.set('_previewImageAsBase64String', null);
-    }
-
     run(() => {
-      let file = this.get('_selectedFile');
+      const file = this.get('_selectedFile');
+
       if (!isNone(file)) {
-        this.set('value', JSON.stringify({
+        const fileJson = JSON.stringify({
           fileName: file.name,
           fileSize: file.size,
           fileMimeType: file.type
-        }));
+        })
+
+        if (fileJson !== this.get('value')) {
+          this.set('_previewImageAsBase64String', null);
+        }
+
+        this.set('value', fileJson);
+      } else {
+        this.set('_previewImageAsBase64String', null);
       }
     });
   }),

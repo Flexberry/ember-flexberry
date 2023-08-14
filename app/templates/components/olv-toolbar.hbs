@@ -112,9 +112,6 @@
     </button>
   </div>
 {{/if}}
-{{#each customComponents as |customComponent|}}
-  {{component customComponent.name dynamicProperties=customComponent.properties}}
-{{/each}}
 {{#if exportExcelButton}}
   <div class="ui buttons export-config">
     <button
@@ -180,6 +177,9 @@
         {{t "components.olv-toolbar.custom-button-text"}}
       {{/if}}
   </button>
+{{/each}}
+{{#each customComponents as |customComponent|}}
+  {{component customComponent.name dynamicProperties=customComponent.properties}}
 {{/each}}
 <div class="olv-toolbar-info-modal-dialog ui small basic modal">
   <div class="ui icon header">

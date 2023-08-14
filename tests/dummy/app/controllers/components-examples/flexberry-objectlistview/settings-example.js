@@ -678,7 +678,6 @@ export default ListFormController.extend({
       settingDefaultValue: true,
       settingValue: true,
       bindedControllerPropertieName: 'bottomPagination'
-
     });
     componentSettingsMetadata.pushObject({
       settingName: 'editInModal',

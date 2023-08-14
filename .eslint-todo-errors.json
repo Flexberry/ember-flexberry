@@ -101,12 +101,12 @@
     { "ruleId": "ember/require-computed-macros", "line": 174, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 309, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 310, "column": 28 },
-    { "ruleId": "ember/closure-actions", "line": 1288, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1305, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1306, "column": 42 },
-    { "ruleId": "ember/closure-actions", "line": 1396, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1617, "column": 55 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1661, "column": 37 }
+    { "ruleId": "ember/closure-actions", "line": 1293, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1310, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1311, "column": 42 },
+    { "ruleId": "ember/closure-actions", "line": 1401, "column": 7 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1623, "column": 55 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1667, "column": 37 }
   ],
   "addon/components/flexberry-simpledatetime.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 42, "column": 26 },

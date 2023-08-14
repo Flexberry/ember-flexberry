@@ -772,6 +772,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Component docs link',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Settings example for flexberry-button'
@@ -910,7 +911,8 @@ $.extend(true, translations, {
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Dropdown mode example'
+          'caption': 'Flexberry-lookup. Dropdown mode example',
+          'fieldMinCharacters': 'minCharacters - minimum number of characters to activate the search function'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',

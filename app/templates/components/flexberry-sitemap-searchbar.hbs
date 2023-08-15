@@ -1,0 +1,28 @@
+{{input
+  class="sitemap-search-input"
+  type="text"
+  input=(action "startSearch")
+  click=(action "toggleResultsList")
+  value=userQuery
+  placeholder=placeholder
+}}
+<button type="button" class="sitemap-search-button" onclick={{action "clickSearchIcon"}}>
+  <i class="icon icon-guideline-search sitemap-search-icon"></i>
+</button>
+{{#if isShowingResults}}
+  <div class="sitemap-search-results-list">
+    {{#each _results as |node|}}
+      {{searchbar-node
+        node=node
+        classNames="match-card"
+      }}
+    {{/each}}
+    {{#if noHits}}
+      <div class="ui message">
+        <div class="header">
+          {{t "components.flexberry-sitemap-searchbar.notFoundMsg"}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

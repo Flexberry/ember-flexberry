@@ -33,17 +33,16 @@
   </div>
   <div class="{{if isColumnMode "flex-column"}}">
     {{#each filteredRecords as |record|}}
-      <a class="ui label" data-test-tag>
-        <span class="normal-weight" onClick={{action "preview" record}}>
-          {{record.tagDisplayValue}}
-        </span>
-        {{#unless readonly}}
-          <i
-            class="delete icon"
-            data-test-tag-remove-btn
-            onClick={{action "delete" record}}
-          ></i>
-        {{/unless}}
+      <a class="{{record.tagConfig.customClass}} ui label" data-test-tag>
+        {{#if record.tagConfig.canBeSelected}}
+          <span class="normal-weight" onClick={{action "preview" record}}>{{record.tagDisplayValue}}</span>
+        {{else}}
+          <span class="normal-weight">{{record.tagDisplayValue}}</span>
+        {{/if}}
+
+        {{#if (and record.tagConfig.canBeDeleted (not readonly))}}
+          <i class="delete icon" onClick={{action "delete" record}} data-test-tag-remove-btn></i>
+        {{/if}}
       </a>
     {{else if (not isChooseComponentVisible)}}
       <span class="italic" data-test-no-data>

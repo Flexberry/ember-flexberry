@@ -108,6 +108,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/numeric-autocomplete');
   this.route('components-examples/flexberry-lookup/user-settings-example');
   this.route('components-examples/flexberry-multiple-lookup/multiple-lookup');
+  this.route('components-examples/flexberry-multiple-lookup/configurate-tags');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');

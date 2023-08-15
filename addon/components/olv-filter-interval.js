@@ -4,7 +4,7 @@ import { translationMacro as t } from 'ember-i18n';
 import moment from 'moment';
 
 export default FlexberryBaseComponent.extend({
-
+  classNames: ['two fields'],
   /**
    * Start of interval
    * @type {*}

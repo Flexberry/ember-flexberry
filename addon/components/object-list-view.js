@@ -2233,7 +2233,8 @@ export default FlexberryBaseComponent.extend(
         filterComponent.properties = {
           componentName: 'flexberry-simpledatetime',
           dynProps: {
-            removeButton: false
+            removeButton: false,
+            type: 'date',
           }
         }
       }

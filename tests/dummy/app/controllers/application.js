@@ -539,6 +539,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-multiple-lookup/configurate-tags',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.title'),
+            children: null
           }]
         }, {
           link: null,

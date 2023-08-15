@@ -1,0 +1,34 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-multiple-lookup.configurate-tags.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form" >
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+      componentBlockOverflow="visible"
+    }}
+      {{flexberry-multiple-lookup
+        componentName="MultipleLookupGroupedit"
+        folvComponentName="folvMultipleLookupGroupedit"
+        caption=(t "forms.components-examples.flexberry-multiple-lookup.configurate-tags.lookup-caption")
+        choose="showLookupDialog"
+        updateLookupValue="updateLookupValue"
+        add=(action "addMultipleValue")
+        delete=(action "deleteMultipleValue")
+        preview=(action "previewMultipleValue")
+        records=model.userVotes
+        value=baseVoteModel.author
+        isColumnMode=false
+        autocomplete=true
+        autocompleteProjection="PreviewExampleView"
+        relatedModel=baseVoteModel
+        relationName="author"
+        projection="PreviewExampleView"
+        displayAttributeName="name"
+        title=(t "forms.components-examples.flexberry-multiple-lookup.configurate-tags.lookup-title")
+        usePaginationForAutocomplete=true
+        configurateTag=(action "configurateTag")
+      }}
+    {{/settings-example}}
+  </div>
+</form>

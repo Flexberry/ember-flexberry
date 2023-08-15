@@ -32,8 +32,6 @@
         value=searchPageValue
         enter=(action searchPageButtonAction)
       }}
-      {{!-- TODO: I still do not understand why, but without this, in the Ember 2.x version, the form submitting is faster than processing the `enter` event. --}}
-      {{input classNames=(array "hidden")}}
       {{#if searchPageValue}}
         <button
           type="button"
@@ -45,7 +43,7 @@
       {{/if}}
     </div>
     <div class="right menu">
-      {{#if showShowingEntries}}
+      {{#if (and showShowingEntries recordsTotalCount)}}
         <div class="showing-entries">
           {{#if (and currentIntervalRecords recordsTotalCount) }}
             {{concat
@@ -54,7 +52,7 @@
           {{/if}}
         </div>
       {{/if}}
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action perPageClick) needChecksOnValue=false direction="upward"}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action perPageClick) settings=(hash direction="upward")}}
     </div>
   </div>
 {{/if}}

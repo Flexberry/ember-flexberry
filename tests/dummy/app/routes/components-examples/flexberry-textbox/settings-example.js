@@ -1,5 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { getOwner } from '@ember/application';
+import { dynamicModelRegistration } from 'dummy/utils/create-dynamic-models';
 
 export default Route.extend({
   appState: service(),
@@ -15,13 +17,50 @@ export default Route.extend({
 
     @method model
    */
-  /* eslint-disable no-unused-vars */
-  model(params) {
+  model() {
     var store = this.get('store');
 
-    var base = store.createRecord('components-examples/flexberry-textbox/settings-example/base', {});
+    let dynamicModel = {
+      modelName: 'dynamic-model',
+      attrs: [
+        {
+          "name": "text",
+          "type": "string",
+          "notNull": false,
+          "defaultValue": "",
+          "stored": true
+        }
+      ],
+      projections: [
+        {
+          "name": "BaseE",
+          "attrs": [
+            {
+              "name": "text",
+              "caption": "Text",
+              "hidden": false,
+              "index": 0,
+            }
+          ]
+        },
+        {
+          "name": "BaseL",
+          "attrs": [
+            {
+              "name": "text",
+              "caption": "Text",
+              "hidden": false,
+              "index": 0,
+            }
+          ]
+        }
+      ]
+    };
+
+    // Dynamic model registration and creation.
+    dynamicModelRegistration(dynamicModel, getOwner(this));
+    var base = store.createRecord('dynamic-model', { text: 'dynamic-model-text'});
 
     return base;
   }
-  /* eslint-enable no-unused-vars */
 });

@@ -2113,7 +2113,7 @@ export default FlexberryBaseComponent.extend(
         name: 'flexberry-dropdown',
         properties: {
           items: filterSettings.items,
-          class: 'compact'
+          class: 'fluid'
         }
       };
     }
@@ -2178,7 +2178,7 @@ export default FlexberryBaseComponent.extend(
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact',
+          class: 'fluid',
         };
         break;
       }

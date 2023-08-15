@@ -337,7 +337,6 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "no-unnecessary-concat",
-        "quotes",
         "no-inline-styles",
         "no-invalid-interactive",
         "simple-unless"
@@ -940,7 +939,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
       "only": [
-        "block-indentation",
         "no-bare-strings"
       ]
     },

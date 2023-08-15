@@ -6,28 +6,27 @@ import { isNone } from '@ember/utils';
 import DS from 'ember-data';
 import { attr } from 'ember-flexberry-data/utils/attributes';
 import Model from 'ember-flexberry-data/models/model';
-import Mixin from '@ember/object/mixin';
 
   /**
-    Creates mixin from data model.
+    Creates model from data model.
 
-    @method createMixin
+    @method createModel
     @param {Object} attributes model attributes array.
-    @return {Object} Mixin
+    @return {Object} Model
   */
-  function createMixin(attrs) {
+  function createModel(attrs) {
     if (isNone(attrs)) {
       return;
     }
 
-    let mixin = {};
+    let model = {};
     attrs.forEach((attribute) => {
-      mixin[attribute.name] = DS.attr(attribute.type, { required: attribute.notNull });
+      model[attribute.name] = DS.attr(attribute.type, { required: attribute.notNull });
     });
 
-    let modelMixin = Mixin.create(mixin);
-    return modelMixin;
-  };
+    let modelResult = Model.extend(model);
+    return modelResult;
+  }
 
   /**
     Creates projection from data model.
@@ -44,7 +43,7 @@ import Mixin from '@ember/object/mixin';
     });
 
     return modelProjection;
-  };
+  }
 
   /**
     Dynamic model registration.
@@ -54,19 +53,16 @@ import Mixin from '@ember/object/mixin';
   */
  let dynamicModelRegistration = function(dynamicModelObj, owner) {
     let modelRegistered = owner.hasRegistration(`model:${dynamicModelObj.modelName}`);
-    let mixinRegistered = owner.hasRegistration(`mixin:${dynamicModelObj.modelName}`);
 
-    // Check if model and mixin are registered.
-    if (!modelRegistered && !mixinRegistered) {
-      let modelMixin = createMixin(dynamicModelObj.attrs);
-      let model = Model.extend(modelMixin);
+    // Check if model is registered.
+    if (!modelRegistered) {
+      let model = createModel(dynamicModelObj.attrs);
 
       dynamicModelObj.projections.forEach((projection) => {
         model.defineProjection(projection.name, dynamicModelObj.modelName, createProjection(projection));
       });
 
       owner.register(`model:${dynamicModelObj.modelName}`, model);
-      owner.register(`mixin:${dynamicModelObj.modelName}`, modelMixin);
     }
   }
 

@@ -913,7 +913,8 @@ $.extend(true, translations, {
           'captionModalDouble': 'Модальное с modal-dialog'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Режим dropdown'
+          'caption': 'Flexberry-lookup. Режим dropdown',
+          'fieldMinCharacters': 'minCharacters - минимальное количество символов для активации функции поиска'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',

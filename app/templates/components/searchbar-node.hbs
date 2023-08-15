@@ -1,0 +1,19 @@
+{{#if node.children}}
+  {{#flexberry-toggler
+    caption=node.caption.string
+    expandedCaption=node.caption.string
+    collapsedCaption=node.caption.string
+    expanded=false
+    componentName=node.caption.string
+    iconClass=iconClass
+  }}
+    {{#each node.children as |subnode|}}
+      {{searchbar-node
+        node=subnode}}
+    {{/each}}
+  {{/flexberry-toggler}}
+{{else}}
+  {{#link-to node.link title=node.title.string}}
+    {{node.caption.string}}
+  {{/link-to}}
+{{/if}}

@@ -6,8 +6,10 @@
   value=userQuery
   placeholder=placeholder
 }}
-<button type="button" class="sitemap-search-button" onclick={{action "clickSearchIcon"}}>
-  <i class="icon icon-guideline-search sitemap-search-icon"></i>
+<button type="button" class="sitemap-search-button item link" onclick={{action "clickSearchIcon"}}>
+  <span class="title-item-menu">
+    <i class="icon icon-guideline-search sitemap-search-icon"></i>
+  </span>
 </button>
 {{#if isShowingResults}}
   <div class="sitemap-search-results-list">

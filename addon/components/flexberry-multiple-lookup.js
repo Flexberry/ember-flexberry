@@ -1,9 +1,10 @@
 import { A } from '@ember/array';
 import { computed, observer, get, set } from '@ember/object';
+import { copy } from '@ember/object/internals';
 import { inject as service} from '@ember/service';
 import { run } from '@ember/runloop';
 import { isNone } from '@ember/utils';
-import { debug } from '@ember/debug';
+import { debug, assert } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import Builder from 'ember-flexberry-data/query/builder';
@@ -80,6 +81,54 @@ export default FlexberryBaseComponent.extend({
 
     return isVisible && !readonly;
   }),
+
+  /**
+    Default settings for tags.
+
+    @property defaultTagConfig
+    @type Object
+
+    @param {Boolean} [canBeDeleted=true] The tag can be deleted
+    @param {Boolean} [canBeSelected=true] The tag can be selected
+    @param {String} [customClass=''] Custom css classes for the tag
+  */
+  defaultTagConfig: undefined,
+
+  /**
+    Hook for configurate tag.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-multiple-lookup
+        ...
+        configurateTag=(action "configurateTag")
+        ...
+      }}
+      ```
+
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          configurateTag(tagConfig, record) {
+            set(tagConfig, 'canBeDeleted', false);
+            if (record === this.get('myFavoriteRecord')) {
+              set(tagConfig, 'canBeSelected', false);
+              set(tagConfig, 'customClass', 'my-fav-record');
+            }
+          }
+        }
+      });
+      ```
+    @method configurateTag
+
+    @param {Object} tagConfig Settings for tag.
+    @param {DS.Model} record The record in tag.
+  */
+  configurateTag: undefined,
 
   /**
    * Add new record by value.
@@ -206,6 +255,23 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+   * Building a tag configuration property.
+  */
+  buildConfigurateTags: observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
+    let configurateTag = this.get('configurateTag');
+
+    this.get('filteredRecords').forEach((record) => {
+      let tagConfig = copy(this.get('defaultTagConfig'));
+      set(record, 'tagConfig', tagConfig);
+
+      if (configurateTag) {
+        assert('configurateTag must be a function', typeof configurateTag === 'function');
+        configurateTag(tagConfig, record);
+      }
+    });
+  }),
+
+  /**
     Object with lookup properties to send on remove action.
    *
     @property removeData
@@ -239,6 +305,11 @@ export default FlexberryBaseComponent.extend({
     this.get('filteredRecords').forEach((record) =>
       set(record, 'tagDisplayValue', this.getRecordDisplayValue(record))
     );
+    this.set('defaultTagConfig', {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: '',
+    });
     this.addObserver('value', this.addNewRecordByValue);
     this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);
   },

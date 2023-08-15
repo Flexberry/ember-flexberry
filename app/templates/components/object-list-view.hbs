@@ -1,11 +1,11 @@
-<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
+<table class="object-list-view ui unstackable celled {{if readonly "readonly"}} {{tableClass}} table">
   <thead>
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow}}
             {{#if (not-eq class "groupedit-container")}}
-              <div class="ui check-rows-button {{buttonClass}} button {{if readonly 'disabled'}}">
+              <div class="ui check-rows-button {{buttonClass}} button {{if readonly "disabled"}}">
                 {{#if checkRowsSettingsItems}}
                   {{flexberry-menu
                     items=checkRowsSettingsItems
@@ -16,7 +16,7 @@
             {{else}}
               <button
                 type="button"
-                class="ui check-all-at-page-button {{buttonClass}} {{if readonly 'disabled'}} button"
+                class="ui check-all-at-page-button {{buttonClass}} {{if readonly "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>
@@ -47,11 +47,11 @@
             {{#if column.sorted}}
               <div class="object-list-view-order-icon">
                 {{#if column.sortAscending}}
-                  <div title="{{t 'components.object-list-view.sort-ascending'}}">
+                  <div title="{{t "components.object-list-view.sort-ascending"}}">
                     {{column.sortNumber}}<i class="ascending icon"></i>
                   </div>
                 {{else}}
-                  <div title="{{t 'components.object-list-view.sort-descending'}}">
+                  <div title="{{t "components.object-list-view.sort-descending"}}">
                     {{column.sortNumber}}<i class="descending icon"></i>
                   </div>
                 {{/if}}
@@ -97,23 +97,20 @@
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
-              <div class="fluid action input ui">
-                <div style="width: 100%">
-                  {{component column.filter.component.name
-                    value=column.filter.pattern
-                    readonly=(or
-                      (eq column.filter.condition "empty")
-                      (eq column.filter.condition "nempty")
-                    )
-                    dynamicProperties=column.filter.component.properties
-                  }}
-                </div>
+              <div class="ui action input">
+                {{component column.filter.component.name
+                  value=column.filter.pattern
+                  readonly=(or
+                    (eq column.filter.condition "empty")
+                    (eq column.filter.condition "nempty")
+                  )
+                  dynamicProperties=column.filter.component.properties
+                }}
                 <button
                   type="button"
-                  class="ui clear-filter button"
+                  class="ui clear-filter icon button"
                   title={{t "components.object-list-view.clear-filter-in-column"}}
-                  {{action "clearFilterForColumn" column.filter}}
-                >
+                  {{action "clearFilterForColumn" column.filter}}>
                   <i class="remove icon"></i>
                 </button>
               </div>
@@ -163,7 +160,7 @@
           createNewByPrototype=createNewByPrototype
           deleteRow=(action "deleteRow")
           customButtonsInRow=customButtonsInRow
-          customButtonInRowAction='customButtonInRowAction'
+          customButtonInRowAction="customButtonInRowAction"
           defaultLeftPadding=defaultLeftPadding
           overflowedComponents=overflowedComponents
           folvComponentName=componentName

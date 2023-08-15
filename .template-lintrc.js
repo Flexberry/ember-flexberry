@@ -337,7 +337,6 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "no-unnecessary-concat",
-        "quotes",
         "no-inline-styles",
         "no-invalid-interactive",
         "simple-unless"

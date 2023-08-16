@@ -5,6 +5,7 @@
 import { set } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { isNone } from '@ember/utils';
+import moment from 'moment';
 
 import {
   SimplePredicate,
@@ -98,6 +99,23 @@ let predicateForFilter = function (filter) {
         }
 
       case 'date':
+        if (filter.condition === 'between' && filter.pattern) {
+          const [from, to] = filter.pattern.split('|');
+          const fromIsValid = moment(from).isValid();
+          const toIsValid = moment(to).isValid();
+          if (fromIsValid && toIsValid) {
+            return new DatePredicate(filter.name, 'geq', from).and(
+              new DatePredicate(filter.name, 'leq', to)
+            );
+          } else if (fromIsValid) {
+            return new DatePredicate(filter.name, 'leq', to);
+          } else if (toIsValid) {
+            return new DatePredicate(filter.name, 'geq', from);
+          } else {
+            return null;
+          }
+        }
+  
         return filter.pattern ?
           new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
           new SimplePredicate(filter.name, filter.condition, null);

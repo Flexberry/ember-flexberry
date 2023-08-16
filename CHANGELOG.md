@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+* The `flexberry-objectlistview` component:
+    * Added interval filter for dates.
+
 ## [3.9.0] - 2023-07-20
 ### Added
 * The `flexberry-multiple-lookup` component:

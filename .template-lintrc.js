@@ -343,12 +343,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/olv-filter-interval",
-      "only": [
-        "no-inline-styles"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/olv-setconfigdialogbutton",
       "only": [
         "eol-last",

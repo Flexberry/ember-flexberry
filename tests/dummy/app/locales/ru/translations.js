@@ -909,8 +909,7 @@ $.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
-          'captionModal': 'Модальное окно с ui-modal',
-          'captionModalDouble': 'Модальное с modal-dialog'
+          'captionModalDouble': 'Модальное окно с modal-dialog'
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown',

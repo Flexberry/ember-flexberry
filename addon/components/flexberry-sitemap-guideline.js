@@ -4,7 +4,7 @@
 
 import $ from 'jquery';
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { next } from '@ember/runloop';
 
 /**
   Component for sitemap render from the object with links.
@@ -104,15 +104,18 @@ export default Component.extend({
     }
   },
 
-  actions: {
-    /**
-      Show or hide menu.
+  /**
+    Component mouseEnter handler.
 
-      @method actions.menuToggle
-    */
-    menuToggle() {
-      this.$('.subMenu:first').toggleClass('hidden');
-      set(this, 'nodeIsOpen', !get(this, 'nodeIsOpen'));
-    }
-  },
+    @method mouseEnter
+    @private
+  */
+  mouseEnter() {
+    next(()=> {
+      const menuElement = $(this.element).closest('.menu');
+      const { left, width } = menuElement[0].getBoundingClientRect();
+      const subMeluLeft = left + width - 5;
+      $(this.element).children('.menu').attr('style', `left: ${subMeluLeft}px !important;`);
+    });
+  }
 });

@@ -52,6 +52,15 @@ export default FlexberrySitemapGuidelineComponent.extend({
     }
   },
 
+  /**
+    Component mouseEnter handler.
+
+    @method mouseEnter
+    @private
+  */
+  mouseEnter() {
+  },
+
   actions: {
     /**
       Back in menu.

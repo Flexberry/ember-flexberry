@@ -1155,13 +1155,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/ui-message/settings-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/readonly-mode",
       "only": [
         "block-indentation",

@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "3.10.0-beta.1",
+  "version": "3.10.0-beta.2",
   "description": "Ember Flexberry Addon",
   "keywords": [
     "ember-addon",
@@ -43,7 +43,7 @@
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-flexberry-data": "3.9.0",
-    "ember-flexberry-themes": "0.3.0-beta.1",
+    "ember-flexberry-themes": "0.3.0-beta.2",
     "ember-i18n": "5.2.1",
     "ember-test-selectors": "2.1.0",
     "ember-truth-helpers": "2.0.0",

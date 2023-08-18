@@ -703,22 +703,6 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
           break;
         }
 
-        case 'setting icon': {
-          this.send('showConfigDialog', namedSetting);
-          break;
-        }
-
-        case 'remove icon': {
-          /* eslint-disable no-unused-vars */
-          userSettingsService.deleteUserSetting(componentName, namedSetting)
-          .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
-            alert('Настройка ' + namedSetting + ' удалена');
-          });
-          /* eslint-enable no-unused-vars */
-          break;
-        }
-
         case 'remove circle icon': {
           if (!userSettingsService.haveDefaultUserSetting(componentName)) {
             alert('No default usersettings');
@@ -840,35 +824,10 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
 
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let componentName = this.get('componentName');
-      let userSettingsService = this.get('userSettingsService');
-
-      switch (className) {
-        case 'file excel outline icon': {
-          this.send('showExportDialog');
-          break;
-        }
-
-        case 'checkmark box icon': {
-          this.send('showExportDialog', namedSetting, true);
-          break;
-        }
-
-        case 'setting icon': {
-          this.send('showExportDialog', namedSetting);
-          break;
-        }
-
-        case 'remove icon': {
-          /* eslint-disable no-unused-vars */
-          userSettingsService.deleteUserSetting(componentName, namedSetting, true)
-          .then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting, componentName);
-            alert('Настройка ' + namedSetting + ' удалена');
-          });
-          /* eslint-enable no-unused-vars */
-          break;
-        }
+      if (className === 'file excel outline icon') {
+        this.send('showExportDialog', null);
+      } else {
+        this.send('showExportDialog', namedSetting, true);
       }
     },
 

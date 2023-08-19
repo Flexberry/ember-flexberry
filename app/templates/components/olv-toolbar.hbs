@@ -178,6 +178,9 @@
       {{/if}}
   </button>
 {{/each}}
+{{#each customComponents as |customComponent|}}
+  {{component customComponent.name dynamicProperties=customComponent.properties}}
+{{/each}}
 <div class="olv-toolbar-info-modal-dialog ui small basic modal">
   <div class="ui icon header">
     <i class="olvt icon"></i>

@@ -76,12 +76,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/lookup-dialog",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "app/templates/new-platform-flexberry-services-lock-list",
       "only": [
         "eol-last"
@@ -105,6 +99,13 @@ module.exports = {
         "no-inline-styles",
         "no-invalid-interactive",
         "no-quoteless-attributes"
+      ]
+    },
+    {
+      "moduleId": "app/templates/components/flexberry-edit-panel",
+      "only": [
+        // don't delete, exception for text in button.
+        "block-indentation"
       ]
     },
     {
@@ -220,6 +221,14 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/components/flexberry-multiple-lookup",
+      "only": [
+        "link-href-attributes",
+        "no-invalid-interactive",
+        "no-unnecessary-concat"
+      ]
+    },
+    {
       "moduleId": "app/templates/components/flexberry-objectlistview",
       "only": [
         "quotes",
@@ -245,15 +254,6 @@ module.exports = {
       "moduleId": "app/templates/components/flexberry-sitemap",
       "only": [
         "eol-last",
-        "no-invalid-interactive"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/flexberry-tab-bar",
-      "only": [
-        "eol-last",
-        "no-unnecessary-concat",
-        "link-href-attributes",
         "no-invalid-interactive"
       ]
     },
@@ -337,16 +337,9 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "no-unnecessary-concat",
-        "quotes",
         "no-inline-styles",
         "no-invalid-interactive",
         "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "app/templates/components/olv-filter-interval",
-      "only": [
-        "no-inline-styles"
       ]
     },
     {
@@ -408,13 +401,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/mobile/components/flexberry-sitemap-guideline",
-      "only": [
-        "eol-last",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
         "eol-last",
@@ -465,7 +451,6 @@ module.exports = {
       "only": [
         "eol-last",
         "simple-unless",
-        "no-bare-strings"
       ]
     },
     {
@@ -478,23 +463,12 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-comment-edit",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-comment-vote-edit",
-      "only": [
-        "eol-last",
-        "quotes"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-localization-edit",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -509,26 +483,12 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-multi-list-user-edit",
       "only": [
         "block-indentation",
-        "eol-last",
-        "quotes",
         "self-closing-void-elements",
-        "no-inline-styles",
-        "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-edit",
-      "only": [
-        "eol-last",
-        "quotes",
-        "simple-unless"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-file-edit",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -548,7 +508,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-type-edit",
       "only": [
-        "eol-last",
         "simple-unless"
       ]
     },
@@ -561,9 +520,7 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-toggler-example-master-e",
       "only": [
-        "block-indentation",
-        "eol-last",
-        "quotes"
+        "block-indentation"
       ]
     },
     {
@@ -590,13 +547,6 @@ module.exports = {
         "link-href-attributes",
         "no-invalid-interactive",
         "require-valid-alt-text"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/new-platform-flexberry-services-lock-list",
-      "only": [
-        "eol-last",
-        "quotes"
       ]
     },
     {
@@ -635,12 +585,6 @@ module.exports = {
         "eol-last",
         "no-inline-styles",
         "style-concatenation"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/edit-form-readonly",
-      "only": [
-        "eol-last"
       ]
     },
     {
@@ -728,14 +672,11 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/edit-form-validation/validation",
       "only": [
         "block-indentation",
-        "eol-last"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -752,26 +693,31 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/base-operations",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-actions",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autocomplete",
       "only": [
-        "eol-last",
         "no-duplicate-attributes"
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit",
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-simpledatetime/manual-enter",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-custom-window",
       "only": [
         "eol-last"
       ]
@@ -779,15 +725,12 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-dropdown",
       "only": [
-        "eol-last",
         "no-duplicate-attributes"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-limit-function",
       "only": [
-        "eol-last",
-        "quotes",
         "require-button-type"
       ]
     },
@@ -805,19 +748,19 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example-relation-name",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-lookup/settings-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/base-operations",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-groupedit/delete-with-details",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-acceptance-tests/flexberry-objectlistview/delete-with-details",
       "only": [
         "eol-last"
       ]
@@ -930,14 +873,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/flexberry-file-in-modal",
-      "only": [
-        "eol-last",
-        "quotes",
-        "require-button-type"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-file/settings-example",
       "only": [
         "eol-last"
@@ -959,16 +894,18 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute",
       "only": [
-        "eol-last",
-        "quotes",
+        "simple-unless"
+      ]
+    },
+    {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/groupedit-with-multiselect-edit",
+      "only": [
         "simple-unless"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-readonly-columns-by-configurate-row-example",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -989,71 +926,19 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/model-update-example",
       "only": [
-        "eol-last",
-        "quotes",
         "no-duplicate-attributes",
         "require-button-type"
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/settings-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/autocomplete-order-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/autofill-by-limit-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/customizing-window-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/default-ordering-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
       "only": [
-        "block-indentation",
-        "eol-last",
         "no-bare-strings"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/hierarchy-olv-in-lookup-example",
-      "only": [
-        "eol-last",
-        "quotes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/limit-function-example",
-      "only": [
-        "eol-last",
-        "quotes"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example",
       "only": [
-        "eol-last",
-        "quotes",
         "require-button-type"
       ]
     },
@@ -1066,22 +951,13 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/lookup-in-modal",
       "only": [
-        "eol-last",
-        "quotes",
         "require-button-type"
       ]
     },
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/numeric-autocomplete",
       "only": [
-        "eol-last",
         "no-multiple-empty-lines"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/settings-example",
-      "only": [
-        "eol-last"
       ]
     },
     {
@@ -1123,7 +999,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/edit-form-with-detail-edit",
       "only": [
-        "eol-last",
         "simple-unless"
       ]
     },
@@ -1131,14 +1006,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/edit-form-with-detail-list",
       "only": [
         "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/ember-flexberry-dummy-suggestion-multi-list-edit",
-      "only": [
-        "eol-last",
-        "quotes",
-        "simple-unless"
       ]
     },
     {
@@ -1180,6 +1047,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/toolbar-custom-components-example",
+      "only": [
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/list-on-editform",
       "only": [
         "block-indentation",
@@ -1190,8 +1063,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/lock-services-editor-view-edit",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1294,7 +1165,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/readonly-mode",
       "only": [
         "block-indentation",
-        "eol-last",
         "no-bare-strings"
       ]
     },
@@ -1310,16 +1180,8 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/integration-examples/edit-form/validation",
-      "only": [
-        "block-indentation",
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit",
       "only": [
-        "eol-last",
         "simple-unless"
       ]
     },
@@ -1413,8 +1275,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/on-edit-form/suggestion",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1431,8 +1291,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit",
       "only": [
-        "eol-last",
-        "quotes",
         "simple-unless"
       ]
     },
@@ -1446,8 +1304,6 @@ module.exports = {
     {
       "moduleId": "tests/dummy/app/templates/mobile/components-examples/flexberry-lookup/lookup-in-modal",
       "only": [
-        "eol-last",
-        "quotes",
         "require-button-type"
       ]
     }

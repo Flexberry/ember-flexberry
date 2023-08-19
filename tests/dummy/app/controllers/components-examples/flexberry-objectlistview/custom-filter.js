@@ -1,5 +1,6 @@
 import { computed, observer } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
+import defaultConditionsByType from 'ember-flexberry/utils/default-conditions-by-type';
 
 export default ListFormController.extend({
   filterByAnyWord: false,
@@ -8,6 +9,21 @@ export default ListFormController.extend({
 
   queryParams: ['filterCondition'],
   filterCondition: undefined,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+  */
+  ddlFilterSettings: computed(function () {
+    return [{
+      modelName: 'ember-flexberry-dummy-suggestion-type',
+      projectionName: 'SuggestionTypeL',
+      propName: 'name',
+      bindingPath: 'type'
+    }]
+  }),
 
   /**
     Observes current state of FilterCondition parameter
@@ -65,24 +81,22 @@ export default ListFormController.extend({
     },
     /* eslint-enable no-unused-vars */
 
-    conditionsByType(type) {
-      switch (type) {
-        case 'file':
-          return null;
-
-        case 'date':
-        case 'number':
-          return ['eq', 'neq', 'le', 'ge'];
-
-        case 'string':
-          return ['eq', 'neq', 'like', 'empty'];
-
-        case 'boolean':
-          return ['eq'];
-
-        default:
-          return ['eq', 'neq'];
+    conditionsByType(type, attribute) {
+      let i18n = this.get('i18n');
+      if (attribute && attribute.name === 'address') {
+        return {
+          'eq': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.eqAddress'),
+          'neq': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.neqAddress'),
+          'like': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.likeAddress'),
+          'nlike': i18n.t('forms.components-examples.flexberry-objectlistview.custom-filter.nlikeAddress'),
+        };
       }
+
+      if (type === 'string') {
+        return ['eq', 'neq', 'like', 'empty'];
+      }
+
+      return defaultConditionsByType(type, i18n);      
     },
   }
 });

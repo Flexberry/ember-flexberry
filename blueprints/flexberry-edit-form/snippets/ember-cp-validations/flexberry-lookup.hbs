@@ -5,14 +5,18 @@
       remove="removeLookupValue"
       value=model.<%= name %><%
 if (lookupValueField) { %>
-      displayAttributeName="<%= lookupValueField %>"
+      displayAttributeName="<%= lookupValueField %>"<%
+  if (isDropdown) { %>
+      dropdown=true<%
+  }else{%>
       autocomplete=true<%
-} %>
+}%><%}%>
       relationName="<%= name %>"
       projection="<%= projection %>"
       title=(<%= caption %>)
       readonly=<%= readonly %>
       componentName="<%= name %>Lookup"
+      updateLookupValue=(action "updateLookupValue")
       class=(if (v-get validationModel<%= propertyMaster %> "<%= propertyName %>" "isInvalid") "error")
       data-test-<%= entityName %>-<%= dashedName %>=true
     }}

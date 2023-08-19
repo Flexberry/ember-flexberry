@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 import EmberValidations from 'ember-validations';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
@@ -71,6 +70,11 @@ Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-us
 // Projection for lookup example on window customization.
 Model.defineProjection('PreviewExampleView', 'ember-flexberry-dummy-application-user', {
   name: attr('Name'),
+});
+
+// Projection for lookup test with custom window.
+Model.defineProjection('TestLookupCustomWindow', 'ember-flexberry-dummy-application-user', {
+  eMail: attr('E-mail')
 });
 
 export default Model;

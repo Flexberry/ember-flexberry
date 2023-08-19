@@ -222,6 +222,23 @@ export default FlexberryBaseComponent.extend({
   showFiltersInModal: undefined,
 
   /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath
@@ -257,6 +274,15 @@ export default FlexberryBaseComponent.extend({
   _pages: computed('pages', function () {
     return A(this.get('pages'));
   }),
+
+  /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
 
   /**
     Number page for search.
@@ -457,6 +483,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showPrototypeMenuItemInRow: false,
+
+  /**
+    Flag indicate when edit form must be open in modal window.
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+    editInModal: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.
@@ -732,6 +767,16 @@ export default FlexberryBaseComponent.extend({
   filterByAllWords: false,
 
   /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
+
+  /**
     Array of pages to show.
 
     @property pages
@@ -812,28 +857,33 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   currentIntervalRecords: computed('pages', 'perPageValue', function() {
-    let pages = this.get('pages');
-    let perPageValue = this.get('perPageValue');
-    let recordsTotalCount = this.get('recordsTotalCount');
-    if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
-      throw new Error('Property \'recordsTotalCount\' is undefined.');
-    }
-
-    let currentStartRecords = null;
-    let currentEndRecords = null;
-
-    pages.forEach((page) => {
-      if (page.isCurrent) {
-        currentStartRecords = page.number * perPageValue - perPageValue + 1;
-        currentEndRecords = page.number * perPageValue;
+    try {
+      let pages = this.get('pages');
+      let perPageValue = this.get('perPageValue');
+      let recordsTotalCount = this.get('recordsTotalCount');
+      if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
+        throw new Error('Property \'recordsTotalCount\' is undefined.');
       }
-    });
 
-    if (currentEndRecords > recordsTotalCount) {
-      currentEndRecords = recordsTotalCount;
+      let currentStartRecords = null;
+      let currentEndRecords = null;
+
+      pages.forEach((page) => {
+        if (page.isCurrent) {
+          currentStartRecords = page.number * perPageValue - perPageValue + 1;
+          currentEndRecords = page.number * perPageValue;
+        }
+      });
+
+      if (currentEndRecords > recordsTotalCount) {
+        currentEndRecords = recordsTotalCount;
+      }
+
+      return currentStartRecords + '-' + currentEndRecords;
     }
-
-    return currentStartRecords + '-' + currentEndRecords;
+    catch (error) {
+      return;
+    }
   }),
 
   /**
@@ -922,6 +972,11 @@ export default FlexberryBaseComponent.extend({
   store: service('store'),
 
   /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
+
+  /**
     Array of custom user buttons.
 
     @example
@@ -994,6 +1049,71 @@ export default FlexberryBaseComponent.extend({
   customButtons: undefined,
 
   /**
+    Custom components in the toolbar.
+
+    @example
+      ```
+      [
+        {
+          name: '...', // Component name.
+          properties: {...} // Component properties.
+        },
+        ...
+      ]
+      ```
+
+    @example
+      Example of how to add custom components:
+      1) it has to be defined computed property at corresponding controller.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        customToolbarComponents: computed('dropdownValue', function() {
+          return [{
+            name: 'flexberry-dropdown',
+            properties: {
+              items: this.get('dropdownItems'),
+              value: this.get('dropdownValue'),
+              onChange: this.get('onChange').bind(this)
+            }
+          }];
+        })
+      });
+      ```
+
+      2) in the controller, you must specify the `onChange` method.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        dropdownValue: null,
+        dropdownItems: null,
+
+        onChange: function(value) {
+          this.set('dropdownValue', value);
+        },
+      });
+      ```
+
+      3) the `customToolbarComponents` property must be specified in the list template.
+      ```
+      {{flexberry-objectlistview
+        ...
+        customToolbarComponents=customToolbarComponents
+      }}
+      ```
+
+    @property customToolbarComponents
+    @type Array<Object>
+  */
+  customToolbarComponents: undefined,
+
+  /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
 
     @example
@@ -1059,12 +1179,14 @@ export default FlexberryBaseComponent.extend({
             /* eslint-enable ember/closure-actions */
           } else {
             let editFormRoute = this.get('editFormRoute');
+            let editInModal = this.get('editInModal');
+            let useSidePageMode = this.get('useSidePageMode');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
             if (isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
             } else {
-              options = merge(options, { editFormRoute: editFormRoute });
+              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
             }
 
             /* eslint-disable ember/closure-actions */
@@ -1090,8 +1212,10 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1109,8 +1233,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1129,8 +1255,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(pageNumber, this.get('componentName'));
     },
@@ -1322,6 +1450,7 @@ export default FlexberryBaseComponent.extend({
 
       if (searchPageNumber) {
         this.send('gotoPage', action, searchPageNumber);
+        this.set('searchPageValue', undefined);
       }
     }
   },

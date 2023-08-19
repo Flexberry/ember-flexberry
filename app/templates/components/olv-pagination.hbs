@@ -1,0 +1,58 @@
+{{#if (or (not inHierarchicalMode) hierarchyPaging)}}
+  <div class="ui secondary menu no-margin nav-bar">
+    <div class="ui basic buttons">
+      <button
+        type="button"
+        class="ui {{unless hasPreviousPage "disabled"}} button prev-page-button"
+        disabled={{not hasPreviousPage}}
+        {{action previousPage}}>
+      </button>
+      {{#each pages as |page|}}
+        {{#if page.isEllipsis}}
+          <div class="ui button">...</div>
+        {{else if page.isCurrent}}
+          <button type="button" class="ui disabled active button" disabled>{{page.number}}</button>
+        {{else}}
+          <button type="button" class="ui button" {{action gotoPage page.number}}>{{page.number}}</button>
+        {{/if}}
+      {{/each}}
+      <button
+        type="button"
+        class="ui {{unless hasNextPage "disabled"}} button next-page-button"
+        disabled={{not hasNextPage}}
+        {{action nextPage}}>
+      </button>
+    </div>
+    <div class="ui input nav-bar-search-page {{if (and searchPageValue searchPageButtonReadonly) "error" }}">
+      {{input
+        type="number"
+        min=_pages.firstObject.number
+        max=_pages.lastObject.number
+        placeholder=(t "components.flexberry-objectlistview.search-page-placeholder")
+        value=searchPageValue
+        enter=(action searchPageButtonAction)
+      }}
+      {{#if searchPageValue}}
+        <button
+          type="button"
+          class="ui {{buttonClass}} icon button {{if searchPageButtonReadonly "disabled" "primary"}} goto-page-button small"
+          title={{t "components.flexberry-objectlistview.search-button-text"}}
+          disabled={{searchPageButtonReadonly}}
+          {{action searchPageButtonAction}}>
+        </button>
+      {{/if}}
+    </div>
+    <div class="right menu">
+      {{#if (and showShowingEntries recordsTotalCount)}}
+        <div class="showing-entries">
+          {{#if (and currentIntervalRecords recordsTotalCount) }}
+            {{concat
+              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+            }}
+          {{/if}}
+        </div>
+      {{/if}}
+      {{flexberry-dropdown needChecksOnValue=false items=perPageValues value=perPageValue class="compact selection" onChange=(action perPageClick) settings=(hash direction="upward")}}
+    </div>
+  </div>
+{{/if}}

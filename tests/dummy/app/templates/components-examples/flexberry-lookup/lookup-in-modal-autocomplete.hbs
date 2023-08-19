@@ -1,0 +1,29 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.caption"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  <button class="ui button" type="button" {{action "showUiModal" "#example"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModal"}}</button>
+  <button class="ui button" type="button" {{action "showSecondModal"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModalDouble"}}</button>
+</form>
+
+{{#ui-modal id="repeat-window"}}
+  <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModal"}}</div>
+  <div class="content">
+    <div class="ui form flexberry-vertical-form">
+      <div class="field">
+        {{flexberry-lookup
+          value=model.editor1
+          relatedModel=model
+          relationName="editor1"
+          projection="ApplicationUserL"
+          displayAttributeName="name"
+          readonly=readonly
+          choose=(action "showLookupDialog")
+          remove=(action "removeLookupValue")
+          autocomplete=true
+          updateLookupValue=(action "updateLookupValue")
+        }}
+      </div>
+      <button class="ui button" type="button" {{action "hideModal"}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+    </div>
+  </div>
+{{/ui-modal}}

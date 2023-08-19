@@ -185,9 +185,9 @@ ErrorableRouteMixin, {
           } else {
             /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
+              this.replaceWith(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
+              this.replaceWith(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
             /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
 
@@ -209,6 +209,7 @@ ErrorableRouteMixin, {
           filter: params.filter,
           filterCondition: controller.get('filterCondition'),
           filters: filtersPredicate,
+          filterProjectionName: controller.get('filterProjectionName'),
           predicate: limitPredicate,
           advLimit: advLimit,
           hierarchicalAttribute: hierarchicalAttribute,
@@ -229,9 +230,9 @@ ErrorableRouteMixin, {
         this.includeSorting(records, this.sorting);
         controller.set('model', records);
 
-        if (this.sorting.length > 0 && isNone(this.get('controller').get('sort'))) {
-          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
-          this.get('controller').set('sort', sortQueryParam);
+        if (this.sorting.length > 0 && isNone(controller.get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, controller.get('sortDefaultValue'));
+          controller.set('sort', sortQueryParam);
         }
 
         return records;

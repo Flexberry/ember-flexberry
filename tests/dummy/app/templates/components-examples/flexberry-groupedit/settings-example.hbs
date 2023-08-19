@@ -1,11 +1,17 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-groupedit.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef2_groupedit.html">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{#settings-example
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
     }}
+      <div class="field">
+        <button type="button" class="ui button remove-class-new" {{action "removeClassButtonAction"}}>{{t "forms.components-examples.flexberry-groupedit.settings-example.remove-class-button-name"}}</button>
+      </div>
       {{flexberry-groupedit
         componentName="aggregatorDetailsGroupedit"
         content=model.details

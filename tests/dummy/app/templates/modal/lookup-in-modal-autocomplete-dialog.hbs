@@ -1,0 +1,23 @@
+{{#modal-dialog
+  title=(t "forms.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.captionModalDouble")
+  useOkButton=false
+  useCloseButton=false
+  close="removeModalDialog"
+}}
+  <div class="ui form flexberry-vertical-form">
+    <div class="field">
+      {{flexberry-lookup
+        value=model.type
+        projection="SuggestionTypeL"
+        displayAttributeName="name"
+        title="Master"
+        relationName="type"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
+        readonly=readonly
+        autocomplete=true
+        updateLookupValue=(action "updateLookupValue")
+      }}
+    </div>
+  </div>
+{{/modal-dialog}}

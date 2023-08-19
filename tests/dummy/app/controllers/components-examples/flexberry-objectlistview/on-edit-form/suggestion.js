@@ -5,8 +5,7 @@ import { scheduleOnce } from '@ember/runloop';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import OlvOnEditMixin from 'ember-flexberry/mixins/flexberry-objectlistview-on-edit-form-controller';
-
-import { Query } from 'ember-flexberry-data';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerOperationsIndicationMixin, {
   /**
@@ -48,6 +47,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
     }
 
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -58,6 +58,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -70,6 +71,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -96,7 +98,7 @@ export default BaseEditFormController.extend(OlvOnEditMixin, EditFormControllerO
     if (methodOptions.modelName === this.get('folvModelName') &&
     methodOptions.projectionName === this.get('folvProjection')) {
       let id =  this.get('model.type.id');
-      let limitFunction = new Query.SimplePredicate('suggestionType', Query.FilterOperator.Eq, id);
+      let limitFunction = new SimplePredicate('suggestionType', 'eq', id);
       return limitFunction;
     }
 

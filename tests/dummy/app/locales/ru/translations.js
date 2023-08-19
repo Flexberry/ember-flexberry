@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Пользовательские кнопки',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Пример групэдита с мультиселектом в лукапе',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
@@ -328,6 +332,10 @@ $.extend(true, translations, {
               'caption': 'Лукап в модальном окне',
               'title': ''
             },
+            'lookup-in-modal-autocomplete': {
+              'caption': 'Лукап в модальном окне с автокомплитом',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -346,6 +354,18 @@ $.extend(true, translations, {
             },
             'user-settings-example': {
               'caption': 'Пример настройки OLV модального окна',
+              'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Пример кастомизации тегов',
               'title': ''
             }
           },
@@ -428,9 +448,21 @@ $.extend(true, translations, {
               'caption': 'Пример ограничения длины текста в ячейках',
               'title': ''
             },
+            'toolbar-custom-components-example': {
+              'caption': 'Пример встраивания пользовательских компонентов в olv-toolbar',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-tab-bar': {
+            'caption': 'flexberry-tab-bar',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -540,6 +572,10 @@ $.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Иконки',
+            'title': 'Иконки'
+          },
         },
         'user-setting-forms': {
           'caption': 'Пользовательские настройки',
@@ -612,6 +648,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Заполните поле "Имя"',
       'eMail-validation-message-caption': 'Заполните поле "E-mail"',
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
+      'profile': 'Профиль',
+      'contact-info': 'Контактная информация',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -738,6 +776,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Ссылка на документацию компонента',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-button'
@@ -788,11 +827,18 @@ $.extend(true, translations, {
       'flexberry-file': {
         'settings-example': {
           'caption': 'Flexberry-file. Пример работы с настройками'
+        },
+        'file-in-modal': {
+          'caption': 'Flexberry-file. Пример файла в модальном окне',
+          'captionModal': 'Flexberry-file. Пример файла в модальном окне',
+          'buttonModal': 'Модальное окно №1',
+          'buttonClose': 'Закрыть'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Пример работы с настройками'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками',
+          'remove-class-button-name': 'Убрать класс "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Пользовательские кнопки',
@@ -839,6 +885,10 @@ $.extend(true, translations, {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
         },
+        'event-example': {
+          'caption': 'Flexberry-lookup. События',
+          'titleLookup': 'Мастер'
+        },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
           'titleLookup': 'Мастер',
@@ -857,8 +907,14 @@ $.extend(true, translations, {
           'buttonModalDouble': 'Модальное окно №2',
           'buttonClose': 'Закрыть'
         },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
+          'captionModal': 'Модальное окно с ui-modal',
+          'captionModalDouble': 'Модальное с modal-dialog'
+        },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Режим dropdown'
+          'caption': 'Flexberry-lookup. Режим dropdown',
+          'fieldMinCharacters': 'minCharacters - минимальное количество символов для активации функции поиска'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
@@ -871,6 +927,18 @@ $.extend(true, translations, {
         'user-settings-example': {
           'not-user-user-setting-caption': 'Отключить использование пользовательских настроек для OLV лукапа',
           'clear-user-setting': 'Сбросить настройки пользователя'
+        }
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Пример кастомизации тегов',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
         }
       },
       'flexberry-menu': {
@@ -914,6 +982,9 @@ $.extend(true, translations, {
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Пример ограничения длины текста в ячейках'
         },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Пример встраивания пользовательских компонентов в olv-toolbar'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
@@ -930,7 +1001,11 @@ $.extend(true, translations, {
           'caption': 'Список детейлов Тип предложения'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Настройка фильтра'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра',
+          'eqAddress': 'Адресочек равен',
+          'neqAddress': 'Адресочек неравен',
+          'likeAddress': 'Адресочек содержит',
+          'nlikeAddress': 'Адресочек не содержит'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
@@ -959,6 +1034,29 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
+        }
+      },
+      'flexberry-tab-bar': {
+        'settings-example': {
+          'reload-button-text': 'Обновить',
+          'instruction-text': 'Нажмите кнопку "Обновить" после смены свойства контроллера <code>isOverflowedTabs</code>',
+          'caption': 'Flexberry-tab-bar. Пример работы с настройками',
+          'tab_1': 'Вкладка №1',
+          'tab_2': 'Вкладка №2',
+          'tab_3': 'Вкладка №3',
+          'tab_4': 'Вкладка №4',
+          'tab_5': 'Вкладка №5',
+          'tab_6': 'Вкладка №6',
+          'tab_7': 'Вкладка №7',
+          'tab_8': 'Вкладка №8',
+          'tab_9': 'Вкладка №9',
+          'tab_10': 'Вкладка №10',
+          'tab_11': 'Вкладка №11',
+          'tab_12': 'Вкладка №12',
+          'tab_13': 'Вкладка №13',
+          'tab_14': 'Вкладка №14',
+          'tab_15': 'Вкладка №15',
+          'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },
       'flexberry-text-cell': {
@@ -1092,7 +1190,11 @@ $.extend(true, translations, {
             caption: 'Виды департаментов'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Иконки',
+        'title': 'Иконки'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

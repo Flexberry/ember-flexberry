@@ -1,14 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:application', {
-  needs: [
-    'service:objectlistview-events',
-    'service:app-state',
-  ],
-});
+module('Unit | Controller | application', function (hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  var controller = this.subject();
-  assert.ok(controller);
+  test('it exists', function(assert) {
+    let controller = this.owner.lookup('controller:application');
+    assert.ok(controller);
+  });
 });

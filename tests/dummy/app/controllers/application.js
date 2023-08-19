@@ -25,6 +25,8 @@ export default Controller.extend({
   */
   appState: service(),
 
+  router: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -45,12 +47,21 @@ export default Controller.extend({
       sidebar.sidebar('toggle');
       sidebar.toggleClass('sidebar-mini');
 
+      let $sitemapSearchInput = $('.sitemap-search-input');
+
+      if (sidebar.hasClass('sidebar-mini')) {
+        $sitemapSearchInput.addClass('hidden');
+      } else {
+        $sitemapSearchInput.removeClass('hidden');
+      }
+
       $('.full.height').toggleClass('content-opened');
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
+      $('.icon-guideline-search').toggleClass('visible');
 
       // For reinit overflowed tabs.
       $(window).trigger('resize');
@@ -101,6 +112,20 @@ export default Controller.extend({
       }
       return null;
     },
+
+    /**
+      Select themes.
+      @method actions.changeTheme
+    */
+    changeTheme(value) {
+      let sheet = document.querySelector('#theme');
+      if (!sheet) {
+        return;
+      }
+
+      let rootURL = this.get('router.location.location.origin') + config.rootURL;
+      sheet.setAttribute('href', `${rootURL}assets/${value}.css`);
+    }
   },
 
   /**
@@ -156,6 +181,14 @@ export default Controller.extend({
   locales: undefined,
 
   /**
+    Themes supported by application.
+    @property themes
+    @type String[]
+    @default ['purple', 'dark', 'default']
+  */
+  themes: undefined,
+
+  /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
 
     @method _userSettingsServiceChanged
@@ -170,6 +203,8 @@ export default Controller.extend({
   */
   init() {
     this._super(...arguments);
+
+    this.set('themes', ['purple', 'dark', 'default']);
 
     let i18n = this.get('i18n');
     if (isNone(i18n)) {
@@ -207,13 +242,13 @@ export default Controller.extend({
         link: 'index',
         caption: i18n.t('forms.application.sitemap.index.caption'),
         title: i18n.t('forms.application.sitemap.index.title'),
-        icon: 'home',
+        icon: 'icon-guideline-user',
         children: null
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.application.caption'),
         title: i18n.t('forms.application.sitemap.application.title'),
-        icon: 'clock outline',
+        icon: 'icon-guideline-grid',
         children: [{
           link: 'ember-flexberry-dummy-application-user-list',
           caption: i18n.t('forms.application.sitemap.application.application-users.caption'),
@@ -249,31 +284,31 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),
         title: i18n.t('forms.application.sitemap.log-service-examples.title'),
-        icon: 'thumbs up',
+        icon: 'icon-guideline-edit-note',
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
           children: null,
-          icon: 'clock outline'
+          icon: 'icon-guideline-edit-note'
         }, {
           link: 'log-service-examples/settings-example',
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null,
-          icon: 'lock'
+          icon: 'icon-guideline-setting'
         }, {
           link: 'log-service-examples/clear-log-form',
           caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
           children: null,
-          icon: 'comment outline'
+          icon: 'icon-guideline-delete'
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.lock.caption'),
         title: i18n.t('forms.application.sitemap.lock.caption'),
-        icon: 'lock',
+        icon: 'icon-guideline-lock',
         children: [{
           link: 'new-platform-flexberry-services-lock-list',
           caption: i18n.t('forms.application.sitemap.lock.title'),
@@ -284,7 +319,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
-        icon: 'comment outline',
+        icon: 'icon-guideline-date',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.caption'),
@@ -385,6 +420,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.custom-buttons-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.groupedit-with-multiselect.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
@@ -445,6 +485,11 @@ export default Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/lookup-in-modal-autocomplete',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal-autocomplete.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/dropdown-mode-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
@@ -483,6 +528,21 @@ export default Controller.extend({
             link: 'components-examples/flexberry-lookup/user-settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.user-settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.title'),
+          children: [{
+            link: 'components-examples/flexberry-multiple-lookup/multiple-lookup',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-multiple-lookup/configurate-tags',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.title'),
             children: null
           }]
         }, {
@@ -582,7 +642,13 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limited-text-size-example.title'),
             children: null
-          }]
+          }, {
+            link: 'components-examples/flexberry-objectlistview/toolbar-custom-components-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-components-example.title'),
+            children: null
+          }
+        ]
         }, {
           link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),
@@ -591,6 +657,16 @@ export default Controller.extend({
             link: 'components-examples/flexberry-simpledatetime/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.title'),
+          children: [{
+            link: 'components-examples/flexberry-tab-bar/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-tab-bar.settings-example.title'),
             children: null
           }]
         }, {
@@ -678,7 +754,7 @@ export default Controller.extend({
         link: null,
         caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
         title: i18n.t('forms.application.sitemap.integration-examples.title'),
-        icon: 'linkify',
+        icon: 'icon-guideline-group-plus',
         children: [{
           link: null,
           caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
@@ -724,12 +800,17 @@ export default Controller.extend({
               children: null
             }]
           }]
+        }, {
+          link: 'integration-examples/ember-flexberry-icons',
+          caption: i18n.t('forms.application.sitemap.integration-examples.icons.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.icons.title'),
+          children: null
         }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
         title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
-        icon: 'desktop',
+        icon: 'icon-guideline-setting',
         children: [{
           link: 'user-setting-forms/user-setting-delete',
           caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),

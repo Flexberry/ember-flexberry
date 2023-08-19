@@ -1,0 +1,53 @@
+<div class="field no-margin">
+  <div class="field {{unless isChooseComponentVisible "no-margin"}}">
+    <label data-test-caption>
+      {{caption}}
+    </label>
+    {{#if isChooseComponentVisible}}
+      {{#if hasBlock}}
+        {{yield value}}
+      {{else}}
+        {{flexberry-lookup
+          componentName=componentName
+          folvComponentName=folvComponentName
+          choose=choose
+          remove=remove
+          updateLookupValue=updateLookupValue
+          removeButtonClass="hidden"
+          value=value
+          autocomplete=true
+          autocompleteProjection=autocompleteProjection
+          displayAttributeName=displayAttributeName
+          relatedModel=relatedModel
+          relationName=relationName
+          projection=projection
+          title=title
+          readonly=readonly
+          dynamicProperties=dynamicProperties
+          lookupLimitPredicate=lookupLimitPredicate
+          lookupWindowCustomProperties=lookupWindowCustomProperties
+          usePaginationForAutocomplete=usePaginationForAutocomplete
+        }}
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="{{if isColumnMode "flex-column"}}">
+    {{#each filteredRecords as |record|}}
+      <a class="{{record.tagConfig.customClass}} ui label" data-test-tag>
+        {{#if record.tagConfig.canBeSelected}}
+          <span class="normal-weight" onClick={{action "preview" record}}>{{record.tagDisplayValue}}</span>
+        {{else}}
+          <span class="normal-weight">{{record.tagDisplayValue}}</span>
+        {{/if}}
+
+        {{#if (and record.tagConfig.canBeDeleted (not readonly))}}
+          <i class="delete icon" onClick={{action "delete" record}} data-test-tag-remove-btn></i>
+        {{/if}}
+      </a>
+    {{else if (not isChooseComponentVisible)}}
+      <span class="italic" data-test-no-data>
+        {{t "components.flexberry-multiple-lookup.no-data"}}
+      </span>
+    {{/each}}
+  </div>
+</div>

@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.autocomplete-order-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef2_lookup-component.html#наложение-сортировки-на-скрытые-поля-мастера">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-lookup
         readonly=readonly
@@ -12,6 +15,7 @@
         relationName="type"
         choose=(action "showLookupDialog")
         remove=(action "removeLookupValue")
+        updateLookupValue=(action "updateLookupValue")
         autocomplete=true
         placeholder=placeholder
     }}

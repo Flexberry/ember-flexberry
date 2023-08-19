@@ -4,24 +4,26 @@ import { initialize } from 'dummy/instance-initializers/lock';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
 
-module('Unit | Instance Initializer | lock', {
-  beforeEach() {
+let application;
+let appInstance;
+
+module('Unit | Instance Initializer | lock', function (hooks) {
+  hooks.beforeEach(() => {
     run(() => {
-      this.application = Application.create();
-      this.appInstance = this.application.buildInstance();
+      application = Application.create();
+      appInstance = application.buildInstance();
     });
-  },
+  });
 
-  afterEach() {
-    run(this.appInstance, 'destroy');
-    destroyApp(this.application);
-  },
-});
+  hooks.afterEach(() => {
+    run(appInstance, 'destroy');
+    destroyApp(application);
+  });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
-  initialize(this.appInstance);
-
-  // you would normally confirm the results of the initializer here
-  assert.ok(true);
+  test('it works', function(assert) {
+    initialize(appInstance);
+  
+    // you would normally confirm the results of the initializer here
+    assert.ok(true);
+  });  
 });

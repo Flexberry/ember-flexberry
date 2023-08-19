@@ -1,17 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:new-platform-flexberry-services-lock-list', 'Unit | Controller | new-platform-flexberry-services-lock-list', {
-  needs: [
-    'controller:advlimit-dialog',
-    'controller:colsconfig-dialog',
-    'controller:filters-dialog',
-    'service:adv-limit',
-    'service:objectlistview-events',
-    'service:user-settings',
-  ],
-});
+module('Unit | Controller | new-platform-flexberry-services-lock-list', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let controller = this.subject();
-  assert.ok(controller);
+  test('it exists', function(assert) {
+    let controller = this.owner.lookup('controller:new-platform-flexberry-services-lock-list');
+    assert.ok(controller);
+  });
 });

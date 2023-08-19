@@ -1,18 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:<%= entityName %>', 'Unit | Route | <%= entityName %>', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'service:cols-config-menu',
-    'service:detail-interaction',
-    'service:objectlistview-events',
-    'service:user-settings',
-    'service:app-state',
-    'service:adv-limit',
-  ],
-});
+module('Unit | Route | <%= entityName %>', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:<%= entityName %>');
+    assert.ok(route);
+  });
 });

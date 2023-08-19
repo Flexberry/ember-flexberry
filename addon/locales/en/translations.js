@@ -8,7 +8,10 @@ export default {
       'save-button-text': 'Save',
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
-      'close-button-text': 'Close'
+      'close-button-text': 'Close',
+      'more-button-text': 'More',
+      'only-more-button-text': 'Actions',
+      'readonly': 'read-only mode'
     },
 
     'error-form': {
@@ -30,6 +33,468 @@ export default {
 
     'loading': {
       caption: 'Loading...',
+    },
+
+    'application': {
+      'header': {
+        'menu': {
+          'sitemap-button': {
+            'title': 'Menu'
+          },
+          'user-settings-service-checkbox': {
+            'caption': 'Use service to save user settings'
+          },
+          'show-menu': {
+            'caption': 'Show menu'
+          },
+          'hide-menu': {
+            'caption': 'Hide menu'
+          },
+          'language-dropdown': {
+            'caption': 'Application language',
+            'placeholder': 'Choose language'
+          },
+        },
+        'login': {
+          'caption': 'Login'
+        },
+        'logout': {
+          'caption': 'Logout'
+        }
+      },
+
+      'delete-rows-modal-dialog': {
+        'confirm-button-caption': 'Delete',
+        'cancel-button-caption': 'Cancel',
+        'delete-row-caption': 'Delete row ?',
+        'delete-rows-caption': 'Delete selected rows ?',
+      },
+
+      'footer': {
+        'application-name': 'Test stand for ember-flexberry',
+        'application-version': {
+          'caption': 'Addon version {{version}}',
+          'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
+            '(npm version + commit sha). ' +
+            'Click to open commit on GitHub.'
+        }
+      },
+
+      'sitemap': {
+        'application-name': {
+          'caption': 'Test stand for ember-flexberry',
+          'title': ''
+        },
+        'application-version': {
+          'caption': 'Addon version {{version}}',
+          'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
+            '(npm version + commit sha). ' +
+            'Click to open commit on GitHub.'
+        },
+        'index': {
+          'caption': 'Home',
+          'title': ''
+        },
+        'application': {
+          'caption': 'Application',
+          'title': '',
+          'application-users': {
+            'caption': 'Application users',
+            'title': ''
+          },
+          'localizations': {
+            'caption': 'Localizations',
+            'title': ''
+          },
+          'suggestion-types': {
+            'caption': 'Suggestion types',
+            'title': ''
+          },
+          'suggestions': {
+            'caption': 'Suggestions',
+            'title': ''
+          },
+          'multi': {
+            'caption': 'Multi list',
+            'title': ''
+          },
+          'suggestion-file': {
+            'caption': 'Suggestion file',
+            'title': ''
+          }
+        },
+        'log-service-examples': {
+          'caption': 'Log service',
+          'title': '',
+          'application-log': {
+            'caption': 'Application log',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Settings example',
+            'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Clear log',
+            'title': ''
+          }
+        },
+        'lock': {
+          'caption': 'Blocking',
+          'title': 'Block list',
+        },
+        'components-examples': {
+          'caption': 'Components examples',
+          'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-checkbox': {
+            'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'three-state-example': {
+              'caption': 'Three-state example',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-dropdown': {
+            'caption': 'flexberry-dropdown',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'conditional-render-example': {
+              'caption': 'Conditional render example',
+              'title': ''
+            },
+            'empty-value-example': {
+              'caption': 'Example dropdown with empty value',
+              'title': ''
+            },
+            'items-example': {
+              'caption': 'Example values of the items',
+              'title': ''
+            }
+          },
+          'flexberry-field': {
+            'caption': 'flexberry-field',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'flexberry-file-in-modal': {
+              'caption': 'Flexberry file in modal window',
+              'title': ''
+            },
+          },
+          'flexberry-groupedit': {
+            'caption': 'flexberry-groupedit',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Model update example',
+              'title': ''
+            },
+            'custom-buttons-example': {
+              'caption': 'Custom user buttons example',
+              'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Configurate rows',
+              'title': ''
+            },
+            'groupedit-with-lookup-with-computed-atribute': {
+              'caption': 'Computed attributes LookUp  in GroupEdit',
+              'title': ''
+            },
+            'readonly-columns-by-configurate-row-example': {
+              'caption': 'GrouptEdit readonly columns by configurateRow',
+              'title': ''
+            }
+          },
+          'flexberry-lookup': {
+            'caption': 'flexberry-lookup',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Window customization',
+              'title': ''
+            },
+            'compute-autocomplete': {
+              'caption': 'Example lookup with compute autocomplete',
+              'title': ''
+            },
+            'numeric-autocomplete': {
+              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'title': ''
+            },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Example hierarchical OLV in lookup',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Limit function example',
+              'title': ''
+            },
+            'autofill-by-limit-example': {
+              'caption': 'Example autofillByLimit',
+              'title': ''
+            },
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Limit function with dinamic properties example',
+              'title': ''
+            },
+            'lookup-block-form-example': {
+              'caption': 'Lookup block form example',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Lookup in modal window',
+              'title': ''
+            },
+            'dropdown-mode-example': {
+              'caption': 'Dropdown mode example',
+              'title': ''
+            },
+            'default-ordering-example': {
+              'caption': 'Default ordering example',
+              'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Example for autocomplete with order',
+              'title': ''
+            },
+            'user-settings-example': {
+              'caption': 'Example for modal dialog olv user settiings',
+              'title': ''
+            }
+          },
+          'flexberry-menu': {
+            'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-objectlistview': {
+            'caption': 'flexberry-objectlistview',
+            'title': '',
+            'limit-function-example': {
+              'caption': 'Limit function example',
+              'title': ''
+            },
+            'inheritance-models': {
+              'caption': 'Inheritance models',
+              'title': ''
+            },
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Custom buttons on toolbar',
+              'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Placement on edit form',
+              'title': ''
+            },
+            'list-on-editform': {
+              'caption': 'Placement of the list of detail of the master on the editing form',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Custom filter',
+              'title': ''
+            },
+            'edit-form-with-detail-list': {
+              'caption': 'List example',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Hierarchy example',
+              'title': ''
+            },
+            'hierarchy-paging-example': {
+              'caption': 'Hierarchy with paginig example',
+              'title': ''
+            },
+            'configurate-rows': {
+              'caption': 'Configurate rows',
+              'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Selected rows',
+              'title': ''
+            },
+            'downloading-files-from-olv-list': {
+              'caption': 'Downloading files from the list',
+              'title': ''
+            },
+            'object-list-view-resize': {
+              'caption': 'Columns markup',
+              'title': ''
+            },
+            'return-from-ediform': {
+              'title': 'Return from edit-form to list-form with queryParameter',
+              'return-button': 'Return'
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Example displaying username which the object was locked',
+              'title': ''
+            },
+            'limited-text-size-example': {
+              'caption': 'Limited text size example',
+              'title': ''
+            },
+          },
+          'flexberry-simpledatetime': {
+            'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-text-cell': {
+            'caption': 'flexberry-text-cell',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-textarea': {
+            'caption': 'flexberry-textarea',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-textbox': {
+            'caption': 'flexberry-textbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-toggler': {
+            'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'settings-example-inner': {
+              'caption': 'Settings example (toggler in a toggler)',
+              'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit into toggler example',
+            }
+          },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          }
+        },
+        'integration-examples': {
+          'caption': 'Integration examples',
+          'title': '',
+          'edit-form': {
+            'caption': 'Edit form',
+            'title': '',
+            'readonly-mode': {
+              'caption': 'Readonly mode',
+              'title': ''
+            },
+            'validation': {
+              'caption': 'Validation',
+              'title': ''
+            }
+          },
+          'odata-examples': {
+            'caption': 'Work with OData',
+            'title': '',
+            'get-masters': {
+              'caption': 'Get master from oData function',
+              'title': '',
+              'sotrudnik': {
+                'caption': 'Sotrudnik',
+                'title': ''
+              },
+              'departament': {
+                'caption': 'Departament',
+                'title': ''
+              },
+              'vid-departamenta': {
+                'caption': 'Vid departamenta',
+                'title': ''
+              }
+            },
+          },
+        },
+        'user-setting-forms': {
+          'caption': 'User settings',
+          'title': '',
+          'user-setting-delete': {
+            'caption': 'Settings deletion',
+            'title': ''
+          }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance tests',
+          'title': '',
+        },
+      }
     }
   },
 
@@ -60,6 +525,10 @@ export default {
 
     'flexberry-dropdown': {
       'placeholder': '(no value)'
+    },
+
+    'flexberry-required-marker': {
+      title: 'Required field'
     },
 
     'flexberry-file': {
@@ -112,6 +581,11 @@ export default {
         }
       }
     },
+
+    'flexberry-multiple-lookup': {
+      'no-data': 'No value'
+    },
+
     'flexberry-objectlistview': {
       'placeholder': 'There is no data',
       'showing-entries': {
@@ -212,7 +686,8 @@ export default {
       'check-all-button-text': 'Check all on all pages',
       'uncheck-all-button-text': 'Uncheck all on all pages',
       'clear-sorting-button-text': 'Set the default sorting',
-      'clear-select-button-text': 'Deselect'
+      'clear-select-button-text': 'Deselect',
+      'pullUpLookupValues': 'Use all selected records'
     },
 
     'groupedit-toolbar': {
@@ -303,6 +778,10 @@ export default {
       'placeholder': 'Tree nodes are not defined'
     },
 
+    'flexberry-sitemap-searchbar': {
+      'placeholder': 'Find section...',
+      'notFoundMsg': 'Not found'
+    },
     'flexberry-sitemap-guideline': {
       'main-menu-caption': 'Main menu'
     }
@@ -367,5 +846,9 @@ export default {
         },
       },
     },
-  }
+  },
+
+  'validations': {
+    'server-side-validation-error': 'Error requesting server side validation'
+  },
 };

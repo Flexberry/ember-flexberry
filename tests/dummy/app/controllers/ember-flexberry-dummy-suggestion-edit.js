@@ -76,6 +76,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     let cellComponent = this._super(...arguments);
     let i18n = this.get('i18n');
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -89,7 +90,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             projection: 'ApplicationUserL',
             autocomplete: true,
             showPreviewButton: true,
-            previewFormRoute: 'ember-flexberry-dummy-application-user-edit'
+            previewFormRoute: 'ember-flexberry-dummy-application-user-edit',
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -102,6 +104,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 

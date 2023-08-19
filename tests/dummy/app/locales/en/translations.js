@@ -272,6 +272,10 @@ $.extend(true, translations, {
               'caption': 'Custom user buttons example',
               'title': ''
             },
+            'groupedit-with-multiselect': {
+              'caption': 'Groupedit with multiselect in lookup function example',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
@@ -328,6 +332,10 @@ $.extend(true, translations, {
               'caption': 'Lookup in modal window',
               'title': ''
             },
+            'lookup-in-modal-aurocomplete': {
+              'caption': 'Lookup in modal with autocomplete',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -346,6 +354,18 @@ $.extend(true, translations, {
             },
             'user-settings-example': {
               'caption': 'Example for modal dialog olv user settiings',
+              'title': ''
+            }
+          },
+          'flexberry-multiple-lookup': {
+            'caption': 'flexberry-multiple-lookup',
+            'title': '',
+            'multiple-lookup': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Example of tag customization',
               'title': ''
             }
           },
@@ -428,9 +448,21 @@ $.extend(true, translations, {
               'caption': 'Limited text size example',
               'title': ''
             },
+            'toolbar-custom-components-example': {
+              'caption': 'Example of embedding custom components in olv-toolbar',
+              'title': ''
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-tab-bar': {
+            'caption': 'flexberry-tab-bar',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -540,6 +572,10 @@ $.extend(true, translations, {
               }
             },
           },
+          'icons': {
+            'caption': 'Icons',
+            'title': 'Icons'
+          },
         },
         'user-setting-forms': {
           'caption': 'User settings',
@@ -612,6 +648,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Name is required',
       'eMail-validation-message-caption': 'E-Mail is required',
       'phone1-required-caption': 'Require filling in the "Phone1" field',
+      'profile': 'Profile',
+      'contact-info': 'Contact Information',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -738,6 +776,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Component docs link',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Settings example for flexberry-button'
@@ -787,11 +826,18 @@ $.extend(true, translations, {
       'flexberry-file': {
         'settings-example': {
           'caption': 'Flexberry-file. Settings example'
+        },
+        'file-in-modal': {
+          'caption': 'Flexberry-file. Flexberry file in modal window',
+          'captionModal': 'Flexberry-file. Flexberry file in modal window',
+          'buttonModal': 'Modal window №1',
+          'buttonClose': 'Close'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Settings example'
+          'caption': 'Flexberry-groupedit. Settings example',
+          'remove-class-button-name': 'Remove class "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Custom buttons example',
@@ -834,6 +880,10 @@ $.extend(true, translations, {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
         },
+        'event-example': {
+          'caption': 'Flexberry-lookup. Event example',
+          'titleLookup': 'Master'
+        },
         'limit-function-through-dynamic-properties-example': {
           'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
           'titleLookup': 'Master',
@@ -856,8 +906,17 @@ $.extend(true, translations, {
           'buttonModalDouble': 'Modal window №2',
           'buttonClose': 'Close'
         },
+        'lookup-in-modal-autocomplete': {
+          'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
+          'captionModal': 'Custom modal window ui-modal',
+          'captionModalDouble': 'Custom modal window modal-dialog',
+          'buttonModal': 'Custom modal window ui-modal',
+          'buttonModalDouble': 'Custom modal window modal-dialog',
+          'buttonClose': 'Close'
+        },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Dropdown mode example'
+          'caption': 'Flexberry-lookup. Dropdown mode example',
+          'fieldMinCharacters': 'minCharacters - minimum number of characters to activate the search function'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',
@@ -867,6 +926,18 @@ $.extend(true, translations, {
           'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
+      },
+      'flexberry-multiple-lookup': {
+        'multiple-lookup': {
+          'caption': 'Flexberry-multiple-lookup. Settings example',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Example of tag customization',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user'
+        }
       },
       'flexberry-menu': {
         'settings-example': {
@@ -909,6 +980,9 @@ $.extend(true, translations, {
         'limited-text-size-example': {
           'caption': 'Flexberry-objectlistview. Limited text size example'
         },
+        'toolbar-custom-components-example': {
+          'caption': 'Flexberry-objectlistview. Example of embedding custom components in olv-toolbar'
+        },
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
@@ -925,7 +999,11 @@ $.extend(true, translations, {
           'caption': 'List of children Type'
         },
         'custom-filter': {
-          'caption': 'Flexberry-objectlistview. Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter',
+          'eqAddress': 'Address is equal',
+          'neqAddress': 'Address is not equal',
+          'likeAddress': 'Address contains',
+          'nlikeAddress': 'Address does not contain'
         },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
@@ -954,6 +1032,29 @@ $.extend(true, translations, {
       'flexberry-simpledatetime': {
         'settings-example': {
           'caption': 'Flexberry-simpledatetime. Settings example'
+        }
+      },
+      'flexberry-tab-bar': {
+        'settings-example': {
+          'caption': 'Flexberry-tab-bar. Settings example',
+          'reload-button-text': 'Reload',
+          'instruction-text': 'Click the "Reload" button after changing the <code>isOverflowedTabs</code> controller properties',
+          'tab_1': 'Tab №1',
+          'tab_2': 'Tab №2',
+          'tab_3': 'Tab №3',
+          'tab_4': 'Tab №4',
+          'tab_5': 'Tab №5',
+          'tab_6': 'Tab №6',
+          'tab_7': 'Tab №7',
+          'tab_8': 'Tab №8',
+          'tab_9': 'Tab №9',
+          'tab_10': 'Tab №10',
+          'tab_11': 'Tab №11',
+          'tab_12': 'Tab №12',
+          'tab_13': 'Tab №13',
+          'tab_14': 'Tab №14',
+          'tab_15': 'Tab №15',
+          'lorem': 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam cum fugiat placeat nostrum optio, blanditiis id. Quia nulla, velit hic tempore, tempora earum deserunt non debitis fuga adipisci repudiandae provident, natus laborum vitae a nesciunt cumque quod mollitia labore rerum cum beatae? Numquam cumque fugit dolorem sequi commodi veniam quae delectus quia tenetur eos. Repellat saepe nulla accusantium illo id.'
         }
       },
       'flexberry-text-cell': {
@@ -1087,7 +1188,11 @@ $.extend(true, translations, {
             caption: 'EmberFlexberryDummyVidDepartamentaL'
           },
         }
-      }
+      },
+      'icons': {
+        'caption': 'Icons',
+        'title': 'Icons'
+      },
     },
     'user-setting-forms': {
       'user-setting-delete': {

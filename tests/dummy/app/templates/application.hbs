@@ -1,5 +1,6 @@
 {{#if isInAcceptanceTestMode}}
   {{outlet}}
+  {{outlet "editrecord-modal"}}
   {{outlet "modal"}}
 {{else}}
   {{#flexberry-sidebar
@@ -11,6 +12,7 @@
       onHidden=(action "updateWidth")
     )
   }}
+    {{flexberry-sitemap-searchbar sitemap=sitemap.nodes}}
 
     {{flexberry-sitemap sitemap=sitemap class="flexberry-sitemap"}}
     <div class="sitebar-footer">
@@ -75,6 +77,14 @@
             placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
           }}
         </div>
+        <div class="item">
+          {{flexberry-dropdown
+            class="compact theme"
+            items=themes
+            value="purple"
+            onChange=(action "changeTheme")
+          }}
+        </div>
       </div>
 
       <div class="page-header-userbar">
@@ -87,7 +97,7 @@
     </div>
   </div>
   <div id="example" class="pusher">
-    <div class="ui form {{appState.state}}">
+    <div class="ui form {{appState.validation}} {{appState.state}}">
       <div class="bgw-opacity hidden"></div>
       <div class="full height">
         <div class="flexberry-content ui attached segment">
@@ -101,6 +111,7 @@
     </div>
   </div>
   <div class="ui main container">
+    {{outlet "editrecord-modal"}}
     {{outlet "modal"}}
   </div>
   {{!-- <div class="ui vertical footer segment">

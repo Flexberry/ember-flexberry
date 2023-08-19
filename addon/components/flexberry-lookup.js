@@ -612,6 +612,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         modalDialogSettings: this.get('_modalDialogSettings'),
         updateLookupAction: this.get('updateLookupAction'),
+        componentContext: this
       };
     }),
 
@@ -943,6 +944,16 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       if (!this.get('value') && !this.get('autocompletePersistValue') && !this.get('usePaginationForAutocomplete')) {
         this.set('displayValue', null);
       }
+    },
+
+    /**
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData
+    */
+    updateLookupValue(updateData) {
+      this.sendAction(this.get('updateLookupAction'), updateData);
     }
   },
 
@@ -1220,19 +1231,22 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           const skip = maxResults * (_this.get('_pageInResultsForAutocomplete') - 1);
           builder.skip(skip);
           builder.top(maxResults);
-          builder.count();
+
+          if (usePagination) builder.count();
 
           run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               const results = records.map((r) => ({ title: r.get(displayAttributeName), instance: r }));
 
-              if (usePagination && skip > 0) {
-                results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
-              }
+              if (usePagination) {
+                if (skip > 0)
+                  results.unshift({ title: '<div class="ui center aligned container"><i class="angle up icon"></i></div>', prevPage: true });
 
-              if (skip + records.get('length') < records.get('meta.count')) {
-                const title = usePagination ? '<div class="ui center aligned container"><i class="angle down icon"></i></div>' : '...';
-                results.push({ title: title, nextPage: usePagination });
+                if (skip + records.get('length') < records.get('meta.count'))
+                  results.push({ title: '<div class="ui center aligned container"><i class="angle down icon"></i></div>', nextPage: true });
+              } else {
+                if (records.get('length') == maxResults)
+                  results.push({ title: '...', nextPage: false });
               }
 
               callback({ success: true, results: results });
@@ -1294,7 +1308,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
             debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
             _this.set('value', result.instance);
-            _this.get('currentController').send(_this.get('updateLookupAction'),
+            _this.send(_this.get('updateLookupAction'),
               {
                 relationName: relationName,
                 modelToLookup: relatedModel,
@@ -1360,7 +1374,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
                     _this.sendAction('remove', _this.get('removeData'));
                   } else {
                     _this.set('value', record);
-                    _this.get('currentController').send(_this.get('updateLookupAction'),
+                    _this.send(_this.get('updateLookupAction'),
                       {
                         relationName: relationName,
                         modelToLookup: relatedModel,
@@ -1481,13 +1495,13 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
           }
         }
 
-        _this.get('currentController').send(_this.get('updateLookupAction'),
-        {
-          relationName: relationName,
-          modelToLookup: relatedModel,
+        _this.send(_this.get('updateLookupAction'),
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
             newRelationValue: newValue,
             componentName: _this.get('componentName')
-        });
+          });
       },
       onHide() {
         _this.$('.flexberry-dropdown input.search').val('');
@@ -1685,7 +1699,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       if (get(records, 'length') === 1) {
         let record = records.objectAt(0);
         _this.set('value', record);
-        _this.get('currentController').send(_this.get('updateLookupAction'),
+        _this.send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

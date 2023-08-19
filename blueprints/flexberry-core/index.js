@@ -27,11 +27,14 @@ module.exports = {
 
         //'__root__/app.js',
         //'__root__/templates/application.hbs',
-
+        
+        '__root__/adapters/application.js',
         '__root__/templates/mobile/application.hbs',
     ],
     getFileMap: function () {
-        var moduleName = this.options.entity && this.options.entity.name || this.packageName;
+        var moduleName = this.options.entity &&
+			this.options.entity.name ||
+			this.packageName;
         var fileMapVariables = this._generateFileMapVariables(moduleName, null, this.options);
         return this.generateFileMap(fileMapVariables);
     },
@@ -79,6 +82,7 @@ module.exports = {
             lodash.remove(this._files, function (fileName) { return fileName.indexOf("tests/dummy/") === 0; });
         }
         this._excludeIfExists();
+        this.setLocales(this._files);
         return this._files;
     },
 
@@ -89,6 +93,28 @@ module.exports = {
         }
 
         return this._super(...arguments);
+    },
+
+    setLocales: function (files) {
+        var localesFile = path.join('vendor/flexberry/custom-generator-options/generator-options.json');
+        if (!fs.existsSync(localesFile)) {
+            return files;
+        }
+        var locales = JSON.parse(stripBom(fs.readFileSync(localesFile, "utf8")));
+        if (locales.locales == undefined) {
+            return files;
+        }
+        if (!locales.locales.en) {
+            files.splice(files.indexOf("__root__/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/"), 1);
+            files.splice(files.indexOf("addon/locales/en/translations.js"), 1);
+        }
+        if (!locales.locales.ru) {
+            files.splice(files.indexOf("__root__/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/"), 1);
+            files.splice(files.indexOf("addon/locales/ru/translations.js"), 1);
+        }
+        return files;
     },
 
     /**
@@ -155,12 +181,12 @@ var CoreBlueprint = /** @class */ (function () {
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
-            var formFileName = listForms_1[_i];
-            var pp = path.parse(formFileName);
+            let formFileName = listForms_1[_i];
+            let pp = path.parse(formFileName);
             if (pp.ext != ".json")
                 continue;
             var listFormFile = path.join(listFormsDir, formFileName);
-            var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+            let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
             if (listForm.external)
                 continue;
@@ -172,12 +198,12 @@ var CoreBlueprint = /** @class */ (function () {
             formsImportedProperties.push("    '" + listFormName + "': " + listForm.name + "Form");
         }
         for (var _a = 0, editForms_1 = editForms; _a < editForms_1.length; _a++) {
-            var formFileName = editForms_1[_a];
-            var pp = path.parse(formFileName);
+            let formFileName = editForms_1[_a];
+            let pp = path.parse(formFileName);
             if (pp.ext != ".json")
                 continue;
             var editFormFile = path.join(editFormsDir, formFileName);
-            var content = stripBom(fs.readFileSync(editFormFile, "utf8"));
+            let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
             var editForm = JSON.parse(content);
             if (editForm.external)
                 continue;
@@ -187,7 +213,7 @@ var CoreBlueprint = /** @class */ (function () {
         }
         for (var _b = 0, models_1 = models; _b < models_1.length; _b++) {
             var modelFileName = models_1[_b];
-            var pp = path.parse(modelFileName);
+            let pp = path.parse(modelFileName);
             if (pp.ext != ".json")
                 continue;
             var model = ModelBlueprint_1.default.loadModel(modelsDir, modelFileName);
@@ -203,7 +229,7 @@ var CoreBlueprint = /** @class */ (function () {
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru", localePathTemplate);
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {
             var item = _d[_c];
-            var childItemExt = new SitemapItemExt(item);
+            const childItemExt = new SitemapItemExt(item, options);
             childItemExt.process("forms.application.sitemap", 5);
             applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
             children.push(childItemExt.sitemap);
@@ -212,8 +238,8 @@ var CoreBlueprint = /** @class */ (function () {
         this.children = children.join(", ");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
-        this.formsImportedProperties = formsImportedProperties.join(",\n");
-        this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+        this.formsImportedProperties = formsImportedProperties.join(",\n") + ",";
+        this.modelsImportedProperties = modelsImportedProperties.join(",\n") + ",";
     }
     CoreBlueprint.prototype.getLocalePathTemplate = function (options, isDummy, localePathSuffix) {
         var targetRoot = "app";
@@ -225,8 +251,9 @@ var CoreBlueprint = /** @class */ (function () {
     return CoreBlueprint;
 }());
 var SitemapItemExt = /** @class */ (function () {
-    function SitemapItemExt(baseItem) {
+    function SitemapItemExt(baseItem, options) {
         this.baseItem = baseItem;
+		this.options = options;
     }
     SitemapItemExt.prototype.process = function (parentTranslationProp, level) {
         var translationProp;
@@ -253,7 +280,7 @@ var SitemapItemExt = /** @class */ (function () {
         if (this.baseItem.children) {
             for (var _i = 0, _a = this.baseItem.children; _i < _a.length; _i++) {
                 var childItem = _a[_i];
-                var childItemExt = new SitemapItemExt(childItem);
+                const childItemExt = new SitemapItemExt(childItem, this.options);
                 childItemExt.process(translationProp, level + 1);
                 childrenTranslation.push(childItemExt.translation);
                 childrenTranslationOtherLocales.push(childItemExt.translationOtherLocales);
@@ -280,12 +307,46 @@ var SitemapItemExt = /** @class */ (function () {
         this.translationOtherLocales = "" + indentStr2 + this.quote(translationName) + ": {\n" + indentStr + "caption: '" + this.escapeValue(translationName) + "',\n" +
             (indentStr + "title: '" + this.escapeValue(translationName) + "',\n" + childrenOtherLocalesStr + "\n" + indentStr2 + "}");
         var INDENT = "";
-        this.sitemap = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n" +
-            (level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n")) +
-            ("" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n") +
-            ("" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n") +
-            (nodeIcon === undefined ? '' : ("" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(nodeIcon) + ",\n")) +
-            ("" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}");
+
+        const sitemapLink = "{\n" + INDENT + indentStr + "link: " + this.quoteIfNotNull(this.baseItem.link) + ",\n";
+		const levelIcon = level > 5 ? '' : ("" + INDENT + indentStr + "icon: 'list',\n");
+		const caption = "" + INDENT + indentStr + "caption: i18n.t('" + translationProp + ".caption'),\n";
+		const title = "" + INDENT + indentStr + "title: i18n.t('" + translationProp + ".title'),\n";
+		
+		let icon = '';
+		if (nodeIcon !== undefined) {
+			const existIcon = this.existIconInApplication(sitemapLink, this.options);
+			const resultIcon = existIcon !== '' ? existIcon : nodeIcon;
+			icon = "" + INDENT + indentStr + "icon: " + this.quoteIfNotNull(resultIcon) + ",\n";
+		}
+
+		const children = "" + INDENT + indentStr + "children: " + sitemapChildrenStr + "\n" + INDENT + indentStr2 + "}";
+
+        this.sitemap = sitemapLink +
+			levelIcon +
+			caption +
+			title +
+			icon +
+			children;
+    };
+	SitemapItemExt.prototype.existIconInApplication = function (value, options) {
+        let icon = '';
+		
+		if (options) {
+			const applicationFilePath = this.options.target + path.sep + "app" + path.sep + "controllers" + path.sep + "application.js";
+			
+			if (fs.existsSync(applicationFilePath)) {
+				const content = stripBom(fs.readFileSync(applicationFilePath, "utf8"));
+
+				const startPosition = content.indexOf(value);
+				const contentAfterPosition = startPosition !== -1 ? content.substring(startPosition, content.length) : '';
+				const existIconFinded = contentAfterPosition.match(/icon: '(.*)'[,|\n]/);
+				
+				icon = existIconFinded !== null && existIconFinded.length > 0 ? existIconFinded.pop(): icon;
+			}
+		}
+		
+		return icon;
     };
     SitemapItemExt.prototype.escapeValue = function (value) {
         return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");

@@ -128,6 +128,7 @@ export default EditFormController.extend({
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -140,7 +141,8 @@ export default EditFormController.extend({
             projection: 'ApplicationUserL',
             autocomplete: true,
             showPreviewButton: true,
-            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page'
+            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
+            updateLookupValue: updateLookupValue
           };
           break;
       }

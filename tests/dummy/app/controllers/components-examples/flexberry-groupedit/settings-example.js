@@ -6,6 +6,7 @@ import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
+import $ from 'jquery';
 
 export default EditFormController.extend({
   /**
@@ -426,6 +427,18 @@ export default EditFormController.extend({
   lookupEvents: service('lookup-events'),
 
   actions: {
+    /**
+      Handler for click on custom user button.
+
+      @method actions.removeClassButtonAction
+    */
+    removeClassButtonAction() {
+      let $columns = $('tr.groupedit-new-row');
+      $.each($columns, (key, item) => {
+        item.className = '';
+      });
+    },
+
     /**
       Handles click on lookup's choose button.
     */

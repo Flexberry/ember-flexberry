@@ -443,6 +443,8 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
+      /* If before value was not set (undefined) then moment(this.get('_valueAsDate')) returns current date.
+        If user input current date then moment(...).isSame(date) will return TRUE while in reality it is FALSE.*/
       let valueAsDate = this.get('_valueAsDate');
       if ((isNone(valueAsDate) && !isNone(date))
             || !moment(valueAsDate).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
@@ -453,6 +455,21 @@ export default FlexberryBaseComponent.extend({
       if (!isNone(inputValue)) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
+    }
+  },
+
+  _onChange() {
+    const oldValue = this.get('value');
+    this._validationDateTime();
+    const newValue = this.get('value');
+
+    if (newValue && newValue !== oldValue) {
+      this.set('_valueAsDate', newValue);
+
+      const onChange = this.get('onChange');
+      if (typeof onChange === 'function') {
+        onChange(newValue, oldValue);
       }
     }
   },
@@ -486,8 +503,11 @@ export default FlexberryBaseComponent.extend({
       locale: this.get('locale') || this.get('i18n.locale'),
       altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
       dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
-      onChange: (dates) => {
-        this.set('_valueAsDate', dates[0]);
+      onChange: () => {
+        let inputValue = this.$('.custom-flatpickr')[0].value;
+        if (!isBlank(inputValue)) {
+          this._onChange();
+        }
       },
       onClose: () => {
         this.set('canClick', true);
@@ -499,17 +519,18 @@ export default FlexberryBaseComponent.extend({
     $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
     $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(timeless ? this.dateMask : this.dateTimeMask);
+
+    this.$('.custom-flatpickr').change($.proxy(function () {
+      this._onChange();
+    }, this));
+
     this.$('.custom-flatpickr').keydown($.proxy(function (e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
-        this._validationDateTime();
-        return false;
+        this._onChange();
       }
     }, this));
 
-    this.$('.custom-flatpickr').change($.proxy(function () {
-      this._validationDateTime();
-    }, this));
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
 
     let namespace = this.elementId;
@@ -643,6 +664,7 @@ export default FlexberryBaseComponent.extend({
 
         flatpickr.setDate(value, false);
         flatpickr.clear();
+        this._onChange();
       }
     },
 

@@ -1,6 +1,8 @@
-<i class="close icon"></i>
-<div class="header">{{title}}</div>
-<div class="{{if viewImageContent "image"}} scrolling content">
+{{#if showHeader}}
+  <i class="close icon"></i>
+  <div class="header">{{title}}</div>
+{{/if}}
+<div class="{{if viewImageContent "image"}} {{if _toolbarVisible "smallerContentSize"}} scrolling content">
   {{#if viewImageContent}}
     <div class="ui centered image">{{yield}}</div>
   {{else}}

@@ -100,12 +100,6 @@ module.exports = function(environment) {
         // For guideline theme
         // Settings for flexberry-objectlistview component.
         flexberryObjectlistview: {
-          // Flag indicates whether to side page or usually mode.
-          useSidePageMode: true,
-
-          // Flag indicates whether to show olv filters in modal.
-          showFiltersInModal: true,
-
           // Default number of records on the list page
           defaultPerPage: 5
         },

@@ -12,7 +12,7 @@
       onHidden=(action "updateWidth")
     )
   }}
-    {{flexberry-sitemap-searchbar sitemap=sitemap.nodes}}
+    {{!-- {{flexberry-sitemap-searchbar sitemap=sitemap.nodes}} --}}
 
     {{flexberry-sitemap sitemap=sitemap class="flexberry-sitemap"}}
     <div class="sitebar-footer">
@@ -77,14 +77,14 @@
             placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
           }}
         </div>
-        <div class="item">
+        {{!-- <div class="item">
           {{flexberry-dropdown
             class="compact theme"
             items=themes
             value="purple"
             onChange=(action "changeTheme")
           }}
-        </div>
+        </div> --}}
       </div>
 
       <div class="page-header-userbar">

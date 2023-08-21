@@ -447,29 +447,10 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-edit",
-      "only": [
-        "eol-last",
-        "simple-unless",
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-list",
       "only": [
         "eol-last",
         "no-trailing-spaces"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-comment-edit",
-      "only": [
-        "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-localization-edit",
-      "only": [
-        "simple-unless"
       ]
     },
     {
@@ -487,12 +468,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-file-edit",
-      "only": [
-        "simple-unless"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-file-list",
       "only": [
         "eol-last"
@@ -503,12 +478,6 @@ module.exports = {
       "only": [
         "eol-last",
         "quotes"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-suggestion-type-edit",
-      "only": [
-        "simple-unless"
       ]
     },
     {

@@ -305,7 +305,7 @@ $.extend(true, translations, {
               'title': ''
             },
             'numeric-autocomplete': {
-              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'caption': 'Example lookup with autocomplete and dropdown with numeric displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -869,7 +869,7 @@ $.extend(true, translations, {
           'title': ''
         },
         'numeric-autocomplete': {
-          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'caption': 'Example lookup with autocomplete and dropdown with numeric displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {

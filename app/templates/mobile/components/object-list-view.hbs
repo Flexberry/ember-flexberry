@@ -13,7 +13,7 @@
     </thead>
   {{/if}}
   <tbody>
-    {{#if showFilters}}
+    {{#if (and (not showFiltersInModal) showFilters)}}
       <tr class="object-list-view-filters" onkeydown={{action "applyFiltersByEnter"}}>
         {{#if showHelperColumn}}
           <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">

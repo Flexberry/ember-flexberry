@@ -297,7 +297,7 @@ export default {
               'title': ''
             },
             'numeric-autocomplete': {
-              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'caption': 'Пример лукапа c автокомплитом и dropdown с числовым displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {

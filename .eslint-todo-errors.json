@@ -1533,9 +1533,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 56, "column": 17 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 61, "column": 17 }
   ],
-  "tests/dummy/app/controllers/log-service-examples/settings-example.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 264, "column": 41 }
-  ],
   "tests/dummy/app/controllers/new-platform-flexberry-services-lock-list.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 63, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 73, "column": 63 },

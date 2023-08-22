@@ -908,11 +908,7 @@ $.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
-          'captionModal': 'Custom modal window ui-modal',
           'captionModalDouble': 'Custom modal window modal-dialog',
-          'buttonModal': 'Custom modal window ui-modal',
-          'buttonModalDouble': 'Custom modal window modal-dialog',
-          'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Dropdown mode example',

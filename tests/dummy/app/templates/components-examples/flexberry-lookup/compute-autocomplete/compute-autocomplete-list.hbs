@@ -1,37 +1,41 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
-<a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html#лукап-с-автокомплитом">
-  {{t "forms.components-examples.docs-link"}}
-</a>
-<div class="row">
-  {{flexberry-objectlistview
-    content=model
-    modelName="ember-flexberry-dummy-suggestion-type"
-    modelProjection=modelProjection
-    editFormRoute=editFormRoute
-    createNewButton=false
-    deleteButton=true
-    refreshButton=true
-    exportExcelButton=true
-    sorting=computedSorting
-    orderable=true
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    recordsTotalCount=recordsTotalCount
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
-    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
-    componentName="SOLVSuggestionTypeObjectListView"
-    showCheckBoxInRow=true
-    showEditMenuItemInRow=true
-    showDeleteMenuItemInRow=true
-    showEditButtonInRow=true
-    showDeleteButtonInRow=true
-  }}
-</div>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <a href="https://flexberry.github.io/ru/ef2_lookup-component.html#lookup-в-режиме-автодополнения-autocomplete">
+      {{t "forms.components-examples.docs-link"}}
+    </a>
+  </div>
+  <div class="row">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-suggestion-type"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      createNewButton=false
+      deleteButton=true
+      refreshButton=true
+      exportExcelButton=true
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
+      componentName="SOLVSuggestionTypeObjectListView"
+      showCheckBoxInRow=true
+      showEditMenuItemInRow=true
+      showDeleteMenuItemInRow=true
+      showEditButtonInRow=true
+      showDeleteButtonInRow=true
+    }}
+  </div>
+</form>

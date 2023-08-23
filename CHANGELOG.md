@@ -3,7 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.10.0] - 2023-08-23
 ### Added
+* Color scheme change.
+* Added `flexberry-sitemap-searchbar` component.
+* Added `olv-pagination` component.
+* The `flexberry-multiple-lookup` component:
+    * Added tags customization.
 * The `flexberry-objectlistview` component:
     * Added interval filter for dates.
 

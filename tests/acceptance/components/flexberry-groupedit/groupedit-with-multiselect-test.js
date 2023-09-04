@@ -28,8 +28,8 @@ test(testName, (assert) => {
   wait().then(() => {
     assert.equal(currentPath(), path);
 
-    let $olv = $('.object-list-view ');
-    let $tbody = $('td.field', $olv)[0];
+    const $olv = $('.object-list-view ');
+    const $tbody = $('td.field', $olv)[0];
     let done = assert.async();
     run(() => click($tbody));
     wait().then(() => {
@@ -41,7 +41,8 @@ test(testName, (assert) => {
       } else {            
         startChildrenCount = children.childElementCount;
       }
-      let $addButton = $('button.ui.ui-add.button')[1];
+
+      const $addButton = $('button.ui.ui-add.button')[1];
 
       if (startChildrenCount == 0) {
         run(() => {
@@ -50,14 +51,14 @@ test(testName, (assert) => {
       }
 
       wait().then(() => {
-        let $lookupButton = $('button.ui.ui-change.button')[2];
+        const $lookupButton = $('button.ui.ui-change.button')[2];
         run(() => {
           click($lookupButton);
         });
         wait().then(() => {
           let $modal = $('div.flexberry-modal')[0];
-          let $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
-          let $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
+          const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
+          const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
           run( function () {
             click($checkbox1);
@@ -65,7 +66,7 @@ test(testName, (assert) => {
           });
           wait().then(() => {
             $modal = $('div.flexberry-modal')[0];
-            let $addRecords = $('button.ui.button', $modal)[0];
+            const $addRecords = $('button.ui.button', $modal)[0];
             run(() => {
               click($addRecords);
             });

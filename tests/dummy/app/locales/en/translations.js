@@ -305,7 +305,7 @@ $.extend(true, translations, {
               'title': ''
             },
             'numeric-autocomplete': {
-              'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+              'caption': 'Example lookup with autocomplete and dropdown with numeric displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -362,6 +362,10 @@ $.extend(true, translations, {
             'title': '',
             'multiple-lookup': {
               'caption': 'Settings example',
+              'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Example of tag customization',
               'title': ''
             }
           },
@@ -644,6 +648,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Name is required',
       'eMail-validation-message-caption': 'E-Mail is required',
       'phone1-required-caption': 'Require filling in the "Phone1" field',
+      'profile': 'Profile',
+      'contact-info': 'Contact Information',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -770,6 +776,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Component docs link',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Settings example for flexberry-button'
@@ -829,7 +836,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Settings example'
+          'caption': 'Flexberry-groupedit. Settings example',
+          'remove-class-button-name': 'Remove class "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Custom buttons example',
@@ -861,7 +869,7 @@ $.extend(true, translations, {
           'title': ''
         },
         'numeric-autocomplete': {
-          'caption': 'Example lookup with autocomplete and dropdwon with numeric displayAttributeName',
+          'caption': 'Example lookup with autocomplete and dropdown with numeric displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
@@ -900,14 +908,11 @@ $.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Lookup in modal with autocomlete',
-          'captionModal': 'Custom modal window ui-modal',
           'captionModalDouble': 'Custom modal window modal-dialog',
-          'buttonModal': 'Custom modal window ui-modal',
-          'buttonModalDouble': 'Custom modal window modal-dialog',
-          'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Dropdown mode example'
+          'caption': 'Flexberry-lookup. Dropdown mode example',
+          'fieldMinCharacters': 'minCharacters - minimum number of characters to activate the search function'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',
@@ -921,6 +926,11 @@ $.extend(true, translations, {
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
           'caption': 'Flexberry-multiple-lookup. Settings example',
+          'lookup-caption': 'Choose user',
+          'lookup-title': 'Choose user'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Example of tag customization',
           'lookup-caption': 'Choose user',
           'lookup-title': 'Choose user'
         }

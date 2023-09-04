@@ -6,6 +6,7 @@ export default EditFormController.extend({
 
     if (attr.kind === 'belongsTo') {
       if (model.modelName === 'ember-flexberry-dummy-localized-suggestion-type' && bindingPath === 'localization') {
+        let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
         cellComponent.componentProperties = {
           projection: 'LocalizationL',
           displayAttributeName: 'name',
@@ -13,7 +14,8 @@ export default EditFormController.extend({
           relationName: 'localization',
           choose: 'showLookupDialog',
           remove: 'removeLookupValue',
-          autocomplete: true
+          autocomplete: true,
+          updateLookupValue: updateLookupValue
         };
       }
     }

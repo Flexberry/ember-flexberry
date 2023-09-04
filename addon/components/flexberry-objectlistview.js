@@ -276,6 +276,15 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
+
+  /**
     Number page for search.
 
     @property searchPageValue
@@ -848,28 +857,33 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   currentIntervalRecords: computed('pages', 'perPageValue', function() {
-    let pages = this.get('pages');
-    let perPageValue = this.get('perPageValue');
-    let recordsTotalCount = this.get('recordsTotalCount');
-    if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
-      throw new Error('Property \'recordsTotalCount\' is undefined.');
-    }
-
-    let currentStartRecords = null;
-    let currentEndRecords = null;
-
-    pages.forEach((page) => {
-      if (page.isCurrent) {
-        currentStartRecords = page.number * perPageValue - perPageValue + 1;
-        currentEndRecords = page.number * perPageValue;
+    try {
+      let pages = this.get('pages');
+      let perPageValue = this.get('perPageValue');
+      let recordsTotalCount = this.get('recordsTotalCount');
+      if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
+        throw new Error('Property \'recordsTotalCount\' is undefined.');
       }
-    });
 
-    if (currentEndRecords > recordsTotalCount) {
-      currentEndRecords = recordsTotalCount;
+      let currentStartRecords = null;
+      let currentEndRecords = null;
+
+      pages.forEach((page) => {
+        if (page.isCurrent) {
+          currentStartRecords = page.number * perPageValue - perPageValue + 1;
+          currentEndRecords = page.number * perPageValue;
+        }
+      });
+
+      if (currentEndRecords > recordsTotalCount) {
+        currentEndRecords = recordsTotalCount;
+      }
+
+      return currentStartRecords + '-' + currentEndRecords;
     }
-
-    return currentStartRecords + '-' + currentEndRecords;
+    catch (error) {
+      return;
+    }
   }),
 
   /**
@@ -1436,6 +1450,7 @@ export default FlexberryBaseComponent.extend({
 
       if (searchPageNumber) {
         this.send('gotoPage', action, searchPageNumber);
+        this.set('searchPageValue', undefined);
       }
     }
   },

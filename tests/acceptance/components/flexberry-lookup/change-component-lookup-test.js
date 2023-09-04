@@ -113,7 +113,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
 
 executeTest('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation',
 (store, assert, app, latestReceivedRecords) => {
-  assert.expect(4);
+  assert.expect(6);
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
 
   andThen(function() {
@@ -121,6 +121,8 @@ executeTest('changes in component\'s value causes changes in related model\'s sp
     let model = get(controller, 'model');
     let relationName = get(controller, 'relationName');
     let displayAttributeName = get(controller, 'displayAttributeName');
+    let updateLookupValueTest = get(controller, 'updateLookupValueTest');
+    assert.strictEqual(updateLookupValueTest, 'base', 'updateLookupValueTest has default value');
 
     let $lookup = $('.flexberry-lookup');
     let $lookupInput = $('input', $lookup);
@@ -149,6 +151,13 @@ executeTest('changes in component\'s value causes changes in related model\'s sp
         $lookupInput.val(),
         chosenRecordDisplayAttribute,
         'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
+
+      let updateLookupValueTestUpdated = get(controller, 'updateLookupValueTest');
+      assert.strictEqual(
+        updateLookupValueTestUpdated,
+        'updated',
+        'updateLookupValue action was called');
+
     }).catch((reason) => {
       throw new Error(reason);
     }).finally(() => {

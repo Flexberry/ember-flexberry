@@ -3,6 +3,9 @@
 */
 
 import { set } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { isNone } from '@ember/utils';
+import moment from 'moment';
 
 import {
   SimplePredicate,
@@ -25,6 +28,8 @@ import {
   @return {BasePredicate|null} Predicate to filter through.
 */
 let predicateForFilter = function (filter) {
+  let owner = getOwner(this);
+
   if (filter.condition) {
     switch (filter.type) {
       case 'string':
@@ -94,11 +99,36 @@ let predicateForFilter = function (filter) {
         }
 
       case 'date':
+        if (filter.condition === 'between' && filter.pattern) {
+          const [from, to] = filter.pattern.split('|');
+          const fromIsValid = moment(from).isValid();
+          const toIsValid = moment(to).isValid();
+          if (fromIsValid && toIsValid) {
+            return new DatePredicate(filter.name, 'geq', from).and(
+              new DatePredicate(filter.name, 'leq', to)
+            );
+          } else if (fromIsValid) {
+            return new DatePredicate(filter.name, 'leq', to);
+          } else if (toIsValid) {
+            return new DatePredicate(filter.name, 'geq', from);
+          } else {
+            return null;
+          }
+        }
+  
         return filter.pattern ?
           new DatePredicate(filter.name, filter.condition, filter.pattern, true) :
           new SimplePredicate(filter.name, filter.condition, null);
-      default:
+      default: {
+        let transformInstance = owner.lookup('transform:' + filter.type);
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+        if (transformClass && transformClass.predicateForFilter) {
+          return transformClass.predicateForFilter(filter);
+        }
+
         return null;
+      }
     }
   } else if (filter.pattern) {
     switch (filter.type) {

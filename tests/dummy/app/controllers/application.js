@@ -25,6 +25,8 @@ export default Controller.extend({
   */
   appState: service(),
 
+  router: service(),
+
   actions: {
     /**
       Call `updateWidthTrigger` for `objectlistviewEventsService`.
@@ -45,12 +47,21 @@ export default Controller.extend({
       sidebar.sidebar('toggle');
       sidebar.toggleClass('sidebar-mini');
 
+      let $sitemapSearchInput = $('.sitemap-search-input');
+
+      if (sidebar.hasClass('sidebar-mini')) {
+        $sitemapSearchInput.addClass('hidden');
+      } else {
+        $sitemapSearchInput.removeClass('hidden');
+      }
+
       $('.full.height').toggleClass('content-opened');
 
       $('.sidebar.icon .text_menu').toggleClass('hidden');
       $('.sidebar.icon').toggleClass('text-menu-show');
       $('.sidebar.icon').toggleClass('text-menu-hide');
       $('.bgw-opacity').toggleClass('hidden');
+      $('.icon-guideline-search').toggleClass('visible');
 
       // For reinit overflowed tabs.
       $(window).trigger('resize');
@@ -101,6 +112,20 @@ export default Controller.extend({
       }
       return null;
     },
+
+    /**
+      Select themes.
+      @method actions.changeTheme
+    */
+    changeTheme(value) {
+      let sheet = document.querySelector('#theme');
+      if (!sheet) {
+        return;
+      }
+
+      let rootURL = this.get('router.location.location.origin') + config.rootURL;
+      sheet.setAttribute('href', `${rootURL}assets/${value}.css`);
+    }
   },
 
   /**
@@ -156,6 +181,14 @@ export default Controller.extend({
   locales: undefined,
 
   /**
+    Themes supported by application.
+    @property themes
+    @type String[]
+    @default ['purple', 'dark', 'default']
+  */
+  themes: undefined,
+
+  /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
 
     @method _userSettingsServiceChanged
@@ -170,6 +203,8 @@ export default Controller.extend({
   */
   init() {
     this._super(...arguments);
+
+    this.set('themes', ['purple', 'dark', 'default']);
 
     let i18n = this.get('i18n');
     if (isNone(i18n)) {
@@ -503,6 +538,11 @@ export default Controller.extend({
             link: 'components-examples/flexberry-multiple-lookup/multiple-lookup',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.multiple-lookup.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-multiple-lookup/configurate-tags',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-multiple-lookup.configurate-tags.title'),
             children: null
           }]
         }, {

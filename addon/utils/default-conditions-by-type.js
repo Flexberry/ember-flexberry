@@ -1,3 +1,6 @@
+import { getOwner } from '@ember/application';
+import { isNone } from '@ember/utils';
+
 /**
   @module ember-flexberry
 */
@@ -10,17 +13,13 @@
   @return {Array} Available conditions for filter.
 */
 export default function defaultConditionsByType(type, i18n) {
+  let owner = this != undefined ? getOwner(this) : getOwner(i18n);
+
   switch (type) {
     case 'file':
       return null;
 
     case 'date':
-      return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq'),
-        'le': i18n.t('components.object-list-view.filters.le'),
-        'ge': i18n.t('components.object-list-view.filters.ge'),
-      };
     case 'number':
     case 'decimal':
       return {
@@ -46,10 +45,18 @@ export default function defaultConditionsByType(type, i18n) {
         'empty': i18n.t('components.object-list-view.filters.empty'),
       };
 
-    default:
+    default: {
+      let transformInstance = owner.lookup('transform:' + type);
+      let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+      if (transformClass && transformClass.conditionsForFilter) {
+        return transformClass.conditionsForFilter();
+      }
+
       return {
         'eq': i18n.t('components.object-list-view.filters.eq'),
         'neq': i18n.t('components.object-list-view.filters.neq')
       };
+    }
   }
 }

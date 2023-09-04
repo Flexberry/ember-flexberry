@@ -305,7 +305,7 @@ $.extend(true, translations, {
               'title': ''
             },
             'numeric-autocomplete': {
-              'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+              'caption': 'Пример лукапа c автокомплитом и dropdown с числовым displayAttributeName',
               'title': ''
             },
             'hierarchy-olv-in-lookup-example': {
@@ -362,6 +362,10 @@ $.extend(true, translations, {
             'title': '',
             'multiple-lookup': {
               'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'configurate-tags': {
+              'caption': 'Пример кастомизации тегов',
               'title': ''
             }
           },
@@ -644,6 +648,8 @@ $.extend(true, translations, {
       'name-validation-message-caption': 'Заполните поле "Имя"',
       'eMail-validation-message-caption': 'Заполните поле "E-mail"',
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
+      'profile': 'Профиль',
+      'contact-info': 'Контактная информация',
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -770,6 +776,7 @@ $.extend(true, translations, {
     },
 
     'components-examples': {
+      'docs-link': 'Ссылка на документацию компонента',
       'flexberry-button': {
         'settings-example': {
           'caption': 'Пример работы с настройками flexberry-button'
@@ -830,7 +837,8 @@ $.extend(true, translations, {
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Flexberry-groupedit. Пример работы с настройками'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками',
+          'remove-class-button-name': 'Убрать класс "new"',
         },
         'custom-buttons-example': {
           'caption': 'Flexberry-groupedit. Пользовательские кнопки',
@@ -862,7 +870,7 @@ $.extend(true, translations, {
           'title': ''
         },
         'numeric-autocomplete': {
-          'caption': 'Пример лукапа c автокомплитом и dropdwon с числовым displayAttributeName',
+          'caption': 'Пример лукапа c автокомплитом и dropdown с числовым displayAttributeName',
           'title': ''
         },
         'hierarchy-olv-in-lookup-example': {
@@ -901,11 +909,11 @@ $.extend(true, translations, {
         },
         'lookup-in-modal-autocomplete': {
           'caption': 'Flexberry-lookup. Лукап в модальном окне с автокомплитом',
-          'captionModal': 'Модальное окно с ui-modal',
-          'captionModalDouble': 'Модальное с modal-dialog'
+          'captionModalDouble': 'Модальное окно с modal-dialog'
         },
         'dropdown-mode-example': {
-          'caption': 'Flexberry-lookup. Режим dropdown'
+          'caption': 'Flexberry-lookup. Режим dropdown',
+          'fieldMinCharacters': 'minCharacters - минимальное количество символов для активации функции поиска'
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
@@ -923,6 +931,11 @@ $.extend(true, translations, {
       'flexberry-multiple-lookup': {
         'multiple-lookup': {
           'caption': 'Flexberry-multiply-lookup. Пример работы с настройками',
+          'lookup-caption': 'Заполнение пользователей',
+          'lookup-title': 'Заполнение пользователей'
+        },
+        'configurate-tags': {
+          'caption': 'Flexberry-multiply-lookup. Пример кастомизации тегов',
           'lookup-caption': 'Заполнение пользователей',
           'lookup-title': 'Заполнение пользователей'
         }

@@ -185,9 +185,9 @@ ErrorableRouteMixin, {
           } else {
             /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
+              this.replaceWith(this.currentRouteName, { queryParams:  $.extend(params, { sort: null, perPage: this.perPage || 5 }) }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
+              this.replaceWith(this.currentRouteName, { queryParams: $.extend(params, { sort: sortString, perPage: this.perPage || 5 }) });  //Reload current page and records (model) list
             }
             /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
 

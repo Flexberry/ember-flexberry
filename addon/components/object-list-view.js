@@ -986,10 +986,10 @@ export default FlexberryBaseComponent.extend(
     @default ''
   */
   componentName: '',
-  
+
   /**
    * Clears selection from row
-   * 
+   *
    * @param {DS.Model} recordWithKey Model in row
    */
   clearSelectionFromRow(recordWithKey) {
@@ -1121,7 +1121,7 @@ export default FlexberryBaseComponent.extend(
 
       this.clearSelectionFromRow(recordWithKey);
     },
-    
+
     /* eslint-enable no-unused-vars */
 
     /**
@@ -1321,7 +1321,7 @@ export default FlexberryBaseComponent.extend(
         set(filter, 'pattern', null);
       }
 
-      let options = this._getFilterComponentByCondition(newCondition, oldCondition);
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
       let componentForFilterByCondition = this.get('componentForFilterByCondition');
       if (componentForFilterByCondition) {
         assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -2011,20 +2011,19 @@ export default FlexberryBaseComponent.extend(
   _addFilterForColumn(column, attr, bindingPath) {
     let relation = attr.kind !== 'attr';
     let attribute = this._getAttribute(attr, bindingPath);
-
-    let conditions;
-    let conditionsByType = this.get('conditionsByType');
-    if (conditionsByType) {
-      assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
-      conditions = conditionsByType(attribute.type, attribute);
-    } else {
-      conditions = defaultConditionsByType(attribute.type, this.get('i18n'));
-    }
-
     let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
     let type = attribute.type;
     let pattern;
     let condition;
+    let conditions;
+    let conditionsByType = this.get('conditionsByType');
+  
+    if (conditionsByType) {
+      assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
+      conditions = conditionsByType(type, attribute);
+    } else {
+      conditions = defaultConditionsByType(type, this.get('i18n'));
+    }
 
     let filters = this.get('filters');
     if (filters && filters.hasOwnProperty(name)) {
@@ -2039,12 +2038,20 @@ export default FlexberryBaseComponent.extend(
     }
 
     let componentForFilter = this.get('componentForFilter');
+
     if (componentForFilter) {
       assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      $.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+      $.extend(true, component, componentForFilter(type, relation, attribute));
     }
 
-    let options = this._getFilterComponentByCondition(condition, null);
+    let transformInstance = getOwner(this).lookup('transform:' + type);
+    let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
+
+    if (transformClass && transformClass.componentForFilter) {
+      $.extend(true, component, transformClass.componentForFilter(relation));
+    }
+
+    let options = this._getFilterComponentByCondition(condition, null, type);
     let componentForFilterByCondition = this.get('componentForFilterByCondition');
     if (componentForFilterByCondition) {
       assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -2106,7 +2113,7 @@ export default FlexberryBaseComponent.extend(
         name: 'flexberry-dropdown',
         properties: {
           items: filterSettings.items,
-          class: 'compact'
+          class: 'fluid'
         }
       };
     }
@@ -2156,19 +2163,22 @@ export default FlexberryBaseComponent.extend(
         break;
 
       case 'string':
-      case 'number':
         component.name = 'flexberry-textbox';
         break;
 
+      case 'number':
       case 'decimal':
         component.name = 'flexberry-textbox';
+        component.properties = {
+          type: 'number',
+        };
         break;
 
       case 'boolean': {
         component.name = 'flexberry-dropdown';
         component.properties = {
           items: ['true', 'false'],
-          class: 'compact',
+          class: 'fluid',
         };
         break;
       }
@@ -2210,11 +2220,26 @@ export default FlexberryBaseComponent.extend(
     @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
+    @param {String} attributeType
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponentByCondition(newCondition, oldCondition) {
+  _getFilterComponentByCondition(newCondition, oldCondition, attributeType) {
     if (newCondition === 'between') {
-      return { name: 'olv-filter-interval' };
+      const filterComponent = {
+        name: 'olv-filter-interval'
+      };
+
+      if (attributeType === 'date') {
+        filterComponent.properties = {
+          componentName: 'flexberry-simpledatetime',
+          dynProps: {
+            removeButton: false,
+            type: 'date',
+          }
+        }
+      }
+
+      return filterComponent;
     }
 
     if (oldCondition === 'between') {

@@ -6,7 +6,7 @@ import { assert, warn, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { computed, observer, get } from '@ember/object';
 import { deprecatingAlias } from '@ember/object/computed';
-import { later, run, once } from '@ember/runloop';
+import { later, run, once, scheduleOnce } from '@ember/runloop';
 import { merge } from '@ember/polyfills';
 import { isNone } from '@ember/utils';
 import { on } from '@ember/object/evented';
@@ -110,6 +110,15 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
     @default 1
   */
   _pageInResultsForAutocomplete: 1,
+
+  /**
+    Flag for rerendering dropdown.
+
+    @private
+    @property _dropdownRefreshFlag
+    @type Boolean
+  */
+  _dropdownRefreshFlag: true,
 
   /**
     Computed property for {{#crossLink "FlexberryLookup/modalDialogSettings:property"}}modalDialogSettings{{/crossLink}} property.
@@ -277,10 +286,33 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
   */
   _dropdownObserver: on('init', observer('dropdown', function() {
     if (this.get('dropdown')) {
+      this.addObserver('minCharacters', this, this._dropdownRerenderObserverFunction);
+      this.addObserver('lookupLimitPredicate', this, this._dropdownRerenderObserverFunction);
+      this.addObserver('lookupAdditionalLimitFunction', this, this._dropdownRerenderObserverFunction);
       this._onDropdown();
+    } else {
+      this.removeObserver('minCharacters', this, this._dropdownRerenderObserverFunction);
+      this.removeObserver('lookupLimitPredicate', this, this._dropdownRerenderObserverFunction);
+      this.removeObserver('lookupAdditionalLimitFunction', this, this._dropdownRerenderObserverFunction);
     }
   })),
   /* eslint-enable  ember/no-on-calls-in-components */
+
+  /**
+    Rerender dropdown when needed.
+
+    @method _dropdownRerenderObserverFunction
+    @private
+  */
+  _dropdownRerenderObserverFunction() {
+    this.set('_dropdownRefreshFlag', false);
+
+    const rerenderFunc = function() {
+      this.set('_dropdownRefreshFlag', true);
+    };
+
+    scheduleOnce('afterRender', this, rerenderFunc);
+  },
 
   /**
     Flag to show in lookup preview button.

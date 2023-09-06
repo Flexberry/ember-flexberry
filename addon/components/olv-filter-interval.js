@@ -73,6 +73,14 @@ export default FlexberryBaseComponent.extend({
     let from = this.get('from') || '';
     let to = this.get('to') || '';
     let separator = this.get('separator');
+    const value = this.get('value');
+
+    if (!value && !isNaN(from) && !isNaN(to)) {
+      this.set('from', null);
+      this.set('to', null);
+      separator = '';
+    }
+
     this.set('value', from + separator + to);
   }),
 });

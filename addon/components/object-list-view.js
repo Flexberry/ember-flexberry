@@ -2061,7 +2061,11 @@ export default FlexberryBaseComponent.extend(
     $.extend(true, component, options);
 
     // Hack to restore component when clearing filter for one column.
-    component._defaultComponent = component.name;
+    if (component.name === 'olv-filter-interval') {
+      component._defaultComponent = component.properties.componentName;
+    } else {
+      component._defaultComponent = component.name;
+    }
 
     column.filter = { name, type, pattern, condition, conditions, component };
   },
@@ -2229,6 +2233,15 @@ export default FlexberryBaseComponent.extend(
         name: 'olv-filter-interval'
       };
 
+      if (attributeType === 'number') {
+        filterComponent.properties = {
+          componentName: 'flexberry-textbox',
+          dynProps: {
+            type: 'number',
+          }
+        }
+      }
+
       if (attributeType === 'date') {
         filterComponent.properties = {
           componentName: 'flexberry-simpledatetime',
@@ -2317,7 +2330,8 @@ export default FlexberryBaseComponent.extend(
           let filters = {};
           let hasFilters = false;
           this.get('columns').forEach((column) => {
-            if (column.filter.condition || column.filter.pattern) {
+            if ((column.filter.condition === 'between' && column.filter.pattern) ||
+              ((column.filter.condition || column.filter.pattern) && column.filter.condition !== 'between')) {
               hasFilters = true;
               filters[column.filter.name] = column.filter;
             }

@@ -65,6 +65,10 @@ export default FlexberryBaseComponent.extend({
       @param {Object} filter Object with the filter description.
     */
     clearFilterField(filter) {
+      if (get(filter, 'component.name') === 'olv-filter-interval') {
+        set(filter, 'component.properties', get(filter, 'component.properties.dynProps'));
+      }
+
       set(filter, 'component.name', get(filter, 'component._defaultComponent'));
       set(filter, 'condition', undefined);
       set(filter, 'pattern', undefined);

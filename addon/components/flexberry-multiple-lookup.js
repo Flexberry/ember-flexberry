@@ -256,7 +256,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Building a tag configuration property.
-  */
+   */
   buildConfigurateTags: observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
     let configurateTag = this.get('configurateTag');
 
@@ -305,13 +305,14 @@ export default FlexberryBaseComponent.extend({
     this.get('filteredRecords').forEach((record) =>
       set(record, 'tagDisplayValue', this.getRecordDisplayValue(record))
     );
+    this.addObserver('value', this.addNewRecordByValue);
+    this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);
     this.set('defaultTagConfig', {
       canBeDeleted: true,
       canBeSelected: true,
       customClass: '',
     });
-    this.addObserver('value', this.addNewRecordByValue);
-    this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);
+    this.buildConfigurateTags();
   },
 
   actions: {

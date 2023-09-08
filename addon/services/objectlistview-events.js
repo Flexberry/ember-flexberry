@@ -314,6 +314,32 @@ export default Service.extend(Evented, {
   },
 
   /**
+    Trigger for "setGeSort" event in route.
+    Event name: setGeSort.
+
+    @method setGeSortTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+    @param {Array} colDescs Array column descriptions.
+  */
+  setGeSortTrigger(componentName, sorting, colDescs) {
+    this.trigger('setGeSort', componentName, sorting, colDescs);
+  },
+
+
+  /**
+    Trigger for "setDefaultGeSort" event in route.
+    Event name: setDefaultGeSort.
+
+    @method setDefaultGeSortTrigger
+
+    @param {Array} colDescs Array column descriptions.
+  */
+  setDefaultGeSortTrigger(colDescs) {
+    this.trigger('setDefaultGeSort', colDescs);
+  },
+  /**
     Trigger for "geSortApply" event in object-list-view.
     Event name: geSortApply.
 

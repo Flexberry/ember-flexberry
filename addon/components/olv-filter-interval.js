@@ -68,18 +68,10 @@ export default FlexberryBaseComponent.extend({
    */
   separator: '|',
 
-  fromChanged: on('init', observer('from', function() {
-    once(this, 'valueSetter');
-  })),
-
-  toChanged: on('init', observer('to', function() {
-    once(this, 'valueSetter');
-  })),
-
   /**
    * Sets value with format '{from}{separator}{to}'
    */
-  valueSetter: observer('value', function () {
+   valueSetter: function() {
     let from = this.get('from') || '';
     let to = this.get('to') || '';
     let separator = this.get('separator');
@@ -92,5 +84,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('value', from + separator + to);
-  }),
+  },
+
+  /**
+    It observes changes in from, to, value.
+
+    @method _valueChanged
+    @private
+  */
+  _valueChanged: on('init', observer('from', 'to', 'value', function () {
+    once(this, 'сhanged');
+  })),
 });

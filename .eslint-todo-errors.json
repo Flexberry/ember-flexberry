@@ -195,8 +195,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 3134, "column": 29 }
   ],
   "addon/components/olv-filter-interval.js": [
-    { "ruleId": "ember/no-on-calls-in-components", "line": 71, "column": 16 },
-    { "ruleId": "ember/no-on-calls-in-components", "line": 75, "column": 14 }
+    { "ruleId": "ember/no-on-calls-in-components", "line": 95, "column": 18 }
   ],
   "addon/components/olv-toolbar.js": [
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 266, "column": 19 },

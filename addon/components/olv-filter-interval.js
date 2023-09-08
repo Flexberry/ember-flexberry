@@ -1,4 +1,6 @@
+import { on } from '@ember/object/evented';
 import { observer } from '@ember/object';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import moment from 'moment';
@@ -69,10 +71,28 @@ export default FlexberryBaseComponent.extend({
   /**
    * Sets value with format '{from}{separator}{to}'
    */
-  valueSetter: observer('from', 'to', 'value', function () {
+   valueSetter: function() {
     let from = this.get('from') || '';
     let to = this.get('to') || '';
     let separator = this.get('separator');
+    const value = this.get('value');
+
+    if (!value && !isNaN(from) && !isNaN(to)) {
+      this.set('from', null);
+      this.set('to', null);
+      separator = '';
+    }
+
     this.set('value', from + separator + to);
-  }),
+  },
+
+  /**
+    It observes changes in from, to, value.
+
+    @method _valueChanged
+    @private
+  */
+  _valueChanged: on('init', observer('from', 'to', 'value', function () {
+    once(this, 'valueSetter');
+  })),
 });

@@ -29,14 +29,6 @@ export default FlexberryGroupeditComponent.extend({
   */
   allowColumnResize: false,
 
-  /**
-    Service that triggers objectlistview events.
-
-    @property objectlistviewEvents
-    @type Service
-  */
-    // objectlistviewEvents: service(),
-
     /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 

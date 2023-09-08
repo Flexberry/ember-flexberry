@@ -93,6 +93,6 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _valueChanged: on('init', observer('from', 'to', 'value', function () {
-    once(this, 'сhanged');
+    once(this, 'valueSetter');
   })),
 });

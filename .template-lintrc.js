@@ -401,6 +401,12 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "app/templates/mobile/components/ge-sorting-dialog-content",
+      "only": [
+        "link-href-attributes"
+      ]
+    },
+    {
       "moduleId": "app/templates/mobile/components/object-list-view-row",
       "only": [
         "eol-last",

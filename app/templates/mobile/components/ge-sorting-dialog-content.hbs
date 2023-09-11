@@ -3,8 +3,8 @@
     <div class="field">
       <button type="button" class="ui button cols-config-apply" {{action "sortingFunction" content}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
     </div>
-    {{#each model.colDescs as |colDesc n|}}
-      <div propName='{{colDesc.propName}}' class="colsconfig-prop">
+    {{#each model.colDescs as |colDesc|}}
+      <div propName={{colDesc.propName}} class="colsconfig-prop">
         <div class="field colsconfig-prop-name {{if colDesc.hide "disabled"}}">
           <span>{{colDesc.name}}</span>
         </div>
@@ -13,7 +13,7 @@
           {{#unless colDesc.isHasMany}}
             <div class="sort-direction-cell field">
               <label>{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</label>
-              <div class="ui compact selection dropdown sort-direction-dropdown {{if colDesc.hide 'disabled'}}">
+              <div class="ui compact selection dropdown sort-direction-dropdown {{if colDesc.hide "disabled"}}">
                 <i class="dropdown icon"></i>
                 <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
                 <div class="menu">
@@ -28,7 +28,7 @@
           {{#if colDesc.sortOrder}}
             <div class="field">
               <label>{{t "components.colsconfig-dialog-content.sort-priority-caption"}}</label>
-              <div class="ui input {{if colDesc.hide 'disabled'}}">
+              <div class="ui input {{if colDesc.hide "disabled"}}">
                 {{input
                   class="sort-priority-input"
                   value=colDesc.sortPriority

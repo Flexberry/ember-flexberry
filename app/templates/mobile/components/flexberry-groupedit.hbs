@@ -7,20 +7,20 @@
   defaultSettingsButton=defaultSettingsButton
   confirmDeleteRows=confirmDeleteRows
   sorting=sorting
-  customButtonAction=(action 'customButtonAction')
+  customButtonAction=(action "customButtonAction")
   customButtons=customButtons
   orderedProperty=orderedProperty
 }}
 <div class="ui secondary menu no-margin nav-bar">
-    <button
-      type="button"
-      class="ui {{unless sorting "disabled"}} button mobile-sorting-setting-button"
-      title={{_mobileSortingSettingsCaption}}
-      disabled={{not sorting}}
-      {{action "showConfigDialog"}}>
-        <i class={{_mobileSortingSettingsIcon}}></i>
-        {{_mobileSortingSettingsCaption}}
-    </button>
+  <button
+    type="button"
+    class="ui {{unless sorting "disabled"}} button mobile-sorting-setting-button"
+    title={{_mobileSortingSettingsCaption}}
+    disabled={{not sorting}}
+    {{action "showConfigDialog"}}>
+    <i class={{_mobileSortingSettingsIcon}}></i>
+    {{_mobileSortingSettingsCaption}}
+  </button>
 </div>
 {{object-list-view
   class="groupedit-container"
@@ -52,9 +52,9 @@
   mainModelProjection=mainModelProjection
   modelProjection=modelProjection
   content=content
-  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
-  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
-  action=(action 'groupEditRowClick')
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
+  action=(action "groupEditRowClick")
   componentName=componentName
   allowColumnResize=allowColumnResize
   configurateRow=this.attrs.configurateRow

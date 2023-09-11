@@ -160,7 +160,7 @@ export default FlexberryGroupeditComponent.extend({
     @property currentSortings
     @type Map
   */
-  currentSortings: new Map(),
+  currentSortings: null,
 
   /**
     Set new sorting.
@@ -300,6 +300,8 @@ export default FlexberryGroupeditComponent.extend({
 
   init() {
     this._super(...arguments);
+
+    this.set('currentSortings', new Map());
 
     this.get('_groupEditEventsService').on('setGeSort', this, this.setSorting);
     this.get('_groupEditEventsService').on('setDefaultGeSort', this, this.setDefaultColNames);

@@ -88,14 +88,12 @@ export default Mixin.create({
 
       @method actions.showSortGeDialog
       @param componentName Component name.
-      @param settingName Setting name.
       @param useSidePageMode Indicates when use side page mode.
       @param modelProjection Model projection.
-      @param content Content for display in modal dialog.
       @param geSorting Current sorting.
     */
-      showSortGeDialog(componentName, settingName, useSidePageMode=false, modelProjection, content, geSorting) {
-        this._showSortGeDialog(componentName, settingName, useSidePageMode, this, modelProjection, content, geSorting);
+      showSortGeDialog(componentName, useSidePageMode=true, modelProjection, geSorting) {
+        this._showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting);
       },
 
       /**
@@ -443,16 +441,13 @@ export default Mixin.create({
 
     @method _showSortGeDialog
     @param componentName
-    @param settingName
     @param useSidePageMode
-    @param settingsSource
     @param modelProjection
-    @param content    
     @param geSorting
     @private
   */
-    _showSortGeDialog(componentName, settingName, useSidePageMode, settingsSource, modelProjection, content, geSorting) {
-    let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
+    _showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting) {
+    let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName);
     let sorting = geSorting;
     let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
@@ -461,9 +456,7 @@ export default Mixin.create({
     let projectionAttributes = modelProjection.attributes;
     
     colDescs = this._getGeneratedColumns(projectionAttributes, 
-      settingsSource, fixedColumns, colsOrder, sorting);
-
-    let settName = settingName;
+      this, fixedColumns, colsOrder, sorting);
 
     let store = this.get('store');
 
@@ -482,7 +475,7 @@ export default Mixin.create({
 
       this.send('showModalDialog', 'ge-sorting-dialog-content',
       { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
-      settingName: settName, store: store, useSidePageMode: useSidePageMode, content: content, geSorting: geSorting } }, loadingParams);
+      store: store, useSidePageMode: useSidePageMode, geSorting: geSorting } }, loadingParams);
 
     },
 

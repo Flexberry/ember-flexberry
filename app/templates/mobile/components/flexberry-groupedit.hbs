@@ -14,9 +14,9 @@
 <div class="ui secondary menu no-margin nav-bar">
   <button
     type="button"
-    class="ui {{unless sorting "disabled"}} button mobile-sorting-setting-button"
+    class="ui {{unless orderable "disabled"}} button mobile-sorting-setting-button"
     title={{_mobileSortingSettingsCaption}}
-    disabled={{not sorting}}
+    disabled={{not orderable}}
     {{action "showConfigDialog"}}>
     <i class={{_mobileSortingSettingsIcon}}></i>
     {{_mobileSortingSettingsCaption}}

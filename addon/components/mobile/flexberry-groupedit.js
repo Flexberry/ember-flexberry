@@ -190,11 +190,11 @@ export default FlexberryGroupeditComponent.extend({
     Convert array of object sorting to array.
 
     @private
-    @property _currecntSortingArray
+    @property _currentSortingArray
     @type Array
     @readOnly
   */
-    _currecntSortingArray: computed('sorting',  function() {
+    _currentSortingArray: computed('sorting',  function() {
       let sorting = this.get('sorting');
       let columns = A();
       if (sorting === null) {
@@ -327,12 +327,10 @@ export default FlexberryGroupeditComponent.extend({
 
   actions: {
     showConfigDialog() {
-      this.get('currentController').send('showSortGeDialog', 
-                                          this.get('componentName'), 
-                                          undefined, 
+      this.get('currentController').send('showSortGeDialog',
+                                          this.get('componentName'),
                                           this.get('useSidePageMode'), 
                                           this.get('modelProjection'),
-                                          this.get('content'),
                                           this.get('sorting'));
     }
   }

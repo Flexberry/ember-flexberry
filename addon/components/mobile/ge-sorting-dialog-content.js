@@ -79,7 +79,6 @@ export default FlexberryBaseComponent.extend({
     sortingFunction() {
       let sorting = this._getSettings().sorting || [];
       let componentName = this.get('model.componentName');
-      this.get('_groupEditEventsService').geSortApplyTrigger(componentName, sorting);
       
       this.get('_groupEditEventsService').setGeSortTrigger(componentName, sorting, this.get('model.colDescs'));
 

@@ -451,24 +451,19 @@ export default Mixin.create({
     let sorting = geSorting;
     let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
-    let colDescs = A();  //Columns description
     let modelName = modelProjection.modelName;
     let projectionAttributes = modelProjection.attributes;
     
-    colDescs = this._getGeneratedColumns(projectionAttributes, 
+    let colDescs = this._getGeneratedColumns(projectionAttributes,
       this, fixedColumns, colsOrder, sorting);
 
     let store = this.get('store');
 
     let controller = this.get('colsconfigController');
     controller.set('mainControler', this);
-    let loadingParams = {
-      view: 'application',
-      outlet: 'modal'
-    };
     this.send('showModalDialog', 'colsconfig-dialog');
 
-    loadingParams = {
+    let loadingParams = {
       view: 'colsconfig-dialog',
       outlet: 'modal-content'
     };

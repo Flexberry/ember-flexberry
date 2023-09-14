@@ -308,7 +308,12 @@ export default FlexberryGroupeditComponent.extend({
 
     let componentName = this.get('componentName');
     let component = this.get('currentController.developerUserSettings.' + `${componentName}`);
-    let sorting = component.DEFAULT.sorting;
+    let sorting = [];
+
+    if (component) {
+      sorting = component.DEFAULT.sorting;
+    }
+
     this.set('sorting', sorting);
 
     this.get('currentController').send('getGeneratedColumns', this.get('componentName'), undefined, this.get('modelProjection'), this.get('sorting'));

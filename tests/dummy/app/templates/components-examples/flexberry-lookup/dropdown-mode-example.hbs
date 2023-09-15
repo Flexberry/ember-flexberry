@@ -9,30 +9,27 @@
       label=label
       placeholder=placeholder
       type=type
-      change=(action "changeMinCharactersValue")
     }}
   </div>
-  {{#if rerender}}
-    <div class="field">
-      <label>dropdownIsSearch=true, minCharacters={{minCharacters}}, dropdownSettings=(hash direction="downward")</label>
-      {{flexberry-lookup
-        value=model.type
-        projection="DropDownLookupExampleView"
-        displayAttributeName="name"
-        title="Master"
-        relationName="type"
-        choose=(action "showLookupDialog")
-        remove=(action "removeLookupValue")
-        updateLookupValue=(action "updateLookupValue")
-        readonly=readonly
-        lookupLimitPredicate=lookupCustomLimitPredicate
-        dropdown=true
-        dropdownIsSearch=true
-        sorting="desc"
-        minCharacters=minCharacters
-      }}
-    </div>
-  {{/if}}
+  <div class="field">
+    <label>dropdownIsSearch=true, minCharacters={{minCharacters}}, dropdownSettings=(hash direction="downward")</label>
+    {{flexberry-lookup
+      value=model.type
+      projection="DropDownLookupExampleView"
+      displayAttributeName="name"
+      title="Master"
+      relationName="type"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
+      readonly=readonly
+      lookupLimitPredicate=lookupCustomLimitPredicate
+      dropdown=true
+      dropdownIsSearch=true
+      sorting="desc"
+      minCharacters=minCharacters
+    }}
+  </div>
   <div class="field">
     <label>dropdownIsSearch=false, dropdownSettings=(hash direction="upward")</label>
     {{flexberry-lookup

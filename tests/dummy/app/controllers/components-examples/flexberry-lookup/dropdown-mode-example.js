@@ -1,7 +1,6 @@
 import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
-import { scheduleOnce } from '@ember/runloop';
 import { translationMacro as t } from 'ember-i18n';
 
 
@@ -52,17 +51,5 @@ export default EditFormController.extend({
     @property type
     @type String
   */
-  type: 'number',
-
-  actions: {
-    changeMinCharactersValue() {
-      this.set('rerender', false);
-
-      const oppositeValue = function() {
-        this.set('rerender', true);
-      };
-
-      scheduleOnce('afterRender', this, oppositeValue);
-    }
-  }
+  type: 'number'
 });

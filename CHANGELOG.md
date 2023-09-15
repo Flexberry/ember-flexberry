@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* The `flexberry-lookup` component:
+    * Fixed cache in dropdown mode.
 
 ## [3.10.0] - 2023-08-23
 ### Added

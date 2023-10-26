@@ -35,7 +35,8 @@ module.exports = {
     'ember/no-observers': 'warn',
     'ember/no-mixins': 'off',
     'ember/require-computed-property-dependencies': 'off',
-    'hbs/check-hbs-template-literals': 'error'
+    'hbs/check-hbs-template-literals': 'error',
+    'ember/no-new-mixins': 'off',
   },
   reportUnusedDisableDirectives: true,
   overrides: [

@@ -138,19 +138,13 @@
   ],
   "addon/components/mobile/flexberry-groupedit.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 261, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 266, "column": 30 },
     { "ruleId": "ember/no-side-effects", "line": 266, "column": 9 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 266, "column": 30 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 279, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 283, "column": 37 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 292, "column": 47 },
     { "ruleId": "ember/no-side-effects", "line": 295, "column": 9 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 295, "column": 30 }
-  ],
-  
-  "addon/components/mobile/ge-sorting-dialog-content.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 102, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 179, "column": 41 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 179, "column": 102 }
   ],
   "addon/components/mobile/object-list-view.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 196, "column": 24 }
@@ -278,65 +272,31 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 23 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 28, "column": 42 }
   ],
-  "addon/mixins/colsconfig-dialog-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 4, "column": 16 }
-  ],
   "addon/mixins/dom-actions.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 52, "column": 16 },
     { "ruleId": "no-prototype-builtins", "line": 348, "column": 31 },
     { "ruleId": "no-prototype-builtins", "line": 382, "column": 31 }
   ],
-  "addon/mixins/dynamic-actions.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 63, "column": 16 }
-  ],
   "addon/mixins/dynamic-properties.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 20, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 144, "column": 22 }
   ],
-  "addon/mixins/edit-form-controller-operations-indication.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 14, "column": 16 }
-  ],
   "addon/mixins/edit-form-route-operations-indication.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 13, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 61, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 78, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 79, "column": 16 }
   ],
-  "addon/mixins/edit-in-modal-open.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 6, "column": 16 }
-  ],
   "addon/mixins/errorable-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 13, "column": 16 },
     { "ruleId": "no-prototype-builtins", "line": 68, "column": 26 }
   ],
   "addon/mixins/errorable-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 11, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 90, "column": 22 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 91, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 92, "column": 20 }
   ],
-  "addon/mixins/fixable-component.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 22, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 62 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 95, "column": 66 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 125, "column": 53 }
-  ],
-  "addon/mixins/flexberry-ddau-checkbox-actions-handler.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 17, "column": 16 }
-  ],
-  "addon/mixins/flexberry-ddau-slider-actions-handler.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 17, "column": 16 }
-  ],
-  "addon/mixins/flexberry-file-compatible-component.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 13, "column": 16 }
-  ],
   "addon/mixins/flexberry-file-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 16, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 65, "column": 18 }
   ],
   "addon/mixins/flexberry-groupedit-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 17, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 100, "column": 26 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 102, "column": 55 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 104, "column": 59 },
@@ -355,19 +315,13 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 218, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 233, "column": 21 }
   ],
-  "addon/mixins/flexberry-lookup-compatible-component.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 13, "column": 16 }
-  ],
   "addon/mixins/flexberry-lookup-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 25, "column": 16 },
-    { "ruleId": "ember/no-new-mixins", "line": 142, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 161, "column": 24 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 164, "column": 24 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 166, "column": 24 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 199, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 207, "column": 42 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 249, "column": 33 },
-    { "ruleId": "ember/no-new-mixins", "line": 262, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 274, "column": 49 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 279, "column": 24 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 282, "column": 24 },
@@ -377,13 +331,10 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 323, "column": 23 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 324, "column": 23 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 354, "column": 33 },
-    { "ruleId": "ember/no-new-mixins", "line": 384, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 394, "column": 13 },
-    { "ruleId": "ember/no-new-mixins", "line": 408, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 433, "column": 67 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 445, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 453, "column": 26 },
-    { "ruleId": "ember/no-new-mixins", "line": 485, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 496, "column": 13 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 536, "column": 95 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 585, "column": 37 },
@@ -398,48 +349,29 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 652, "column": 24 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 655, "column": 12 }
   ],
-  "addon/mixins/flexberry-objectlistview-hierarchical-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 13, "column": 16 }
-  ],
   "addon/mixins/flexberry-objectlistview-hierarchical-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 19, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 34, "column": 102 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 53, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 53, "column": 81 }
   ],
   "addon/mixins/flexberry-objectlistview-on-edit-form-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 23, "column": 16 },
     { "ruleId": "ember/require-computed-macros", "line": 75, "column": 22 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 133, "column": 15 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 143, "column": 11 }
   ],
-  "addon/mixins/flexberry-objectlistview-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 18, "column": 16 }
-  ],
-  "addon/mixins/flexberry-treenode-actions-handler.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 14, "column": 16 }
-  ],
   "addon/mixins/limited-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 52, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 153, "column": 17 }
   ],
   "addon/mixins/limited-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 55, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 125, "column": 54 },
     { "ruleId": "no-prototype-builtins", "line": 129, "column": 21 }
   ],
   "addon/mixins/lock-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 16, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 113, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 117, "column": 38 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 146, "column": 18 }
   ],
-  "addon/mixins/modal-application-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 61, "column": 16 },
-    { "ruleId": "ember/no-new-mixins", "line": 77, "column": 20 }
-  ],
   "addon/mixins/multi-list-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 11, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 22, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 38, "column": 14 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 39, "column": 14 },
@@ -475,7 +407,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 285, "column": 18 }
   ],
   "addon/mixins/multi-list-model-edit.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 19, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 50, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 51, "column": 20 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 52, "column": 20 },
@@ -487,7 +418,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 88, "column": 24 }
   ],
   "addon/mixins/multi-list-model.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 19, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 23, "column": 37 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 72, "column": 22 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 73, "column": 22 },
@@ -502,7 +432,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 115, "column": 24 }
   ],
   "addon/mixins/multi-list-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 17, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 53 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 55, "column": 41 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 55, "column": 54 },
@@ -517,7 +446,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 69, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 70, "column": 27 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 71, "column": 18 },
-    { "ruleId": "ember/no-new-mixins", "line": 71, "column": 54 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 94, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 95, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 96, "column": 16 },
@@ -533,9 +461,7 @@
     { "ruleId": "no-prototype-builtins", "line": 148, "column": 21 }
   ],
   "addon/mixins/olv-toolbar-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 14, "column": 16 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 86, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 130, "column": 18 },    
+    { "ruleId": "ember/use-ember-get-and-set", "line": 130, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 159, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 199, "column": 36 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 201, "column": 54 },
@@ -551,38 +477,21 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 547, "column": 37 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 580, "column": 40 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 603, "column": 53 },
-    { "ruleId": "ember/no-new-mixins", "line": 607, "column": 9 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 612, "column": 34 }
   ],
   "addon/mixins/paginated-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 50, "column": 16 },
     { "ruleId": "ember/require-computed-macros", "line": 129, "column": 22 },
     { "ruleId": "ember/require-computed-macros", "line": 153, "column": 20 }
   ],
-  "addon/mixins/paginated-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 48, "column": 16 }
-  ],
   "addon/mixins/predicate-from-filters.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 19, "column": 16 },
     { "ruleId": "no-prototype-builtins", "line": 55, "column": 21 }
   ],
   "addon/mixins/reload-list-mixin.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 26, "column": 16 },
     { "ruleId": "no-undef", "line": 94, "column": 25 },
     { "ruleId": "no-prototype-builtins", "line": 310, "column": 33 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 319, "column": 77 }
   ],
-  "addon/mixins/required-actions.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 18, "column": 16 }
-  ],
-  "addon/mixins/sortable-column.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 15, "column": 16 }
-  ],
-  "addon/mixins/sortable-controller.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 46, "column": 16 }
-  ],
   "addon/mixins/sortable-route.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 46, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 75, "column": 13 }
   ],
   "addon/objects/validation-data.js": [
@@ -1560,11 +1469,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 85, "column": 63 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 100, "column": 61 }
   ],
-  "tests/dummy/app/mixins/list-form-controller-operations-indication.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 15, "column": 16 }
-  ],
   "tests/dummy/app/mixins/list-form-route-operations-indication.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 12, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 19, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 20, "column": 16 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 42, "column": 18 },
@@ -2072,14 +1977,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 60, "column": 12 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 62, "column": 31 }
   ],
-  "tests/unit/mixins/dynamic-actions-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 9, "column": 40 },
-    { "ruleId": "ember/no-new-mixins", "line": 353, "column": 24 },
-    { "ruleId": "ember/no-new-mixins", "line": 571, "column": 22 },
-    { "ruleId": "ember/no-new-mixins", "line": 663, "column": 24 }
-  ],
   "tests/unit/mixins/dynamic-properties-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 39 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 35, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 47, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 18 },
@@ -2102,59 +2000,6 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 192, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 195, "column": 25 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 198, "column": 25 }
-  ],
-  "tests/unit/mixins/errorable-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 32 }
-  ],
-  "tests/unit/mixins/flexberry-file-controller-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 41 }
-  ],
-  "tests/unit/mixins/flexberry-groupedit-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 41 }
-  ],
-  "tests/unit/mixins/lock-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 11, "column": 25 }
-  ],
-  "tests/unit/mixins/modal-application-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 39 }
-  ],
-  "tests/unit/mixins/multi-list-controller-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 37 }
-  ],
-  "tests/unit/mixins/multi-list-model-edit-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 36 }
-  ],
-  "tests/unit/mixins/multi-list-model-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 32 }
-  ],
-  "tests/unit/mixins/multi-list-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 32 }
-  ],
-  "tests/unit/mixins/paginated-controller-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 37 }
-  ],
-  "tests/unit/mixins/paginated-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 32 }
-  ],
-  "tests/unit/mixins/predicate-from-filters-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 38 }
-  ],
-  "tests/unit/mixins/reload-list-mixin-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 16, "column": 33 },
-    { "ruleId": "ember/no-new-mixins", "line": 22, "column": 17 },
-    { "ruleId": "ember/no-new-mixins", "line": 30, "column": 27 },
-    { "ruleId": "ember/no-new-mixins", "line": 39, "column": 33 },
-    { "ruleId": "ember/no-new-mixins", "line": 58, "column": 18 },
-    { "ruleId": "ember/no-new-mixins", "line": 68, "column": 17 },
-    { "ruleId": "ember/no-new-mixins", "line": 92, "column": 27 },
-    { "ruleId": "ember/no-new-mixins", "line": 93, "column": 28 },
-    { "ruleId": "ember/no-new-mixins", "line": 100, "column": 33 }
-  ],
-  "tests/unit/mixins/sortable-controller-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 36 }
-  ],
-  "tests/unit/mixins/sortable-route-test.js": [
-    { "ruleId": "ember/no-new-mixins", "line": 7, "column": 31 }
   ],
   "tests/unit/routes/edit-form-new-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 25, "column": 9 },

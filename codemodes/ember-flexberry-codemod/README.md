@@ -27,6 +27,15 @@ npx ember-flexberry-codemod-update-lookup lookup-hbs app/templates/master-edit.h
 npx ember-flexberry-codemod-update-lookup lookup-getCellComponent app/
 ```
 
+## Important
+
+After update component templates (.hbs files), you must append action into component ```actions```, like showed this:
+```
+updateLookupValue(updateData) {
+  this.get('currentController').send('updateLookupValue', updateData);
+}
+```
+
 ## Problem cases
 
 - **"UnhandledPromiseRejectionWarning: Error: Command failed with ENAMETOOLONG"** - This error can appear when there are too many files in the specified directory to parse. (In our case .js or .hbs files). You should try running the command for each folder/file inside the given directory.

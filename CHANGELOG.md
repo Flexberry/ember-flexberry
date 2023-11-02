@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.11.0-beta.1] - 2023-11-02
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.11.0-beta.1`.
+
 ## [3.10.1] - 2023-09-15
 ### Added
 * The `flexberry-groupedit` component:

@@ -2,7 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.11.0] - 2023-11-09
+### Added
+* Added information about updating component templates.
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.11.0`.
+### Fixed
+* Add fixable component for lookup in dropdown mode found inside the flexberry-groupedit.
 
 ## [3.11.0-beta.1] - 2023-11-02
 ### Changed

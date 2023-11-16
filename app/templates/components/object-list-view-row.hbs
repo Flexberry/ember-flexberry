@@ -152,7 +152,7 @@
               </button>
             {{/if}}
             {{get-formatted record.data column.propName
-              dateFormat=dateFormat
+              dateFormat=column.cellComponent.componentProperties.dateFormat
               moment=moment
             }}
           </div>

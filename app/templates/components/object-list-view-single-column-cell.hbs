@@ -13,7 +13,7 @@
       {{else}}
         <div class="oveflow-text">
           {{get-formatted model column.propName
-            dateFormat=dateFormat
+            dateFormat=column.cellComponent.componentProperties.dateFormat
             moment=moment
           }}&nbsp;
         </div>

@@ -212,12 +212,13 @@
       {{model.errors.message}}
     </span>
   {{/if}}
-  {{flexberry-field
+  <label>Message</label>
+  {{flexberry-textarea
     readonly=readonly
     required=true
     value=model.message
+    rows=6
     class=(if model.errors.message "error" "")
-    label="Message"
   }}
 </div>
 
@@ -227,12 +228,13 @@
       {{model.errors.formattedMessage}}
     </span>
   {{/if}}
-  {{flexberry-field
+  <label>Formatted message</label>
+  {{flexberry-textarea
     readonly=readonly
     required=true
     value=model.formattedMessage
+    rows=6
     class=(if model.errors.formattedMessage "error" "")
-    label="Formatted message"
   }}
 </div>
 

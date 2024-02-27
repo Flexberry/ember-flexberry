@@ -1,5 +1,5 @@
 module.exports = function(environment) {
-  var backendUrl = 'http://node2.hub.ics.perm.ru:2080';
+  var backendUrl = 'https://ember-stand.flexberry-foundation.ru';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.

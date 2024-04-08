@@ -486,6 +486,11 @@ export default FlexberryBaseComponent.extend({
     const min = this.get('min');
     const max = this.get('max');
 
+    if (!isNone(min) && min.getSeconds() > 0) {
+      min.setMinutes(min.getMinutes() + 1);
+      min.setSeconds(0);
+    }
+
     const options = {
       altInput: true,
       time_24hr: true,

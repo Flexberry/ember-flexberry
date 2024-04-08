@@ -115,9 +115,9 @@
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 75, "column": 26 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 101, "column": 18 },
     { "ruleId": "ember/no-arrow-function-computed-properties", "line": 232, "column": 29 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 502, "column": 54 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 540, "column": 72 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 540, "column": 111 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 507, "column": 54 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 545, "column": 72 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 545, "column": 111 }
   ],
   "addon/components/flexberry-tab-bar.js": [
     { "ruleId": "ember/no-side-effects", "line": 77, "column": 11 }

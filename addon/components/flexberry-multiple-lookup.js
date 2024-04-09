@@ -160,7 +160,9 @@ export default FlexberryBaseComponent.extend({
     const newValue = this.get(propertyPath);
     if (!isNone(newValue)) {
       if (isNone(this.get('filteredRecords').findBy(`${this.get('relationName')}.id`, get(newValue, 'id')))) {
-        this.add(newValue);
+        run.next(() => {
+          this.add(newValue);
+        });
       }
 
       this.set(propertyPath, null);

@@ -1,29 +1,13 @@
 <h3 class="ui header">{{t "forms.application.sitemap.components-examples.flexberry-groupedit.field-readonly-status-depend-on-another-field-value.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_groupedit_configurate_row.html#изменение-поля-в-groupedit-в-зависимости-от-значения-в-другом-поле">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-groupedit
         componentName="aggregatorDetailsGroupedit"
         content=model.details
         modelProjection=modelProjection.attributes.details
-        placeholder=placeholder
-        readonly=readonly
-        tableStriped=tableStriped
-        createNewButton=createNewButton
-        deleteButton=deleteButton
-        defaultSortingButton=defaultSortingButton
-        allowColumnResize=allowColumnResize
-        showAsteriskInRow=showAsteriskInRow
-        showCheckBoxInRow=showCheckBoxInRow
-        showDeleteButtonInRow=showDeleteButtonInRow
-        showEditMenuItemInRow=showEditMenuItemInRow
-        showDeleteMenuItemInRow=showDeleteMenuItemInRow
-        useSingleColumn=useSingleColumn
-        singleColumnHeaderTitle=singleColumnHeaderTitle
-        rowClickable=rowClickable
-        immediateDelete=immediateDelete
-        orderable=true
-        defaultSettingsButton=defaultSettingsButton
-        fixedHeader=fixedHeader
-      }}
+    }}
   </div>
 </form>

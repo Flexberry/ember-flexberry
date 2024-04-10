@@ -6,6 +6,7 @@ import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
 import Ember from 'ember';
 import { isEmpty, typeOf } from '@ember/utils';
+import { get } from '@ember/object';
 
 const {
   Logger
@@ -91,8 +92,8 @@ export default Mixin.create({
 
     const elementClass = this.get('fixedElementClass');
     const elements = component.getElementsByClassName(elementClass);
-    const olv = $(component).closest(this.get('olvClasses')).get(0);
-    const modal = $(component).closest(this.get('modalClasses')).get(0);
+    const olv = get($(component).closest(this.get('olvClasses')), 0);
+    const modal = get($(component).closest(this.get('modalClasses')), 0);
 
     if (isEmpty(olv) && isEmpty(modal)) return Logger.warn(`Компонент находится вне спискового компонента или модального окна`);
     if (isEmpty(elements)) return Logger.warn(`Элемент с классом '${elementClass}' не найден`);
@@ -110,8 +111,11 @@ export default Mixin.create({
   },
 
   /**
-   * Показывает фиксированный элемент.
-   * @param {Object} options Корректировка позиции фиксированного элемента и т.д...
+   * Show a fixed element.
+   *
+   * @function showFixedElement
+   * @param {object} options Correction of the position of a fixed element.
+   * @returns {void}
    */
   showFixedElement(options = {}) {
     if (!this.get('canFixElement')) return;
@@ -122,45 +126,44 @@ export default Mixin.create({
     const isVisible = element.classList.contains('visible');
     const fixedOnVisible = options.fixedOnVisible || false;
     const parentComponentClasses = this.get('parentComponentClasses');
-    let parentComponent = $(parentComponentClasses).get(0);
+    const parentComponent = get($(parentComponentClasses), 0);
 
     if (!isVisible || fixedOnVisible) {
-      const { height, left, width, bottom } = component.getBoundingClientRect();
-      let { top } = component.getBoundingClientRect();
+      const { height, left, width, bottom, top } = component.getBoundingClientRect();
       const optionWidth = options.width || 0;
 
       if (this.get('isInsideOlv')) {
-        element.style.maxHeight = 'none';
-        let elementHeight = $(element).outerHeight();
+        const elementHeight = $(element).outerHeight();
+        const logoHeight = $(this.get('logoClass')).outerHeight();
+        const heightToEndWindow = window.innerHeight - bottom;
+        const heightToStartWindow = top - logoHeight;
 
-        const upward = window.innerHeight - bottom < elementHeight;
+        const upward = (heightToEndWindow < elementHeight) && (heightToStartWindow > heightToEndWindow);
         const optionLeft = options.left || 0;
         const optionTop = options.top || 0;
 
         if (upward) {
           element.style.overflowY = 'auto';
-
-          if (elementHeight > top) {
-            let logoHeight = $(this.get('logoClass')).outerHeight();
-            element.style.maxHeight = `${top - logoHeight}px`;
-          }
-
+          element.style.maxHeight = `${heightToStartWindow}px`;
           element.style.bottom = `${window.innerHeight - top}px`;
           element.style.top = `auto`;
 
           component.classList.add('upward');
         } else {
+          element.style.maxHeight = `${heightToEndWindow}px`;
           element.style.top = `${top + height + optionTop}px`;
           element.style.bottom = `auto`;
 
           component.classList.remove('upward');
         }
 
-        let offsetLeft = left - parentComponent.getBoundingClientRect().left + optionLeft;
+        const offsetLeft = left - parentComponent.getBoundingClientRect().left + optionLeft;
         $(element).attr('style', function(i, s) { return (s || '') + `left: ${offsetLeft}px !important;` });
       }
 
-      if (this.get('isInsideModal')) element.style.left = 0;
+      if (this.get('isInsideModal')) {
+        element.style.left = 0;
+      }
 
       element.style.width = `${width + optionWidth}px`;
       element.style.position = 'fixed';
@@ -170,7 +173,9 @@ export default Mixin.create({
   },
 
   /**
-   * Скрывает фиксированный элемент.
+   * Hide a fixed element.
+   *
+   * @function hideFixedElement
    */
   hideFixedElement() {
     if (!this.get('canFixElement')) return;
@@ -178,10 +183,12 @@ export default Mixin.create({
     const element = this.get('fixedElementRef');
     element.style.left = '-9999px';
     element.style.maxHeight = 'none';
-    element.style.position = '';
+    element.classList.remove('visible');
 
     const component = this.get('componentRef');
     $(component).blur();
+    component.classList.remove('active');
+    component.classList.remove('visible');
 
     this.removeScrollListeners();
   },

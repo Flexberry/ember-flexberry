@@ -15,6 +15,15 @@ export default Mixin.create({
   _userSettingsService: service('user-settings'),
 
   /**
+    Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
+
+    @property _groupEditEventsService
+    @type Service
+    @private
+  */
+    _groupEditEventsService: service('objectlistview-events'),
+
+  /**
     Controller to show advlimit config modal window.
 
     @property advLimitController
@@ -73,6 +82,41 @@ export default Mixin.create({
     showConfigDialog(componentName, settingName, useSidePageMode=false, isExportExcel = false, immediateExport = false) {
       this._showConfigDialog(componentName, settingName, useSidePageMode, this, isExportExcel, immediateExport);
     },
+
+    /**
+      Show columns config dialog for groupedit.
+
+      @method actions.showSortGeDialog
+      @param componentName Component name.
+      @param useSidePageMode Indicates when use side page mode.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      showSortGeDialog(componentName, useSidePageMode=true, modelProjection, geSorting) {
+        this._showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting);
+      },
+
+      /**
+      Show columns config dialog.
+
+      @method actions.getGeneratedColumns
+      @param componentName Component name.
+      @param settingName Setting name.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      getGeneratedColumns(componentName, settingName, modelProjection, geSorting) {
+        let projectionAttributes = modelProjection.attributes;
+        let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
+        fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+        let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
+        let sorting = geSorting;
+        let columns = this._getGeneratedColumns(projectionAttributes, this, fixedColumns, colsOrder, sorting);
+        this.set('colDescs', columns);
+
+        this.get('_groupEditEventsService').setDefaultGeSortTrigger(this.get('colDescs'));
+        return columns;
+      },
 
     /**
       Show filters dialog.
@@ -298,6 +342,137 @@ export default Mixin.create({
       settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
       exportParams: exportParams, store: store, useSidePageMode: useSidePageMode } }, loadingParams);
   },
+
+    /**
+    Get columns info.
+
+    @method _getGeneratedColumns
+    @param projectionAttributes
+    @param settingsSource
+    @param fixedColumns
+    @param colsOrder
+    @param sorting
+    @private
+  */
+    _getGeneratedColumns(projectionAttributes, settingsSource, fixedColumns, colsOrder, sorting) {
+      let colDesc;  //Column description
+      let colDescs = A();  //Columns description
+      let propName;
+
+      let colList = this._generateColumns(projectionAttributes, false, null, null, settingsSource);
+      let namedColList = {};
+
+      for (let i = 0; i < colList.length; i++) {
+        colDesc = colList[i];
+        propName = colDesc.propName;
+        colDesc.fixed = fixedColumns.indexOf(propName) > -1;
+        namedColList[propName] = colDesc;
+      }
+
+      if (isArray(colsOrder)) {
+        /*
+        Remove propName, that are not in colList
+        */
+        let reliableColsOrder = A();
+        for (let i = 0; i < colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
+          propName = colOrder.propName;
+          if ((propName in namedColList) && ('header' in  namedColList[propName])) {
+            reliableColsOrder.pushObject(colOrder);
+          }
+        }
+
+        colsOrder = reliableColsOrder;
+      } else {
+        colsOrder = colList;
+      }
+
+      let namedSorting = {};
+      let sortPriority = 0;
+      if (isNone(sorting)) {
+        sorting = A();
+      }
+
+      for (let i = 0; i < sorting.length; i++) {
+        colDesc = sorting[i];
+        propName = colDesc.propName;
+        if (propName in namedColList) {
+          colDesc.sortPriority = ++sortPriority;
+          namedSorting[propName] = colDesc;
+        }
+      }
+
+      for (let i = 0; i < colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+
+        if (!(propName in namedColList) || !('header' in  namedColList[propName])) {
+          delete namedColList[propName];
+          continue;
+        }
+
+        let name = namedColList[propName].header;
+        let isHasMany = namedColList[propName].isHasMany;
+        let fixed = namedColList[propName].fixed;
+        delete namedColList[propName];
+        colDesc = { name: name, propName: propName, isHasMany: isHasMany, fixed: fixed };
+
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
+        }
+
+        colDescs.pushObject(colDesc);
+      }
+
+      for (propName in namedColList) {
+        colDescs.pushObject({ propName: propName, name: namedColList[propName].header, sortOrder: 0,
+          isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
+      }
+
+      return colDescs;
+    },
+
+    /**
+    Show columns config dialog for groupedit.
+
+    @method _showSortGeDialog
+    @param componentName
+    @param useSidePageMode
+    @param modelProjection
+    @param geSorting
+    @private
+  */
+    _showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting) {
+    let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName);
+    let sorting = geSorting;
+    let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    let modelName = modelProjection.modelName;
+    let projectionAttributes = modelProjection.attributes;
+    
+    let colDescs = this._getGeneratedColumns(projectionAttributes,
+      this, fixedColumns, colsOrder, sorting);
+
+    let store = this.get('store');
+
+    let controller = this.get('colsconfigController');
+    controller.set('mainControler', this);
+    this.send('showModalDialog', 'colsconfig-dialog');
+
+    let loadingParams = {
+      view: 'colsconfig-dialog',
+      outlet: 'modal-content'
+    };
+
+      this.send('showModalDialog', 'ge-sorting-dialog-content',
+      { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+      store: store, useSidePageMode: useSidePageMode, geSorting: geSorting } }, loadingParams);
+
+    },
 
   /**
     Generate the columns.

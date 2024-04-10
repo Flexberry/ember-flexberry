@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(environment) {
-  var backendUrl = 'http://stands-backend.flexberry.net';
+  var backendUrl = 'https://ember-stand.flexberry-foundation.ru';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.

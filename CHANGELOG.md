@@ -2,7 +2,30 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.11.0] - 2023-11-09
+### Added
+* Added information about updating component templates.
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.11.0`.
+### Fixed
+* Add fixable component for lookup in dropdown mode found inside the flexberry-groupedit.
+
+## [3.11.0-beta.1] - 2023-11-02
+### Changed
+* Update dependency on `ember-flexberry-data` to version `3.11.0-beta.1`.
+
+## [3.10.1] - 2023-09-15
+### Added
+* The `flexberry-groupedit` component:
+    * Added sorting for mobile mode.
+
+### Fixed
+* The `flexberry-multiple-lookup` component:
+    * Fixed tags customization on init.
+* The `flexberry-lookup` component:
+    * Fixed cached values when limit function changed in dropdown mode.
+* The `flexberry-objectlistview` component:
+    * Fixed removal of interval filters.
 
 ## [3.10.0] - 2023-08-23
 ### Added

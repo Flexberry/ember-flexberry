@@ -1,0 +1,44 @@
+<div class="ui form {{appState.state}}">
+  <div class="flexberry-colsconfig content">
+    <div class="field">
+      <button type="button" class="ui button cols-config-apply" {{action "sortingFunction" content}}>{{if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</button>
+    </div>
+    {{#each model.colDescs as |colDesc|}}
+      <div propName={{colDesc.propName}} class="colsconfig-prop">
+        <div class="field colsconfig-prop-name {{if colDesc.hide "disabled"}}">
+          <span>{{colDesc.name}}</span>
+        </div>
+        {{!-- Сортировка --}}
+        <div class="two fields unstackable">
+          {{#unless colDesc.isHasMany}}
+            <div class="sort-direction-cell field">
+              <label>{{t "components.colsconfig-dialog-content.sort-direction-caption"}}</label>
+              <div class="ui compact selection dropdown sort-direction-dropdown {{if colDesc.hide "disabled"}}">
+                <i class="dropdown icon"></i>
+                <div class="default text">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                <div class="menu">
+                  <div class="item" data-value="0">{{t "components.colsconfig-dialog-content.sort-direction-none"}}</div>
+                  <div class="item" data-value="1">{{t "components.colsconfig-dialog-content.sort-direction-asc"}}</div>
+                  <div class="item" data-value="-1">{{t "components.colsconfig-dialog-content.sort-direction-desc"}}</div>
+                </div>
+              </div>
+            </div>
+          {{/unless}}
+          {{!-- Приоритет --}}
+          {{#if colDesc.sortOrder}}
+            <div class="field">
+              <label>{{t "components.colsconfig-dialog-content.sort-priority-caption"}}</label>
+              <div class="ui input {{if colDesc.hide "disabled"}}">
+                {{input
+                  class="sort-priority-input"
+                  value=colDesc.sortPriority
+                }}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    {{/each}}
+    <a class="hidden download-anchor"></a>
+  </div>
+</div>

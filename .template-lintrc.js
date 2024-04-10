@@ -912,6 +912,13 @@ module.exports = {
       ]
     },
     {
+      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-groupedit/field-readonly-status-depend-on-another-field-value",
+      "only": [
+        "block-indentation",
+        "eol-last"
+      ]
+    },
+    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/dropdown-mode-example",
       "only": [
         "no-bare-strings"

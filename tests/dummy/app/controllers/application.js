@@ -444,6 +444,11 @@ export default Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-groupedit/field-readonly-status-depend-on-another-field-value',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.field-readonly-status-depend-on-another-field-value.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.field-readonly-status-depend-on-another-field-value.title'),
+            children: null
           }]
         }, {
           link: null,

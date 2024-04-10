@@ -5,7 +5,7 @@ import { set, observer } from '@ember/object';
 export default EditFormController.extend({
 
   getCellComponent: function(attr, bindingPath, model) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo') {
       if (model.modelName === 'components-examples/flexberry-groupedit/shared/detail' && bindingPath === 'master') {
@@ -25,14 +25,14 @@ export default EditFormController.extend({
   },
 
   enumerationObserver: observer('model.details.@each.enumeration', function () {
-      const details = this.get('model.details').toArray();
+    const details = this.get('model.details').toArray();
 
-      details.forEach((detail) => {
-        let rowConfig = detail.rowConfig;
-        if (rowConfig) {
-          this.send('configurateRow', rowConfig, detail);
-        }
-      });
+    details.forEach((detail) => {
+      let rowConfig = detail.rowConfig;
+      if (rowConfig) {
+        this.send('configurateRow', rowConfig, detail);
+      }
+    });
   }),
 
   actions: {

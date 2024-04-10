@@ -24,13 +24,13 @@ export default EditFormRoute.extend({
     @method model
   */
   model() {
-    var store = this.get('store');
+    let store = this.get('store');
 
-    var arrRec = [];
-    for (var i = 1; i < 10; i++) {
+    let arrRec = [];
+    for (let i = 1; i < 10; i++) {
       let newRecord = store.createRecord('components-examples/flexberry-groupedit/shared/detail', {
         text: i + 'test',
-        flag: Math.floor(Math.random() * 2)
+        flag: i % 2
       });
       arrRec.push(newRecord);
     }

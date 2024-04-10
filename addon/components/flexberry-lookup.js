@@ -1538,6 +1538,7 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       onHide() {
         _this.$('.flexberry-dropdown input.search').val('');
         _this.$('.flexberry-dropdown .text.filtered').removeClass('filtered');
+        _this.$('.flexberry-dropdown').dropdown('setup menu', {});
       }
     };
 

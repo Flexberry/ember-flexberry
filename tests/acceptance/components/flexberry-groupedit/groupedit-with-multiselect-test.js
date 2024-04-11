@@ -61,34 +61,48 @@ test(testName, function(assert) {
 
         run(() => click($lookupButton));
         wait().then(() => {
-          const $modal = $('div.flexberry-modal')[0];
-          const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
-          const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
-          run(() => {
-            click($checkbox1);
-            click($checkbox2);
-          });
-          wait().then(() => {
+          let fieldCheched = function () {
+            const $modal = $('div.flexberry-modal')[0];
+            const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
+            const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
-            const $addRecords = $('button.ui.button', $modal)[0];
+            run(() => {
+              click($checkbox1);
+              click($checkbox2);
+            });
+            wait().then(() => {
 
-            let closeEditForm = function () {
-              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
-              const $closeButton = $('button.ui.button.close-button')[0];
-              run(() => click($closeButton));
-              wait().then(() =>  scheduleOnce('afterRender', done()));
-            }
+              /**
+               *  Close edit form and equl test
+               */
+              function closeEditForm() {
+                const children = $('tbody', $('div.groupedit-container')[1])[0];
+                assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
+                const $closeButton = $('button.ui.button.close-button')[0];
 
-            let closeLookup = function ()  {
-              run(() => click($addRecords));
-              wait().then(() => {
-                scheduleOnce('afterRender', closeEditForm());
-              });
-            };
+                run(() => click($closeButton));
+                wait().then(() =>  scheduleOnce('afterRender', done()));
+              }
 
-            scheduleOnce('afterRender', closeLookup());
-          });
+              /**
+               * Close lookup function
+               */
+              function closeLookup()  {
+                const $modal = $('div.flexberry-modal')[0];
+                const $addRecords = $('button.ui.button', $modal)[0];
+
+                run(() => click($addRecords));
+                wait().then(() => {
+                  scheduleOnce('afterRender', closeEditForm());
+                });
+              }
+
+              scheduleOnce('afterRender', closeLookup());
+            });
+          };
+
+          scheduleOnce('afterRender', fieldCheched());
         });
       });
     });

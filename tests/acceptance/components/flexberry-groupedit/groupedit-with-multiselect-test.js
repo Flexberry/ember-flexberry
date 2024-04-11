@@ -70,23 +70,24 @@ test(testName, function(assert) {
             click($checkbox2);
           });
           wait().then(() => {
+
             const $addRecords = $('button.ui.button', $modal)[0];
 
             let closeEditForm = function () {
+              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
               const $closeButton = $('button.ui.button.close-button')[0];
               run(() => click($closeButton));
-              wait().then(() => done());
+              wait().then(() =>  scheduleOnce('afterRender', done()));
             }
 
             let closeLookup = function ()  {
-              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
-              scheduleOnce('afterRender', closeEditForm());
+              run(() => click($addRecords));
+              wait().then(() => {
+                scheduleOnce('afterRender', closeEditForm());
+              });
             };
 
-            run(() => click($addRecords));
-            wait().then(() => {
-              scheduleOnce('afterRender', closeLookup());
-            });
+            scheduleOnce('afterRender', closeLookup());
           });
         });
       });

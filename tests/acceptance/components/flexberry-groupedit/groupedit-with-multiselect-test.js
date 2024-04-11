@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { set } from '@ember/object';
-import { run } from '@ember/runloop';
+import { run, scheduleOnce } from '@ember/runloop';
 import { module, test } from 'qunit';
 import wait from 'ember-test-helpers/wait';
 import { click } from '@ember/test-helpers';
@@ -72,14 +72,20 @@ test(testName, function(assert) {
           wait().then(() => {
             const $addRecords = $('button.ui.button', $modal)[0];
 
-            run(() => click($addRecords));
-            wait().then(() => {
-              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
-
+            let closeEditForm = function () {
               const $closeButton = $('button.ui.button.close-button')[0];
-
               run(() => click($closeButton));
               wait().then(() => done());
+            }
+
+            let closeLookup = function ()  {
+              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
+              scheduleOnce('afterRender', closeEditForm());
+            };
+
+            run(() => click($addRecords));
+            wait().then(() => {
+              scheduleOnce('afterRender', closeLookup());
             });
           });
         });
@@ -87,3 +93,4 @@ test(testName, function(assert) {
     });
   });
 });
+

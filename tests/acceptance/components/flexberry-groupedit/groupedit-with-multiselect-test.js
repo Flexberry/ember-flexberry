@@ -75,7 +75,7 @@ test(testName, function(assert) {
 
             run(() => click($addRecords));
             setTimeout(() => {
-
+              const children = $('tbody', $('div.groupedit-container')[1])[0];
               assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
 
               const $closeButton = $('button.ui.button.close-button')[0];

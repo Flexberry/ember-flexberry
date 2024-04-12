@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { set } from '@ember/object';
-import { run, scheduleOnce } from '@ember/runloop';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import wait from 'ember-test-helpers/wait';
 import { click } from '@ember/test-helpers';
@@ -9,6 +9,7 @@ import startApp from '../../../helpers/start-app';
 let app;
 const path = 'components-examples/flexberry-groupedit/groupedit-with-multiselect-list';
 const testName = 'check multiselect in lookup function';
+const waitTime = 2000;
 
 module('Acceptance | flexberry-groupedit | ' + testName, {
   beforeEach() {
@@ -61,51 +62,30 @@ test(testName, function(assert) {
 
         run(() => click($lookupButton));
         wait().then(() => {
+          const $modal = $('div.flexberry-modal')[0];
+          const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
+          const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
 
-          let fieldCheched = function () {
-            const $modal = $('div.flexberry-modal')[0];
-            const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
-            const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
+          run(() => {
+            click($checkbox1);
+            click($checkbox2);
+          });
+          setTimeout(() => {
+            const $addRecords = $('button.ui.button', $modal)[0];
 
-            run(() => {
-              click($checkbox1);
-              click($checkbox2);
-            });
-            wait().then(() => {
+            run(() => click($addRecords));
+            setTimeout(() => {
 
-              /**
-               *  Close edit form and equl test
-               */
-              function closeEditForm() {
-                const children = $('tbody', $('div.groupedit-container')[1])[0];
-                assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
-                const $closeButton = $('button.ui.button.close-button')[0];
+              assert.equal(children.childElementCount, startChildrenCount + 2, 'All records are added');
 
-                run(() => click($closeButton));
-                wait().then(() =>  scheduleOnce('afterRender', done()));
-              }
+              const $closeButton = $('button.ui.button.close-button')[0];
 
-              /**
-               * Close lookup function
-               */
-              function closeLookup()  {
-                const $modal = $('div.flexberry-modal')[0];
-                const $addRecords = $('button.ui.button', $modal)[0];
-
-                run(() => click($addRecords));
-                wait().then(() => {
-                  scheduleOnce('afterRender', closeEditForm());
-                });
-              }
-
-              scheduleOnce('afterRender', closeLookup());
-            });
-          };
-
-          scheduleOnce('afterRender', fieldCheched());
+              run(() => click($closeButton));
+              wait().then(() => done());
+            }, waitTime);
+          }, waitTime);
         });
       });
     });
   });
 });
-

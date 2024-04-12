@@ -61,7 +61,7 @@ test(testName, function(assert) {
         const $lookupButton = $('button.ui.ui-change.button')[2];
 
         run(() => click($lookupButton));
-        wait().then(() => {
+        setTimeout(() => {
           const $modal = $('div.flexberry-modal')[0];
           const $checkbox1 = $('div.flexberry-checkbox.ui', $modal)[0];
           const $checkbox2 = $('div.flexberry-checkbox.ui', $modal)[1];
@@ -84,7 +84,7 @@ test(testName, function(assert) {
               wait().then(() => done());
             }, waitTime);
           }, waitTime);
-        });
+        },waitTime);
       });
     });
   });

@@ -89,10 +89,10 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 1522, "column": 36 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1530, "column": 26 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 1535, "column": 34 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1596, "column": 26 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1734, "column": 15 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1735, "column": 26 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 1740, "column": 34 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1599, "column": 26 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1737, "column": 15 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1738, "column": 26 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 1743, "column": 34 }
   ],
   "addon/components/flexberry-objectlistview.js": [
     { "ruleId": "ember/closure-actions", "line": 122, "column": 7 },

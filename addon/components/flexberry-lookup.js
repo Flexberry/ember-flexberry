@@ -1538,6 +1538,9 @@ export default FlexberryBaseComponent.extend(FixableComponent, {
       onHide() {
         _this.$('.flexberry-dropdown input.search').val('');
         _this.$('.flexberry-dropdown .text.filtered').removeClass('filtered');
+
+        // Resets the content of the dropdown menu to its initial state when it is hidden.
+        // After the reset, the responseAsync function is called to send a new request with an empty search string.
         _this.$('.flexberry-dropdown').dropdown('setup menu', {});
       }
     };

@@ -287,6 +287,10 @@ $.extend(true, translations, {
             'readonly-columns-by-configurate-row-example': {
               'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
               'title': ''
+            },
+            'field-readonly-status-depend-on-another-field-value': {
+              'caption': 'Блокировка поля GrouptEdit в зависимости от значения другого поля текущей строки',
+              'title': ''
             }
           },
           'flexberry-lookup': {

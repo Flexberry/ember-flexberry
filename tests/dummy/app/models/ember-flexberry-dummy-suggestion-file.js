@@ -3,7 +3,7 @@ import EmberValidations from 'ember-validations';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
-let Model = EmberFlexberryDataModel.extend(EmberValidations, {
+const Model = EmberFlexberryDataModel.extend(EmberValidations, {
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
@@ -12,6 +12,14 @@ let Model = EmberFlexberryDataModel.extend(EmberValidations, {
   }),
   order: DS.attr('number', { ordered: true }),
   file: DS.attr('file'),
+
+  validations: {
+    suggestion: {
+      presence: {
+        message: 'Suggestion is required',
+      },
+    },    
+  }
 });
 
 // List form projection.

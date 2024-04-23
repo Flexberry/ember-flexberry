@@ -67,7 +67,9 @@
           updateLookupValue=(action "updateLookupValue")
           readonly=readonly
           componentName="Suggestion"
+          class=(if validationModel.errors.suggestion "error")
         }}
+        {{flexberry-validationmessage error=validationModel.errors.suggestion}}
       </div>
     </div>
   </div>

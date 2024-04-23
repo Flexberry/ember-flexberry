@@ -1481,6 +1481,9 @@
   "tests/dummy/app/models/ember-flexberry-dummy-application-user.js": [
     { "ruleId": "ember/avoid-leaking-state-in-ember-objects", "line": 23, "column": 3 }
   ],
+  "tests/dummy/app/models/ember-flexberry-dummy-suggestion-file.js": [
+    { "ruleId": "ember/avoid-leaking-state-in-ember-objects", "line": 16, "column": 3 }
+  ],
   "tests/dummy/app/routes/components-acceptance-tests/edit-form-readonly.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 41, "column": 16 }
   ],

@@ -276,6 +276,10 @@ $.extend(true, translations, {
               'caption': 'Пример групэдита с мультиселектом в лукапе',
               'title': ''
             },
+            'dynamic-groupedit': {
+              'caption': 'Динамический групэдит',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''

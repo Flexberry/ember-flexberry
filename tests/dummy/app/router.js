@@ -86,6 +86,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-file/flexberry-file-in-modal');
   this.route('components-examples/flexberry-groupedit/settings-example');
+  this.route('components-examples/flexberry-groupedit/dynamic-groupedit');
   this.route('components-examples/flexberry-groupedit/model-update-example');
   this.route('components-examples/flexberry-groupedit/custom-buttons-example');
   this.route('components-examples/flexberry-groupedit/configurate-row-example');

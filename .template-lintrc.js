@@ -924,12 +924,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/lookup-block-form-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/lookup-in-modal",
       "only": [
         "require-button-type"
@@ -1157,12 +1151,6 @@ module.exports = {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-edit",
       "only": [
         "simple-unless"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-lookup/compute-autocomplete/compute-autocomplete-list",
-      "only": [
-        "eol-last"
       ]
     },
     {

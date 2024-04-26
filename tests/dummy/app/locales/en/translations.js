@@ -276,6 +276,10 @@ $.extend(true, translations, {
               'caption': 'Groupedit with multiselect in lookup function example',
               'title': ''
             },
+            'dynamic-groupedit': {
+              'caption': 'Dynamic groupedit',
+              'title': ''
+            },
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''

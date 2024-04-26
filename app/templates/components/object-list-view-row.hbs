@@ -83,21 +83,25 @@
           {{/if}}
         {{/if}}
         {{#each customButtonsInRow as |customButtonInRow|}}
-            <button
-              type="button"
-              class="ui {{customButtonInRow.buttonClasses}} button"
-              title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
-              {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
-              <i class={{customButtonInRow.buttonIcon}}></i>
-            </button>
+          <button
+            type="button"
+            class="ui {{customButtonInRow.buttonClasses}} button"
+            title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
+            <i class={{customButtonInRow.buttonIcon}}></i>
+          </button>
         {{/each}}
       </div>
     </td>
     {{#each columns as |column index|}}
+
+      {{!-- template-lint-disable --}}
       <td
         {{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
         class="field {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
+        {{!-- template-lint-enable --}}
+
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
             {{#with (if column.relationshipPath (get record.data column.relationshipPath) record.data) as |relation|}}
@@ -132,7 +136,7 @@
                 readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
                 required=required
                 componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
-                canFixElement=(or (eq column.cellComponent.componentName 'flexberry-dropdown') (eq column.cellComponent.componentName 'flexberry-lookup'))
+                canFixElement=(or (eq column.cellComponent.componentName "flexberry-dropdown") (eq column.cellComponent.componentName "flexberry-lookup"))
               }}
               {{#if showValidationMessages}}
                 {{flexberry-validationmessage error=(v-get relation column.attrName "message")}}
@@ -141,10 +145,10 @@
           {{/if}}
         {{else}}
           <div class="oveflow-text">
-            {{#if (and (not index) inHierarchicalMode (or isParentRecord hasRecords))}}
+            {{#if inHierarchicalMode}}
               <button
                 type="button"
-                class="ui button hierarchy-expand icon mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
+                class="ui button hierarchy-expand icon {{if (or index (not inHierarchicalMode) (and (not isParentRecord) (not hasRecords))) "hidden"}} mini compact {{if _recordsIsLoading "loading"}} {{buttonClass}}"
                 title={{t (concat "components.object-list-view.hierarchy-buttons." (if _expanded "minus" "plus") "-button-title")}}
                 {{action (if recordsLoaded "expand" "loadChildRecords") bubbles=false}}
               >
@@ -171,7 +175,7 @@
                   <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                 </div>
               {{else}}
-                <div class="item edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                <div role="button" class="item edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                   <i class="edit icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                 </div>
@@ -184,7 +188,7 @@
                   <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
                 </div>
               {{else}}
-                <div class="item prototype-menu" {{action createNewByPrototype (get record "data.id")}}>
+                <div role="button" class="item prototype-menu" {{action createNewByPrototype (get record "data.id")}}>
                   <i class="copy icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
                 </div>
@@ -197,15 +201,15 @@
                   <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                 </div>
               {{else}}
-                <div class="item delete-menu" {{action deleteRow record}}>
+                <div role="button" class="item delete-menu" {{action deleteRow record}}>
                   <i class="trash icon"></i>
                   <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                 </div>
               {{/if}}
             {{/if}}
             {{#each menuInRowAdditionalItems as |menuItem|}}
-              <div class="item" {{action sendMenuItemAction menuItem.actionName record.data}}>
-                <i class="{{menuItem.icon}}"></i>
+              <div role="button" class="item" {{action sendMenuItemAction menuItem.actionName record.data}}>
+                <i class={{menuItem.icon}}></i>
                 <span>{{menuItem.title}}</span>
               </div>
             {{/each}}

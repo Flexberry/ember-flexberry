@@ -43,7 +43,7 @@
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-flexberry-data": "3.11.1-beta.2",
-    "ember-flexberry-themes": "0.3.0-beta.2",
+    "ember-flexberry-themes": "0.3.0-beta.8",
     "ember-i18n": "5.2.1",
     "ember-test-selectors": "2.1.0",
     "ember-truth-helpers": "2.0.0",

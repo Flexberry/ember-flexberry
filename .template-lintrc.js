@@ -315,16 +315,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "app/templates/components/object-list-view-row",
-      "only": [
-        "block-indentation",
-        "eol-last",
-        "no-unnecessary-concat",
-        "quotes",
-        "no-invalid-interactive"
-      ]
-    },
-    {
       "moduleId": "app/templates/components/object-list-view-single-column-cell",
       "only": [
         "eol-last",
@@ -985,12 +975,6 @@ module.exports = {
     },
     {
       "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/hierarchy-example",
-      "only": [
-        "eol-last"
-      ]
-    },
-    {
-      "moduleId": "tests/dummy/app/templates/components-examples/flexberry-objectlistview/hierarchy-paging-example",
       "only": [
         "eol-last"
       ]

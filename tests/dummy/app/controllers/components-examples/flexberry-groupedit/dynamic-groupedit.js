@@ -31,7 +31,7 @@ export default ListFormController.extend(FlexberryLookupMixin, {
   },
 
   actions: {
-    objectListViewRowClick(record, options) {
+    objectListViewRowClick(record) {
       this.set('modelGroupedit', record.get('userVotes'));
     }
   }

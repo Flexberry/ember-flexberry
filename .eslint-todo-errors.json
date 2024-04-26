@@ -1407,6 +1407,9 @@
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/configurate-row-example.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 42, "column": 45 }
   ],
+  "tests/dummy/app/controllers/components-examples/flexberry-groupedit/dynamic-groupedit.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 35, "column": 41 }
+  ],
   "tests/dummy/app/controllers/components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit-groupedit-with-lookup-with-computed-atribute.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 66 }
   ],

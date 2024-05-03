@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Dependency on `tmp` of `0.2.1` version.
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `3.12.0`.
 * Update dependency on `ember-flexberry-themes` to version `0.3.0-beta.8`.
 * Update dependency on `ember-cli-moment-shim` to strictly version `3.6.0`.
 ### Fixed

@@ -2,16 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.12.0] - 2024-05-02
-### Added
-* Dependency on `tmp` of `0.2.1` version.
+## [3.12.0] - 2024-05-03
 ### Changed
-* Update dependency on `ember-flexberry-themes` to version `0.3.0-beta.8`.
-* Update dependency on `ember-cli-moment-shim` to strictly version `3.6.0`.
+* Update `ember-flexberry-themes` to version `0.3.0-beta.8`.
+* Update `ember-flexberry-data` to version `3.12.0`.
+* Set version of `ember-cli-moment-shim` to strictly `3.6.0`.
+* Set version of `tmp` to strictly `0.2.1`.
+
 ### Fixed
-* Issue with minimum date limit in `flexberry-simpledatetime`.
-* Console error when using `flexberry-multiple-lookup`.
-* Issue with reset search in lookup in dropdown-mode.
+* The `flexberry-simpledatetime` component:
+    * Fixed minimum date limit.
+* The `flexberry-lookup` component:
+    * Fixed search reset in dropdown-mode.
+* The `flexberry-multiple-lookup` component:
+    * Fixed error in console.
 
 ## [3.11.0] - 2023-11-09
 ### Added

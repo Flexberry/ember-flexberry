@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
@@ -40,11 +41,13 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   @type Object
   @default {}
   */
-  developerUserSettings: {
-    suggestionTypeLocalizedTypesGroupEdit: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 55 }]
+  developerUserSettings: computed(function() {
+    return {
+      suggestionTypeLocalizedTypesGroupEdit: {
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 55 }]
+        }
       }
     }
-  }
+  })
 });

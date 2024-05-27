@@ -2,18 +2,25 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import EmberMap from '@ember/map';
+import EmberObject, { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { deprecatingAlias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
 
   @class ObjectlistviewEvents
-  @extends Ember.Service
-  @uses Ember.Evented
+  @extends Service
+  @uses Evented
   @public
  */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   /**
     Current set of selected records for all list components.
@@ -31,7 +38,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @type Object
     @private
   */
-  _olvFilterColumnsArray: Ember.computed(() => ({})),
+  _olvFilterColumnsArray: computed(() => ({})),
 
   /**
     Init service.
@@ -41,6 +48,40 @@ export default Ember.Service.extend(Ember.Evented, {
   init() {
     this._super(...arguments);
     this.set('_selectedRecords', []);
+    this.set('_multiRows', []);
+  },
+
+  /**
+    Returns a list of selected rows from component.
+
+    @method getMultiSelectedRecords
+  */
+  getMultiSelectedRecords(componentName) {
+    return this.get('_multiRows')[componentName];
+  },
+
+  /**
+    Removes all rows from list of selected rows from component.
+
+    @method clearMultiSelectedRecords
+  */
+  clearMultiSelectedRecords() {
+    this.set('_multiRows', []);
+  },
+
+  /**
+    Remembers all selected rows to keep them when page is changing.
+
+    @method holdMultiSelectedRecords
+  */
+  holdMultiSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    (this.getSelectedRecords(componentName) || []).forEach((v, i) => {
+      this.get('_multiRows')[componentName].set(i, v);
+    });
   },
 
   /**
@@ -127,6 +168,15 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Set of rows for multiselect function in groupedit.
+
+    @property _multiRows
+    @type Array
+    @default null
+  */
+  _multiRows: null,
+
+  /**
     Trigger for "new row has been added" event in objectlistview.
     Event name: olvRowAdded.
 
@@ -180,9 +230,21 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
-    if (count > 0 || !Ember.isNone(recordWithKey)) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    if (recordWithKey) {
+      if (checked) {
+        this.get('_multiRows')[componentName].set(recordWithKey.key, recordWithKey);
+      } else {
+        this.get('_multiRows')[componentName].delete(recordWithKey.key);
+      }
+    }
+
+    if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
-        this.get('_selectedRecords')[componentName] = Ember.Map.create();
+        this.get('_selectedRecords')[componentName] = EmberMap.create();
       }
 
       if (checked) {
@@ -194,6 +256,24 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     this.trigger('olvRowSelected', componentName, record, count, checked, recordWithKey);
+  },
+
+  /**
+    Creates records with all remembered multiselected rows.
+
+    @method restoreSelectedRecords
+  */
+  restoreSelectedRecords(componentName) {
+    if (!this.get('_multiRows')[componentName]) {
+      this.get('_multiRows')[componentName] = EmberMap.create();
+    }
+
+    this.get('_multiRows')[componentName].forEach((v, i) => {
+      let recordWithKey = EmberObject.create({});
+      recordWithKey.set('key', i);
+      recordWithKey.set('data', v.data);
+      this.get('_selectedRecords')[componentName].set(i, recordWithKey);
+    });
   },
 
   /**
@@ -233,6 +313,32 @@ export default Ember.Service.extend(Ember.Evented, {
     this.trigger('setSorting', componentName, sorting);
   },
 
+  /**
+    Trigger for "setGeSort" event in route.
+    Event name: setGeSort.
+
+    @method setGeSortTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+    @param {Array} colDescs Array column descriptions.
+  */
+  setGeSortTrigger(componentName, sorting, colDescs) {
+    this.trigger('setGeSort', componentName, sorting, colDescs);
+  },
+
+
+  /**
+    Trigger for "setDefaultGeSort" event in route.
+    Event name: setDefaultGeSort.
+
+    @method setDefaultGeSortTrigger
+
+    @param {Array} colDescs Array column descriptions.
+  */
+  setDefaultGeSortTrigger(colDescs) {
+    this.trigger('setDefaultGeSort', colDescs);
+  },
   /**
     Trigger for "geSortApply" event in object-list-view.
     Event name: geSortApply.
@@ -310,7 +416,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @type Object
     @default {}
   */
-  currentLimitFunctions: Ember.computed(() => { return {}; }).readOnly(),
+  currentLimitFunctions: computed(function () { return {}; }).readOnly(),
 
   /**
     Form's loading state.
@@ -318,7 +424,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property loadingState
     @type string
   */
-  loadingState: Ember.computed.deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
+  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
 
   /**
     Service for managing the state of the application.
@@ -326,7 +432,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property appState
     @type AppStateService
   */
-  appState: Ember.inject.service(),
+  appState: service(),
 
   /**
     Sets current limit function for OLV.
@@ -337,7 +443,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} componentName Component name.
   */
   setLimitFunction(limitFunction, componentName) {
-    this.set(`currentLimitFunctions.${componentName}`, limitFunction instanceof BasePredicate ? limitFunction : undefined);
+    this.get('currentLimitFunctions')[componentName] = limitFunction instanceof BasePredicate ? limitFunction : undefined;
   },
 
   /**
@@ -348,7 +454,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @return {BasePredicate} Current limit function.
   */
   getLimitFunction(componentName) {
-    return this.get(`currentLimitFunctions.${componentName}`);
+    return this.get('currentLimitFunctions')[componentName];
   },
 
   /**
@@ -381,7 +487,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
-    Ember.deprecate('This method is deprecated, use app state service.', false, {
+    deprecate('This method is deprecated, use app state service.', false, {
       id: 'service.app-state',
       until: '1.0.0',
     });
@@ -437,5 +543,23 @@ export default Ember.Service.extend(Ember.Evented, {
     typeof this.get('_selectedRecords')[componentName].clear === 'function') {
       this.get('_selectedRecords')[componentName].clear();
     }
-  }
+  },
+
+  /**
+    Triggers when edit record dialog was created.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogCreatedTrigger() {
+    this.trigger('editRecordDialogCreated');
+  },
+
+  /**
+    Triggers when edit record dialog was hidden.
+
+    @method editRecordDialogHiddenTrigger
+  */
+  editRecordDialogHiddenTrigger() {
+    this.trigger('editRecordDialogHidden');
+  },
 });

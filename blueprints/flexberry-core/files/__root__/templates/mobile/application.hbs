@@ -1,12 +1,14 @@
 {{#if isInAcceptanceTestMode}}
   {{outlet}}
+  {{outlet "editrecord-modal"}}
   {{outlet "modal"}}
 {{else}}
-{{#ui-sidebar
+{{#flexberry-sidebar
   class="mobile inverted vertical main menu"
-  ui_context=".ember-application > .ember-view"
-  onShow=(action "updateWidth")
-  onHidden=(action "updateWidth")
+  settings=(hash
+    onShow=(action "updateWidth")
+    onHidden=(action "updateWidth")
+  )
 }}
   <a class="item"
     href={{addonVersionHref}}
@@ -14,8 +16,8 @@
     title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
-  {{render "sitemap" sitemap}}
-{{/ui-sidebar}}
+  {{flexberry-sitemap sitemap=sitemap class="flexberry-sitemap"}}
+{{/flexberry-sidebar}}
 <div class="bgw-fix mobile">
   <div class="background-logo mobile">
     <div class="ui attached menu mobile">
@@ -50,7 +52,7 @@
   </div>
 </div>
 <div id="example-mobile" class="pusher mobile">
-  <div class="ui form {{appState.state}}">
+  <div class="ui form {{appState.validation}} {{appState.state}}">
     <div class="full height" style="min-height: 94.8vh!important;" >
       <div class="flexberry-content ui attached segment">
         <div class="ui main container">
@@ -63,6 +65,7 @@
   </div>
 </div>
 <div class="ui main container">
+  {{outlet "editrecord-modal"}}
   {{outlet "modal"}}
 </div>
 <div class="ui vertical footer segment">

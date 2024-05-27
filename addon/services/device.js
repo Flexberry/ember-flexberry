@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import $ from 'jquery';
+import { getOwner } from '@ember/application';
+import { isBlank } from '@ember/utils';
 
 /**
   Devices detection service.
@@ -10,9 +14,9 @@ import Ember from 'ember';
   duplicates all <a href="https://github.com/matthewhudson/device.js">devicejs</a> methods inside service & implements some new methods.
 
   @class DeviceService
-  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Service">Service</a>
 */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   /**
     If set as `true`, into prefixes for paths, returned by `pathPrefixes` function, will be added prefix in format: 'platformName-deviceType'.
 
@@ -54,15 +58,7 @@ export default Ember.Service.extend(Ember.Evented, {
     (for example 'ipad-portrait', 'ipad', 'tablet-portrait', 'tablet', 'mobile-portrait', 'mobile').
     @private
   */
-  _cache: {
-    orientation: null,
-    platform: null,
-    type: null,
-    pathPrefixes: {
-      landscape: null,
-      portrait: null
-    }
-  },
+  _cache: undefined,
 
   /**
     Initializes service.
@@ -81,7 +77,7 @@ export default Ember.Service.extend(Ember.Evented, {
         this.set(propertieName, devicejs[propertieName]);
       }
 
-      let app = Ember.getOwner(this).application;
+      let app = getOwner(this).application;
       if (app.deviceService) {
         this.set('prefixForType', !!app.deviceService.prefixForType);
         this.set('prefixForOrientation', !!app.deviceService.prefixForOrientation);
@@ -90,10 +86,20 @@ export default Ember.Service.extend(Ember.Evented, {
 
       // Attach orientation change handler.
       this.set('_onOrientationChange', this._onOrientationChange.bind(this));
-      Ember.$(window).on('resize orientationchange', this._onOrientationChange);
+      $(window).on('resize orientationchange', this._onOrientationChange);
     } else {
       throw new Error('Device service error. Can\'t find device.js entry point.');
     }
+
+    this.set('_cache', {
+      orientation: null,
+      platform: null,
+      type: null,
+      pathPrefixes: {
+        landscape: null,
+        portrait: null
+      }
+    });
   },
 
   /**
@@ -107,6 +113,16 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Get current device is tablet.
+
+    @method isTablet
+    @return {Boolean} Returns true, if device is tablet.
+  */
+  isTablet() {
+    return this.tablet();
+  },
+
+  /**
     Get current device is phone.
 
     @method isMobile
@@ -117,12 +133,22 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Get current device is phone.
+
+    @method isMobile
+    @return {Boolean} Returns true, if device is phone.
+  */
+  isTv() {
+    return this.television();
+  },
+
+  /**
     Destroys service.
   */
   willDestroy() {
     this._super(...arguments);
 
-    Ember.$(window).off('resize orientationchange', this._onOrientationChange);
+    $(window).off('resize orientationchange', this._onOrientationChange);
   },
 
   /**
@@ -195,9 +221,9 @@ export default Ember.Service.extend(Ember.Evented, {
       type = 'desktop';
     } else if (this.isMobile()) {
       type = 'phone';
-    } else if (this.tablet()) {
+    } else if (this.isTablet()) {
       type = 'tablet';
-    } else if (this.tv()) {
+    } else if (this.isTv()) {
       type = 'tv';
     } else {
       type = '';
@@ -244,7 +270,7 @@ export default Ember.Service.extend(Ember.Evented, {
     if (this.get('prefixForPlatformAndType')) {
       if (this.ios()) {
         pathPrefixWithPlatformAndType = this.ipad() ? 'ipad' : this.ipod() ? 'ipod' : 'iphone';
-      } else if (!(Ember.isBlank(platform) || Ember.isBlank(type))) {
+      } else if (!(isBlank(platform) || isBlank(type))) {
         pathPrefixWithPlatformAndType = platform + '-' + type;
       }
     }
@@ -256,7 +282,7 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     // Path prefix with common type only: 'mobile' for both tablets and phones etc.
-    let pathPrefixCommon = this.isMobile() ? 'mobile' : '';
+    let pathPrefixCommon = this.isMobile() || this.isTablet() ? 'mobile' : '';
 
     // Path prefixes without orientation.
     let pathPrefixesWithoutOrientation = [
@@ -264,7 +290,7 @@ export default Ember.Service.extend(Ember.Evented, {
         pathPrefixWithType,
         pathPrefixCommon
     ].filter((pathPrefix) => {
-      return !Ember.isBlank(pathPrefix);
+      return !isBlank(pathPrefix);
     });
 
     // Form resulting path prefixes dictionary with additional prefixes related to orientation:

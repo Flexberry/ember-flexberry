@@ -13,8 +13,8 @@
     </thead>
   {{/if}}
   <tbody>
-    {{#if showFilters}}
-      <tr onkeydown={{action "applyFiltersByEnter"}}>
+    {{#if (and (not showFiltersInModal) showFilters)}}
+      <tr class="object-list-view-filters" onkeydown={{action "applyFiltersByEnter"}}>
         {{#if showHelperColumn}}
           <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
             <div class="object-list-view-helper-column-cell"></div>
@@ -27,9 +27,9 @@
               {{#if column.filter.conditions}}
                 <div class="filter-operation">
                   {{flexberry-dropdown
+                    displayCaptions=(not (is-array column.filter.conditions))
                     value=column.filter.condition
                     items=column.filter.conditions
-                    displayCaptions=(not (is-array column.filter.conditions))
                     class="compact fluid"
                     placeholder=(t "components.object-list-view.filter-condition")
                     needChecksOnValue=false
@@ -89,8 +89,8 @@
           showDeleteButtonInRow=showDeleteButtonInRow
           showEditButtonInRow=showEditButtonInRow
           showPrototypeButtonInRow=showPrototypeButtonInRow
+          inExpandMode=inExpandMode
           isParentRecordPropertyName=isParentRecordPropertyName
-          inExpandMode=(unbound inExpandMode)
           hierarchicalIndent=hierarchicalIndent
           inHierarchicalMode=inHierarchicalMode
           singleColumnCellComponent=singleColumnCellComponent
@@ -103,6 +103,7 @@
           hierarchyPaging=hierarchyPaging
           fixedHeader=fixedHeader
           configurateRow=configurateRow
+          allSelect=allSelect
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

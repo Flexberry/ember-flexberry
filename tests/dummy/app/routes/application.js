@@ -1,4 +1,19 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import ModalApplicationRouteMixin from 'ember-flexberry/mixins/modal-application-route';
 
-export default Ember.Route.extend(ModalApplicationRouteMixin, {});
+export default Route.extend(ModalApplicationRouteMixin, {
+  actions: {
+    /**
+      Handles onRefresh action.
+
+      @method actions.onRefresh
+    */
+    onRefresh() {
+      this.refresh();
+    },
+
+    showModalSupport() {
+      this.send('showModalDialog', 'modal/ember-flexberry-support-modal');
+    },
+  }
+});

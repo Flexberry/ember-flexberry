@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef2_lookup-component.html#настройка-иерархии">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-lookup
       componentName="HierarchyLookup"
@@ -10,8 +13,9 @@
       relationName="type"
       choose="showLookupDialog"
       remove="removeLookupValue"
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true
     }}
@@ -26,8 +30,9 @@
       relationName="type"
       choose="showLookupDialog"
       remove="removeLookupValue"
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true
     }}
@@ -40,12 +45,15 @@
       displayAttributeName="name"
       title=(t "forms.components-examples.flexberry-lookup.hierarchy-olv-in-lookup-example.titleLookup")
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       lookupLimitPredicate=lookupCustomLimitPredicate
       autocomplete=true
+      inHierarchicalMode=true
+      hierarchicalAttribute="parent"
     }}
   </div>
 </form>

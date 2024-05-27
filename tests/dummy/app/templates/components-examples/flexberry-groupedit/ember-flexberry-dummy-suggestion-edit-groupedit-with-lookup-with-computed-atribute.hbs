@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -37,53 +37,60 @@
           <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.address "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.address
+      class=(if (v-get validationObject "address" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "address" "message")}}
   </div>
-  <div class="field {{if model.errors.text "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.text
+      class=(if (v-get validationObject "text" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "text" "message")}}
   </div>
-  <div class="field {{if model.errors.date "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
+      type="date"
       value=model.date
+      class=(if (v-get validationObject "date" "isInvalid") "error")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "date" "message")}}
   </div>
-  <div class="field {{if model.errors.votes "error" ""}}">
+  <div class="field">
     {{flexberry-field
       value=model.votes
+      class=(if (v-get validationObject "votes" "isInvalid") "error")
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "votes" "message")}}
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
+      class=(if (v-get validationObject "moderated" "isInvalid") "error")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "moderated" "message")}}
   </div>
-  <div class="field {{if model.errors.type "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
     {{flexberry-lookup
       value=model.type
+      class=(if (v-get validationObject "type" "isInvalid") "error")
       relatedModel=model
       relationName="type"
       projection="SuggestionTypeL"
@@ -91,17 +98,19 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       dropdown=true
       readonly=readonly
       direction="upward"
       componentName="SuggestionEditType"
     }}
-    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "type" "message")}}
   </div>
-  <div class="field {{if model.errors.author "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
     {{flexberry-lookup
       value=model.author
+      class=(if (v-get validationObject "author" "isInvalid") "error")
       relatedModel=model
       relationName="author"
       projection="ApplicationUserL"
@@ -109,15 +118,17 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       componentName="SuggestionEditAuthor"
     }}
-    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "author" "message")}}
   </div>
-  <div class="field {{if model.errors.editor1 "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
     {{flexberry-lookup
       value=model.editor1
+      class=(if (v-get validationObject "editor1" "isInvalid") "error")
       relatedModel=model
       relationName="editor1"
       projection="ApplicationUserL"
@@ -125,12 +136,13 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       componentName="SuggestionEditEditor1"
     }}
-    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "editor1" "message")}}
   </div>
-  <div class="field {{if model.errors.files "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{flexberry-groupedit
       componentName="filesGroupEdit"
@@ -140,7 +152,7 @@
       orderable=true
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "files" "messages")}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.readonly-groupedit-with-lookup-with-computed-atribute-field"}}</label>
@@ -154,7 +166,7 @@
       value=fieldvalue
     }}
   </div>
-  <div class="field {{if model.errors.userVotes "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionUserVotesGroupEdit"
@@ -164,9 +176,9 @@
       orderable=true
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
   </div>
-  <div class="field {{if model.errors.comments "error" ""}}">
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionCommentsGroupEdit"
@@ -181,6 +193,6 @@
       orderable=true
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "comments" "messages")}}
   </div>
 </form>

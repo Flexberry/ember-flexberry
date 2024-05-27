@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -39,6 +37,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     let cellComponent = this._super(...arguments);
     let limitFunction = new StringPredicate('name').contains('Vasya');
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -52,6 +51,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             lookupLimitPredicate: limitFunction,
             computedProperties: { thisController: this },
             readonly: false,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -64,6 +64,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 
@@ -75,14 +76,14 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
   actions: {
     configurateFilesRow(rowConfig, record) {
-      Ember.set(rowConfig, 'customClass', 'positive ');
+      set(rowConfig, 'customClass', 'positive ');
       let readonlyColumns = [];
       if (record.get('order') === 1) {
         readonlyColumns.push('order');
         readonlyColumns.push('file');
       }
 
-      Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
+      set(rowConfig, 'readonlyColumns', readonlyColumns);
     },
 
     configurateVotesRow(rowConfig, record) {
@@ -91,7 +92,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         readonlyColumns.push('author');
       }
 
-      Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
+      set(rowConfig, 'readonlyColumns', readonlyColumns);
     }
   }
 });

@@ -1,28 +1,34 @@
-<h3 class="ui header">{{<%= caption %>}}</h3>
+<h3 class="ui header">{{<%= caption %>}}{{#if readonly}} ({{t "forms.edit-form.readonly"}}){{/if}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
   {{flexberry-error error=error}}
   <div class="field">
+    {{flexberry-edit-panel
+      showCloseButton=true
+      deepMount=true
+      readonly=readonly
+      buttons=(array
+        (hash
+          type="submit"
+          class="save-button"
+          disabled=(readonly)
+          text=(t "forms.edit-form.save-button-text")
+          icon="icon icon-save"
+          action="save")
+        (hash
+          type="submit"
+          class="save-close-button"
+          disabled=(readonly)
+          text=(t "forms.edit-form.saveAndClose-button-text")
+          icon="icon icon-save-close"
+          action="saveAndClose"
+        ))
+    }}
+  </div>
+  <div class="field flexberry-validationsummary-container">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
-  <div class="field">
-    <div class="flexberry-edit-panel">
-      {{#unless readonly}}
-        <button type="submit" class="ui button save-button" {{action 'save'}}>
-          {{t "forms.edit-form.save-button-text"}}
-        </button>
-        {{#unless model.isNew}}
-          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
-            {{t "forms.edit-form.delete-button-text"}}
-          </button>
-        {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>
-        {{t "forms.edit-form.close-button-text"}}
-      </button>
-    </div>
-  </div>
-  <%=flexberryComponents%>
+<%=flexberryComponents%>
 </form>

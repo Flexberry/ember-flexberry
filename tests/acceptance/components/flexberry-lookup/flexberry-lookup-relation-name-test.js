@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup relation name test', (store, assert, app) => {
@@ -6,7 +6,7 @@ executeTest('flexberry-lookup relation name test', (store, assert, app) => {
   visit('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let relationName = Ember.get(controller, 'relationName');
+    let relationName = get(controller, 'relationName');
     assert.strictEqual(
       relationName,
       'Temp relation name',

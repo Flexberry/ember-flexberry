@@ -108,7 +108,8 @@
   {{#if model.errors.timestamp}}
     <span style="color:red">{{model.errors.timestamp}}</span>
   {{/if}}
-  {{flexberry-datepicker
+  {{flexberry-simpledatetime
+    type="datetime-local"
     readonly=readonly
     value=model.timestamp
     class=(if model.errors.timestamp "error" "")
@@ -211,12 +212,13 @@
       {{model.errors.message}}
     </span>
   {{/if}}
-  {{flexberry-field
+  <label>Message</label>
+  {{flexberry-textarea
     readonly=readonly
     required=true
     value=model.message
+    rows=6
     class=(if model.errors.message "error" "")
-    label="Message"
   }}
 </div>
 
@@ -226,12 +228,13 @@
       {{model.errors.formattedMessage}}
     </span>
   {{/if}}
-  {{flexberry-field
+  <label>Formatted message</label>
+  {{flexberry-textarea
     readonly=readonly
     required=true
     value=model.formattedMessage
+    rows=6
     class=(if model.errors.formattedMessage "error" "")
-    label="Formatted message"
   }}
 </div>
 

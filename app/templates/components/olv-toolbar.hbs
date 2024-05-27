@@ -61,15 +61,15 @@
   {{#if availableCollExpandMode}}
     <button
       type="button"
-      class="ui button icon hierarchical-button {{buttonClass}}"
-      title={{t "components.olv-toolbar.coll-expand-button-text"}}
+      class="ui button icon hierarchical-button {{buttonClass}} active"
+      title={{if inExpandMode (t "components.olv-toolbar.coll-comspres-button-text") (t "components.olv-toolbar.coll-expand-button-text")}}
       {{action switchExpandMode}}>
-        <i class="expand icon"></i>
+        <i class="{{if inExpandMode "compress" "expand"}} icon"></i>
     </button>
   {{/if}}
 {{/if}}
 {{#if enableFilters}}
-  <div class="ui icon buttons filter-active">
+  <div class="ui icon buttons filter-active {{if filters "show-filter"}}">
     <button
       type="button"
       class="ui button {{buttonClass}} {{if showFilters "active"}}"
@@ -131,7 +131,7 @@
   <div class="ui buttons cols-config">
     <button
       type="button"
-      class="ui icon button config-button"
+      class="ui icon button config-button{{if colsSettingsItems " settings-enabled" ""}}"
       title={{t "components.colsconfig-dialog-content.title"}}
       {{action "showConfigDialog"}}>
         <i class="large table icon"></i>
@@ -177,6 +177,9 @@
         {{t "components.olv-toolbar.custom-button-text"}}
       {{/if}}
   </button>
+{{/each}}
+{{#each customComponents as |customComponent|}}
+  {{component customComponent.name dynamicProperties=customComponent.properties}}
 {{/each}}
 <div class="olv-toolbar-info-modal-dialog ui small basic modal">
   <div class="ui icon header">

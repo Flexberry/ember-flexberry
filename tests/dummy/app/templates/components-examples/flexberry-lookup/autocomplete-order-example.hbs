@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.autocomplete-order-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html#лукап-с-автодополнением">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-lookup
         readonly=readonly
@@ -10,8 +13,9 @@
         title=title
         relatedModel=model
         relationName="type"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
+        updateLookupValue=(action "updateLookupValue")
         autocomplete=true
         placeholder=placeholder
     }}

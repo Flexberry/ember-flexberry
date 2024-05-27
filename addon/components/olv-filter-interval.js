@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { on } from '@ember/object/evented';
+import { observer } from '@ember/object';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-const { observer } = Ember;
+import moment from 'moment';
 
 export default FlexberryBaseComponent.extend({
-
+  classNames: ['two fields'],
   /**
    * Start of interval
    * @type {*}
@@ -20,7 +22,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Components to be rendered in from/to blocks
    */
-  componentName: null,
+  componentName: 'flexberry-textbox',
 
   /**
    * DynamicProperties for from/to components
@@ -37,8 +39,15 @@ export default FlexberryBaseComponent.extend({
   init() {
     this._super(...arguments);
     let valueSplit = (this.get('value') || '').toString().split(this.get('separator'));
-    this.set('from', valueSplit[0]);
-    this.set('to', valueSplit[1]);
+    let from = valueSplit[0] || '';
+    let to = valueSplit[1] || '';
+    if (this.get('componentName') === 'flexberry-simpledatetime') {
+      from = moment(from).toDate();
+      to = moment(to).toDate();
+    }
+  
+    this.set('from', from);
+    this.set('to', to);
   },
 
   /**
@@ -62,10 +71,28 @@ export default FlexberryBaseComponent.extend({
   /**
    * Sets value with format '{from}{separator}{to}'
    */
-  valueSetter: observer('from', 'to', 'value', function () {
+   valueSetter: function() {
     let from = this.get('from') || '';
     let to = this.get('to') || '';
     let separator = this.get('separator');
+    const value = this.get('value');
+
+    if (!value && !isNaN(from) && !isNaN(to)) {
+      this.set('from', null);
+      this.set('to', null);
+      separator = '';
+    }
+
     this.set('value', from + separator + to);
-  }),
+  },
+
+  /**
+    It observes changes in from, to, value.
+
+    @method _valueChanged
+    @private
+  */
+  _valueChanged: on('init', observer('from', 'to', 'value', function () {
+    once(this, 'valueSetter');
+  })),
 });

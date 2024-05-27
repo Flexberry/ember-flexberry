@@ -2,9 +2,20 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { isBlank, isNone } from '@ember/utils';
+import { oneWay } from '@ember/object/computed';
+import { inject as service} from '@ember/service';
+import EmberObject, { get, computed } from '@ember/object';
+import Evented from '@ember/object/evented';
+import { guidFor } from '@ember/object/internals';
+import { assert } from '@ember/debug';
+import { merge } from '@ember/polyfills';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+import { later } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import runAfter from '../utils/run-after';
 
 /**
@@ -14,6 +25,9 @@ import runAfter from '../utils/run-after';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
+  classNames: ['flexberry-objectlistview'],
+
   /**
     Flag used to display filters.
 
@@ -22,7 +36,7 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _showFilters: Ember.computed.oneWay('filters'),
+  _showFilters: oneWay('filters'),
 
   /**
     Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
@@ -31,7 +45,7 @@ export default FlexberryBaseComponent.extend({
     @type FormLoadTimeTrackerService
     @private
   */
-  formLoadTimeTracker: Ember.inject.service(),
+  formLoadTimeTracker: service(),
 
   /**
     Store the action name at controller for loading records.
@@ -99,7 +113,7 @@ export default FlexberryBaseComponent.extend({
     @property hierarchyByAttribute
     @type String
   */
-  hierarchyByAttribute: Ember.computed({
+  hierarchyByAttribute: computed({
     get() {
       return this.get('_hierarchicalAttribute');
     },
@@ -135,7 +149,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+  inHierarchicalMode: computed('currentController.inHierarchicalMode', function() {
     return this.get('currentController.inHierarchicalMode');
   }),
 
@@ -146,7 +160,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  inExpandMode: Ember.computed('currentController.inExpandMode', function() {
+  inExpandMode: computed('currentController.inExpandMode', function() {
     return this.get('currentController.inExpandMode');
   }),
 
@@ -157,7 +171,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  hierarchyPaging: Ember.computed('currentController.hierarchyPaging', function() {
+  hierarchyPaging: computed('currentController.hierarchyPaging', function() {
     return this.get('currentController.hierarchyPaging');
   }),
 
@@ -180,6 +194,16 @@ export default FlexberryBaseComponent.extend({
   hierarchicalIndent: undefined,
 
   /**
+    The value of the {{#crossLink "ModalDialog/useSidePageMode:property"}}useSidePageMode{{/crossLink}} property for the modal windows used by this component.
+    It can be configured through the configuration file (`config/environment.js`).
+
+    @property useSidePageMode
+    @type Boolean
+    @default false
+  */
+  useSidePageMode: undefined,
+
+  /**
     Using `ember-test-selectors`, creates `[data-test-component=flexberry-objectlistview]` selector for this component.
 
     @property data-test-component
@@ -196,6 +220,23 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showFiltersInModal: undefined,
+
+  /**
+    Settings for filters with a dropdown list of values.
+
+    @property ddlFilterSettings
+    @type Array<Object>
+    @example
+      ddlFilterSettings: computed(function () {
+        return [{
+          modelName: 'ember-flexberry-dummy-suggestion-type',
+          projectionName: 'SuggestionTypeL',
+          propName: 'name',
+          bindingPath: 'type'
+        }]
+      })
+  */
+  ddlFilterSettings: null,
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -230,9 +271,18 @@ export default FlexberryBaseComponent.extend({
     @property _pages
     @type Ember.Array
   */
-  _pages: Ember.computed('pages', function () {
-    return Ember.A(this.get('pages'));
+  _pages: computed('pages', function () {
+    return A(this.get('pages'));
   }),
+
+  /**
+    Bottom position of pagination.
+
+    @property bottomPagination
+    @type Boolean
+    @default true
+  */
+  bottomPagination: true,
 
   /**
     Number page for search.
@@ -248,7 +298,7 @@ export default FlexberryBaseComponent.extend({
     @property searchPageButtonReadonly
     @type Boolean
   */
-  searchPageButtonReadonly: Ember.computed('searchPageValue', '_pages.@each.isCurrent', function() {
+  searchPageButtonReadonly: computed('searchPageValue', '_pages.@each.isCurrent', function() {
     const searchPageValue = this.get('searchPageValue');
     const searchPage = parseInt(searchPageValue, 10);
     if (isNaN(searchPage)) {
@@ -351,10 +401,7 @@ export default FlexberryBaseComponent.extend({
     @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null,
-  },
+  cellComponent: undefined,
 
   /**
     Flag: indicates whether to show validation messages in every row or not.
@@ -436,6 +483,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showPrototypeMenuItemInRow: false,
+
+  /**
+    Flag indicate when edit form must be open in modal window.
+    @property editInModal
+    @type Boolean
+    @default false
+    @private
+  */
+    editInModal: false,
 
   /**
     Additional menu items for dropdown menu in last column of every row.
@@ -711,6 +767,16 @@ export default FlexberryBaseComponent.extend({
   filterByAllWords: false,
 
   /**
+    Name of model projection which should be used for filtering throught search-element on toolbar.
+    Filtering is processed only by properties defined in this projection.
+
+    @property filterProjectionName
+    @type String
+    @default undefined
+  */
+  filterProjectionName: undefined,
+
+  /**
     Array of pages to show.
 
     @property pages
@@ -765,13 +831,23 @@ export default FlexberryBaseComponent.extend({
   columnsWidthAutoresize: false,
 
   /**
+    It is used to set how the resize method works.
+    Values: 'fit', 'flex', 'overflow'
+
+    @property columnsResizeMode
+    @type String
+    @default 'overflow'
+  */
+  columnsResizeMode: 'overflow',
+
+  /**
     List of component names, which can overflow table cell.
 
     @property overflowedComponents
     @type Array
-    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+    @default A(['flexberry-dropdown', 'flexberry-lookup'])
   */
-  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+  overflowedComponents: A(['flexberry-dropdown', 'flexberry-lookup']),
 
   /**
     Current interval of records.
@@ -780,30 +856,34 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  currentIntervalRecords: Ember.computed('pages', 'perPageValue', function() {
-    let pages = this.get('pages');
-    let perPageValue = this.get('perPageValue');
-    let recordsTotalCount = this.get('recordsTotalCount');
-    if (recordsTotalCount === null && this.get('showShowingEntries')) {
-      this.set('showShowingEntries', false);
-      throw new Error('Property \'recordsTotalCount\' is undefined.');
-    }
-
-    let currentStartRecords = null;
-    let currentEndRecords = null;
-
-    pages.forEach((page) => {
-      if (page.isCurrent) {
-        currentStartRecords = page.number * perPageValue - perPageValue + 1;
-        currentEndRecords = page.number * perPageValue;
+  currentIntervalRecords: computed('pages', 'perPageValue', function() {
+    try {
+      let pages = this.get('pages');
+      let perPageValue = this.get('perPageValue');
+      let recordsTotalCount = this.get('recordsTotalCount');
+      if (isNone(recordsTotalCount) && this.get('showShowingEntries')) {
+        throw new Error('Property \'recordsTotalCount\' is undefined.');
       }
-    });
 
-    if (currentEndRecords > recordsTotalCount) {
-      currentEndRecords = recordsTotalCount;
+      let currentStartRecords = null;
+      let currentEndRecords = null;
+
+      pages.forEach((page) => {
+        if (page.isCurrent) {
+          currentStartRecords = page.number * perPageValue - perPageValue + 1;
+          currentEndRecords = page.number * perPageValue;
+        }
+      });
+
+      if (currentEndRecords > recordsTotalCount) {
+        currentEndRecords = recordsTotalCount;
+      }
+
+      return currentStartRecords + '-' + currentEndRecords;
     }
-
-    return currentStartRecords + '-' + currentEndRecords;
+    catch (error) {
+      return;
+    }
   }),
 
   /**
@@ -854,26 +934,26 @@ export default FlexberryBaseComponent.extend({
 
     @property useRowByRowLoading
     @type Boolean
-    @default true
+    @default false
   */
-  useRowByRowLoading: true,
+  useRowByRowLoading: false,
 
   /**
     Flag indicates whether to use bottom row by row loading progress while rows in loading state.
 
     @property useRowByRowLoadingProgress
     @type Boolean
-    @default true
+    @default false
   */
-  useRowByRowLoadingProgress: true,
+  useRowByRowLoadingProgress: false,
 
   /**
     Interface for communication between object-list-view and flexberry-objectlistview.
 
     @property eventsBus
-    @type Ember.Evented
+    @type Evented
   */
-  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
+  eventsBus: EmberObject.extend(Evented, {}).create(),
 
   /**
     Service that triggers objectlistview events.
@@ -881,7 +961,20 @@ export default FlexberryBaseComponent.extend({
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
+
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: service('store'),
+
+  /**
+    Flag to highlight selected records in modal window.
+  */
+  skipSelectedRecords: true,
 
   /**
     Array of custom user buttons.
@@ -907,7 +1000,7 @@ export default FlexberryBaseComponent.extend({
 
       export default ListFormController.extend({
         ...
-        customButtonsMethod: Ember.computed('i18n.locale', function() {
+        customButtonsMethod: computed('i18n.locale', function() {
           let i18n = this.get('i18n');
           return [{
             buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
@@ -946,7 +1039,7 @@ export default FlexberryBaseComponent.extend({
       {{flexberry-objectlistview
         ...
         customButtons=customButtonsMethod
-        userButtonActionTest='userButtonActionTest'
+        userButtonActionTest=(action "userButtonActionTest")
       }}
       ```
 
@@ -954,6 +1047,71 @@ export default FlexberryBaseComponent.extend({
     @type Array
   */
   customButtons: undefined,
+
+  /**
+    Custom components in the toolbar.
+
+    @example
+      ```
+      [
+        {
+          name: '...', // Component name.
+          properties: {...} // Component properties.
+        },
+        ...
+      ]
+      ```
+
+    @example
+      Example of how to add custom components:
+      1) it has to be defined computed property at corresponding controller.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        customToolbarComponents: computed('dropdownValue', function() {
+          return [{
+            name: 'flexberry-dropdown',
+            properties: {
+              items: this.get('dropdownItems'),
+              value: this.get('dropdownValue'),
+              onChange: this.get('onChange').bind(this)
+            }
+          }];
+        })
+      });
+      ```
+
+      2) in the controller, you must specify the `onChange` method.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        dropdownValue: null,
+        dropdownItems: null,
+
+        onChange: function(value) {
+          this.set('dropdownValue', value);
+        },
+      });
+      ```
+
+      3) the `customToolbarComponents` property must be specified in the list template.
+      ```
+      {{flexberry-objectlistview
+        ...
+        customToolbarComponents=customToolbarComponents
+      }}
+      ```
+
+    @property customToolbarComponents
+    @type Array<Object>
+  */
+  customToolbarComponents: undefined,
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
@@ -982,10 +1140,12 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Object} column Column to sort by
     */
+    /* eslint-disable no-unused-vars */
     sortByColumn(column) {
       throw new Error('No handler for sortByColumn action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... sortByColumn=(action "sortByColumn")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -994,10 +1154,12 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Object} column Column to add sorting by
     */
+    /* eslint-disable no-unused-vars */
     addColumnToSorting(column) {
       throw new Error('No handler for addColumnToSorting action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... addColumnToSorting=(action "addColumnToSorting")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles action from row click (action is handled at route so it can't be closure action now).
@@ -1009,21 +1171,27 @@ export default FlexberryBaseComponent.extend({
     */
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
-        let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
+        let $clickedRow = this._getRowByKey(record.key || guidFor(record));
         runAfter(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
-            this.sendAction('action', record);
+            /* eslint-disable ember/closure-actions */
+            this.sendAction('action', record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+            /* eslint-enable ember/closure-actions */
           } else {
             let editFormRoute = this.get('editFormRoute');
-            Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-            if (Ember.isNone(options)) {
+            let editInModal = this.get('editInModal');
+            let useSidePageMode = this.get('useSidePageMode');
+            assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+            if (isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
             } else {
-              options = Ember.merge(options, { editFormRoute: editFormRoute });
+              options = merge(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
             }
 
-            this.sendAction('action', record, options);
+            /* eslint-disable ember/closure-actions */
+            this.sendAction('action', record, options); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+            /* eslint-enable ember/closure-actions */
           }
         });
 
@@ -1044,8 +1212,10 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1063,8 +1233,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(this.get('componentName'));
     },
@@ -1083,8 +1255,10 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      this._clearSelectedRecords();
+      if (!this.get('skipSelectedRecords')) {
+        // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+        this._clearSelectedRecords();
+      }
 
       action(pageNumber, this.get('componentName'));
     },
@@ -1101,7 +1275,7 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
       }
 
-      this.sendAction(actionName);
+      this.get(actionName)();
     },
 
     /**
@@ -1127,25 +1301,23 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     createNewByPrototype(prototypeId) {
-      Ember.assert('The prototype record ID is not defined', prototypeId);
+      assert('The prototype record ID is not defined', prototypeId);
       let editFormRoute = this.get('editFormRoute');
-      Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
+      assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('currentController');
       this.get('objectlistviewEventsService').setLoadingState('loading');
-      let appController = Ember.getOwner(this).lookup('controller:application');
+      let appController = getOwner(this).lookup('controller:application');
       let thisRouteName = appController.get('currentRouteName');
       let thisRecordId = modelController.get('model.id');
       let transitionOptions = {
         queryParams: {
           prototypeId: prototypeId,
-          parentParameters: {
-            parentRoute: thisRouteName,
-            parentRouteRecordId: thisRecordId
-          }
+          parentRoute: thisRouteName,
+          parentRouteRecordId: thisRecordId
         }
       };
 
-      Ember.run.later((function() {
+      later((function() {
         modelController.transitionToRoute(editFormRoute + '.new', transitionOptions);
       }), 50);
     },
@@ -1165,10 +1337,12 @@ export default FlexberryBaseComponent.extend({
       @method actions.applyFilters
       @param {Array} filters Filters.
     */
+    /* eslint-disable no-unused-vars */
     applyFilters(filters) {
       throw new Error('No handler for applyFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... applyFilters=(action "applyFilters")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
@@ -1191,10 +1365,12 @@ export default FlexberryBaseComponent.extend({
       @method actions.filterByAnyMatch
       @param {String} The pattern to filter objects
     */
+    /* eslint-disable no-unused-vars */
     filterByAnyMatch(pattern) {
       throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Set availability hierarchical mode, and save the attribute name in controller.
@@ -1204,7 +1380,7 @@ export default FlexberryBaseComponent.extend({
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
-      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute, false, this.get('componentName'));
+      this.get('currentController').send('saveHierarchicalAttribute', hierarchicalAttribute, false, this.get('componentName'));
     },
 
     /**
@@ -1213,7 +1389,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
-      this.sendAction('_switchHierarchicalMode', this.get('componentName'));
+      this.get('currentController').send('switchHierarchicalMode', this.get('componentName'));
     },
 
     /**
@@ -1235,7 +1411,7 @@ export default FlexberryBaseComponent.extend({
       @param {Boolean} Flag indicates that this is the first download of data.
     */
     loadRecords(id, target, property, firstRunMode) {
-      this.sendAction('_loadRecords', id, target, property, firstRunMode, this.get('componentName'));
+      this.get('currentController').send('loadRecords', id, target, property, firstRunMode, this.get('componentName'));
     },
 
     /**
@@ -1259,7 +1435,7 @@ export default FlexberryBaseComponent.extend({
       @param {DS.Model} record
     */
     sendMenuItemAction(actionName, record) {
-      this.sendAction(actionName, record);
+      this.get(actionName)(record);
     },
 
     /**
@@ -1274,6 +1450,7 @@ export default FlexberryBaseComponent.extend({
 
       if (searchPageNumber) {
         this.send('gotoPage', action, searchPageNumber);
+        this.set('searchPageValue', undefined);
       }
     }
   },
@@ -1427,7 +1604,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    For more information see [init](https://emberjs.com/api/ember/release/classes/EmberObject/methods/init?anchor=init) method of [EmberObject](https://emberjs.com/api/ember/release/classes/EmberObject).
    */
   init() {
     this._super(...arguments);
@@ -1436,6 +1613,28 @@ export default FlexberryBaseComponent.extend({
     if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
+    }
+
+    if (!this.get('disableHierarchicalMode')) {
+      let modelName = this.get('modelName');
+      if (modelName) {
+        let model = this.get('store').modelFor(modelName);
+        let relationships = get(model, 'relationships');
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          this.send('availableHierarchicalMode', hierarchicalrelationships[0].name);
+        } else if (hierarchicalrelationships.length > 1) {
+          let hierarchyAttribute = this.get('hierarchyAttribute');
+          if (!isNone(hierarchyAttribute)) {
+            let hierarchyAttributeExist = A(hierarchicalrelationships).findBy('name', hierarchyAttribute);
+            if (!isNone(hierarchyAttributeExist)) {
+              this.send('availableHierarchicalMode', hierarchyAttribute);
+            } else {
+              throw new Error(`Property '${hierarchyAttribute}' does not exist in the model.`);
+            }
+          }
+        }
+      }
     }
 
     let eventsBus = this.get('eventsBus');
@@ -1447,13 +1646,19 @@ export default FlexberryBaseComponent.extend({
       });
     }
 
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null,
+    });
+
     // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'useSidePageMode', defaultValue: false });
     this.initProperty({ propertyName: 'showFiltersInModal', defaultValue: false });
   },
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
-    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+    [More info](https://emberjs.com/api/ember/release/classes/Component#event_didRender).
 
     @method didRender
   */
@@ -1464,7 +1669,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Called when the element of the view is going to be destroyed.
-    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+    For more information see [willDestroyElement](https://emberjs.com/api/ember/release/classes/Component#event_willDestroyElement) event of [Component](https://emberjs.com/api/ember/release/classes/Component).
   */
   willDestroyElement() {
     this._super(...arguments);
@@ -1484,9 +1689,9 @@ export default FlexberryBaseComponent.extend({
   _getRowByKey(key) {
     let row = null;
     this.$('tbody tr').each(function() {
-      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      let currentKey = $(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
-        row = Ember.$(this);
+        row = $(this);
         return;
       }
     });
@@ -1513,11 +1718,11 @@ export default FlexberryBaseComponent.extend({
 
   _setMenuWidth(tableWidth, containerWidth) {
     let $table = this.$('table.object-list-view');
-    if (Ember.isBlank(tableWidth)) {
+    if (isBlank(tableWidth)) {
       tableWidth = $table.width();
     }
 
-    if (Ember.isBlank(containerWidth)) {
+    if (isBlank(containerWidth)) {
       containerWidth = $table.parent().width() - 5;
     }
 

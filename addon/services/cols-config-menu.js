@@ -2,26 +2,27 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
 
 /**
  * Service to work with column configuration menu
  *
  * @class ColsConfigMenuService
- * @extends Ember.Service
+ * @extends Service
  * @public
  */
-export default Ember.Service.extend(Ember.Evented, {
-  addNamedSettingTrigger(namedSetting, componentName) {
-    this.trigger('addNamedSetting', namedSetting, componentName);
+export default Service.extend(Evented, {
+  addNamedSettingTrigger(namedSetting, componentName, isExportExcel) {
+    this.trigger('addNamedSetting', namedSetting, componentName, isExportExcel);
   },
 
-  deleteNamedSettingTrigger(namedSetting, componentName) {
-    this.trigger('deleteNamedSetting', namedSetting, componentName);
+  deleteNamedSettingTrigger(namedSetting, componentName, isExportExcel) {
+    this.trigger('deleteNamedSetting', namedSetting, componentName, isExportExcel);
   },
 
-  updateNamedSettingTrigger(componentName) {
-    this.trigger('updateNamedSetting', componentName);
+  updateNamedSettingTrigger(componentName, isExportExcel) {
+    this.trigger('updateNamedSetting', componentName, isExportExcel);
   },
 
   updateNamedAdvLimitTrigger(componentName) {

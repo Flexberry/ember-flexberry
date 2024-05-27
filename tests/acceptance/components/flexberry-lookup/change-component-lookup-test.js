@@ -1,26 +1,29 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { get } from '@ember/object';
 import { executeTest } from './execute-flexberry-lookup-test';
 
 let openLookupDialog = function($lookup) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
     let timeout = 4000;
 
-    let $lookupChooseButton = Ember.$('.ui-change', $lookup);
+    let $lookupChooseButton = $('.ui-change', $lookup);
 
     // Try to open lookup dialog.
-    Ember.run(() => {
+    run(() => {
       $lookupChooseButton.click();
     });
 
     // Wait for lookup dialog to be opened & data loaded.
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
-        let $lookupDialog = Ember.$('.flexberry-modal');
-        let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
+        let $lookupDialog = $('.flexberry-modal');
+        let $records = $('.content table.object-list-view tbody tr', $lookupDialog);
         if ($records.length === 0) {
           // Data isn't loaded yet.
           return;
@@ -36,7 +39,7 @@ let openLookupDialog = function($lookup) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;
@@ -52,31 +55,31 @@ let openLookupDialog = function($lookup) {
 };
 
 let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
     let timeout = 4000;
 
-    let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
-    let $choosedRecord = Ember.$($records[recordIndex]);
+    let $records = $('.content table.object-list-view tbody tr', $lookupDialog);
+    let $choosedRecord = $($records[recordIndex]);
 
     // Try to choose record in the lookup dialog.
-    Ember.run(() => {
+    run(() => {
       // Inside object-list-views component click actions are available only if cell in row has been clicked.
       // Click on whole row wont take an effect.
-      let $choosedRecordFirstCell = Ember.$(Ember.$('td', $choosedRecord)[1]);
+      let $choosedRecordFirstCell = $($('td', $choosedRecord)[1]);
       $choosedRecordFirstCell.click();
 
       // Click on modal-dialog close icon.
       // Сrutch correcting irregular bug
-      let $modelDilogClose = Ember.$('.close.icon');
+      let $modelDilogClose = $('.close.icon');
       $modelDilogClose.click();
     });
 
     // Wait for lookup dialog to be closed.
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
         if (!$lookupDialog.hasClass('hidden')) {
           // Dialog is still opened.
@@ -93,7 +96,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;
@@ -110,17 +113,19 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
 
 executeTest('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation',
 (store, assert, app, latestReceivedRecords) => {
-  assert.expect(4);
+  assert.expect(6);
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
 
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let model = Ember.get(controller, 'model');
-    let relationName = Ember.get(controller, 'relationName');
-    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
+    let model = get(controller, 'model');
+    let relationName = get(controller, 'relationName');
+    let displayAttributeName = get(controller, 'displayAttributeName');
+    let updateLookupValueTest = get(controller, 'updateLookupValueTest');
+    assert.strictEqual(updateLookupValueTest, 'base', 'updateLookupValueTest has default value');
 
-    let $lookup = Ember.$('.flexberry-lookup');
-    let $lookupInput = Ember.$('input', $lookup);
+    let $lookup = $('.flexberry-lookup');
+    let $lookupInput = $('input', $lookup);
     assert.strictEqual($lookupInput.val(), '', 'lookup display value is empty by default');
 
     // Wait for lookup dialog to be opened, choose first record & check component's state.
@@ -146,6 +151,13 @@ executeTest('changes in component\'s value causes changes in related model\'s sp
         $lookupInput.val(),
         chosenRecordDisplayAttribute,
         'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
+
+      let updateLookupValueTestUpdated = get(controller, 'updateLookupValueTest');
+      assert.strictEqual(
+        updateLookupValueTestUpdated,
+        'updated',
+        'updateLookupValue action was called');
+
     }).catch((reason) => {
       throw new Error(reason);
     }).finally(() => {

@@ -1,13 +1,17 @@
 {{#if dropdown}}
-  {{flexberry-dropdown
-    placeholder=placeholder
-    class=(concat "search " dropdownClass)
-    value=displayValue
-    readonly=(if readonly "readonly")
-    needChecksOnValue=false
-    isSearch=true
-    isSearchReadOnly=dropdownIsSearch
-  }}
+  {{#if _dropdownRefreshFlag}}
+    {{flexberry-dropdown
+      placeholder=placeholder
+      class=(concat "search " dropdownClass)
+      value=displayValue
+      readonly=(if readonly "readonly")
+      needChecksOnValue=false
+      isSearch=true
+      isSearchReadOnly=dropdownIsSearch
+      settings=_dropdownSettings
+      canFixElement=canFixElement
+    }}
+  {{/if}}
 {{else}}
   <div data-test-lookup class="ui {{unless hasBlock "fluid"}} action input {{if (and readonly (not hasBlock)) "disabled"}}">
     {{#if hasBlock}}
@@ -47,6 +51,14 @@
         </button>
       {{/if}}
     {{/if}}
+    <button
+      data-test-lookup-clear
+      class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+      title={{t "components.flexberry-lookup.remove-button-text"}}
+      type="button"
+      {{action "remove" removeData}}>
+      {{{removeText}}}
+    </button>
     {{#unless hasBlock}}
       <button
         data-test-lookup-change
@@ -57,18 +69,10 @@
         {{{chooseText}}}
       </button>
     {{/unless}}
-    <button
-      data-test-lookup-clear
-      class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
-      title={{t "components.flexberry-lookup.remove-button-text"}}
-      type="button"
-      {{action "remove" removeData}}>
-      {{{removeText}}}
-    </button>
   </div>
 {{/if}}
 {{#if hasBlock}}
   {{_hasBlockSetter}}
 {{else if autocomplete}}
-  <div class="results"></div>
+  <div class="results {{if canFixElement fixedElementClass}}"></div>
 {{/if}}

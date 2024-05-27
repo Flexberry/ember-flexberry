@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.default-ordering-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html#установка-сортировки-по-умолчанию">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{flexberry-lookup
       value=model.type
@@ -7,11 +10,12 @@
       displayAttributeName="name"
       title=(t "forms.components-examples.flexberry-lookup.default-ordering-example.titleLookup")
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       limitFunction=null
-      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
       componentName=lookupComponentName
     }}
   </div>

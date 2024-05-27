@@ -1,51 +1,50 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-localization-edit.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{ui-message
-    type="success"
-    closeable=true
-    visible=showFormSuccessMessage
-    caption=formSuccessMessageCaption
-    message=formSuccessMessage
-    onShow=(action "onSuccessMessageShow")
-    onHide=(action "onSuccessMessageHide")
-  }}
-  {{ui-message
-    type="error"
-    closeable=true
-    visible=showFormErrorMessage
-    caption=formErrorMessageCaption
-    message=formErrorMessage
-    onShow=(action "onErrorMessageShow")
-    onHide=(action "onErrorMessageHide")
-  }}
   {{flexberry-error error=error}}
   <div class="field">
-    <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
-    </div>
-  </div>
-  <div class="field">
-    <div class="flexberry-edit-panel">
-      {{#unless readonly}}
-        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui button save-button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
-        {{/unless}}
-        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
-        {{/unless}}
-        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui button save-del-button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
-        {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
-    </div>
-  </div>
-  <div class="field {{if model.errors.name "error" ""}}">
-    {{flexberry-field
-      value=model.name
-      label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
+    {{flexberry-edit-panel
+      showCloseButton=true
+      deepMount=true
       readonly=readonly
+      buttons=(array
+        (hash
+          type="submit"
+          class="save-button"
+          disabled=(and hasParentRoute (not saveBeforeRouteLeave))
+          text=(t "forms.edit-form.save-button-text")
+          action="save")
+        (hash
+          type="submit"
+          class="save-close-button"
+          disabled=(and hasParentRoute (not saveBeforeRouteLeave))
+          text=(t "forms.edit-form.saveAndClose-button-text")
+          action="saveAndClose"
+        )
+        (hash
+          type="submit"
+          class="save-del-button"
+          disabled=(and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))
+          text=(t "forms.edit-form.delete-button-text")
+          action="delete"
+        ))
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+  <div class="field flexberry-validationsummary-container">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=(v-get validationModel "messages")}}
+    </div>
+  </div>
+  <div class="ui one column grid stackable">
+    <div class="column">
+      <div class="field">
+        {{flexberry-field
+          value=model.name
+          class=(if (v-get validationModel "name" "isInvalid") "error")
+          label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
+          readonly=readonly
+        }}
+        {{flexberry-validationmessage error=(v-get validationModel "name" "message")}}
+      </div>
+    </div>
   </div>
 </form>

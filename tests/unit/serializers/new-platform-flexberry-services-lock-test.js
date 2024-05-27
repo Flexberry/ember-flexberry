@@ -1,12 +1,15 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
-moduleForModel('new-platform-flexberry-services-lock', 'Unit | Serializer | new-platform-flexberry-services-lock', {
-  needs: ['serializer:new-platform-flexberry-services-lock']
-});
+module('Unit | Serializer | new-platform-flexberry-services-lock', function (hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it serializes records', function(assert) {
-  let record = this.subject();
-  let serializedRecord = record.serialize();
-  assert.ok(serializedRecord);
+  test('it serializes records', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let record = run(() => store.createRecord('new-platform-flexberry-services-lock', {}));
+    let serializedRecord = record.serialize();
+
+    assert.ok(serializedRecord);
+  });
 });

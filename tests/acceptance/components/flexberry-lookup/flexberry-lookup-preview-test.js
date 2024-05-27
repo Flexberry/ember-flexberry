@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import { executeTest } from './execute-flexberry-lookup-test';
 
 executeTest('flexberry-lookup preview in modal test', (store, assert, app) => {
@@ -11,12 +11,12 @@ executeTest('flexberry-lookup preview in modal test', (store, assert, app) => {
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let testName = controller.testName;
-    let $inModal = Ember.$('.in-modal');
+    let $inModal = $('.in-modal');
 
     click('.ui-preview', $inModal).then(() => {
-      let $modal = Ember.$('.modal');
-      let $form = Ember.$('.form', $modal);
-      let $field = Ember.$('.flexberry-field .flexberry-textbox', $form);
+      let $modal = $('.modal');
+      let $form = $('.form', $modal);
+      let $field = $('.flexberry-field .flexberry-textbox', $form);
       let value = $field.children('input').val();
       assert.equal(value, testName);
     });
@@ -34,11 +34,11 @@ executeTest('flexberry-lookup preview in separate route test', (store, assert, a
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let testName = controller.testName;
-    let $inSeparateRoute = Ember.$('.in-separate-route');
+    let $inSeparateRoute = $('.in-separate-route');
 
     click('.ui-preview', $inSeparateRoute).then(() => {
-      let $form = Ember.$('.form');
-      let $field = Ember.$('.flexberry-field .flexberry-textbox', $form);
+      let $form = $('.form');
+      let $field = $('.flexberry-field .flexberry-textbox', $form);
       let value = $field.children('input').val();
       assert.equal(value, testName);
     });
@@ -55,11 +55,11 @@ executeTest('flexberry-lookup preview in groupedit test', (store, assert, app) =
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let testName = controller.testName;
-    let $inGroupedit = Ember.$('.in-groupedit');
+    let $inGroupedit = $('.in-groupedit');
 
     click('.ui-preview', $inGroupedit).then(() => {
-      let $form = Ember.$('.form');
-      let $field = Ember.$('.flexberry-field .flexberry-textbox', $form);
+      let $form = $('.form');
+      let $field = $('.flexberry-field .flexberry-textbox', $form);
       let value = $field.children('input').val();
       assert.equal(value, testName);
     });

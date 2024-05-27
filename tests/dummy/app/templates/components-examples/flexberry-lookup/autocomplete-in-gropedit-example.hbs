@@ -1,0 +1,16 @@
+<h3 class="ui header">{{t "forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-in-groupedit-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html#лукап-с-автодополнением">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
+  <div class="field">
+    {{flexberry-groupedit
+      componentName="suggestionTypeLocalizedTypesGroupEdit"
+      mainModelProjection=modelProjection
+      content=model.localizedTypes
+      modelProjection=modelProjection.attributes.localizedTypes
+      orderable=false
+      readonly=readonly
+    }}
+  </div>
+</form>

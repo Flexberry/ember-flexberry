@@ -1,0 +1,57 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.customizing-window-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-lookup
+      value=model.editor1
+      relatedModel=model
+      projection=projectionName
+      displayAttributeName="name"
+      title=(t "forms.components-examples.flexberry-lookup.customizing-window-example.titleLookup")
+      relationName="editor1"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      lookupWindowCustomProperties=(action "getLookupFolvProperties")
+      componentName="SuggestionEditor1ForLookupCustomWindowTest"
+      updateLookupValue=(action "updateLookupValue")
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-lookup
+      value=model.author
+      relatedModel=model
+      projection=projectionName
+      displayAttributeName="name"
+      title=(t "forms.components-examples.flexberry-lookup.customizing-window-example.titleLookup")
+      relationName="author"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+      lookupWindowCustomProperties=(action "getLookupFolvPropertiesForAuthor")
+      componentName="SuggestionAuthorForLookupCustomWindowTest"
+      updateLookupValue=(action "updateLookupValue")
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionUserVotesGroupEditForLookupCustomWindowTest"
+      content=model.userVotes
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.userVotes
+      orderable=true
+      readonly=readonly
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="suggestionCommentsGroupEditForLookupCustomWindowTest"
+      content=model.comments
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.comments
+      orderable=true
+      readonly=readonly
+    }}
+  </div>
+</form>

@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import { observer, computed } from '@ember/object';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -28,11 +26,11 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
   fieldvalue: 'Vasya',
 
-  lookupReadonly: Ember.observer('checkboxValue', function() {
+  lookupReadonly: observer('checkboxValue', function() {
     this.set('lookupDynamicProperties.readonly', this.get('checkboxValue'));
   }),
 
-  lookupLimitFunction: Ember.observer('fieldvalue', function() {
+  lookupLimitFunction: observer('fieldvalue', function() {
     this.set('lookupDynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
   }),
 
@@ -43,9 +41,10 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type Object
     @readOnly
   */
-  lookupDynamicProperties: Ember.computed(function() {
+  lookupDynamicProperties: computed(function() {
     let lookupLimitPredicate;
     let lookupAdditionalLimitFunction;
+    let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
     let fieldvalue = this.get('fieldvalue');
     if (fieldvalue) {
       lookupLimitPredicate = new StringPredicate('name').contains(fieldvalue);
@@ -66,6 +65,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
       readonly: this.get('checkboxValue'),
       lookupLimitPredicate,
       lookupAdditionalLimitFunction,
+      updateLookupValue: updateLookupValue
     };
   }).readOnly(),
 
@@ -83,6 +83,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = this.get('lookupDynamicProperties');
@@ -97,6 +98,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            updateLookupValue: updateLookupValue
           };
           break;
 

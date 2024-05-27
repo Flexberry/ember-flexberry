@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { readOnly } from '@ember/object/computed';
 
 /**
   Service for managing the state of the application.
@@ -54,10 +55,10 @@ import Ember from 'ember';
   @class AppStateService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     @private
-    @property state
+    @property _state
     @type String
     @default ''
   */
@@ -70,7 +71,24 @@ export default Ember.Service.extend({
     @readOnly
     @type String
   */
-  state: Ember.computed.readOnly('_state'),
+  state: readOnly('_state'),
+
+  /**
+    @private
+    @property _validation
+    @type String
+    @default ''
+  */
+  _validation: '',
+
+  /**
+    The application validation.
+
+    @property validation
+    @readOnly
+    @type String
+  */
+  validation: readOnly('_validation'),
 
   /**
     Sets the application state as `loading`.
@@ -115,5 +133,24 @@ export default Ember.Service.extend({
   */
   reset() {
     this.set('_state', '');
+  },
+
+  /**
+    Sets the application validation as `validation-hide`.
+
+    @method validationHide
+  */
+  validationHide() {
+    this.set('_validation', 'validation-hide');
+  },
+
+
+  /**
+    Sets the application validation to the default value.
+
+    @method validationShow
+  */
+  validationShow() {
+    this.set('_validation', '');
   },
 });

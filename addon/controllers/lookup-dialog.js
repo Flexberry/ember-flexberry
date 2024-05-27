@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { isBlank } from '@ember/utils';
+import { deprecate } from '@ember/debug';
+import { observer, get } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
@@ -32,6 +36,12 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @type String
   */
   title: undefined,
+
+  /**
+    Flag which indicates that several rows were selected.
+    Shows whether multiselect in groupedit is available.
+  */
+  isPullUpActive: false,
 
   /**
     Current lookup selected record.
@@ -115,7 +125,25 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
+
+  init() {
+    this._super(...arguments);
+
+    this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
+  },
+
+  willDestroy() {
+    this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
+
+    this._super(...arguments);
+  },
+
+  _rowSelected() {
+    const multi = this.get('objectlistviewEventsService').getMultiSelectedRecords(this.get('folvComponentName'));
+    let isPullUpActive = multi && multi.size;
+    this.set('isPullUpActive', isPullUpActive);
+  },
 
   actions: {
     /**
@@ -138,6 +166,40 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
       this.get('lookupEventsService').lookupDialogOnVisibleTrigger(this.get('componentName'), modalDialog);
+    },
+
+    removeModalDialog() {
+      scheduleOnce('afterRender', () => this.get('objectlistviewEventsService').clearMultiSelectedRecords());
+      return true;
+    },
+
+    pullUpLookupValues() {
+      const currentLookupRow = this.get('currentLookupRow');
+      let selected = this.get('objectlistviewEventsService').getMultiSelectedRecords(this.get('folvComponentName'));
+      const contextModel = this.get('reloadContext.model');
+      const lookupModelName = this.get('saveTo.model.constructor.modelName');
+      const relName = get(contextModel.constructor, 'relationships').get(lookupModelName)[0].name;
+      let detail = contextModel.get(relName);
+      if (selected) {
+        if (currentLookupRow) {
+          selected.forEach(({ data }) => detail.pushObject(this.store.createRecord(lookupModelName, {
+            [this.saveTo.propName]: data
+          })));
+        } else {
+          let rowValueToUpdate = [];
+          selected.forEach(({ data }) => rowValueToUpdate.push(data) );
+          this._selectMaster(rowValueToUpdate[0])
+
+          for (let i = 1; i < rowValueToUpdate.length; i++) {
+            detail.pushObject(this.store.createRecord(lookupModelName, {
+              [this.saveTo.propName]: rowValueToUpdate[i]
+            }))
+          }
+        }
+      }
+  
+      this.get('objectlistviewEventsService').clearMultiSelectedRecords();
+      this._closeModalDialog();
     },
 
     /**
@@ -193,6 +255,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         filters: this._filtersPredicate(),
         filter: this.get('filter'),
         filterCondition: this.get('filterCondition'),
+        filterProjectionName: this.get('filterProjectionName'),
         predicate: this.get('predicate'),
         hierarchicalAttribute: this.get('hierarchicalAttribute'),
         hierarchyPaging: this.get('hierarchyPaging'),
@@ -202,7 +265,10 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         currentLookupRow: this.get('currentLookupRow'),
         customPropertiesData: this.get('customPropertiesData'),
         componentName: this.get('componentName'),
-        folvComponentName: this.get('folvComponentName')
+        folvComponentName: this.get('folvComponentName'),
+        modalDialogSettings: {
+          lookupSettings: this.get('modalDialogSettings.lookupSettings'),
+        }
       };
 
       if (reloadData.customPropertiesData) {
@@ -246,7 +312,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
 
     @method queryParametersChanged
   */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function () {
+  queryParametersChanged: observer('filter', 'page', 'perPage', 'sort', function() {
     if (this.get('reloadObserverIsActive')) {
       this.send('refreshList');
     }
@@ -273,6 +339,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
       this.set('sort', undefined);
       this.set('filters', undefined);
       this.set('filter', undefined);
+      this.set('filterProjectionName', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);
 
@@ -301,9 +368,10 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     }
 
     const updateLookupAction = saveTo.updateLookupAction;
+    const componentContext = saveTo.componentContext;
     const componentName = this.get('componentName');
-    if (!Ember.isBlank(updateLookupAction)) {
-      this.get('reloadContext').send(updateLookupAction,
+    if (!isBlank(updateLookupAction)) {
+      componentContext.send(updateLookupAction,
         {
           relationName: saveTo.propName,
           modelToLookup: saveTo.model,
@@ -311,7 +379,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
           componentName: componentName
         });
     } else {
-      Ember.deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
+      deprecate(`You need to send updateLookupAction name to saveTo object in lookup choose parameters`, false, {
         id: 'ember-flexberry.controllers.lookup-dialog',
         until: '4.0',
       });

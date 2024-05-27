@@ -1,38 +1,51 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.dropdown-mode-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html#режим-выпадающего-списка">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
-  <label>dropdownIsSearch=true, direction="downward"</label>
+    {{flexberry-field
+      value=minCharactersValue
+      label=label
+      placeholder=placeholder
+      type=type
+    }}
+  </div>
+  <div class="field">
+    <label>dropdownIsSearch=true, minCharacters={{minCharacters}}, dropdownSettings=(hash direction="downward")</label>
     {{flexberry-lookup
       value=model.type
       projection="DropDownLookupExampleView"
       displayAttributeName="name"
       title="Master"
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       lookupLimitPredicate=lookupCustomLimitPredicate
       dropdown=true
       dropdownIsSearch=true
       sorting="desc"
-      direction="downward"
+      minCharacters=minCharacters
     }}
   </div>
   <div class="field">
-  <label>dropdownIsSearch=false, direction="upward"</label>
+    <label>dropdownIsSearch=false, dropdownSettings=(hash direction="upward")</label>
     {{flexberry-lookup
       value=model.type
       projection="DropDownLookupExampleView"
       displayAttributeName="name"
       title="Master"
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       lookupLimitPredicate=lookupCustomLimitPredicate
       dropdown=true
       sorting="desc"
-      direction="upward"
+      dropdownSettings=(hash direction="upward")
     }}
   </div>
 </form>

@@ -1,9 +1,27 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
+import { inject as controller } from '@ember/controller';
+import { assert } from '@ember/debug';
+import { typeOf, isNone } from '@ember/utils';
+import { get, set } from '@ember/object';
+import { isArray, A } from '@ember/array';
+import { capitalize } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
-export default Ember.Mixin.create({
-  _userSettingsService: Ember.inject.service('user-settings'),
+export default Mixin.create({
+  _userSettingsService: service('user-settings'),
+
+  /**
+    Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
+
+    @property _groupEditEventsService
+    @type Service
+    @private
+  */
+    _groupEditEventsService: service('objectlistview-events'),
 
   /**
     Controller to show advlimit config modal window.
@@ -12,7 +30,7 @@ export default Ember.Mixin.create({
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('advlimit-dialog')
   */
-  advLimitController: Ember.inject.controller('advlimit-dialog'),
+  advLimitController: controller('advlimit-dialog'),
 
   /**
     Controller to show filters modal window.
@@ -21,7 +39,7 @@ export default Ember.Mixin.create({
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
     @default Ember.inject.controller('filters-dialog')
   */
-  filtersDialogController: Ember.inject.controller('filters-dialog'),
+  filtersDialogController: controller('filters-dialog'),
 
   /**
     Service for managing advLimits for lists.
@@ -29,7 +47,7 @@ export default Ember.Mixin.create({
     @property advLimit
     @type advLimit
   */
-  advLimit: Ember.inject.service(),
+  advLimit: service(),
 
   /**
     Default cell component that will be used to display values in columns cells.
@@ -57,12 +75,48 @@ export default Ember.Mixin.create({
       @method actions.showConfigDialog
       @param componentName Component name.
       @param settingName Setting name.
+      @param useSidePageMode Indicates when use side page mode.
       @param isExportExcel Indicates if it's export excel dialog.
       @param immediateExport Indicate if auto export is needed.
     */
-    showConfigDialog(componentName, settingName, isExportExcel = false, immediateExport = false) {
-      this._showConfigDialog(componentName, settingName, this, isExportExcel, immediateExport);
+    showConfigDialog(componentName, settingName, useSidePageMode=false, isExportExcel = false, immediateExport = false) {
+      this._showConfigDialog(componentName, settingName, useSidePageMode, this, isExportExcel, immediateExport);
     },
+
+    /**
+      Show columns config dialog for groupedit.
+
+      @method actions.showSortGeDialog
+      @param componentName Component name.
+      @param useSidePageMode Indicates when use side page mode.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      showSortGeDialog(componentName, useSidePageMode=true, modelProjection, geSorting) {
+        this._showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting);
+      },
+
+      /**
+      Show columns config dialog.
+
+      @method actions.getGeneratedColumns
+      @param componentName Component name.
+      @param settingName Setting name.
+      @param modelProjection Model projection.
+      @param geSorting Current sorting.
+    */
+      getGeneratedColumns(componentName, settingName, modelProjection, geSorting) {
+        let projectionAttributes = modelProjection.attributes;
+        let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
+        fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+        let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
+        let sorting = geSorting;
+        let columns = this._getGeneratedColumns(projectionAttributes, this, fixedColumns, colsOrder, sorting);
+        this.set('colDescs', columns);
+
+        this.get('_groupEditEventsService').setDefaultGeSortTrigger(this.get('colDescs'));
+        return columns;
+      },
 
     /**
       Show filters dialog.
@@ -71,7 +125,7 @@ export default Ember.Mixin.create({
       @param componentName Component name.
       @param filterColumns columns with available filters.
     */
-    showFiltersDialog(componentName, filterColumns) {
+    showFiltersDialog(componentName, filterColumns, useSidePageMode) {
       let controller = this.get('filtersDialogController');
       controller.set('mainControler', this);
 
@@ -86,7 +140,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'filters-dialog-content',
-        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName } }, loadingParams);
+        { controller: controller, model: { filterColumns: filterColumns, componentName: componentName, useSidePageMode: useSidePageMode } }, loadingParams);
     },
 
     /**
@@ -130,25 +184,25 @@ export default Ember.Mixin.create({
     @param immediateExport
     @private
   */
-  _showConfigDialog(componentName, settingName, settingsSource, isExportExcel = false, immediateExport = false) {
+  _showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel = false, immediateExport = false) {
     let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
     let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
     let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
     let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
-    let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || Ember.A();
+    let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
     let saveColWidthState = false;
     let propName;
     let colDesc;  //Column description
-    let colDescs = Ember.A();  //Columns description
+    let colDescs = A();  //Columns description
     let projectionAttributes;
     let modelName = settingsSource.get('modelProjection.modelName');
     if (isExportExcel) {
       let exportExcelProjectionName = settingsSource.get('exportExcelProjection') || settingsSource.get('modelProjection.projectionName');
-      Ember.assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
+      assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
 
       let exportExcelProjection = this.store.modelFor(modelName).projections.get(exportExcelProjectionName);
-      Ember.assert(`Projection "${exportExcelProjectionName}" is not defined in model "${modelName}".`, exportExcelProjection);
+      assert(`Projection "${exportExcelProjectionName}" is not defined in model "${modelName}".`, exportExcelProjection);
 
       projectionAttributes = exportExcelProjection.attributes;
     } else {
@@ -165,18 +219,18 @@ export default Ember.Mixin.create({
       namedColList[propName] = colDesc;
     }
 
-    if (Ember.isArray(colsOrder)) {
+    if (isArray(colsOrder)) {
       /*
        Remove propName, that are not in colList
        */
-      let reliableColsOrder = Ember.A();
+      let reliableColsOrder = A();
       for (let i = 0; i < colsOrder.length; i++) {
         let colOrder = colsOrder[i];
         propName = colOrder.propName;
         if ((propName in namedColList) && ('header' in  namedColList[propName])) {
           reliableColsOrder.pushObject(colOrder);
           if (isExportExcel && colOrder.name) {
-            Ember.set(namedColList[propName], 'header.string', colOrder.name);
+            set(namedColList[propName], 'header.string', colOrder.name);
           }
         }
       }
@@ -188,8 +242,8 @@ export default Ember.Mixin.create({
 
     let namedSorting = {};
     let sortPriority = 0;
-    if (Ember.isNone(sorting)) {
-      sorting = Ember.A();
+    if (isNone(sorting)) {
+      sorting = A();
     }
 
     for (let i = 0; i < sorting.length; i++) {
@@ -201,13 +255,13 @@ export default Ember.Mixin.create({
       }
     }
 
-    if (Ember.isNone(columnWidths)) {
-      columnWidths = Ember.A();
+    if (isNone(columnWidths)) {
+      columnWidths = A();
     }
 
     let namedColWidth = {};
 
-    if (Ember.isNone(settingName)) {
+    if (isNone(settingName)) {
       namedColWidth = settingsSource.get('currentColumnsWidths') || {};
     } else {
       for (let i = 0; i < columnWidths.length; i++) {
@@ -286,8 +340,139 @@ export default Ember.Mixin.create({
     this.send('showModalDialog', 'colsconfig-dialog-content',
       { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
       settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
-      exportParams: exportParams, store: store } }, loadingParams);
+      exportParams: exportParams, store: store, useSidePageMode: useSidePageMode } }, loadingParams);
   },
+
+    /**
+    Get columns info.
+
+    @method _getGeneratedColumns
+    @param projectionAttributes
+    @param settingsSource
+    @param fixedColumns
+    @param colsOrder
+    @param sorting
+    @private
+  */
+    _getGeneratedColumns(projectionAttributes, settingsSource, fixedColumns, colsOrder, sorting) {
+      let colDesc;  //Column description
+      let colDescs = A();  //Columns description
+      let propName;
+
+      let colList = this._generateColumns(projectionAttributes, false, null, null, settingsSource);
+      let namedColList = {};
+
+      for (let i = 0; i < colList.length; i++) {
+        colDesc = colList[i];
+        propName = colDesc.propName;
+        colDesc.fixed = fixedColumns.indexOf(propName) > -1;
+        namedColList[propName] = colDesc;
+      }
+
+      if (isArray(colsOrder)) {
+        /*
+        Remove propName, that are not in colList
+        */
+        let reliableColsOrder = A();
+        for (let i = 0; i < colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
+          propName = colOrder.propName;
+          if ((propName in namedColList) && ('header' in  namedColList[propName])) {
+            reliableColsOrder.pushObject(colOrder);
+          }
+        }
+
+        colsOrder = reliableColsOrder;
+      } else {
+        colsOrder = colList;
+      }
+
+      let namedSorting = {};
+      let sortPriority = 0;
+      if (isNone(sorting)) {
+        sorting = A();
+      }
+
+      for (let i = 0; i < sorting.length; i++) {
+        colDesc = sorting[i];
+        propName = colDesc.propName;
+        if (propName in namedColList) {
+          colDesc.sortPriority = ++sortPriority;
+          namedSorting[propName] = colDesc;
+        }
+      }
+
+      for (let i = 0; i < colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+
+        if (!(propName in namedColList) || !('header' in  namedColList[propName])) {
+          delete namedColList[propName];
+          continue;
+        }
+
+        let name = namedColList[propName].header;
+        let isHasMany = namedColList[propName].isHasMany;
+        let fixed = namedColList[propName].fixed;
+        delete namedColList[propName];
+        colDesc = { name: name, propName: propName, isHasMany: isHasMany, fixed: fixed };
+
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
+        }
+
+        colDescs.pushObject(colDesc);
+      }
+
+      for (propName in namedColList) {
+        colDescs.pushObject({ propName: propName, name: namedColList[propName].header, sortOrder: 0,
+          isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
+      }
+
+      return colDescs;
+    },
+
+    /**
+    Show columns config dialog for groupedit.
+
+    @method _showSortGeDialog
+    @param componentName
+    @param useSidePageMode
+    @param modelProjection
+    @param geSorting
+    @private
+  */
+    _showSortGeDialog(componentName, useSidePageMode, modelProjection, geSorting) {
+    let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName);
+    let sorting = geSorting;
+    let fixedColumns = this.get(`defaultDeveloperUserSettings.${componentName}.DEFAULT.columnWidths`) || A();
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    let modelName = modelProjection.modelName;
+    let projectionAttributes = modelProjection.attributes;
+    
+    let colDescs = this._getGeneratedColumns(projectionAttributes,
+      this, fixedColumns, colsOrder, sorting);
+
+    let store = this.get('store');
+
+    let controller = this.get('colsconfigController');
+    controller.set('mainControler', this);
+    this.send('showModalDialog', 'colsconfig-dialog');
+
+    let loadingParams = {
+      view: 'colsconfig-dialog',
+      outlet: 'modal-content'
+    };
+
+      this.send('showModalDialog', 'ge-sorting-dialog-content',
+      { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+      store: store, useSidePageMode: useSidePageMode, geSorting: geSorting } }, loadingParams);
+
+    },
 
   /**
     Generate the columns.
@@ -296,7 +481,7 @@ export default Ember.Mixin.create({
     @private
   */
   _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath, settingsSource) {
-    columnsBuf = columnsBuf || Ember.A();
+    columnsBuf = columnsBuf || A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -306,9 +491,9 @@ export default Ember.Mixin.create({
       }
 
       let attr = attributes[attrName];
-      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
+      assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
-        case 'hasMany':
+        case 'hasMany': {
           if (isExportExcel && !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, settingsSource, true);
@@ -316,13 +501,14 @@ export default Ember.Mixin.create({
           }
 
           break;
+        }
 
-        case 'belongsTo':
+        case 'belongsTo': {
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, settingsSource);
 
-            if (Ember.isNone(Ember.get(column, 'cellComponent.componentName'))) {
+            if (isNone(get(column, 'cellComponent.componentName'))) {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {
@@ -336,8 +522,9 @@ export default Ember.Mixin.create({
           currentRelationshipPath += attrName + '.';
           this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath, settingsSource);
           break;
+        }
 
-        case 'attr':
+        case 'attr': {
           if (attr.options.hidden) {
             break;
           }
@@ -346,6 +533,7 @@ export default Ember.Mixin.create({
           let column = this._createColumn(attr, attrName, bindingPath, settingsSource);
           columnsBuf.pushObject(column);
           break;
+        }
       }
     }
 
@@ -388,20 +576,20 @@ export default Ember.Mixin.create({
   */
   _createColumn(attr, attrName, bindingPath, settingsSource, isHasMany = false) {
     let currentController = this.get('currentController');
-    let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
+    let getCellComponent = get(currentController || {}, 'getCellComponent');
     let cellComponent = settingsSource.get('cellComponent');
 
-    if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
+    if (!this.get('editOnSeparateRoute') && typeOf(getCellComponent) === 'function') {
+      let recordModel = isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
     let key = this._createKey(bindingPath, settingsSource);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
-    let index = Ember.get(attr, 'options.index');
+    let index = get(attr, 'options.index');
 
     let column = {
-      header: valueFromLocales || Ember.String.htmlSafe(attr.caption || Ember.String.capitalize(attrName)),
+      header: valueFromLocales || htmlSafe(attr.caption || capitalize(attrName)),
       propName: bindingPath,
       cellComponent: cellComponent,
       isHasMany: isHasMany,
@@ -416,7 +604,7 @@ export default Ember.Mixin.create({
     if (customColumnAttributesFunc) {
       let customColAttr = customColumnAttributesFunc(attr, bindingPath);
       if (customColAttr && (typeof customColAttr === 'object')) {
-        Ember.$.extend(true, column, customColAttr);
+        $.extend(true, column, customColAttr);
       }
     }
 

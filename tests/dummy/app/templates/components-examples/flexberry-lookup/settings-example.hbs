@@ -1,5 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
+  <a href="https://flexberry.github.io/ru/ef3_flexberry-lookup.html">
+    {{t "forms.components-examples.docs-link"}}
+  </a>
   <div class="field">
     {{#settings-example
       controllerProperties=this
@@ -16,8 +19,8 @@
         title=title
         relatedModel=model
         relationName="type"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
         autocomplete=autocomplete
         autocompletePersistValue=autocompletePersistValue
         usePaginationForAutocomplete=usePaginationForAutocomplete
@@ -35,6 +38,8 @@
         previewOnSeparateRoute=previewOnSeparateRoute
         previewFormRoute="ember-flexberry-dummy-suggestion-type-edit"
         preview=(action "previewLookupValue")
+        updateLookupValue=(action "updateLookupValue")
+        autocompleteDirection=autocompleteDirection
       }}
     {{/settings-example}}
   </div>

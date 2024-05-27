@@ -2,15 +2,16 @@
   @module ember-flexberry-dummy
  */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isNone } from '@ember/utils';
 
 /**
   Number input component.
 
   @class NumberInputComponent
-  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+  @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
  */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Override wrapper tag name to disable component's wrapping div.
 
@@ -37,22 +38,24 @@ export default Ember.Component.extend({
   value: undefined,
 
   /**
-    Handles changes in inputValue.
-   */
-  inputValueDidChange: Ember.observer('inputValue', function() {
-    let value = parseInt(this.get('inputValue'), 10);
-    this.set('value', isNaN(value) ? undefined : value);
-  }),
-
-  /**
     Initializes component.
    */
   init() {
     this._super(...arguments);
 
     let value = this.get('value');
-    if (!Ember.isNone(value)) {
+    if (!isNone(value)) {
       this.set('inputValue', '' + value);
     }
+  },
+
+  actions: {
+    /**
+     * Handles changes in inputValue.
+     */
+    inputValueDidChange() {
+      let value = parseInt(this.get('inputValue'), 10);
+      this.set('value', isNaN(value) ? undefined : value);
+    },
   }
 });

@@ -7,8 +7,9 @@
       displayAttributeName="name"
       title=(t "forms.components-examples.flexberry-lookup.limit-function-example.titleLookup")
       relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      updateLookupValue=(action "updateLookupValue")
       readonly=readonly
       autocomplete=true
       dynamicProperties=dynamicProperties
@@ -16,13 +17,13 @@
     }}
   </div>
   <br>
-  <button class="ui button firstLimitFunction" {{action 'firstLimitFunction' on="click"}}>
+  <button class="ui button firstLimitFunction" {{action "firstLimitFunction" on="click"}}>
     {{concat (t "forms.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.captionFirstLimitFunction") ": " firstLimitType}}
   </button>
-  <button class="ui button secondLimitFunction" {{action 'secondLimitFunction' on="click"}}>
+  <button class="ui button secondLimitFunction" {{action "secondLimitFunction" on="click"}}>
     {{concat (t "forms.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.captionSecondLimitFunction") ": " secondLimitType}}
   </button>
-  <button class="ui button clearLimitFunction" {{action 'clearLimitFunction' on="click"}}>
+  <button class="ui button clearLimitFunction" {{action "clearLimitFunction" on="click"}}>
     {{t "forms.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.captionClearLimitFunction"}}
   </button>
 </form>

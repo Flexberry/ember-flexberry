@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -28,7 +28,7 @@ export default EditFormController.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-lookup.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-lookup.placeholder'));
     }
@@ -128,6 +128,7 @@ export default EditFormController.extend({
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
+      let updateLookupValue = this.get('actions.updateLookupValue').bind(this);
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
@@ -140,7 +141,8 @@ export default EditFormController.extend({
             projection: 'ApplicationUserL',
             autocomplete: true,
             showPreviewButton: true,
-            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page'
+            previewFormRoute: 'components-acceptance-tests/flexberry-lookup/settings-example-preview-page',
+            updateLookupValue: updateLookupValue
           };
           break;
       }

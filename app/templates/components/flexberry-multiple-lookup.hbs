@@ -33,7 +33,6 @@
   </div>
   <div class={{if isColumnMode "flex-column"}}>
     {{#each filteredRecords as |record|}}
-      {{! template-lint-disable link-href-attributes }}
       <a
         class="{{
           get record (concat componentName "_tagConfig.customClass")

@@ -1,7 +1,7 @@
 import { A } from '@ember/array';
 import { computed, observer, get, set } from '@ember/object';
 import { copy } from '@ember/object/internals';
-import { inject as service} from '@ember/service';
+import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
 import { isNone } from '@ember/utils';
 import { debug, assert } from '@ember/debug';
@@ -264,7 +264,7 @@ export default FlexberryBaseComponent.extend({
 
     this.get('filteredRecords').forEach((record) => {
       let tagConfig = copy(this.get('defaultTagConfig'));
-      set(record, 'tagConfig', tagConfig);
+      set(record, `${this.get('componentName')}_tagConfig`, tagConfig);
 
       if (configurateTag) {
         assert('configurateTag must be a function', typeof configurateTag === 'function');

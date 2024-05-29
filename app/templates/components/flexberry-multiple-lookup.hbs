@@ -31,17 +31,40 @@
       {{/if}}
     {{/if}}
   </div>
-  <div class="{{if isColumnMode "flex-column"}}">
+  <div class={{if isColumnMode "flex-column"}}>
     {{#each filteredRecords as |record|}}
-      <a class="{{record.tagConfig.customClass}} ui label" data-test-tag>
-        {{#if record.tagConfig.canBeSelected}}
-          <span class="normal-weight" onClick={{action "preview" record}}>{{record.tagDisplayValue}}</span>
+      <a
+        class="{{
+          get record (concat componentName "_tagConfig.customClass")
+        }} ui label"
+        data-test-tag
+      >
+        {{#if (get record (concat componentName "_tagConfig.canBeSelected"))}}
+          <span
+            class="normal-weight"
+            role="button"
+            onClick={{action "preview" record}}
+          >
+            {{record.tagDisplayValue}}
+          </span>
         {{else}}
-          <span class="normal-weight">{{record.tagDisplayValue}}</span>
+          <span class="normal-weight">
+            {{record.tagDisplayValue}}
+          </span>
         {{/if}}
 
-        {{#if (and record.tagConfig.canBeDeleted (not readonly))}}
-          <i class="delete icon" onClick={{action "delete" record}} data-test-tag-remove-btn></i>
+        {{#if
+          (and
+            (get record (concat componentName "_tagConfig.canBeDeleted"))
+            (not readonly)
+          )
+        }}
+          <i
+            class="delete icon"
+            role="button"
+            onClick={{action "delete" record}}
+            data-test-tag-remove-btn
+          ></i>
         {{/if}}
       </a>
     {{else if (not isChooseComponentVisible)}}

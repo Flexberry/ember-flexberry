@@ -654,6 +654,9 @@ $.extend(true, translations, {
       'phone1-required-caption': 'Require filling in the "Phone1" field',
       'profile': 'Profile',
       'contact-info': 'Contact Information',
+      'limiting-multilists-by-model-field': {
+        'caption': 'Users with similar e-mail addresses'
+      }
     },
 
     'ember-flexberry-dummy-comment-edit': {

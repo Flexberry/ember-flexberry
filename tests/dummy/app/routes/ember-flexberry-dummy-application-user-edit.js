@@ -66,6 +66,12 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
     }
   }),
 
+  /**
+    OLV limit predicate.
+
+    @param component OLV component.
+    @returns Predicate.
+   */
   objectListViewLimitPredicate(component) {
     if (component.params.componentName === 'MultiUserList') {
       return this.getMultiUserListPredicate(component);
@@ -74,6 +80,12 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
     return null;
   },
 
+  /**
+    Limit predicate for MultiUserList.
+
+    @param component MultiUserList component.
+    @returns Predicate.
+   */
   getMultiUserListPredicate(component) {
     let email = '';
 

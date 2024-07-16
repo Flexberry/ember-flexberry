@@ -655,7 +655,7 @@ $.extend(true, translations, {
       'profile': 'Profile',
       'contact-info': 'Contact Information',
       'limiting-multilists-by-model-field': {
-        'caption': 'Users with similar e-mail addresses'
+        'caption': 'Users with similar e-mail addresses',
       }
     },
 

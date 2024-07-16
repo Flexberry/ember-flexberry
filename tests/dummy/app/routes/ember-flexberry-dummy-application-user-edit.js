@@ -2,7 +2,7 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 import MultiListRoute from 'ember-flexberry/mixins/multi-list-route';
 import ListParameters from 'ember-flexberry/objects/list-parameters';
-import { computed } from '@ember/object';
+import { computed, get, set } from '@ember/object';
 import { SimplePredicate, ComplexPredicate, FalsePredicate } from 'ember-flexberry-data/query/predicate';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Condition from 'ember-flexberry-data/query/condition';
@@ -10,7 +10,6 @@ import { resolve, hash } from 'rsvp';
 import { isNone, isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-import { get, set } from '@ember/object';
 
 export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, MultiListRoute, {
 
@@ -19,7 +18,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
 
     @property advLimit
     @type AdvLimitService
-  */
+   */
   advLimit: service(),
 
   /**
@@ -41,25 +40,25 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
   modelName: 'ember-flexberry-dummy-application-user',
 
   /**
-  developerUserSettings.
-  {
-  <componentName>: {
-    <settingName>: {
-        colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
-        colsWidths: [ <colName>:<colWidth>, ... ],
+    developerUserSettings.
+    {
+    <componentName>: {
+      <settingName>: {
+          colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+          sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
+          colsWidths: [ <colName>:<colWidth>, ... ],
+        },
+        ...
       },
       ...
-    },
-    ...
-  }
-  For default userSetting use empty name ('').
-  <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+    }
+    For default userSetting use empty name ('').
+    <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
 
-  @property developerUserSettings
-  @type Object
-  @default {}
-  */
+    @property developerUserSettings
+    @type Object
+    @default {}
+   */
 
   developerUserSettings: computed(function() {
     return {
@@ -115,6 +114,13 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
     this.getMultiListModels(transition, model);
   },
 
+  /**
+    Get models for Multilists.
+
+    @param transition Transition.
+    @param model Resolved model.
+    @returns Hash models.
+   */
   getMultiListModels(transition, model) {
     const advLimitService = this.get('advLimit');
 
@@ -125,8 +131,8 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
 
       return advLimitService.getAdvLimitsFromStore(Object.keys(developerUserSettings));
     }).then(() => {
-      let userSettingsService = this.get('userSettingsService');
-      let listComponentNames = userSettingsService.getListComponentNames();
+      const userSettingsService = this.get('userSettingsService');
+      const listComponentNames = userSettingsService.getListComponentNames();
       let result = {};
       listComponentNames.forEach(function(componentName) {
         this.get('colsConfigMenu').updateNamedSettingTrigger(componentName);
@@ -134,19 +140,20 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
         let settings = this.get(`multiListSettings.${componentName}`);
 
         if (!isNone(settings)) {
-          let filtersPredicate = this._filtersPredicate(componentName);
-          let sorting = userSettingsService.getCurrentSorting(componentName);
-          let perPage = userSettingsService.getCurrentPerPage(componentName);
+          const filtersPredicate = this._filtersPredicate(componentName);
+          const sorting = userSettingsService.getCurrentSorting(componentName);
+          const perPage = userSettingsService.getCurrentPerPage(componentName);
           set(settings, 'filtersPredicate', filtersPredicate);
           set(settings, 'perPage', perPage);
           set(settings, 'sorting', sorting);
 
-          let limitPredicate =
+          const limitPredicate =
             this.objectListViewLimitPredicate({ modelName: settings.modelName, projectionName: settings.projectionName, params: settings, model: model });
 
           const advLimit = advLimitService.getCurrentAdvLimit(componentName);
 
-          let queryParameters = {
+          // OLV-settings.
+          const queryParameters = {
             componentName: componentName,
             modelName: settings.modelName,
             projectionName: settings.projectionName,
@@ -174,7 +181,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, Mult
             this.includeSorting(hashModel[componentName], get(settings, 'sorting'));
             set(settings, 'model', hashModel[componentName]);
             if (isNone(get(settings, 'sort'))) {
-              let sortQueryParam = serializeSortingParam(get(settings, 'sorting'), get(settings, 'sortDefaultValue'));
+              const sortQueryParam = serializeSortingParam(get(settings, 'sorting'), get(settings, 'sortDefaultValue'));
               set(settings, 'sort', sortQueryParam);
             }
           }

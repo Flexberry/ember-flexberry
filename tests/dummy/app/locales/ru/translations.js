@@ -659,7 +659,7 @@ $.extend(true, translations, {
       'profile': 'Профиль',
       'contact-info': 'Контактная информация',
       'limiting-multilists-by-model-field': {
-        'caption': 'Пользователи с похожими e-mail адресами'
+        'caption': 'Пользователи с похожими e-mail адресами',
       }
     },
 

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(environment) {
-  var backendUrl = 'https://ember-stand.flexberry-foundation.ru';
+  var backendUrl = 'http://localhost:80';
 
   if (environment === 'development-loc') {
     // Use `ember s -e development-loc` command for local backend usage.
@@ -166,7 +166,7 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.locationType = 'none';
+    ENV.locationType = 'http://localhost:80';
 
     // URL of the backend running in docker.
     backendUrl = 'http://localhost:80';

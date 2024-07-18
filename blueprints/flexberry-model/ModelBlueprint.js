@@ -356,6 +356,11 @@ var ModelBlueprint = /** @class */ (function () {
                     options += attr.type === 'number' ? ', integer: true' : '';
                     validators[attr.name].push("validator('number', { " + options + " }),");
                     break;
+                default: 
+                    if (attr.notNull) {
+                        validators[attr.name].push("validator('presence', true),");
+                    }
+                    break;
             }
         }
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {

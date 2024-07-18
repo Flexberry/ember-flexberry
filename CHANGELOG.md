@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.13.0-beta.1] - 2024-05-29
+### Added
+* The `flexberry-multiple-lookup` component:
+    * Added tag configuration by componentName.
+
 ## [3.12.0] - 2024-05-03
 ### Changed
 * Update `ember-flexberry-themes` to version `0.3.0-beta.8`.

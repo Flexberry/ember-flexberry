@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+* The `flexberry-model` blueprint:
+    * added presence validator for not null attributes with non-standart types, including enum type.
+
 ## [3.13.0-beta.1] - 2024-05-29
 ### Added
 * The `flexberry-multiple-lookup` component:

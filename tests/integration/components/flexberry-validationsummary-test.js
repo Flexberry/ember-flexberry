@@ -1,14 +1,15 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 
-moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry-validationsummary', {
-  integration: true
-});
+module( 'Integration | Component | flexberry-validationsummary', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders and works', function(assert) {
-  this.render(hbs`{{flexberry-validationsummary errors=errors color=color header=header}}`);
+test('it renders and works',async function(assert) {
+  await render(hbs`{{flexberry-validationsummary errors=errors color=color header=header}}`);
 
   let errors = this.set('errors', A());
   assert.ok(this.$('.ui.message').is(':hidden'), 'Component is hidden if no errors.');
@@ -27,6 +28,8 @@ test('it renders and works', function(assert) {
   this.set('color', 'blue');
   assert.ok(this.$('.ui.message').hasClass('blue'), 'Color works through CSS class.');
 
-  this.render(hbs`{{flexberry-validationsummary}}`);
+  await render(hbs`{{flexberry-validationsummary}}`);
   assert.ok(this.$('.ui.message').hasClass('red'), `Default color 'red'.`);
+  });
 });
+

@@ -11,3 +11,4 @@ module('Integration | Component | flexberry-error', function(hooks) {
     assert.ok(/Error, error, error.../.test(this.element.textContent), 'Error message is displayed correctly');
   });
 });
+

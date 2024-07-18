@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * The `flexberry-multiple-lookup` component:
     * Added tag configuration by componentName.
+* The `object-list-view` component:
+    * Added limiting multilists by model field.
 
 ## [3.12.0] - 2024-05-03
 ### Changed

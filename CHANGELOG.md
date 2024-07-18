@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+* The `flexberry-file` component:
+    * fixed image preview after upload action.
+
 ## [3.13.0-beta.1] - 2024-05-29
 ### Added
 * The `flexberry-multiple-lookup` component:

@@ -3,16 +3,19 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', function(hooks) {
+module('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', function(hooks) {
  setupRenderingTest(hooks);
-test('it renders and works',async function(assert) {
-  this.render(hbs`{{flexberry-sitemap}}`);
+ 
+ test('it renders and works',async function(assert) {
+
+  await render(hbs`{{flexberry-sitemap}}`);
   assert.equal(this.$().text().trim(), '', 'Empty sitemap, empty result.');
+  
   await render(hbs`
-    {{#flexberry-sitemap}}
-      template block text
+    {{#flexberry-sitemap}} 
+    template block text 
     {{/flexberry-sitemap}}
-  `);
+ `);
   assert.equal(this.$().text().trim(), '', 'Block params not used.');
   // this.set('sitemap', {
   //   nodes: [

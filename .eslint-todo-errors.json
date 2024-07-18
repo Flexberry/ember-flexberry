@@ -1611,7 +1611,7 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 216, "column": 15 }
   ],
   "tests/integration/components/flexberry-error-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 9, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 }
   ],
   "tests/integration/components/flexberry-field-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 15, "column": 1 },

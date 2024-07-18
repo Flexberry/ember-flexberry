@@ -1243,7 +1243,9 @@ export default FlexberryBaseComponent.extend({
 
         this.set('value', fileJson);
       } else {
-        this.set('_previewImageAsBase64String', null);
+        if (this.get('_uploadData')) {
+          this.set('_previewImageAsBase64String', null);
+        }
       }
     });
   }),

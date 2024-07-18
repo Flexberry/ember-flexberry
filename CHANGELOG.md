@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 * The `flexberry-model` blueprint:
     * added presence validator for not null attributes with non-standart types, including enum type.
+* The `flexberry-file` component:
+    * fixed image preview after upload action.
+
 
 ## [3.13.0-beta.1] - 2024-05-29
 ### Added

@@ -1,21 +1,19 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', {
-  integration: true
-});
-
-test('it renders and works', function(assert) {
+moduleForComponent('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', function(hooks) {
+ setupRenderingTest(hooks);
+test('it renders and works',async function(assert) {
   this.render(hbs`{{flexberry-sitemap}}`);
   assert.equal(this.$().text().trim(), '', 'Empty sitemap, empty result.');
-
-  this.render(hbs`
+  await render(hbs`
     {{#flexberry-sitemap}}
       template block text
     {{/flexberry-sitemap}}
   `);
   assert.equal(this.$().text().trim(), '', 'Block params not used.');
-
   // this.set('sitemap', {
   //   nodes: [
   //     {
@@ -31,4 +29,6 @@ test('it renders and works', function(assert) {
   // assert.equal(this.$('.title-item-menu:visible').text().trim(), 'Superheroes', 'Menu is closed.');
   // this.$('.title-item-menu:visible').click();
   // assert.equal(this.$('.title-item-menu:visible').text().trim().replace(/\s+/g, ''), 'SuperheroesSupermanIronman', 'Menu is open.');
+  });
 });
+

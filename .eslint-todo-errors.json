@@ -1783,11 +1783,12 @@
     { "ruleId": "ember/no-test-and-then", "line": 633, "column": 5 }
   ],
   "tests/integration/components/flexberry-sitemap-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 4, "column": 1 },
+    { "ruleId": "no-unused-vars", "line": 1, "column": 10 },
+    { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },
+    { "ruleId": "no-undef", "line": 6, "column": 1 },
     { "ruleId": "ember/no-test-this-render", "line": 9, "column": 3 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 9, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 12, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 16 }
   ],
   "tests/integration/components/flexberry-tab-bar-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },

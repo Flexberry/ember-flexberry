@@ -7,14 +7,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * added presence validator for not null attributes with non-standart types, including enum type.
 * The `flexberry-file` component:
     * fixed image preview after upload action.
+* The `object-list-view` component:
+    * Added limiting multilists by model field.
 
 
 ## [3.13.0-beta.1] - 2024-05-29
 ### Added
 * The `flexberry-multiple-lookup` component:
     * Added tag configuration by componentName.
-* The `object-list-view` component:
-    * Added limiting multilists by model field.
 
 ## [3.12.0] - 2024-05-03
 ### Changed

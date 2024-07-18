@@ -1896,11 +1896,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 30, "column": 15 }
   ],
   "tests/integration/components/form-load-time-tracker-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 14, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 37, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 37, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 40, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 40, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 39, "column": 16 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 42, "column": 16 }
   ],
   "tests/integration/components/groupedit-toolbar-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 4, "column": 1 },

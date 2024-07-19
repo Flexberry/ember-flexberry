@@ -1910,9 +1910,9 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 19, "column": 15 }
   ],
   "tests/integration/components/modal-dialog-test.js": [
-    { "ruleId": "ember/no-legacy-test-waiters", "line": 16, "column": 5 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 29, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 39, "column": 18 }
+    { "ruleId": "ember/no-legacy-test-waiters", "line": 17, "column": 5 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 26, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 36, "column": 18 }
   ],
   "tests/integration/components/object-list-view-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 12, "column": 1 },

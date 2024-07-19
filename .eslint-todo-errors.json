@@ -1903,8 +1903,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 40, "column": 15 }
   ],
   "tests/integration/components/groupedit-toolbar-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 16 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 22, "column": 16 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 15, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 20, "column": 18 }
   ],
   "tests/integration/components/modal-dialog-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },

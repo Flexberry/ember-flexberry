@@ -24,13 +24,12 @@ module('Integration | Component | form load time tracker', function(hooks) {
     Component.reopen({
       i18n: service('i18n')
     });
-
+ 
     this.inject.service('form-load-time-tracker', { as: 'formLoadTimeTracker' });
 
     // Set 'ru' as initial locale.
     this.set('i18n.locale', 'ru');
   });
-});
 
 test('it renders', async function(assert) {
   let i18n = this.get('i18n');
@@ -41,5 +40,7 @@ test('it renders', async function(assert) {
 
   await render(hbs`{{#form-load-time-tracker}}Yield here!{{/form-load-time-tracker}}`);
   assert.equal(this.$().text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2\nYield here!');
+  });
 });
+
 

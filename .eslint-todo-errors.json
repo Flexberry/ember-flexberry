@@ -1889,11 +1889,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 15 }
   ],
   "tests/integration/components/flexberry-validationsummary-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 11, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 30, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 30, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 13, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 16 }
   ],
   "tests/integration/components/form-load-time-tracker-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 14, "column": 1 },

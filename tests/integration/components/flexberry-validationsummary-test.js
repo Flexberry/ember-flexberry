@@ -8,8 +8,9 @@ import { render } from '@ember/test-helpers';
 module( 'Integration | Component | flexberry-validationsummary', function(hooks) {
   setupRenderingTest(hooks);
 
-test('it renders and works',async function(assert) {
-  await render(hbs`{{flexberry-validationsummary errors=errors color=color header=header}}`);
+  test('it renders and works',async function(assert) {
+    
+    await render(hbs`{{flexberry-validationsummary errors=errors color=color header=header}}`);
 
   let errors = this.set('errors', A());
   assert.ok(this.$('.ui.message').is(':hidden'), 'Component is hidden if no errors.');

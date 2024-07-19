@@ -1,37 +1,34 @@
 import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
-import startApp from '../../../helpers/start-app';
+import { set } from '@ember/object';
 import $ from 'jquery';
 
-let app;
 const path = 'components-examples/flexberry-dropdown/empty-value-example';
 const testName = 'empty value test';
 
-module('Acceptance | flexberry-dropdown | ' + testName, {
-    beforeEach() {
+module('Acceptance | flexberry-dropdown | ' + testName, function(hooks) {
+  setupApplicationTest(hooks);
 
-      // Start application.
-      app = startApp();
-
-      // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-      let applicationController = app.__container__.lookup('controller:application');
-      applicationController.set('isInAcceptanceTestMode', true);
-    },
-
-    afterEach() {
-      run(app, 'destroy');
-    }
+  hooks.beforeEach(function() {
+    // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
+    let applicationController = this.owner.lookup('controller:application');
+    set(applicationController, 'isInAcceptanceTestMode', true);
   });
 
-test(testName, (assert) => {
-  assert.expect(3);
+  hooks.afterEach(function() {
+    run(this.owner, 'destroy');
+  });
 
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path, 'Path is correctly');
+  test(testName, async function(assert) {
+    assert.expect(3);
 
-    let $dropdown = $('.flexberry-dropdown');
-    assert.equal($dropdown.length, 1, 'Dropdown is render');
-    assert.equal($dropdown[0].innerText, 'Enum value №2', 'Dropdown value is "Enum value №2"');
+    await visit(path);
+    assert.equal(currentURL(), path, 'Path is correctly');
+
+    const $dropdown = $('.flexberry-dropdown');
+    assert.equal($dropdown.length, 1, 'Dropdown is rendered');
+    assert.equal($dropdown[0].innerText.trim(), 'Enum value №2', 'Dropdown value is &quot;Enum value №2&quot;');
   });
 });

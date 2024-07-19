@@ -17,32 +17,38 @@ module('Integration | Component | modal-dialog', function(hooks) {
   });
 
   hooks.afterEach(function() {
-    // This might cause an error if the modal is not present
-    try {
-      this.element.querySelector('.flexberry-modal').classList.remove('dimmer'); // Assuming you have such class
-    } catch (e) {
-      // Handle the error or ignore if it is expected
+    if (this.element.querySelector('.flexberry-modal')) {
+      this.element.querySelector('.flexberry-modal').classList.remove('modal', 'hide', 'dimmer');
     }
   });
 
-  test('it renders', async function(assert) {
-    await render(hbs`
+  test('it renders', function(assert) {
+    this.render(hbs`
       {{#modal-dialog settings=settings created=createdConsumer}}
         template block text
       {{/modal-dialog}}
     `);
 
-    assert.equal(this.element.querySelector('.content').textContent.trim(), 'template block text');
+    return new Promise(resolve => {
+      setTimeout(() => {
+        assert.equal(this.element.querySelector('.content').textContent.trim(), 'template block text');
+        resolve();
+      }, 0);
+    });
   });
 
-  test('it should not show actions div if no buttons visible', async function(assert) {
-    await render(hbs`
+  test('it should not show actions div if no buttons visible', function(assert) {
+    this.render(hbs`
       {{#modal-dialog settings=settings created=createdConsumer useOkButton=false useCloseButton=false}}
         template block text
       {{/modal-dialog}}
     `);
 
-    assert.equal(this.element.querySelectorAll('.actions').length, 0);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        assert.equal(this.element.querySelectorAll('.actions').length, 0);
+        resolve();
+      }, 0);
+    });
   });
 });
-

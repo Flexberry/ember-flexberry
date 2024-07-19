@@ -1,22 +1,25 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
 
-moduleForComponent('groupedit-toolbar', 'Integration | Component | groupedit toolbar', {
-  integration: true
-});
 
-test('it renders', function(assert) {
+module('Integration | Component | groupedit toolbar', function(hooks) {
+  setupRenderingTest(hooks);
+
+
+test('it renders',async function(assert) {
   assert.expect(2);
 
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{groupedit-toolbar componentName = "someName"}}`);
+  await render(hbs`{{groupedit-toolbar componentName = "someName"}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
-  this.render(hbs`
+  await render(hbs`
     {{#groupedit-toolbar componentName = "someName"}}
       template block text
     {{/groupedit-toolbar}}
@@ -25,3 +28,5 @@ test('it renders', function(assert) {
   //Component does not support template block usage.
   assert.equal(this.$().text().trim(), '');
 });
+});
+

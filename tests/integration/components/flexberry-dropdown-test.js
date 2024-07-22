@@ -11,162 +11,150 @@ import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { render, click } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
 
 const animationDuration = $.fn.dropdown.settings.duration + 100;
 
-moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dropdown', {
-  integration: true,
+module( 'Integration | Component | flexberry dropdown', function(hooks) {
+  setupRenderingTest(hooks);
 
-  beforeEach: function () {
-    this.register('locale:ru/translations', I18nRuLocale);
-    this.register('locale:en/translations', I18nEnLocale);
-    this.register('service:i18n', I18nService);
+  hooks.beforeEach(async function () {
+    this.owner.register('locale:ru/translations', I18nRuLocale);
+    this.owner.register('locale:en/translations', I18nEnLocale);
+    this.owner.register('service:i18n', I18nService);
 
-    this.inject.service('i18n', { as: 'i18n' });
+    this.i18n = this.owner.lookup('service:i18n');
     Component.reopen({
       i18n: service('i18n')
     });
 
     // Set 'ru' as initial locale.
     this.set('i18n.locale', 'ru');
-  }
-});
+  });
 
-// Helper method to expand flexberry-dropdown.
-let expandDropdown = function(options) {
-  options = options || {};
+  // Helper method to expand flexberry-dropdown.
+  let expandDropdown = function(options) {
+    options = options || {};
 
-  let $component = options.dropdown;
-  let $menu = $component.children('div.menu');
+    let $component = $(this.element).find('.flexberry-dropdown');
+    let $dropdownMenu = $component.find('div.menu');
 
-  let callbacks = A(options.callbacks || []);
+    let callbacks = A(options.callbacks || []);
 
-  return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
+      // Click on component to trigger expand animation.
+      run(() => {
+        $component.click();
 
-    // Click on component to trigger expand animation.
-    run(() => {
-      $component.click();
+        // Set timeouts for possibly defined additional callbacks.
+        callbacks.forEach((callback) => {
+          setTimeout(callback.callback, callback.timeout);
+        });
 
-      // Set timeouts for possibly defined additional callbacks.
-      callbacks.forEach((callback) => {
-        setTimeout(callback.callback, callback.timeout);
+        // Set timeout for end of expand animation.
+        setTimeout(() => {
+          if ($component.hasClass('active') && $component.hasClass('visible') && $dropdownMenu.hasClass('visible')) {
+            resolve();
+          } else {
+            reject(new Error('flexberry-dropdown\'s menu isn\'t expanded'));
+          }
+        }, animationDuration);
       });
-
-      // Set timeout for end of expand animation.
-      setTimeout(() => {
-        if ($component.hasClass('active') && $component.hasClass('visible') && $menu.hasClass('visible')) {
-          resolve();
-        } else {
-          reject(new Error('flexberry-dropdown\'s menu isn\'t expanded'));
-        }
-      }, animationDuration);
     });
-  });
-};
+  };
 
-// Helper method to select item with specified caption from already expanded flexberry-dropdown's menu.
-let selectDropdownItem = function(options) {
-  options = options || {};
+  // Helper method to select item with specified caption from already expanded flexberry-dropdown's menu.
+  let selectDropdownItem = function(options) {
+    options = options || {};
 
-  let $component = options.dropdown;
-  let $menu = $component.children('div.menu');
+    let $component = $(this.element).find('.flexberry-dropdown');
+    let $dropdownMenu = $component.find('div.menu');
+    let itemCaption = options.itemCaption;
+    let callbacks = A(options.callbacks || []);
 
-  let itemCaption = options.itemCaption;
-  let callbacks = A(options.callbacks || []);
+    return new RSVP.Promise((resolve, reject) => {
+      // To select some item, menu must be expanded.
+      if (!($component.hasClass('active') && $component.hasClass('visible') && $dropdownMenu.hasClass('visible'))) {
+        reject(new Error('flexberry-dropdown\'s menu isn\'t expanded'));
+      }
 
-  return new RSVP.Promise((resolve, reject) => {
+      // To select some item, menu must contain such item (with the specified caption).
+      let $item = $dropdownMenu.find('.item:contains(' + itemCaption + ')');
+      if ($item.length === 0) {
+        reject(new Error('flexberry-dropdown\'s menu doesn\'t contain item with caption \'' + itemCaption + '\''));
+      }
 
-    // To select some item, menu must be expanded.
-    if (!($component.hasClass('active') && $component.hasClass('visible') && $menu.hasClass('visible'))) {
-      reject(new Error('flexberry-dropdown\'s menu isn\'t expanded'));
-    }
+      // Click on item to select it & trigger collapse animation.
+      run(() => {
+        $item.click();
 
-    // To select some item, menu must contain such item (with the specified caption).
-    let $item = $('.item:contains(' + itemCaption + ')', $menu);
-    if ($item.length === 0) {
-      reject(new Error('flexberry-dropdown\'s menu doesn\'t contain item with caption \'' + itemCaption + '\''));
-    }
+        // Set timeouts for possibly defined additional callbacks.
+        callbacks.forEach((callback) => {
+          setTimeout(callback.callback, callback.timeout);
+        });
 
-    // Click on item to select it & trigger collapse animation.
-    run(() => {
-      $item.click();
-
-      // Set timeouts for possibly defined additional callbacks.
-      callbacks.forEach((callback) => {
-        setTimeout(callback.callback, callback.timeout);
+        // Set timeout for end of collapse animation.
+        setTimeout(() => {
+          if (!($component.hasClass('active') || $component.hasClass('visible') || $dropdownMenu.hasClass('visible'))) {
+            resolve();
+          } else {
+            reject(new Error('flexberry-dropdown\'s menu isn\'t collapsed'));
+          }
+        }, animationDuration);
       });
-
-      // Set timeout for end of collapse animation.
-      setTimeout(() => {
-        if (!($component.hasClass('active') || $component.hasClass('visible') || $menu.hasClass('visible'))) {
-          resolve();
-        } else {
-          reject(new Error('flexberry-dropdown\'s menu isn\'t collapsed'));
-        }
-      }, animationDuration);
     });
-  });
-};
+  };
 
-test('it renders properly', function(assert) {
-  assert.expect(14);
+  test('it renders properly', async function(assert) {
+    assert.expect(14);
 
-  // Render component.
-  this.render(hbs`{{flexberry-dropdown
-    class=class
-  }}`);
+    // Render component.
+    await render(hbs`{{flexberry-dropdown class=class}}`);
 
-  // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownIcon = $component.children('i.icon');
-  let $dropdownText = $component.children('div.text');
-  let $dropdownMenu = $component.children('div.menu');
+    let $component = $(this.element).find('.flexberry-dropdown');
+    let $dropdownIcon = $component.find('i.icon');
+    let $dropdownText = $component.find('div.text');
+    let $dropdownMenu = $component.find('div.menu');
 
-  // Check wrapper <div>.
-  assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
-  assert.strictEqual($component.hasClass('flexberry-dropdown'), true, 'Component\'s wrapper has \' flexberry-dropdown\' css-class');
-  assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
-  assert.strictEqual($component.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
-  assert.strictEqual($component.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
-  assert.strictEqual($dropdownIcon.hasClass('dropdown icon'), true, 'Component\'s wrapper has \'dropdown icon\' css-class');
-  assert.strictEqual($dropdownText.hasClass('default text'), true, 'Component\'s wrapper has \'default text\' css-class');
-  assert.strictEqual($dropdownMenu.hasClass('menu'), true, 'Component\'s wrapper has \'menu\' css-class');
+    // Проверяем обертку <div>.
+    assert.strictEqual($component.prop('tagName'), 'DIV', 'Обертка компонента - это <div>');
+    assert.strictEqual($component.hasClass('flexberry-dropdown'), true, 'Обертка компонента имеет css-класс \'flexberry-dropdown\'');
+    assert.strictEqual($component.hasClass('ui'), true, 'Обертка компонента имеет css-класс \'ui\'');
+    assert.strictEqual($component.hasClass('selection'), true, 'Обертка компонента имеет css-класс \'selection\'');
+    assert.strictEqual($component.hasClass('dropdown'), true, 'Обертка компонента имеет css-класс \'dropdown\'');
+    assert.strictEqual($dropdownIcon.hasClass('dropdown icon'), true, 'Иконка компонента имеет css-класс \'dropdown icon\'');
+    assert.strictEqual($dropdownText.hasClass('default text'), true, 'Текст компонента имеет css-класс \'default text\'');
+    assert.strictEqual($dropdownMenu.hasClass('menu'), true, 'Меню компонента имеет css-класс \'menu\'');
 
-  // Check wrapper's additional CSS-classes.
-  let additioanlCssClasses = 'scrolling compact fluid';
-  this.set('class', additioanlCssClasses);
-  /* eslint-disable no-unused-vars */
-  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  });
-  /* eslint-enable no-unused-vars */
+    // Проверяем дополнительные CSS-классы обертки.
+    let additionalCssClasses = 'scrolling compact fluid';
+    this.set('class', additionalCssClasses);
+    A(additionalCssClasses.split(' ')).forEach((cssClassName) => {
+        assert.strictEqual($component.hasClass(cssClassName), true, `Обертка компонента имеет дополнительный css-класс '${cssClassName}'`);
+    });
 
-  // Clean up wrapper's additional CSS-classes.
-  this.set('class', '');
-  /* eslint-disable no-unused-vars */
-  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  });
+    // Очищаем дополнительные CSS-классы обертки.
+    this.set('class', '');
+    A(additionalCssClasses.split(' ')).forEach((cssClassName) => {
+        assert.strictEqual($component.hasClass(cssClassName), false, `Обертка компонента не имеет дополнительного css-класса '${cssClassName}'`);
+    });
+      });
   /* eslint-enable no-unused-vars */
 });
 
-test('it renders i18n-ed placeholder', function(assert) {
-  assert.expect(2);
+  test('it renders i18n-ed placeholder',async function(assert) {
+    assert.expect(2);
 
-  // Render component.
-  this.render(hbs`{{flexberry-dropdown}}`);
+    // Render component.
+    await render(hbs`{{flexberry-dropdown}}`);
 
-  // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownText = $component.children('div.default.text');
+    // Retrieve component.
+    let $component = this.element.querySelector('.flexberry-dropdown'); 
+    let $dropdownText = $component.querySelector('div.text');
+
 
   // Check <dropdown>'s placeholder.
   assert.strictEqual(
@@ -182,11 +170,11 @@ test('it renders i18n-ed placeholder', function(assert) {
     'Component\'s inner <dropdown>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
-test('it renders manually defined placeholder', function(assert) {
+test('it renders manually defined placeholder', async function(assert) {
   assert.expect(2);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     placeholder=placeholder
   }}`);
 
@@ -195,8 +183,11 @@ test('it renders manually defined placeholder', function(assert) {
   this.set('placeholder', placeholder);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownText = $component.children('div.default.text');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+
+  let $dropdownText = $component.querySelector('div.text');
+
+
 
   // Check <dropdown>'s placeholder.
   assert.strictEqual(
@@ -208,17 +199,17 @@ test('it renders manually defined placeholder', function(assert) {
   assert.strictEqual($.trim($dropdownText.text()), placeholder);
 });
 
-test('readonly mode works properly', function(assert) {
+test('readonly mode works properly', async function(assert) {
   assert.expect(2);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     readonly=true
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownMenu = $component.querySelector('div.menu');
 
   // Activate readonly mode & check that readonly (disabled) attribute exists now & has value equals to 'readonly'.
   assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
@@ -243,7 +234,7 @@ test('readonly mode works properly', function(assert) {
   /* eslint-enable no-unused-vars */
 });
 
-test('needChecksOnValue mode properly', function(assert) {
+test('needChecksOnValue mode properly', async function(assert) {
   let exceptionHandler = TestAdapter.exception;
   TestAdapter.exception = (error) => {
     throw error;
@@ -254,7 +245,7 @@ test('needChecksOnValue mode properly', function(assert) {
   this.set('itemsArray', itemsArray);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     value=value
     items=itemsArray
     needChecksOnValue=needChecksOnValue
@@ -270,7 +261,7 @@ test('needChecksOnValue mode properly', function(assert) {
   TestAdapter.exception = exceptionHandler;
 });
 
-test('dropdown with items represented by object renders properly', function(assert) {
+test('dropdown with items represented by object renders properly', async function(assert) {
   assert.expect(3);
 
   // Create objects for testing.
@@ -282,14 +273,15 @@ test('dropdown with items represented by object renders properly', function(asse
   this.set('itemsObject', itemsObject);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     items=itemsObject
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
-  let $dropdownItem = $dropdownMenu.children('div.item');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownIcon = $component.querySelector('i.icon');
+  let $dropdownMenu = $component.querySelector('div.menu');
+
 
   // Check component's captions and objects.
   let itemsObjectKeys = Object.keys(itemsObject);
@@ -302,7 +294,7 @@ test('dropdown with items represented by object renders properly', function(asse
   });
 });
 
-test('dropdown with items represented by array renders properly', function(assert) {
+test('dropdown with items represented by array renders properly', async function(assert) {
   assert.expect(3);
 
   // Create array for testing.
@@ -310,14 +302,14 @@ test('dropdown with items represented by array renders properly', function(asser
   this.set('itemsArray', itemsArray);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     items=itemsArray
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
-  let $dropdownItem = $dropdownMenu.children('div.item');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownMenu = $component.querySelector('div.menu');
+  let $dropdownItem = $component.querySelector('div.item');
 
   // Check component's captions and array.
   $dropdownItem.each(function(i) {
@@ -328,7 +320,7 @@ test('dropdown with items represented by array renders properly', function(asser
   });
 });
 
-test('expand animation works properly', function(assert) {
+test('expand animation works properly', async function(assert) {
   assert.expect(9);
 
   // Create array for testing.
@@ -336,13 +328,13 @@ test('expand animation works properly', function(assert) {
   this.set('itemsArray', itemsArray);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     items=itemsArray
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownMenu = $component.querySelector('div.menu');
 
   // Check that component is collapsed by default.
   assert.strictEqual($component.hasClass('active'), false, 'Component hasn\'t class \'active\'');
@@ -376,7 +368,7 @@ test('expand animation works properly', function(assert) {
   });
 });
 
-test('collapse animation works properly', function(assert) {
+test('collapse animation works properly', async function(assert) {
   assert.expect(9);
 
   // Create array for testing.
@@ -384,13 +376,13 @@ test('collapse animation works properly', function(assert) {
   this.set('itemsArray', itemsArray);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     items=itemsArray
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownMenu = $component.querySelector('div.menu');
 
   let asyncAnimationsCompleted = assert.async();
   expandDropdown({
@@ -432,7 +424,7 @@ test('collapse animation works properly', function(assert) {
   });
 });
 
-test('changes in inner <dropdown> causes changes in property binded to \'value\'', function(assert) {
+test('changes in inner <dropdown> causes changes in property binded to \'value\'', async function(assert) {
   assert.expect(5);
 
   // Create array for testing.
@@ -441,14 +433,14 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
   this.set('value', null);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     items=itemsArray
     value=value
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
+  let $component = this.element.querySelector('.flexberry-dropdown');
+  let $dropdownMenu = $component.querySelector('div.menu');
 
   // Caption of the item to be selected.
   let itemCaption = itemsArray[2];
@@ -465,9 +457,9 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
       itemCaption: itemCaption
     });
   }).then(() => {
-    let $selectedItems = $dropdownMenu.children('div.item.active.selected');
-    let $selectedItem = $($selectedItems[0]);
-    let $dropdownText = $component.children('div.text');
+    let $selectedItems = $menu.children('.item.active.selected');
+    let $selectedItem = $selectedItems.eq(0);
+    let $dropdownText = $component.querySelector('div.text');
 
     // Check that specified item is selected now & it is the only one selected item.
     assert.strictEqual($selectedItems.length, 1, 'Only one component\'s item is active');
@@ -487,7 +479,7 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
   });
 });
 
-test('changes in inner <dropdown> causes call to \'onChange\' action', function(assert) {
+test('changes in inner <dropdown> causes call to \'onChange\' action', async function(assert) {
   assert.expect(2);
 
   // Create array for testing.
@@ -503,14 +495,14 @@ test('changes in inner <dropdown> causes call to \'onChange\' action', function(
   });
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
+  await render(hbs`{{flexberry-dropdown
     value=value
     items=itemsArray
     onChange = (action \"onDropdownChange\")
   }}`);
 
   // Retrieve component.
-  let $component = this.$().children();
+  let $component = this.element.querySelector('.flexberry-dropdown');
 
   // Caption of the item to be selected.
   let itemCaption = itemsArray[2];
@@ -538,3 +530,5 @@ test('changes in inner <dropdown> causes call to \'onChange\' action', function(
     asyncAnimationsCompleted();
   });
 });
+
+

@@ -1560,19 +1560,12 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 266, "column": 15 }
   ],
   "tests/integration/components/flexberry-ddau-checkbox-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 9, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 16, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 97, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 97, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 129, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 129, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 173, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 173, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 213, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 213, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 260, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 260, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 76, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 108, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 149, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 179, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 216, "column": 18 }
   ],
   "tests/integration/components/flexberry-dropdown-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 19, "column": 1 },

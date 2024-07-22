@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, clearRender } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { registerWaiter } from '@ember/test';
 import wait from 'ember-test-helpers/wait';
@@ -17,9 +17,9 @@ module('Integration | Component | modal-dialog', function(hooks) {
     registerWaiter(this, () => this.get('created'));
   });
 
-  hooks.afterEach(function() {
-    // This might cause an error if the modal is not present
-    this.$('.flexberry-modal').modal('hide dimmer');
+  hooks.afterEach(async function() {
+    // Ensure modal is hidden and cleanup is done before next test
+    await clearRender();
   });
 
   test('it renders', async function(assert) {
@@ -39,9 +39,10 @@ module('Integration | Component | modal-dialog', function(hooks) {
       {{/modal-dialog}}
     `);
 
-    return wait().then(() => {
-      assert.equal(this.$('.actions').length, 0);
-    });
+    await wait();
+    assert.equal(this.element.querySelectorAll('.actions').length, 0);
   });
 });
+
+
 

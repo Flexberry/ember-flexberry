@@ -19,9 +19,9 @@ module('Integration | Component | groupedit toolbar', function(hooks) {
     // Template block usage:
     await render(hbs`
      {{#groupedit-toolbar componentName = "someName"}}
-     template block text
+      template block text
      {{/groupedit-toolbar}}
-   `);
+    `);
 
     //Component does not support template block usage.
     assert.equal(this.$().text().trim(), '');

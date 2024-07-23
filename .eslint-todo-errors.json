@@ -1600,15 +1600,11 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 506, "column": 15 }
   ],
   "tests/integration/components/flexberry-edit-panel-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 13, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 108, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 108, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 137, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 137, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 168, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 168, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 216, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 216, "column": 15 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 30, "column": 39 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 113, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 142, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 173, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 223, "column": 18 }
   ],
   "tests/integration/components/flexberry-error-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 }

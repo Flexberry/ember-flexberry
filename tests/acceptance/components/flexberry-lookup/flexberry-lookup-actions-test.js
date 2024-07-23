@@ -2,11 +2,12 @@ import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { set } from '@ember/object';
 import { executeTest } from './execute-flexberry-lookup-test';
+import { settled } from '@ember/test-helpers';
 
-executeTest('flexberry-lookup actions test', (store, assert, app) => {
+executeTest('flexberry-lookup actions test', async (store, assert, app) => {
   assert.expect(5);
 
-  let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  const controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
 
   // Remap remove action.
   let $onRemoveData;
@@ -16,25 +17,29 @@ executeTest('flexberry-lookup actions test', (store, assert, app) => {
     assert.strictEqual($onRemoveData.relationName, 'type', 'Component sends \'remove\' with actual relationName');
   });
 
-  // Remap chose action.
+  // Remap choose action.
   let $onChooseData;
   set(controller, 'actions.externalChooseAction', (actual) => {
     $onChooseData = actual;
     assert.notEqual($onChooseData, undefined, 'Component sends \'choose\' action after first click');
-    assert.strictEqual($onChooseData.componentName, 'flexberry-lookup',
-     'Component sends \'choose\' with actual componentName');
-    assert.strictEqual($onChooseData.projection, 'SettingLookupExampleView',
-     'Component sends \'choose\' with actual projection');
+    assert.strictEqual($onChooseData.componentName, 'flexberry-lookup', 'Component sends \'choose\' with actual componentName');
+    assert.strictEqual($onChooseData.projection, 'SettingLookupExampleView', 'Component sends \'choose\' with actual projection');
   });
 
-  visit('components-acceptance-tests/flexberry-lookup/settings-example-actions');
-  andThen(function() {
-    let $lookupButtouChoose = $('.ui-change');
-    let $lookupButtouRemove = $('.ui-clear');
+  await visit('components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  
+  // Wait for the page to settle
+  await settled();
 
-    run(() => {
-      $lookupButtouChoose.click();
-      $lookupButtouRemove.click();
-    });
+  const $lookupButtonChoose = $('.ui-change');
+  const $lookupButtonRemove = $('.ui-clear');
+
+  // Simulate clicks on the buttons
+  run(() => {
+    $lookupButtonChoose.click();
+    $lookupButtonRemove.click();
   });
+
+  // Wait for any asynchronous operations to complete
+  await settled();
 });

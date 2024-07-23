@@ -1896,12 +1896,9 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 19, "column": 15 }
   ],
   "tests/integration/components/modal-dialog-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 6, "column": 1 },
-    { "ruleId": "ember/no-legacy-test-waiters", "line": 20, "column": 5 },
-    { "ruleId": "ember/no-test-this-render", "line": 29, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 29, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 41, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 41, "column": 15 }
+    { "ruleId": "ember/no-legacy-test-waiters", "line": 17, "column": 5 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 25, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 37, "column": 18 }
   ],
   "tests/integration/components/object-list-view-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 45 },

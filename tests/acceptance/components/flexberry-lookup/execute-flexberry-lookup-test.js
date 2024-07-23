@@ -10,9 +10,8 @@ export function executeTest(testName, callback, additionalBeforeEachSettings) {
   let store;
   let latestReceivedRecords = A();
 
-  module('Acceptance | flexberry-lookup-base |' + testName, {
+  module('Acceptance | flexberry-lookup-base | ' + testName, {
     beforeEach() {
-
       // Start application.
       app = startApp();
 
@@ -21,14 +20,12 @@ export function executeTest(testName, callback, additionalBeforeEachSettings) {
       applicationController.set('isInAcceptanceTestMode', true);
 
       // Override store.query method to receive & remember records which will be requested by lookup dialog.
-      let store = app.__container__.lookup('service:store');
+      store = app.__container__.lookup('service:store');
       let originalQueryMethod = store.query;
       store.query = function(...args) {
-        // Call original method & remember returned records.
         return originalQueryMethod.apply(this, args).then((records) => {
           latestReceivedRecords.clear();
           latestReceivedRecords.addObjects(records.toArray());
-
           return records;
         });
       };
@@ -47,5 +44,7 @@ export function executeTest(testName, callback, additionalBeforeEachSettings) {
     },
   });
 
-  test(testName, (assert) => callback(store, assert, app, latestReceivedRecords));
+  test(testName, async function(assert) {
+    await callback(store, assert, app, latestReceivedRecords);
+  });
 }

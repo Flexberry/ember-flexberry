@@ -1930,7 +1930,6 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 15 }
   ],
   "tests/integration/components/ui-message-test.js": [
-    { "ruleId": "no-unused-vars", "line": 6, "column": 18 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 18 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 30, "column": 18 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 64, "column": 18 },

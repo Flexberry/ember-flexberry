@@ -3,7 +3,7 @@ import { run } from '@ember/runloop';
 import { A } from '@ember/array';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
 module('Integration | Component | ui-message', function(hooks) {
@@ -12,7 +12,7 @@ module('Integration | Component | ui-message', function(hooks) {
   test('it renders properly',async function(assert) {
     assert.expect(2);
 
-   // Render component.
+    // Render component.
     await render(hbs`{{ui-message}}`);
 
     // Retrieve component.
@@ -28,8 +28,8 @@ module('Integration | Component | ui-message', function(hooks) {
 
     // Render component.
     await render(hbs`{{ui-message
-    size=size
-     }}`);
+      size=size
+    }}`);
 
     // Retrieve component.
     let $component = this.$().children();
@@ -55,7 +55,7 @@ module('Integration | Component | ui-message', function(hooks) {
         'Component\'s wrapper hasn\'t size css-class \'' + sizeCssClassName + '\'');
     });
     /* eslint-enable no-unused-vars */
-});
+  });
 
   test('type renders properly', async function(assert) {
     assert.expect(12);
@@ -111,7 +111,7 @@ module('Integration | Component | ui-message', function(hooks) {
         $component.hasClass(colorCssClassName),
         true,
         'Component\'s wrapper has color css-class \'' + colorCssClassName + '\'');
-    });
+      });
     /* eslint-enable no-unused-vars */
 
     this.set('color', '');
@@ -121,7 +121,7 @@ module('Integration | Component | ui-message', function(hooks) {
         $component.hasClass(colorCssClassName),
         false,
         'Component\'s wrapper hasn\'t color css-class \'' + colorCssClassName + '\'');
-   });
+    });
     /* eslint-enable no-unused-vars */
   });
 
@@ -267,7 +267,7 @@ module('Integration | Component | ui-message', function(hooks) {
     // Render component.
     await render(hbs`{{ui-message
       closeable=true
-      onHide=(action \"onClose\")
+      onHide=this.onClose
     }}`);
 
     // Retrieve component.
@@ -301,7 +301,7 @@ module('Integration | Component | ui-message', function(hooks) {
     await render(hbs`{{ui-message
       closeable=true
       visible=visible
-      onShow=(action \"onVisible\")
+      onShow=action.onVisible
     }}`);
 
     // Retrieve component.

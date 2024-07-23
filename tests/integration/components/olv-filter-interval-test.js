@@ -1,6 +1,6 @@
 import { module, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
 module('Integration | Component | olv-filter-interval', function(hooks){

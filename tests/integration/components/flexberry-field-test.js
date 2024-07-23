@@ -23,7 +23,7 @@ module('Integration | Component | flexberry-field', function(hooks) {
     this.owner.register('locale:en/translations', I18nEnLocale);
     this.owner.register('service:i18n', I18nService);
 
-    // Inject i18n service into all components
+    this.i18n = this.owner.lookup('service:i18n');
     Component.reopen({
       i18n: service('i18n')
     });

@@ -1,3 +1,4 @@
+import { run, later } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, currentURL } from '@ember/test-helpers';

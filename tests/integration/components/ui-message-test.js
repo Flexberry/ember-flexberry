@@ -260,7 +260,7 @@ module('Integration | Component | ui-message', function(hooks) {
     assert.expect(3);
 
     let messageClose = false;
-    this.set('actions.onClose', () => {
+    this.set('onClose', () => {
       messageClose = true;
     });
 
@@ -293,7 +293,7 @@ module('Integration | Component | ui-message', function(hooks) {
     assert.expect(4);
 
     let messageVisible = false;
-    this.set('actions.onVisible', () => {
+    this.set('onVisible', () => {
       messageVisible = true;
     });
 
@@ -301,7 +301,7 @@ module('Integration | Component | ui-message', function(hooks) {
     await render(hbs`{{ui-message
       closeable=true
       visible=visible
-      onShow=action.onVisible
+      onShow=this.onVisible
     }}`);
 
     // Retrieve component.

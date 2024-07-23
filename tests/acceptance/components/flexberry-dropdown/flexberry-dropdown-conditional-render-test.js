@@ -34,12 +34,12 @@ module('Acceptance | flexberry-dropdown | ' + testName, function(hooks) {
     const done = assert.async();
     const timeout = 100;
     later(() => {
-        const $dropdown = $('.flexberry-dropdown');
-        assert.equal($dropdown.length, 0, 'Dropdown isn\'t rendered');
+      const $dropdown = $('.flexberry-dropdown');
+      assert.equal($dropdown.length, 0, 'Dropdown isn\'t rendered');
 
-        const $span = $('div.field span');
-        assert.equal($span.text(), 'Enum value №1', 'Span is rendered');
-        done();
+      const $span = $('div.field span');
+      assert.equal($span.text(), 'Enum value №1', 'Span is rendered');
+      done();
     }, timeout);
   });
 });

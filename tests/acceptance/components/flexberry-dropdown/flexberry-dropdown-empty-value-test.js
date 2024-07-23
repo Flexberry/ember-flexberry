@@ -29,6 +29,6 @@ module('Acceptance | flexberry-dropdown | ' + testName, function(hooks) {
 
     const $dropdown = $('.flexberry-dropdown');
     assert.equal($dropdown.length, 1, 'Dropdown is rendered');
-    assert.equal($dropdown[0].innerText.trim(), 'Enum value №2', 'Dropdown value is &quot;Enum value №2&quot;');
+    assert.equal($dropdown[0].innerText.trim(), 'Enum value №2', 'Dropdown value is "Enum value №2"');
   });
 });

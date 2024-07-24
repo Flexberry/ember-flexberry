@@ -1617,17 +1617,17 @@
   ],
   "tests/integration/components/flexberry-field-test.js": [
     { "ruleId": "no-unused-vars", "line": 14, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 39, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 82, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 107, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 147, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 184, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 215, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 239, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 267, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 324, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 362, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 382, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 38, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 81, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 106, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 146, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 183, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 214, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 238, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 266, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 323, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 361, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 381, "column": 18 }
   ],
   "tests/integration/components/flexberry-groupedit-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 19, "column": 1 },

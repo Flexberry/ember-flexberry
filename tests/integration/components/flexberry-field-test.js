@@ -14,7 +14,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { render, click } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
-
 module('Integration | Component | flexberry-field', function(hooks) {
   setupRenderingTest(hooks);
 
@@ -409,5 +408,7 @@ module('Integration | Component | flexberry-field', function(hooks) {
       this.get('value'),
       newValue,
       'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
+  });
 });
-});
+
+

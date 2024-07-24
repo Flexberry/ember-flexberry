@@ -1,51 +1,47 @@
-import $ from 'jquery';
 import { isBlank } from '@ember/utils';
-import { run } from '@ember/runloop';
-import { get } from '@ember/object';
+import { click, settled } from '@ember/test-helpers';
 import { executeTest } from './execute-flexberry-lookup-test';
 
-executeTest('flexberry-lookup autofillByLimit in readonly test', (store, assert) => {
+executeTest('flexberry-lookup autofillByLimit in readonly test', async (store, assert) => {
   assert.expect(1);
-  visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
-  andThen(function() {
-    let $lookupField = $('.isreadonly .lookup-field');
-    let value = $lookupField.val();
-    assert.ok(isBlank(value), 'Value was changed');
-  });
+  await visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
+  const $lookupField = document.querySelector('.isreadonly .lookup-field');
+  const value = $lookupField.value;
+  assert.ok(isBlank(value), 'Value was changed');
 });
 
-executeTest('flexberry-lookup autofillByLimit is clean test', (store, assert) => {
+executeTest('flexberry-lookup autofillByLimit is clean test', async (store, assert) => {
   assert.expect(2);
-  visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
-  andThen(function() {
-    let $lookupField = $('.isclean .lookup-field');
-    let value = $lookupField.val();
-    assert.notOk(isBlank(value), 'Value wasn\'t changed');
+  await visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
+  await settled();
+  const $lookupField = document.querySelector('.isclean .lookup-field');
+  const value = $lookupField.value;
+  assert.notOk(isBlank(value), 'Value wasn\'t changed');
 
-    run(() => {
-      click('.isclean .ui-clear');
-      andThen(function() {
-        let $lookupFieldUpdate = $('.isclean .lookup-field');
-        let valueUpdate = $lookupFieldUpdate.val();
-        assert.ok(isBlank(valueUpdate), 'Value isn\'t empty');
-      });
-    });
-  });
+  const $clearButton = document.querySelector('.isclean .ui-clear');
+  await click($clearButton);
+
+  // Wait for any potential async operations to complete
+  await settled();
+
+  const valueUpdate = $lookupField.value;
+  assert.ok(isBlank(valueUpdate), 'Value isn\'t empty');
+
 });
 
-executeTest('flexberry-lookup autofillByLimit changes select value test', (store, assert, app) => {
+executeTest('flexberry-lookup autofillByLimit changes select value test', async (store, assert, app) => {
   assert.expect(1);
-  visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
-  andThen(function() {
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let defaultValue = get(controller, 'defaultValue.id');
+  await visit('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');
 
-    let $lookupField = $('.exist .lookup-field');
-    let value = $lookupField.val();
+  const controller = app.__container__.lookup('controller:' + currentRouteName());
+  const defaultValue = controller.defaultValue.id;
 
-    assert.notEqual(
-      defaultValue,
-      value,
-      'DefaultValue: \'' + defaultValue + '\' didn\'t change');
-  });
+  const $lookupField = document.querySelector('.exist .lookup-field');
+  const value = $lookupField.value;
+
+  assert.notEqual(
+    defaultValue,
+    value,
+    'DefaultValue: \'' + defaultValue + '\' didn\'t change'
+  );
 });

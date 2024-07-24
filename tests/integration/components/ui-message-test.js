@@ -9,7 +9,7 @@ import { setupRenderingTest } from 'ember-qunit';
 module('Integration | Component | ui-message', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders properly',async function(assert) {
+  test('it renders properly', async function(assert) {
     assert.expect(2);
 
     // Render component.
@@ -23,7 +23,7 @@ module('Integration | Component | ui-message', function(hooks) {
     assert.strictEqual($component.hasClass('message'), true, 'Component\'s wrapper has \' message\' css-class');
   });
 
-   test('size renders properly', async function(assert) {
+  test('size renders properly', async function(assert) {
     assert.expect(8);
 
     // Render component.
@@ -146,11 +146,11 @@ module('Integration | Component | ui-message', function(hooks) {
     assert.strictEqual($component.hasClass('floating'), false, 'Component\'s wrapper hasn\'t \'floating\' css-class');
   });
 
-  test('attached renders properly',async function(assert) {
+  test('attached renders properly', async function(assert) {
     assert.expect(3);
 
     // Render component.
-     await render(hbs`{{ui-message
+    await render(hbs`{{ui-message
       attached=attached
     }}`);
 
@@ -316,5 +316,5 @@ module('Integration | Component | ui-message', function(hooks) {
     this.set('visible', true);
     assert.strictEqual(messageVisible, true, 'Component is visible');
     assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css-class \'hidden\'');
-    });
   });
+});

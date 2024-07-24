@@ -13,17 +13,11 @@ import UserSettingsService from 'ember-flexberry/services/user-settings';
 import AggregatorModel from 'dummy/models/components-examples/flexberry-groupedit/shared/aggregator';
 import AggregatorModelMainModelProjection from '../../../models/ember-flexberry-dummy-suggestion';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
-import I18nService from 'ember-i18n/services/i18n';
 
 module('Integration | Component | flexberry-groupedit', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.register('service:i18n', I18nService);
-    this.owner.register('service:user-settings', UserSettingsService);
-
-    this.i18n = this.owner.lookup('service:i18n');
-    this.userSettingsService = this.owner.lookup('service:user-settings');
     Component.reopen({
       i18n: service('i18n'),
       userSettingsService: service('user-settings'),
@@ -32,12 +26,7 @@ module('Integration | Component | flexberry-groupedit', function(hooks) {
       isUserSettingsServiceEnabled: false
     });
 
-    let logService = this.owner.lookup('service:log');
-    
-    // Ensure service exists before modifying it
-    if (logService) {
-      logService.set('enabled', false);
-    }
+    this.owner.lookup('service:log').set('enabled', false);
   });
 
   hooks.afterEach(function() {

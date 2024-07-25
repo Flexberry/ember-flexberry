@@ -1,0 +1,12 @@
+{{#if this.label}}
+<label>{{this.label}}</label>
+{{/if}}
+{{flexberry-textbox
+  class=this.class
+  type=this.type
+  value=this.value
+  readonly=(if this.readonly "readonly")
+  required=this.required
+  placeholder=this.placeholder
+  maxlength=this.maxlength
+}}

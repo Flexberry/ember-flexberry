@@ -1,0 +1,29 @@
+{
+  "components": {
+    "flexberry-error": {
+      "caption": "Произошла ошибка",
+      "show-more": "Подробнее",
+      "unknown-error": "Неизвестная ошибка"
+    },
+    "flexberry-field": {
+      "placeholder": "(нет значения)"
+    },
+    "flexberry-textbox": {
+      "placeholder": "(нет значения)"
+    },
+    "flexberry-simpledatetime": {
+      "placeholder": "(нет значения)",
+      "scroll-caption-text": "Используйте скролл для перемотки",
+      "apply-button-text": "Выбрать"
+    },
+    "flexberry-textarea": {
+      "placeholder": "(нет значения)"
+    },
+    "flexberry-dropdown": {
+      "placeholder": "(нет значения)"
+    },
+    "flexberry-required-marker": {
+      "title": "Поле, обязательное для заполнения"
+    }
+  }
+}

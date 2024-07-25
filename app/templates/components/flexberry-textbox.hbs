@@ -1,0 +1,18 @@
+{{#if this.readonly}}
+  <Input
+    @type={{this.type}}
+    @value={{readonly this.value}}
+    readonly="readonly"
+    required={{this.required}}
+    placeholder={{this.placeholder}}
+    maxlength={{this.maxlength}}
+  />
+{{else}}
+  <Input
+    @type={{this.type}}
+    @value={{this.value}}
+    required={{this.required}}
+    placeholder={{this.placeholder}}
+    maxlength={{this.maxlength}}
+  />
+{{/if}}

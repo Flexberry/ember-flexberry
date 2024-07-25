@@ -1,0 +1,54 @@
+{{page-title "Dummy"}}
+
+<h2 id="title">Welcome to Ember 5 fuck 10 bitch 0</h2>
+
+{{flexberry-textbox
+  value="textbox"
+  readonly=false
+  maxlength=15
+}}
+
+{{flexberry-field
+  readonly=false
+  required=true
+  value="field"
+  label="flexberry-field"
+}}
+
+{{flexberry-textarea
+  readonly=false
+  required=true
+  value="textarea"
+  rows=6
+}}
+
+{{flexberry-checkbox
+  label="checkbox"
+  value=true
+}}
+
+{{flexberry-button
+  iconClass="icon flag"
+  caption="button"
+  readonly=false
+  click=(action "actionButton")
+}}
+
+{{#flexberry-toggler
+  caption="toggler"
+}}
+  open toggler
+{{/flexberry-toggler}}
+
+{{flexberry-dropdown
+  items=(array "ru" "en")
+  value="ru"
+}}
+
+{{flexberry-dialog
+  caption="Test"
+  content="dialog"
+  visible=this.visible
+}}
+
+{{outlet}}

@@ -1,0 +1,16 @@
+{{#if this.isSearch}}
+  {{#if this.isSearchReadOnly}}
+    <input class="search" autocomplete="off">
+  {{else}}
+    <input class="search" autocomplete="off" readonly>
+  {{/if}}
+{{/if}}
+
+<i class="dropdown icon"></i>
+<div class="{{unless this.value "default"}} text">{{this.text}}</div>
+<div class="menu {{if this.canFixElement this.fixedElementClass}}">
+  {{yield}}
+  {{#each-in this.items as |key itemValue|}}
+    <div class="item {{if (eq this.value (if this.displayCaptions key itemValue)) "active selected"}}" data-value="{{key}}">{{itemValue}}</div>
+  {{/each-in}}
+</div>

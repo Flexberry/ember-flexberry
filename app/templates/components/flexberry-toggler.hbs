@@ -1,0 +1,4 @@
+<div class="title {{if this.expanded 'active'}}">
+  <i class="{{if this.iconClass this.iconClass 'dropdown icon' }}"></i><span class="flexberry-toggler-caption">{{this.currentCaption}}</span>
+</div>
+<div class="content flexberry-toggler-content {{if this.expanded 'active'}}">{{yield}}</div>

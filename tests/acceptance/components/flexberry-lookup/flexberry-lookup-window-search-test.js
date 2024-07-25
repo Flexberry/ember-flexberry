@@ -1,43 +1,39 @@
-import Ember from 'ember';
+import { settled } from '@ember/test-helpers';
 import { executeTest } from './execute-flexberry-lookup-test';
+import $ from 'jquery';
 
-executeTest('flexberry-lookup window search test', (store, assert, app) => {
+executeTest('flexberry-lookup window search test', async (store, assert, app) => {
   assert.expect(3);
   let path = 'components-examples/flexberry-lookup/customizing-window-example';
-  visit(path);
+  
+  await visit(path);
+  assert.equal(currentPath(), path);
 
-  andThen(function() {
-    assert.equal(currentPath(), path);
+  let $lookupChooseButton = $('button.ui-change');
+  await click($lookupChooseButton);
 
-    let $lookupChooseButton = Ember.$('button.ui-change');
-    let $sampleText;
+  // Проверка существования поля поиска
+  await settled();
+  let $windowSearchField = $('div.block-action-input').children('input');
+  let $lookupTable = $('.content table.object-list-view');
+  let $lookupTableBody = $lookupTable.children('tbody');
+  let $lookupTableRow = $lookupTableBody.children('tr');
+  let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
 
-    click($lookupChooseButton);
+  assert.equal($windowSearchField.length, 1, 'search exists');
 
-    //Search exists
-    andThen(() => {
-      let $windowSearchField = Ember.$('div.block-action-input').children('input');
-      let $lookupTable = Ember.$('.content table.object-list-view');
-      let $lookupTableBody = $lookupTable.children('tbody');
-      let $lookupTableRow = $lookupTableBody.children('tr');
-      let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').eq(2);
+  let sampleText = $.trim($lookupTableRowText.text());
+  await fillIn($windowSearchField, sampleText);
 
-      assert.equal($windowSearchField.length === 1, true, 'search exists');
+  let $windowSearchButton = $('button.search-button');
+  await click($windowSearchButton);
 
-      $sampleText = $.trim($lookupTableRowText.text());
-      fillIn($windowSearchField, $sampleText);
+  // Проверка, что поиск работает
+  await settled();
+  $lookupTable = $('.content table.object-list-view');
+  $lookupTableBody = $lookupTable.children('tbody');
+  $lookupTableRow = $lookupTableBody.children('tr');
+  let $lookupTableRowTextAfterSearch = $lookupTableRow.find('div.oveflow-text').first();
 
-      let $windowSearchButton = Ember.$('button.search-button');
-      click($windowSearchButton);
-      //Search works
-      andThen(() => {
-        let $lookupTable = Ember.$('.content table.object-list-view');
-        let $lookupTableBody = $lookupTable.children('tbody');
-        let $lookupTableRow = $lookupTableBody.children('tr');
-        let $lookupTableRowText = $lookupTableRow.find('div.oveflow-text').first();
-
-        assert.equal($sampleText === $.trim($lookupTableRowText.text()), true, 'search works');
-      });
-    });
-  });
+  assert.equal(sampleText === $.trim($lookupTableRowTextAfterSearch.text()), true, 'search works');
 });

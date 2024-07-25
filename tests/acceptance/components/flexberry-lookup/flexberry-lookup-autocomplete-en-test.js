@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { executeTest } from './execute-flexberry-lookup-test';
 import { loadingLocales } from './lookup-test-functions';
-import { fillIn, settled } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
 
 executeTest('flexberry-lookup autocomplete message en', async (store, assert, app) => {
   assert.expect(4);

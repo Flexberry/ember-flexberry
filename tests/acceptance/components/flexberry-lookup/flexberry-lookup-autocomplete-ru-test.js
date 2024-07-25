@@ -1,4 +1,4 @@
-import { fillIn, settled } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
 import { executeTest } from './execute-flexberry-lookup-test';
 import { loadingLocales } from './lookup-test-functions';
 import $ from 'jquery';

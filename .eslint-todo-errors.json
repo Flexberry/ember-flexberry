@@ -926,7 +926,7 @@
     { "ruleId": "no-undef", "line": 39, "column": 38 }
   ],
   "tests/acceptance/components/flexberry-lookup/lookup-test-functions.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 12 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 48, "column": 10 }
   ],
   "tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-autocomplete-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },

@@ -20,7 +20,7 @@ executeTest('flexberry-lookup default ordering test', async (store, assert, app)
       if (columnIsName && !defaultSorting) {
         assert.equal($headerOrder.length === 0, true, `${$headerName} has no sorting`);
         return;
-      };
+      }
 
       assert.equal($headerOrder.length !== 0, true, `${$headerName} has sorting ${$headerOrderTitle}`);
 

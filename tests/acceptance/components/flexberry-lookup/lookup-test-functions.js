@@ -52,4 +52,4 @@ export async function loadingLocales(locale, app) {
       resolve({ msg: 'ok' });
     }, timeout);
   });
-};
+}

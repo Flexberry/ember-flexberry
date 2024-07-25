@@ -19,18 +19,17 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
 
   hooks.beforeEach( function () {
     this.owner.register('locale:ru/translations', I18nRuLocale);
-    this.owner.register('locale:en/translations', I18nEnLocale);
+    this.owner.register('locale:e n/translations', I18nEnLocale);
     this.owner.register('service:i18n', I18nService);
 
-    this.inject.service('i18n', { as: 'i18n' });
+    this.i18n = this.owner.lookup('service:i18n');
     Component.reopen({
       i18n: service('i18n')
     });
 
     // Set 'ru' as initial locale.
     this.set('i18n.locale', 'ru');
-  });;
-
+  });
 
   test('it renders properly', async function(assert) {
     assert.expect(10);

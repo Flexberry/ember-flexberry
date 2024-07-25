@@ -1691,8 +1691,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 286, "column": 20 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 319, "column": 20 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 348, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 384, "column": 20 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 420, "column": 20 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 383, "column": 20 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 420, "column": 18 }
   ],
   "tests/integration/components/flexberry-sidebar-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 },

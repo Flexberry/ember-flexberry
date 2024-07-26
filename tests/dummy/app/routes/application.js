@@ -5,6 +5,6 @@ export default Route.extend({
   intl: service(),
 
   beforeModel() {
-    this.intl.setLocale(['en-us']);
+    this.intl.setLocale(['ru']);
   }
 });

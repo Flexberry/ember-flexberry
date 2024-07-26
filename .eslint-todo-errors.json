@@ -1535,21 +1535,14 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 36, "column": 10 }
   ],
   "tests/integration/components/flexberry-checkbox-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 9, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 16, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 65, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 65, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 102, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 102, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 135, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 135, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 165, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 165, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 199, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 199, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 266, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 266, "column": 15 }
+    { "ruleId": "no-unused-vars", "line": 4, "column": 10 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 18, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 67, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 104, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 137, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 167, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 200, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 269, "column": 18 }
   ],
   "tests/integration/components/flexberry-ddau-checkbox-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 18 },

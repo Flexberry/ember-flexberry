@@ -13,7 +13,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
-
 module('Integration | Component | flexberry-textarea', function(hooks) {
   setupRenderingTest(hooks);
 

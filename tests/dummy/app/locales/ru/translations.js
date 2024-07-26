@@ -658,6 +658,9 @@ $.extend(true, translations, {
       'phone1-required-caption': 'Требовать заполнения поля "Номер телефона 1"',
       'profile': 'Профиль',
       'contact-info': 'Контактная информация',
+      'limiting-multilists-by-model-field': {
+        'caption': 'Пользователи с похожими e-mail адресами',
+      }
     },
 
     'ember-flexberry-dummy-comment-edit': {

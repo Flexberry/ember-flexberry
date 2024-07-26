@@ -1,12 +1,12 @@
-  import { module, test } from 'qunit';
-  import hbs from 'htmlbars-inline-precompile';
-  import Component from "@ember/component";
-  import { inject as service } from "@ember/service";
-  import I18nService from 'ember-i18n/services/i18n';
-  import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
-  import I18nEnLocale from 'ember-flexberry/locales/en/translations';
-  import { render, fillIn, settled } from '@ember/test-helpers';
-  import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+import hbs from 'htmlbars-inline-precompile';
+import Component from "@ember/component";
+import { inject as service } from "@ember/service";
+import I18nService from 'ember-i18n/services/i18n';
+import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
+import I18nEnLocale from 'ember-flexberry/locales/en/translations';
+import { render, fillIn, settled } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
 
   let app;
 
@@ -19,31 +19,34 @@
       this.owner.register('service:i18n', I18nService);
 
       // Set 'ru' as initial locale.
-      this.owner.inject('component', 'i18n', 'service:i18n');
+      this.i18n = this.owner.lookup('service:i18n');
+      //this.owner.inject('component', 'i18n', 'service:i18n');
 
-    // Set 'ru' as initial locale.
-    this.i18n = this.owner.lookup('service:i18n');
-    this.i18n.set('locale', 'ru');
+      // Set 'ru' as initial locale.
+      //this.i18n = this.owner.lookup('service:i18n');
+      //this.i18n.set('locale', 'ru');
 
-    Component.reopen({
-      i18n: service('i18n'),
-      userSettingsService: service('user-settings')
-    });
-    /**
-      @description Application sitemap.
-      @property sitemap
-      @type Object
-    */
+      Component.reopen({
+        i18n: service('i18n')
+      });
+    
+      // Установка начальной локали 'ru'
+      this.i18n.set('locale', 'ru');
+      /**
+        @description Application sitemap.
+        @property sitemap
+        @type Object
+      */
       this._sitemap = function() {
-      let i18n = this.get('i18n');
-      return {
-        nodes: [{
-          link: 'index',
-          caption: i18n.t('forms.application.sitemap.index.caption'),
-          title: i18n.t(I18nRuLocale,'forms.application.sitemap.index.title'),
-          children: null
-        }, {
-          link: null,
+        let i18n = this.get('i18n');
+        return {
+          nodes: [{
+            link: 'index',
+            caption: i18n.t('forms.application.sitemap.index.caption'),
+            title: i18n.t(I18nRuLocale,'forms.application.sitemap.index.title'),
+            children: null
+          }, {
+            link: null,
           caption: i18n.t('forms.application.sitemap.application.caption'),
           title: i18n.t('forms.application.sitemap.application.title'),
           children: [{
@@ -601,36 +604,35 @@
   test('it renders properly', async function(assert) {
     this.set('sitemap', this._sitemap().nodes);
     assert.expect(8);
-  
+
     await render(hbs`{{flexberry-sitemap-searchbar
       sitemap=sitemap}}`);
-  
-    assert.equal(this.$().text().trim(), '');
-  
+
+    assert.equal(this.element.textContent.trim(), '');
+
     // Retrieve component.
-    const $component = this.$().children('.sitemap-searchbar.ui.search');
-    $component[0].firstElementChild.click();
-    const results = $component.children('.sitemap-search-results-list');
-  
-    assert.notEqual(results[0].children.length, 0);
-  
+    const $component = this.element.querySelector('.sitemap-searchbar.ui.search');
+    $component.firstElementChild.click();
+    const results = $component.querySelector('.sitemap-search-results-list');
+
+    assert.notEqual(results.children.length, 0);
+
     let value = this.get('i18n').t('forms.application.sitemap.lock.caption');
-    const $input = $component.find('.ember-text-field');
+    const $input = $component.querySelector('.ember-text-field');
     await fillIn($input, value); 
-      // let $field = $('div.ui.action.input');
-      await settled();
-      assert.equal($input[0].value, value);
-      assert.equal(results[0].children.length, 1);
-      assert.equal(results.find('.flexberry-toggler-caption')[0].innerHTML, value);
-  
-      value = 'sfnesjgbsnsrf';
-      await fillIn($input, value); 
-      await settled();
-        // let $field = $('div.ui.action.input');
-        assert.equal($input[0].value, value);
-        assert.equal(results[0].children.length, 1);
-        const notFoundMsg = this.get('i18n').t('components.flexberry-sitemap-searchbar.notFoundMsg');
-        assert.equal(results.find('.header')[0].innerText, notFoundMsg);
+    await settled();
+    assert.equal($input.value, value);
+    assert.equal(results.children.length, 1);
+    assert.equal(results.querySelector('.flexberry-toggler-caption').innerHTML, value);
+
+    value = 'sfnesjgbsnsrf';
+    await fillIn($input, value); 
+    await settled();
+    assert.equal($input.value, value);
+    assert.equal(results.children.length, 1);
+    const notFoundMsg = this.get('i18n').t('components.flexberry-sitemap-searchbar.notFoundMsg');
+    assert.equal(results.querySelector('.header').innerText, notFoundMsg);
   });
 });
+
 

@@ -8,45 +8,41 @@ import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 import { render, fillIn, settled } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
-  let app;
+let app;
 
-  module('Integration | Component | flexberry-sitemap-searchbar', function(hooks) {
-    setupRenderingTest(hooks);
+module('Integration | Component | flexberry-sitemap-searchbar', function(hooks) {
+  setupRenderingTest(hooks);
 
-    hooks.beforeEach( function () {
-      this.owner.register('locale:ru/translations', I18nRuLocale);
-      this.owner.register('locale:en/translations', I18nEnLocale);
-      this.owner.register('service:i18n', I18nService);
+  hooks.beforeEach( function () {
+    this.owner.register('locale:ru/translations', I18nRuLocale);
+    this.owner.register('locale:en/translations', I18nEnLocale);
+    this.owner.register('service:i18n', I18nService);
 
-      // Set 'ru' as initial locale.
-      this.i18n = this.owner.lookup('service:i18n');
-      //this.owner.inject('component', 'i18n', 'service:i18n');
+    this.i18n = this.owner.lookup('service:i18n');
 
-      // Set 'ru' as initial locale.
-      //this.i18n = this.owner.lookup('service:i18n');
-      //this.i18n.set('locale', 'ru');
+    Component.reopen({
+      i18n: service('i18n')
+    });
+    // Set 'ru' as initial locale.
+    this.i18n.set('locale', 'ru');
 
-      Component.reopen({
-        i18n: service('i18n')
-      });
+    /**
+      @description Application sitemap.
+      @property sitemap
+      @type Object
+    */
     
-      // Установка начальной локали 'ru'
-      this.i18n.set('locale', 'ru');
-      /**
-        @description Application sitemap.
-        @property sitemap
-        @type Object
-      */
-      this._sitemap = function() {
-        let i18n = this.get('i18n');
-        return {
-          nodes: [{
-            link: 'index',
-            caption: i18n.t('forms.application.sitemap.index.caption'),
-            title: i18n.t(I18nRuLocale,'forms.application.sitemap.index.title'),
-            children: null
-          }, {
-            link: null,
+    this._sitemap = function() {
+      let i18n = this.get('i18n');
+
+      return {
+        nodes: [{
+          link: 'index',
+          caption: i18n.t('forms.application.sitemap.index.caption'),
+          title: i18n.t(I18nRuLocale,'forms.application.sitemap.index.title'),
+          children: null
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.application.caption'),
           title: i18n.t('forms.application.sitemap.application.title'),
           children: [{
@@ -590,16 +586,14 @@ import { setupRenderingTest } from 'ember-qunit';
         }]
       };
     },
+  /**
+    Array of search objects.
 
-    /**
-      Array of search objects.
-
-      @property sitemap
-      @type Array
-    */
-      this.set('sitemap', []);
+    @property sitemap
+    @type Array
+  */
+    this.set('sitemap', []);
   });
-
 
   test('it renders properly', async function(assert) {
     this.set('sitemap', this._sitemap().nodes);

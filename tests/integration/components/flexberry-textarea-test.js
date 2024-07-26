@@ -19,7 +19,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
 
   hooks.beforeEach( function () {
     this.owner.register('locale:ru/translations', I18nRuLocale);
-    this.owner.register('locale:e n/translations', I18nEnLocale);
+    this.owner.register('locale:en/translations', I18nEnLocale);
     this.owner.register('service:i18n', I18nService);
 
     this.i18n = this.owner.lookup('service:i18n');

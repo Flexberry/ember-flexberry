@@ -1863,14 +1863,14 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 332, "column": 15 }
   ],
   "tests/integration/components/flexberry-toggler-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 109, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 177, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 253, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 287, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 305, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 326, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 341, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 108, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 176, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 252, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 286, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 304, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 325, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 340, "column": 18 }
   ],
   "tests/integration/components/flexberry-validationmessage-test.js": [
     { "ruleId": "ember/no-test-module-for", "line": 4, "column": 1 },

@@ -7,13 +7,12 @@ import hbs from 'htmlbars-inline-precompile';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
-
 const animationDuration = $.fn.accordion.settings.duration + 100;
 
 module('Integration | Component | flexberry toggler', function(hooks) {
   setupRenderingTest(hooks);
 
-// Common expand/collapse test method.
+  // Common expand/collapse test method.
   let expandCollapseTogglerWithStateChecks = async function(assert, captions) {
     assert.expect(10);
     let endFunction = assert.async();

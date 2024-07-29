@@ -14,7 +14,7 @@ module( 'Integration | Component | flexberry-tab-bar', function(hooks) {
     await render(hbs`{{flexberry-tab-bar isOverflowedTabs=true}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $menu = $component.children('div.menu');
     let $dropdown = $component.children('div.dropdown');
 
@@ -41,7 +41,7 @@ module( 'Integration | Component | flexberry-tab-bar', function(hooks) {
     await render(hbs`{{flexberry-tab-bar items=items isOverflowedTabs=true}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $menu = $component.children('div.menu');
     let $dropdownMenu = $component.children('div.dropdown').children('div.menu');
     let $menuItems = $menu.children('button.item');
@@ -134,7 +134,7 @@ module( 'Integration | Component | flexberry-tab-bar', function(hooks) {
     `);
     
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $menu = $component.children('div.menu');
     let $dropdown = $component.children('div.dropdown');
 

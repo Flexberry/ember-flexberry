@@ -9,14 +9,14 @@ module('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', funct
  test('it renders and works',async function(assert) {
 
   await render(hbs`{{flexberry-sitemap}}`);
-  assert.equal(this.$().text().trim(), '', 'Empty sitemap, empty result.');
+  assert.equal($(this.element).text().trim(), '', 'Empty sitemap, empty result.');
   
   await render(hbs`
     {{#flexberry-sitemap}} 
     template block text 
     {{/flexberry-sitemap}}
  `);
-  assert.equal(this.$().text().trim(), '', 'Block params not used.');
+  assert.equal($(this.element).text().trim(), '', 'Block params not used.');
   // this.set('sitemap', {
   //   nodes: [
   //     {

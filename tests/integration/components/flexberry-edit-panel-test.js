@@ -121,7 +121,7 @@ module('Integration | Component | flexberry edit panel', function(hooks) {
       text: i18n.t('forms.edit-form.close-button-text')
     });
     // Retrieve component.
-    const $component = this.$().children();
+    const $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -146,7 +146,7 @@ module('Integration | Component | flexberry edit panel', function(hooks) {
     }}`);
 
     // Retrieve component.
-    const $component = this.$().children();
+    const $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -177,7 +177,7 @@ module('Integration | Component | flexberry edit panel', function(hooks) {
     }}`);
 
     // Retrieve component.
-    const $component = this.$().children();
+    const $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -228,7 +228,7 @@ module('Integration | Component | flexberry edit panel', function(hooks) {
     }}`);
   
     // Retrieve component.
-    const $component = this.$().children();
+    const $component = $(this.element).children();
     const $panelButtons = $component.children('button');
   
     await run(() => {

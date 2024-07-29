@@ -175,8 +175,8 @@ export default Component.extend({
         run(() => {
           this.set('expanded', true);
           if (this.get('hasResizableOLV')) {
-            this.$('table.object-list-view').colResizable({ disable: true });
-            this.$('table.object-list-view').colResizable();
+            $('table.object-list-view', this.element).colResizable({ disable: true });
+            $('table.object-list-view', this.element).colResizable();
           }
         });
       },
@@ -196,7 +196,7 @@ export default Component.extend({
     this._super(...arguments);
 
     // Destroys Semantic UI accordion.
-    this.$().accordion('destroy');
+    $(this.element).accordion('destroy');
   },
 
   /**

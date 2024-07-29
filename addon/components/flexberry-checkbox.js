@@ -91,7 +91,7 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    $(this.element, '.flexberry-checkbox-input').prop('checked', value);
+    $('.flexberry-checkbox-input', this.element).prop('checked', value);
   }),
 
   /**

@@ -38,7 +38,7 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       {{/flexberry-toggler}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $componentTitle = $component.children('div .title');
     let $componentCaption = $componentTitle.children('span');
     let $componentContent = $component.children('div .content');
@@ -112,7 +112,7 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       {{/flexberry-toggler}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $togglerTitle = $component.children('.title');
     let $togglerIcon = $togglerTitle.children('i');
     let $togglerCaption = $togglerTitle.children('span');
@@ -180,7 +180,7 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       {{/flexberry-toggler}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $togglerTitle = $component.children('.title');
     let $togglerIcon = $togglerTitle.children('i');
 
@@ -259,7 +259,7 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       {{/flexberry-toggler}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $togglerTitle = $component.children('.title');
     let $togglerCaption = $togglerTitle.children('span');
     let $togglerContent = $component.children('.content');

@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { typeOf, isNone } from '@ember/utils';
-import { get } from '@ember/object';
 import { A } from '@ember/array';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
@@ -18,45 +17,45 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox caption=caption class=class}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
-    let $checkboxInput = $component.children('input');
+    let $component = this.element.querySelector('.flexberry-checkbox');
+    let $checkboxInput = $component.querySelector('input');
 
     // Check wrapper <div>.
-    assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
-    assert.strictEqual($component.hasClass('flexberry-checkbox'), true, 'Component\'s container has \'flexberry-checkbox\' css-class');
-    assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
-    assert.strictEqual($component.hasClass('checkbox'), true, 'Component\'s wrapper has \'checkbox\' css-class');
+    assert.strictEqual($component.tagName, 'DIV', 'Component\'s wrapper is a <div>');
+    assert.strictEqual($component.classList.contains('flexberry-checkbox'), true, 'Component\'s container has \'flexberry-checkbox\' css-class');
+    assert.strictEqual($component.classList.contains('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
+    assert.strictEqual($component.classList.contains('checkbox'), true, 'Component\'s wrapper has \'checkbox\' css-class');
 
     // Check <input>.
-    assert.strictEqual($checkboxInput.length === 1, true, 'Component has inner <input>');
-    assert.strictEqual($checkboxInput.attr('type'), 'checkbox', 'Component\'s inner <input> is of checkbox type');
+    assert.strictEqual($checkboxInput !== null, true, 'Component has inner <input>');
+    assert.strictEqual($checkboxInput.type, 'checkbox', 'Component\'s inner <input> is of checkbox type');
     assert.strictEqual(
-      $checkboxInput.hasClass('flexberry-checkbox-input'),
+      $checkboxInput.classList.contains('flexberry-checkbox-input'),
       true,
       'Component\'s inner checkbox <input> has flexberry-checkbox-input css-class');
-    assert.strictEqual($checkboxInput.hasClass('hidden'), true, 'Component\'s inner checkbox <input> has \'hidden\' css-class');
-    assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked');
+    assert.strictEqual($checkboxInput.classList.contains('hidden'), true, 'Component\'s inner checkbox <input> has \'hidden\' css-class');
+    assert.strictEqual($checkboxInput.checked, false, 'Component\'s inner checkbox <input> isn\'t checked');
 
     // Check wrapper's additional CSS-classes.
-    let additioanlCssClasses = 'radio slider toggle';
-    this.set('class', additioanlCssClasses);
+    let additionalCssClasses = 'radio slider toggle';
+    this.set('class', additionalCssClasses);
 
     /* eslint-disable no-unused-vars */
-    A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+    A(additionalCssClasses.split(' ')).forEach((cssClassName, index) => {
       assert.strictEqual(
-      $component.hasClass(cssClassName),
-      true,
+        $component.classList.contains(cssClassName),
+        true,
       'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
     });
     /* eslint-enable no-unused-vars */
 
     this.set('class', '');
     /* eslint-disable no-unused-vars */
-    A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+    A(additionalCssClasses.split(' ')).forEach((cssClassName, index) => {
       assert.strictEqual(
-      $component.hasClass(cssClassName),
-      false,
-      'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+        $component.classList.contains(cssClassName),
+        false,
+        'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
     });
     /* eslint-enable no-unused-vars */
   });
@@ -67,17 +66,17 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox label=label}}`);
 
     // Retrieve component, it's inner <label>.
-    let $component = this.$().children();
-    let $checkboxLabel = $component.children('label');
+    let $component = this.element.querySelector('.flexberry-checkbox');
+    let $checkboxLabel = $component.querySelector('label');
 
     // Check <label>'s text.
-    assert.strictEqual($checkboxLabel.length === 1, true, 'Component has inner <label>');
+    assert.strictEqual($checkboxLabel !== null, true, 'Component has inner <label>');
     assert.strictEqual(
-      $checkboxLabel.hasClass('flexberry-checkbox-label'),
+      $checkboxLabel.classList.contains('flexberry-checkbox-label'),
       true,
       'Component\'s inner <label> has flexberry-checkbox-label css-class');
     assert.strictEqual(
-      $.trim($checkboxLabel.text()).length === 0,
+      $checkboxLabel.textContent.trim().length === 0,
       true,
       'Component\'s inner <label> is empty by default');
 
@@ -85,7 +84,7 @@ module('flexberry-checkbox', function(hooks) {
     let label = 'This is checkbox';
     this.set('label', label);
     assert.strictEqual(
-      $.trim($checkboxLabel.text()) === label,
+      $checkboxLabel.textContent.trim() === label,
       true,
       `Component's inner <label> has text defined in component's 'label' property: '${label}'`);
 
@@ -93,7 +92,7 @@ module('flexberry-checkbox', function(hooks) {
     label = null;
     this.set('label', label);
     assert.strictEqual(
-      $.trim($checkboxLabel.text()).length === 0,
+      $checkboxLabel.textContent.trim().length === 0,
       true,
       `Component's inner <label> is empty if component's 'label' property is cleaned up`);
   });
@@ -104,31 +103,27 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox value=flag}}`);
 
     // Retrieve component & it's inner <input>.
-    let $component = this.$().children();
-    let $checkboxInput = $component.children('input');
+    let $component = this.element.querySelector('.flexberry-checkbox');
+    let $checkboxInput = $component.querySelector('input');
 
     // Check component's initial state.
-    assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' before first click');
-    assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before first click');
-    assert.strictEqual(typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' before first click');
+    assert.strictEqual($component.classList.contains('checked'), false, 'Component hasn\'t css-class \'checked\' before first click');
+    assert.strictEqual($checkboxInput.checked, false, 'Component\'s inner checkbox <input> isn\'t checked before first click');
+    assert.strictEqual(typeof this.flag, 'undefined', 'Component\'s binded value is \'undefined\' before first click');
 
     // Imitate click on component (change it's state to checked) & check it's state again.
     // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
-    run(() => {
-      $component.click();
-      assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after click');
-      assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after click');
-      assert.strictEqual(this.get('flag'), true, 'Component\'s binded value is \'true\' after click');
-    });
+     await click($component);
+    assert.strictEqual($component.classList.contains('checked'), true, 'Component has css-class \'checked\' after click');
+    assert.strictEqual($checkboxInput.checked, true, 'Component\'s inner checkbox <input> is checked after click');
+    assert.strictEqual(this.flag, true, 'Component\'s binded value is \'true\' after click');
 
     // Imitate click on component again (change it's state to unchecked) & check it's state again.
     // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into run function.
-    run(() => {
-      $component.click();
-      assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after second click');
-      assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after second click');
-      assert.strictEqual(this.get('flag'), false, 'Component\'s binded value is \'false\' after second click');
-    });
+    await click($component);
+    assert.strictEqual($component.classList.contains('checked'), false, 'Component hasn\'t css-class \'checked\' after second click');
+    assert.strictEqual($checkboxInput.checked, false, 'Component\'s inner checkbox <input> isn\'t checked after second click');
+    assert.strictEqual(this.flag, false, 'Component\'s binded value is \'false\' after second click');
   });
   
   test('Changes in in binded value causes changes in checkbox', async function(assert) {
@@ -137,23 +132,23 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox value=flag}}`);
 
     // Retrieve component & it's inner <input>.
-    let $component = this.$().children();
-    let $checkboxInput = $component.children('input');
+    let $component = this.element.querySelector('.flexberry-checkbox');
+    let $checkboxInput = $component.querySelector('input');
 
     // Check component's initial state.
-    assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' by default');
-    assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked by default');
-    assert.strictEqual(typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' by default');
+    assert.strictEqual($component.classList.contains('checked'), false, 'Component hasn\'t css-class \'checked\' by default');
+    assert.strictEqual($checkboxInput.checked, false, 'Component\'s inner checkbox <input> isn\'t checked by default');
+    assert.strictEqual(typeof this.flag, 'undefined', 'Component\'s binded value is \'undefined\' by default');
 
     // Change binded value to 'true' & check component's state again (it must be checked).
     this.set('flag', true);
-    assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after binded value changed to \'true\'');
-    assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after binded value changed to \'true\'');
+    assert.strictEqual($component.classList.contains('checked'), true, 'Component has css-class \'checked\' after binded value changed to \'true\'');
+    assert.strictEqual($checkboxInput.checked, true, 'Component\'s inner checkbox <input> is checked after binded value changed to \'true\'');
 
     // Change binded value to 'false' & check component's state again (it must be unchecked).
     this.set('flag', false);
-    assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after binded value changed to \'false\'');
-    assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after binded value changed to \'false\'');
+    assert.strictEqual($component.classList.contains('checked'), false, 'Component hasn\'t css-class \'checked\' after binded value changed to \'false\'');
+    assert.strictEqual($checkboxInput.checked, false, 'Component\'s inner checkbox <input> isn\'t checked after binded value changed to \'false\'');
   });
 
   test('Component sends \'onChange\' action', async function(assert) {
@@ -269,19 +264,19 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox value=flag class=class}}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = this.element.querySelector('.flexberry-checkbox');
   
     // Check component's initial state.
-    assert.strictEqual($component.hasClass('radio'), true, 'Component hasn\'t css-class \'radio\' by default');
-    assert.strictEqual($component.hasClass('slider'), true, 'Component hasn\'t css-class \'slider\' by default');
-    assert.strictEqual($component.hasClass('toggle'), true, 'Component hasn\'t css-class \'toggle\' by default');
-  
+    assert.strictEqual($component.classList.contains('radio'), true, 'Component hasn\'t css-class \'radio\' by default');
+    assert.strictEqual($component.classList.contains('slider'), true, 'Component hasn\'t css-class \'slider\' by default');
+    assert.strictEqual($component.classList.contains('toggle'), true, 'Component hasn\'t css-class \'toggle\' by default');
+
     // Change binded value to 'true' & check component's state again (it must be checked).
     this.set('flag', true);
-  
-    // Check component's afther change state.
-    assert.strictEqual($component.hasClass('radio'), true, 'Component hasn\'t css-class \'radio\' afther change');
-    assert.strictEqual($component.hasClass('slider'), true, 'Component hasn\'t css-class \'slider\' afther change');
-    assert.strictEqual($component.hasClass('toggle'), true, 'Component hasn\'t css-class \'toggle\' afther change');
+
+    // Check component's after change state.
+    assert.strictEqual($component.classList.contains('radio'), true, 'Component hasn\'t css-class \'radio\' after change');
+    assert.strictEqual($component.classList.contains('slider'), true, 'Component hasn\'t css-class \'slider\' after change');
+    assert.strictEqual($component.classList.contains('toggle'), true, 'Component hasn\'t css-class \'toggle\' after change');
   });
 });

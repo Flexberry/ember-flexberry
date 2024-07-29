@@ -1535,14 +1535,16 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 36, "column": 10 }
   ],
   "tests/integration/components/flexberry-checkbox-test.js": [
-    { "ruleId": "no-unused-vars", "line": 4, "column": 10 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 18, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 67, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 104, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 137, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 167, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 200, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 269, "column": 18 }
+    { "ruleId": "no-unused-vars", "line": 1, "column": 8 },
+    { "ruleId": "no-unused-vars", "line": 2, "column": 10 },
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 66, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 103, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 132, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 162, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 195, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 264, "column": 18 }
   ],
   "tests/integration/components/flexberry-ddau-checkbox-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 18 },

@@ -1535,21 +1535,14 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 36, "column": 10 }
   ],
   "tests/integration/components/flexberry-checkbox-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 9, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 16, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 65, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 65, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 102, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 102, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 135, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 135, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 165, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 165, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 199, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 199, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 266, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 266, "column": 15 }
+    { "ruleId": "no-unused-vars", "line": 4, "column": 10 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 18, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 67, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 104, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 137, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 167, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 200, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 269, "column": 18 }
   ],
   "tests/integration/components/flexberry-ddau-checkbox-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 17, "column": 18 },
@@ -1669,30 +1662,24 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 18 }
   ],
   "tests/integration/components/flexberry-simpledatetime-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 11, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 30, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 30, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 40, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 40, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 64, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 64, "column": 15 },
-    { "ruleId": "no-undef", "line": 85, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 85, "column": 9 },
-    { "ruleId": "no-undef", "line": 86, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 86, "column": 9 },
-    { "ruleId": "ember/no-test-this-render", "line": 89, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 89, "column": 15 },
-    { "ruleId": "no-undef", "line": 96, "column": 25 },
-    { "ruleId": "no-undef", "line": 98, "column": 3 },
-    { "ruleId": "no-undef", "line": 101, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 101, "column": 24 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 17 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 33, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 43, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 66, "column": 18 },
+    { "ruleId": "no-undef", "line": 87, "column": 5 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 87, "column": 11 },
+    { "ruleId": "no-undef", "line": 88, "column": 5 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 88, "column": 11 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 91, "column": 18 },
+    { "ruleId": "no-undef", "line": 98, "column": 27 },
+    { "ruleId": "no-undef", "line": 100, "column": 5 },
+    { "ruleId": "no-undef", "line": 103, "column": 20 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 103, "column": 26 }
   ],
   "tests/integration/components/flexberry-sitemap-searchbar-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 13, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 610, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 610, "column": 15 },
-    { "ruleId": "ember/no-test-and-then", "line": 625, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 633, "column": 5 }
+    { "ruleId": "no-unused-vars", "line": 11, "column": 5 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 15 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 602, "column": 18 }
   ],
   "tests/integration/components/flexberry-sitemap-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 16 },
@@ -1753,23 +1740,14 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 332, "column": 15 }
   ],
   "tests/integration/components/flexberry-toggler-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 10, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 30, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 30, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 107, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 107, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 175, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 175, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 251, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 251, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 285, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 285, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 303, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 303, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 324, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 324, "column": 15 },
-    { "ruleId": "ember/no-test-this-render", "line": 339, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 339, "column": 15 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 108, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 176, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 252, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 286, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 304, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 325, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 340, "column": 18 }
   ],
   "tests/integration/components/flexberry-validationmessage-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 },

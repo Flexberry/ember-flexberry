@@ -11,17 +11,23 @@ module.exports = function (defaults) {
     },
   });
 
+  app.import('node_modules/dexie/dist/dexie.min.js', {
+    using: [
+      { transformation: 'amd', as: 'dexie' }
+    ]
+  });
+
   app.import('node_modules/fomantic-ui/dist/semantic.min.js', {
-      using: [
-        { transformation: 'amd', as: 'semantic' }
-      ]
-    });
+    using: [
+      { transformation: 'amd', as: 'semantic' }
+    ]
+  });
 
   app.import('node_modules/fomantic-ui/dist/semantic.min.css', {
-      using: [
-        { transformation: 'amd', as: 'semantic' }
-      ]
-    });
+    using: [
+      { transformation: 'amd', as: 'semantic' }
+    ]
+  });
 
   /*
     This build file specifies the options for the dummy test app of this

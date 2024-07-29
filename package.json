@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "0.0.0",
+  "version": "5.0.0-beta.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -44,6 +44,7 @@
     "@glimmer/tracking": "^1.1.2",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
+    "dexie": "^2.0.2",
     "ember-auto-import": "^2.7.4",
     "ember-cli": "~5.10.0",
     "ember-cli-clean-css": "^3.0.0",
@@ -51,8 +52,12 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-cp-validations": "^6.0.1",
+    "ember-data": "^5.3.4",
+    "ember-flexberry-data": "5.0.0-beta.4",
     "ember-intl": "^7.0.4",
     "ember-load-initializers": "^2.1.2",
+    "ember-moment": "^9.0.1",
     "ember-page-title": "^8.2.3",
     "ember-qunit": "^8.1.0",
     "ember-resolver": "^11.0.1",
@@ -61,6 +66,7 @@
     "ember-template-lint": "^5.13.0",
     "ember-truth-helpers": "^4.0.3",
     "ember-try": "^3.0.0",
+    "ember-uuid": "^2.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^11.12.0",

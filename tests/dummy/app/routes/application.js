@@ -7,7 +7,7 @@ export default Route.extend({
   store: service(),
 
   beforeModel() {
-    this.intl.setLocale(['en-us']);
+    this.intl.setLocale(['ru']);
   },
 
   model(params) {

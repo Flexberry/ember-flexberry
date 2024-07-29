@@ -1681,11 +1681,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 101, "column": 24 }
   ],
   "tests/integration/components/flexberry-sitemap-searchbar-test.js": [
-    { "ruleId": "ember/no-test-module-for", "line": 13, "column": 1 },
-    { "ruleId": "ember/no-test-this-render", "line": 610, "column": 3 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 610, "column": 15 },
-    { "ruleId": "ember/no-test-and-then", "line": 625, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 633, "column": 5 }
+    { "ruleId": "no-unused-vars", "line": 11, "column": 5 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 15 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 602, "column": 18 }
   ],
   "tests/integration/components/flexberry-sitemap-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 16 },

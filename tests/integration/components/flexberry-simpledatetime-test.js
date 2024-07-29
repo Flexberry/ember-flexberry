@@ -46,16 +46,11 @@ module('Integration | Component | flexberry-simpledatetime', function(hooks) {
       }}`);
 
     // Retrieve component.
-    //let $component = this.$();
-    //let $componentInput = $('.flatpickr-input.custom-flatpickr', $component);
-    //let componentInput = $component.querySelector('.flatpickr-input.custom-flatpickr');
     let componentInput = this.element.querySelector('.custom-flatpickr');
-
 
     // Click on component to open calendar.
     await click(componentInput);
 
-    //let $calendar = $('.flatpickr-calendar');
     let calendar = document.querySelector('.flatpickr-calendar');
 
     // Check calendar.
@@ -109,4 +104,5 @@ module('Integration | Component | flexberry-simpledatetime', function(hooks) {
     });
   });
 });
+
 

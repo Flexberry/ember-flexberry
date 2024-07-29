@@ -42,7 +42,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check wrapper <div>.
@@ -96,7 +96,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
       }}
     `);
 
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     assert.strictEqual($component.hasClass('class1'), true, 'Component\'s container has \'class1\' css-class');
     assert.strictEqual($component.hasClass('class2'), true, 'Component\'s container has \'class2\' css-class');
@@ -118,7 +118,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check that <input>'s readonly attribute doesn't exist yet.
@@ -158,7 +158,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     $textboxInput.on('change', (e) => {
@@ -195,7 +195,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     $textboxInput.click();
@@ -223,7 +223,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     await render(hbs`{{flexberry-textbox}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check <input>'s placeholder.
@@ -251,7 +251,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check <input>'s placeholder.
@@ -279,7 +279,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check <input>'s value & binded value for initial emptyness.
@@ -317,7 +317,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $fieldInput = $('.flexberry-textbox input', $component);
 
     // Check <input>'s maxlength attribute.
@@ -337,7 +337,7 @@ module( 'Integration | Component | flexberry-textbox', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textboxInput = $component.children('input');
 
     // Check <input>'s value & binded value for initial emptyness.

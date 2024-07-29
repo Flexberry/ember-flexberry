@@ -974,3 +974,4 @@ module('Integration | Component | flexberry-groupedit', function(hooks) {
     assert.strictEqual($componentOlvFirstHead.innerText === valueMainModelProjection.toString(), true, 'Header has text \'Vote type\'');
   });
 });
+

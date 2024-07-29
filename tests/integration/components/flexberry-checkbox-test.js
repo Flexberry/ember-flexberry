@@ -18,7 +18,7 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox caption=caption class=class}}`);
 
     // Retrieve component, it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $checkboxInput = $component.children('input');
 
     // Check wrapper <div>.
@@ -67,7 +67,7 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox label=label}}`);
 
     // Retrieve component, it's inner <label>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $checkboxLabel = $component.children('label');
 
     // Check <label>'s text.
@@ -104,7 +104,7 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox value=flag}}`);
 
     // Retrieve component & it's inner <input>.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $checkboxInput = $component.children('input');
 
     // Check component's initial state.
@@ -200,7 +200,7 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox readonly=this.readonly value=this.flag onChange=this.onCheckboxChange}}`);
 
     // Retrieve component & its inner <input>.
-    let $component = this.element.querySelector('.flexberry-checkbox');
+    let $component = this.element.querySelector(' .flexberry-checkbox');
     let $checkboxInput = $component.querySelector('input');
 
     // Check component's initial state.
@@ -269,7 +269,7 @@ module('flexberry-checkbox', function(hooks) {
     await render(hbs`{{flexberry-checkbox value=flag class=class}}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
   
     // Check component's initial state.
     assert.strictEqual($component.hasClass('radio'), true, 'Component hasn\'t css-class \'radio\' by default');

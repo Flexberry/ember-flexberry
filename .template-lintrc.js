@@ -441,12 +441,6 @@ module.exports = {
       ]
     },
     {
-      "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-edit",
-      "only": [
-        "eol-last",
-      ]
-    },
-    {
       "moduleId": "tests/dummy/app/templates/ember-flexberry-dummy-application-user-list",
       "only": [
         "eol-last",

@@ -1749,7 +1749,11 @@
   ],
   "tests/integration/components/groupedit-toolbar-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 15, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 20, "column": 18 }
+    { "ruleId": "ember/no-global-jquery", "line": 17, "column": 18 },
+    { "ruleId": "no-undef", "line": 17, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 20, "column": 18 },
+    { "ruleId": "ember/no-global-jquery", "line": 27, "column": 18 },
+    { "ruleId": "no-undef", "line": 27, "column": 18 }
   ],
   "tests/integration/components/modal-dialog-test.js": [
     { "ruleId": "ember/no-legacy-test-waiters", "line": 17, "column": 5 },

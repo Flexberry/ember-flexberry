@@ -1,14 +1,15 @@
 import { executeTest } from './execute-folv-test';
 
-executeTest('check delete record from olv', (store, assert) => {
+executeTest('check delete record from olv', async (store, assert) => {
   assert.expect(1);
+  
   const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
+  await visit(path);
+  
+  assert.equal(currentPath(), path, 'Correct path is visited');
 
-    const model = 'ember-flexberry-dummy-suggestion-type';
-    const prop = 'name';
-    checkDeleteRecordFromOlv('[data-test-olv]', null, assert, store, model, prop);
-  });
+  const model = 'ember-flexberry-dummy-suggestion-type';
+  const prop = 'name';
+  
+  await checkDeleteRecordFromOlv('[data-test-olv]', null, assert, store, model, prop);
 });

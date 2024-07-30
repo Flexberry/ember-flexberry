@@ -1,75 +1,67 @@
-import $ from 'jquery';
 import { executeTest } from './execute-folv-test';
-import { run } from '@ember/runloop';
-import wait from 'ember-test-helpers/wait';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check dropdown in the filter for directories', (store, assert, app) => {
+executeTest('check dropdown in the filter for directories', async (store, assert, app) => {
   assert.expect(7);
 
   const path = 'components-examples/flexberry-objectlistview/custom-filter';
 
-  visit(path);
+  await visit(path);
+  assert.equal(currentPath(), path, 'Path is correct');
 
-  andThen(() => {
-    assert.equal(currentPath(), path, 'Path is correct');
+  const filterButtonDiv = document.querySelector('.buttons.filter-active');
+  const filterButton = filterButtonDiv.querySelector('button');
 
-    let $filterButtonDiv = $('.buttons.filter-active');
-    let $filterButton = $filterButtonDiv.children('button');
+  const olv = document.querySelector('.object-list-view');
+  const thead = olv.querySelectorAll('th');
+  const index = Array.from(thead).findIndex(item => item.innerText === 'Тип предложения' || item.innerText === 'Type');
 
-    let $olv = $('.object-list-view');
-    let $thead = $('th', $olv);
-    const index = Object.values($thead).findIndex(item => item.innerText === 'Тип предложения' || item.innerText === 'Type');
+  await click(filterButton);
 
-    andThen(() => {
-      run(() => $filterButton.click());
+  const objectListViewFiltersColumns = document.querySelectorAll('.object-list-view-filters');
+  const objectListViewFiltersRows = objectListViewFiltersColumns[1].children;
 
-      let $objectListViewFiltersColumns = $('.object-list-view-filters');
-      let $objectListViewFiltersRows = $($objectListViewFiltersColumns[1]).children();
+  assert.strictEqual(objectListViewFiltersColumns.length === 2, true, 'Filter columns are rendered');
+  assert.strictEqual(objectListViewFiltersRows.length > 0, true, 'Filter rows are rendered');
 
-      assert.strictEqual($objectListViewFiltersColumns.length === 2, true, 'Filter columns are rendered');
-      assert.strictEqual($objectListViewFiltersRows.length > 0, true, 'Filter rows are rendered');
+  const dropdownForDirectories = objectListViewFiltersRows[index].querySelector('.flexberry-dropdown');
+  const menu = dropdownForDirectories.querySelector('div.menu');
+  const items = menu.children;
 
-      let $dropdownForDirectories = $($objectListViewFiltersRows[index]).find('.flexberry-dropdown');
-      let $menu = $dropdownForDirectories.children('div.menu');
-      let $items = $menu.children();
+  assert.strictEqual(dropdownForDirectories !== null, true, 'Dropdown in the filter for directories is rendered');
 
-      assert.strictEqual($dropdownForDirectories.length === 1, true, 'Dropdown in the filter for directories is rendered');
+  await click(dropdownForDirectories);
+  assert.strictEqual(dropdownForDirectories.classList.contains('active'), true, 'Dropdown menu is rendered');
 
-      run(() => $dropdownForDirectories.click());
+  const controller = app.__container__.lookup('controller:' + currentRouteName());
+  let filterResult = controller.model.toArray();
+  let isFiltered = true;
 
-      assert.strictEqual($dropdownForDirectories.hasClass('active'), true, 'Dropdown menu is rendered');
-
-      const controller = app.__container__.lookup('controller:' + currentRouteName());
-      let filtherResult = controller.model.toArray();
-      let isFiltered = true;
-  
-      filtherResult.forEach(element => {
-        if (element.type.name !== $items[0].innerText) {
-          isFiltered = false;
-        }
-      });
-  
-      assert.strictEqual(isFiltered, false, 'Is not filtered');
-
-      run(() => $($items[0]).click());
-
-      wait().then(() => {
-        let $refreshButton = $('.refresh-button')[0];
-        run(() => $refreshButton.click());
-
-        wait().then(() => {
-          filtherResult = controller.model.toArray();
-          isFiltered = true;
-
-          filtherResult.forEach(element => {
-            if (element.type.name !== $items[0].innerText) {
-              isFiltered = false;
-            }
-          });
-
-          assert.strictEqual(isFiltered, true, 'Is filtered');
-        });
-      });
-    });
+  filterResult.forEach(element => {
+    if (element.type.name !== items[0].innerText) {
+      isFiltered = false;
+    }
   });
+
+  assert.strictEqual(isFiltered, false, 'Is not filtered');
+
+  await click(items[0]);
+
+  await settled(); // Wait for the click to process
+
+  const refreshButton = document.querySelector('.refresh-button');
+  await click(refreshButton);
+
+  await settled(); // Wait for the refresh to process
+
+  filterResult = controller.model.toArray();
+  isFiltered = true;
+
+  filterResult.forEach(element => {
+    if (element.type.name !== items[0].innerText) {
+      isFiltered = false;
+    }
+  });
+
+  assert.strictEqual(isFiltered, true, 'Is filtered');
 });

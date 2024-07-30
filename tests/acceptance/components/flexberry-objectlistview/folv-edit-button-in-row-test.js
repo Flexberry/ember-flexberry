@@ -1,34 +1,25 @@
-import $ from 'jquery';
 import { executeTest } from './execute-folv-test';
 import { openEditFormByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
-// Need to add sort by multiple columns.
-/* eslint-disable no-unused-vars */
-executeTest('check edit button in row', (store, assert, app) => {
+executeTest('check edit button in row', async (store, assert, app) => {
   assert.expect(3);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
-  visit(path);
-  andThen(() => {
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
+  
+  await visit(path);
+  
+  // Check page path.
+  assert.equal(currentPath(), path, 'Path is correct');
 
-    // Check page path.
-    assert.equal(currentPath(), path);
+  const editButtonsInRow = document.querySelectorAll('.object-list-view-row-edit-button');
+  assert.equal(editButtonsInRow.length, 5, 'All rows have edit buttons');
 
-    let $editButtonInRow = $('.object-list-view-row-edit-button');
+  // Apply filter function.
+  const openEditFormFunction = () => {
+    const editButtonInRow = editButtonsInRow[0];
+    return click(editButtonInRow);
+  };
 
-    assert.equal($editButtonInRow.length, 5, 'All row have editButton');
-
-    // Apply filter function.
-    let openEditFormFunction =  function() {
-      let editButtonInRow = $('.object-list-view-row-edit-button')[0];
-      editButtonInRow.click();
-    };
-
-    // Open editform.
-    let done1 = assert.async();
-    openEditFormByFunction(openEditFormFunction).then(() => {
-      assert.ok(true, 'edit form open');
-      done1();
-    });
-  });
+  // Open edit form.
+  await openEditFormByFunction(openEditFormFunction);
+  assert.ok(true, 'Edit form opened');
 });
-/* eslint-enable no-unused-vars */

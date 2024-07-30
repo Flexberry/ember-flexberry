@@ -11,6 +11,6 @@ module('Integration | Component | olv-filter-interval', function(hooks){
     // Handle any actions with this.on('myAction', function(val) { ... });
 
     await render(hbs`{{olv-filter-interval}}`);
-    assert.equal(this.$().text().trim(), '');
+    assert.equal($(this.element).text().trim(), '');
   });
 });

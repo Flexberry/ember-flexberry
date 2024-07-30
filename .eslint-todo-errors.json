@@ -1534,6 +1534,22 @@
   "tests/dummy/app/routes/integration-examples/edit-form/validation.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 36, "column": 10 }
   ],
+  "tests/integration/components/flexberry/validation-summary-test.js": [
+    { "ruleId": "ember/no-global-jquery", "line": 18, "column": 15 },
+    { "ruleId": "no-undef", "line": 18, "column": 15 },
+    { "ruleId": "ember/no-global-jquery", "line": 24, "column": 15 },
+    { "ruleId": "no-undef", "line": 24, "column": 15 },
+    { "ruleId": "ember/no-global-jquery", "line": 25, "column": 15 },
+    { "ruleId": "no-undef", "line": 25, "column": 15 },
+    { "ruleId": "ember/no-global-jquery", "line": 28, "column": 43 },
+    { "ruleId": "no-undef", "line": 28, "column": 43 },
+    { "ruleId": "ember/no-global-jquery", "line": 30, "column": 18 },
+    { "ruleId": "no-undef", "line": 30, "column": 18 },
+    { "ruleId": "ember/no-global-jquery", "line": 33, "column": 15 },
+    { "ruleId": "no-undef", "line": 33, "column": 15 },
+    { "ruleId": "ember/no-global-jquery", "line": 38, "column": 15 },
+    { "ruleId": "no-undef", "line": 38, "column": 15 }
+  ],
   "tests/integration/components/flexberry-checkbox-test.js": [
     { "ruleId": "no-unused-vars", "line": 4, "column": 10 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 18, "column": 18 },

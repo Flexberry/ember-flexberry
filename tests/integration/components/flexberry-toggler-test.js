@@ -290,11 +290,11 @@ module('Integration | Component | flexberry toggler', function(hooks) {
         Hello!
       {{/flexberry-toggler}}`);
 
-    assert.notOk(this.$('.flexberry-toggler .content').hasClass('active'));
+    assert.notOk($(this.element, '.flexberry-toggler .content').hasClass('active'));
 
-    this.$('.flexberry-toggler .title').click();
+    $('.flexberry-toggler .title', this.element).click();
 
-    assert.ok(this.$('.flexberry-toggler .content').hasClass('active'));
+    assert.ok($('.flexberry-toggler .content', this.element).hasClass('active'));
   });
 
   test('loong animation speed', async function(assert) {
@@ -308,14 +308,14 @@ module('Integration | Component | flexberry toggler', function(hooks) {
         Hello!
       {{/flexberry-toggler}}`);
 
-    this.$('.flexberry-toggler .title').click();
+    $('.flexberry-toggler .title', this.element).click();
 
-    assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
+    assert.ok($('.flexberry-toggler .content', this.element).hasClass('animating'));
     later(() => {
-      assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
+      assert.ok($('.flexberry-toggler .content', this.element).hasClass('animating'));
     }, 500);
     later(() => {
-      assert.notOk(this.$('.flexberry-toggler .content').hasClass('animating'));
+      assert.notOk($('.flexberry-toggler .content', this.element).hasClass('animating'));
       done();
     }, 1000);
   });
@@ -330,9 +330,9 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       Hello!
     {{/flexberry-toggler}}`);
 
-    assert.ok(this.$('.flexberry-toggler').hasClass('has-shadow'));
+    assert.ok($('.flexberry-toggler', this.element).hasClass('has-shadow'));
     this.set('hasShadow', false);
-    assert.notOk(this.$('.flexberry-toggler').hasClass('has-shadow'));
+    assert.notOk($(this.element, '.flexberry-toggler').hasClass('has-shadow'));
   });
 
   test('Components property hasBorder works properly', async function(assert) {
@@ -345,8 +345,8 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       Hello!
     {{/flexberry-toggler}}`);
 
-    assert.ok(this.$('.flexberry-toggler').hasClass('has-border'));
+    assert.ok($('.flexberry-toggler', this.element).hasClass('has-border'));
     this.set('hasBorder', false);
-    assert.notOk(this.$('.flexberry-toggler').hasClass('has-border'));
+    assert.notOk($(this.element, '.flexberry-toggler').hasClass('has-border'));
   });
 });

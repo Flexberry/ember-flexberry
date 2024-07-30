@@ -3,17 +3,18 @@ import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 import { deleteRecords, addRecords } from './folv-tests-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+import {set} from '@ember/object'
 
 let app;
 let store;
 let route;
-let path = 'components-acceptance-tests/flexberry-objectlistview/folv-user-settings';
-let pathHelp = 'components-examples/flexberry-lookup/user-settings-example';
-let modelName = 'ember-flexberry-dummy-suggestion-type';
+const path = 'components-acceptance-tests/flexberry-objectlistview/folv-user-settings';
+const pathHelp = 'components-examples/flexberry-lookup/user-settings-example';
+const modelName = 'ember-flexberry-dummy-suggestion-type';
 let userService;
 
 /* There is some problem with TransitionAborted on server, so for server there is variant without redirect.*/
-let skip = true;
+const skip = true;
 
 module('Acceptance | flexberry-objectlistview | per page user settings', {
   beforeEach() {
@@ -22,22 +23,22 @@ module('Acceptance | flexberry-objectlistview | per page user settings', {
     app = startApp();
 
     // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-    let applicationController = app.__container__.lookup('controller:application');
-    applicationController.set('isInAcceptanceTestMode', true);
+    const applicationController = app.__container__.lookup('controller:application');
+    set(applicationController,'isInAcceptanceTestMode', true);
     store = app.__container__.lookup('service:store');
     route = app.__container__.lookup('route:components-acceptance-tests/flexberry-objectlistview/folv-user-settings');
     userService = app.__container__.lookup('service:user-settings')
-    Ember.set(userService, 'isUserSettingsServiceEnabled', true);
+    set(userService, 'isUserSettingsServiceEnabled', true);
   },
 
   afterEach() {
     // Destroy application.
-    Ember.set(userService, 'isUserSettingsServiceEnabled', true);
+    set(userService, 'isUserSettingsServiceEnabled', true);
     Ember.run(app, 'destroy');
   }
 });
 
-test('check saving of user settings', function(assert) {
+test('check saving of user settings', async function(assert) {
   if (skip) {
     assert.ok(true);
     return;
@@ -49,128 +50,58 @@ test('check saving of user settings', function(assert) {
   route.set('developerUserSettings', { FOLVPagingObjectListView: { DEFAULT: { colsOrder: [ { propName: 'name' } ], perPage: 28 } } });
 
   // Add records for paging.
-  Ember.run(() => {
-    addRecords(store, modelName, uuid).then(function(resolvedPromises) {
-      assert.ok(resolvedPromises, 'All records saved.');
-      let done = assert.async();
-      visit(path);
-      andThen(function() {
-        try {
-          assert.equal(currentPath(), path);
-          let currentUrl = currentURL();
-          assert.ok(currentUrl.contains("perPage=28"), "Переадресация выполнена успешно (настройка взята из developerUserSettings).");
-          checkPaging(assert, '28');
-          route.set('developerUserSettings', { FOLVPagingObjectListView: { DEFAULT: { colsOrder: [ { propName: 'name' } ], perPage: 17 } } });
+  await run(async () => {
+    await addRecords(store, modelName, uuid);
+    assert.ok(true, 'All records saved.');
 
-          let doneHelp = assert.async();
-          visit(pathHelp);
-          andThen(function() {
-            assert.equal(currentPath(), pathHelp);
-            let done1 = assert.async();
-            visit(path);
-            andThen(function() {
-              try {
-                assert.equal(currentPath(), path);
-                let currentUrl = currentURL();
-                assert.ok(currentUrl.contains("perPage=28"), "Переадресация выполнена успешно (настройка взята из БД).");
-                checkPaging(assert, '28');
-                
-                let done2 = assert.async();
-                click("div.cols-config i.dropdown");
-                andThen(function() {
-                  try {
-                    let done3 = assert.async();
-                    click("div.cols-config i.remove");
-                    andThen(function() {
-                      try {
-                        assert.ok(true, 'Произведён сброс настроек пользователя до developerUserSettings.');
-                        let currentUrl = currentURL();
-                        assert.ok(currentUrl.contains("perPage=17"), "Переадресация выполнена успешно (настройка взята из developerUserSettings).");
-                        checkPaging(assert, '17');
+    await visit(path);
+    assert.equal(currentRouteName(), path);
+    assert.ok(currentURL().includes('perPage=28'), 'Перенаправление выполнено успешно (настройка взята из developerUserSettings).');
+    checkPaging(assert, '28');
 
-                        let done4 = assert.async();
-                        checkWithDisabledUserSettings(assert, done4);
-                      } catch (error) {
-                        deleteRecords(store, modelName, uuid, assert);
-                        deleteUserSetting(assert);
-                        throw error;
-                      }
-                      finally {
-                        done3();
-                      }
-                    });
-                  } catch (error) {
-                    deleteRecords(store, modelName, uuid, assert);
-                    deleteUserSetting(assert);
-                    throw error;
-                  }
-                  finally{
-                    done2();
-                  }
-                });
-              } catch(error) {
-                deleteRecords(store, modelName, uuid, assert);
-                deleteUserSetting(assert);
-                throw error;
-              } finally {
-                done1();
-              }
-            });
-            doneHelp();
-          });
-        }
-        catch(error) {
-          deleteRecords(store, modelName, uuid, assert);
-          deleteUserSetting(assert);
-          throw error;
-        } 
-        finally {
-          done();
-        }
-      });
+    route.set('developerUserSettings', {
+      FOLVPagingObjectListView: {
+        DEFAULT: { colsOrder: [{ propName: 'name' }], perPage: 17 }
+      }
     });
+
+    await visit(pathHelp);
+    assert.equal(currentRouteName(), pathHelp);
+
+    await visit(path);
+    assert.equal(currentRouteName(), path);
+    assert.ok(currentURL().includes('perPage=28'), 'Перенаправление выполнено успешно (настройка взята из БД).');
+    checkPaging(assert, '28');
+
+    await click('div.cols-config i.dropdown');
+    await click('div.cols-config i.remove');
+
+    assert.ok(true, 'Произведён сброс настроек пользователя до developerUserSettings.');
+    assert.ok(currentURL().includes('perPage=17'), 'Перенаправление выполнено успешно (настройка взята из developerUserSettings).');
+    checkPaging(assert, '17');
+
+    await checkWithDisabledUserSettings(assert, uuid);
   });
 });
 
-function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
-  try{
-    let doneHelp = assert.async();
-    visit(pathHelp);
-    andThen(function() {
-      assert.equal(currentPath(), pathHelp);
+async function checkWithDisabledUserSettings(assert, asyncDone, uuid) {
+    await visit(pathHelp);
+    assert.equal(currentRouteName(), pathHelp);
       route.set('developerUserSettings', { FOLVPagingObjectListView: { DEFAULT: { colsOrder: [ { propName: 'name' } ], perPage: 11 } } });
-      Ember.set(userService, 'isUserSettingsServiceEnabled', false);
+      set(userService, 'isUserSettingsServiceEnabled', false);
 
       // Remove current saved not in Database settings.
-      Ember.set(userService, 'currentUserSettings', {});
+      set(userService, 'currentUserSettings', {});
 
-      let done1 = assert.async();
-      visit(path);   
-      andThen(function() {
-        try {
-          assert.equal(currentPath(), path);
-          let currentUrl = currentURL();
-          assert.ok(currentUrl.contains("perPage=11"), "Переадресация выполнена успешно (настройка взята из developerUserSettings).");
-          checkPaging(assert, '11');
-        } catch(error) {
-          throw error;
-        } finally {
-          Ember.set(userService, 'isUserSettingsServiceEnabled', true);
-          deleteRecords(store, modelName, uuid, assert);
-          deleteUserSetting(assert);
-          done1();
+      await visit(path);
+      assert.equal(currentRouteName(), path);
+      assert.ok(currentURL().includes('perPage=11'), 'Перенаправление выполнено успешно (настройка взята из developerUserSettings).');
+      checkPaging(assert, '11');
+
+          set(userService, 'isUserSettingsServiceEnabled', true);
+          await deleteRecords(store, modelName, uuid, assert);
+          await deleteUserSetting(assert);
         }
-      });
-      doneHelp();
-    });
-  } catch(error) {
-    deleteRecords(store, modelName, uuid, assert);
-    deleteUserSetting(assert);
-    throw error;
-  } finally {
-    asyncDone();
-  }
-}
 
 // Function to check current perPage value on page.
 function checkPaging(assert, expectedCount) {
@@ -181,24 +112,16 @@ function checkPaging(assert, expectedCount) {
 }
 
 // Function for deleting user settings from database.
-function deleteUserSetting(assert) {
-  Ember.run(() => {
-    let done = assert.async();
-    userService._getExistingSettings("FOLVPagingObjectListView", "DEFAULT").then(
-      foundRecords => {
-        if (foundRecords && foundRecords.length > 0){
+async function deleteUserSetting(assert) {
+  let foundRecords = await userService._getExistingSettings('FOLVPagingObjectListView', 'DEFAULT');
+
+        if (foundRecords && foundRecords.length > 0) {
           assert.equal(foundRecords.length, 1, "Найдена настройка пользователя.");
           foundRecords[0].deleteRecord();
-          foundRecords[0].save().then(() => {
-            assert.ok(true, "Настройки пользователя удалены из БД.");
-            done();
-          });
+          await foundRecords[0].save();
+          assert.ok(true, "Настройки пользователя удалены из БД.");
         }
         else {
           assert.ok(true, "Настройки пользователя не найдены в БД.");
-          done();
-        }
       }
-    )
-  });
-}
+    }

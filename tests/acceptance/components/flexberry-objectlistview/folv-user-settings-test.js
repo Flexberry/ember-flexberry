@@ -4,6 +4,7 @@ import startApp from '../../../helpers/start-app';
 import { deleteRecords, addRecords } from './folv-tests-functions';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import {set} from '@ember/object'
+import { run } from '@ember/runloop';
 
 let app;
 let store;
@@ -34,7 +35,7 @@ module('Acceptance | flexberry-objectlistview | per page user settings', {
   afterEach() {
     // Destroy application.
     set(userService, 'isUserSettingsServiceEnabled', true);
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   }
 });
 

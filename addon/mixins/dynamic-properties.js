@@ -93,7 +93,7 @@ export default Mixin.create({
       });
 
       let classNames = this.get('classNames');
-      let $component = this.get('_componentWrapperIsAvailable') ? this.$() : null;
+      let $component = this.get('_componentWrapperIsAvailable') ? $(this.element) : null;
 
       if (!isArray(classNames)) {
         classNames = [];

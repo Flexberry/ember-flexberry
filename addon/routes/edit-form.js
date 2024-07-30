@@ -114,6 +114,8 @@ ReloadListMixin, {
   */
   appState: service(),
 
+  router: service(),
+
   userSettingsService: service('user-settings'),
 
   /**

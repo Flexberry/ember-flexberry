@@ -240,7 +240,7 @@ export default EditFormController.extend({
           modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
         }
 
-        this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
+        this.router.transitionTo(modelAgregatorRoute, modelCurrentAgregator);
       }
     } else {
       this._super.apply(this, arguments);

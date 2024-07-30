@@ -418,7 +418,7 @@ export default Mixin.create(ReloadListMixin, {
 
       if (options.showInSeparateRoute) {
         let transitionOptions = options.transitionOptions || {};
-        this.transitionToRoute(transitionRoute, recordId, transitionOptions);
+        this.router.transitionTo(transitionRoute, recordId, transitionOptions);
       } else {
         let routeName = options.controller || transitionRoute;
         let modelName = options.modelName;

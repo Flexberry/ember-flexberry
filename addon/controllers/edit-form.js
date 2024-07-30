@@ -9,7 +9,7 @@ import { assert } from '@ember/debug';
 import { get, computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import Evented from '@ember/object/evented';
-import { inject as injectService} from '@ember/service';
+import { service } from '@ember/service';
 import { isNone, isEmpty } from '@ember/utils';
 
 import DS from 'ember-data';
@@ -133,7 +133,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @property appState
     @type AppStateService
   */
-  appState: injectService(),
+  appState: service(),
+
+  router: service(),
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -474,7 +476,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
             const modelId = this.get('model.id');
             const modelAfterSaveRefreshed = store.peekRecord(modelName , modelId);
 
-            this.transitionToRoute(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
+            this.router.transitionTo(routeName.slice(0, -4), modelAfterSaveRefreshed, transitionQuery);
           }
         }
       };
@@ -759,9 +761,9 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
       assert('Parent route must be defined.', parentRoute);
       let parentRouteRecordId = this.get('parentRouteRecordId');
       if (isNone(parentRouteRecordId)) {
-        this.transitionToRoute(parentRoute);
+        this.router.transitionTo(parentRoute);
       } else {
-        this.transitionToRoute(parentRoute, parentRouteRecordId);
+        this.router.transitionTo(parentRoute, parentRouteRecordId);
       }
     }
   },
@@ -857,7 +859,7 @@ FlexberryObjectlistviewHierarchicalControllerMixin, {
     @readOnly
     @private
   */
-  _flexberryDetailInteractionService: injectService('detail-interaction'),
+  _flexberryDetailInteractionService: service('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.

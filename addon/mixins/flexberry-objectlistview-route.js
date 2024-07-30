@@ -66,16 +66,16 @@ export default Mixin.create(EditInModalOpen, {
         }
 
         if (!onEditForm) {
-          this.transitionTo(editFormRoute, recordId, transitionOptions);
+          this.router.transitionTo(editFormRoute, recordId, transitionOptions);
         } else {
           if (saveBeforeRouteLeave) {
             this.controller.save(false, true).then(() => {
-              this.transitionTo(editFormRoute, recordId, transitionOptions);
+              this.router.transitionTo(editFormRoute, recordId, transitionOptions);
             }).catch((errorData) => {
               this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
             });
           } else {
-            this.transitionTo(editFormRoute, recordId, transitionOptions);
+            this.router.transitionTo(editFormRoute, recordId, transitionOptions);
           }
         }
       }

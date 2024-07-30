@@ -87,7 +87,7 @@ export default Mixin.create({
   */
   setSorting(componentName, sorting) {
     let sort = serializeSortingParam(A(sorting));
-    this.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
+    this.router.transitionTo(this.currentRouteName, { queryParams: { sort: sort } });
   },
 
   setupController() {

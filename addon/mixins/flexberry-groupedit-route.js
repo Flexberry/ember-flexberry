@@ -109,12 +109,12 @@ export default Mixin.create({
         if (record.get('isNew')) {
           let newModelPath = _this.newRoutePath(editFormRoute);
           later((function() {
-            _this.transitionTo(newModelPath).then((newRoute) => {
+            _this.router.transitionTo(newModelPath).then((newRoute) => {
               newRoute.controller.set('readonly', methodOptions.readonly);
             });
           }), 50);
         } else {
-          _this.transitionTo(editFormRoute, record.get('id')).then((newRoute) => {
+          _this.router.transitionTo(editFormRoute, record.get('id')).then((newRoute) => {
             newRoute.controller.set('readonly', methodOptions.readonly);
           });
         }

@@ -5,6 +5,7 @@
 import Controller, { inject } from '@ember/controller';
 import { isNone } from '@ember/utils';
 import { assert } from '@ember/debug';
+import { service } from '@ember/service';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
@@ -57,6 +58,8 @@ export default Controller.extend(PaginatedControllerMixin,
     @default controller('colsconfig-dialog')
   */
   colsconfigController: inject('colsconfig-dialog'),
+
+  router: service(),
 
   /**
     Object with developer user settings.

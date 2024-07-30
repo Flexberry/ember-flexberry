@@ -23,26 +23,26 @@ export default function defaultConditionsByType(type, i18n) {
     case 'number':
     case 'decimal':
       return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq'),
-        'le': i18n.t('components.object-list-view.filters.le'),
-        'ge': i18n.t('components.object-list-view.filters.ge'),
-        'between': i18n.t('components.object-list-view.filters.between'),
+        'eq': /*i18n.t(*/'components.object-list-view.filters.eq'/*)*/,
+        'neq': /*i18n.t(*/'components.object-list-view.filters.neq'/*)*/,
+        'le': /*i18n.t(*/'components.object-list-view.filters.le'/*)*/,
+        'ge': /*i18n.t(*/'components.object-list-view.filters.ge'/*)*/,
+        'between': /*i18n.t(*/'components.object-list-view.filters.between'/*)*/,
       };
     case 'string':
       return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq'),
-        'like': i18n.t('components.object-list-view.filters.like'),
-        'nlike': i18n.t('components.object-list-view.filters.nlike')
+        'eq': /*i18n.t(*/'components.object-list-view.filters.eq'/*)*/,
+        'neq': /*i18n.t(*/'components.object-list-view.filters.neq'/*)*/,
+        'like': /*i18n.t(*/'components.object-list-view.filters.like'/*)*/,
+        'nlike': /*i18n.t(*/'components.object-list-view.filters.nlike'/*)*/
       };
 
     case 'boolean':
       return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq'),
-        'nempty': i18n.t('components.object-list-view.filters.nempty'),
-        'empty': i18n.t('components.object-list-view.filters.empty'),
+        'eq': /*i18n.t(*/'components.object-list-view.filters.eq'/*)*/,
+        'neq': /*i18n.t(*/'components.object-list-view.filters.neq'/*)*/,
+        'nempty': /*i18n.t(*/'components.object-list-view.filters.nempty'/*)*/,
+        'empty': /*i18n.t(*/'components.object-list-view.filters.empty'/*)*/,
       };
 
     default: {
@@ -54,8 +54,8 @@ export default function defaultConditionsByType(type, i18n) {
       }
 
       return {
-        'eq': i18n.t('components.object-list-view.filters.eq'),
-        'neq': i18n.t('components.object-list-view.filters.neq')
+        'eq': /*i18n.t(*/'components.object-list-view.filters.eq'/*)*/,
+        'neq': /*i18n.t(*/'components.object-list-view.filters.neq'/*)*/
       };
     }
   }

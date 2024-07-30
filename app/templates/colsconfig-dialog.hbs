@@ -1,0 +1,12 @@
+{{#modal-dialog
+  title=(if this.model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export-modal-dialog-title") (t "components.colsconfig-dialog-content.title"))
+  sizeClass="small"
+  close="removeModalDialog"
+  created="createdModalDialog"
+  useOkButton=false
+  useCloseButton=false
+  useSidePageMode=this.model.useSidePageMode
+  componentName=this.model.componentName
+}}
+  {{!--outlet "modal-content"--}}
+{{/modal-dialog}}

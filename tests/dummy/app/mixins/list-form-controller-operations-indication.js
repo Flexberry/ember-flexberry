@@ -72,12 +72,11 @@ export default Mixin.create({
     @type String
    */
   formSuccessMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'delete') {
-      return i18n.t('forms.list-form.delete-success-message-caption');
+      return /*i18n.t(*/'forms.list-form.delete-success-message-caption'/*)*/;
     }
 
-    return i18n.t('forms.list-form.load-success-message-caption');
+    return /*i18n.t(*/'forms.list-form.load-success-message-caption'/*)*/;
   }),
 
   /**
@@ -87,12 +86,11 @@ export default Mixin.create({
     @type String
    */
   formSuccessMessage: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
     let message = null;
     if (this.get('latestOperationType') === 'delete') {
-      message = i18n.t('forms.list-form.delete-success-message');
+      message = /*i18n.t(*/'forms.list-form.delete-success-message'/*)*/;
     } else {
-      message = i18n.t('forms.list-form.load-success-message');
+      message = /*i18n.t(*/'forms.list-form.load-success-message'/*)*/;
     }
 
     return new htmlSafe('<ul><li>' + message + '</li></ul>');
@@ -113,12 +111,11 @@ export default Mixin.create({
     @type String
    */
   formErrorMessageCaption: computed('i18n.locale', 'latestOperationType', function() {
-    let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'delete') {
-      return i18n.t('forms.list-form.delete-error-message-caption');
+      return /*i18n.t(*/'forms.list-form.delete-error-message-caption'/*)*/;
     }
 
-    return i18n.t('forms.list-form.load-error-message-caption');
+    return /*i18n.t(*/'forms.list-form.load-error-message-caption'/*)*/;
   }),
 
   /**

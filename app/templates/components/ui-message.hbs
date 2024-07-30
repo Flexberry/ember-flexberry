@@ -1,0 +1,13 @@
+{{#if this.icon}}
+  <i class="{{this.icon}}"></i>
+{{/if}}
+{{#if this.closeable}}
+  <i class="close icon"></i>
+{{/if}}
+{{#if this.icon}}
+  <div class="content">
+    {{partial "components/ui-message-content"}}
+  </div>
+{{else}}
+  {{partial "components/ui-message-content"}}
+{{/if}}

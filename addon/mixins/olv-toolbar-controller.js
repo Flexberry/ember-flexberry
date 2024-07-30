@@ -8,7 +8,7 @@ import { get, set } from '@ember/object';
 import { isArray, A } from '@ember/array';
 import { capitalize } from 'ember-flexberry-data/utils/string-functions';
 import { htmlSafe } from '@ember/template';
-import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+//import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import getAttrLocaleKey from '../utils/get-attr-locale-key';
 
 export default Mixin.create({
@@ -585,7 +585,7 @@ export default Mixin.create({
     }
 
     let key = this._createKey(bindingPath, settingsSource);
-    let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+    let valueFromLocales = /*getValueFromLocales(this.get('i18n'), */key/*)*/;
     let index = get(attr, 'options.index');
 
     let column = {

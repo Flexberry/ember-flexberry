@@ -1,0 +1,38 @@
+{{#if this.titleIsBeforeIcon}}
+  {{#if this.item.localeKey}}
+    <span>{{t this.item.localeKey}}</span>
+  {{else}}
+    <span>{{this.item.title}}</span>
+  {{/if}}
+{{/if}}
+{{#if this.item.icon}}
+  <i class="{{this.item.icon}}"></i>
+{{/if}}
+{{#if (not this.titleIsBeforeIcon)}}
+  {{#if this.item.localeKey}}
+    <span>{{t this.item.localeKey}}</span>
+  {{else}}
+    <span>{{this.item.title}}</span>
+  {{/if}}
+{{/if}}
+{{#each this.item.buttons as |button|}}
+  <button
+    type="button"
+    class="ui {{button.buttonClasses}} button"
+    title={{button.buttonTitle}}
+    disabled={{button.disabled}}
+    {{action "itemButtonAction" button.buttonAction bubbles=false}}>
+      {{#if button.iconClass}}
+        <i class="{{button.iconClass}}"></i>
+      {{/if}}
+      {{if button.buttonName button.buttonName}}
+  </button>
+{{/each}}
+{{#if this.hasSubitems}}
+  <div class="{{if this.item.itemsAlignment this.item.itemsAlignment}} menu">
+    {{#each this.item.items as |item|}}
+      {{flexberry-menuitem item=item}}
+    {{/each}}
+  </div>
+{{/if}}
+{{yield}}

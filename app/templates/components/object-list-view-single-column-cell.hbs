@@ -1,0 +1,29 @@
+{{#each this.columns as |column|}}
+  <div class="field {{if (and this.showValidationMessages (v-get this.model column.propName "isInvalid")) "error"}}">
+    <label>{{if column.keyLocale (t column.keyLocale) column.header}}</label>
+    <div class="inline fields {{if (not this.hasEditableValues) "readonly"}}">
+      {{#if column.cellComponent.componentName}}
+        {{component column.cellComponent.componentName
+          dynamicProperties=column.cellComponent.componentProperties
+          relatedModel=this.model
+          value=(mut (get this.model column.propName))
+          readonly=this.readonly
+          required=this.required
+        }}
+      {{else}}
+        <div class="oveflow-text">
+          {{get-formatted this.model column.propName
+            dateFormat=column.cellComponent.componentProperties.dateFormat
+            moment=this.moment
+          }}&nbsp;
+        </div>
+      {{/if}}
+      {{#if this.showValidationMessages}}
+        {{flexberry-validationmessage
+          error=(v-get this.model column.propName "messages")
+          pointing="left pointing"
+        }}
+      {{/if}}
+    </div>
+  </div>
+{{/each}}

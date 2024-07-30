@@ -1,5 +1,4 @@
 import { executeTest } from './execute-folv-test';
-// import { click, visit, currentURL } from '@ember/test-helpers';
 import { get } from '@ember/object';
 import RuLocale from 'dummy/locales/ru/translations';
 import { settled } from '@ember/test-helpers';

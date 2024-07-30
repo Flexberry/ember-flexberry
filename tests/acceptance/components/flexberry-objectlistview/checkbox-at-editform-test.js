@@ -3,7 +3,7 @@ import { executeTest  } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
 executeTest('check checkbox at editform', async (store, assert, app) => {
-  assert.expect(2);  
+  assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-list-with-checked-checkbox';
   await visit(path);
 

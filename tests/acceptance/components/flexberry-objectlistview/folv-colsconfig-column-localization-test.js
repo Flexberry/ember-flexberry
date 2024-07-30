@@ -1,46 +1,39 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
 import { executeTest } from './execute-folv-test';
 import { loadingLocales } from './folv-tests-functions';
 import RuLocale from 'dummy/locales/ru/translations';
 import EnLocale from 'dummy/locales/en/translations';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check colsconfig column localization test', (store, assert, app) => {
+executeTest('check colsconfig column localization test', async (store, assert, app) => {
   assert.expect(21);
   const path = 'ember-flexberry-dummy-suggestion-list';
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
 
-    function checkLocalization(currentLocale, locale) {
-      return new RSVP.Promise((resolve) => {
-        const columnsLocalization = Ember.get(currentLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
+  await visit(path);
+  assert.equal(currentPath(), path, 'Visited the correct path');
 
-        click('.config-button');
-        andThen(() => {
-          const $columns = Ember.$('.flexberry-colsconfig tbody tr');
-          $columns.each((i, column) => {
-            const cellText = column.cells[2].innerText;
-            const propname = column.getAttribute('propname').replace('.name', '');
-            const assertionMessage = `${locale} locale ${propname} ok`;
-            const caption = Ember.get(columnsLocalization, `${propname}.__caption__`);
-            assert.equal(caption, cellText, assertionMessage);
-          });
+  const checkLocalization = async (currentLocale, locale) => {
+    const columnsLocalization = Ember.get(currentLocale, 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL');
 
-          click('.close.icon');
-          andThen(() => {
-            resolve();
-          });
-        });
-      });
-    }
+    await click('.config-button');
+    await settled(); // Ждем завершения всех асинхронных действий
 
-    loadingLocales('en', app).then(() => {
-      checkLocalization(EnLocale, 'En').then(() => {
-        loadingLocales('ru', app).then(() => {
-          checkLocalization(RuLocale, 'Ru');
-        });
-      });
+    const $columns = Ember.$('.flexberry-colsconfig tbody tr');
+    $columns.each((i, column) => {
+      const cellText = column.cells[2].innerText;
+      const propname = column.getAttribute('propname').replace('.name', '');
+      const assertionMessage = `${locale} locale ${propname} ok`;
+      const caption = Ember.get(columnsLocalization, `${propname}.__caption__`);
+      assert.equal(caption, cellText, assertionMessage);
     });
-  });
+
+    await click('.close.icon');
+    await settled(); // Ждем завершения всех асинхронных действий
+  };
+
+  await loadingLocales('en', app);
+  await checkLocalization(EnLocale, 'En');
+
+  await loadingLocales('ru', app);
+  await checkLocalization(RuLocale, 'Ru');
 });

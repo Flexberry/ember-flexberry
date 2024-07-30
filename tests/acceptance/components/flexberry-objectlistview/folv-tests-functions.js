@@ -1,316 +1,194 @@
 import $ from 'jquery';
 import { A } from '@ember/array';
-import { later, run } from '@ember/runloop';
-import RSVP from 'rsvp';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';
 
-// Function for waiting list loading.
-export function loadingList($ctrlForClick, list, records) {
-  return new RSVP.Promise((resolve, reject) => {
-    let checkIntervalId;
-    let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let timeout = 10000;
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    run(() => {
-      $ctrlForClick.click();
-    });
+// Функция ожидания загрузки списка.
+export async function loadingList($ctrlForClick, list, records) {
+  $ctrlForClick.click();
 
-    run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let $list = $(list);
-        let $records = $(records, $list);
-        if ($records.length === 0) {
+  let checkInterval = 500;
+  let timeoutDuration = 10000;
 
-          // Data isn't loaded yet.
-          return;
-        }
+  let startTime = Date.now();
+  while (Date.now() - startTime < timeoutDuration) {
+    await delay(checkInterval);
+    let $list = $(list);
+    let $records = $(records, $list);
+    
+    if ($records.length > 0) {
+      return $list; // Данные загружены
+    }
+  }
 
-        // Data is loaded.
-        // Stop interval & resolve promise.
-        window.clearInterval(checkIntervalId);
-        checkIntervalSucceed = true;
-        resolve($list);
-      }, checkInterval);
-    });
-
-    // Set wait timeout.
-    run(() => {
-      window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
-
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('ListForm load operation is timed out');
-      }, timeout);
-    });
-  });
+  throw new Error('ListForm load operation is timed out');
 }
 
 /**
-  Function for waiting editform loading afther open editform by function at acceptance test.
-
-  @public
-  @method openEditFormByFunction
-  @param {Function} openEditFormFunction Method options.
+ * Функция ожидания загрузки формы редактирования после ее открытия.
+ * 
+ * @public
+ * @method openEditFormByFunction
+ * @param {Function} openEditFormFunction Метод для открытия формы.
  */
-export function openEditFormByFunction(openEditFormFunction) {
-  return new RSVP.Promise((resolve, reject) => {
-    let checkIntervalId;
-    let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let timeout = 10000;
+export async function openEditFormByFunction(openEditFormFunction) {
+  openEditFormFunction();
+  
+  let checkInterval = 500;
+  let timeoutDuration = 10000;
 
-    openEditFormFunction();
+  let startTime = Date.now();
+  while (Date.now() - startTime < timeoutDuration) {
+    await delay(checkInterval);
+    
+    if ($('.ui.button.close-button').length > 0) {
+      await delay(100); // Ждем рендеринга
+      return; // Форма загружена
+    }
+  }
 
-    run(() => {
-      checkIntervalId = window.setInterval(() => {
-        if ($('.ui.button.close-button').length === 0) {
-
-          // Edit form isn't loaded yet.
-          return;
-        }
-
-        // Edit form is loaded, wait to render.
-        // Stop interval & resolve promise.
-        window.setTimeout(() => {
-          window.clearInterval(checkIntervalId);
-          checkIntervalSucceed = true;
-          resolve();
-        });
-      }, checkInterval);
-    });
-
-    // Set wait timeout.
-    run(() => {
-      window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
-
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
-      }, timeout);
-    });
-  });
+  throw new Error('editForm load operation is timed out');
 }
 
 /**
-  Function for waiting list loading afther refresh by function at acceptance test.
-
-  @public
-  @method refreshListByFunction
-  @param {Function} refreshFunction Method options.
-  @param {Object} controlle Current form controller.
-
-  For use:
-    Form controller must have the following code:
-      ```js
-        loadCount: 0
-      ```
-
-    Form router must have the following code:
-      ```js
-        onModelLoadingAlways(data) {
-          let loadCount = this.get('controller.loadCount') + 1;
-          this.set('controller.loadCount', loadCount);
-        }
-      ```
+ * Функция ожидания загрузки списка после обновления.
+ * 
+ * @public
+ * @method refreshListByFunction
+ * @param {Function} refreshFunction Метод для обновления.
+ * @param {Object} controller Текущий контроллер формы.
  */
-export function refreshListByFunction(refreshFunction, controller) {
-  return new RSVP.Promise((resolve, reject) => {
-    let checkIntervalId;
-    let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let renderInterval = 100;
-    let timeout = 10000;
-    let timeiutForLongTimeLoad = checkInterval + 500;
+export async function refreshListByFunction(refreshFunction, controller) {
+  let checkInterval = 500;
+  let renderInterval = 100;
+  let timeoutDuration = 10000;
+  
+  let lastLoadCount = controller.loadCount;
+  refreshFunction();
 
-    let $lastLoadCount = controller.loadCount;
-    refreshFunction();
+  let startTime = Date.now();
+  while (Date.now() - startTime < timeoutDuration) {
+    await delay(checkInterval);
+    
+    let loadCount = controller.loadCount;
+    if (loadCount !== lastLoadCount) {
+      await delay(renderInterval); // Ждем рендеринга
+      return; // Данные загружены
+    }
+  }
 
-    run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let loadCount = controller.loadCount;
-        if (loadCount === $lastLoadCount) {
+  throw new Error('ListForm load operation is timed out');
+}
 
-          // Data isn't loaded yet.
-          return;
-        }
+// Функция для проверки сортировки.
+export async function checkSortingList(store, projection, $olv, ordr) {
+  let modelName = projection.modelName;
+  let builder = new Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
+  if (ordr) {
+    builder.orderBy(ordr);
+  }
+  
+  let records = await store.query(modelName, builder.build());
+  let recordsArr = records.toArray();
+  let $tr = $('table.object-list-view tbody tr').toArray();
 
-        // Data is loaded, wait to render.
-        // Stop interval & resolve promise.
-        window.setTimeout(() => {
-          window.clearInterval(checkIntervalId);
-          checkIntervalSucceed = true;
-          resolve();
-        }, renderInterval);
-      }, checkInterval);
-    });
-
-    // Set wait timeout.
-    run(() => {
-      window.setTimeout(() => {
-        // Timeout for with a long load, setInterval executed first.
-        window.setTimeout(() => {
-          if (checkIntervalSucceed) {
-            return;
-          }
-
-          // Time is out.
-          // Stop intervals & reject promise.
-          window.clearInterval(checkIntervalId);
-          reject('ListForm load operation is timed out');
-        }, timeiutForLongTimeLoad);
-      }, timeout);
-    });
+  return $tr.every((current, i) => {
+    let expectVal = recordsArr[i] ? recordsArr[i].get('address') : '';
+    return $.trim(current.children[1].innerText) === expectVal;
   });
 }
 
-// Function for check sorting.
-export function checkSortingList(store, projection, $olv, ordr) {
-  return new RSVP.Promise((resolve) => {
-    run(() => {
-      let modelName = projection.modelName;
-      let builder = new Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
-      builder = !ordr ? builder : builder.orderBy(ordr);
-      store.query(modelName, builder.build()).then((records) => {
-        let recordsArr = records.toArray();
-        let $tr = $('table.object-list-view tbody tr').toArray();
-
-        let isTrue = $tr.reduce((sum, current, i) => {
-          let expectVal = !recordsArr[i].get('address') ? '' : recordsArr[i].get('address');
-          return sum && ($.trim(current.children[1].innerText) === expectVal);
-        }, true);
-
-        resolve(isTrue);
-      });
-    });
-  });
-}
-
-// Function for addition records.
-export function addRecords(store, modelName, uuid) {
-  let promises = A();
+// Функция для добавления записей.
+export async function addRecords(store, modelName, uuid) {
+  let promises = [];
   let listCount = 55;
-  run(() => {
 
-    let builder = new Builder(store).from(modelName).count();
-    store.query(modelName, builder.build()).then((result) => {
-      let howAddRec = listCount - result.meta.count;
-      let newRecords = A();
+  let builder = new Builder(store).from(modelName).count();
+  let result = await store.query(modelName, builder.build());
+  let howAddRec = listCount - result.meta.count;
 
-      for (let i = 0; i < howAddRec; i++) {
-        newRecords.pushObject(
-          store.createRecord(modelName,
-            modelName == 'ember-flexberry-dummy-application-user'
-            ? { name: uuid, eMail: uuid, phone1: uuid }
-            : { name: uuid }));
-      }
+  for (let i = 0; i < howAddRec; i++) {
+    let newRecord = store.createRecord(modelName, 
+      modelName === 'ember-flexberry-dummy-application-user'
+        ? { name: uuid, eMail: uuid, phone1: uuid }
+        : { name: uuid });
+    promises.push(newRecord.save());
+  }
 
-      newRecords.forEach(function(item) {
-        promises.push(item.save());
-      });
-    });
-  });
-  return RSVP.Promise.all(promises);
+  return Promise.all(promises);
 }
 
-// Function for deleting records.
-export function deleteRecords(store, modelName, uuid) {
+// Функция для удаления записей.
+export async function deleteRecords(store, modelName, uuid) {
   let builder = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid);
-  return store.query(modelName, builder.build()).then(r => RSVP.all(r.map(i => i.destroyRecord())));
+  let records = await store.query(modelName, builder.build());
+  return Promise.all(records.map(record => record.destroyRecord()));
 }
 
-// Function for waiting loading list.
-export function loadingLocales(locale, app) {
-  return new RSVP.Promise((resolve) => {
-    let i18n = app.__container__.lookup('service:i18n');
-
-    run(() => {
-      i18n.set('locale', locale);
-    });
-
-    let timeout = 500;
-    later((() => {
-      resolve({ msg: 'ok' });
-    }), timeout);
-  });
+// Функция ожидания загрузки локалей.
+export async function loadingLocales(locale, app) {
+  let i18n = app.__container__.lookup('service:i18n');
+  i18n.set('locale', locale);
+  await delay(500);
+  return { msg: 'ok' };
 }
 
-// Function for filter object-list-view by list of operations and values.
-export function filterObjectListView(objectListView, operations, filterValues) {
+// Функция для фильтрации object-list-view по списку операций и значений.
+export async function filterObjectListView(objectListView, operations, filterValues) {
+  let promises = [];
+
   let tableBody = objectListView.children('tbody');
   let tableRow = $(tableBody.children('tr'));
   let tableColumns = $(tableRow[0]).children('td');
 
-  let promises = A();
-
   for (let i = 0; i < tableColumns.length; i++) {
     if (operations[i]) {
-      promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
+      promises.push(filterColumn(objectListView, i, operations[i], filterValues[i]));
     }
   }
 
-  return RSVP.Promise.all(promises);
+  return Promise.all(promises);
 }
 
-// Function for filter object-list-view at one column by operations and values.
-export function filterCollumn(objectListView, columnNumber, operation, filterValue) {
-  return new RSVP.Promise((resolve) => {
-    let tableBody = objectListView.children('tbody');
-    let tableRow = tableBody.children('tr');
+// Функция для фильтрации object-list-view по одной колонке.
+export async function filterColumn(objectListView, columnNumber, operation, filterValue) {
+  let tableBody = objectListView.children('tbody');
+  let tableRow = tableBody.children('tr');
 
-    let filterOperation = $(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
-    let filterValueCell = $(tableRow[1]).children('td')[columnNumber];
+  let filterOperation = $(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
+  let filterValueCell = $(tableRow[1]).children('td')[columnNumber];
 
-    // Select an existing item.
-    $(filterOperation).dropdown('set selected', operation);
+  // Выбираем существующий элемент.
+  $(filterOperation).dropdown('set selected', operation);
 
-    let dropdown = $(filterValueCell).find('.flexberry-dropdown');
-    let textbox = $(filterValueCell).find('.ember-text-field');
+  let dropdown = $(filterValueCell).find('.flexberry-dropdown');
+  let textbox = $(filterValueCell).find('.ember-text-field');
 
-    let fillPromise;
-    if (textbox.length !== 0) {
-      fillPromise = fillIn(textbox, filterValue);
-    }
+  if (textbox.length !== 0) {
+    await fillIn(textbox, filterValue);
+  }
 
-    if (dropdown.length !== 0) {
-      dropdown.dropdown('set selected', filterValue);
-    }
+  if (dropdown.length !== 0) {
+    $(dropdown).dropdown('set selected', filterValue);
+  }
 
-    if (fillPromise) {
-      fillPromise.then(() => resolve());
-    } else {
-      let timeout = 300;
-      later((() => {
-        resolve();
-      }), timeout);
-    }
-
-  });
+  // Ждем небольшую задержку перед завершением
+  await delay(300);
 }
 
+// Функция для получения условий сортировки.
 export function getOrderByClause(currentSorting) {
-  return Object.keys(currentSorting).map(function(key) {
-    return { name: key, sortOrder: currentSorting[key].sortAscending ? 'asc' : 'desc', sortNumber: currentSorting[key].sortNumber };
-  }).sort(function(obj1, obj2) {
-    if (obj1.sortNumber < obj2.sortNumber) {
-      return -1;
-    }
-
-    if (obj1.sortNumber > obj2.sortNumber) {
-      return 1;
-    }
-
-    return 0;
-  }).map(function(obj) {
-    return `${obj.name} ${obj.sortOrder}`;
-  }).join(', ');
+  return Object.keys(currentSorting)
+    .map(key => ({
+      name: key,
+      sortOrder: currentSorting[key].sortAscending ? 'asc' : 'desc',
+      sortNumber: currentSorting[key].sortNumber
+    }))
+    .sort((obj1, obj2) => obj1.sortNumber - obj2.sortNumber)
+    .map(obj => `${obj.name} ${obj.sortOrder}`)
+    .join(', ');
 }

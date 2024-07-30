@@ -10,30 +10,28 @@ export function executeTest(testName, callback) {
   let store;
   let userSettingsService;
 
-  module('Acceptance | flexberry-objectlistview | ' + testName, {
-    beforeEach() {
+  module('Acceptance | flexberry-objectlistview | ' + testName, function(hooks) {
+    hooks.beforeEach(function(assert) {
       run(() => {
         // Start application.
         app = startApp();
 
-        // Just take it and turn it off...
-        app.__container__.lookup('service:log').set('enabled', false);
+        // Disable logging service.
+        let logService = app.__container__.lookup('service:log');
+        logService.set('enabled', false);
 
-        // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
+        // Enable acceptance test mode in application controller.
         let applicationController = app.__container__.lookup('controller:application');
         applicationController.set('isInAcceptanceTestMode', true);
+
         store = app.__container__.lookup('service:store');
 
         userSettingsService = app.__container__.lookup('service:user-settings');
-        let getCurrentPerPage = function() {
-          return 5;
-        };
-
-        userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
+        userSettingsService.set('getCurrentPerPage', () => 5);
       });
-    },
+    });
 
-    afterEach() {
+    hooks.afterEach(function(assert) {
       run(() => {
         if (dataForDestroy.length !== 0) {
           recursionDelete(0);
@@ -41,10 +39,12 @@ export function executeTest(testName, callback) {
           run(app, 'destroy');
         }
       });
-    }
-  });
+    });
 
-  test(testName, (assert) => callback(store, assert, app));
+    test(testName, function(assert) {
+      return callback(store, assert, app);
+    });
+  });
 }
 
 /**
@@ -54,7 +54,6 @@ export function executeTest(testName, callback) {
   @method addDataForDestroy
   @param {Object} data  or array of Object.
  */
-
 export function addDataForDestroy(data) {
   if (isArray(data)) {
     dataForDestroy.addObjects(data);
@@ -63,17 +62,18 @@ export function addDataForDestroy(data) {
   }
 }
 
-function recursionDelete(index) {
+function recursionDelete(index, resolve) {
   if (index < dataForDestroy.length) {
     if (!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
-        recursionDelete(index + 1);
+        recursionDelete(index + 1, resolve);
       });
     } else {
-      recursionDelete(index + 1);
+      recursionDelete(index + 1, resolve);
     }
   } else {
     dataForDestroy.clear();
     run(app, 'destroy');
+    resolve();
   }
 }

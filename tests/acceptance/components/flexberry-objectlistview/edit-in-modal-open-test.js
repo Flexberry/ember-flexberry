@@ -1,23 +1,25 @@
 import { executeTest } from './execute-folv-test';
-import $ from 'jquery';
+// import { click, visit, currentURL } from '@ember/test-helpers';
 import { get } from '@ember/object';
 import RuLocale from 'dummy/locales/ru/translations';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check edit in modal open', (store, assert) => { 
+executeTest('check edit in modal open', async (store, assert) => {
   assert.expect(3);
   const path = 'ember-flexberry-dummy-suggestion-type-list';
-  visit(path);
-  andThen(() => { 
-    assert.equal(currentPath(), path);
-    const row =  $('.field')[0];
-    click(row);
-    andThen(() => {
-      let $editForm = $('.flexberry-modal');
+  
+  await visit(path);
+  assert.equal(currentURL(), path, 'Visited the correct path');
 
-      assert.ok($editForm, 'edit form open');
-      assert.strictEqual($('.flexberry-modal .ui.header')[0].innerText, get(RuLocale, 'forms.ember-flexberry-dummy-suggestion-type-edit.caption'), 'check header');
+  const row = document.querySelector('.field');
+  await click(row);
+  
+  await settled(); // Wait for any pending promises
+  
+  const $editForm = document.querySelector('.flexberry-modal');
+  assert.ok($editForm, 'edit form open');
+  assert.strictEqual($editForm.querySelector('.ui.header').innerText, get(RuLocale, 'forms.ember-flexberry-dummy-suggestion-type-edit.caption'), 'check header');
 
-      click('.close.icon');
-    });
-  });
+  const closeButton = document.querySelector('.close-button');
+  await click(closeButton);
 });

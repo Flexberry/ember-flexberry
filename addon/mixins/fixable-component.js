@@ -4,13 +4,8 @@
 
 import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
-import Ember from 'ember';
 import { isEmpty, typeOf } from '@ember/utils';
 import { get } from '@ember/object';
-
-const {
-  Logger
-} = Ember;
 
 /**
  * Добавляет возможность компоненту в списке или модальном окне
@@ -95,9 +90,9 @@ export default Mixin.create({
     const olv = get($(component).closest(this.get('olvClasses')), 0);
     const modal = get($(component).closest(this.get('modalClasses')), 0);
 
-    if (isEmpty(olv) && isEmpty(modal)) return Logger.warn(`Компонент находится вне спискового компонента или модального окна`);
-    if (isEmpty(elements)) return Logger.warn(`Элемент с классом '${elementClass}' не найден`);
-    if (elements.length > 1) return Logger.warn(`Найдено больше одного элемента с классом '${elementClass}'`);
+    if (isEmpty(olv) && isEmpty(modal)) return /*Logger.warn(`Компонент находится вне спискового компонента или модального окна`)*/;
+    if (isEmpty(elements)) return /*Logger.warn(`Элемент с классом '${elementClass}' не найден`)*/;
+    if (elements.length > 1) return /*Logger.warn(`Найдено больше одного элемента с классом '${elementClass}'`)*/;
 
     const element = elements[0];
     element.style.zIndex = 100;
@@ -119,7 +114,7 @@ export default Mixin.create({
    */
   showFixedElement(options = {}) {
     if (!this.get('canFixElement')) return;
-    if (typeOf(options) !== 'object') return Logger.warn(`Параметр 'options' имеет неверный тип`);
+    if (typeOf(options) !== 'object') return /*Logger.warn(`Параметр 'options' имеет неверный тип`)*/;
 
     const element = this.get('fixedElementRef');
     const component = this.get('componentRef');

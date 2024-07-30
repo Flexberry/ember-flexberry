@@ -7,7 +7,6 @@ import RSVP from 'rsvp';
 import { getOwner } from '@ember/application';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { merge } from '@ember/polyfills';
 import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
@@ -470,7 +469,7 @@ export default Service.extend({
    */
   getCurrentPerPage(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration('config:environment');
+    let configEnvironmentSettings = getOwner(this).resolveRegistration('config:environment');
     let defaultPerPage;
 
     try{
@@ -827,7 +826,7 @@ export default Service.extend({
     for (let settingProperty in setting1) {
       if (settingProperty in addSettings) {
         ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
-        merge(setting1[settingProperty], addSettings[settingProperty]) :
+        Object.assign(setting1[settingProperty], addSettings[settingProperty]) :
         addSettings[settingProperty];
       } else {
         ret[settingProperty] = setting1[settingProperty];

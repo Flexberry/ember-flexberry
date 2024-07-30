@@ -242,9 +242,9 @@ export default Component.extend(
 
     // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
     // Search until 'targetObject' is none or condition is true.
-    let targetObject = this.get('_targetObject');
+    let targetObject = this.get('_target');
     while (!(isNone(targetObject) || condition(targetObject))) {
-      targetObject = targetObject.get('_targetObject');
+      targetObject = targetObject.get('_target');
     }
 
     return targetObject;

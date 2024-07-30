@@ -4,12 +4,9 @@
 
 import Service from '@ember/service';
 import Evented from '@ember/object/evented';
-import EmberMap from '@ember/map';
 import EmberObject, { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
-import { deprecatingAlias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { deprecate } from '@ember/application/deprecations';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
@@ -76,11 +73,12 @@ export default Service.extend(Evented, {
   */
   holdMultiSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = EmberMap.create();
+      this.get('_multiRows')[componentName] = {};
     }
 
-    (this.getSelectedRecords(componentName) || []).forEach((v, i) => {
-      this.get('_multiRows')[componentName].set(i, v);
+    const multiRows = Object.keys(this.getSelectedRecords(componentName) || {});
+    multiRows.forEach((key) => {
+      this.get('_multiRows')[componentName][multiRows[key]] = key;
     });
   },
 
@@ -231,27 +229,27 @@ export default Service.extend(Evented, {
   */
   rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = EmberMap.create();
+      this.get('_multiRows')[componentName] = {};
     }
 
     if (recordWithKey) {
       if (checked) {
-        this.get('_multiRows')[componentName].set(recordWithKey.key, recordWithKey);
+        this.get('_multiRows')[componentName][recordWithKey.key] = recordWithKey;
       } else {
-        this.get('_multiRows')[componentName].delete(recordWithKey.key);
+        delete this.get('_multiRows')[componentName][recordWithKey.key];
       }
     }
 
     if (count > 0 || !isNone(recordWithKey)) {
       if (!this.get('_selectedRecords')[componentName]) {
-        this.get('_selectedRecords')[componentName] = EmberMap.create();
+        this.get('_selectedRecords')[componentName] = {};
       }
 
       if (checked) {
-        this.get('_selectedRecords')[componentName].set(recordWithKey.key, recordWithKey);
+        this.get('_selectedRecords')[componentName][recordWithKey.key] = recordWithKey;
       } else
       {
-        this.get('_selectedRecords')[componentName].delete(recordWithKey.key);
+        delete this.get('_selectedRecords')[componentName][recordWithKey.key];
       }
     }
 
@@ -265,14 +263,15 @@ export default Service.extend(Evented, {
   */
   restoreSelectedRecords(componentName) {
     if (!this.get('_multiRows')[componentName]) {
-      this.get('_multiRows')[componentName] = EmberMap.create();
+      this.get('_multiRows')[componentName] = {};
     }
 
-    this.get('_multiRows')[componentName].forEach((v, i) => {
+    const multiRows = Object.keys(this.get('_multiRows')[componentName] || {});
+    multiRows.forEach((key) => {
       let recordWithKey = EmberObject.create({});
-      recordWithKey.set('key', i);
-      recordWithKey.set('data', v.data);
-      this.get('_selectedRecords')[componentName].set(i, recordWithKey);
+      recordWithKey.set('key', multiRows[key]);
+      recordWithKey.set('data', key.data);
+      this.get('_selectedRecords')[componentName].set(multiRows[key], recordWithKey);
     });
   },
 
@@ -419,14 +418,6 @@ export default Service.extend(Evented, {
   currentLimitFunctions: computed(function () { return {}; }).readOnly(),
 
   /**
-    Form's loading state.
-
-    @property loadingState
-    @type string
-  */
-  loadingState: deprecatingAlias('appState.state', { id: 'service.app-state', until: '1.0.0' }),
-
-  /**
     Service for managing the state of the application.
 
     @property appState
@@ -480,45 +471,6 @@ export default Service.extend(Evented, {
   },
 
   /**
-    Method that sets the form's loading state.
-    This method is deprecated, use {{#crossLink "AppStateService"}}app state service{{/crossLink}}.
-
-    @method setLoadingState
-    @param {String} loadingState Loading state for set.
-  */
-  setLoadingState(loadingState) {
-    deprecate('This method is deprecated, use app state service.', false, {
-      id: 'service.app-state',
-      until: '1.0.0',
-    });
-
-    switch (loadingState) {
-      case 'loading':
-        this.get('appState').loading();
-        break;
-
-      case 'success':
-        this.get('appState').success();
-        break;
-
-      case 'error':
-        this.get('appState').error();
-        break;
-
-      case 'warning':
-        this.get('appState').warning();
-        break;
-
-      case '':
-        this.get('appState').reset();
-        break;
-
-      default:
-        throw new Error(`Unknown state: '${loadingState}'.`);
-    }
-  },
-
-  /**
     Returns map with previously saved selected records for OLV component with specified name.
 
     @method getSelectedRecords
@@ -538,10 +490,8 @@ export default Service.extend(Evented, {
     @param {String} componentName The name of OLV component.
   */
   clearSelectedRecords(componentName) {
-    if (this.get('_selectedRecords')[componentName] &&
-    this.get('_selectedRecords')[componentName].clear &&
-    typeof this.get('_selectedRecords')[componentName].clear === 'function') {
-      this.get('_selectedRecords')[componentName].clear();
+    if (this.get('_selectedRecords')[componentName]) {
+      this.get('_selectedRecords')[componentName] = {};
     }
   },
 

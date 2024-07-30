@@ -36,9 +36,9 @@ module('Integration | Component | form load time tracker', function(hooks) {
     let loadTimeText = i18n.t('components.form-load-time-tracker.load-time');
     let renderTimeText = i18n.t('components.form-load-time-tracker.render-time');
     await render(hbs`{{form-load-time-tracker}}`);
-    assert.equal(this.$().text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2');
+    assert.equal($(this.element).text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2');
 
     await render(hbs`{{#form-load-time-tracker}}Yield here!{{/form-load-time-tracker}}`);
-    assert.equal(this.$().text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2\nYield here!');
+    assert.equal($(this.element).text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2\nYield here!');
   });
 });

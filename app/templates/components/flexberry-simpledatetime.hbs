@@ -1,0 +1,35 @@
+{{#if (and this.currentTypeSupported this.useBrowserInput)}}
+  {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
+{{else}}
+  <div class="ui fluid action input flatpickr">
+    <input type="text" placeholder={{this.placeholder}}/>
+    {{#if this.openButton}}
+      {{#if this.readonlyAttr}}
+        <button
+          class="ui ui-open disabled button"
+          title={{t "components.flexberry-simpledatetime.apply-button-text"}}
+          disabled="disabled"
+          {{action "open" bubbles=false}}>
+          <i class="{{this.type}} icon"></i>
+        </button>
+      {{else}}
+        <button
+          class="ui ui-open button"
+          title={{t "components.flexberry-simpledatetime.apply-button-text"}}
+          {{action "open" bubbles=false}}>
+          <i class="{{this.type}} icon"></i>
+        </button>
+      {{/if}}
+    {{/if}}
+    {{#if this.removeButton}}
+      <button
+        class="ui ui-clear {{if this.readonlyAttr "disabled"}} button"
+        title={{t "components.flexberry-lookup.remove-button-text"}}
+        disabled={{this.readonlyAttr}}
+        type="button"
+        {{action "remove" bubbles=false}}>
+        <i class="remove icon"></i>
+      </button>
+    {{/if}}
+  </div>
+{{/if}}

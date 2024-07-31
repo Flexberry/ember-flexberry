@@ -3220,9 +3220,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 22, "column": 47 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-clear-test.js": [
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 15, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 37 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 35 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-for-each-column-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 7, "column": 3 }

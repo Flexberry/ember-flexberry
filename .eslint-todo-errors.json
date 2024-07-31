@@ -3277,9 +3277,8 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 20 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 35 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 51, "column": 14 }
   ],
   "tests/acceptance/components/flexberry-simpledatetime/flexberry-simpledatetime-manual-enter-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 29 },

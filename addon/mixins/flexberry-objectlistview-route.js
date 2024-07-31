@@ -49,7 +49,7 @@ export default Mixin.create(EditInModalOpen, {
         let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
         let onEditForm = methodOptions.onEditForm;
         let recordId = get(record, 'id') || get(record, 'data.id');
-        let thisRouteName = this.get('router.currentRouteName');
+        let thisRouteName = this.router.currentRouteName;
         let thisRecordId = this.get('currentModel.id');
         let queryParams = {
           modelName: methodOptions.modelName,

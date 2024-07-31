@@ -359,15 +359,6 @@ export default FlexberryBaseComponent.extend({
   onEditForm: false,
 
   /**
-    Primary action for row click.
-
-    @property action
-    @type String
-    @default 'objectListViewRowClick'
-  */
-  action: 'objectListViewRowClick',
-
-  /**
     It indicates current component mode.
      Available values:
      `listform` - simple list form and after row selection it has to be opened corresponding edit form;
@@ -1175,9 +1166,7 @@ export default FlexberryBaseComponent.extend({
         let $clickedRow = this._getRowByKey(record.key || guidFor(record));
         runAfter(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
-            /* eslint-disable ember/closure-actions */
-            this.sendAction('action', record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
-            /* eslint-enable ember/closure-actions */
+            this.rowClick(record);
           } else {
             let editFormRoute = this.get('editFormRoute');
             let editInModal = this.get('editInModal');
@@ -1190,9 +1179,7 @@ export default FlexberryBaseComponent.extend({
               options = Object.assign(options, { editFormRoute: editFormRoute, editInModal: editInModal, useSidePageMode:useSidePageMode });
             }
 
-            /* eslint-disable ember/closure-actions */
-            this.sendAction('action', record, options); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
-            /* eslint-enable ember/closure-actions */
+            this.rowClick(record, options);
           }
         });
 
@@ -1690,7 +1677,15 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _getRowByKey(key) {
-    return $(this.element, `#${key}`)
+    let row = null;
+    $('tbody tr', this.element).each(function() {
+      let currentKey = $(this).find('td:eq(0) div:eq(0)').text().trim();
+      if (currentKey === key) {
+        row = $(this);
+        return;
+      }
+    });
+    return row;
   },
 
   /**
@@ -1703,7 +1698,7 @@ export default FlexberryBaseComponent.extend({
   */
   _setActiveRow($row) {
     // Deactivate previously activated row.
-    $(this.element, 'tbody tr.active').removeClass('active');
+    $('tbody tr.active', this.element).removeClass('active');
 
     // Activate specified row.
     if ($row && $row.addClass) {
@@ -1712,7 +1707,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   _setMenuWidth(tableWidth, containerWidth) {
-    let $table = $(this.element, 'table.object-list-view');
+    let $table = $('table.object-list-view', this.element);
     if (isBlank(tableWidth)) {
       tableWidth = $table.width();
     }
@@ -1722,12 +1717,12 @@ export default FlexberryBaseComponent.extend({
     }
 
     // Using scrollWidth, because Internet Explorer don't receive correct value for this element with .width().
-    let pages = $(this.element, '.ui.secondary.menu .ui.basic.buttons')[0];
+    let pages = $('.ui.secondary.menu .ui.basic.buttons', this.element)[0];
     if (tableWidth < pages.scrollWidth) {
       tableWidth = pages.scrollWidth + 75;
     }
 
-    $(this.element, '.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
+    $('.ui.secondary.menu', this.element).css({ 'width': (this.get('columnsWidthAutoresize') ?
       containerWidth : containerWidth < tableWidth ? containerWidth : tableWidth) + 'px' });
   },
 

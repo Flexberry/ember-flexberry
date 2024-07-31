@@ -869,7 +869,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, {
 
     // Initialize SemanticUI modal dialog, and remember it in a component property,
     // because after call to infoModalDialog.modal its html will disappear from DOM.
-    let infoModalDialog = $(this.element, '.olv-toolbar-info-modal-dialog');
+    let infoModalDialog = $('.olv-toolbar-info-modal-dialog', this.element);
     infoModalDialog.modal('setting', 'closable', true);
     this.set('_infoModalDialog', infoModalDialog);
     let modelController = this.get('modelController');

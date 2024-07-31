@@ -1055,7 +1055,7 @@ export default FlexberryBaseComponent.extend(
         });
         /* eslint-enable ember/avoid-leaking-state-in-ember-objects */
         runAfter(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
-          this.get('action')(recordData, params);
+          this.rowClick(recordData, params);
         });
 
         this._setActiveRecord(recordKey);
@@ -1476,8 +1476,8 @@ export default FlexberryBaseComponent.extend(
 
           if (renderedRowIndex >= contentLength) {
             // The last menu needs will be up.
-            $(this.element, '.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
-            $(this.element, '.object-list-view-menu > .ui.dropdown').dropdown();
+            $('.object-list-view-menu .ui.dropdown', this.element).removeClass('bottom').not(':first').last().addClass('bottom');
+            $('.object-list-view-menu > .ui.dropdown', this.element).dropdown();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1510,7 +1510,7 @@ export default FlexberryBaseComponent.extend(
             if (this.get('allowColumnResize')) {
               this._reinitResizablePlugin();
             } else {
-              let $table = $(this.element, 'table.object-list-view');
+              let $table = $('table.object-list-view', this.element);
               $table.colResizable({ disable: true });
             }
           }
@@ -1521,19 +1521,19 @@ export default FlexberryBaseComponent.extend(
       if (this.get('allowColumnResize')) {
         this._reinitResizablePlugin();
       } else {
-        let $table = $(this.element, 'table.object-list-view');
+        let $table = $('table.object-list-view', this.element);
         $table.colResizable({ disable: true });
       }
 
       // The last menu needs will be up.
-      $(this.element, '.object-list-view-menu .ui.dropdown').removeClass('bottom').not(':first').last().addClass('bottom');
-      $(this.element, '.object-list-view-menu > .ui.dropdown').dropdown();
+      $('.object-list-view-menu .ui.dropdown', this.element).removeClass('bottom').not(':first').last().addClass('bottom');
+      $('.object-list-view-menu > .ui.dropdown', this.element).dropdown();
     }
 
     this._setCurrentColumnsWidth();
 
     if (this.get('fixedHeader')) {
-      let $currentTable = $(this.element, 'table.object-list-view');
+      let $currentTable = $('table.object-list-view', this.element);
       $currentTable.parent().addClass('fixed-header');
 
       this._fixedTableHead($currentTable);
@@ -1598,7 +1598,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _reinitResizablePlugin() {
-    let $currentTable = $(this.element, 'table.object-list-view');
+    let $currentTable = $('table.object-list-view', this.element);
     let cols = this.get('columns');
     let helper = this.get('showHelperColumn');
     let menu = this.get('showMenuColumn');
@@ -1611,11 +1611,11 @@ export default FlexberryBaseComponent.extend(
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
     for (let k = 0; k < fixedColumnsWidth.length; k++) {
       if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
-        $(this.element, '.object-list-view-menu').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+        $('.object-list-view-menu', this.element).css({ 'width': fixedColumnsWidth[k].width + 'px' });
       }
 
       if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
-        $(this.element, '.object-list-view-operations').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+        $('.object-list-view-operations', this.element).css({ 'width': fixedColumnsWidth[k].width + 'px' });
       }
     }
 
@@ -1671,7 +1671,7 @@ export default FlexberryBaseComponent.extend(
 
       userSetting = isArray(userSetting) ? A(userSetting) : A();
 
-      let $table = $(this.element, 'table.object-list-view');
+      let $table = $('table.object-list-view', this.element);
       let $columns = $table.find('th');
 
       if (this.get('allowColumnResize')) {
@@ -1689,7 +1689,7 @@ export default FlexberryBaseComponent.extend(
       let minAutoColumnWidth = this.get('minAutoColumnWidth');
 
       $.each($columns, (key, item) => {
-        let currentItem = $(this.element, item);
+        let currentItem = $(item, this.element);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
         assert('Column property name is not defined', currentPropertyName);
 
@@ -1739,7 +1739,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       $.each($columns, (key, item) => {
-        let currentItem = $(this.element, item);
+        let currentItem = $(item, this.element);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
         assert('Column property name is not defined', currentPropertyName);
 
@@ -1773,9 +1773,9 @@ export default FlexberryBaseComponent.extend(
 
     // Send info to service with user settings.
     let userWidthSettings = [];
-    let $columns = $(this.element, eventParams.currentTarget).find('th');
+    let $columns = $(eventParams.currentTarget, this.element).find('th');
     $.each($columns, (key, item) => {
-      let currentItem = $(this.element, item);
+      let currentItem = $(item, this.element);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
       assert('Column property name is not defined', currentPropertyName);
 
@@ -1886,10 +1886,10 @@ export default FlexberryBaseComponent.extend(
   */
   _setCurrentColumnsWidth() {
     if (!isNone(this.get('currentController'))) {
-      let $columns = $(this.element, 'table.object-list-view').find('th');
+      let $columns = $('table.object-list-view', this.element).find('th');
       let currentWidths = {};
       $.each($columns, (key, item) => {
-        let currentItem = $(this.element, item);
+        let currentItem = $(item, this.element);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
         assert('Column property name is not defined', currentPropertyName);
 
@@ -2368,7 +2368,7 @@ export default FlexberryBaseComponent.extend(
       return row;
     }
 
-    $(this.element, 'tbody tr').each(function() {
+    $('tbody tr', this.element).each(function() {
       let currentKey = $(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
         row = $(this);
@@ -2777,7 +2777,7 @@ export default FlexberryBaseComponent.extend(
   */
   _setActiveRecord(key) {
     // Hide highlight from previously activated row.
-    $(this.element, 'tbody tr.active').removeClass('active');
+    $('tbody tr.active', this.element).removeClass('active');
 
     // Activate specified row.
     let $selectedRow = this._getRowByKey(key);

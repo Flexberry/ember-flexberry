@@ -3246,29 +3246,20 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-toolbar-custom-components-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 24, "column": 5 }
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
+    { "ruleId": "no-unused-vars", "line": 4, "column": 18 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 18, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 22, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 24, "column": 29 },
-    { "ruleId": "ember/no-test-and-then", "line": 26, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 73 }
+    { "ruleId": "ember/no-test-and-then", "line": 22, "column": 3 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 24, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 69 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 25, "column": 27 },
-    { "ruleId": "ember/no-test-and-then", "line": 53, "column": 7 },
-    { "ruleId": "ember/no-test-and-then", "line": 73, "column": 11 },
-    { "ruleId": "ember/no-test-and-then", "line": 77, "column": 13 },
-    { "ruleId": "ember/no-test-and-then", "line": 84, "column": 17 },
-    { "ruleId": "ember/no-test-and-then", "line": 88, "column": 21 },
-    { "ruleId": "ember/no-test-and-then", "line": 136, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 153, "column": 7 },
-    { "ruleId": "no-useless-catch", "line": 157, "column": 11 }
+    { "ruleId": "no-useless-catch", "line": 108, "column": 7 },
+    { "ruleId": "no-useless-catch", "line": 142, "column": 3 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 51, "column": 9 },

@@ -42,6 +42,7 @@ export default EditFormController.extend({
       '  relationName="author"<br>' +
       '  projection="PreviewExampleView"<br>' +
       '  displayAttributeName="name"<br>' +
+      '  orderAttributeName="name"<br>' +
       '  dynamicProperties=dynamicProperties<br>' +
       '  title=(t "forms.components-examples.flexberry-multiple-lookup.multiple-lookup.lookup-title")<br>' +
       '  lookupWindowCustomProperties=lookupWindowCustomProperties<br>' +

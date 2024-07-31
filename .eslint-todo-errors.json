@@ -1419,8 +1419,8 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 68 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-multiple-lookup/multiple-lookup.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 89, "column": 42 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 103, "column": 105 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 90, "column": 42 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 104, "column": 105 }
   ],
   "tests/dummy/app/controllers/components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 16, "column": 46 }

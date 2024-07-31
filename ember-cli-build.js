@@ -29,6 +29,17 @@ module.exports = function (defaults) {
     ]
   });
 
+  app.import({
+    development: 'node_modules/flatpickr/dist/flatpickr.js',
+    production:  'node_modules/flatpickr/dist/flatpickr.min.js'
+  });
+
+  app.import('node_modules/flatpickr/dist/flatpickr.min.css');
+  app.import('node_modules/flatpickr/dist/l10n/ru.js');
+
+  // Script for mask input.
+  app.import('vendor/jquery.maskedinput.min/jquery.maskedinput.min.js');
+
   app.import('vendor/jquery.colResizable/colResizable-1.6.min.js');
 
   /*

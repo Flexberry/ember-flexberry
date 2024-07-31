@@ -3209,9 +3209,8 @@
     { "ruleId": "ember/no-test-and-then", "line": 22, "column": 7 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-paging-navigation-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 20, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 27 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 23, "column": 21 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-by-computable-field-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },

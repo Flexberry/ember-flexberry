@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { get } from '@ember/object';
-import { later } from '@ember/runloop';
+import {settled} from '@ember/test-helpers';
 import { executeTest } from './execute-folv-test';
 import { loadingLocales, refreshListByFunction } from './folv-tests-functions';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
@@ -53,13 +53,11 @@ executeTest('check getCellComponent', async (store, assert, app) => {
   let $refreshButton = $toolBarButtons[0];
   assert.equal($refreshButton.innerText.trim(), get(I18nEnLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
 
-  let timeout = 500;
-  later(async() => {
-    // Apply filter function.
-    let refreshFunction = async function() {
-      let refreshButton = $('.refresh-button')[0];
-      await click(refreshButton);
-    };
+  // Apply filter function.
+  let refreshFunction = async function() {
+  let refreshButton = $('.refresh-button')[0];
+  await click(refreshButton);
+  };
 
   // Apply filter.
   await refreshListByFunction(refreshFunction, controller);
@@ -76,19 +74,18 @@ executeTest('check getCellComponent', async (store, assert, app) => {
   assert.ok(resultDateTime, 'date format is \'DD.MM.YYYY, hh:mm:ss\' ');
   controller.set('dateFormat', '3');
 
-  later(async () => {
-    await refreshListByFunction(refreshFunction, controller);
-    let $list =  $(olvContainerClass);
-    assert.ok($list, 'list loaded');
+  await settled();
 
-    /* eslint-disable no-useless-escape */
-    // Date format most be II (example Sep 4 1986).
-    let reDateString = /[a-zA-Z]{3} ([1-9]|[12][0-9]|3[01])\, (19|20)\d\d/;
-    let arrayDateString = reDateString.exec($dateCell());
-    /* eslint-enable no-useless-escape */
+  await refreshListByFunction(refreshFunction, controller);
+  $list =  $(olvContainerClass);
+  assert.ok($list, 'list loaded');
 
-    let resultDateString = arrayDateString ? arrayDateString[0] : null;
-    assert.ok(resultDateString, 'date format is \'ll\' ');
-    }, timeout);
-  }, timeout);
+  /* eslint-disable no-useless-escape */
+  // Date format most be II (example Sep 4 1986).
+  let reDateString = /[a-zA-Z]{3} ([1-9]|[12][0-9]|3[01])\, (19|20)\d\d/;
+  let arrayDateString = reDateString.exec($dateCell());
+  /* eslint-enable no-useless-escape */
+
+  let resultDateString = arrayDateString ? arrayDateString[0] : null;
+  assert.ok(resultDateString, 'date format is \'ll\' ');
 });

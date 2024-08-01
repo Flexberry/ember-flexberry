@@ -103,7 +103,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownIcon = $component.children('i.icon');
     let $dropdownText = $component.children('div.text');
     let $dropdownMenu = $component.children('div.menu');
@@ -150,7 +150,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     await render(hbs`{{flexberry-dropdown}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownText = $component.children('div.default.text');
 
     // Check <dropdown>'s placeholder.
@@ -202,7 +202,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
   
     // Activate readonly mode & check that readonly (disabled) attribute exists now & has value equals to 'readonly'.
@@ -275,7 +275,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
     let $dropdownItem = $dropdownMenu.children('div.item');
   
@@ -303,7 +303,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
     let $dropdownItem = $dropdownMenu.children('div.item');
   
@@ -329,7 +329,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
   
     // Check that component is collapsed by default.
@@ -377,7 +377,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
   
     let asyncAnimationsCompleted = assert.async();
@@ -435,7 +435,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $dropdownMenu = $component.children('div.menu');
   
     // Caption of the item to be selected.
@@ -498,7 +498,7 @@ module('Integration | Component | flexberry-dropdown', function(hooks) {
     }}`);
   
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
   
     // Caption of the item to be selected.
     let itemCaption = itemsArray[2];

@@ -3141,8 +3141,13 @@
     { "ruleId": "ember/no-test-and-then", "line": 29, "column": 9 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js": [
+    { "ruleId": "no-unused-vars", "line": 3, "column": 8 },
     { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 45, "column": 9 }
+    { "ruleId": "no-undef", "line": 36, "column": 11 },
+    { "ruleId": "no-undef", "line": 37, "column": 15 },
+    { "ruleId": "no-undef", "line": 42, "column": 13 },
+    { "ruleId": "no-undef", "line": 71, "column": 19 },
+    { "ruleId": "no-undef", "line": 81, "column": 19 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-e-form-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 }
@@ -3174,9 +3179,8 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-getCellComponent-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 50, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 78, "column": 22 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 50, "column": 14 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 77, "column": 14 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-goto-editform-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },

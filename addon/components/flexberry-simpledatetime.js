@@ -4,11 +4,11 @@
 
 import { computed, observer } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import $ from 'jquery';
 import moment from 'moment';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
-//import { translationMacro as t } from 'ember-i18n';
 
 /**
   Wrapper for input[type='date/datetime/datetime-local'] component.
@@ -30,6 +30,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  intl: service(),
 
   /**
     Store current value as Date object.
@@ -211,7 +212,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default 't('components.flexberry-simpledatetime.placeholder')'
   */
-  placeholder: 'components.flexberry-simpledatetime.placeholder', //t('components.flexberry-simpledatetime.placeholder'),
+  placeholder: undefined,
 
   /**
     Array CSS class names.
@@ -505,7 +506,7 @@ export default FlexberryBaseComponent.extend({
       defaultHour: this.get('defaultHour'),
       defaultMinute: this.get('defaultMinute'),
       appendTo: calendarContext ? $(calendarContext).get(0) : undefined,
-      locale: this.get('locale') || this.get('i18n.locale'),
+      locale: this.get('locale') || this.get('intl.primaryLocale'),
       altFormat: timeless ? this.altDateFormat : this.altDateTimeFormat,
       dateFormat: timeless ? this.dateFormat : this.dateTimeFormat,
       onChange: () => {
@@ -561,7 +562,7 @@ export default FlexberryBaseComponent.extend({
 
     @method reinitFlatpickrObserver
   */
-  reinitFlatpickrObserver: observer('type', 'min', 'max', 'locale', 'i18n.locale', 'defaultHour', 'defaultMinute', function () {
+  reinitFlatpickrObserver: observer('type', 'min', 'max', 'locale', 'this.intl.primaryLocale', 'defaultHour', 'defaultMinute', function () {
     if (!this.get('useBrowserInput') || !this.get('currentTypeSupported')) {
       this._flatpickrDestroy();
       scheduleOnce('afterRender', this, this._flatpickrCreate);

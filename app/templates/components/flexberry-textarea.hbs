@@ -2,7 +2,7 @@
   @value={{this.value}}
   readonly={{this.readonly}}
   required={{this.required}}
-  placeholder={{this.placeholder}}
+  placeholder={{(if this.placeholder this.placeholder (t 'components.flexberry-textarea.placeholder'))}}
   rows={{this.rows}}
   cols={{this.cols}}
   disabled={{this.disabled}}

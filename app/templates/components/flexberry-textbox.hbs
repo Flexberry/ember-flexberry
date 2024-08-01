@@ -4,7 +4,7 @@
     @value={{readonly this.value}}
     readonly="readonly"
     required={{this.required}}
-    placeholder={{this.placeholder}}
+    placeholder={{(if this.placeholder this.placeholder (t 'components.flexberry-textbox.placeholder'))}}
     maxlength={{this.maxlength}}
   />
 {{else}}
@@ -12,7 +12,7 @@
     @type={{this.type}}
     @value={{this.value}}
     required={{this.required}}
-    placeholder={{this.placeholder}}
+    placeholder={{(if this.placeholder this.placeholder (t 'components.flexberry-textbox.placeholder'))}}
     maxlength={{this.maxlength}}
   />
 {{/if}}

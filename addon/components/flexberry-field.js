@@ -109,8 +109,6 @@ export default FlexberryBaseComponent.extend({
   init() {
     this._super(...arguments);
 
-    this.set('placeholder', this.intl.t('components.flexberry-field.placeholder'));
-
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
   },

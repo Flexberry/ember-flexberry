@@ -7,6 +7,6 @@
   value=this.value
   readonly=(if this.readonly "readonly")
   required=this.required
-  placeholder=this.placeholder
+  placeholder=(if this.placeholder this.placeholder (t 'components.flexberry-field.placeholder'))
   maxlength=this.maxlength
 }}

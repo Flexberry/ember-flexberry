@@ -1,8 +1,8 @@
 {{#if (and this.currentTypeSupported this.useBrowserInput)}}
-  {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
+  {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=(if this.placeholder this.placeholder (t 'components.flexberry-simpledatetime.placeholder'))}}
 {{else}}
   <div class="ui fluid action input flatpickr">
-    <input type="text" placeholder={{this.placeholder}}/>
+    <input type="text" placeholder={{(if this.placeholder this.placeholder (t 'components.flexberry-simpledatetime.placeholder'))}}/>
     {{#if this.openButton}}
       {{#if this.readonlyAttr}}
         <button

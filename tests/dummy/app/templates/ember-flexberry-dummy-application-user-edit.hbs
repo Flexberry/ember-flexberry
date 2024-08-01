@@ -49,12 +49,12 @@
       <div class="two fields">
         <div class="field">
           <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
-          {{!--flexberry-simpledatetime
+          {{flexberry-simpledatetime
             type="date"
             value=this.model.birthday
             class=(if this.validationModel.errors.birthday "error")
             readonly=this.readonly
-          --}}
+          }}
           {{flexberry-validationmessage error=this.validationModel.errors.birthday}}
         </div>
         <div class="field">

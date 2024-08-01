@@ -39,7 +39,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -81,7 +81,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s readonly attribute doesn't exist yet.
@@ -117,7 +117,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     $textareaInput.on('change', (e) => {
@@ -149,7 +149,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     await render(hbs`{{flexberry-textarea}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check <textarea>'s placeholder.
@@ -177,7 +177,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check <textarea>'s placeholder.
@@ -205,7 +205,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s required attribute doesn't exist yet.
@@ -239,7 +239,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s disabled attribute doesn't exist yet.
@@ -273,7 +273,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s autofocus attribute doesn't exist yet.
@@ -307,7 +307,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s spellcheck attribute doesn't exist yet.
@@ -341,7 +341,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s wrap attribute 'soft'.
@@ -383,7 +383,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Retrieve default rows count for current browser.
@@ -417,7 +417,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Retrieve default rows count for current browser.
@@ -451,7 +451,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     //Generate a random value 'maxlength' and convert to a string.
@@ -482,7 +482,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
@@ -525,7 +525,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
@@ -562,7 +562,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check that <textarea>'s hasn\'t value selectionDirection attribute.
@@ -583,7 +583,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check <textarea>'s value & binded value for initial emptyness.
@@ -622,7 +622,7 @@ module('Integration | Component | flexberry-textarea', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $textareaInput = $component.children('textarea');
 
     // Check <textarea>'s value & binded value for initial emptyness.

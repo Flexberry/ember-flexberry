@@ -290,7 +290,8 @@ module('Integration | Component | flexberry toggler', function(hooks) {
         Hello!
       {{/flexberry-toggler}}`);
 
-    assert.notOk($(this.element).find('.flexberry-toggler .content').hasClass('active'));
+      const element = this.element.querySelector('.flexberry-toggler .content');
+      assert.notOk(element && element.classList.contains('active'));
 
     $('.flexberry-toggler .title', this.element).click();
 
@@ -330,9 +331,10 @@ module('Integration | Component | flexberry toggler', function(hooks) {
       Hello!
     {{/flexberry-toggler}}`);
 
+    let element = this.element.querySelector('.flexberry-toggler');
     assert.ok($('.flexberry-toggler', this.element).hasClass('has-shadow'));
     this.set('hasShadow', false);
-    assert.notOk($(this.element).find('.flexberry-toggler .content').hasClass('has-shadow'));
+    assert.notOk(element.classList.contains('has-shadow'));
   });
 
   test('Components property hasBorder works properly', async function(assert) {
@@ -347,6 +349,7 @@ module('Integration | Component | flexberry toggler', function(hooks) {
 
     assert.ok($('.flexberry-toggler', this.element).hasClass('has-border'));
     this.set('hasBorder', false);
-    assert.notOk($(this.element).find('.flexberry-toggler').hasClass('has-border'));
+    const element = this.element.querySelector('.flexberry-toggler');
+    assert.notOk(element.classList.contains('has-border'));
   });
 });

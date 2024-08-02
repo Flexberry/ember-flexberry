@@ -2,36 +2,36 @@ import { run } from '@ember/runloop';
 import { A, isArray } from '@ember/array';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
-
 let dataForDestroy = A();
 let app;
-
 export function executeTest(testName, callback) {
   let store;
   let userSettingsService;
 
-  module('Acceptance | flexberry-objectlistview | ' + testName, function(hooks) {
-    hooks.beforeEach(function() {
+  module('Acceptance | flexberry-objectlistview | ' + testName, {
+    beforeEach() {
       run(() => {
         // Start application.
         app = startApp();
 
-        // Disable logging service.
-        let logService = app.__container__.lookup('service:log');
-        logService.set('enabled', false);
+        // Just take it and turn it off...
+        app.__container__.lookup('service:log').set('enabled', false);
 
-        // Enable acceptance test mode in application controller.
+        // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
         let applicationController = app.__container__.lookup('controller:application');
         applicationController.set('isInAcceptanceTestMode', true);
-
         store = app.__container__.lookup('service:store');
 
         userSettingsService = app.__container__.lookup('service:user-settings');
-        userSettingsService.set('getCurrentPerPage', () => 5);
-      });
-    });
+        let getCurrentPerPage = function() {
+          return 5;
+        };
 
-    hooks.afterEach(function() {
+        userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
+      });
+    },
+
+    afterEach() {
       run(() => {
         if (dataForDestroy.length !== 0) {
           recursionDelete(0);
@@ -39,21 +39,19 @@ export function executeTest(testName, callback) {
           run(app, 'destroy');
         }
       });
-    });
-
-    test(testName, function(assert) {
-      return callback(store, assert, app);
-    });
+    }
   });
+
+  test(testName, (assert) => callback(store, assert, app));
 }
 
 /**
   Function to delete data after testing.
-
   @public
   @method addDataForDestroy
   @param {Object} data  or array of Object.
  */
+
 export function addDataForDestroy(data) {
   if (isArray(data)) {
     dataForDestroy.addObjects(data);
@@ -62,18 +60,17 @@ export function addDataForDestroy(data) {
   }
 }
 
-function recursionDelete(index, resolve) {
+function recursionDelete(index) {
   if (index < dataForDestroy.length) {
     if (!dataForDestroy[index].currentState.isDeleted) {
       dataForDestroy[index].destroyRecord().then(() => {
-        recursionDelete(index + 1, resolve);
+        recursionDelete(index + 1);
       });
     } else {
-      recursionDelete(index + 1, resolve);
+      recursionDelete(index + 1);
     }
   } else {
     dataForDestroy.clear();
     run(app, 'destroy');
-    resolve();
   }
 }

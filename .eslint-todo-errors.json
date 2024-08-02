@@ -749,6 +749,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 483, "column": 55 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 484, "column": 55 }
   ],
+  "tests/acceptance/components/flexberry-dropdown/flexberry-dropdown-conditional-render-test.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 14, "column": 27 }
+  ],
   "tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 27 },
     { "ruleId": "ember/no-test-and-then", "line": 34, "column": 3 },

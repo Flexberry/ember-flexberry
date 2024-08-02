@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { A } from '@ember/array';
-import { later, run } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import RSVP from 'rsvp';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';

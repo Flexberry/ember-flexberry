@@ -1,7 +1,7 @@
 import { executeTest } from './execute-folv-test';
 import { openEditFormByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
-executeTest('check edit button in row', async (store, assert, app) => {
+executeTest('check edit button in row', async (store, assert) => {
   assert.expect(3);
   const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   

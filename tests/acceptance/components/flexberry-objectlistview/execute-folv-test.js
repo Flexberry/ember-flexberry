@@ -11,7 +11,7 @@ export function executeTest(testName, callback) {
   let userSettingsService;
 
   module('Acceptance | flexberry-objectlistview | ' + testName, function(hooks) {
-    hooks.beforeEach(function(assert) {
+    hooks.beforeEach(function() {
       run(() => {
         // Start application.
         app = startApp();
@@ -31,7 +31,7 @@ export function executeTest(testName, callback) {
       });
     });
 
-    hooks.afterEach(function(assert) {
+    hooks.afterEach(function() {
       run(() => {
         if (dataForDestroy.length !== 0) {
           recursionDelete(0);

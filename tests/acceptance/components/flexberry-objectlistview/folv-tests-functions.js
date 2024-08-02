@@ -1,5 +1,7 @@
 import $ from 'jquery';
 import { A } from '@ember/array';
+import { later, run } from '@ember/runloop';
+import RSVP from 'rsvp';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';
 
@@ -7,7 +9,7 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Функция ожидания загрузки списка.
+// Function for waiting list loading.
 export async function loadingList($ctrlForClick, list, records) {
   $ctrlForClick.click();
 
@@ -19,7 +21,7 @@ export async function loadingList($ctrlForClick, list, records) {
     await delay(checkInterval);
     let $list = $(list);
     let $records = $(records, $list);
-    
+
     if ($records.length > 0) {
       return $list; // Данные загружены
     }
@@ -29,51 +31,50 @@ export async function loadingList($ctrlForClick, list, records) {
 }
 
 /**
- * Функция ожидания загрузки формы редактирования после ее открытия.
- * 
- * @public
- * @method openEditFormByFunction
- * @param {Function} openEditFormFunction Метод для открытия формы.
+  Function for waiting editform loading afther open editform by function at acceptance test.
+  @public
+  @method openEditFormByFunction
+  @param {Function} openEditFormFunction Method options.
  */
-export async function openEditFormByFunction(openEditFormFunction) {
-  openEditFormFunction();
+  export async function openEditFormByFunction(openEditFormFunction) {
+    openEditFormFunction();
   
-  let checkInterval = 500;
-  let timeoutDuration = 10000;
-
-  let startTime = Date.now();
-  while (Date.now() - startTime < timeoutDuration) {
-    await delay(checkInterval);
-    
-    if ($('.ui.button.close-button').length > 0) {
-      await delay(100); // Ждем рендеринга
-      return; // Форма загружена
+    let checkInterval = 500;
+    let timeoutDuration = 10000;
+  
+    let startTime = Date.now();
+    while (Date.now() - startTime < timeoutDuration) {
+      await delay(checkInterval);
+  
+      if ($('.ui.button.close-button').length > 0) {
+        await delay(100); // Ждем рендеринга
+        return; // Форма загружена
+      }
     }
+  
+    throw new Error('editForm load operation is timed out');
   }
 
-  throw new Error('editForm load operation is timed out');
-}
-
 /**
- * Функция ожидания загрузки списка после обновления.
- * 
- * @public
- * @method refreshListByFunction
- * @param {Function} refreshFunction Метод для обновления.
- * @param {Object} controller Текущий контроллер формы.
- */
+  * Функция ожидания загрузки списка после обновления.
+  * 
+  * @public
+  * @method refreshListByFunction
+  * @param {Function} refreshFunction Метод для обновления.
+  * @param {Object} controller Текущий контроллер формы.
+  */
 export async function refreshListByFunction(refreshFunction, controller) {
   let checkInterval = 500;
   let renderInterval = 100;
   let timeoutDuration = 10000;
-  
+
   let lastLoadCount = controller.loadCount;
   refreshFunction();
 
   let startTime = Date.now();
   while (Date.now() - startTime < timeoutDuration) {
     await delay(checkInterval);
-    
+
     let loadCount = controller.loadCount;
     if (loadCount !== lastLoadCount) {
       await delay(renderInterval); // Ждем рендеринга
@@ -84,52 +85,73 @@ export async function refreshListByFunction(refreshFunction, controller) {
   throw new Error('ListForm load operation is timed out');
 }
 
-// Функция для проверки сортировки.
+// Function for check sorting.
 export async function checkSortingList(store, projection, $olv, ordr) {
   let modelName = projection.modelName;
-  let builder = new Builder(store).from(modelName).selectByProjection(projection.projectionName).skip(0);
-  if (ordr) {
-    builder.orderBy(ordr);
-  }
-  
-  let records = await store.query(modelName, builder.build());
-  let recordsArr = records.toArray();
-  let $tr = $('table.object-list-view tbody tr').toArray();
+  let builder = new Builder(store)
+    .from(modelName)
+    .selectByProjection(projection.projectionName)
+    .skip(0);
 
-  return $tr.every((current, i) => {
-    let expectVal = recordsArr[i] ? recordsArr[i].get('address') : '';
-    return $.trim(current.children[1].innerText) === expectVal;
-  });
+  if (ordr) {
+    builder = builder.orderBy(ordr);
+  }
+
+  let isSortingValid;
+  try {
+    let records = await store.query(modelName, builder.build());
+    let recordsArr = records.toArray();
+    let $tr = $('table.object-list-view tbody tr').toArray();
+
+    isSortingValid = $tr.reduce((sum, current, i) => {
+      let expectVal = (recordsArr[i] && recordsArr[i].get('address')) ? recordsArr[i].get('address') : '';
+      return sum && ($.trim(current.children[1].innerText) === expectVal);
+    }, true);
+  } catch (error) {
+    console.error('Error fetching records:', error);
+    isSortingValid = false;
+  }
+
+  return isSortingValid;
 }
 
-// Функция для добавления записей.
-export async function addRecords(store, modelName, uuid) {
-  let promises = [];
+// Function for addition records.
+export function addRecords(store, modelName, uuid) {
+  let promises = A();
   let listCount = 55;
 
-  let builder = new Builder(store).from(modelName).count();
-  let result = await store.query(modelName, builder.build());
-  let howAddRec = listCount - result.meta.count;
+  try {
+    let builder = new Builder(store).from(modelName).count();
+    store.query(modelName, builder.build()).then((result) => {
+      let howAddRec = listCount - result.meta.count;
+      let newRecords = A();
 
-  for (let i = 0; i < howAddRec; i++) {
-    let newRecord = store.createRecord(modelName, 
-      modelName === 'ember-flexberry-dummy-application-user'
-        ? { name: uuid, eMail: uuid, phone1: uuid }
-        : { name: uuid });
-    promises.push(newRecord.save());
+      for (let i = 0; i < howAddRec; i++) {
+        newRecords.pushObject(
+          store.createRecord(modelName,
+            modelName == 'ember-flexberry-dummy-application-user'
+            ? { name: uuid, eMail: uuid, phone1: uuid }
+            : { name: uuid }));
+      }
+
+      newRecords.forEach(function(item) {
+        promises.push(item.save());
+      });
+    });
+  } catch (error) {
+    console.error('Error adding records:', error);
   }
-
-  return Promise.all(promises);
+  return RSVP.Promise.all(promises);
 }
 
-// Функция для удаления записей.
+// Function for deleting records.
 export async function deleteRecords(store, modelName, uuid) {
   let builder = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid);
   let records = await store.query(modelName, builder.build());
   return Promise.all(records.map(record => record.destroyRecord()));
 }
 
-// Функция ожидания загрузки локалей.
+// Function for waiting loading list.
 export async function loadingLocales(locale, app) {
   let i18n = app.__container__.lookup('service:i18n');
   i18n.set('locale', locale);
@@ -137,50 +159,59 @@ export async function loadingLocales(locale, app) {
   return { msg: 'ok' };
 }
 
-// Функция для фильтрации object-list-view по списку операций и значений.
+// Function for filter object-list-view by list of operations and values.
 export async function filterObjectListView(objectListView, operations, filterValues) {
-  let promises = [];
-
   let tableBody = objectListView.children('tbody');
   let tableRow = $(tableBody.children('tr'));
   let tableColumns = $(tableRow[0]).children('td');
 
+  let promises = [];
+
   for (let i = 0; i < tableColumns.length; i++) {
     if (operations[i]) {
-      promises.push(filterColumn(objectListView, i, operations[i], filterValues[i]));
+      promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
     }
   }
 
   return Promise.all(promises);
 }
 
-// Функция для фильтрации object-list-view по одной колонке.
-export async function filterColumn(objectListView, columnNumber, operation, filterValue) {
-  let tableBody = objectListView.children('tbody');
-  let tableRow = tableBody.children('tr');
+// Function for filter object-list-view at one column by operations and values.
+export async function filterCollumn(objectListView, columnNumber, operation, filterValue) {
+  return new Promise((resolve) => {
+    let tableBody = objectListView.children('tbody');
+    let tableRow = tableBody.children('tr');
 
-  let filterOperation = $(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
-  let filterValueCell = $(tableRow[1]).children('td')[columnNumber];
+    let filterOperation = $(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
+    let filterValueCell = $(tableRow[1]).children('td')[columnNumber];
 
-  // Выбираем существующий элемент.
-  $(filterOperation).dropdown('set selected', operation);
+    // Select an existing item.
+    $(filterOperation).dropdown('set selected', operation);
 
-  let dropdown = $(filterValueCell).find('.flexberry-dropdown');
-  let textbox = $(filterValueCell).find('.ember-text-field');
+    let dropdown = $(filterValueCell).find('.flexberry-dropdown');
+    let textbox = $(filterValueCell).find('.ember-text-field');
 
-  if (textbox.length !== 0) {
-    await fillIn(textbox, filterValue);
-  }
+    let fillPromise;
+    if (textbox.length !== 0) {
+      fillPromise = fillIn(textbox, filterValue);
+    }
 
-  if (dropdown.length !== 0) {
-    $(dropdown).dropdown('set selected', filterValue);
-  }
+    if (dropdown.length !== 0) {
+      dropdown.dropdown('set selected', filterValue);
+    }
 
-  // Ждем небольшую задержку перед завершением
-  await delay(300);
+    if (fillPromise) {
+      fillPromise.then(() => resolve());
+    } else {
+      let timeout = 300;
+      later((() => {
+        resolve();
+      }), timeout);
+    }
+
+  });
 }
 
-// Функция для получения условий сортировки.
 export function getOrderByClause(currentSorting) {
   return Object.keys(currentSorting)
     .map(key => ({

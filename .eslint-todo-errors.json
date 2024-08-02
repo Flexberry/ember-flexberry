@@ -3141,13 +3141,7 @@
     { "ruleId": "ember/no-test-and-then", "line": 29, "column": 9 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js": [
-    { "ruleId": "no-unused-vars", "line": 3, "column": 8 },
-    { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
-    { "ruleId": "no-undef", "line": 36, "column": 11 },
-    { "ruleId": "no-undef", "line": 37, "column": 15 },
-    { "ruleId": "no-undef", "line": 42, "column": 13 },
-    { "ruleId": "no-undef", "line": 71, "column": 19 },
-    { "ruleId": "no-undef", "line": 81, "column": 19 }
+    { "ruleId": "ember/no-test-import-export", "line": 6, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-e-form-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 }
@@ -3157,12 +3151,21 @@
     { "ruleId": "ember/no-test-and-then", "line": 7, "column": 3 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-with-details-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "no-unused-vars", "line": 2, "column": 23 },
-    { "ruleId": "no-unused-vars", "line": 8, "column": 58 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 86, "column": 41 },
-    { "ruleId": "ember/no-test-and-then", "line": 103, "column": 9 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 140, "column": 33 }
+    { "ruleId": "no-unused-vars", "line": 1, "column": 8 },
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
+    { "ruleId": "no-unused-vars", "line": 3, "column": 23 },
+    { "ruleId": "no-unused-vars", "line": 7, "column": 10 },
+    { "ruleId": "no-unused-vars", "line": 9, "column": 64 },
+    { "ruleId": "ember/no-global-jquery", "line": 54, "column": 26 },
+    { "ruleId": "no-undef", "line": 54, "column": 26 },
+    { "ruleId": "ember/no-global-jquery", "line": 55, "column": 32 },
+    { "ruleId": "no-undef", "line": 55, "column": 32 },
+    { "ruleId": "no-undef", "line": 64, "column": 24 },
+    { "ruleId": "no-undef", "line": 76, "column": 24 },
+    { "ruleId": "ember/no-global-jquery", "line": 78, "column": 27 },
+    { "ruleId": "no-undef", "line": 78, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 88, "column": 41 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 136, "column": 31 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-dropdown-filter-for-directories-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },

@@ -33,3 +33,4 @@ module( 'Integration | Component | flexberry-validationsummary', function(hooks)
   });
 });
 
+

@@ -1739,22 +1739,6 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 19 }
   ],
-  "tests/integration/components/flexberry-validationsummary-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 18 },
-    { "ruleId": "ember/no-global-jquery", "line": 15, "column": 15 },
-    { "ruleId": "no-undef", "line": 15, "column": 15 },
-    { "ruleId": "ember/no-global-jquery", "line": 20, "column": 15 },
-    { "ruleId": "no-undef", "line": 20, "column": 15 },
-    { "ruleId": "ember/no-global-jquery", "line": 21, "column": 15 },
-    { "ruleId": "no-undef", "line": 21, "column": 15 },
-    { "ruleId": "ember/no-global-jquery", "line": 24, "column": 43 },
-    { "ruleId": "no-undef", "line": 24, "column": 43 },
-    { "ruleId": "ember/no-global-jquery", "line": 26, "column": 18 },
-    { "ruleId": "no-undef", "line": 26, "column": 18 },
-    { "ruleId": "ember/no-global-jquery", "line": 29, "column": 15 },
-    { "ruleId": "no-undef", "line": 29, "column": 15 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 18 }
-  ],
   "tests/integration/components/form-load-time-tracker-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 38, "column": 18 },
     { "ruleId": "hbs/check-hbs-template-literals", "line": 41, "column": 18 }

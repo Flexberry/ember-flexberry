@@ -188,12 +188,12 @@ module('Integration | Component | flexberry-groupedit', function(hooks) {
             searchForContentChange=searchForContentChange
           }}`);
   
-      assert.equal(this.$('.object-list-view').find('tr').length, 2);
+      assert.equal($(this.element, '.object-list-view').find('tr').length, 2);
   
       let $detailsAtributes = this.get('proj.attributes.details.attributes');
       let $detailsAtributesArray = Object.keys($detailsAtributes);
   
-      let $component = this.$().children();
+      let $component = $(this.element).children();
       let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
   
       // Check groupedit-toolbar <div>.
@@ -429,7 +429,7 @@ module('Integration | Component | flexberry-groupedit', function(hooks) {
             defaultSettingsButton=false
           }}`);
   
-      let $component = this.$().children();
+      let $component = $(this.element).children();
       let $componentButtons = $('.ui.button', $component);
   
       assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
@@ -974,3 +974,4 @@ module('Integration | Component | flexberry-groupedit', function(hooks) {
     assert.strictEqual($componentOlvFirstHead.innerText === valueMainModelProjection.toString(), true, 'Header has text \'Vote type\'');
   });
 });
+

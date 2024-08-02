@@ -69,7 +69,7 @@ module('Integration | Component | flexberry-simpledatetime', function(hooks) {
       }}`);
 
     // Retrieve component.
-    let $component = this.$();
+    let $component = $(this.element);
     let $componentInput = $('.flatpickr-input.custom-flatpickr', $component);
 
     // Click on component to open calendar.
@@ -94,7 +94,7 @@ module('Integration | Component | flexberry-simpledatetime', function(hooks) {
       }}`);
 
     // Retrieve component.
-    let $component = this.$();
+    let $component = $(this.element);
     let $componentInput = Ember.$('.custom-flatpickr', $component);
 
     Ember.run(() => {

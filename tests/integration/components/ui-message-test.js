@@ -16,7 +16,7 @@ module('Integration | Component | ui-message', function(hooks) {
     await render(hbs`{{ui-message}}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
@@ -32,7 +32,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check component's syze's types.
     let sizeTypes = A(['small', 'large', 'huge', 'massive']);
@@ -66,7 +66,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check component's type's CSS-classes.
     let typeCssClasses = A(['warning', 'info', 'positive', 'success', 'negative', 'error']);
@@ -100,7 +100,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check component's color's CSS-classes.
     let colorCssClasses = A(['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'black']);
@@ -134,7 +134,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.hasClass('floating'), false, 'Component\'s wrapper hasn\'t \'floating\' css-class');
@@ -155,7 +155,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // Check wrapper <div>.
     assert.strictEqual($component.hasClass('attached'), false, 'Component\'s wrapper hasn\'t \'attached\' css-class');
@@ -177,7 +177,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $closeableIcon = $component.children('i');
 
     // Component is visible.
@@ -204,7 +204,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $closeableIcon = $component.children('i');
 
     assert.strictEqual($closeableIcon.hasClass('close'), true, 'Component\'s close icon has css-class \'close\'');
@@ -221,7 +221,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $captionText = $component.children('div');
     let $massageText = $component.children('p');
 
@@ -241,7 +241,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $messageIcon = $component.children('i');
     let $captionDiv = $component.children('div.content');
     let $captionText = $captionDiv.children('div.header');
@@ -271,7 +271,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
     let $closeableIcon = $component.children('i');
 
     // The component is visible.
@@ -305,7 +305,7 @@ module('Integration | Component | ui-message', function(hooks) {
     }}`);
 
     // Retrieve component.
-    let $component = this.$().children();
+    let $component = $(this.element).children();
 
     // The component is hidden.
     this.set('visible', false);

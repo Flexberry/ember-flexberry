@@ -4,6 +4,7 @@ import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import $ from 'jquery';
 
 module( 'Integration | Component | flexberry-validationsummary', function(hooks) {
   setupRenderingTest(hooks);

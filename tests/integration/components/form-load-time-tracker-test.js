@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
+import $ from 'jquery';
 
 const formLoadTimeTracker = Service.extend({
   loadTime: 1.0000,
@@ -42,3 +43,4 @@ module('Integration | Component | form load time tracker', function(hooks) {
     assert.equal($(this.element).text().trim(), loadTimeText + ': 1\n' + renderTimeText + ': 2\nYield here!');
   });
 });
+

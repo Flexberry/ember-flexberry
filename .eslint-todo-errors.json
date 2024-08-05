@@ -1724,7 +1724,7 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 42, "column": 18 }
   ],
   "tests/integration/components/olv-filter-interval-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 13, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 14, "column": 18 }
   ],
   "tests/integration/components/ui-message-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 18 },

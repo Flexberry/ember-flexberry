@@ -1706,8 +1706,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 18 }
   ],
   "tests/integration/components/form-load-time-tracker-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 38, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 41, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 39, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 42, "column": 18 }
   ],
   "tests/integration/components/groupedit-toolbar-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 15, "column": 18 },

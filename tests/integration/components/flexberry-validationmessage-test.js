@@ -2,8 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import $ from 'jquery';
 
-module('flexberry-validationmessage', 'Integration | Component | flexberry-validationmessage', function(hooks) {
+module('Integration | Component | flexberry-validationmessage', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and works', async function (assert) {

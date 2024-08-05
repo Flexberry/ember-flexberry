@@ -1728,8 +1728,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 19 }
   ],
   "tests/integration/components/flexberry-validationsummary-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 31, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 13, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 18 }
   ],
   "tests/integration/components/form-load-time-tracker-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 38, "column": 18 },

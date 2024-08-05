@@ -18,7 +18,7 @@ module( 'Integration | Component | flexberry-validationsummary', function(hooks)
     run(() => {
       errors.pushObject('Validation error.');
     });
-    assert.ok($(this.element, '.ui.message').is(':visible'), 'Component is visible if there errors.');
+    assert.ok($('.ui.message', this.element).is(':visible'), 'Component is visible if there errors.');
     assert.ok($(this.element).text().trim(), 'Validation error.', 'Component shows errors at added.');
 
     this.set('header', 'Validation errors');
@@ -30,7 +30,7 @@ module( 'Integration | Component | flexberry-validationsummary', function(hooks)
     assert.ok($('.ui.message', this.element).hasClass('blue'), 'Color works through CSS class.');
 
     await render(hbs`{{flexberry-validationsummary}}`);
-    assert.ok($('.ui.message',this.element).hasClass('red'), `Default color 'red'.`);
+    assert.ok($('.ui.message', this.element).hasClass('red'), `Default color 'red'.`);
   });
 });
 

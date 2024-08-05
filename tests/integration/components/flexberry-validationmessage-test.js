@@ -22,8 +22,8 @@ module('Integration | Component | flexberry-validationmessage', function(hooks) 
     this.set('error', ['First error.', 'Second error.']);
     assert.equal($(this.element).text().trim(), 'First error.,Second error.', 'Component shows all errors.');
 
-    assert.notOk($(this.element, '.ui.label').hasClass('red'), 'Override default color with undefined value.');
-    assert.notOk($(this.element, '.ui.label').hasClass('pointing'), 'Override default pointing with undefined value.');
+    assert.notOk($('.ui.label', this.element).hasClass('red'), 'Override default color with undefined value.');
+    assert.notOk($('.ui.label', this.element).hasClass('pointing'), 'Override default pointing with undefined value.');
 
     this.set('color', 'pink');
     this.set('pointing', 'left pointing');

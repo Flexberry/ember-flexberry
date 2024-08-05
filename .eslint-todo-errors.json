@@ -1724,8 +1724,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 340, "column": 18 }
   ],
   "tests/integration/components/flexberry-validationmessage-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 10, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 32, "column": 19 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 33, "column": 19 }
   ],
   "tests/integration/components/flexberry-validationsummary-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 18 },

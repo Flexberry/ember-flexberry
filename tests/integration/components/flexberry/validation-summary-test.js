@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import {setupRenderingTest} from 'ember-qunit';
 import {render} from '@ember/test-helpers';
+import $ from 'jquery';
 
 const { A, run } = Ember;
 

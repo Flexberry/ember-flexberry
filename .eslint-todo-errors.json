@@ -1710,8 +1710,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 42, "column": 18 }
   ],
   "tests/integration/components/groupedit-toolbar-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 15, "column": 18 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 20, "column": 18 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 16, "column": 18 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 21, "column": 18 }
   ],
   "tests/integration/components/modal-dialog-test.js": [
     { "ruleId": "ember/no-legacy-test-waiters", "line": 17, "column": 5 },

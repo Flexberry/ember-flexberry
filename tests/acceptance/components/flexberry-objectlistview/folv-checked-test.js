@@ -1,27 +1,23 @@
-import $ from 'jquery';
-import { executeTest} from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { settled } from '@ember/test-helpers';
 
-/* eslint-disable no-unused-vars */
-executeTest('test checking', (store, assert, app) => {
+executeTest('test checking', async (store, assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
 
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
+  await visit(path);
+  assert.equal(currentPath(), path, 'Visited the correct path');
 
-    let $folvContainer = $('.object-list-view-container');
-    let $row = $('table.object-list-view tbody tr', $folvContainer).first();
+  const $folvContainer = document.querySelector('.object-list-view-container');
+  const $row = $folvContainer.querySelector('table.object-list-view tbody tr');
 
-    // Мark first record.
-    let $firstCell = $('.object-list-view-helper-column-cell', $row);
-    let $checkboxInRow = $('.flexberry-checkbox', $firstCell);
+  // Mark first record.
+  const $firstCell = $row.querySelector('.object-list-view-helper-column-cell');
+  const $checkboxInRow = $firstCell.querySelector('.flexberry-checkbox');
 
-    $checkboxInRow.click();
-    andThen(() => {
-      let recordIsChecked = ($checkboxInRow[0].className.indexOf('checked') >= 0);
-      assert.ok(recordIsChecked, 'First row is checked');
-    });
-  });
+  await click($checkboxInRow);
+  await settled(); // Ждем завершения всех асинхронных действий
+
+  const recordIsChecked = $checkboxInRow.classList.contains('checked');
+  assert.ok(recordIsChecked, 'First row is checked');
 });
-/* eslint-enable no-unused-vars */

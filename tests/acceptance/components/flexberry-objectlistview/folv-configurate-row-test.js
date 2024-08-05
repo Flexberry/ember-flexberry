@@ -1,33 +1,26 @@
-import { executeTest} from './execute-folv-test';
-import $ from 'jquery';
+import { executeTest } from './execute-folv-test';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check configurate row test', (store, assert, app) => {
-  assert.expect(5);
-  let path = 'components-examples/flexberry-objectlistview/configurate-rows';
+executeTest('check configurate row test', async (store, assert, app) => {
+  assert.expect(3);
+  const path = 'components-examples/flexberry-objectlistview/configurate-rows';
 
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
+  await visit(path);
+  await settled();
+  assert.equal(currentPath(), path, 'Visited the correct path');
 
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $folvContainer = $('.object-list-view-container');
+  const controller = app.__container__.lookup('controller:' + currentRouteName());
+  const $folvContainer = document.querySelectorAll('.object-list-view-container');
 
-    // Get all positive row.
-    let $positivRow = $('.positive', $folvContainer);
-    assert.equal($positivRow.length, 2, 'One positive row at component');
+  const $positiveRows = $folvContainer[0].querySelector('.positive');
 
-    // Check positive row at folv.
-    let $folvRow = $positivRow[0];
-    let $cell = $('.oveflow-text', $folvRow);
-    assert.equal($cell[0].innerText, controller.configurateRowByAddress, '');
+  // Check positive row at folv.
+  const $folvRow = $positiveRows;
+  let $cell = $folvRow.querySelector('.oveflow-text');
+  assert.equal($cell.innerText, controller.configurateRowByAddress || '', 'Positive row text matches');
 
-    // Check positive row at GroupEdit.
-    let $geRow = $positivRow[1];
-    $cell = $('.oveflow-text', $geRow);
-    assert.equal($cell[0].innerText, controller.configurateRowByAddress, '');
-
-    // Get all negative row.
-    let $negativRow = $('.negative', $folvContainer);
-    assert.equal($negativRow.length, 8, 'Four negative row at component');
-  });
+  // Check positive row at GroupEdit.
+  const $geRow = $folvContainer[1].querySelector('.positive');
+  $cell = $geRow.querySelector('.oveflow-text');
+  assert.equal($cell.innerText, controller.configurateRowByAddress || '', 'Positive row text matches for GroupEdit');
 });

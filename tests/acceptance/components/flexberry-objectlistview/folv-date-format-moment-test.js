@@ -5,84 +5,64 @@ import { loadingLocales, refreshListByFunction } from './folv-tests-functions';
 
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
-executeTest('date format moment L', (store, assert, app) => {
+executeTest('date format moment L', async (store, assert, app) => {
   assert.expect(5);
-  let done = assert.async();
-  let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
-    loadingLocales('ru', app).then(() => {
+  const path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
+  
+  await visit(path);
+  assert.equal(currentPath(), path, 'Correct path is visited');
 
-      let olvContainerClass = '.object-list-view-container';
+  await loadingLocales('ru', app);
 
-      let $toolBar = $('.ui.secondary.menu')[0];
-      let $toolBarButtons = $toolBar.children;
-      let $refreshButton = $toolBarButtons[0];
-      assert.equal($refreshButton.innerText.trim(), get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
+  const olvContainerClass = '.object-list-view-container';
+  const $toolBar = $('.ui.secondary.menu')[0];
+  const $refreshButton = $toolBar.children[0];
 
-      let controller = app.__container__.lookup('controller:' + currentRouteName());
-      let refreshFunction =  function() {
-        let refreshButton = $('.refresh-button')[0];
-        refreshButton.click();
-      };
+  assert.equal($refreshButton.innerText.trim(), get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'Button refresh exists');
 
-      refreshListByFunction(refreshFunction, controller).then(() => {
-        let moment = app.__container__.lookup('service:moment');
-        let momentValue = get(moment, 'defaultFormat');
+  const controller = app.__container__.lookup('controller:' + currentRouteName());
 
-        assert.equal(momentValue, 'L', 'moment value is \'L\' ');
+  const refreshFunction = () => {
+    const refreshButton = $('.refresh-button')[0];
+    refreshButton.click();
+  };
 
-        let $folvContainer = $(olvContainerClass);
-        let $table = $('table.object-list-view', $folvContainer);
-        let $headRow = $('thead tr', $table)[0].children;
+  await refreshListByFunction(refreshFunction, controller);
 
-        let indexDate = () => {
-          let toReturn;
-          /* eslint-disable no-unused-vars */
-          Object.keys($headRow).forEach((element, index, array) => {
-            let $dateAttribute = $($headRow[element]).children('div');
-            if (($dateAttribute.length !== 0) && ($.trim($dateAttribute[0].getAttribute('data-olv-header-property-name')) === 'date')) {
-              toReturn = index;
-              return false;
-            }
-          });
-          /* eslint-enable no-unused-vars */
+  const moment = app.__container__.lookup('service:moment');
+  const momentValue = get(moment, 'defaultFormat');
+  assert.equal(momentValue, 'L', 'Moment value is \'L\'');
 
-          return toReturn;
-        };
+  const $folvContainer = $(olvContainerClass);
+  const $table = $('table.object-list-view', $folvContainer);
+  const $headRow = $('thead tr', $table)[0].children;
 
-        let $dateCell = () => { return $.trim($('tbody tr', $table)[0].children[indexDate()].innerText); };
+  const indexDate = () => {
+    for (let index = 0; index < $headRow.length; index++) {
+      const $dateAttribute = $($headRow[index]).children('div');
+      if ($dateAttribute.length !== 0 && $.trim($dateAttribute[0].getAttribute('data-olv-header-property-name')) === 'date') {
+        return index;
+      }
+    }
+    return -1; // Если не найдено
+  };
 
-        // Date format most be DD.MM.YYYY
-        let dateFormatRuRe = /(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d/;
-        let findDateRu = dateFormatRuRe.exec($dateCell());
+  const $dateCell = () => $.trim($('tbody tr', $table)[0].children[indexDate()].innerText);
 
-        assert.ok(findDateRu, 'date format is \'DD.MM.YYYY\' ');
+  // Date format must be DD.MM.YYYY
+  const dateFormatRuRe = /(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d/;
+  const findDateRu = dateFormatRuRe.exec($dateCell());
 
-        let done2 = assert.async();
-        loadingLocales('en', app).then(() => {
+  assert.ok(findDateRu, 'Date format is \'DD.MM.YYYY\'');
 
-          let done1 = assert.async();
-          refreshListByFunction(refreshFunction, controller).then(() => {
-            // Date format most be MM/DD/YYYY:
-            let dateFormatEnRe = /(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d/;
-            let dataCellStr = $dateCell();
+  await loadingLocales('en', app);
 
-            let findDateEn = dateFormatEnRe.exec(dataCellStr);
+  await refreshListByFunction(refreshFunction, controller);
 
-            assert.ok(findDateEn, 'date format is \'MM/DD/YYYY\' ');
+  // Date format must be MM/DD/YYYY
+  const dateFormatEnRe = /(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d/;
+  const dataCellStr = $dateCell();
+  const findDateEn = dateFormatEnRe.exec(dataCellStr);
 
-          }).catch((reason) => {
-            // Error output.
-            assert.ok(false, reason);
-          }).finally(() => {
-            done1();
-          });
-          done2();
-        });
-        done();
-      });
-    });
-  });
+  assert.ok(findDateEn, 'Date format is \'MM/DD/YYYY\'');
 });

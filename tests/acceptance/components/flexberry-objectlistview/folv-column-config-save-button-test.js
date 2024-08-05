@@ -1,28 +1,22 @@
-import $ from 'jquery';
 import { executeTest } from './execute-folv-test';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check column config save button test', (store, assert) => {
+executeTest('check column config save button test', async (store, assert) => {
   assert.expect(3);
-  let path = 'ember-flexberry-dummy-suggestion-list';
-  visit(path);
+  const path = 'ember-flexberry-dummy-suggestion-list';
 
-  andThen(() => {
-    assert.equal(currentPath(), path);
+  await visit(path);
+  assert.equal(currentPath(), path, 'Visited the correct path');
 
-    let $configButton = $('button.config-button');
-    click($configButton);
+  await click('button.config-button');
+  await settled(); // Ждем завершения всех асинхронных действий
 
-    andThen(() => {
-      let $field = $('div.ui.action.input');
-      let $fieldInput = $field.children('input');
+  const $field = document.querySelector('div.ui.action.input');
+  const $fieldInput = $field.querySelector('input');
 
-      assert.equal($field.children('.cols-config-save.disabled').length === 1, true, 'button disabled');
-      fillIn($fieldInput, 'aaayyyeee leemaauuuu');
-    });
+  assert.equal($field.querySelectorAll('.cols-config-save.disabled').length === 1, true, 'button disabled');
+  await fillIn($fieldInput, 'aaayyyeee leemaauuuu');
+  await settled(); // Ждем завершения всех асинхронных действий
 
-    andThen(() => {
-      let $field = $('div.ui.action.input');
-      assert.equal($field.children('.cols-config-save.disabled').length === 0, true, 'button active');
-    });
-  });
+  assert.equal($field.querySelectorAll('.cols-config-save.disabled').length === 0, true, 'button active');
 });

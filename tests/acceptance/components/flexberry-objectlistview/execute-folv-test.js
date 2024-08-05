@@ -2,10 +2,8 @@ import { run } from '@ember/runloop';
 import { A, isArray } from '@ember/array';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
-
 let dataForDestroy = A();
 let app;
-
 export function executeTest(testName, callback) {
   let store;
   let userSettingsService;
@@ -49,7 +47,6 @@ export function executeTest(testName, callback) {
 
 /**
   Function to delete data after testing.
-
   @public
   @method addDataForDestroy
   @param {Object} data  or array of Object.

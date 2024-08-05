@@ -53,7 +53,6 @@ export function loadingList($ctrlForClick, list, records) {
 
 /**
   Function for waiting editform loading afther open editform by function at acceptance test.
-
   @public
   @method openEditFormByFunction
   @param {Function} openEditFormFunction Method options.
@@ -103,18 +102,15 @@ export function openEditFormByFunction(openEditFormFunction) {
 
 /**
   Function for waiting list loading afther refresh by function at acceptance test.
-
   @public
   @method refreshListByFunction
   @param {Function} refreshFunction Method options.
   @param {Object} controlle Current form controller.
-
   For use:
     Form controller must have the following code:
       ```js
         loadCount: 0
       ```
-
     Form router must have the following code:
       ```js
         onModelLoadingAlways(data) {
@@ -205,7 +201,6 @@ export function addRecords(store, modelName, uuid) {
     store.query(modelName, builder.build()).then((result) => {
       let howAddRec = listCount - result.meta.count;
       let newRecords = A();
-
       for (let i = 0; i < howAddRec; i++) {
         newRecords.pushObject(
           store.createRecord(modelName,
@@ -213,7 +208,6 @@ export function addRecords(store, modelName, uuid) {
             ? { name: uuid, eMail: uuid, phone1: uuid }
             : { name: uuid }));
       }
-
       newRecords.forEach(function(item) {
         promises.push(item.save());
       });
@@ -269,22 +263,17 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
 
     let filterOperation = $(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
     let filterValueCell = $(tableRow[1]).children('td')[columnNumber];
-
     // Select an existing item.
     $(filterOperation).dropdown('set selected', operation);
-
     let dropdown = $(filterValueCell).find('.flexberry-dropdown');
     let textbox = $(filterValueCell).find('.ember-text-field');
-
     let fillPromise;
     if (textbox.length !== 0) {
       fillPromise = fillIn(textbox, filterValue);
     }
-
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
-
     if (fillPromise) {
       fillPromise.then(() => resolve());
     } else {
@@ -293,7 +282,6 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
         resolve();
       }), timeout);
     }
-
   });
 }
 

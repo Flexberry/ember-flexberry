@@ -1670,8 +1670,8 @@
     { "ruleId": "hbs/check-hbs-template-literals", "line": 602, "column": 18 }
   ],
   "tests/integration/components/flexberry-sitemap-test.js": [
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 11, "column": 16 },
-    { "ruleId": "hbs/check-hbs-template-literals", "line": 14, "column": 16 }
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 12, "column": 16 },
+    { "ruleId": "hbs/check-hbs-template-literals", "line": 15, "column": 16 }
   ],
   "tests/integration/components/flexberry-tab-bar-test.js": [
     { "ruleId": "hbs/check-hbs-template-literals", "line": 14, "column": 18 },

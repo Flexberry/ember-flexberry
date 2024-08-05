@@ -2,21 +2,22 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import $ from 'jquery';
 
-module('flexberry-sitemap', 'Integration | Component | flexberry-sitemap', function(hooks) {
+module('Integration | Component | flexberry-sitemap', function(hooks) {
  setupRenderingTest(hooks);
  
  test('it renders and works',async function(assert) {
 
   await render(hbs`{{flexberry-sitemap}}`);
-  assert.equal(this.$().text().trim(), '', 'Empty sitemap, empty result.');
+  assert.equal($(this.element).text().trim(), '', 'Empty sitemap, empty result.');
   
   await render(hbs`
     {{#flexberry-sitemap}} 
     template block text 
     {{/flexberry-sitemap}}
  `);
-  assert.equal(this.$().text().trim(), '', 'Block params not used.');
+  assert.equal($(this.element).text().trim(), '', 'Block params not used.');
   // this.set('sitemap', {
   //   nodes: [
   //     {

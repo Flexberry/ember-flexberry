@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
+import $ from 'jquery';
 
 module('Integration | Component | groupedit toolbar', function(hooks) {
   setupRenderingTest(hooks);

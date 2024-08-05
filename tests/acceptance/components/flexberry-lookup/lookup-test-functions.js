@@ -1,65 +1,55 @@
 import $ from 'jquery';
-import RSVP from 'rsvp';
-import { run } from '@ember/runloop';
 
-// Function for waiting list loading.
-export function loadingList($ctrlForClick, list, records) {
-  return new RSVP.Promise((resolve, reject) => {
+// Функция для ожидания загрузки списка.
+export async function loadingList($ctrlForClick, list, records) {
+  return new Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let timeout = 10000;
+    const checkInterval = 500;
+    const timeout = 10000;
 
-    run(() => {
-      $ctrlForClick.click();
-    });
+    // Клик по контроллеру.
+    click($ctrlForClick);
 
-    run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let $list = $(list);
-        let $records = $(records, $list);
-        if ($records.length === 0) {
+    checkIntervalId = window.setInterval(() => {
+      const $list = $(list);
+      const $records = $(records, $list);
+      if ($records.length === 0) {
+        // Данные еще не загружены.
+        return;
+      }
 
-          // Data isn't loaded yet.
-          return;
-        }
+      // Данные загружены.
+      // Остановить интервал и разрешить промис.
+      window.clearInterval(checkIntervalId);
+      checkIntervalSucceed = true;
+      resolve($list);
+    }, checkInterval);
 
-        // Data is loaded.
-        // Stop interval & resolve promise.
-        window.clearInterval(checkIntervalId);
-        checkIntervalSucceed = true;
-        resolve($list);
-      }, checkInterval);
-    });
+    // Установить тайм-аут ожидания.
+    window.setTimeout(() => {
+      if (checkIntervalSucceed) {
+        return;
+      }
 
-    // Set wait timeout.
-    run(() => {
-      window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
-
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
-      }, timeout);
-    });
+      // Время вышло.
+      // Остановить интервалы и отклонить промис.
+      window.clearInterval(checkIntervalId);
+      reject('editForm load operation is timed out');
+    }, timeout);
   });
 }
 
-// Function for waiting loading list.
-export function loadingLocales(locale, app) {
-  return new RSVP.Promise((resolve) => {
-    let i18n = app.__container__.lookup('service:i18n');
+// Функция для ожидания загрузки локалей.
+export async function loadingLocales(locale, app) {
+  return new Promise((resolve) => {
+    const i18n = app.__container__.lookup('service:i18n');
 
-    run(() => {
-      i18n.set('locale', locale);
-    });
+    i18n.set('locale', locale);
 
-    let timeout = 500;
-    run.later((() => {
+    const timeout = 500;
+    setTimeout(() => {
       resolve({ msg: 'ok' });
-    }), timeout);
+    }, timeout);
   });
 }

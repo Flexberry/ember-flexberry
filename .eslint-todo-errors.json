@@ -795,94 +795,77 @@
   ],
   "tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 119, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 142, "column": 32 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 149, "column": 55 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 118, "column": 30 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 122, "column": 53 }
   ],
   "tests/acceptance/components/flexberry-lookup/change-model-lookup-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 9, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 35, "column": 13 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 41, "column": 66 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 40 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 11 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 37, "column": 57 }
   ],
   "tests/acceptance/components/flexberry-lookup/execute-flexberry-lookup-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 8, "column": 1 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 29 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 20, "column": 29 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-actions-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 31, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-en-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-autocomplete-ru-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-autofill-by-limit-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 10, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 20, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 27, "column": 7 },
-    { "ruleId": "ember/no-test-and-then", "line": 39, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-custom-window-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 6, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 28, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 59, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 60, "column": 58 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 74, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 75, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 95, "column": 40 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 96, "column": 63 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 111, "column": 42 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 112, "column": 66 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 137, "column": 48 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 138, "column": 63 },
-    { "ruleId": "ember/no-test-and-then", "line": 167, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 183, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 184, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 214, "column": 38 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 215, "column": 58 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 244, "column": 40 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 245, "column": 63 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 260, "column": 42 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 261, "column": 66 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 286, "column": 48 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 287, "column": 63 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 33 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 28, "column": 34 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 56, "column": 28 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 48 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 71, "column": 11 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 72, "column": 11 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 92, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 93, "column": 47 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 108, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 109, "column": 48 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 137, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 138, "column": 39 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 161, "column": 33 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 162, "column": 34 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 190, "column": 28 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 191, "column": 48 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 219, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 220, "column": 47 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 235, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 236, "column": 48 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 264, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 265, "column": 39 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-default-ordering-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "no-unused-vars", "line": 4, "column": 71 },
-    { "ruleId": "ember/no-global-jquery", "line": 12, "column": 23 },
-    { "ruleId": "no-undef", "line": 12, "column": 23 },
-    { "ruleId": "no-extra-semi", "line": 22, "column": 8 },
-    { "ruleId": "ember/no-test-and-then", "line": 32, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 39, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 44, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 51, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 57, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 62, "column": 5 }
+    { "ruleId": "no-unused-vars", "line": 5, "column": 77 },
+    { "ruleId": "ember/no-global-jquery", "line": 13, "column": 23 },
+    { "ruleId": "no-undef", "line": 13, "column": 23 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-default-user-setting-test.js": [
     { "ruleId": "no-redeclare", "line": 2, "column": 11 },
     { "ruleId": "no-redeclare", "line": 2, "column": 18 },
-    { "ruleId": "no-redeclare", "line": 2, "column": 27 }
+    { "ruleId": "no-redeclare", "line": 2, "column": 27 },
+    { "ruleId": "no-unused-vars", "line": 7, "column": 97 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-events-test.js": [
     { "ruleId": "no-redeclare", "line": 2, "column": 11 },
     { "ruleId": "no-redeclare", "line": 2, "column": 18 },
     { "ruleId": "no-redeclare", "line": 2, "column": 27 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 43, "column": 40 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 39, "column": 38 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-limit-function-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 6, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 53 }
+    { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 47, "column": 45 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-prefer-developer-to-default-user-setting-test.js": [
     { "ruleId": "no-redeclare", "line": 3, "column": 11 },
@@ -895,38 +878,29 @@
     { "ruleId": "no-redeclare", "line": 2, "column": 27 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-preview-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 9, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 32, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 53, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-projection-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "no-unused-vars", "line": 5, "column": 71 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-relation-name-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 7, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/flexberry-lookup-window-search-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "no-unused-vars", "line": 4, "column": 68 },
-    { "ruleId": "ember/no-test-and-then", "line": 9, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 18, "column": 5 },
+    { "ruleId": "no-unused-vars", "line": 5, "column": 74 },
     { "ruleId": "no-undef", "line": 27, "column": 21 },
-    { "ruleId": "ember/no-test-and-then", "line": 33, "column": 7 },
     { "ruleId": "no-undef", "line": 39, "column": 38 }
   ],
   "tests/acceptance/components/flexberry-lookup/lookup-test-functions.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 12 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 48, "column": 10 }
   ],
   "tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-autocomplete-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-lookup/visiting-flexberry-lookup-dropdown-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/checkbox-at-editform-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },

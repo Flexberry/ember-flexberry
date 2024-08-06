@@ -74,11 +74,9 @@ executeTest('check delete before record with promise test', async (store, assert
       run(() => {
         later(async() => {
           let result = await store.query(modelName, builder2.build());
-          store.query(modelName, builder2.build()).then((result) => {
           assert.notOk(result.meta.count, 'record \'' + uuid + '\'not found in store');
           resolve();
         }, timeout);
       });
     });
   });
-});

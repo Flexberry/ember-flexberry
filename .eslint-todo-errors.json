@@ -1002,9 +1002,9 @@
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 27, "column": 9 }
   ],
-  "tests/acceptance/components/flexberry-objectlistview/folv-delete-before-recoed-with-promise-test.js": [
+ "tests/acceptance/components/flexberry-objectlistview/folv-delete-before-recoed-with-promise-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 27, "column": 9 }
+    { "ruleId": "no-unused-vars", "line": 76, "column": 15 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-in-row-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },

@@ -7,80 +7,61 @@ import { checkSortingList, loadingLocales, refreshListByFunction, getOrderByClau
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
 // Need to add sort by multiple columns.
-executeTest('check sorting clear', (store, assert, app) => {
+executeTest('check sorting clear', async (store, assert, app) => {
   assert.expect(8);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
-  visit(path);
-  click('.ui.clear-sorting-button');
-  andThen(() => {
+  await visit(path);
+  await click('.ui.clear-sorting-button');
 
-    // Check page path.
-    assert.equal(currentPath(), path);
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = get(controller, 'modelProjection');
+  // Check page path.
+  assert.equal(currentPath(), path);
+  let controller = app.__container__.lookup('controller:' + currentRouteName());
+  let projectionName = get(controller, 'modelProjection');
 
-    let orderByClause = null;
+  let orderByClause = null;
 
-    let $olv = $('.object-list-view ');
-    let $thead = $('th.dt-head-left', $olv)[0];
+  let $olv = $('.object-list-view ');
+  let $thead = $('th.dt-head-left', $olv)[0];
 
-    let currentSorting = controller.get('computedSorting');
-    if (!$.isEmptyObject(currentSorting)) {
-      orderByClause = getOrderByClause(currentSorting);
-    }
+  let currentSorting = controller.get('computedSorting');
+  if (!$.isEmptyObject(currentSorting)) {
+    orderByClause = getOrderByClause(currentSorting);
+  }
 
-    run(() => {
-      let done = assert.async();
+  // Check sortihg in the first column. Sorting is not append.
+  await loadingLocales('ru', app);
+  let isTrue = await checkSortingList(store, projectionName, $olv, orderByClause);
+  assert.ok(isTrue, 'sorting is not applied');
 
-      // Check sortihg in the first column. Sorting is not append.
-      loadingLocales('ru', app).then(() => {
-        checkSortingList(store, projectionName, $olv, orderByClause).then((isTrue) => {
-          assert.ok(isTrue, 'sorting is not applied');
+  // Check sortihg icon in the first column. Sorting icon is not added.
+  assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
 
-          // Check sortihg icon in the first column. Sorting icon is not added.
-          assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
+  // Refresh function.
+  let refreshFunction =  async function() {
+    await click( $thead);
+  };
+  await refreshListByFunction(refreshFunction, controller)
+  $thead = $('th.dt-head-left', $olv)[0];
+  let $ord = $('.object-list-view-order-icon', $thead);
+  let $divOrd = $('div', $ord);
 
-          // Refresh function.
-          let refreshFunction =  function() {
-            $thead.click();
-          };
+  assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
+  assert.equal($('.icon', $divOrd).hasClass('ascending'), true, 'sorting symbol added');
 
-          let done1 = assert.async();
-          refreshListByFunction(refreshFunction, controller).then(() => {
-            let $thead = $('th.dt-head-left', $olv)[0];
-            let $ord = $('.object-list-view-order-icon', $thead);
-            let $divOrd = $('div', $ord);
+  isTrue = await checkSortingList(store, projectionName, $olv, 'address asc');
+  assert.ok(isTrue, 'sorting applied');
 
-            assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
-            assert.equal($('.icon', $divOrd).hasClass('ascending'), true, 'sorting symbol added');
+  let refreshFunction2 = async function() {
+    let $clearButton = $('.clear-sorting-button');
+    await click($clearButton);
+  };
 
-            let done2 = assert.async();
-            checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
-              assert.ok(isTrue, 'sorting applied');
+  await refreshListByFunction(refreshFunction2, controller);
 
-              let done3 = assert.async();
-              let refreshFunction2 =  function() {
-                let $clearButton = $('.clear-sorting-button');
-                $clearButton.click();
-              };
+  $thead = $('th.dt-head-left', $olv)[0];
+  $ord = $('.object-list-view-order-icon', $thead);
+  $divOrd = $('div', $ord);
 
-              refreshListByFunction(refreshFunction2, controller).then(() => {
-                let $thead = $('th.dt-head-left', $olv)[0];
-                let $ord = $('.object-list-view-order-icon', $thead);
-                let $divOrd = $('div', $ord);
-
-                assert.equal($divOrd.attr('title'), undefined, 'sorting are clear');
-                assert.equal($.trim($divOrd.text()), '', 'sorting symbol delete');
-
-                done3();
-              });
-              done2();
-            });
-            done1();
-          });
-          done();
-        });
-      });
-    });
-  });
+  assert.equal($divOrd.attr('title'), undefined, 'sorting are clear');
+  assert.equal($.trim($divOrd.text()), '', 'sorting symbol delete');
 });

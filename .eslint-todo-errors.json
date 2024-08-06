@@ -1008,7 +1008,7 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-in-row-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 29, "column": 9 }
+    { "ruleId": "no-unused-vars", "line": 10, "column": 65 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 6, "column": 1 }

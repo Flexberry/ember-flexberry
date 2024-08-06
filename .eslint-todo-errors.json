@@ -924,8 +924,7 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-by-enther-click-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 16, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 46 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 22, "column": 42 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/filther/folv-filter-on-toolbar-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },

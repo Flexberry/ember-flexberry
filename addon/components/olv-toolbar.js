@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import VoiceTypingActions from '../mixins/voice-typing-actions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 const { getOwner } = Ember;
 
@@ -11,7 +12,7 @@ const { getOwner } = Ember;
   @class OlvToolbar
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(VoiceTypingActions, {
   /**
     Controller for model.
 
@@ -862,6 +863,28 @@ export default FlexberryBaseComponent.extend({
       let oLVToolbarInfoCopyButton = infoModalDialog.find('.olv-toolbar-info-modal-dialog-copy-button');
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
+    },
+
+    /**
+      Callback success speech recognition.
+
+       @method onSuccessSpeechRecognition
+       @param {String} text text.
+    */
+    onSuccessSpeechRecognition(text) {
+      this.set('filterByAnyMatchText', text);
+
+      this.send('filterByAnyMatch');
+    },
+
+    /**
+      Callback failure speech recognition.
+
+       @method onFailureSpeechRecognition
+       @param {String} error text error.
+    */
+    onFailureSpeechRecognition(error) {
+      this.set('filterByAnyMatchText', error);
     }
   },
 

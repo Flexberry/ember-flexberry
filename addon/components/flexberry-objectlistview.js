@@ -721,6 +721,14 @@ export default FlexberryBaseComponent.extend({
   filterProjectionName: undefined,
 
   /**
+    Flag: view button voice typing.
+
+    @property isUseVoiceTyping
+    @type Boolean
+  */
+  isUseVoiceTyping: undefined,
+
+  /**
     Array of pages to show.
 
     @property pages

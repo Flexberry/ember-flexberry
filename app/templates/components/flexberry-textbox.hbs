@@ -8,11 +8,16 @@
     maxlength=maxlength
   }}
 {{else}}
-  {{input
-    type=type
-    value=value
-    required=required
-    placeholder=placeholder
-    maxlength=maxlength
-  }}
+  <div class="ui icon input">
+    {{input
+      type=type
+      value=value
+      required=required
+      placeholder=placeholder
+      maxlength=maxlength
+    }}
+    {{#if voiceTypingIsActive}}
+      <i class="circular microphone link icon" {{action 'voiceTyping'}}></i>
+    {{/if}}
+  </div>
 {{/if}}

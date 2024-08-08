@@ -75,16 +75,16 @@ export default Ember.Mixin.create({
 
       if (!Ember.isNone(window.SpeechRecognition)) {
 
-          // Create a new instance of speech recognition.
-          const speechRecognition = new SpeechRecognition();
-          speechRecognition.lang = this.get('i18n.locale') || 'ru';
-          speechRecognition.interimResults = false;
-          speechRecognition.maxAlternatives = 1;
+        // Create a new instance of speech recognition.
+        const speechRecognition = new SpeechRecognition();
+        speechRecognition.lang = this.get('i18n.locale') || 'ru';
+        speechRecognition.interimResults = false;
+        speechRecognition.maxAlternatives = 1;
 
-          speechRecognition.addEventListener('result', this._onGetResultSpeechRecognition.bind(this));
-          speechRecognition.addEventListener('error', this._onErrorSpeechRecognition.bind(this));
+        speechRecognition.addEventListener('result', this._onGetResultSpeechRecognition.bind(this));
+        speechRecognition.addEventListener('error', this._onErrorSpeechRecognition.bind(this));
 
-          this.set('speechRecognition', speechRecognition);
+        this.set('speechRecognition', speechRecognition);
       } else {
         this.set('isUseVoiceTyping', false);
       }
@@ -113,7 +113,7 @@ export default Ember.Mixin.create({
     voiceTyping() {
       let speechRecognition = this.get('speechRecognition');
       speechRecognition.addEventListener('end', () => {
-          speechRecognition.stop();
+        speechRecognition.stop();
       }, { once: true });
 
       speechRecognition.start();

@@ -15,5 +15,11 @@
   spellcheck=(if spellcheck "spellcheck")
 }}
 {{#if (and voiceTypingIsActive (not readonly))}}
-  <i class="circular microphone link icon" {{action "voiceTyping"}} />
+  <button
+    type="button"
+    class="ui button voice-typing"
+    title={{t "components.flexberry-textarea.voice-button-text"}}
+    {{action "voiceTyping"}}>
+    <i class="circular microphone link icon" />
+  </button>
 {{/if}}

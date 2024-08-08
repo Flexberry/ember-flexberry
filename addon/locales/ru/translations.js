@@ -91,10 +91,12 @@ export default {
     },
 
     'flexberry-textbox': {
+      'voice-button-text': 'Голосовой поиск',
       placeholder: '(нет значения)'
     },
 
     'flexberry-textarea': {
+      'voice-button-text': 'Голосовой поиск',
       placeholder: '(нет значения)'
     },
 

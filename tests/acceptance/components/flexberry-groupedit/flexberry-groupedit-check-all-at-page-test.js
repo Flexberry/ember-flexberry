@@ -11,9 +11,9 @@ const testName = 'check all at page';
 var olvContainerClass = '.object-list-view-container';
 var trTableClass = 'table.object-list-view tbody tr';
 
-module('Acceptance | flexberry-groupedit | ' + testName,  {
-  //setupApplicationTest(hooks);
-  beforeEach () {
+module('Acceptance | flexberry-groupedit | ' + testName, {
+
+  beforeEach() {
 
     // Start application.
     app = startApp();
@@ -23,36 +23,33 @@ module('Acceptance | flexberry-groupedit | ' + testName,  {
     applicationController.set('isInAcceptanceTestMode', true);
   },
 
-  afterEach () {
+  afterEach() {
     run(app, 'destroy');
   }
 });
 
-  test(testName, async function (assert) {
-    assert.expect(4);
+test(testName, async function (assert) {
+  assert.expect(4);
 
-    await visit(path);
+  await visit(path);
 
-    //await settled();
+  assert.equal(currentPath(), path);
 
-    assert.equal(currentPath(), path);
+  let $olv = $('.object-list-view ');
+  let $thead = $('th.dt-head-left', $olv)[0];
 
-    let $olv = $('.object-list-view ');
-    let $thead = $('th.dt-head-left', $olv)[0];
+  let $list = await loadingList($thead, olvContainerClass, trTableClass);
+  assert.ok($list);
+  let $rows = $('.object-list-view-helper-column', $list);
 
+  await click('.ui.check-all-at-page-button');
+  await settled();
+  let $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
+  assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
 
-    let $list = await loadingList($thead, olvContainerClass, trTableClass);
-    assert.ok($list);
-    let $rows = $('.object-list-view-helper-column', $list);
+  await click('.ui.check-all-at-page-button');
+  await settled();
 
-    await click('.ui.check-all-at-page-button');
-    await settled();
-    let $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
-    assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
-
-    await click('.ui.check-all-at-page-button');
-    await settled();
-
-    $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
-    assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
-  });
+  $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
+  assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
+});

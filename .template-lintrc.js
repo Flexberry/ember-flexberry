@@ -305,13 +305,15 @@ module.exports = {
     {
       "moduleId": "app/templates/components/flexberry-textarea",
       "only": [
-        "eol-last"
+        "eol-last",
+        "no-invalid-interactive"
       ]
     },
     {
       "moduleId": "app/templates/components/flexberry-textbox",
       "only": [
-        "eol-last"
+        "eol-last",
+        "no-invalid-interactive"
       ]
     },
     {

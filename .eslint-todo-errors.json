@@ -750,10 +750,7 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 484, "column": 55 }
   ],
   "tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-check-all-at-page-test.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 27 },
-    { "ruleId": "ember/no-test-and-then", "line": 34, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 47, "column": 9 },
-    { "ruleId": "ember/no-test-and-then", "line": 52, "column": 11 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 23, "column": 27 }
   ],
   "tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-configurate-row-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 29 },
@@ -788,11 +785,9 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 159, "column": 33 }
   ],
   "tests/acceptance/components/flexberry-groupedit/flexberry-groupedit-user-button-test.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 16, "column": 29 },
-    { "ruleId": "ember/no-test-and-then", "line": 29, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 39, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 43, "column": 5 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 17, "column": 29 }
   ],
+
   "tests/acceptance/components/flexberry-lookup/change-component-lookup-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 118, "column": 30 },

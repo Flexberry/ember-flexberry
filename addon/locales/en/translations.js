@@ -52,12 +52,10 @@ export default {
     },
 
     'flexberry-textbox': {
-      'voice-button-text': 'Voice search',
       placeholder: '(no value)'
     },
 
     'flexberry-textarea': {
-      'voice-button-text': 'Voice search',
       placeholder: '(no value)'
     },
 

@@ -146,10 +146,6 @@ div.ui.secondary.menu.no-margin {
     border: 0px;
 }
 
-.ui.button.voice-typing {
-    border: 0px;
-}
-
 .ui.buttons.filter-active {
     border: 1px solid @uiBorderColor;
     height: 35px;

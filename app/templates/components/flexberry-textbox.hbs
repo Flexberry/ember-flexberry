@@ -16,12 +16,6 @@
     maxlength=maxlength
   }}
   {{#if voiceTypingIsActive}}
-    <button
-      type="button"
-      class="ui button voice-typing"
-      title={{t "components.flexberry-textbox.voice-button-text"}}
-      {{action "voiceTyping"}}>
-      <i class="circular microphone link icon" />
-    </button>
+    <i role="button" class="circular microphone link icon" {{action "voiceTyping"}} />
   {{/if}}
 {{/if}}

@@ -9,7 +9,7 @@ import { getOwner } from '@ember/application';
 
 export default Mixin.create({
 
-  classNameBindings: ['isUseVoiceTyping:icon'],
+  classNameBindings: ['voiceTypingIsActive:icon'],
 
   /**
     Flag: view button voice typing.

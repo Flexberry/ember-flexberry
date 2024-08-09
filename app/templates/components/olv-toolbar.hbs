@@ -96,6 +96,15 @@
       placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
       value=filterByAnyMatchText key-down="keyDownFilterAction"
     }}</div>
+    {{#if voiceTypingIsActive}}
+      <button
+        type="button"
+        class="ui {{buttonClass}} icon button voice-button"
+        title={{t "components.olv-toolbar.voice-button-text"}}
+        {{action "voiceTyping"}}>
+          <i class="microphone icon"></i>
+      </button>
+    {{/if}}
     <button
       type="button"
       class="ui {{buttonClass}} icon button search-button"

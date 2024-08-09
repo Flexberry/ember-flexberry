@@ -2017,7 +2017,7 @@ export default FlexberryBaseComponent.extend(
     let condition;
     let conditions;
     let conditionsByType = this.get('conditionsByType');
-  
+
     if (conditionsByType) {
       assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(type, attribute);
@@ -2168,6 +2168,9 @@ export default FlexberryBaseComponent.extend(
 
       case 'string':
         component.name = 'flexberry-textbox';
+        component.properties = {
+          isUseVoiceTyping: this.get('isUseVoiceTyping')
+        };
         break;
 
       case 'number':

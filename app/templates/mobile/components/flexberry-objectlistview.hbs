@@ -35,6 +35,7 @@
   switchExpandMode=(action "switchExpandMode")
   readonly=readonly
   useSidePageMode=useSidePageMode
+  isUseVoiceTyping=isUseVoiceTyping
 }}
 {{#if (or (not inHierarchicalMode) hierarchyPaging)}}
   <div class="ui secondary menu no-margin nav-bar">
@@ -112,6 +113,7 @@
   showFilters=_showFilters
   showFiltersInModal=showFiltersInModal
   filters=filters
+  isUseVoiceTyping=isUseVoiceTyping
   applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
   componentForFilterByCondition=componentForFilterByCondition
@@ -149,4 +151,3 @@
   fixedHeader=fixedHeader
   recordsTotalCount=recordsTotalCount
 }}
-

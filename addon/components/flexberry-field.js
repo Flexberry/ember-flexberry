@@ -91,6 +91,13 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
+    Flag: view button voice typing.
+    @property isUseVoiceTyping
+    @type Boolean
+  */
+  isUseVoiceTyping: undefined,
+
+  /**
     Indicates if field has text.
 
     @property hasText

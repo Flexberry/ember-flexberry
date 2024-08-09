@@ -14,3 +14,6 @@
   autofocus=autofocus
   spellcheck=spellcheck
 }}
+{{#if (and voiceTypingIsActive (not readonly))}}
+  <i role="button" class="circular microphone link icon" {{action "voiceTyping"}} />
+{{/if}}

@@ -4,6 +4,7 @@
 
 import { computed } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
+import VoiceTypingActions from '../mixins/voice-typing-actions';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -20,7 +21,7 @@ import { translationMacro as t } from 'ember-i18n';
   @class FlexberryTextarea
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(VoiceTypingActions, {
   /**
     Keeps `readonly` current value.
 

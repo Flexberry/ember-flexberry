@@ -2,54 +2,45 @@ import $ from 'jquery';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { loadingList } from '../flexberry-objectlistview/folv-tests-functions';
-import startApp from '../../../helpers/start-app';
-import { settled } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL, settled, findAll, find, click, waitFor } from '@ember/test-helpers';
 
-let app;
+const olvContainerClass = '.object-list-view-container';
+const trTableClass = 'table.object-list-view tbody tr';
 const path = 'components-examples/flexberry-groupedit/configurate-row-example';
-const testName = 'check all at page';
-var olvContainerClass = '.object-list-view-container';
-var trTableClass = 'table.object-list-view tbody tr';
 
-module('Acceptance | flexberry-groupedit | ' + testName, {
+module('Acceptance | flexberry-groupedit | check all at page', function (hooks) {
+  setupApplicationTest(hooks);
 
-  beforeEach() {
+  test('check all at page', async function (assert) {
+    assert.expect(4);
 
-    // Start application.
-    app = startApp();
+    await visit(path);
+    await settled();
 
-    // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-    let applicationController = app.__container__.lookup('controller:application');
-    applicationController.set('isInAcceptanceTestMode', true);
-  },
+    assert.equal(currentURL(), path);
 
-  afterEach() {
-    run(app, 'destroy');
-  }
-});
+    let $olv = $('.object-list-view');
+    let $thead = $('th.dt-head-left', $olv);
 
-test(testName, async function (assert) {
-  assert.expect(4);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let $list = loadingList($thead, olvContainerClass, trTableClass);
+    assert.ok($list);
 
-  await visit(path);
+    let $rows = $('.object-list-view-helper-column', $list);
 
-  assert.equal(currentPath(), path);
+    await waitFor('.ui.check-all-at-page-button', { timeout: 10000 });
+    await click('.ui.check-all-at-page-button');
+    await settled();
+    let $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
+    assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
 
-  let $olv = $('.object-list-view ');
-  let $thead = $('th.dt-head-left', $olv)[0];
+    await waitFor('.ui.check-all-at-page-button', { timeout: 10000 });
 
-  let $list = await loadingList($thead, olvContainerClass, trTableClass);
-  assert.ok($list);
-  let $rows = $('.object-list-view-helper-column', $list);
+    await click('.ui.check-all-at-page-button');
+    await settled();
 
-  await click('.ui.check-all-at-page-button');
-  await settled();
-  let $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
-  assert.equal($checkCheckBox.length, $rows.length, 'All checkBox in row are select');
-
-  await click('.ui.check-all-at-page-button');
-  await settled();
-
-  $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
-  assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
+    $checkCheckBox = $('.flexberry-checkbox.checked', $rows);
+    assert.equal($checkCheckBox.length, 0, 'All checkBox in row are unselect');
+  });
 });

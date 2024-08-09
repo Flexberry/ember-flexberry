@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
-  classNameBindings: ['isUseVoiceTyping:icon'],
+  classNameBindings: ['voiceTypingIsActive:icon'],
 
   /**
     Flag: view button voice typing.

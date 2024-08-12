@@ -221,7 +221,7 @@ export default FlexberryBaseComponent.extend({
     Handles DOM-related component's properties after each render.
   */
   didRender() {
-    $(this.element, '.ui.dropdown.group-toolbar').dropdown();
+    $('.ui.dropdown.group-toolbar', this.element).dropdown();
   },
 
   /**

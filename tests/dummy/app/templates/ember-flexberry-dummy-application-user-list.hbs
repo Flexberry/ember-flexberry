@@ -1,4 +1,29 @@
 <h3>{{t "forms.ember-flexberry-dummy-application-user-list.caption"}}</h3>
 <div class="row" role="form">
-
+  {{flexberry-objectlistview
+    content=this.model
+    modelName="ember-flexberry-dummy-application-user"
+    modelProjection=this.modelProjection
+    editFormRoute=this.editFormRoute
+    createNewButton=true
+    refreshButton=true
+    sorting=this.computedSorting
+    orderable=true
+    pages=this.pages
+    perPageValue=this.perPageValue
+    perPageValues=this.perPageValues
+    recordsTotalCount=this.recordsTotalCount
+    hasPreviousPage=this.hasPreviousPage
+    hasNextPage=this.hasNextPage
+    rowClick=(action "rowClick")
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    beforeDeleteAllRecords=(action "beforeDeleteAllRecords")
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="applicationUserObjectListView"
+    deleteButton=true
+    showCheckBoxInRow=true
+  }}  
 </div>

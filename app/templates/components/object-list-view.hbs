@@ -1,0 +1,182 @@
+<table class="object-list-view ui unstackable celled {{if this.readonly "readonly"}} {{this.tableClass}} table">
+  <thead>
+    <tr>
+      {{#if this.showHelperColumn}}
+        <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+          {{#if this.showCheckBoxInRow}}
+            {{#if (not-eq this.class "groupedit-container")}}
+              <div class="ui check-rows-button {{this.buttonClass}} button {{if this.readonly "disabled"}}">
+                {{#if this.checkRowsSettingsItems}}
+                  {{flexberry-menu
+                    items=this.checkRowsSettingsItems
+                    onItemClick=(action "onCheckRowMenuItemClick")
+                  }}
+                {{/if}}
+              </div>
+            {{else}}
+              <button
+                type="button"
+                class="ui check-all-at-page-button {{this.buttonClass}} {{if this.readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+            {{/if}}
+            {{#if (and this.defaultSortingButton (not this.orderedProperty))}}
+              <button
+                type="button"
+                class="ui clear-sorting-button {{this.buttonClass}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
+            {{/if}}
+          {{/if}}
+        </th>
+      {{/if}}
+      {{#each this.columns as |column|}}
+        <th class="dt-head-left me class" onclick={{action "headerCellClick" column }} width={{column.width}}>
+          <div data-olv-header-property-name={{column.propName}} title={{this.sortTitleCompute}}>
+            <span>
+            {{#if column.keyLocale}}
+              {{t column.keyLocale}}
+            {{else}}
+              {{column.header}}
+            {{/if}}
+            </span>
+            {{#if column.sorted}}
+              <div class="object-list-view-order-icon">
+                {{#if column.sortAscending}}
+                  <div title="{{t "components.object-list-view.sort-ascending"}}">
+                    {{column.sortNumber}}<i class="ascending icon"></i>
+                  </div>
+                {{else}}
+                  <div title="{{t "components.object-list-view.sort-descending"}}">
+                    {{column.sortNumber}}<i class="descending icon"></i>
+                  </div>
+                {{/if}}
+              </div>
+            {{/if}}
+          </div>
+        </th>
+      {{/each}}
+      {{#if this.showMenuColumn}}
+        <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
+      {{/if}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#if (and (not this.showFiltersInModal) this.showFilters)}}
+      <tr class="object-list-view-filters">
+        {{#if this.showHelperColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
+        {{#each this.columns as |column|}}
+          <td style={{this.defaultPaddingStyle}} class="overflowed-cell">
+            {{#if column.filter.conditions}}
+              {{flexberry-dropdown
+                displayCaptions=(not (is-array column.filter.conditions))
+                value=column.filter.condition
+                items=column.filter.conditions
+                class="compact fluid"
+                placeholder=(t "components.object-list-view.filter-condition")
+                needChecksOnValue=false
+                onChange=(action "filterConditionChanged" column.filter)
+              }}
+            {{/if}}
+          </td>
+        {{/each}}
+        {{#if this.showMenuColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
+      </tr>
+      <tr class="object-list-view-filters" onkeydown={{action "applyFiltersByEnter"}}>
+        {{#if this.showHelperColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
+        {{#each this.columns as |column|}}
+          <td style={{this.defaultPaddingStyle}} class="{{if (array-contains this.overflowedComponents column.filter.component.name) "overflowed-cell"}}">
+            {{#if column.filter.component.name}}
+              <div class="ui action input">
+                {{component column.filter.component.name
+                  value=column.filter.pattern
+                  readonly=(or
+                    (eq column.filter.condition "empty")
+                    (eq column.filter.condition "nempty")
+                  )
+                  dynamicProperties=column.filter.component.properties
+                }}
+                <button
+                  type="button"
+                  class="ui clear-filter icon button"
+                  title={{t "components.object-list-view.clear-filter-in-column"}}
+                  {{action "clearFilterForColumn" column.filter}}>
+                  <i class="remove icon"></i>
+                </button>
+              </div>
+            {{/if}}
+          </td>
+        {{/each}}
+        {{#if this.showMenuColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
+      </tr>
+    {{/if}}
+    {{#unless this.content}}
+      <tr>
+        <td colspan="{{this.colspan}}" style="text-align:center;">
+            {{this.placeholder}}
+        </td>
+      </tr>
+    {{else}}
+      {{#each this.contentWithKeys key="key" as |record|}}
+        {{object-list-view-row
+          record=record
+          columns=this.columns
+          readonly=this.readonly
+          required=this.required
+          showMenuColumn=this.showMenuColumn
+          sendMenuItemAction=this.sendMenuItemAction
+          menuInRowAdditionalItems=this.menuInRowAdditionalItems
+          showHelperColumn=this.showHelperColumn
+          defaultRowConfig=this.defaultRowConfig
+          showValidationMessages=this.showValidationMessagesInRow
+          showAsteriskInRow=this.showAsteriskInRow
+          showCheckBoxInRow=this.showCheckBoxInRow
+          showEditButtonInRow=this.showEditButtonInRow
+          showPrototypeButtonInRow=this.showPrototypeButtonInRow
+          showDeleteButtonInRow=this.showDeleteButtonInRow
+          showEditMenuItemInRow=this.showEditMenuItemInRow
+          showPrototypeMenuItemInRow=this.showPrototypeMenuItemInRow
+          showDeleteMenuItemInRow=this.showDeleteMenuItemInRow
+          isParentRecordPropertyName=this.isParentRecordPropertyName
+          hierarchicalIndent=this.hierarchicalIndent
+          inHierarchicalMode=this.inHierarchicalMode
+          inExpandMode=this.inExpandMode
+          loadRecords=this.loadRecords
+          doRenderData=record.doRenderData
+          rowClick=(action "rowClick")
+          selectRow=(action "selectRow")
+          createNewByPrototype=this.createNewByPrototype
+          deleteRow=(action "deleteRow")
+          customButtonsInRow=this.customButtonsInRow
+          customButtonInRowAction="customButtonInRowAction"
+          defaultLeftPadding=this.defaultLeftPadding
+          overflowedComponents=this.overflowedComponents
+          folvComponentName=this.componentName
+          hierarchyPaging=this.hierarchyPaging
+          configurateRow=this.configurateRow
+          allSelect=this.allSelect
+        }}
+      {{/each}}
+      {{#if this.rowByRowLoadingProgress}}
+        <tr>
+          <td colspan="{{this.colspan}}" style="text-align:center;">
+            <div class="ui active centered inline loader"></div>
+            {{t "components.object-list-view.loading-text"}}
+          </td>
+        </tr>
+      {{/if}}
+    {{/unless}}
+  </tbody>
+</table>

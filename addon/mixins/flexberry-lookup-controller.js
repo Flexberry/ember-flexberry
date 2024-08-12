@@ -450,7 +450,7 @@ export default Mixin.create(ReloadListMixin, {
         const modalDialogSettings = Object.assign({ sizeClass: 'small preview-model' }, options.modalDialogSettings);
         const lookupController = this.get('lookupController');
         lookupController.setProperties({
-          title: this.get('i18n').t('components.flexberry-lookup.preview-button-text'),
+          title: /*this.get('i18n').t(*/'components.flexberry-lookup.preview-button-text'/*)*/,
           modalDialogSettings: modalDialogSettings,
         });
 

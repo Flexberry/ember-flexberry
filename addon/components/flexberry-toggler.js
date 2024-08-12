@@ -4,6 +4,7 @@
 import { run } from '@ember/runloop';
 import { computed, observer } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { service } from '@ember/service';
 import Component from '@ember/component';
 import $ from 'jquery';
 
@@ -25,6 +26,8 @@ import $ from 'jquery';
   @extends <a href="https://emberjs.com/api/ember/release/classes/Component">Component</a>
 */
 export default Component.extend({
+  userSettingsService: service('user-settings'),
+
   /**
     Current visibility state.
 

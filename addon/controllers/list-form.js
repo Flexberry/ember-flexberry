@@ -95,6 +95,18 @@ export default Controller.extend(PaginatedControllerMixin,
     beforeDeleteAllRecords(modelName, data) {
       data.cancel = true;
       assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    },
+
+    /**
+      Table row click handler.
+
+      @method actions.objectListViewRowClick
+      @public
+
+      @param {EmberObject} record Record related to clicked table row
+    */
+    rowClick(record, options) {
+      this.send("objectListViewRowClick", record, options);
     }
   },
 

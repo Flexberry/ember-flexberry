@@ -1,0 +1,258 @@
+{{#if this.doRenderData}}
+  <tr class="{{this.record.rowConfig.customClass}}{{if this.record.selected " active"}}{{if this.record.data.hasDirtyAttributes " groupedit-new-row"}}">
+    <td class="object-list-view-helper-column {{unless this.showHelperColumn "hidden"}}" style={{this.defaultPaddingStyle}}>
+      <div class="hidden">{{this.record.key}}</div>
+      <div class="object-list-view-helper-column-cell">
+        {{#if this.showHelperColumn}}
+          {{#if (and this.showAsteriskInRow this.record.data.hasDirtyAttributes)}}
+            <div class="cell asterisk-cell">
+              <i class="asterisk small red icon"></i>
+            </div>
+          {{/if}}
+          {{#if this.showCheckBoxInRow}}
+            <div class="cell">
+              {{flexberry-checkbox
+                readonly=(or (not this.record.rowConfig.canBeSelected) this.allSelect)
+                onChange=(action this.selectRow this.record)
+                value=this.record.selected
+              }}
+            </div>
+          {{/if}}
+          {{#if this.showEditButtonInRow}}
+            <div class="cell">
+              {{#if this.readonly}}
+                <button
+                  type="button"
+                  class="ui ui-edit object-list-view-row-edit-button {{this.buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                  disabled="disabled">
+                  <i class="edit icon"></i>
+                </button>
+              {{else}}
+                <button
+                  type="button"
+                  class="ui ui-edit object-list-view-row-edit-button {{this.buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                  {{action "onRowClick" this.record (hash column=null columnIndex=null rowEdit=true)}}>
+                  <i class="edit icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+          {{#if this.showPrototypeButtonInRow}}
+            <div class="cell">
+              {{#if this.readonly}}
+                <button
+                  type="button"
+                  class="ui ui-edit object-list-view-row-prototype-button {{this.buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
+                  disabled="disabled">
+                  <i class="copy icon"></i>
+                </button>
+              {{else}}
+                <button
+                  type="button"
+                  class="ui ui-edit object-list-view-row-prototype-button {{this.buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}
+                  {{action this.createNewByPrototype (get this.record "data.id")}}>
+                  <i class="copy icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+          {{#if this.showDeleteButtonInRow}}
+            <div class="cell">
+              {{#if (or this.readonly (not this.record.rowConfig.canBeDeleted))}}
+                <button
+                  type="button"
+                  class="ui ui-delete object-list-view-row-delete-button {{this.buttonClass}} disabled button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  disabled="disabled">
+                  <i class="minus icon"></i>
+                </button>
+              {{else}}
+                <button
+                  type="button"
+                  class="ui ui-delete object-list-view-row-delete-button {{this.buttonClass}} button"
+                  title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                  {{action this.deleteRow this.record}}>
+                  <i class="minus icon"></i>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/if}}
+        {{#each this.customButtonsInRow as |customButtonInRow|}}
+          <button
+            type="button"
+            class="ui {{customButtonInRow.buttonClasses}} button"
+            title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+            {{action "customButtonInRowAction" customButtonInRow.buttonAction this.record.data}}>
+            <i class={{customButtonInRow.buttonIcon}}></i>
+          </button>
+        {{/each}}
+      </div>
+    </td>
+    {{#each this.columns as |column index|}}
+
+      {{!-- template-lint-disable --}}
+      <td
+        {{action "onRowClick" this.record (hash column=column columnIndex=index) preventDefault=false}}
+        class="field {{if (array-contains this.overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+        style={{if (and (not index) this.inHierarchicalMode) this.hierarchicalIndentStyle this.defaultPaddingStyle}}>
+        {{!-- template-lint-enable --}}
+
+        {{#if column.cellComponent.componentName}}
+          {{#if this.inHierarchicalMode}}
+            {{#with (if column.relationshipPath (get this.record.data column.relationshipPath) this.record.data) as |relation|}}
+              {{#component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=this.record.data
+                value=(mut (get this.record.data column.propName))
+                class=(if (and this.showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell this.record.rowConfig.readonlyColumns column.propName this.readonly column.cellComponent.componentProperties.readonly)
+                required=this.required
+                componentName=(concat "(" this.folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+              }}
+                {{#if (and (not index) this.inHierarchicalMode (or this.isParentRecord this.hasRecords))}}
+                  <button
+                    type="button"
+                    class="ui button hierarchy-expand icon mini compact {{if this._recordsIsLoading "loading"}} {{this.buttonClass}}"
+                    title={{t (concat "components.object-list-view.hierarchy-buttons." (if this._expanded "minus" "plus") "-button-title")}}
+                    {{action (if this.recordsLoaded "expand" "loadChildRecords") bubbles=false}}
+                  >
+                    <i class="{{if this._expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                  </button>
+                {{/if}}
+              {{/component}}
+            {{/with}}
+          {{else}}
+            {{#with (if column.relationshipPath (get this.record.data column.relationshipPath) this.record.data) as |relation|}}
+              {{component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=this.record.data
+                value=(mut (get this.record.data column.propName))
+                class=(if (and this.showValidationMessages (v-get relation column.attrName "isInvalid")) "error")
+                readonly=(readonly-cell this.record.rowConfig.readonlyColumns column.propName this.readonly column.cellComponent.componentProperties.readonly)
+                required=this.required
+                componentName=(concat "(" this.folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
+                canFixElement=(or (eq column.cellComponent.componentName "flexberry-dropdown") (eq column.cellComponent.componentName "flexberry-lookup"))
+              }}
+              {{#if this.showValidationMessages}}
+                {{flexberry-validationmessage error=(v-get relation column.attrName "message")}}
+              {{/if}}
+            {{/with}}
+          {{/if}}
+        {{else}}
+          <div class="oveflow-text">
+            {{#if this.inHierarchicalMode}}
+              <button
+                type="button"
+                class="ui button hierarchy-expand icon {{if (or index (not this.inHierarchicalMode) (and (not this.isParentRecord) (not this.hasRecords))) "hidden"}} mini compact {{if this._recordsIsLoading "loading"}} {{this.buttonClass}}"
+                title={{t (concat "components.object-list-view.hierarchy-buttons." (if this._expanded "minus" "plus") "-button-title")}}
+                {{action (if this.recordsLoaded "expand" "loadChildRecords") bubbles=false}}
+              >
+                <i class="{{if this._expanded "minus" "plus"}} hierarchy-expand icon"></i>
+              </button>
+            {{/if}}
+            {{get-formatted this.record.data column.propName
+              dateFormat=column.cellComponent.componentProperties.dateFormat
+              moment=this.moment
+            }}
+          </div>
+        {{/if}}
+      </td>
+    {{/each}}
+    {{#if this.showMenuColumn}}
+      <td class="object-list-view-menu" style={{this.defaultPaddingStyle}}>
+        <div class="right pointing ui icon dropdown button">
+          <i class="list layout icon"></i>
+          <div class="right menu">
+            {{#if this.showEditMenuItemInRow}}
+              {{#if this.readonly}}
+                <div class="item disabled edit-menu">
+                  <i class="edit icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div role="button" class="item edit-menu" {{action "onRowClick" this.record (hash column=null columnIndex=null rowEdit=true)}}>
+                  <i class="edit icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+                </div>
+              {{/if}}
+            {{/if}}
+            {{#if this.showPrototypeMenuItemInRow}}
+              {{#if this.readonly}}
+                <div class="item disabled prototype-menu">
+                  <i class="copy icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div role="button" class="item prototype-menu" {{action this.createNewByPrototype (get this.record "data.id")}}>
+                  <i class="copy icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.prototype-menu-item-title"}}</span>
+                </div>
+              {{/if}}
+            {{/if}}
+            {{#if this.showDeleteMenuItemInRow}}
+              {{#if (or this.readonly (not this.record.rowConfig.canBeDeleted))}}
+                <div class="item disabled delete-menu">
+                  <i class="trash icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+                </div>
+              {{else}}
+                <div role="button" class="item delete-menu" {{action this.deleteRow this.record}}>
+                  <i class="trash icon"></i>
+                  <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+                </div>
+              {{/if}}
+            {{/if}}
+            {{#each this.menuInRowAdditionalItems as |menuItem|}}
+              <div role="button" class="item" {{action this.sendMenuItemAction menuItem.actionName this.record.data}}>
+                <i class={{menuItem.icon}}></i>
+                <span>{{menuItem.title}}</span>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </td>
+    {{/if}}
+  </tr>
+  {{#if (and this._expanded this.inHierarchicalMode)}}
+    {{#each this.records key="key" as |record|}}
+      {{object-list-view-row
+        record=record
+        columns=this.columns
+        readonly=this.readonly
+        required=this.required
+        showMenuColumn=this.showMenuColumn
+        sendMenuItemAction=this.sendMenuItemAction
+        menuInRowAdditionalItems=this.menuInRowAdditionalItems
+        showHelperColumn=this.showHelperColumn
+        defaultRowConfig=this.defaultRowConfig
+        showValidationMessages=this.showValidationMessages
+        showAsteriskInRow=this.showAsteriskInRow
+        showCheckBoxInRow=this.showCheckBoxInRow
+        showEditButtonInRow=this.showEditButtonInRow
+        showPrototypeButtonInRow=this.showPrototypeButtonInRow
+        showDeleteButtonInRow=this.showDeleteButtonInRow
+        isParentRecordPropertyName=this.isParentRecordPropertyName
+        inHierarchicalMode=this.inHierarchicalMode
+        inExpandMode=this.inExpandMode
+        loadRecords=this.loadRecords
+        doRenderData=record.doRenderData
+        rowClick=this.rowClick
+        selectRow=this.selectRow
+        createNewByPrototype=this.createNewByPrototype
+        deleteRow=this.deleteRow
+        _currentLevel=this._currentLevel
+        hierarchicalIndent=this._hierarchicalIndent
+        defaultLeftPadding=this.defaultLeftPadding
+        overflowedComponents=this.overflowedComponents
+        folvComponentName=this.folvComponentName
+        hierarchyLoadedLevel=this.hierarchyLoadedLevel
+        configurateRow=this.configurateRow
+      }}
+    {{/each}}
+  {{/if}}
+{{/if}}

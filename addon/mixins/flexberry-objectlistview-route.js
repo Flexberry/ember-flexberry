@@ -49,7 +49,7 @@ export default Mixin.create(EditInModalOpen, {
         let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
         let onEditForm = methodOptions.onEditForm;
         let recordId = get(record, 'id') || get(record, 'data.id');
-        let thisRouteName = this.get('router.currentRouteName');
+        let thisRouteName = this.router.currentRouteName;
         let thisRecordId = this.get('currentModel.id');
         let queryParams = {
           modelName: methodOptions.modelName,
@@ -72,7 +72,7 @@ export default Mixin.create(EditInModalOpen, {
             this.controller.save(false, true).then(() => {
               this.router.transitionTo(editFormRoute, recordId, transitionOptions);
             }).catch((errorData) => {
-              this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+              this.controller.rejectError(errorData, /*this.get('i18n').t(*/'forms.edit-form.save-failed-message'/*)*/);
             });
           } else {
             this.router.transitionTo(editFormRoute, recordId, transitionOptions);

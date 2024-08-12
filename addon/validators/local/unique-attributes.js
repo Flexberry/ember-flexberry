@@ -65,7 +65,7 @@ const uniqueAttributes = BaseValidator.extend({
           return true;
         }
       }).catch(() => {
-        return this.errors.pushObject(`${get(this.model, 'i18n').t('validations.server-side-validation-error')}`);
+        return this.errors.pushObject(/*`${get(this.model, 'i18n').t(*/'validations.server-side-validation-error'/*)}`*/);
       });
     }
   }

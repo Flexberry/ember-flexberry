@@ -40,6 +40,8 @@ module.exports = function (defaults) {
   // Script for mask input.
   app.import('vendor/jquery.maskedinput.min/jquery.maskedinput.min.js');
 
+  app.import('vendor/jquery.colResizable/colResizable-1.6.min.js');
+
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`

@@ -3,6 +3,7 @@
 */
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import VoiceTypingActions from '../mixins/voice-typing-actions';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -19,7 +20,7 @@ import { translationMacro as t } from 'ember-i18n';
   @class FlexberryTextbox
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(VoiceTypingActions, {
   /**
     Input value.
 

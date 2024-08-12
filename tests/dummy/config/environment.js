@@ -74,6 +74,9 @@ module.exports = function(environment) {
       // Flag: indicates whether to use adv limit service or not.
       useAdvLimitService: true,
 
+      // Flag: indicates whether to use voice typing in all controls or not.
+      useVoiceTypingInAllControls: false,
+
       // Custom property with components settings.
       components: {
         // Settings for flexberry-file component.

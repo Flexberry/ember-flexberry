@@ -660,6 +660,7 @@ export default {
       'coll-comspres-button-text':'Collapse all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
+      'voice-button-text': 'Voice search',
       'search-button-text': 'Search',
       'clear-search-button-text': 'Clear search',
       'export-excel-button-text': 'Export to Excel',

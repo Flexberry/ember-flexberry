@@ -21,9 +21,21 @@ export default FlexberryBaseComponent.extend({
   records: null,
 
   /**
+   * Count of dragover events.
+   */
+  dragCount: 0,
+
+  /**
    * Filtered records.
    */
   filteredRecords: computed('records.@each.isDeleted', function () {
+    return this.get('records').filterBy('isDeleted', false);
+  }),
+
+  /**
+   * Draggable records.
+   */
+  draggableRecords: computed('records.[]', function () {
     return this.get('records').filterBy('isDeleted', false);
   }),
 
@@ -182,6 +194,7 @@ export default FlexberryBaseComponent.extend({
   _createQueryBuilder(store, modelName, projection, order) {
     const sorting = this.get('sorting');
     const displayAttributeName = this.get('displayAttributeName');
+    const orderAttributeName = this.get('orderAttributeName');
 
     const builder = new Builder(store, modelName);
 
@@ -191,7 +204,7 @@ export default FlexberryBaseComponent.extend({
       builder.select(displayAttributeName);
     }
 
-    builder.orderBy(`${order ? order : `${displayAttributeName} ${sorting}`}`);
+    builder.orderBy(`${order ? order : `${orderAttributeName ? orderAttributeName : displayAttributeName} ${sorting}`}`);
 
     return builder;
   },
@@ -248,12 +261,38 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+   * Swap element in records by id.
+   * 
+   * @function _swapRecordElementsById
+   * @param {string} activeElementId Id of element to move.
+   * @param {string} currentElementId Id of element for insert position.
+   */
+  _swapRecordElementsById(activeElementId, currentElementId) {
+    const relationName = this.get('relationName');
+    let records = this.get('records');
+    let activeElement = records.findBy(relationName + '.id', activeElementId);
+    let currentElement = records.findBy(relationName + '.id', currentElementId);
+    let activeElementIndex = records.indexOf(activeElement);
+    let increaseIndex = activeElementIndex < records.indexOf(currentElement) ? 1 : 0;
+
+    records.removeObject(activeElement);
+
+    let newIndex = records.indexOf(currentElement);
+
+    records.insertAt(newIndex + increaseIndex, activeElement);
+
+    this.set('records', records);
+    this.set('dragCount', this.get('dragCount') + 1);
+  },
+
+  /**
    * Building a property to display selected values.
    */
   buildDisplayValue: observer('filteredRecords.[]', 'tagDisplayAttributeName', 'relationName', 'displayAttributeName', function () {
-    this.get('filteredRecords').forEach((record) =>
-      set(record, 'tagDisplayValue', this.getRecordDisplayValue(record))
-    );
+    this.get('filteredRecords').forEach((record) => {
+      set(record, 'tagDisplayValue', this.getRecordDisplayValue(record));
+      set(record, 'tagIdValue', get(record, this.get('relationName') + '.id'));
+    });
   }),
 
   /**
@@ -304,9 +343,10 @@ export default FlexberryBaseComponent.extend({
     const newValuePropertyName = 'relatedModel.' + this.get('relationName');
     this.set('newValuePropertyName', newValuePropertyName);
     this.set('value', null);
-    this.get('filteredRecords').forEach((record) =>
-      set(record, 'tagDisplayValue', this.getRecordDisplayValue(record))
-    );
+    this.get('filteredRecords').forEach((record) => {
+      set(record, 'tagDisplayValue', this.getRecordDisplayValue(record));
+      set(record, 'tagIdValue', get(record, this.get('relationName') + '.id'));
+    });
     this.addObserver('value', this.addNewRecordByValue);
     this.addObserver(newValuePropertyName, this.initAddNewRecordByNewValuePropertyName);
     this.set('defaultTagConfig', {
@@ -495,6 +535,52 @@ export default FlexberryBaseComponent.extend({
           debug(`Flexberry Lookup::autocomplete state = ${state}`);
         });
       }
+    });
+
+    // List of tags.
+    let tagsListElement = this.$('.draggable-tags')[0];
+
+    // Dragstart event.
+    tagsListElement.addEventListener('dragstart', (evt) => {
+      evt.target.classList.add('selected');
+    })
+    
+    // Dragend event.
+    tagsListElement.addEventListener('dragend', (evt) => {
+      let currentElement = evt.target;
+
+      if (!currentElement.classList.contains('selected')) return;
+
+      currentElement.classList.remove('selected');
+    });
+
+    // Dragover event.
+    tagsListElement.addEventListener('dragover', (evt) => {
+      // Allow to drop.
+      evt.preventDefault();
+    
+      // Find moving element.
+      const activeElement = tagsListElement.querySelector('.selected');
+
+      if (activeElement === null) return;
+
+      // Current element.
+      var currentElement = evt.target;
+
+      // Take tag element.
+      while (!currentElement.classList.contains('draggable-tag')) {
+        currentElement = currentElement.parentElement;
+
+        if (!currentElement) return;
+      }
+
+      if (activeElement === currentElement) return;
+    
+      const activeElementId = activeElement.getAttribute('id');
+      const currentElementId = currentElement.getAttribute('id');
+
+      // Swap elements.
+      _this._swapRecordElementsById(activeElementId, currentElementId);
     });
   }
 });

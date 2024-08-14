@@ -1285,47 +1285,42 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 19, "column": 29 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 27 }
   ],
-  "tests/acceptance/edit-form-validation-test/validation-base-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 }
+ "tests/acceptance/edit-form-validation-test/validation-base-test.js": [
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
+
   "tests/acceptance/edit-form-validation-test/validation-checkbox-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
+
   "tests/acceptance/edit-form-validation-test/validation-detail-delete-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 23, "column": 5 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
+
   "tests/acceptance/edit-form-validation-test/validation-detail-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 }
   ],
   "tests/acceptance/edit-form-validation-test/validation-dropdown-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
-  "tests/acceptance/edit-form-validation-test/validation-file-test.js": [
+ "tests/acceptance/edit-form-validation-test/validation-file-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
-  "tests/acceptance/edit-form-validation-test/validation-lookup-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+ "tests/acceptance/edit-form-validation-test/validation-lookup-test.js": [
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
   "tests/acceptance/edit-form-validation-test/validation-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
   "tests/acceptance/edit-form-validation-test/validation-textarea-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
+
   "tests/acceptance/edit-form-validation-test/validation-textbox-letter-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
-  "tests/acceptance/edit-form-validation-test/validation-textbox-numeric-test.js": [
+ "tests/acceptance/edit-form-validation-test/validation-textbox-numeric-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/edit-form-validation-test/validation-textbox-unique-date-test.js": [

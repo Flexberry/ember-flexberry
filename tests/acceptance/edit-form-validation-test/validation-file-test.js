@@ -1,36 +1,28 @@
-import { run } from '@ember/runloop';
 import $ from 'jquery';
-import {executeTest} from './execute-validation-test';
+import { executeTest } from './execute-validation-test';
 
 /* eslint-disable no-unused-vars */
-executeTest('check operation file', (store, assert, app) => {
+executeTest('check operation file', async (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
 
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path);
+  await visit(path);
 
-    let $validationFieldFile = $($('.field')[7]);
-    let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
+  assert.equal(currentPath(), path);
 
-    // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), 'File is required', 'Flexberry file have default value');
+  let $validationFieldFile = $($('.field')[7]);
+  let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
 
-    let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
+  // Check default validationmessage text.
+  assert.equal($validationFlexberryErrorLable.text().trim(), 'File is required', 'Flexberry file have default value');
 
-    // Click lookup button.
-    run(() => {
-      $validationFlexberryLookupButton.click();
-    });
+  let $validationFlexberryLookupButton = $('.ui.button.ui-change')[0];
 
-    let done = assert.async();
+  // Click lookup button.
+  await click($validationFlexberryLookupButton);
 
-    // Сounting the number of validationmessage.
-    setTimeout(function() {
-      assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Flexberry file have value');
-      done();
-    }, 2000);
-  });
+  // Сounting the number of validationmessage.
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Flexberry file have value');
 });
 /* eslint-enable no-unused-vars */

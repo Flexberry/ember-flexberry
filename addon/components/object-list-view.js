@@ -2034,6 +2034,9 @@ export default FlexberryBaseComponent.extend(
       case 'string':
       case 'number':
         component.name = 'flexberry-textbox';
+        component.properties = {
+          isUseVoiceTyping: this.get('isUseVoiceTyping')
+        };
         break;
 
       case 'boolean':
@@ -2518,7 +2521,7 @@ export default FlexberryBaseComponent.extend(
   */
   _deleteHasManyRelationships(record, immediately) {
     /*
-    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM. 
+    If ONLINE with flag IMMEDIATELY then record is sended to Flexberry ORM.
     ORM will delete all hasMany relationships on server side,
     but it is needed to unload hasMany relationships on client side.
 

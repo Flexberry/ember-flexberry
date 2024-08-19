@@ -220,6 +220,7 @@ export default {
       'coll-expand-button-text':'Свернуть/развернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
+      'voice-button-text': 'Голосовой поиск',
       'search-button-text': 'Поиск',
       'clear-search-button-text': 'Очистить поиск',
       'export-excel-button-text': 'Экспорт в Excel',

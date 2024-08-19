@@ -4,11 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.8.1] - 2024-08-19
 ### Added
-* Added Add voice typing to components:
+* Added voice typing to components:
     * `flexberry-field`
     * `flexberry-textarea`
     * `flexberry-textbox`
-    * Serch in `flexberry-objectlistview`
+    * Search in `flexberry-objectlistview`
 
 ## [2.8.0] - 2023-03-13
 ### Added

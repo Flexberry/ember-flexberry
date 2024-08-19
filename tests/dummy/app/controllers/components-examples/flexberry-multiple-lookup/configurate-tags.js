@@ -122,7 +122,8 @@ export default EditFormController.extend({
       Configurate tags on the condition.
     */
     configurateTag(tagConfig, record) {
-      if (get(record, 'author.name') === this.get('configurateTagByValue')) {
+      const _configurateTagsByValue = this.get('configurateTagByValue');
+      if (!_configurateTagsByValue || get(record, 'author.name') === _configurateTagsByValue) {
         set(tagConfig, 'canBeDeleted', this.get('canBeDeleted'));
         set(tagConfig, 'canBeSelected', this.get('canBeSelected'));
         set(tagConfig, 'customClass', this.get('customClass'));

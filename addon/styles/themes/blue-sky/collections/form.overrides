@@ -256,3 +256,11 @@ option {
     color: @readonlyColor;
     pointer-events: none;
 }
+
+.flexberry-lookup {
+    .input:not(.disabled) {
+        input[readonly] {
+            color: @textColor;
+        }
+    }
+}

@@ -161,6 +161,11 @@ div.ui.secondary.menu.no-margin {
     border-color: @uiHoveredNegitveBorderColor;
 }
 
+.ui.secondary.menu > .ui.action.input > .voice-button {
+    position: absolute;
+    right: 55px;
+    border: none;
+}
 .ui.secondary.menu > .ui.action.input > .search-button {
     position: absolute;
     right: 25px;

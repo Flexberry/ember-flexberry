@@ -735,6 +735,12 @@ Ember.$.extend(true, translations, {
       'flexberry-file': {
         'settings-example': {
           'caption': 'Flexberry-file. Пример работы с настройками'
+        },
+        'file-in-modal': {
+          'caption': 'Flexberry-file. Пример файла в модальном окне',
+          'captionModal': 'Flexberry-file. Пример файла в модальном окне',
+          'buttonModal': 'Модальное окно №1',
+          'buttonClose': 'Закрыть'
         }
       },
       'flexberry-groupedit': {

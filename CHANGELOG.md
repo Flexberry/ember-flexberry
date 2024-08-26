@@ -2,19 +2,23 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
-* The `flexberry-model` blueprint:
-    * added presence validator for not null attributes with non-standart types, including enum type.
-* The `flexberry-file` component:
-    * fixed image preview after upload action.
-* The `object-list-view` component:
-    * Added limiting multilists by model field.
-
-
-## [3.13.0-beta.1] - 2024-05-29
+## [3.13.0] - 2024-08-26
 ### Added
 * The `flexberry-multiple-lookup` component:
     * Added tag configuration by componentName.
+* Added voice typing to components:
+    * `flexberry-field`
+    * `flexberry-textarea`
+    * `flexberry-textbox`
+    * Search in `flexberry-objectlistview`
+* The `object-list-view` component:
+    * Added limiting multilists by model field.
+* Blueprints:
+    * The `flexberry-model` added presence validator for not null attributes with non-standart types, including enum type.
+
+### Fixed
+* The `flexberry-file` component:
+    * Fixed image preview after upload action.
 
 ## [3.12.0] - 2024-05-03
 ### Changed

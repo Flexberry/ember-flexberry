@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.13.1] - 2024-10-21
+### Fixed
+* The `flexberry-objectlistview` component:
+    * Child's menu item in hierarchy mode.
+
 ## [3.13.0] - 2024-08-26
 ### Added
 * The `flexberry-multiple-lookup` component:

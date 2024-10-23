@@ -7,81 +7,77 @@ import { click } from '@ember/test-helpers';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import Builder from 'ember-flexberry-data/query/builder';
 
-/* eslint-disable no-unused-vars */
-executeTest('check delete button in row', (store, assert, app) => {
+executeTest('check delete button in row', async (store, assert, app) => {
   assert.expect(4);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
-  let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let howAddRec = 1;
-  let uuid = '0' + generateUniqueId();
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
+  const modelName = 'ember-flexberry-dummy-suggestion-type';
+  const howAddRec = 1;
+  const uuid = '0' + generateUniqueId();
 
-  // Add records for deliting.
-  run(() => {
+  // Add records for deleting.
+  await run(async () => {
     let newRecord = store.createRecord(modelName, { name: uuid });
-    let done1 = assert.async();
 
-    newRecord.save().then(() => {
-      addDataForDestroy(newRecord);
-      let builder = new Builder(store).from(modelName).count();
-      let done = assert.async();
-      store.query(modelName, builder.build()).then((result) => {
-        visit(path + '?perPage=' + result.meta.count);
-        andThen(() => {
-          assert.equal(currentPath(), path);
+    await newRecord.save();
+    addDataForDestroy(newRecord);
 
-          let olvContainerClass = '.object-list-view-container';
-          let trTableClass = 'table.object-list-view tbody tr';
+    let builder = new Builder(store).from(modelName).count();
+    let result = await store.query(modelName, builder.build());
+    await visit(path + '?perPage=' + result.meta.count);
+  });
 
-          let $folvContainer = $(olvContainerClass);
-          let $rows = () => { return $(trTableClass, $folvContainer).toArray(); };
+  assert.equal(currentPath(), path);
 
-          // Check that the records have been added.
-          let recordIsForDeleting = $rows().reduce((sum, element) => {
-            let nameRecord = $.trim(element.children[1].innerText);
-            let flag = nameRecord.indexOf(uuid) >= 0;
-            return sum + flag;
-          }, 0);
+  let olvContainerClass = '.object-list-view-container';
+  let trTableClass = 'table.object-list-view tbody tr';
 
-          assert.equal(recordIsForDeleting, howAddRec, howAddRec + ' record added');
+  let $folvContainer = $(olvContainerClass);
+  let $rows = () => { return $(trTableClass, $folvContainer).toArray(); };
 
-          /* eslint-disable no-unused-vars */
-          let clickPromises = [];
-          $rows().forEach(function(element, i, arr)  {
-            let nameRecord = $.trim(element.children[1].innerText);
-            if (nameRecord.indexOf(uuid) >= 0) {
-              let $deleteBtnInRow = $('.object-list-view-row-delete-button', element)[0];
-              run(() => {
-                clickPromises.push(click($deleteBtnInRow));
-              });
-            }
-          });
-          /* eslint-enable no-unused-vars */
+  // Check that the records have been added.
+  let recordIsForDeleting = await run(() => {
+    return $rows().reduce((sum, element) => {
+      let nameRecord = $.trim(element.children[1].innerText);
+      let flag = nameRecord.indexOf(uuid) >= 0;
+      return sum + flag;
+    }, 0);
+  });
 
-          Promise.all(clickPromises).then(() => {
-            let done2 = assert.async();
+  assert.equal(recordIsForDeleting, howAddRec, howAddRec + ' record added');
 
-            // Check that the records have been removed.
-            let recordsIsDeleteBtnInRow = $rows().every((element) => {
-              let nameRecord = $.trim(element.children[1].innerText);
-              return nameRecord.indexOf(uuid) < 0;
-            });
+  /* eslint-disable no-unused-vars */
+  let clickPromises = [];
+  $rows().forEach(function(element) {
+    let nameRecord = $.trim(element.children[1].innerText);
+    if (nameRecord.indexOf(uuid) >= 0) {
+      let $deleteBtnInRow = $('.object-list-view-row-delete-button', element)[0];
+      clickPromises.push(run(() => click($deleteBtnInRow)));
+    }
+  });
+  /* eslint-enable no-unused-vars */
 
-            assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
+  await Promise.all(clickPromises);
 
-            // Check that the records have been removed into store.
-            let builder2 = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid).count();
-            let timeout = 500;
-            later((function() {
-              store.query(modelName, builder2.build()).then((result) => {
-                assert.notOk(result.meta.count, 'record \'' + uuid + '\'not found in store');
-                done2();
-              });
-            }), timeout);
-          });
-        });
-        done();
-      });
-      done1();
+  // Check that the records have been removed.
+  let recordsIsDeleteBtnInRow = await run(() => {
+    return $rows().every((element) => {
+      let nameRecord = $.trim(element.children[1].innerText);
+      return nameRecord.indexOf(uuid) < 0;
+    });
+  });
+
+  assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
+
+  // Check that the records have been removed into store.
+  let builder2 = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid).count();
+  let timeout = 500;
+  await new Promise(resolve => {
+    run(() => {
+      later(async () => {
+        let result = await store.query(modelName, builder2.build());
+        assert.notOk(result.meta.count, 'record \'' + uuid + '\' not found in store');
+        resolve();
+      }, timeout);
     });
   });
 });

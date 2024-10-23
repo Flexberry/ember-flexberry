@@ -2,42 +2,32 @@ import { module, test } from 'qunit';
 import { run } from '@ember/runloop';
 import startApp from '../../../helpers/start-app';
 import $ from 'jquery';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL, settled, findAll, find, click, waitFor } from '@ember/test-helpers';
 
-let app;
 const path = 'components-examples/flexberry-groupedit/configurate-row-example';
 const testName = 'configurate row';
 
-module('Acceptance | flexberry-groupedit | ' + testName, {
-    beforeEach() {
+module('Acceptance | flexberry-groupedit | ' + testName, function (hooks) {
+  setupApplicationTest(hooks);
 
-      // Start application.
-      app = startApp();
+  test(testName, async function (assert) {
+    assert.expect(58);
 
-      // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-      let applicationController = app.__container__.lookup('controller:application');
-      applicationController.set('isInAcceptanceTestMode', true);
-    },
+    await visit(path);
+    await settled();
 
-    afterEach() {
-      run(app, 'destroy');
-    }
-  });
-
-test(testName, (assert) => {
-  assert.expect(58);
-
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path, 'Path is correctly');
+    assert.equal(currentURL(), path, 'Path is correctly');
+   
+    //await waitFor('.object-list-view-container tbody tr');
+    await new Promise(resolve => setTimeout(resolve, 1000));
     let $folvRows = $('.object-list-view-container tbody tr');
-
     for (let i = 0; i < $folvRows.length; i++) {
       let $row = $folvRows[i];
       let $deleteButton = $('.object-list-view-row-delete-button', $row);
       let $flagField = $('.field .flexberry-checkbox', $row);
 
-      if (i % 2 === 0)
-      {
+      if (i % 2 === 0) {
         assert.equal($deleteButton.hasClass('disabled'), true, 'Delete button in an even row is disabled');
         assert.equal($flagField.hasClass('checked'), true, 'CheckBox in an even row is checked');
       } else {

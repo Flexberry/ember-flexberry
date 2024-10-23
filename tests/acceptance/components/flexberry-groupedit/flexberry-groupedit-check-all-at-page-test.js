@@ -33,7 +33,7 @@ module('Acceptance | flexberry-groupedit | ' + testName, function(hooks) {
     assert.expect(4);
 
     await visit(path);
-    assert.equal(currentURL(), path, 'Path is correctly');
+    assert.equal(currentURL(), path, 'The path is correct.');
 
     const $olv = $('.object-list-view');
     const $thead = $('th.dt-head-left', $olv).first();

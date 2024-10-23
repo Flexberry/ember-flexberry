@@ -360,7 +360,12 @@ export default Service.extend(Evented, {
     @default [{ category: 'PROMISE', message: "TransitionAborted" }]
   */
   errorMessageFilters: A([
-    { category: 'PROMISE', message: 'TransitionAborted' }
+    { category: 'PROMISE', message: 'TransitionAborted' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Store::query' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Store::findRecord' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry ODataAdapter::query' },
+    { category: 'DEBUG', message: 'DEBUG: Flexberry Lookup Mixin::updateLookupValue' },
+    { category: 'DEPRECATION', message: 'DEPRECATION' }
   ]),
 
   /**
@@ -406,8 +411,11 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.error, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.error, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -426,15 +434,20 @@ export default Service.extend(Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
+      const message = joinArguments(...arguments);
+
       return _this._queue.attach((resolve, reject) => {
-        let message = joinArguments(...arguments);
         if (message.indexOf('DEPRECATION') === 0) {
+          if (_this._checkMessageOnSkipped(messageCategory.deprecate, message)) return;
+
           return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
             resolve(result);
           }).catch((reason) => {
             reject(reason);
           });
         } else {
+          if (_this._checkMessageOnSkipped(messageCategory.warn, message)) return;
+
           return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
             resolve(result);
           }).catch((reason) => {
@@ -455,8 +468,11 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.log, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.log, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -475,8 +491,11 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.info, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.info, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -495,8 +514,11 @@ export default Service.extend(Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
+      const message = joinArguments(...arguments);
+      if (_this._checkMessageOnSkipped(messageCategory.debug, message)) return;
+
       return _this._queue.attach((resolve, reject) => {
-        return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
+        return _this._storeToApplicationLog(messageCategory.debug, message, '').then((result) => {
           resolve(result);
         }).catch((reason) => {
           reject(reason);
@@ -559,31 +581,6 @@ export default Service.extend(Evented, {
     @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
-    let isSkippedMessage = false;
-    let errorMessageFilters = this.get('errorMessageFilters');
-    let errorMessageFilterActive = this.get('errorMessageFilterActive');
-
-    if (errorMessageFilterActive) {
-      errorMessageFilters.forEach(errorMessageFilter => {
-        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
-          isSkippedMessage = true;
-        }
-      });
-    }
-
-    if (!this.get('enabled') || isSkippedMessage ||
-      category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
-      category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
-      category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
-      category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
-      category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
-      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
-      category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
-      return new RSVP.Promise((resolve) => {
-        this._triggerEvent(category.name);
-        resolve();
-      });
-    }
 
     let appConfig = getOwner(this).factoryFor('config:environment').class;
     let applicationLogProperties = {
@@ -667,5 +664,36 @@ export default Service.extend(Evented, {
         reject(reason);
       });
     });
+  },
+
+  _checkMessageOnSkipped(category, message) {
+    if (!this.get('enabled') ||
+    category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
+    category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
+    category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
+    category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
+    category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
+    category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
+    category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
+      new RSVP.Promise((resolve) => {
+        this._triggerEvent(category.name);
+        resolve();
+      });
+      return true;
+    }
+
+    let isSkippedMessage = false;
+    let errorMessageFilters = this.get('errorMessageFilters');
+    let errorMessageFilterActive = this.get('errorMessageFilterActive');
+
+    if (errorMessageFilterActive) {
+      errorMessageFilters.forEach(errorMessageFilter => {
+        if (category.name === errorMessageFilter.category && message.indexOf(errorMessageFilter.message) !== -1) {
+          isSkippedMessage = true;
+        }
+      });
+    }
+
+    return isSkippedMessage;
   }
 });

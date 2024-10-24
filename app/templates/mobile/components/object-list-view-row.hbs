@@ -1,4 +1,8 @@
-<tr class="{{record.rowConfig.customClass}}{{if record.selected " active"}}{{if record.data.hasDirtyAttributes " groupedit-new-row"}}">
+<tr class="{{record.rowConfig.customClass}}{{if record.selected " active"}}{{if record.data.hasDirtyAttributes " groupedit-new-row"}}"
+  {{action "onTouchStart" on="touchStart" preventDefault=false}}
+  {{action "onTouchMove" on="touchMove" preventDefault=false}}
+  {{action "onTouchEnd" on="touchEnd" preventDefault=preventDefaultTouchEnd}}
+  {{action "onTouchCancel" on="touchCancel" preventDefault=false}}>
   <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
     <div class="hidden">{{record.key}}</div>
     {{#if showHelperColumn}}

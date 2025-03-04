@@ -216,8 +216,7 @@ module.exports = {
         "block-indentation",
         "eol-last",
         "no-unnecessary-concat",
-        "no-negated-condition",
-        "no-shadowed-elements"
+        "no-negated-condition"
       ]
     },
     {

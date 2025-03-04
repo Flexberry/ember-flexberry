@@ -15,17 +15,17 @@
     <span>{{item.title}}</span>
   {{/if}}
 {{/if}}
-{{#each item.buttons as |button|}}
+{{#each item.buttons as |itemButton|}}
   <button
     type="button"
-    class="ui {{button.buttonClasses}} button"
-    title={{button.buttonTitle}}
-    disabled={{button.disabled}}
-    {{action "itemButtonAction" button.buttonAction bubbles=false}}>
-      {{#if button.iconClass}}
-        <i class="{{button.iconClass}}"></i>
+    class="ui {{itemButton.buttonClasses}} button"
+    title={{itemButton.buttonTitle}}
+    disabled={{itemButton.disabled}}
+    {{action "itemButtonAction" itemButton.buttonAction bubbles=false}}>
+      {{#if itemButton.iconClass}}
+        <i class="{{itemButton.iconClass}}"></i>
       {{/if}}
-      {{if button.buttonName button.buttonName}}
+      {{if itemButton.buttonName itemButton.buttonName}}
   </button>
 {{/each}}
 {{#if hasSubitems}}

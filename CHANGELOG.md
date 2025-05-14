@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+## Unreleased
+### Fixed
+* `jquery.flexberry.downloadFile`:
+    * Download of xml files.
+
 ## [3.13.2-beta.1] - 2025-04-03
 ### Fixed
 * The `flexberry-menuitem` component:

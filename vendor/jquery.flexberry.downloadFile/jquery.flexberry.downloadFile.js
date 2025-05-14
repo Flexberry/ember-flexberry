@@ -20,10 +20,16 @@
       type: 'GET',
       headers: options.headers,
       processData: false,
-      xhrFields: {
-        responseType: 'blob'
+      dataType: 'text', // jQuery expects text, but we'll get the raw data
+      xhr: function() {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        this.nativeXhr = xhr; // Save the reference for later
+        return xhr;
       },
-      success: function(result) {
+      success: function() {
+        var result = this.nativeXhr.response;
+
         var anchorProperties = {
           href: URL.createObjectURL(result),
           hidden: true
@@ -57,7 +63,7 @@
           options.onSuccess();
         }
       },
-      error: function(error) {
+      error: function(_, _, error) {
         if (typeof options.onError === 'function') {
           options.onError(error);
         } else {

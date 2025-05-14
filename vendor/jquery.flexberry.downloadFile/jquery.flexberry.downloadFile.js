@@ -24,11 +24,11 @@
       xhr: function() {
         var xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
-        nativeXhr = xhr; // Save the reference for later
+        this.nativeXhr = xhr; // Save the reference for later
         return xhr;
       },
       success: function() {
-        var result = nativeXhr.response;
+        var result = this.nativeXhr.response;
 
         var anchorProperties = {
           href: URL.createObjectURL(result),

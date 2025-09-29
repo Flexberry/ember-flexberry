@@ -282,7 +282,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         };
 
         let userSettingsService = this.get('userSettingsService');
-        userSettingsService.setCurrentParams(folvComponentName, userSettingsParams);
+        userSettingsService.setCurrentParams(folvComponentName, userSettingsParams, this.get('modelName'));
       }
 
       reloadDataHandler(this.get('reloadContext'), reloadData);

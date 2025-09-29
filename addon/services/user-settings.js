@@ -289,11 +289,22 @@ export default Service.extend({
    @param {Object} params
    @return {String} URL params
    */
-  setCurrentParams(componentName, params) {
+  setCurrentParams(componentName, params, modelName) {
     let appPage = this.currentAppPage;
+    let userSetting;
+    if(!isNone(modelName)) {
+      const userSettingValue = getOwner(this).lookup('default-user-setting:' + modelName);
+      if (!isNone(userSettingValue)) {
+        userSetting = userSettingValue.DEFAULT;
+      }
+    }
+
     if (params.sort === null) {
+      if(!isNone(userSetting)) {
+        this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      }
+
       this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
-      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
     } else {
       let sorting;
       if ('sort' in params && params.sort) {
@@ -302,12 +313,13 @@ export default Service.extend({
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
       }
 
-      let userSetting = this.getCurrentUserSetting(componentName);
+      userSetting = this.getCurrentUserSetting(componentName);
       userSetting.sorting = sorting;
       this.saveUserSetting(componentName, defaultSettingName, userSetting);
       this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
-      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
     }
+
+    return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
   },
 
   /**

@@ -1210,11 +1210,11 @@ export default FlexberryBaseComponent.extend(
       @param {String} oldCondition The old value of the filter condition.
     */
     filterConditionChanged(filter, newCondition, oldCondition) {
-      if (oldCondition === 'between' || newCondition === 'empty' || newCondition === 'nempty') {
+      if (newCondition === 'empty' || newCondition === 'nempty') {
         Ember.set(filter, 'pattern', null);
       }
 
-      let options = this._getFilterComponentByCondition(newCondition, oldCondition);
+      let options = this._getFilterComponentByCondition(newCondition, oldCondition, filter.type);
       let componentForFilterByCondition = this.get('componentForFilterByCondition');
       if (componentForFilterByCondition) {
         Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -1903,7 +1903,7 @@ export default FlexberryBaseComponent.extend(
       Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type, attribute);
     } else {
-      conditions = this._conditionsByType(attribute.type);
+      conditions = this._conditionsByType(attribute.type, this.get('i18n'));
     }
 
     let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
@@ -1921,10 +1921,10 @@ export default FlexberryBaseComponent.extend(
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
       Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation, attribute));
+      Ember.$.extend(true, component, componentForFilter(type, relation, attribute));
     }
 
-    let options = this._getFilterComponentByCondition(condition, null);
+    let options = this._getFilterComponentByCondition(condition, null, type);
     let componentForFilterByCondition = this.get('componentForFilterByCondition');
     if (componentForFilterByCondition) {
       Ember.assert(`Need function in 'componentForFilterByCondition'.`, typeof componentForFilterByCondition === 'function');
@@ -1984,6 +1984,7 @@ export default FlexberryBaseComponent.extend(
           'neq': this.get('i18n').t('components.object-list-view.filters.neq'),
           'le': this.get('i18n').t('components.object-list-view.filters.le'),
           'ge': this.get('i18n').t('components.object-list-view.filters.ge'),
+          'between': this.get('i18n').t('components.object-list-view.filters.between'),
         };
       case 'number':
         return {
@@ -2076,18 +2077,24 @@ export default FlexberryBaseComponent.extend(
     @method _getFilterComponentByCondition
     @param {String} newCondtition
     @param {String} oldCondition
+    @param {String} attributeType
     @return {Object} Object with parameters for component.
   */
-  _getFilterComponentByCondition(newCondition, oldCondition) {
+  _getFilterComponentByCondition(newCondition, oldCondition, attributeType) {
     if (newCondition === 'between') {
-      return { name: 'olv-filter-interval' };
+      return {
+        name: 'olv-filter-interval',
+        properties: {
+          componentName: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
+          dynProps: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
+        },
+      };
     }
 
-    if (oldCondition === 'between') {
-      return { name: 'flexberry-textbox' };
-    }
-
-    return {};
+    return {
+      name: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
+      properties: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
+    };
   },
 
   /**

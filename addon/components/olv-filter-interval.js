@@ -39,13 +39,21 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-    let valueSplit = (this.get('value') || '').toString().split(this.get('separator'));
-    let from = valueSplit[0] || '';
-    let to = valueSplit[1] || '';
-    if (this.get('componentName') === 'flexberry-simpledatetime') {
-      from = moment(from).toDate();
-      to = moment(to).toDate();
-    }
+
+    const [fromRaw = '', toRaw = ''] = (this.get('value') || '').toString().split(this.get('separator'));
+    const isDate = this.get('componentName') === 'flexberry-simpledatetime';
+
+    const parse = (val) => {
+      if (!val) return null;
+      if (!isDate) return val;
+      const m = moment(val);
+      return m.isValid() ? m.toDate() : null;
+    };
+
+    this.setProperties({
+      from: parse(fromRaw),
+      to: parse(toRaw)
+    });
   },
 
   /**
@@ -82,7 +90,7 @@ export default FlexberryBaseComponent.extend({
     if (dynPropsType === 'date') {
       dateStyle = "flex-direction: column; gap: 6px; width: 100%; align-items: stretch;";
     }
-    
+
     return Ember.String.htmlSafe(`display:flex; ${dateStyle}`);
   }),
 });

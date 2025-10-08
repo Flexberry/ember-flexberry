@@ -1,14 +1,23 @@
-<div style="float: left; width: 45%;">
-  {{flexberry-textbox
-    value=from
-    placeholder=fromPlaceholder
-    dynamicProperties=dynProps
-  }}
-</div>
-<div style="float: right; width: 45%;">
-  {{flexberry-textbox
-    value=to
-    placeholder=toPlaceholder
-    dynamicProperties=dynProps
-  }}
+<div
+  class="olv-filter-interval"
+  style={{htmlSafe (if (eq dynProps.type "date")
+    "display: flex; flex-direction: column; gap: 6px; width: 100%; align-items: stretch;"
+    "display: flex; flex-direction: row; gap: 8px; width: 100%; align-items: center;"
+  )}}
+>
+  <div class="field" style="flex: 1; width: 100%;">
+    {{component componentName
+      value=from
+      placeholder=fromPlaceholder
+      dynamicProperties=dynProps
+    }}
+  </div>
+
+  <div class="field" style="flex: 1; width: 100%;">
+    {{component componentName
+      value=to
+      placeholder=toPlaceholder
+      dynamicProperties=dynProps
+    }}
+  </div>
 </div>

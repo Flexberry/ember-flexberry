@@ -75,4 +75,14 @@ export default FlexberryBaseComponent.extend({
     let separator = this.get('separator');
     this.set('value', from + separator + to);
   }),
+
+  filterIntervalStyle: Ember.computed('dynProps.type', function() {
+    let dynPropsType = this.get('dynProps.type');
+    let dateStyle = 'flex-direction: row; gap: 8px; width: 100%; align-items: center"';
+    if (dynPropsType === 'date') {
+      dateStyle = "flex-direction: column; gap: 6px; width: 100%; align-items: stretch;";
+    }
+    
+    return Ember.String.htmlSafe(`display:flex; ${dateStyle}`);
+  }),
 });

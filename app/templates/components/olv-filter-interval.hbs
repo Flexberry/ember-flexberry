@@ -1,12 +1,6 @@
 <div
   class="olv-filter-interval"
-  style="
-    display: flex;
-    {{if (eq dynProps.type "date")
-      "flex-direction: column; gap: 6px; width: 100%; align-items: stretch;"
-      "flex-direction: row; gap: 8px; width: 100%; align-items: center;"
-    }}
-  "
+  style={{filterIntervalStyle}}
 >
   <div class="field" style="flex: 1; width: 100%;">
     {{component componentName

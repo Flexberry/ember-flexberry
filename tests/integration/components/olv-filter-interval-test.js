@@ -1,8 +1,16 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+import startApp from '../../helpers/start-app';
 
 moduleForComponent('olv-filter-interval', 'Integration | Component | olv filter interval', {
-  integration: true
+  integration: true,
+  beforeEach: function () {
+  App = startApp();
+  Ember.Component.reopen({
+    i18n: Ember.inject.service('i18n'),
+  });
+}
 });
 
 test('it renders', function(assert) {

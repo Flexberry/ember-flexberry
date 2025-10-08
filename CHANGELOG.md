@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.3] - 2025-10-07
+### Fixed
+* The `flexberry-objectlistview` component:
+    * Date interval filter.
+
 ## [2.8.2] - 2024-10-21
 ### Fixed
 * The `flexberry-objectlistview` component:

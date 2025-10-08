@@ -2,8 +2,11 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 const { observer } = Ember;
+import moment from 'moment';
+
 
 export default FlexberryBaseComponent.extend({
+  classNames: ['two fields'],
 
   /**
    * Start of interval
@@ -20,7 +23,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Components to be rendered in from/to blocks
    */
-  componentName: null,
+  componentName: 'flexberry-textbox',
 
   /**
    * DynamicProperties for from/to components
@@ -36,9 +39,21 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-    let valueSplit = (this.get('value') || '').toString().split(this.get('separator'));
-    this.set('from', valueSplit[0]);
-    this.set('to', valueSplit[1]);
+
+    const [fromRaw = '', toRaw = ''] = (this.get('value') || '').toString().split(this.get('separator'));
+    const isDate = this.get('componentName') === 'flexberry-simpledatetime';
+
+    const parse = (val) => {
+      if (!val) return null;
+      if (!isDate) return val;
+      const m = moment(val);
+      return m.isValid() ? m.toDate() : null;
+    };
+
+    this.setProperties({
+      from: parse(fromRaw),
+      to: parse(toRaw)
+    });
   },
 
   /**
@@ -67,5 +82,15 @@ export default FlexberryBaseComponent.extend({
     let to = this.get('to') || '';
     let separator = this.get('separator');
     this.set('value', from + separator + to);
+  }),
+
+  filterIntervalStyle: Ember.computed('dynProps.type', function() {
+    let dynPropsType = this.get('dynProps.type');
+    let dateStyle = 'flex-direction: row; gap: 8px; width: 100%; align-items: center"';
+    if (dynPropsType === 'date') {
+      dateStyle = "flex-direction: column; gap: 6px; width: 100%; align-items: stretch;";
+    }
+
+    return Ember.String.htmlSafe(`display:flex; ${dateStyle}`);
   }),
 });

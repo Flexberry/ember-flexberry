@@ -3,38 +3,32 @@
   style={{filterIntervalStyle}}
 >
   {{#if (eq dynProps.type "date")}}
-    <div class="field" style="flex: 1; width: 100%; display: flex; align-items: center; gap: 4px;">
+    <div class="field" style="flex: 1; width: 100%; position: relative;">
       {{component componentName
         value=from
         placeholder=fromPlaceholder
         dynamicProperties=dynProps
       }}
-      <button
-        type="button"
-        class="ui clear-filter mini icon button"
-        style="margin-left: 4px;"
+      <i
+        class="remove icon"
+        style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer;"
         title={{t "components.object-list-view.clear-filter-in-column"}}
         {{action "clearFrom"}}
-      >
-        <i class="remove icon"></i>
-      </button>
+      ></i>
     </div>
 
-    <div class="field" style="flex: 1; width: 100%; display: flex; align-items: center; gap: 4px;">
+    <div class="field" style="flex: 1; width: 100%; position: relative;">
       {{component componentName
         value=to
         placeholder=toPlaceholder
         dynamicProperties=dynProps
       }}
-      <button
-        type="button"
-        class="ui clear-filter mini icon button"
-        style="margin-left: 4px;"
+      <i
+        class="remove icon"
+        style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer;"
         title={{t "components.object-list-view.clear-filter-in-column"}}
         {{action "clearTo"}}
-      >
-        <i class="remove icon"></i>
-      </button>
+      ></i>
     </div>
   {{else}}
     <div class="field" style="flex: 1; width: 100%;">

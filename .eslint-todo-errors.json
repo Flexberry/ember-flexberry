@@ -1947,11 +1947,13 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 43, "column": 88 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 44, "column": 25 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 53, "column": 10 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 81, "column": 21 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 82, "column": 19 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 83, "column": 26 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 84, "column": 10 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 88, "column": 29 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 79, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 82, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 90, "column": 21 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 91, "column": 19 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 92, "column": 26 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 93, "column": 10 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 97, "column": 29 }
   ],
   "addon/components/olv-setconfigdialogbutton.js": [
     { "ruleId": "ember/closure-actions", "line": 12, "column": 7 }

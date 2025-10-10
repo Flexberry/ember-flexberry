@@ -74,6 +74,15 @@ export default FlexberryBaseComponent.extend({
    */
   separator: '|',
 
+  actions: {
+    clearFrom() {
+      this.set('from', null);
+    },
+    clearTo() {
+      this.set('to', null);
+    }
+  },
+  
   /**
    * Sets value with format '{from}{separator}{to}'
    */

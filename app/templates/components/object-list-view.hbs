@@ -115,28 +115,13 @@
                   )
                   dynamicProperties=column.filter.component.properties
                 }}
-                {{#if (eq column.filter.type "date")}}
-                {{else if (eq column.filter.type "number")}}
-                  <div style="margin-top: 4px; text-align: left;">
-                    <button
-                      type="button"
-                      class="ui clear-filter button"
-                      title={{t "components.object-list-view.clear-filter-in-column"}}
-                      {{action "clearFilterForColumn" column.filter}}
-                    >
-                      <i class="remove icon"></i>
-                    </button>
-                  </div>
-
-                {{else}}
-                  <button
-                    type="button"
-                    class="ui clear-filter button"
+                {{#if (eq column.filter.type "number")}}
+                  <i
+                    role="button"
+                    class="remove icon field__clear-btn"
                     title={{t "components.object-list-view.clear-filter-in-column"}}
                     {{action "clearFilterForColumn" column.filter}}
-                  >
-                    <i class="remove icon"></i>
-                  </button>
+                  ></i>
                 {{/if}}
               {{else}}
                 <div class="fluid action input ui">

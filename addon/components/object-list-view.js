@@ -2082,19 +2082,29 @@ export default FlexberryBaseComponent.extend(
   */
   _getFilterComponentByCondition(newCondition, oldCondition, attributeType) {
     if (newCondition === 'between') {
-      return {
-        name: 'olv-filter-interval',
-        properties: {
-          componentName: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
-          dynProps: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
-        },
-      };
+      if (attributeType === 'date' || attributeType === 'number') {
+        return {
+          name: 'olv-filter-interval',
+          properties: {
+            componentName: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
+            dynProps: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
+          },
+        };
+      }
+      return {};
     }
 
-    return {
-      name: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
-      properties: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
-    };
+    if (oldCondition === 'between') {
+      if (attributeType === 'string' || attributeType === 'number') {
+        return { name: 'flexberry-textbox', properties: {} };
+      }
+      if (attributeType === 'date') {
+        return { name: 'flexberry-simpledatetime', properties: { type: 'date', removeButton: false } };
+      }
+      return {};
+    }
+
+    return {};
   },
 
   /**

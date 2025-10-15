@@ -154,7 +154,7 @@ div.ui.secondary.menu.no-margin {
 
 .ui.buttons.removeFilter-button {
     border-left: 1px solid @uiBorderColor;
-    height: 33px ;
+    height: 100px ;
 }
 
 .ui.button.icon.remove-button:hover {
@@ -742,4 +742,9 @@ html.mobile .overflowed-cell .flexberry-simpledatetime .flatpickr .ui.ui-clear.b
 
 .ui.loading.button i.icon:before {
   color: transparent !important;
+}
+
+.clear-filter-wrapper {
+  margin-top: 4px;
+  text-align: left;
 }

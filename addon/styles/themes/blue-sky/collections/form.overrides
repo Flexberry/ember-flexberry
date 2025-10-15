@@ -264,3 +264,19 @@ option {
         }
     }
 }
+.olv-filter-interval .field {
+  flex: 1;
+  width: 100%;
+}
+
+.olv-filter-interval .field--relative {
+  position: relative;
+}
+
+.olv-filter-interval .field__clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

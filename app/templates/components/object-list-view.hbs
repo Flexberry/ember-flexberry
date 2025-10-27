@@ -106,40 +106,7 @@
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
-              {{#if (eq column.filter.condition "between")}}
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  readonly=(or
-                    (eq column.filter.condition "empty")
-                    (eq column.filter.condition "nempty")
-                  )
-                  dynamicProperties=column.filter.component.properties
-                }}
-                {{#if (eq column.filter.type "date")}}
-                {{else if (eq column.filter.type "number")}}
-                  <div style="margin-top: 4px; text-align: left;">
-                    <button
-                      type="button"
-                      class="ui clear-filter button"
-                      title={{t "components.object-list-view.clear-filter-in-column"}}
-                      {{action "clearFilterForColumn" column.filter}}
-                    >
-                      <i class="remove icon"></i>
-                    </button>
-                  </div>
-
-                {{else}}
-                  <button
-                    type="button"
-                    class="ui clear-filter button"
-                    title={{t "components.object-list-view.clear-filter-in-column"}}
-                    {{action "clearFilterForColumn" column.filter}}
-                  >
-                    <i class="remove icon"></i>
-                  </button>
-                {{/if}}
-              {{else}}
-                <div class="fluid action input ui">
+                <div class="{{unless (and (eq column.filter.condition "between") (eq column.filter.type "date")) "fluid action input ui"}}">
                   {{component column.filter.component.name
                     value=column.filter.pattern
                     readonly=(or
@@ -148,16 +115,17 @@
                     )
                     dynamicProperties=column.filter.component.properties
                   }}
-                  <button
-                    type="button"
-                    class="ui clear-filter button"
-                    title={{t "components.object-list-view.clear-filter-in-column"}}
-                    {{action "clearFilterForColumn" column.filter}}
-                  >
-                    <i class="remove icon"></i>
-                  </button>
+                  {{#unless (and (eq column.filter.condition "between") (eq column.filter.type "date"))}}
+                    <button
+                      type="button"
+                      class="ui clear-filter button"
+                      title={{t "components.object-list-view.clear-filter-in-column"}}
+                      {{action "clearFilterForColumn" column.filter}}
+                    >
+                      <i class="remove icon"></i>
+                    </button>
+                  {{/unless}}
                 </div>
-              {{/if}}
             {{/if}}
           </td>
         {{/each}}

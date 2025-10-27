@@ -62,6 +62,9 @@
   .flexberry-simpledatetime {
       width: 100%;
   }
+  .two.fields {
+    width: 100%;
+  }
 }
 
 table.object-list-view.selectable tbody,

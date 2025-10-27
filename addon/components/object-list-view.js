@@ -2081,20 +2081,41 @@ export default FlexberryBaseComponent.extend(
     @return {Object} Object with parameters for component.
   */
   _getFilterComponentByCondition(newCondition, oldCondition, attributeType) {
-    if (newCondition === 'between') {
-      return {
-        name: 'olv-filter-interval',
-        properties: {
-          componentName: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
-          dynProps: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
+    const isNewBetween = (newCondition === 'between');
+    const isOldBetween = (oldCondition === 'between');
+
+    if (isNewBetween || isOldBetween) {
+      const componentConfigs = {
+        number: {
+          componentName: 'flexberry-textbox',
+          dynProps: { type: 'number' }
         },
+        date: {
+          componentName: 'flexberry-simpledatetime',
+          dynProps: { removeButton: false, type: 'date' }
+        }
       };
+
+      const config = componentConfigs[attributeType];
+
+      if (!config) {
+        return {};
+      }
+
+      if (isNewBetween) {
+        return {
+          name: 'olv-filter-interval',
+          properties: config
+        };
+      } else {
+        return {
+          name: config.componentName,
+          properties: config.dynProps
+        };
+      }
     }
 
-    return {
-      name: attributeType === 'date' ? 'flexberry-simpledatetime' : 'flexberry-textbox',
-      properties: attributeType === 'date' ? { type: 'date', removeButton: false } : {},
-    };
+    return {};
   },
 
   /**

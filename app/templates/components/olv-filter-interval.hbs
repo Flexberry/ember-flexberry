@@ -1,52 +1,49 @@
-<div
-  class="olv-filter-interval"
-  style={{filterIntervalStyle}}
->
-  {{#if (eq dynProps.type "date")}}
-    <div class="field" style="flex: 1; width: 100%; position: relative;">
+{{#if (eq dynProps.type "date")}}
+  <div class="fluid action input ui">
+    {{component componentName
+      value=from
+      placeholder=fromPlaceholder
+      dynamicProperties=dynProps
+    }}
+    <button
+      type="button"
+      class="ui clear-filter button"
+      title={{t "components.object-list-view.clear-filter-in-column"}}
+      {{action "clearFrom"}}
+    >
+      <i class="remove icon"></i>
+    </button>
+  </div>
+  <div class="fluid action input ui">
+    {{component componentName
+      value=to
+      placeholder=toPlaceholder
+      dynamicProperties=dynProps
+    }}
+    <button
+      type="button"
+      class="ui clear-filter button"
+      title={{t "components.object-list-view.clear-filter-in-column"}}
+      {{action "clearTo"}}
+    >
+      <i class="remove icon"></i>
+    </button>
+  </div>
+{{else}}
+  <div class="two fields">
+    <div class="field">
       {{component componentName
         value=from
         placeholder=fromPlaceholder
         dynamicProperties=dynProps
       }}
-      <i
-        role="button"
-        class="remove icon"
-        style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer;"
-        title={{t "components.object-list-view.clear-filter-in-column"}}
-        {{action "clearFrom"}}
-      ></i>
     </div>
-
-    <div class="field" style="flex: 1; width: 100%; position: relative;">
-      {{component componentName
-        value=to
-        placeholder=toPlaceholder
-        dynamicProperties=dynProps
-      }}
-      <i
-        role="button"
-        class="remove icon"
-        style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer;"
-        title={{t "components.object-list-view.clear-filter-in-column"}}
-        {{action "clearTo"}}
-      ></i>
-    </div>
-  {{else}}
-    <div class="field" style="flex: 1; width: 100%;">
-      {{component componentName
-        value=from
-        placeholder=fromPlaceholder
-        dynamicProperties=dynProps
-      }}
-    </div>
-
-    <div class="field" style="flex: 1; width: 100%;">
+    <div class="field">
       {{component componentName
         value=to
         placeholder=toPlaceholder
         dynamicProperties=dynProps
       }}
     </div>
-  {{/if}}
-</div>
+  </div>
+{{/if}}

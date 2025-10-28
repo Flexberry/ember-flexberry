@@ -1,12 +1,16 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-const { observer } = Ember;
 import moment from 'moment';
 
+const { get, set, observer, setProperties } = Ember;
 
 export default FlexberryBaseComponent.extend({
-  classNames: ['two fields'],
+
+  /**
+    Overload wrapper tag name for disabling wrapper.
+  */
+  tagName: '',
 
   /**
    * Start of interval
@@ -40,8 +44,8 @@ export default FlexberryBaseComponent.extend({
   init() {
     this._super(...arguments);
 
-    const [fromRaw = '', toRaw = ''] = (this.get('value') || '').toString().split(this.get('separator'));
-    const isDate = this.get('componentName') === 'flexberry-simpledatetime';
+    const [fromRaw = '', toRaw = ''] = (get(this, 'value') || '').toString().split(get(this, 'separator'));
+    const isDate = get(this, 'componentName') === 'flexberry-simpledatetime';
 
     const parse = (val) => {
       if (!val) return null;
@@ -50,7 +54,7 @@ export default FlexberryBaseComponent.extend({
       return m.isValid() ? m.toDate() : null;
     };
 
-    this.setProperties({
+    setProperties(this, {
       from: parse(fromRaw),
       to: parse(toRaw)
     });
@@ -76,30 +80,20 @@ export default FlexberryBaseComponent.extend({
 
   actions: {
     clearFrom() {
-      this.set('from', null);
+      set(this, 'from', null);
     },
     clearTo() {
-      this.set('to', null);
+      set(this, 'to', null);
     }
   },
-  
+
   /**
    * Sets value with format '{from}{separator}{to}'
    */
   valueSetter: observer('from', 'to', 'value', function () {
-    let from = this.get('from') || '';
-    let to = this.get('to') || '';
-    let separator = this.get('separator');
-    this.set('value', from + separator + to);
-  }),
-
-  filterIntervalStyle: Ember.computed('dynProps.type', function() {
-    let dynPropsType = this.get('dynProps.type');
-    let dateStyle = 'flex-direction: row; gap: 8px; width: 100%; align-items: center"';
-    if (dynPropsType === 'date') {
-      dateStyle = "flex-direction: column; gap: 6px; width: 100%; align-items: stretch;";
-    }
-
-    return Ember.String.htmlSafe(`display:flex; ${dateStyle}`);
+    let from = get(this, 'from') || '';
+    let to = get(this, 'to') || '';
+    let separator = get(this, 'separator');
+    set(this, 'value', from + separator + to);
   }),
 });

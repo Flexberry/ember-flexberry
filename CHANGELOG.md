@@ -1,6 +1,10 @@
 # Ember Flexberry Changelog
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+## [3.13.2-beta.2] - 2026-01-15
+### Fixed
+* Fix default usersettings.
+
 ## [3.13.2-beta.1] - 2025-04-03
 ### Fixed
 * The `flexberry-menuitem` component:

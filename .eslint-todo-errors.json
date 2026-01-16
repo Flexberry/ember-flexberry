@@ -603,14 +603,14 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 210, "column": 52 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 211, "column": 44 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 212, "column": 49 },
-    { "ruleId": "no-undef", "line": 473, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 729, "column": 56 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 744, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 749, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 750, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 751, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 752, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 753, "column": 23 }
+    { "ruleId": "no-undef", "line": 485, "column": 37 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 741, "column": 56 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 756, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 761, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 762, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 763, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 764, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 765, "column": 23 }
   ],
   "addon/utils/extended-get.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 23 },
@@ -732,6 +732,12 @@
     { "ruleId": "no-extra-semi", "line": 31, "column": 2 },
     { "ruleId": "no-extra-semi", "line": 40, "column": 2 },
     { "ruleId": "no-extra-semi", "line": 55, "column": 2 }
+  ],
+  "config/ember-try.js": [
+    { "ruleId": "node/no-missing-require", "line": 3, "column": 31 }
+  ],
+  "ember-cli-build.js": [
+    { "ruleId": "node/no-missing-require", "line": 4, "column": 30 }
   ],
   "tests/acceptance/components/base-flexberry-lookup-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 128, "column": 27 },

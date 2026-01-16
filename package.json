@@ -111,7 +111,8 @@
   "resolutions": {
     "ws": "6.2.1",
     "ember-get-config": "0.3.0",
-    "tmp": "0.2.1"
+    "tmp": "0.2.1",
+    "mktemp": "0.4.0"
   },
   "engines": {
     "node": "10.* || >= 12.*"

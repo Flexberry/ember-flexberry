@@ -12,14 +12,14 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
 
     - name: Install dependencies
       run: |
         set -x
         npm install -g ember-cli@3.1.4
         npm install -g bower
-        yarn install
+        npm install
         bower install
 
     - name: Setup test environment
@@ -44,14 +44,14 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
 
     - name: Install dependencies
       run: |
         set -x
         npm install -g ember-cli@3.1.4
         npm install -g bower
-        yarn install
+        npm install
         bower install
 
     - name: Setup test environment

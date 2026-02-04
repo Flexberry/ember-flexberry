@@ -313,7 +313,10 @@ export default Service.extend({
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
       }
 
-      userSetting = this.getCurrentUserSetting(componentName);
+      if (isNone(userSetting)) {
+        userSetting = this.getCurrentUserSetting(componentName);
+      }
+
       userSetting.sorting = sorting;
       this.saveUserSetting(componentName, defaultSettingName, userSetting);
       this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;

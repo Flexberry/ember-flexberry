@@ -603,14 +603,14 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 210, "column": 52 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 211, "column": 44 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 212, "column": 49 },
-    { "ruleId": "no-undef", "line": 488, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 744, "column": 56 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 759, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 764, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 765, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 766, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 767, "column": 23 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 768, "column": 23 }
+    { "ruleId": "no-undef", "line": 498, "column": 37 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 754, "column": 56 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 769, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 774, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 775, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 776, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 777, "column": 23 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 778, "column": 23 }
   ],
   "addon/utils/extended-get.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 23 },

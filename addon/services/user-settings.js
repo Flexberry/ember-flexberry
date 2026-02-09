@@ -287,6 +287,7 @@ export default Service.extend({
 
    @method setCurrentParams
    @param {Object} params
+   @param {String} modelName Name of model.
    @return {String} URL params
    */
   setCurrentParams(componentName, params, modelName) {
@@ -313,8 +314,9 @@ export default Service.extend({
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
       }
 
-      if (isNone(userSetting)) {
-        userSetting = this.getCurrentUserSetting(componentName);
+      const currentUserSettingValue = this.getCurrentUserSetting(componentName);
+      if (!isNone(currentUserSettingValue)) {
+        userSetting = currentUserSettingValue;
       }
 
       userSetting.sorting = sorting;
@@ -446,9 +448,10 @@ export default Service.extend({
 
    @method getDefaultDeveloperUserSetting
    @param {String} componentName Name of component.
+   @param {String} modelName Name of model.
    @return {Object}
    */
-  getDefaultDeveloperUserSetting(componentName) {
+  getDefaultDeveloperUserSetting(componentName, modelName) {
     let settingName = defaultSettingName;
 
     let ret;
@@ -457,6 +460,13 @@ export default Service.extend({
       settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
     ) {
       ret = this.defaultDeveloperUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
+    if (isNone(ret) && !isNone(modelName)) {
+      const defaultSettingValue = getOwner(this).lookup('default-user-setting:' + modelName);
+      if (!isNone(defaultSettingValue)) {
+        return defaultSettingValue;
+      }
     }
 
     return ret;

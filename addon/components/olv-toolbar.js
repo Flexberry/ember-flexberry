@@ -710,7 +710,7 @@ export default FlexberryBaseComponent.extend(EditInModalOpen, VoiceTypingActions
             break;
           }
 
-          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName, this.get('modelController.modelName'));
           /* eslint-disable no-unused-vars */
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {

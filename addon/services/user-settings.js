@@ -293,7 +293,11 @@ export default Service.extend({
   setCurrentParams(componentName, params, modelName) {
     let appPage = this.currentAppPage;
     let userSetting;
-    if(!isNone(modelName)) {
+    const currentUserSettingValue = this.getCurrentUserSetting(componentName);
+    if (Object.keys(currentUserSettingValue).length > 0) {
+      userSetting = currentUserSettingValue;
+    }
+    else if (!isNone(modelName)) {
       const userSettingValue = getOwner(this).lookup('default-user-setting:' + modelName);
       if (!isNone(userSettingValue)) {
         userSetting = userSettingValue.DEFAULT;
@@ -312,11 +316,6 @@ export default Service.extend({
         sorting = deserializeSortingParam(params.sort);
       } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-      }
-
-      const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-      if (!isNone(currentUserSettingValue)) {
-        userSetting = currentUserSettingValue;
       }
 
       userSetting.sorting = sorting;
@@ -357,19 +356,19 @@ export default Service.extend({
     @method createDefaultUserSetting
     @param {String} componentName
    */
-   createDefaultUserSetting(componentName) {
-     if (!(this.exists())) {
-       this.currentUserSettings[this.currentAppPage] = {};
-     }
+  createDefaultUserSetting(componentName) {
+    if (!(this.exists())) {
+      this.currentUserSettings[this.currentAppPage] = {};
+    }
 
-     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-       this.currentUserSettings[this.currentAppPage][componentName] = {};
-     }
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      this.currentUserSettings[this.currentAppPage][componentName] = {};
+    }
 
-     if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-       this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
-     }
-   },
+    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
+    }
+  },
 
   /**
    *   Returns current list of userSetting.
@@ -852,8 +851,8 @@ export default Service.extend({
     for (let settingProperty in setting1) {
       if (settingProperty in addSettings) {
         ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
-        merge(setting1[settingProperty], addSettings[settingProperty]) :
-        addSettings[settingProperty];
+          merge(setting1[settingProperty], addSettings[settingProperty]) :
+          addSettings[settingProperty];
       } else {
         ret[settingProperty] = setting1[settingProperty];
       }

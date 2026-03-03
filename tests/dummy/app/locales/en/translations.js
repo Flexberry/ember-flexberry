@@ -1177,6 +1177,7 @@ $.extend(true, translations, {
           'ember-flexberry-dummy-sotrudnik-l': {
             caption: 'EmberFlexberryDummySotrudnikL',
             'doOdataFunction': 'Do Odata function',
+            'doOdataAction': 'Do Odata action',
             'dataReceived': 'Objects loaded',
             'receivedMasters': 'Masters loaded',
             'receivedMastersError': 'Error loading masters',

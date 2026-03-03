@@ -1186,6 +1186,7 @@ $.extend(true, translations, {
           'ember-flexberry-dummy-sotrudnik-l': {
             caption: 'Сотрудники',
             'doOdataFunction': 'Выполнить Odata функцию',
+            'doOdataAction': 'Выполнить Odata экшен',
             'dataReceived': 'Объекты загружены',
             'receivedMasters': 'Мастера загружены',
             'receivedMastersError': 'Ошибка загрузки мастеров',

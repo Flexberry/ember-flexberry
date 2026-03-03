@@ -187,8 +187,8 @@ export default Mixin.create({
   */
   _showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel = false, immediateExport = false) {
     let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
-    const sourceModelName = settingsSource.get('modelName');
-    const userSettingValue = getOwner(this).lookup('default-user-setting:' + sourceModelName);
+    const modelName = settingsSource.get('modelName');
+    const userSettingValue = getOwner(this).lookup('default-user-setting:' + modelName);
     if (isNone(colsOrder) && !isNone(userSettingValue)) {
       colsOrder = userSettingValue.DEFAULT.colsOrder;
     }
@@ -202,7 +202,6 @@ export default Mixin.create({
     let colDesc;  //Column description
     let colDescs = A();  //Columns description
     let projectionAttributes;
-    let modelName = settingsSource.get('modelProjection.modelName');
     if (isExportExcel) {
       let exportExcelProjectionName = settingsSource.get('exportExcelProjection') || settingsSource.get('modelProjection.projectionName');
       assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);

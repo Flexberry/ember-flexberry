@@ -11,7 +11,7 @@ import { merge } from '@ember/polyfills';
 import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
 import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -294,7 +294,7 @@ export default Service.extend({
     let appPage = this.currentAppPage;
     let userSetting;
     const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-    if (currentUserSettingValue && Object.keys(currentUserSettingValue).length > 0) {
+    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).every(value => !isEmpty(value))) {
       userSetting = currentUserSettingValue;
     }
     else if (!isNone(modelName)) {

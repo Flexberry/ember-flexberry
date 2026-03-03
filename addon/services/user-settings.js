@@ -294,7 +294,7 @@ export default Service.extend({
     let appPage = this.currentAppPage;
     let userSetting;
     const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-    if (Object.keys(currentUserSettingValue).length > 0) {
+    if (currentUserSettingValue && Object.keys(currentUserSettingValue).length > 0) {
       userSetting = currentUserSettingValue;
     }
     else if (!isNone(modelName)) {
@@ -316,6 +316,10 @@ export default Service.extend({
         sorting = deserializeSortingParam(params.sort);
       } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
+
+      if (isNone(userSetting)) {
+        userSetting = { };
       }
 
       userSetting.sorting = sorting;

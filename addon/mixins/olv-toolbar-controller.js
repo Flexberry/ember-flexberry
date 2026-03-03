@@ -187,7 +187,8 @@ export default Mixin.create({
   */
   _showConfigDialog(componentName, settingName, useSidePageMode, settingsSource, isExportExcel = false, immediateExport = false) {
     let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
-    const userSettingValue = getOwner(this).lookup('default-user-setting:' + settingsSource.get('modelName'));
+    const sourceModelName = settingsSource.get('modelName');
+    const userSettingValue = getOwner(this).lookup('default-user-setting:' + sourceModelName);
     if (isNone(colsOrder) && !isNone(userSettingValue)) {
       colsOrder = userSettingValue.DEFAULT.colsOrder;
     }

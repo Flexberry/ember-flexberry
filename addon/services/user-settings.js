@@ -11,7 +11,7 @@ import { merge } from '@ember/polyfills';
 import Builder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
 import { A } from '@ember/array';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -293,7 +293,11 @@ export default Service.extend({
   setCurrentParams(componentName, params, modelName) {
     let appPage = this.currentAppPage;
     let userSetting;
-    if(!isNone(modelName)) {
+    const currentUserSettingValue = this.getCurrentUserSetting(componentName);
+    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).every(value => !isEmpty(value))) {
+      userSetting = currentUserSettingValue;
+    }
+    else if (!isNone(modelName)) {
       const userSettingValue = getOwner(this).lookup('default-user-setting:' + modelName);
       if (!isNone(userSettingValue)) {
         userSetting = userSettingValue.DEFAULT;
@@ -314,9 +318,8 @@ export default Service.extend({
         sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
       }
 
-      const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-      if (!isNone(currentUserSettingValue)) {
-        userSetting = currentUserSettingValue;
+      if (isNone(userSetting)) {
+        userSetting = { };
       }
 
       userSetting.sorting = sorting;
@@ -357,19 +360,19 @@ export default Service.extend({
     @method createDefaultUserSetting
     @param {String} componentName
    */
-   createDefaultUserSetting(componentName) {
-     if (!(this.exists())) {
-       this.currentUserSettings[this.currentAppPage] = {};
-     }
+  createDefaultUserSetting(componentName) {
+    if (!(this.exists())) {
+      this.currentUserSettings[this.currentAppPage] = {};
+    }
 
-     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-       this.currentUserSettings[this.currentAppPage][componentName] = {};
-     }
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      this.currentUserSettings[this.currentAppPage][componentName] = {};
+    }
 
-     if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-       this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
-     }
-   },
+    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName] = {};
+    }
+  },
 
   /**
    *   Returns current list of userSetting.
@@ -852,8 +855,8 @@ export default Service.extend({
     for (let settingProperty in setting1) {
       if (settingProperty in addSettings) {
         ret[settingProperty] = (typeof (setting1[settingProperty]) === 'object') ?
-        merge(setting1[settingProperty], addSettings[settingProperty]) :
-        addSettings[settingProperty];
+          merge(setting1[settingProperty], addSettings[settingProperty]) :
+          addSettings[settingProperty];
       } else {
         ret[settingProperty] = setting1[settingProperty];
       }

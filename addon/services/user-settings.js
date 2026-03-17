@@ -294,7 +294,7 @@ export default Service.extend({
     let appPage = this.currentAppPage;
     let userSetting;
     const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).every(value => !isEmpty(value))) {
+    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).some(value => !Ember.isEmpty(value))) {
       userSetting = currentUserSettingValue;
     }
     else if (!isNone(modelName)) {

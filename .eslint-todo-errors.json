@@ -600,9 +600,11 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 275, "column": 51 }
   ],
   "addon/services/user-settings.js": [
+    { "ruleId": "no-unused-vars", "line": 14, "column": 18 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 210, "column": 52 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 211, "column": 44 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 212, "column": 49 },
+    { "ruleId": "no-undef", "line": 297, "column": 99 },
     { "ruleId": "no-undef", "line": 501, "column": 37 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 757, "column": 56 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 772, "column": 23 },

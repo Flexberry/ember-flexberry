@@ -1,6 +1,10 @@
 # Ember Flexberry Changelog
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+## [3.13.2-beta.6] - 2026-03-17
+### Fixed
+* Fix overwriting of specified user settings.
+
 ## [3.13.2-beta.5] - 2026-03-02
 ### Fixed
 * Fix setting for displaying columns using default settings.

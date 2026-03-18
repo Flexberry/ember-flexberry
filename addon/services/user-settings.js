@@ -294,7 +294,7 @@ export default Service.extend({
     let appPage = this.currentAppPage;
     let userSetting;
     const currentUserSettingValue = this.getCurrentUserSetting(componentName);
-    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).every(value => !isEmpty(value))) {
+    if (!isNone(currentUserSettingValue) && Object.values(currentUserSettingValue).some(value => !isEmpty(value))) {
       userSetting = currentUserSettingValue;
     }
     else if (!isNone(modelName)) {
@@ -498,7 +498,7 @@ export default Service.extend({
    */
   getCurrentPerPage(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    let configEnvironmentSettings = Ember.getOwner(this).resolveRegistration('config:environment');
+    let configEnvironmentSettings = getOwner(this).resolveRegistration('config:environment');
     let defaultPerPage;
 
     try{

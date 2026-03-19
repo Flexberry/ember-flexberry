@@ -43,6 +43,30 @@ export default ListFormController.extend({
             }
           }
         });
+    },
+
+    doOdataAction() {
+      const adapter = get(this, 'store').adapterFor('application');
+      let args = {
+        actionName: 'GetMastersForTestAction?__autoExpand=true',
+      };
+
+      adapter.callAction(args)
+        .then(sotrudniks => {
+          if (!isEmpty(sotrudniks.value)) {
+            set(this, 'dataReceived', true);
+            let departaments = sotrudniks.value.map((a) => get(a, 'Departament'));
+            let departamentsIsNull = sotrudniks.value.find((a) => isNone(get(a, 'Departament')));
+            if (!isEmpty(departaments) && isNone(departamentsIsNull)) {
+              set(this, 'receivedMasters', true);
+              let vid = departaments.map((a) => get(a, 'Vid'));
+              let vidIsNull = departaments.find((a) => isNone(get(a, 'Vid')));
+              if (!isEmpty(vid) && isNone(vidIsNull)) {
+                set(this, 'receivedMasterMasters', true);
+              }
+            }
+          }
+        });
     }
   }
 });

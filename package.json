@@ -95,9 +95,6 @@
     "lodash": "^4.4.0",
     "strip-bom": "^2.0.0"
   },
-  "resolutions": {
-    "es5-ext": "0.10.53"
-  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },

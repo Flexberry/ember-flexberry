@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.5] - 2026-03-26
+### Changed
+* Update dependency on `ember-flexberry-data` to version `2.8.1`.
+
 ## [2.8.4] - 2025-10-28
 ### Fixed
 * The `flexberry-objectlistview` component:

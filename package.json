@@ -107,6 +107,7 @@
     "mktemp": "0.3.5",
     "quick-temp": "0.1.5",
     "quick-temp/glob": "7.1.7",
-    "quick-temp/minimatch": "3.0.5"
+    "quick-temp/minimatch": "3.0.5",
+    "foreground-child": "2.0.0"
   }
 }

@@ -7022,15 +7022,10 @@ mkdirp@~0.4.0:
   dependencies:
     minimist "0.0.8"
 
-mktemp@~0.3.4:
+mktemp@0.3.5, mktemp@~0.3.4, mktemp@~0.4.0:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.3.5.tgz#a1504c706d0d2b198c6a0eb645f7fdaf8181f7de"
-  integrity sha1-oVBMcG0NKxmMag62Rff9r4GB994=
-
-mktemp@~0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.4.0.tgz#6d0515611c8a8c84e484aa2000129b98e981ff0b"
-  integrity sha1-bQUVYRyKjITkhKogABKbmOmB/ws=
+  integrity sha512-hFyxoCMAjgU76O22rG4zxjmBqRaOCe9GL9PSTaG+GIX5t7d6kuB/49CkjM2R1u+4XJIZsdaFrnRkOxpmr4aG4w==
 
 module-deps@^4.0.8:
   version "4.1.1"

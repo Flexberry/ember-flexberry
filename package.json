@@ -79,7 +79,6 @@
     "loader.js": "^4.0.1",
     "moment": "2.29.4",
     "moment-timezone": "0.5.35",
-    "mktemp": "~0.3.4",
     "node-uuid": "^1.4.7",
     "npm-run-all": "^4.1.5",
     "semantic-ui-ember": "https://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3",
@@ -102,5 +101,8 @@
   "keywords": [
     "ember-addon",
     "flexberry"
-  ]
+  ],
+  "resolutions": {
+    "mktemp": "0.3.5"
+  }
 }

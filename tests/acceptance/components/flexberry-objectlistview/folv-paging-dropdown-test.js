@@ -6,59 +6,57 @@ import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import $ from 'jquery';
 
-executeTest('check paging dropdown', (store, assert, app) => {
+executeTest('check paging dropdown', async (store, assert, app) => {
   assert.expect(5);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
-  let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let uuid = generateUniqueId();
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
+  const modelName = 'ember-flexberry-dummy-suggestion-type';
+  const uuid = generateUniqueId();
 
   // Add records for paging.
-  run(() => {
+  try {
+    let resolvedPromises = await addRecords(store, modelName, uuid);
+    assert.ok(resolvedPromises, 'All records saved.');
 
-    addRecords(store, modelName, uuid).then(function(resolvedPromises) {
-      assert.ok(resolvedPromises, 'All records saved.');
+    await visit(path);
+    
+    assert.equal(currentPath(), path);
 
-      visit(path);
-      andThen(function() {
-        assert.equal(currentPath(), path);
+    let trTableBody;
+    let activeItem;
 
-        let $choosedIthem;
-        let trTableBody;
-        let activeItem;
+    // Refresh function.
+    const refreshFunction = async function() {
+      let $folvPerPageButton = $('.flexberry-dropdown.compact');
+      let $menu = $('.menu', $folvPerPageButton);
+      trTableBody = () => { return $($('table.object-list-view tbody tr')).length.toString(); };
 
-        // Refresh function.
-        let refreshFunction =  function() {
-          let $folvPerPageButton = $('.flexberry-dropdown.compact');
-          let $menu = $('.menu', $folvPerPageButton);
-          trTableBody = () => { return $($('table.object-list-view tbody tr')).length.toString(); };
+      activeItem =  () => { return $($('.item.active.selected', $menu)).text(); };
 
-          activeItem =  () => { return $($('.item.active.selected', $menu)).text(); };
-
-          // The list should be more than 5 items.
-          assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
-          $folvPerPageButton.click();
-          let timeout = 500;
-          later((() => {
-            let menuIsVisible = $menu.hasClass('visible');
-            assert.strictEqual(menuIsVisible, true, 'menu is visible');
-            $choosedIthem = $('.item', $menu);
-            $choosedIthem[1].click();
-          }), timeout);
-        };
-
-        let controller = app.__container__.lookup('controller:' + currentRouteName());
-        let done = assert.async();
-        refreshListByFunction(refreshFunction, controller).then(() => {
-          // The list should be more than 10 items
-          assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
-        }).catch((reason) => {
-          // Error output.
-          assert.ok(false, reason);
-        }).finally(() => {
-          deleteRecords(store, modelName, uuid, assert);
-          done();
-        });
+      // The list should be more than 5 items.
+      assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
+      await click( $folvPerPageButton);
+      let timeout = 500;
+      return new Promise((resolve) => {
+        later(async() => {
+          let menuIsVisible = $menu.hasClass('visible');
+          assert.strictEqual(menuIsVisible, true, 'menu is visible');
+          let $choosedItem = $('.item', $menu);
+          await click($choosedItem[1]);
+          resolve();
+        }, timeout);
       });
-    });
+    };
+
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+
+    await refreshListByFunction(refreshFunction, controller);
+
+      // The list should be more than 10 items
+      assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
+    } catch (reason) {
+      // Error output.
+      assert.ok(false, reason);
+    } finally {
+      await deleteRecords(store, modelName, uuid, assert);
+    }
   });
-});

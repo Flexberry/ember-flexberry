@@ -1005,17 +1005,16 @@
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
     { "ruleId": "ember/no-test-and-then", "line": 27, "column": 9 }
   ],
-  "tests/acceptance/components/flexberry-objectlistview/folv-delete-before-recoed-with-promise-test.js": [
+ "tests/acceptance/components/flexberry-objectlistview/folv-delete-before-recoed-with-promise-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 27, "column": 9 }
+    { "ruleId": "no-unused-vars", "line": 76, "column": 15 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-in-row-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 29, "column": 9 }
+    { "ruleId": "no-unused-vars", "line": 10, "column": 65 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-button-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 5, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 45, "column": 9 }
+    { "ruleId": "ember/no-test-import-export", "line": 6, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-delete-record-from-e-form-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 }
@@ -1042,9 +1041,8 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-getCellComponent-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 50, "column": 18 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 78, "column": 22 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 50, "column": 14 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 75, "column": 14 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-goto-editform-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
@@ -1054,44 +1052,39 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-limit-function-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 16, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 25, "column": 35 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 35 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 33, "column": 20 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 49, "column": 22 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 24 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 25, "column": 29 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 29 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 33, "column": 14 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 49, "column": 14 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 57, "column": 14 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-locales-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 13, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-lock-edit-form-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 7, "column": 3 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-open-newform-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 6, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 8, "column": 37 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 7, "column": 35 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-paging-dropdown-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 22, "column": 7 }
+    { "ruleId": "no-unused-vars", "line": 1, "column": 17 },
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-paging-navigation-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 20, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 27 }
+    { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 23, "column": 21 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-by-computable-field-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 16, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 21, "column": 34 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 22, "column": 47 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 22, "column": 30 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 23, "column": 43 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-clear-test.js": [
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 15, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 37 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 35 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-for-each-column-test.js": [
     { "ruleId": "ember/no-test-and-then", "line": 7, "column": 3 }
@@ -1100,13 +1093,12 @@
     { "ruleId": "ember/no-test-and-then", "line": 6, "column": 3 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-test.js": [
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
     { "ruleId": "ember/no-test-import-export", "line": 4, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 15, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 37 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 35 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-sorting-with-default-setting-test.js": [
-    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 15, "column": 3 }
+    { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-tests-functions.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 184, "column": 42 },
@@ -1115,18 +1107,15 @@
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-toolbar-custom-components-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 2, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 12, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 24, "column": 5 }
+    { "ruleId": "no-unused-vars", "line": 3, "column": 10 },
+    { "ruleId": "no-unused-vars", "line": 4, "column": 18 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-button-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 1, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 8, "column": 3 },
-    { "ruleId": "ember/no-test-and-then", "line": 18, "column": 5 },
-    { "ruleId": "ember/no-test-and-then", "line": 22, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 24, "column": 29 },
-    { "ruleId": "ember/no-test-and-then", "line": 26, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 31 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 73 }
+    { "ruleId": "ember/no-test-and-then", "line": 22, "column": 3 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 24, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 27 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 27, "column": 69 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-settings-on-multi-list-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 25, "column": 27 },
@@ -1140,29 +1129,14 @@
     { "ruleId": "no-useless-catch", "line": 157, "column": 11 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-user-settings-test.js": [
-    { "ruleId": "ember/use-ember-get-and-set", "line": 26, "column": 27 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 30, "column": 11 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 35, "column": 11 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 49, "column": 9 },
-    { "ruleId": "ember/no-test-and-then", "line": 57, "column": 7 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 63, "column": 17 },
-    { "ruleId": "ember/no-test-and-then", "line": 67, "column": 11 },
-    { "ruleId": "ember/no-test-and-then", "line": 71, "column": 13 },
-    { "ruleId": "ember/no-test-and-then", "line": 80, "column": 17 },
-    { "ruleId": "ember/no-test-and-then", "line": 84, "column": 21 },
-    { "ruleId": "ember/no-test-and-then", "line": 139, "column": 5 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 141, "column": 13 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 142, "column": 13 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 145, "column": 13 },
-    { "ruleId": "ember/no-test-and-then", "line": 149, "column": 7 },
-    { "ruleId": "no-useless-catch", "line": 155, "column": 11 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 158, "column": 17 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 51, "column": 9 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 63, "column": 11 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 91, "column": 13 }
   ],
   "tests/acceptance/components/flexberry-objectlistview/folv-wrapper-projection-test.js": [
     { "ruleId": "ember/no-test-import-export", "line": 3, "column": 1 },
-    { "ruleId": "ember/no-test-and-then", "line": 11, "column": 3 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 37 },
-    { "ruleId": "ember/use-ember-get-and-set", "line": 54, "column": 20 }
+    { "ruleId": "ember/use-ember-get-and-set", "line": 29, "column": 35 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 51, "column": 14 }
   ],
   "tests/acceptance/components/flexberry-simpledatetime/flexberry-simpledatetime-manual-enter-test.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 18, "column": 29 },

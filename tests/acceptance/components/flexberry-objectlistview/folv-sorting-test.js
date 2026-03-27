@@ -7,94 +7,71 @@ import { checkSortingList, loadingLocales, refreshListByFunction, getOrderByClau
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
 // Need to add sort by multiple columns.
-executeTest('check sorting', (store, assert, app) => {
+executeTest('check sorting', async (store, assert, app) => {
   assert.expect(14);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
-  visit(path);
-  click('.ui.clear-sorting-button');
-  andThen(() => {
+  await visit(path);
+  await click('.ui.clear-sorting-button');
 
-    // Check page path.
-    assert.equal(currentPath(), path);
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = get(controller, 'modelProjection');
+  // Check page path.
+  assert.equal(currentPath(), path);
+  let controller = app.__container__.lookup('controller:' + currentRouteName());
+  let projectionName = get(controller, 'modelProjection');
 
-    let orderByClause = null;
+  let orderByClause = null;
 
-    let $olv = $('.object-list-view ');
-    let $thead = $('th.dt-head-left', $olv)[0];
+  let $olv = $('.object-list-view ');
+  let $thead = $('th.dt-head-left', $olv)[0];
 
-    let currentSorting = controller.get('computedSorting');
-    if (!$.isEmptyObject(currentSorting)) {
-      orderByClause = getOrderByClause(currentSorting);
-    }
+  let currentSorting = controller.get('computedSorting');
+  if (!$.isEmptyObject(currentSorting)) {
+    orderByClause = getOrderByClause(currentSorting);
+  }
 
-    run(() => {
-      let done = assert.async();
+  // Check sorting in the first column. Sorting is not append.
+  await loadingLocales('ru', app);
+  let isTrue = await checkSortingList(store, projectionName, $olv, orderByClause);
+  assert.ok(isTrue, 'sorting is not applied');
 
-      // Check sortihg in the first column. Sorting is not append.
-      loadingLocales('ru', app).then(() => {
-        checkSortingList(store, projectionName, $olv, orderByClause).then((isTrue) => {
-          assert.ok(isTrue, 'sorting is not applied');
+  // Check sortihg icon in the first column. Sorting icon is not added
+  assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
+  assert.equal(controller.sort, undefined, 'no sorting in URL');
 
-          // Check sortihg icon in the first column. Sorting icon is not added.
-          assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
-          assert.equal(controller.sort, undefined, 'no sorting in URL');
+  // Refresh function.
+  let refreshFunction = async function() {
+    await click($thead);
+  };
 
-          // Refresh function.
-          let refreshFunction =  function() {
-            $thead.click();
-          };
+  await refreshListByFunction(refreshFunction, controller);
 
-          let done1 = assert.async();
-          refreshListByFunction(refreshFunction, controller).then(() => {
-            let $thead = $('th.dt-head-left', $olv)[0];
-            let $ord = $('.object-list-view-order-icon', $thead);
-            let $divOrd = $('div', $ord);
+  $thead = $('th.dt-head-left', $olv)[0];
+  let $ord = $('.object-list-view-order-icon', $thead);
+  let $divOrd = $('div', $ord);
 
-            assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
-            assert.equal($('.icon', $divOrd).hasClass("ascending"), true, 'sorting symbol added');
-            assert.equal(controller.sort, '+address', 'up sorting in URL');
+  assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
+  assert.equal($('.icon', $divOrd).hasClass("ascending"), true, 'sorting symbol added');
+  assert.equal(controller.sort, '+address', 'up sorting in URL');
 
-            let done2 = assert.async();
-            checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
-              assert.ok(isTrue, 'sorting applied');
-              let done3 = assert.async();
-              refreshListByFunction(refreshFunction, controller).then(() => {
-                let $thead = $('th.dt-head-left', $olv)[0];
-                let $ord = $('.object-list-view-order-icon', $thead);
-                let $divOrd = $('div', $ord);
+  isTrue = await checkSortingList(store, projectionName, $olv, 'address asc');
+  assert.ok(isTrue, 'sorting applied');
 
-                assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-descending'), 'title is Order descending');
-                assert.equal($('.icon', $divOrd).hasClass("descending"), true, 'sorting symbol added');
-                assert.equal(controller.sort, '-address', 'down sorting in URL');
+  await refreshListByFunction(refreshFunction, controller);
 
-                let done4 = assert.async();
-                checkSortingList(store, projectionName, $olv, 'address desc').then((isTrue) => {
-                  assert.ok(isTrue, 'sorting applied');
+  $thead = $('th.dt-head-left', $olv)[0];
+  $ord = $('.object-list-view-order-icon', $thead);
+  $divOrd = $('div', $ord);
 
-                  let done5 = assert.async();
-                  refreshListByFunction(refreshFunction, controller).then(() => {
-                    assert.equal(controller.sort, null, 'no sorting in URL');
-                    let done6 = assert.async();
-                    refreshListByFunction(refreshFunction, controller).then(() => {
-                      assert.equal(controller.sort, '+address', 'up sorting in URL');
-                      done6();
-                    });
-                    done5();
-                  });
-                  done4();
-                });
-              }).finally(() => {
-                done3();
-              });
-              done2();
-            });
-            done1();
-          });
-          done();
-        });
-      });
-    });
-  });
+  assert.equal($divOrd.attr('title'), get(I18nRuLocale, 'components.object-list-view.sort-descending'), 'title is Order descending');
+  assert.equal($('.icon', $divOrd).hasClass("descending"), true, 'sorting symbol added');
+  assert.equal(controller.sort, '-address', 'down sorting in URL');
+
+  isTrue = await checkSortingList(store, projectionName, $olv, 'address desc');
+  assert.ok(isTrue, 'sorting applied');
+
+  await refreshListByFunction(refreshFunction, controller);
+
+  assert.equal(controller.sort, null, 'no sorting in URL');
+
+  await refreshListByFunction(refreshFunction, controller);
+  assert.equal(controller.sort, '+address', 'up sorting in URL');
 });

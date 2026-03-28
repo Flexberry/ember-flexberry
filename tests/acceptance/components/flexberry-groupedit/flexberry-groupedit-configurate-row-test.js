@@ -1,34 +1,37 @@
 import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import { run } from '@ember/runloop';
-import startApp from '../../../helpers/start-app';
 import $ from 'jquery';
+import startApp from '../../../helpers/start-app';
+import { visit, currentURL } from '@ember/test-helpers';
+import { set } from '@ember/object';
 
 let app;
 const path = 'components-examples/flexberry-groupedit/configurate-row-example';
 const testName = 'configurate row';
 
-module('Acceptance | flexberry-groupedit | ' + testName, {
-    beforeEach() {
+module('Acceptance | flexberry-groupedit | ' + testName, function(hooks) {
+  setupApplicationTest(hooks);
 
-      // Start application.
-      app = startApp();
+  hooks.beforeEach(function() {
+    // Start application.
+    app = startApp();
 
-      // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
-      let applicationController = app.__container__.lookup('controller:application');
-      applicationController.set('isInAcceptanceTestMode', true);
-    },
-
-    afterEach() {
-      run(app, 'destroy');
-    }
+    // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
+    let applicationController = app.__container__.lookup('controller:application');
+    set(applicationController, 'isInAcceptanceTestMode', true);
   });
 
-test(testName, (assert) => {
-  assert.expect(58);
+  hooks.afterEach(function() {
+    run(app, 'destroy');
+  });
 
-  visit(path);
-  andThen(() => {
-    assert.equal(currentPath(), path, 'Path is correctly');
+  test(testName, async function(assert) {
+    assert.expect(58);
+
+    await visit(path);
+    assert.equal(currentURL(), path, 'Path is correct');
+
     let $folvRows = $('.object-list-view-container tbody tr');
 
     for (let i = 0; i < $folvRows.length; i++) {
@@ -36,8 +39,7 @@ test(testName, (assert) => {
       let $deleteButton = $('.object-list-view-row-delete-button', $row);
       let $flagField = $('.field .flexberry-checkbox', $row);
 
-      if (i % 2 === 0)
-      {
+      if (i % 2 === 0) {
         assert.equal($deleteButton.hasClass('disabled'), true, 'Delete button in an even row is disabled');
         assert.equal($flagField.hasClass('checked'), true, 'CheckBox in an even row is checked');
       } else {
@@ -46,7 +48,7 @@ test(testName, (assert) => {
       }
 
       let $textField = $('.field .flexberry-textbox input', $row);
-      assert.equal($textField[0].value, i + 1 + 'test', 'TextBox have currect text');
+      assert.equal($textField[0].value, i + 1 + 'test', 'TextBox have correct text');
     }
   });
 });

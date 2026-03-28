@@ -3,56 +3,66 @@ import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectl
 import { run } from '@ember/runloop';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import Builder from 'ember-flexberry-data/query/builder';
+import { settled } from '@ember/test-helpers';
 
-executeTest('check ge filter', (store, assert, app) => {
+executeTest('check ge filter', async (store, assert, app) => {
   assert.expect(3);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
-  let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperation = 'ge';
+  const path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
+  const modelName = 'ember-flexberry-dummy-suggestion';
+  const filtreInsertOperation = 'ge';
   let filtreInsertParametr;
 
-  visit(path + '?perPage=500');
-  andThen(function() {
-    assert.equal(currentPath(), path);
-    let builder2 = new Builder(store).from(modelName).selectByProjection('SuggestionL').top(1);
-    store.query(modelName, builder2.build()).then((result) => {
-      let arr = result.toArray();
-      filtreInsertParametr = arr.objectAt(0).get('votes') - 1;
-    }).then(function() {
-      let $filterButtonDiv = $('.buttons.filter-active');
-      let $filterButton = $filterButtonDiv.children('button');
-      let $objectListView = $('.object-list-view');
+  await visit(path + '?perPage=500');
 
-      // Activate filtre row.
-      run(() => {
-        $filterButton.click();
-      });
+  assert.equal(currentPath(), path);
+  let builder2 = new Builder(store).from(modelName).selectByProjection('SuggestionL').top(1);
+  let result = await store.query(modelName, builder2.build());
+  let arr = result.toArray();
+  filtreInsertParametr = arr.objectAt(0).get('votes') - 1;
 
-      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr).then(function() {
-        // Apply filter function.
-        let refreshFunction =  function() {
-          let refreshButton = $('.refresh-button')[0];
-          refreshButton.click();
-        };
+  let $filterButtonDiv = $('.buttons.filter-active');
+  let $filterButton = $filterButtonDiv.children('button');
+  let $objectListView = $('.object-list-view');
 
-        // Apply filter.
-        let controller = app.__container__.lookup('controller:' + currentRouteName());
-        let done1 = assert.async();
-        refreshListByFunction(refreshFunction, controller).then(() => {
-          let filtherResult = controller.model.content;
-          let successful = true;
-          for (let i = 0; i < filtherResult.length; i++) {
-            let votes = filtherResult[0]._data.votes;
-            if (votes <= filtreInsertParametr) {
-              successful = false;
-            }
-          }
-
-          assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
-          assert.equal(successful, true, 'Filter successfully worked');
-          done1();
-        });
-      });
-    });
+  // Activate filtre row.
+  run(() => {
+    $filterButton.click();
   });
+
+  await settled();
+
+  await run(async() => {
+  await filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr);
+  });
+
+  // Apply filter function.
+  let refreshFunction = async function () {
+    run(() => {
+      let refreshButton = $('.refresh-button')[0];
+      refreshButton.click();
+    });
+  };
+
+
+  // Apply filter.
+  let controller = app.__container__.lookup('controller:' + currentRouteName());
+
+
+  await run(async () => {
+    await refreshListByFunction(refreshFunction, controller);
+  });
+
+  await settled();
+
+  let filtherResult = controller.model.content;
+  let successful = true;
+  for (let i = 0; i < filtherResult.length; i++) {
+    let votes = filtherResult[0]._data.votes;
+    if (votes <= filtreInsertParametr) {
+      successful = false;
+    }
+  }
+
+  assert.equal(filtherResult.length >= 1, true, 'Filtered list is empty');
+  assert.equal(successful, true, 'Filter successfully worked');
 });

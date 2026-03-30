@@ -66,9 +66,9 @@
     "ember-sinon": "^2.2.0",
     "ember-template-lint": "^2.14.0",
     "ember-try": "^0.2.2",
-    "eslint": "^7.13.0",
+    "eslint": "7.13.0",
     "eslint-plugin-ember": "^9.6.0",
-    "eslint-plugin-hbs": "^1.0.0",
+    "eslint-plugin-hbs": "1.0.0",
     "eslint-plugin-jsdoc": "^30.7.8",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-qunit": "^5.0.0",
@@ -95,15 +95,25 @@
     "lodash": "^4.4.0",
     "strip-bom": "^2.0.0"
   },
+  "resolutions": {
+    "rimraf": "^2.7.1",
+    "tmp": "^0.0.33",
+    "quick-temp": "^0.1.8",
+    "ansi-regex": "^3.0.0",
+    "strip-ansi": "^4.0.0",
+    "graceful-fs": "^4.2.11",
+    "natives": "^1.1.6",
+    "minimatch": "^3.0.4",
+    "glob": "^7.1.2",
+    "mktemp": "0.4.0",
+    "es5-ext": "0.10.53",
+    "ember-cli-babel": "^5.2.4"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
   "keywords": [
     "ember-addon",
     "flexberry"
-  ],
-  "resolutions": {
-    "tmp": "0.2.1",
-    "mktemp": "0.3.5"
-  }
+  ]
 }

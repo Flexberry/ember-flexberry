@@ -22,7 +22,7 @@ rm -r app/*
 rm -f ./tests/.jshintrc
 rm -f ./tests/helpers/start-app.js
 mv index.html app
-npm install
+yarn install
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0
@@ -61,7 +61,7 @@ cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
 pushd "$TMP_DIR"
 pushd new-addon-for-tests
 
-npm install
+yarn install
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0

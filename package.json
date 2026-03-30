@@ -93,7 +93,8 @@
     "ember-truth-helpers": "1.2.0",
     "ember-validations": "~2.0.0-alpha.5",
     "lodash": "^4.4.0",
-    "strip-bom": "^2.0.0"
+    "strip-bom": "^2.0.0",
+    "mktemp": "0.3.5"
   },
   "resolutions": {
     "rimraf": "^2.7.1",

@@ -44,7 +44,7 @@ jobs:
         set -x
         npm install -g ember-cli@2.4.3
         npm install -g bower
-        yarn install
+        npm install
         bower install
 
     - name: Run deploy script

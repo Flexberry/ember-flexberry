@@ -27,7 +27,7 @@ jobs:
 
     - name: Run linters
       id: linting
-      run: yarn run lint
+      run: npm run lint
 
     - name: Test addon
       if: ${{ success() || steps.linting.conclusion == 'failure' }}

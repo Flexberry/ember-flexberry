@@ -24,6 +24,9 @@ rm -f ./tests/helpers/start-app.js
 mv index.html app
 yarn install
 
+# Copy yarn.lock to use pinned dependencies in new project
+cp yarn.lock ./
+
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0
 
@@ -62,6 +65,9 @@ pushd "$TMP_DIR"
 pushd new-addon-for-tests
 
 yarn install
+
+# Copy yarn.lock to use pinned dependencies in new project
+cp yarn.lock ./
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0

@@ -19,7 +19,7 @@ jobs:
         set -x
         npm install -g ember-cli@2.4.3
         npm install -g bower
-        yarn install
+        npm install
         bower install
 
     - name: Setup test environment
@@ -51,7 +51,7 @@ jobs:
         set -x
         npm install -g ember-cli@2.4.3
         npm install -g bower
-        yarn install
+        npm install
         bower install
 
     - name: Setup test environment

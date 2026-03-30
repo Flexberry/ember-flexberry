@@ -10,16 +10,15 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: '10.x'
+        node-version: '10.24.1'
 
     - name: Install dependencies
       run: |
         set -x
-        npm install -g ember-cli@2.4.3
         npm install -g bower
-        yarn install --frozen-lockfile
+        yarn install --frozen-lockfile --ignore-engines
         bower install
 
     - name: Setup test environment
@@ -33,7 +32,7 @@ jobs:
       if: ${{ success() || steps.linting.conclusion == 'failure' }}
       run: |
         set -x
-        ember try default test
+        ./node_modules/.bin/ember try default test
 
   test-generator:
     runs-on: ubuntu-latest
@@ -42,16 +41,15 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: '10.x'
+        node-version: '10.24.1'
 
     - name: Install dependencies
       run: |
         set -x
-        npm install -g ember-cli@2.4.3
         npm install -g bower
-        yarn install --frozen-lockfile
+        yarn install --frozen-lockfile --ignore-engines
         bower install
 
     - name: Setup test environment

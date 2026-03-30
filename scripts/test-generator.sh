@@ -73,6 +73,18 @@ pushd new-addon-for-tests
 node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); pkg.overrides = pkg.overrides || {}; pkg.overrides.mktemp = '0.4.0'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');"
 
 npm install
+npm dedupe
+
+# Install ember-cli-moment-shim@2.2.1 to ensure compatibility with Node.js 10
+# The default version (3.8.0) requires a newer version of mktemp that uses node:fs
+npm install ember-cli-moment-shim@2.2.1 --save-dev
+
+# Install mktemp@0.4.0 to ensure compatibility with Node.js 10
+# The default version (2.0.0+) requires Node.js 14+ and uses node:fs
+npm install mktemp@0.4.0 --save-dev
+
+# Dedupe to ensure correct versions are used
+npm dedupe
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0

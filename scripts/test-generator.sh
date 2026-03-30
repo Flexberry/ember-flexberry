@@ -23,6 +23,11 @@ rm -f ./tests/.jshintrc
 rm -f ./tests/helpers/start-app.js
 mv index.html app
 
+# Add overrides to package.json to ensure Node.js 10 compatible mktemp is used
+# This is needed because some transitive dependencies may pull in newer versions
+# of mktemp that use node:fs (requires Node.js 14+)
+node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); pkg.overrides = pkg.overrides || {}; pkg.overrides.mktemp = '0.4.0'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');"
+
 npm install
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
@@ -61,6 +66,11 @@ popd
 cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
 pushd "$TMP_DIR"
 pushd new-addon-for-tests
+
+# Add overrides to package.json to ensure Node.js 10 compatible mktemp is used
+# This is needed because some transitive dependencies may pull in newer versions
+# of mktemp that use node:fs (requires Node.js 14+)
+node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); pkg.overrides = pkg.overrides || {}; pkg.overrides.mktemp = '0.4.0'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');"
 
 npm install
 

@@ -24,7 +24,7 @@ rm -f ./tests/helpers/start-app.js
 mv index.html app
 
 # Copy yarn.lock to use pinned dependencies in new project
-cp yarn.lock ./
+cp "${ADDON_DIR}/yarn.lock" ./
 
 yarn install
 
@@ -62,12 +62,12 @@ pushd new-addon-for-tests
 popd
 popd
 cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
-cp yarn.lock "$TMP_DIR/new-addon-for-tests/"
+cp "${ADDON_DIR}/yarn.lock" "$TMP_DIR/new-addon-for-tests/"
 pushd "$TMP_DIR"
 pushd new-addon-for-tests
 
 # Copy yarn.lock to use pinned dependencies in new project
-cp yarn.lock ./
+cp "${ADDON_DIR}/yarn.lock" ./
 
 yarn install
 

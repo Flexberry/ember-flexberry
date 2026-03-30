@@ -94,7 +94,7 @@
     "ember-validations": "~2.0.0-alpha.5",
     "lodash": "^4.4.0",
     "strip-bom": "^2.0.0",
-    "mktemp": "0.3.5",
+    "mktemp": "^0.4.0",
     "minimatch": "3.0.5",
     "glob": "7.1.2"
   },
@@ -108,7 +108,7 @@
     "natives": "^1.1.6",
     "minimatch": "^3.0.4",
     "glob": "^7.1.2",
-    "mktemp": "0.3.5",
+    "mktemp": "^0.4.0",
     "es5-ext": "0.10.53",
     "ember-cli-babel": "^5.2.4"
   },

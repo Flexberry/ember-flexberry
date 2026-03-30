@@ -101,7 +101,7 @@
   "resolutions": {
     "rimraf": "^2.7.1",
     "tmp": "^0.0.33",
-    "quick-temp": "0.1.5",
+    "quick-temp": "0.1.8",
     "ansi-regex": "^3.0.0",
     "strip-ansi": "^4.0.0",
     "graceful-fs": "^4.2.11",

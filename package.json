@@ -96,8 +96,8 @@
     "strip-bom": "^2.0.0"
   },
   "resolutions": {
-    "quick-temp": "0.1.6",
-    "mktemp": "^0.4.0"
+    "quick-temp": "0.1.5",
+    "mktemp": "^0.3.4"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

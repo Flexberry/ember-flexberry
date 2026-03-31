@@ -26,6 +26,7 @@ npm install
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0
+npm install mktemp@0.4.0 --save-dev
 
 ember install "${ADDON_DIR}"
 #npm install dexie@1.3.6
@@ -65,6 +66,7 @@ npm install
 
 # With version 1.11.1 addon installing fails on ember-cli@2.4.3
 npm install resolve@1.11.0
+npm install mktemp@0.4.0 --save-dev
 
 ember install "${ADDON_DIR}"
 

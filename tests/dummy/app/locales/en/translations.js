@@ -514,6 +514,10 @@ Ember.$.extend(true, translations, {
           'user-setting-delete': {
             'caption': 'Settings deletion',
             'title': ''
+          },
+          'user-custom-logic': {
+            'caption': 'User custom logic examples',
+            'title': ''
           }
         },
         'components-acceptance-tests': {
@@ -1078,6 +1082,12 @@ Ember.$.extend(true, translations, {
         'caption': 'User settings',
         'all-del-button-name': 'Delete all!',
         'message': 'Settings were removed'
+      },
+      'user-custom-logic': {
+        'caption': 'User custom logic examples',
+        'problem': 'Description of the problem',
+        'batch-unchanged-objects': 'Batch with unchanged objects',
+        'batch-unchanged-objects-message': 'The batch response is parsed incorrectly'
       }
     }
   },

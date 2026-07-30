@@ -5758,6 +5758,14 @@
     { "ruleId": "ember/use-ember-get-and-set", "line": 101, "column": 12 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 102, "column": 12 }
   ],
+  "tests/dummy/app/controllers/user-setting-forms/user-custom-logic.js": [
+    { "ruleId": "ember/use-ember-get-and-set", "line": 7, "column": 24 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 33, "column": 11 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 37, "column": 25 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 42, "column": 29 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 49, "column": 12 },
+    { "ruleId": "ember/use-ember-get-and-set", "line": 53, "column": 27 }
+  ],
   "tests/dummy/app/controllers/user-setting-forms/user-setting-delete.js": [
     { "ruleId": "ember/use-ember-get-and-set", "line": 12, "column": 21 },
     { "ruleId": "ember/use-ember-get-and-set", "line": 28, "column": 12 },

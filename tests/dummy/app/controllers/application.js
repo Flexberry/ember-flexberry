@@ -721,6 +721,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),
           title: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.title'),
           children: null
+        }, {
+          link: 'user-setting-forms/user-custom-logic',
+          caption: i18n.t('forms.application.sitemap.user-setting-forms.user-custom-logic.caption'),
+          title: i18n.t('forms.application.sitemap.user-setting-forms.user-custom-logic.title'),
+          children: null
         }]
       }]
     };

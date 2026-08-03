@@ -1,0 +1,12 @@
+<h3>{{t "forms.user-setting-forms.user-custom-logic.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    caption=(t "forms.user-setting-forms.user-custom-logic.problem")
+    icon="icon-guideline-circle-info icon"
+    message=(t "forms.user-setting-forms.user-custom-logic.batch-unchanged-objects-message")
+    closeable=false
+  }}
+  <button type="button" class="ui button" {{action "batchUnchangedObjects" on="click"}}>
+    {{t "forms.user-setting-forms.user-custom-logic.batch-unchanged-objects"}}
+  </button>
+</form>

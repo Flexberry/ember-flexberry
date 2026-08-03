@@ -514,6 +514,10 @@ Ember.$.extend(true, translations, {
           'user-setting-delete': {
             'caption': 'Удаление настроек',
             'title': ''
+          },
+          'user-custom-logic': {
+            'caption': 'Примеры пользовательской логики',
+            'title': ''
           }
         },
         'components-acceptance-tests': {
@@ -1080,6 +1084,12 @@ Ember.$.extend(true, translations, {
         'caption': 'Пользовательские настройки',
         'all-del-button-name': 'Удалить все!',
         'message': 'Настройки удалены'
+      },
+      'user-custom-logic': {
+        'caption': 'Примеры пользовательской логики',
+        'problem': 'Описание проблемы',
+        'batch-unchanged-objects': 'Batch с неизмененными объектами',  
+        'batch-unchanged-objects-message': 'Создали агрегатор и пару детейлов. Сохранили батчем. Добавили еще один детейл. Если теперь в батч отправить всю пачку агрегатор+детейлы, то ответ такого батч запроса парсится некорректно'
       }
     },
   },

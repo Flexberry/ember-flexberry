@@ -1088,8 +1088,25 @@ Ember.$.extend(true, translations, {
       'user-custom-logic': {
         'caption': 'Примеры пользовательской логики',
         'problem': 'Описание проблемы',
-        'batch-unchanged-objects': 'Batch с неизмененными объектами',  
+        'batch-unchanged-objects': 'Batch с неизмененными объектами',
         'batch-unchanged-objects-message': 'Создали агрегатор и пару детейлов. Сохранили батчем. Добавили еще один детейл. Если теперь в батч отправить всю пачку агрегатор+детейлы, то ответ такого батч запроса парсится некорректно'
+      },
+      'user-batch-timing': {
+        'caption': 'Тайминг batchUpdate (воспроизведение бага)',
+        'title': '',
+        'problem': 'Воспроизведение проблемы',
+        'problem-message': 'Сценарий: изменение поля -> store.batchUpdate -> внешний API -> откат/повторный batchUpdate. При баге ответ батча не намазывается на модель к моменту .then(), и повторный запрос не персистит откат в БД.',
+        'run': 'Запустить сценарий',
+        'run-task': 'Вариант из задачи (rollback сразу)',
+        'run-multi': 'Несколько моделей в батче',
+        'watch-console': 'Также смотрите консоль браузера (логи [batch-timing]).',
+        'status': 'Статус',
+        'batch-requests': 'Число batch-запросов',
+        'then-before-external': 'Состояние модели в .then() (до внешнего API)',
+        'rollback-before-rebatch': 'Состояние модели перед повторным batchUpdate',
+        'model-name-after': 'Значение поля в модели после сценария',
+        'backend-name-after': 'Значение поля в БД после сценария',
+        'error': 'Ошибка'
       }
     },
   },

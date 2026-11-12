@@ -186,6 +186,7 @@ Router.map(function() {
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
   this.route('user-setting-forms/user-custom-logic');
+  this.route('user-setting-forms/user-batch-timing');
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autofill-by-limit');

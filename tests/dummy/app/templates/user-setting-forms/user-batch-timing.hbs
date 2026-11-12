@@ -1,0 +1,30 @@
+<h3>{{t "forms.user-setting-forms.user-batch-timing.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    caption=(t "forms.user-setting-forms.user-batch-timing.problem")
+    icon="icon-guideline-circle-info icon"
+    message=(t "forms.user-setting-forms.user-batch-timing.problem-message")
+    closeable=false
+  }}
+  <button type="button" class="ui button" {{action "runScenario" on="click"}}>
+    {{t "forms.user-setting-forms.user-batch-timing.run"}}
+  </button>
+  <button type="button" class="ui button" {{action "runScenarioTask" on="click"}}>
+    {{t "forms.user-setting-forms.user-batch-timing.run-task"}}
+  </button>
+  <button type="button" class="ui button" {{action "runScenarioMulti" on="click"}}>
+    {{t "forms.user-setting-forms.user-batch-timing.run-multi"}}
+  </button>
+</form>
+<div class="ui segments">
+  <div class="ui segment">
+    <strong>{{t "forms.user-setting-forms.user-batch-timing.watch-console"}}</strong>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.status"}}: {{status}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.batch-requests"}}: {{batchRequests}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.then-before-external"}}: {{thenBeforeExternalJson}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.rollback-before-rebatch"}}: {{rollbackBeforeRebatchJson}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.model-name-after"}}: {{modelNameAfter}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.backend-name-after"}}: {{backendNameAfter}}</p>
+    <p>{{t "forms.user-setting-forms.user-batch-timing.error"}}: {{errorMessage}}</p>
+  </div>
+</div>

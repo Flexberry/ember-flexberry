@@ -1088,6 +1088,22 @@ Ember.$.extend(true, translations, {
         'problem': 'Description of the problem',
         'batch-unchanged-objects': 'Batch with unchanged objects',
         'batch-unchanged-objects-message': 'The batch response is parsed incorrectly'
+      },
+      'user-batch-timing': {
+        'caption': 'batchUpdate timing (bug reproduction)',
+        'problem': 'Problem reproduction',
+        'problem-message': 'Scenario: field change -> store.batchUpdate -> external API -> rollback / repeat batchUpdate. On the bug the batch response is not applied to the model at the moment of .then(), so the repeat request does not persist the rollback to DB.',
+        'run': 'Run scenario',
+        'run-task': 'Scenario from the task (immediate rollback)',
+        'run-multi': 'Several models in batch',
+        'watch-console': 'Also check the browser console (logs [batch-timing]).',
+        'status': 'Status',
+        'batch-requests': 'Batch requests count',
+        'then-before-external': 'Model state in .then() (before external API)',
+        'rollback-before-rebatch': 'Model state before repeat batchUpdate',
+        'model-name-after': 'Field value in model after scenario',
+        'backend-name-after': 'Field value in DB after scenario',
+        'error': 'Error'
       }
     }
   },
